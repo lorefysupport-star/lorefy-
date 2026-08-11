@@ -1,25 +1,41 @@
 {
   "expo": {
-    "name": "lorefy-expo",
-    "slug": "lorefy-expo",
+    "name": "Lorefy",
+    "slug": "lorefy",
+    "scheme": "lorefy",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/lorefy-icon.png",
+    "userInterfaceStyle": "dark",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.lorefy.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#09080d",
+        "foregroundImage": "./assets/lorefy-icon.png"
       },
+      "package": "com.lorefy.app",
+      "versionCode": 1,
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8438f5d2-3734-4ef7-8925-c8ffeb5a0cd5"
+      }
+    },
+    "owner": "lorefy"
   }
 }
