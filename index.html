@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lorefy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/lorefy-ui.css?v=20260619-v2">
+<link rel="stylesheet" href="styles/lorefy-system.css?v=20260716-full-audit-v2">
+<link rel="stylesheet" href="styles/lorefy-redesign.css?v=20260711-ui-layout-v2">
+<link rel="stylesheet" href="styles/lorefy-apple-ui.css?v=20260714-profile-dark-v16">
+<link rel="stylesheet" href="styles/lorefy-share-studio.css?v=20260714-profile-dark-v16">
+<link rel="stylesheet" href="styles/lorefy-product-tools.css?v=20260716-community-unify-v3">
+<link rel="stylesheet" href="styles/lorefy-cinema-ui.css?v=20260805-cinema-v1">
+<!-- PWA / iOS web-app -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0d0d0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lorefy">
+<link rel="apple-touch-icon" href="launch/icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="launch/icons/favicon-32.png">
+<style>
+  html,body{margin:0;height:100%;background:#0b0f0e;
+    overflow:hidden;font-family:'Readex Pro',-apple-system,sans-serif;}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+  /* ── iPhone device ── */
+  #device{
+    --nc-top:48px; --nc-bottom:26px;
+    width:390px;height:844px;position:relative;flex-shrink:0;
+    transform-origin:center center;
+    border-radius:54px;
+    background:#0c0b11;
+    padding:13px;
+    box-shadow:
+      0 0 0 13px #1a1a1d,
+      0 0 0 15px #2c2c30,
+      0 0 0 16px #0c0c0e,
+      0 50px 110px -20px rgba(0,0,0,0.75),
+      0 22px 50px -25px rgba(0,0,0,0.9);
+  }
+  #screen{
+    position:absolute;inset:13px;border-radius:42px;overflow:hidden;background:#fff;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.4);
+  }
+  #root{position:absolute;inset:0;}
+  .lf-bootstrap-splash{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:10px;background:#0d0d0f;color:#f7f4f3;
+    font-family:'Readex Pro','Cairo',sans-serif;text-align:center;
+  }
+  .lf-bootstrap-logo{width:76px;height:76px;object-fit:contain;filter:drop-shadow(0 14px 25px rgba(138,76,255,.3));animation:lfBootstrapBreathe 1.7s ease-in-out infinite;}
+  .lf-bootstrap-splash strong{font-size:25px;font-weight:800;}
+  .lf-bootstrap-splash small{color:#a8a3a7;font-size:12px;}
+  @keyframes lfBootstrapBreathe{50%{transform:translateY(-4px) scale(1.025);filter:drop-shadow(0 18px 32px rgba(138,76,255,.5));}}
+  /* Dynamic Island */
+  #island{
+    position:absolute;top:11px;left:50%;transform:translateX(-50%);
+    width:118px;height:33px;background:#000;border-radius:20px;z-index:9000;
+    pointer-events:none;
+  }
+  /* Status bar */
+  #statusbar{
+    position:absolute;top:0;left:0;right:0;height:var(--nc-top);
+    display:flex;align-items:flex-start;justify-content:space-between;
+    padding:17px 30px 0;z-index:8999;pointer-events:none;
+    font-family:-apple-system,'SF Pro Text','Readex Pro',sans-serif;
+    direction:ltr;color:#111;transition:color .3s ease;
+  }
+  #statusbar.dark{color:#fff;}
+  #sb-time{font-size:15px;font-weight:600;letter-spacing:.3px;}
+  #sb-right{display:flex;align-items:center;gap:6px;}
+  #sb-right svg{display:block;}
+  .hint{
+    position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+    color:rgba(255,255,255,0.34);font-size:12px;letter-spacing:.02em;
+    font-family:'Readex Pro',sans-serif;direction:rtl;text-align:center;
+    pointer-events:none;white-space:nowrap;
+  }
+  @media (max-width: 600px), (display-mode: standalone) {
+    html,body{background:#F6F5FA;overflow:hidden;}
+    #stage{display:block;}
+    #device{
+      --nc-top:env(safe-area-inset-top, 0px);
+      --nc-bottom:env(safe-area-inset-bottom, 0px);
+      width:100vw;height:100dvh;padding:0;border-radius:0;
+      transform:none!important;background:#F6F5FA;box-shadow:none;
+    }
+    #screen{inset:0;border-radius:0;box-shadow:none;}
+    #island,#statusbar,.hint{display:none;}
+  }
+</style>
+</head>
+<body>
+  <div id="stage">
+    <div id="device">
+      <div id="screen">
+        <div id="root"><div class="lf-bootstrap-splash" role="status" aria-label="Loading Lorefy"><img class="lf-bootstrap-logo" src="launch/brand/lorefy-feather.png" alt="" aria-hidden="true"><strong>Lorefy</strong><small>جارٍ تجهيز مكتبتك</small></div></div>
+        <div id="island"></div>
+        <div id="statusbar">
+          <div id="sb-time">9:41</div>
+          <div id="sb-right">
+            <!-- signal -->
+            <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0.5" width="3" height="11.5" rx="1"/></svg>
+            <!-- wifi -->
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 2.2c2.6 0 5 1 6.8 2.7l1.2-1.4C14.4 1.3 11.6 0 8.5 0 5.4 0 2.6 1.3.5 3.5l1.2 1.4C3.5 3.2 5.9 2.2 8.5 2.2Z"/><path d="M8.5 5.6c1.6 0 3.1.6 4.2 1.7l1.2-1.4C12.6 4.5 10.6 3.7 8.5 3.7c-2.1 0-4.1.8-5.4 2.2l1.2 1.4C5.4 6.2 6.9 5.6 8.5 5.6Z"/><path d="M8.5 9c.8 0 1.6.3 2.1.9l-2.1 2.1-2.1-2.1c.5-.6 1.3-.9 2.1-.9Z"/></svg>
+            <!-- battery -->
+            <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="17" height="9" rx="2" fill="currentColor"/><path d="M24 4.5v4c1 -.4 1 -3.6 0 -4Z" fill="currentColor" opacity="0.5"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hint">معاينة Lorefy — اسحب وتنقّل كما في التطبيق</div>
+
+  <!-- React + Babel (pinned) -->
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <!-- Lucide icon data (UMD) -->
+  <script src="vendor/lucide.js"></script>
+
+  <!-- Host shims: NenIcons, brand logo components, device fitting -->
+  <script>
+  (function(){
+    var h = React.createElement;
+
+    /* ── NenIcons: wrap Lucide node-data as React components ── */
+    function camel(k){ return k.replace(/-([a-z])/g, function(_,c){ return c.toUpperCase(); }); }
+    function toEl(node, key){
+      var tag = node[0], raw = node[1] || {}, kids = node[2] || [];
+      var attrs = { key: key };
+      for (var k in raw){ attrs[camel(k)] = raw[k]; }
+      var children = Array.isArray(kids) && kids.length
+        ? kids.map(function(n,i){ return toEl(n,i); }) : null;
+      return h(tag, attrs, children);
+    }
+    var L = window.lucide || {};
+    function lookup(name){ return (L.icons && L.icons[name]) || L[name]; }
+    function makeIcon(name){
+      var node = lookup(name);
+      return function Icon(props){
+        props = props || {};
+        var size = props.size != null ? props.size : 24;
+        var color = props.color || 'currentColor';
+        if (!node){ // fallback: rounded square
+          return h('svg', { width:size, height:size, viewBox:'0 0 24 24', fill:'none',
+            stroke:color, strokeWidth:2, style:props.style },
+            h('rect',{ key:0, x:4, y:4, width:16, height:16, rx:3 }));
+        }
+        var raw = node[1] || {}, kids = node[2] || [];
+        var attrs = {
+          width:size, height:size, viewBox: raw.viewBox || '0 0 24 24', fill:'none',
+          stroke:color, strokeWidth: props.strokeWidth || raw['stroke-width'] || 2,
+          strokeLinecap:'round', strokeLinejoin:'round', style:props.style,
+          className: props.className
+        };
+        return h('svg', attrs, kids.map(function(n,i){ return toEl(n,i); }));
+      };
+    }
+    // Proxy: any icon name the app destructures resolves to a component.
+    var iconCache = {};
+    window.NenIcons = new Proxy({}, {
+      get: function(t, name){
+        if (typeof name !== 'string') return undefined;
+        if (!iconCache[name]) iconCache[name] = makeIcon(name);
+        return iconCache[name];
+      }
+    });
+
+    /* ── Brand logo components (placeholder lockups) ── */
+    function lorefyMark(size, style){
+      return h('img', { src:'launch/brand/lorefy-feather.png?v=20260805-brand-v1', alt:'', width:size, height:size,
+        decoding:'async', style:Object.assign({ display:'block', width:size, height:size, objectFit:'contain', flexShrink:0 }, style || {}) });
+    }
+    window.LorefyLockup = function(props){
+      props = props || {};
+      var iconSize = props.iconSize || 24, textSize = props.textSize || 18;
+      var text = props.text || '#171522';
+      return h('div', { style:{ display:'flex', alignItems:'center', gap:iconSize*0.32 } },
+        lorefyMark(iconSize),
+        h('span', { style:{ fontSize:textSize, fontWeight:800, color:text,
+          fontFamily:"'Readex Pro',sans-serif", letterSpacing:'-0.015em', direction:'ltr' } }, 'Lorefy')
+      );
+    };
+    window.LorefyWordmark = function(props){
+      props = props || {};
+      var size = props.size || 23, color = props.color || '#fff';
+      return h('div', { style:{ display:'flex', alignItems:'center', gap:size*0.38 } },
+        lorefyMark(size*1.35),
+        h('span', { style:{ fontSize:size*1.7, fontWeight:800, color:color,
+          fontFamily:"'Readex Pro',sans-serif", letterSpacing:'-0.02em', direction:'ltr' } }, 'Lorefy')
+      );
+    };
+
+    /* ── Fit device to viewport ── */
+    function fit(){
+      var dev = document.getElementById('device');
+      if (!dev) return;
+      var nativeApp = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+      if (nativeApp || window.matchMedia('(max-width: 600px), (display-mode: standalone)').matches) {
+        dev.style.transform = 'none';
+        return;
+      }
+      var pad = 36;
+      var s = Math.min((window.innerWidth - pad) / 390, (window.innerHeight - pad) / 844, 1.2);
+      dev.style.transform = 'scale(' + s + ')';
+    }
+    window.addEventListener('resize', fit);
+    fit();
+    window.__fitDevice = fit;
+  })();
+  </script>
+
+  <!-- ════ Full catalog data (12,699+ works) — must load BEFORE enrich + app ════ -->
+  <script src="modules/lorefy-catalog-plan.js?v=20260716-catalog-resilience-v2"></script>
+  <script src="uploads/lorefy-catalog-map.js?v=20260715-progressive-v1"></script>
+  <script>
+    window.LorefyMangaData = window.LorefyMangaData || [];
+    (function(){
+      var params = new URLSearchParams(location.search || '');
+      var route = { type: params.get('type'), workId: params.get('novel') || params.get('work') || '' };
+      var plan = window.LorefyCatalogPlan.initialCatalogPlan(window.LorefyCatalogManifest, route);
+      if (!plan.length) plan = [5];
+      window.LOREFY_INITIAL_CATALOG_PARTS = plan.slice();
+      plan.forEach(function(part){
+        var id = String(part).padStart(2, '0');
+        document.write('<script src="uploads/lorefy-data-part' + id + '.js?v=20260715-progressive-v1"><\/script>');
+      });
+    })();
+  </script>
+  <script defer src="modules/lorefy-catalog-loader.js?v=20260726-full-catalog-v9"></script>
+  <script defer src="uploads/lorefy-chapter-overrides.js?v=20260616-v23"></script>
+  <script defer src="uploads/lorefy-catalog-aliases.js?v=20260622-audit1"></script>
+
+  <!-- Host feature modules (stats + cover picker) — must load BEFORE the app -->
+  <script defer src="modules/lorefy-cover-api.js?v=20260728-cover-proxy-v2"></script>
+  <script defer src="modules/lorefy-v2.js?v=20260716-premium-stats-v1"></script>
+  <script defer src="modules/lorefy-ui-runtime.js?v=20260620-skills-v1"></script>
+
+  <!-- Accounts: config + backend (Supabase sync) + auth gate -->
+  <script defer src="config/lorefy-runtime.js?v=20260805-apple-v1"></script>
+  <script defer src="config/lorefy-config.js?v=20260805-local-demo-v3"></script>
+  <script defer src="monitoring/lorefy-sentry.js"></script>
+    <script defer src="backend/lorefy-secure-storage.js?v=20260813-keychain-v1"></script>
+    <script defer src="backend/lorefy-backend.js?v=20260813-security-v1"></script>
+    <script defer src="modules/lorefy-subscriptions.js?v=20260722-billing-guard-v1"></script>
+    <script defer src="backend/lorefy-ios-bridge.js"></script>
+    <script defer src="backend/lorefy-ios-oauth.js?v=20260805-google-oauth-v1"></script>
+  <script defer src="auth/lorefy-auth.js?v=20260703-oauth-v37"></script>
+
+  <!-- Weekly catalog delta updater (applies cached updates before app boot) -->
+  <script defer src="modules/lorefy-catalog-updater.js?v=20260726-catalog-safety-v4"></script>
+  <script defer src="modules/lorefy-catalog-identity.js?v=20260722-catalog-identity-security-v2"></script>
+
+  <!-- Arabic enrichment module (loads before app, per integration notes) -->
+  <script defer src="uploads/files/lorefy-enrich.js"></script>
+  <script>
+    (function () {
+      var isLocalHost = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+      var params = new URLSearchParams(location.search || "");
+      var localPremiumPreview = isLocalHost && params.get("preview") === "premium";
+      window.__LOREFY_LOCAL_PREMIUM_PREVIEW = localPremiumPreview;
+      try {
+        if (localPremiumPreview) {
+          localStorage.setItem("lorefy.user.premium.v2", "true");
+        } else {
+          localStorage.removeItem("lorefy.user.premium.v2");
+        }
+      } catch (error) {}
+    })();
+  </script>
+  <!-- The Lorefy app (defines window.NenApp) -->
+  <!-- Character data is needed as soon as a detail screen opens. Keep it in the ordered defer chain. -->
+  <script defer src="uploads/lorefy-character-catalog.js?v=20260722-character-images-v2"></script>
+  <script defer src="uploads/lorefy-literary-character-catalog.js?v=20260722-character-images-v2"></script>
+  <script defer src="modules/lorefy-character-system.js?v=20260726-character-cast-v17"></script>
+  <script defer src="uploads/files/lorefy-app.js?v=20260728-cover-proxy-v2"></script>
+  <script defer src="modules/lorefy-growth-features.js?v=20260726-character-cast-v3"></script>
+  <script defer src="modules/lorefy-share-studio.js?v=20260715-share-images-v17"></script>
+  <script defer src="modules/lorefy-product-core.js?v=20260715-product-core-v1"></script>
+  <script defer src="modules/lorefy-product-tools.js?v=20260715-product-tools-v2"></script>
+  <script defer src="modules/lorefy-user-discovery.js?v=20260810-reader-discovery-v3"></script>
+  <script>
+  window.LOREFY_DEFERRED_ASSETS = [
+      "uploads/lorefy-ar-enrichment.js?v=20260707-lazy-v1",
+      "modules/lorefy-api-catalog.js?v=20260716-api-expansion-v3"
+    ];
+  </script>
+
+  <!-- Mount: auth gate → app -->
+  <script>
+    (document.readyState === 'loading' ? window.addEventListener.bind(window, 'DOMContentLoaded') : function(fn){ fn(); })(function(){
+    (function(){
+      var tweaks = {
+        accent: "#9D4EDD",   // بنفسجي Lorefy
+        logo: "الشرارة",      // spark lockup
+        navStyle: "ثابت",     // fixed tab bar
+        navLabels: true
+      };
+      var statusbar = document.getElementById('statusbar');
+      function readSavedDarkTheme(){
+        try { return localStorage.getItem('lorefy.ui.theme.v1') !== 'light'; } catch (e) { return true; }
+      }
+      function applyThemeShell(dark){
+        dark = !!dark;
+        document.documentElement.dataset.lorefyTheme = dark ? 'dark' : 'light';
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+        document.body.dataset.lorefyTheme = dark ? 'dark' : 'light';
+        if (statusbar) statusbar.classList.toggle('dark', dark);
+        var screen = document.getElementById('screen');
+        if (screen) screen.style.background = dark ? '#0C0B11' : '#F6F5FA';
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', dark ? '#121016' : '#F2F2F7');
+        try { window.dispatchEvent(new CustomEvent('lorefy:theme', { detail: { dark: dark } })); } catch (e) {}
+      }
+      function onTheme(dark){
+        try { localStorage.setItem('lorefy.ui.theme.v1', dark ? 'dark' : 'light'); } catch (e) {}
+        applyThemeShell(dark);
+      }
+      var root = ReactDOM.createRoot(document.getElementById('root'));
+
+      function renderSurface(element){
+        root.render(React.createElement(window.LorefyUI.AppShell, null, element));
+      }
+      /* Keep remote artwork from leaving empty boxes when a provider is slow or offline. */
+      function installImageResilience(){
+        if (window.__lorefyImageResilience) return;
+        window.__lorefyImageResilience = true;
+        var coverFallback = "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6D35C8"/><stop offset="1" stop-color="#1D274D"/></linearGradient></defs><rect width="300" height="450" fill="url(#g)"/><circle cx="230" cy="76" r="92" fill="#FFFFFF" opacity=".1"/><path d="M36 376c55-54 116-64 228-20v58H36z" fill="#0B0A12" opacity=".55"/><text x="150" y="246" fill="#FFFFFF" opacity=".9" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700">LOREFY</text></svg>');
+        var avatarFallback = "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><rect width="160" height="160" rx="80" fill="#E9E0FF"/><circle cx="80" cy="62" r="28" fill="#7A4BD8"/><path d="M30 143c6-34 26-51 50-51s44 17 50 51" fill="#7A4BD8"/><circle cx="80" cy="80" r="72" fill="none" stroke="#FFFFFF" stroke-width="5" opacity=".7"/></svg>');
+        var observer = null;
+        var nearViewport = function(img){
+          try{
+            var rect = img.getBoundingClientRect();
+            return rect.bottom >= -240 && rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 240;
+          }catch(e){ return true; }
+        };
+        var fallbackFor = function(img){
+          var explicit = img.getAttribute("data-fallback") || "";
+          if (/^data:image\//i.test(explicit)) return explicit;
+          var context = String(img.alt || "") + " " + String(img.className || "");
+          try{ context += " " + String((img.closest("[class]") || {}).className || ""); }catch(e){}
+          var coverLike = /cover|hero|poster|work/i.test(context);
+          return !coverLike && /avatar|profile|portrait|character|author|user/i.test(context) ? avatarFallback : coverFallback;
+        };
+        var armTimeout = function(img, fallback){
+          if (img.dataset.lorefyImageTimer || img.dataset.lorefyFallbackApplied === "1") return;
+          if (img.loading === "lazy" && !nearViewport(img)){
+            if (observer) observer.observe(img);
+            return;
+          }
+          img.dataset.lorefyImageTimer = "1";
+          window.setTimeout(function(){
+            if (!img.complete || img.naturalWidth === 0){
+              img.dataset.lorefyFallbackApplied = "1";
+              img.removeAttribute("srcset");
+              img.src = fallback;
+            }
+          }, 5500);
+        };
+        var guard = function(img){
+          if (!img || img.dataset.lorefyImageGuard === "1") return;
+          var src = img.getAttribute("src") || "";
+          if (!/^https?:\/\//i.test(src) && !/^\/api\/media(?:\?|$)/i.test(src)) return;
+          img.dataset.lorefyImageGuard = "1";
+          var fallback = fallbackFor(img);
+          img.style.backgroundImage = 'url("' + fallback.replace(/"/g, "%22") + '")';
+          img.style.backgroundSize = "cover";
+          img.style.backgroundPosition = "center";
+          img.addEventListener("error", function(){
+            if (img.dataset.lorefyFallbackApplied === "1") return;
+            img.dataset.lorefyFallbackApplied = "1";
+            img.removeAttribute("srcset");
+            img.src = fallback;
+          }, { once: true });
+          armTimeout(img, fallback);
+        };
+        observer = "IntersectionObserver" in window ? new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){ if (entry.isIntersecting) armTimeout(entry.target, fallbackFor(entry.target)); });
+        }, { rootMargin: "240px" }) : null;
+        var scan = function(){ document.querySelectorAll("img").forEach(guard); };
+        var scanQueued = false;
+        var queueScan = function(){
+          if (scanQueued) return;
+          scanQueued = true;
+          var flush = function(){ scanQueued = false; scan(); };
+          if (window.requestAnimationFrame) window.requestAnimationFrame(flush);
+          else window.setTimeout(flush, 0);
+        };
+        scan();
+        new MutationObserver(queueScan).observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["src", "srcset"]
+        });
+      }
+      function mountApp(){
+        installImageResilience();
+        applyThemeShell(readSavedDarkTheme());
+        renderSurface(React.createElement(window.NenApp, { tweaks: tweaks, onTheme: onTheme }));
+        if (window.__fitDevice) window.__fitDevice();
+        ensureGrowthFeatures();
+        scheduleDeferredLorefyAssets();
+      }
+      function ensureGrowthFeatures(){
+        setTimeout(function(){
+          if (window.LorefyGrowth) return;
+          window.__lorefyGrowthRetryCount = (window.__lorefyGrowthRetryCount || 0) + 1;
+          if (window.__lorefyGrowthRetryCount > 3) return;
+          var script = document.createElement('script');
+      script.src = 'modules/lorefy-growth-features.js?v=20260726-character-cast-v3&retry=' + window.__lorefyGrowthRetryCount + '-' + Date.now();
+          script.async = false;
+          document.head.appendChild(script);
+        }, 400);
+      }
+      [800, 1800, 4200].forEach(function(ms){ setTimeout(ensureGrowthFeatures, ms); });
+      var deferredLorefyAssetsStarted = false;
+      function scheduleDeferredLorefyAssets(){
+        if (deferredLorefyAssetsStarted) return;
+        deferredLorefyAssetsStarted = true;
+        var queue = (window.LOREFY_DEFERRED_ASSETS || []).slice();
+        function idle(callback, timeout){
+          if ('requestIdleCallback' in window) requestIdleCallback(callback, { timeout: timeout || 4000 });
+          else setTimeout(callback, 900);
+        }
+        function loadScript(src){
+          return new Promise(function(resolve){
+            var script = document.createElement('script');
+            script.src = src;
+            script.async = false;
+            script.onload = script.onerror = function(){ resolve(); };
+            document.head.appendChild(script);
+          });
+        }
+        function refreshCatalog(){
+          try { if (window.__lorefyIngest) window.__lorefyIngest(); }
+          catch(e){}
+          try { if (window.__lorefyRefresh) window.__lorefyRefresh(); }
+          catch(e){}
+        }
+        function next(){
+          var src = queue.shift();
+          if (!src) { refreshCatalog(); return; }
+          loadScript(src).then(function(){
+            refreshCatalog();
+            setTimeout(function(){ idle(next, 5000); }, 1400);
+          });
+        }
+        setTimeout(next, 6500);
+      }
+      function localIdentity(){ try{ return JSON.parse(localStorage.getItem('lorefy.identity.v1')||'null'); }catch(e){ return null; } }
+      function localPreferences(){
+        try{
+          return JSON.parse(localStorage.getItem('lorefy.user.preferences.v2')||localStorage.getItem('lorefy.user.preferences.v1')||'null');
+        }catch(e){ return null; }
+      }
+      function mountGate(startStep){
+        applyThemeShell(readSavedDarkTheme());
+        renderSurface(React.createElement(window.LorefyAuthGate, { startStep: startStep, onComplete: mountApp }));
+        if (window.__fitDevice) window.__fitDevice();
+      }
+
+      async function preparePremiumState(BE, sess){
+        window.LOREFY_FEATURES = window.LOREFY_FEATURES || {};
+        var preview = window.__LOREFY_LOCAL_PREMIUM_PREVIEW === true ||
+          !!(window.LOREFY_RELEASE && window.LOREFY_RELEASE.betaPremiumUnlocked);
+        window.LOREFY_FEATURES.premium = preview;
+        if (preview) return false;
+        try { localStorage.removeItem("lorefy.user.premium.v2"); } catch (e) {}
+        if (!BE || BE.mode !== "live" || !sess || typeof BE.getEntitlements !== "function") return false;
+        try {
+          var rows = await BE.getEntitlements();
+          var now = Date.now();
+          var active = (Array.isArray(rows) ? rows : []).some(function(row){
+            var status = String(row && row.status || "").toLowerCase();
+            if (["active", "trialing", "grace"].indexOf(status) === -1) return false;
+            if (!row.expires_at) return true;
+            var expires = Date.parse(row.expires_at);
+            return !Number.isNaN(expires) && expires > now;
+          });
+          window.LOREFY_FEATURES.premium = active;
+          if (active) {
+            try { localStorage.setItem("lorefy.user.premium.v2", "true"); } catch (e) {}
+          }
+          return active;
+        } catch (e) {
+          window.LOREFY_FEATURES.premium = false;
+          try { localStorage.removeItem("lorefy.user.premium.v2"); } catch (ignore) {}
+          return false;
+        }
+      }
+
+      (async function(){
+        var BE = window.LorefyBackend;
+        try { if (BE && BE.init) await BE.init(); } catch(e){}
+        var sess = null;
+        try { sess = BE && BE.getSession ? await BE.getSession() : null; } catch(e){}
+        var previewParams = new URLSearchParams(location.search || "");
+        var directLocalDemo = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) &&
+          previewParams.get("preview") === "demo" && previewParams.get("demo") === "ready";
+        if (directLocalDemo && BE && BE.mode === "demo") {
+          try {
+            await BE.signInWithOAuth("google");
+            sess = BE.getSession ? await BE.getSession() : sess;
+            localStorage.setItem("lorefy.identity.v1", JSON.stringify({
+              name: "قارئ Lorefy",
+              un: "lorefy_demo",
+              bio: "حساب العرض المحلي",
+              avatar: "",
+              banner: ""
+            }));
+            localStorage.setItem("lorefy.user.preferences.v2", JSON.stringify({
+              version: 2,
+              formats: ["مانجا", "مانهوا", "رواية"],
+              genres: ["أكشن", "خيال", "مغامرة"],
+              seedWorkIds: [],
+              discovery: [],
+              onboardingVersion: 2
+            }));
+          } catch(e) {}
+        }
+        await preparePremiumState(BE, sess);
+        if (sess && BE.mode === 'live' && BE.pull) { try{ await BE.pull(sess.userId); }catch(e){} }
+        if (sess && BE.startSync) { try{ BE.startSync(sess.userId); }catch(e){} }
+        var id = localIdentity();
+        var preferences = localPreferences();
+        var ready = !!(sess && id && id.name && id.un && preferences && preferences.onboardingVersion === 2);
+        if (BE && BE.passwordRecovery) mountGate('recovery');
+        else if (ready) mountApp();
+        else if (sess && id && id.name && id.un) mountGate('preferences');
+        else if (sess) mountGate('account');
+        else mountGate('welcome');
+      })();
+    })();
+    });
+  </script>
+
+  <!-- Local previews always use live files; production keeps the offline PWA cache. -->
+  <script>
+    var isLocalPreview = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname);
+    if (isLocalPreview) {
+      window.addEventListener('load', function(){
+        var clearWorkers = 'serviceWorker' in navigator
+          ? navigator.serviceWorker.getRegistrations().then(function(registrations){
+              return Promise.all(registrations.map(function(registration){
+                return registration.unregister();
+              }));
+            })
+          : Promise.resolve();
+        var clearCaches = 'caches' in window
+          ? caches.keys().then(function(keys){
+              return Promise.all(keys.map(function(key){ return caches.delete(key); }));
+            })
+          : Promise.resolve();
+        Promise.all([clearWorkers, clearCaches]).catch(function(){});
+      });
+    } else if ('serviceWorker' in navigator && window.top === window.self) {
+      window.addEventListener('load', function(){
+        navigator.serviceWorker.register('sw.js?v=20260716-build-sync-v1')
+          .catch(function(){});
+      });
+    }
+  </script>
+</body>
+</html>

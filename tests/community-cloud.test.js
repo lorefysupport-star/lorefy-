@@ -1,0 +1,96 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+
+const root = path.resolve(__dirname, '..');
+const read = (...parts) => fs.readFileSync(path.join(root, ...parts), 'utf8');
+
+test('community publishing is server-owned and bounded', () => {
+  const backend = read('backend', 'lorefy-backend.js');
+  const migration = read('supabase', 'migrations', '20260813_community_release_hardening.sql');
+  const storageMigration = read('supabase', 'migrations', '20260813_storage_release_hardening.sql');
+  const regexMigration = read('supabase', 'migrations', '20260813_storage_regex_fix.sql');
+  const moderationMigration = read('supabase', 'migrations', '20260813_community_moderation.sql');
+  const policyHelpers = read('supabase', 'migrations', '20260813_internal_policy_helpers.sql');
+  const remediation = read('supabase', 'migrations', '20260813_release_security_remediation.sql');
+  const productTools = read('modules', 'lorefy-product-tools.js');
+  const productCore = read('modules', 'lorefy-product-core.js');
+  const app = read('uploads', 'files', 'lorefy-app.js');
+
+  assert.match(backend, /publishReview:\s*async/);
+  assert.match(backend, /_uploadReviewMedia:\s*async/);
+  assert.match(backend, /listReviews:\s*async/);
+  assert.match(backend, /addReviewComment:\s*async/);
+  assert.match(backend, /setReviewReaction:\s*async/);
+  assert.match(backend, /Review image deletion failed/);
+  assert.match(backend, /submitReport:\s*async/);
+  assert.match(backend, /publish_review_comment/);
+  assert.match(backend, /set_review_reaction/);
+  assert.match(migration, /create or replace function public\.publish_review/i);
+  assert.match(migration, /review_rate_limit/i);
+  assert.match(migration, /revoke insert on public\.reviews from authenticated/i);
+  assert.match(migration, /create or replace function public\.submit_report/i);
+  assert.match(storageMigration, /review_media_not_found/);
+  assert.match(storageMigration, /public\.is_active_auth_user\(\)/);
+  assert.match(storageMigration, /drop policy if exists "reviews insert own"/i);
+  assert.match(regexMigration, /\[\.\]\(jpg\|png\|webp\)/);
+  assert.match(moderationMigration, /moderate_community_text/);
+  assert.match(moderationMigration, /before insert or update/);
+  assert.match(moderationMigration, /profile_blocks/);
+  assert.match(backend, /setProfileBlock:\s*async/);
+  assert.match(moderationMigration, /author_has_blocked_viewer/);
+  assert.match(moderationMigration, /reader_has_blocked_author/);
+  assert.match(moderationMigration, /drop policy if exists "reviews read public or own"/i);
+  assert.match(moderationMigration, /drop policy if exists "review comments read"/i);
+  assert.match(moderationMigration, /drop policy if exists "profiles read"/i);
+  assert.match(moderationMigration, /create or replace function public\.search_public_profiles/i);
+  assert.match(policyHelpers, /create or replace function private\.is_active_auth_user/i);
+  assert.match(policyHelpers, /private\.author_has_blocked_viewer/i);
+  assert.match(policyHelpers, /drop function if exists public\.is_active_auth_user/i);
+  assert.match(remediation, /private\.can_interact_with_review/i);
+  assert.match(remediation, /Community comments inherit review access/i);
+  assert.match(remediation, /Review reactions inherit review access/i);
+  assert.match(remediation, /drop policy if exists "Profile media can be uploaded by its owner"/i);
+  assert.match(remediation, /store_apple_authorization\(\s*target_user_id uuid/i);
+  assert.match(remediation, /private\.lock_actor_action\('review'\)/i);
+  assert.match(remediation, /private\.lock_actor_action\('report'\)/i);
+  assert.match(remediation, /private\.lock_actor_action\('comment'\)/i);
+  assert.match(remediation, /private\.account_deletions/i);
+  assert.match(remediation, /begin_account_deletion/i);
+  assert.match(backend, /setProfilePrivacy:\s*async/);
+  assert.match(backend, /is_private:isPrivate/);
+  assert.match(productTools, /card\.dataset\.reviewId/);
+  assert.match(productTools, /card\.dataset\.userId/);
+  assert.match(productCore, /return backend\.setProfileBlock\(id, true\)\.then/);
+  assert.match(app, /tr=async\(\)=>/);
+  assert.match(app, /r\.publishReview\(\{workId:t\.mid/);
+  assert.match(app, /qo=async t=>/);
+  assert.match(app, /r\.deleteReview\(t\)/);
+  assert.match(app, /e\.listReviews\(\{limit:100\}\)/);
+  assert.match(app, /"data-review-id":t\.id/);
+  assert.match(app, /"data-user-id":t\.userId/);
+  assert.match(read('modules', 'lorefy-growth-features.js'), /persistReviewReaction\(card, "dislike", nowMine\)/);
+});
+
+test('native Google OAuth uses PKCE code exchange without fragment token installation', () => {
+  const backend = read('backend', 'lorefy-backend.js');
+  const oauth = read('backend', 'lorefy-ios-oauth.js');
+  assert.match(backend, /flowType:\s*"pkce"/);
+  assert.match(oauth, /exchangeCodeForSession\(code\)/);
+  assert.doesNotMatch(oauth, /setSession\s*\(/);
+  assert.doesNotMatch(oauth, /access_token/);
+  assert.doesNotMatch(oauth, /refresh_token/);
+  assert.match(oauth, /lorefy\.oauth\.google\.pending\.v1/);
+  assert.match(oauth, /App\.getLaunchUrl/);
+});
+
+test('account deletion handles CORS and recursively empties every private media bucket', () => {
+  const fn = read('supabase', 'functions', 'delete-account', 'index.ts');
+  assert.match(fn, /request\.method === "OPTIONS"/);
+  assert.match(fn, /Access-Control-Allow-Origin/);
+  assert.match(fn, /listAllFiles/);
+  assert.match(fn, /\["profile-media", "review-media", "custom-covers"\]/);
+  assert.match(fn, /storage_cleanup_incomplete/);
+  assert.match(fn, /rpc\("begin_account_deletion"/);
+});

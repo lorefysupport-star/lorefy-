@@ -1,0 +1,25 @@
+{
+  "cli": {
+    "version": ">= 21.0.0",
+    "appVersionSource": "local"
+  },
+  "build": {
+    "production": {
+      "distribution": "store",
+      "node": "22.14.0",
+      "ios": {
+        "image": "latest",
+        "scheme": "App",
+        "buildConfiguration": "Release",
+        "resourceClass": "m-medium"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "ascAppId": "6799704077"
+      }
+    }
+  }
+}

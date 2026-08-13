@@ -1,0 +1,27 @@
+{
+  "name": "lorefy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lorefy mobile release shell and App Store preflight tooling.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "community:patch": "node tools/patch-community-cloud.js && node tools/patch-product-report-cloud.js",
+    "ios:prepare": "node tools/prepare-ios-web.mjs",
+    "ios:add": "npm run ios:prepare && npx cap add ios",
+    "ios:sync": "npm run ios:prepare && npx cap sync ios",
+    "eas-build-post-install": "npm run ios:sync",
+    "apple:audit": "node tools/apple-release-audit.mjs",
+    "apple:audit:strict": "node tools/apple-release-audit.mjs --strict"
+  },
+  "dependencies": {
+    "@aparajita/capacitor-secure-storage": "8.0.0",
+    "@capacitor-community/apple-sign-in": "7.1.0",
+    "@capacitor/app": "8.1.1",
+    "@capacitor/browser": "8.0.4",
+    "@capacitor/core": "8.4.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.4.2",
+    "@capacitor/ios": "8.4.2"
+  }
+}

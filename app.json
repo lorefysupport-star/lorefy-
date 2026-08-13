@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Lorefy",
+    "slug": "lorefy",
+    "owner": "lorefy",
+    "version": "1.0.0",
+    "scheme": "com.lorefy.app",
+    "orientation": "portrait",
+    "ios": {
+      "bundleIdentifier": "com.lorefy.app",
+      "buildNumber": "5",
+      "supportsTablet": false,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8438f5d2-3734-4ef7-8925-c8ffeb5a0cd5"
+      },
+      "lorefy": {
+        "releaseMode": "beta",
+        "guestMode": false,
+        "premiumUnlocked": true,
+        "appleSignInEnabled": true
+      }
+    }
+  }
+}
