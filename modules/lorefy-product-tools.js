@@ -131,7 +131,10 @@
   }
 
   function csvCell(value) {
-    return '"' + String(value == null ? "" : value).replace(/"/g, '""') + '"';
+    var text = String(value == null ? "" : value);
+    var formulaPrefix = /^\s*[=+@-]/.test(text);
+    if (formulaPrefix) text = "'" + text;
+    return '"' + text.replace(/"/g, '""') + '"';
   }
 
   function exportLibraryCsv() {

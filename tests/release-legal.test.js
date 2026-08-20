@@ -33,6 +33,9 @@ test('the iOS bundle and public Edge Function include every release page', () =>
   assert.match(publicFunction, /terms/);
   assert.match(publicFunction, /community-guidelines/);
   assert.match(publicFunction, /lorefysupport@gmail\.com/);
+  assert.match(publicFunction, /سياسة الخصوصية/);
+  assert.match(publicFunction, /دعم Lorefy/);
+  assert.doesNotMatch(publicFunction, /ط§|ظ…|âœ¦|â†/);
 });
 
 test('App Store review documentation covers privacy, moderation, and source rights', () => {

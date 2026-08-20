@@ -13,9 +13,18 @@ test('static server rejects prefix-confusion and traversal paths', () => {
   assert.equal(safeStaticPath('/package.json'), null);
   assert.equal(safeStaticPath('/supabase/functions/delete-account/index.ts'), null);
   assert.equal(safeStaticPath('/tools/lorefy-api-server.js'), null);
+  assert.equal(safeStaticPath('/SUPABASE/functions/delete-account/index.ts'), null);
+  assert.equal(safeStaticPath('/PACKAGE.JSON'), null);
   assert.equal(isAllowedMediaHost('upload.wikimedia.org'), true);
   assert.equal(isAllowedMediaHost('static.wikia.nocookie.net'), true);
   assert.equal(isAllowedMediaHost('evil.example'), false);
+});
+
+test('CSV export neutralizes spreadsheet formulas from catalog fields', () => {
+  const tools = fs.readFileSync(path.join(__dirname, '..', 'modules', 'lorefy-product-tools.js'), 'utf8');
+  assert.match(tools, /formulaPrefix/);
+  assert.ok(tools.includes('/^\\s*[=+@-]/'));
+  assert.ok(tools.includes('text = "\'" + text'));
 });
 
 test('api proxy bounds JSON traffic and cannot serve SVG as same-origin media', () => {
@@ -34,6 +43,18 @@ test('api proxy bounds JSON traffic and cannot serve SVG as same-origin media', 
   assert.match(server, /https:\/\/api\.mangadex\.org\/cover/);
   assert.match(server, /MAX_ACTIVE_API_REQUESTS\s*=\s*24/);
   assert.match(server, /LOREFY_ALLOW_PUBLIC_HOST/);
+  assert.match(server, /isAllowedRequestOrigin/);
+  assert.match(server, /request origin is not allowed/);
+});
+
+test('local proxy accepts only Lorefy local browser origins', () => {
+  const { isAllowedRequestOrigin } = require('../tools/lorefy-api-server.js');
+  assert.equal(isAllowedRequestOrigin(undefined), true);
+  assert.equal(isAllowedRequestOrigin('http://127.0.0.1:8793'), true);
+  assert.equal(isAllowedRequestOrigin('http://localhost:8793'), true);
+  assert.equal(isAllowedRequestOrigin('capacitor://localhost'), true);
+  assert.equal(isAllowedRequestOrigin('https://evil.example'), false);
+  assert.equal(isAllowedRequestOrigin('null'), false);
 });
 
 test('native Supabase sessions use Keychain storage', () => {
@@ -127,7 +148,7 @@ test('catalog updater rejects prototype-polluting update keys before state chang
 
 test('cloud state sync rejects stale whole-document writes', () => {
   const backend = fs.readFileSync(path.join(__dirname, '..', 'backend', 'lorefy-backend.js'), 'utf8');
-  const migration = fs.readFileSync(path.join(__dirname, '..', 'supabase', 'migrations', '20260813_user_state_concurrency.sql'), 'utf8');
+  const migration = fs.readFileSync(path.join(__dirname, '..', 'supabase', 'migrations', '20260813010252_user_state_concurrency.sql'), 'utf8');
 
   assert.match(backend, /select\("data,version"\)/);
   assert.match(backend, /rpc\("sync_user_state"/);

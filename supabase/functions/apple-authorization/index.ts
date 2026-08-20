@@ -1,5 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { appleConfiguration, createAppleClientSecret } from "../_shared/apple.ts";
+import { appleConfiguration, createAppleClientSecret, verifyAppleIdentityToken } from "../_shared/apple.ts";
 
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), {
   status,
@@ -40,6 +40,10 @@ Deno.serve(async (request) => {
 
   const linkedAppleIdentity = (user.identities || []).find((identity) => identity.provider === "apple");
   if (!linkedAppleIdentity) return json({ error: "apple_identity_required" }, 409);
+  const linkedAppleSubject = linkedAppleIdentity.identity_data?.sub;
+  if (typeof linkedAppleSubject !== "string" || !linkedAppleSubject) {
+    return json({ error: "apple_identity_invalid" }, 409);
+  }
 
   try {
     const clientSecret = await createAppleClientSecret(apple);
@@ -54,10 +58,12 @@ Deno.serve(async (request) => {
       })
     });
     const tokens = await tokenResponse.json();
-    if (!tokenResponse.ok || typeof tokens.refresh_token !== "string" || !tokens.refresh_token) {
+    if (!tokenResponse.ok || typeof tokens.refresh_token !== "string" || !tokens.refresh_token || typeof tokens.id_token !== "string") {
       console.error("apple token exchange", tokenResponse.status, tokens.error || "missing_refresh_token");
       return json({ error: "apple_token_exchange_failed" }, 502);
     }
+    const appleSubject = await verifyAppleIdentityToken(tokens.id_token, apple.clientId);
+    if (appleSubject !== linkedAppleSubject) return json({ error: "apple_identity_mismatch" }, 409);
 
     const admin = createClient(supabaseUrl, serviceRoleKey, {
       auth: { persistSession: false, autoRefreshToken: false }
@@ -65,7 +71,7 @@ Deno.serve(async (request) => {
     const stored = await admin.rpc("store_apple_authorization", {
       target_user_id: user.id,
       refresh_token: tokens.refresh_token,
-      apple_subject: linkedAppleIdentity.id
+      apple_subject: appleSubject
     });
     if (stored.error) throw stored.error;
     return json({ registered: true });

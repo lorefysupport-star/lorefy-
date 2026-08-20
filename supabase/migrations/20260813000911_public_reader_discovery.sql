@@ -1,5 +1,5 @@
 -- Public reader discovery with a deliberately narrow response shape.
--- Apply after 20260722_account_foundation.sql.
+-- Apply after 20260722000000_account_foundation.sql.
 
 create table if not exists public.profile_follows (
   follower_id uuid not null references auth.users(id) on delete cascade,

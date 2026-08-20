@@ -12,12 +12,34 @@ const json = (body: unknown, status = 200) => new Response(JSON.stringify(body),
 });
 
 type StorageEntry = { name: string; id?: string | null; metadata?: unknown };
+const MAX_AUTH_AGE_SECONDS = 10 * 60;
+const MAX_STORAGE_FILES = 5000;
+const MAX_STORAGE_FOLDERS = 1000;
+const MAX_STORAGE_DEPTH = 8;
+const UPSTREAM_TIMEOUT_MS = 10_000;
+
+function jwtPayload(authorization: string) {
+  try {
+    const token = authorization.replace(/^Bearer\s+/i, "");
+    const part = token.split(".")[1];
+    if (!part) return null;
+    const normalized = part.replace(/-/g, "+").replace(/_/g, "/");
+    return JSON.parse(atob(normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "=")));
+  } catch {
+    return null;
+  }
+}
 
 async function listAllFiles(bucket: any, prefix: string) {
   const files: string[] = [];
   const pending = [prefix];
+  let folders = 0;
   while (pending.length) {
     const folder = pending.pop()!;
+    folders += 1;
+    if (folders > MAX_STORAGE_FOLDERS) throw new Error("storage_folder_limit_exceeded");
+    const depth = folder.split("/").filter(Boolean).length - prefix.split("/").filter(Boolean).length;
+    if (depth > MAX_STORAGE_DEPTH) throw new Error("storage_depth_limit_exceeded");
     let offset = 0;
     for (;;) {
       const { data, error } = await bucket.list(folder, { limit: 1000, offset, sortBy: { column: "name", order: "asc" } });
@@ -25,8 +47,12 @@ async function listAllFiles(bucket: any, prefix: string) {
       const entries = (data || []) as StorageEntry[];
       for (const entry of entries) {
         const fullPath = folder ? `${folder}/${entry.name}` : entry.name;
-        if (entry.id) files.push(fullPath);
-        else pending.push(fullPath);
+        if (entry.id) {
+          files.push(fullPath);
+          if (files.length > MAX_STORAGE_FILES) throw new Error("storage_file_limit_exceeded");
+        } else {
+          pending.push(fullPath);
+        }
       }
       if (entries.length < 1000) break;
       offset += entries.length;
@@ -62,6 +88,12 @@ Deno.serve(async (request) => {
   const { data: userData, error: userError } = await caller.auth.getUser();
   const user = userData.user;
   if (userError || !user) return json({ error: "unauthorized" }, 401);
+  const claims = jwtPayload(authorization);
+  const authenticatedAt = Number(claims && claims.iat);
+  const now = Math.floor(Date.now() / 1000);
+  if (!Number.isFinite(authenticatedAt) || authenticatedAt > now + 60 || now - authenticatedAt > MAX_AUTH_AGE_SECONDS) {
+    return json({ error: "recent_authentication_required" }, 401);
+  }
 
   const admin = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false }
@@ -83,7 +115,8 @@ Deno.serve(async (request) => {
           client_secret: clientSecret,
           token: refreshToken,
           token_type_hint: "refresh_token"
-        })
+        }),
+        signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS)
       });
       if (!revokeResponse.ok) throw new Error(`apple_revocation_failed:${revokeResponse.status}`);
     }

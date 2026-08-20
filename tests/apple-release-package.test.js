@@ -52,9 +52,9 @@ test("builds TestFlight from the complete Capacitor app instead of the Expo demo
   assert.equal(app.extra.lorefy.premiumUnlocked, true);
   assert.equal(app.extra.lorefy.appleSignInEnabled, true);
   assert.equal(app.ios.bundleIdentifier, "com.lorefy.app");
-  assert.equal(app.ios.buildNumber, "5");
-  assert.doesNotMatch(read("ios/App/App.xcodeproj/project.pbxproj"), /CURRENT_PROJECT_VERSION = 4;/);
-  assert.match(read("ios/App/App.xcodeproj/project.pbxproj"), /CURRENT_PROJECT_VERSION = 5;/);
+  assert.equal(app.ios.buildNumber, "6");
+  assert.doesNotMatch(read("ios/App/App.xcodeproj/project.pbxproj"), /CURRENT_PROJECT_VERSION = 5;/);
+  assert.match(read("ios/App/App.xcodeproj/project.pbxproj"), /CURRENT_PROJECT_VERSION = 6;/);
   assert.equal(eas.cli.appVersionSource, "local");
   assert.equal(eas.build.production.ios.image, "latest");
   assert.equal(eas.build.production.ios.scheme, "App");

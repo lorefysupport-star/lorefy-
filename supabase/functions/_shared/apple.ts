@@ -1,4 +1,4 @@
-import { SignJWT, importPKCS8 } from "npm:jose@5.10.0";
+import { SignJWT, createRemoteJWKSet, importPKCS8, jwtVerify } from "npm:jose@5.10.0";
 
 export type AppleConfiguration = {
   clientId: string;
@@ -27,4 +27,16 @@ export async function createAppleClientSecret(config: AppleConfiguration) {
     .setIssuedAt(now)
     .setExpirationTime(now + 300)
     .sign(key);
+}
+
+const appleJwks = createRemoteJWKSet(new URL("https://appleid.apple.com/auth/keys"));
+
+export async function verifyAppleIdentityToken(identityToken: string, clientId: string) {
+  const { payload } = await jwtVerify(identityToken, appleJwks, {
+    issuer: "https://appleid.apple.com",
+    audience: clientId,
+    algorithms: ["RS256"]
+  });
+  if (typeof payload.sub !== "string" || !payload.sub) throw new Error("apple_subject_missing");
+  return payload.sub;
 }

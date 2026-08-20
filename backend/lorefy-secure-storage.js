@@ -26,18 +26,25 @@
     return plugin.setKeyPrefix("lorefy-auth-");
   }).then(async function () {
     var legacyKeys = [];
+    for (var index = 0; index < localStorage.length; index += 1) {
+      var key = localStorage.key(index);
+      if (key && /^sb-[a-z0-9]+-auth-token$/i.test(key)) legacyKeys.push(key);
+    }
     try {
-      for (var index = 0; index < localStorage.length; index += 1) {
-        var key = localStorage.key(index);
-        if (key && /^sb-[a-z0-9]+-auth-token$/i.test(key)) legacyKeys.push(key);
-      }
       for (var item = 0; item < legacyKeys.length; item += 1) {
         var value = localStorage.getItem(legacyKeys[item]);
-        if (value) await plugin.setItem(legacyKeys[item], value);
+        if (value) {
+          await plugin.setItem(legacyKeys[item], value);
+          var stored = await plugin.getItem(legacyKeys[item]);
+          if (stored !== value) throw new Error("Keychain migration verification failed.");
+        }
         localStorage.removeItem(legacyKeys[item]);
       }
     } catch (error) {
-      console.warn("[Lorefy] Session migration to Keychain failed:", error);
+      legacyKeys.forEach(function (legacyKey) { localStorage.removeItem(legacyKey); });
+      global.LorefySecureAuthStorageReady = false;
+      console.error("[Lorefy] Session migration to Keychain failed closed:", error);
+      throw new Error("Keychain migration failed. Sign in again.");
     }
   });
 

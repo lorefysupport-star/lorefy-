@@ -84,7 +84,7 @@ test('entitlements are exposed only through a live server backend', async () => 
 });
 
 test('the entitlement migration is server-authoritative and RLS protected', () => {
-  const migration = fs.readFileSync(path.join(root, 'supabase/migrations/20260722_entitlements.sql'), 'utf8');
+  const migration = fs.readFileSync(path.join(root, 'supabase/migrations/20260722000100_entitlements.sql'), 'utf8');
   assert.match(migration, /create table if not exists public\.entitlements/i);
   assert.match(migration, /enable row level security/i);
   assert.match(migration, /auth\.uid\(\)\s*=\s*user_id/i);
@@ -102,7 +102,7 @@ test('index loads the billing facade before the application bundle', () => {
 });
 
 test('account foundation migration protects profile, state, and media ownership', () => {
-  const migration = fs.readFileSync(path.join(root, 'supabase/migrations/20260722_account_foundation.sql'), 'utf8');
+  const migration = fs.readFileSync(path.join(root, 'supabase/migrations/20260722000000_account_foundation.sql'), 'utf8');
   assert.match(migration, /create table if not exists public\.profiles/i);
   assert.match(migration, /create table if not exists public\.user_state/i);
   assert.match(migration, /insert into storage\.buckets/i);

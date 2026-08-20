@@ -33,7 +33,7 @@ not a payment integration and must not be treated as one.
 - Supabase project `qsroxmltioxqozmykens` is currently `INACTIVE`; accounts,
   server entitlements, deletion, and real checkout cannot be verified until it
   is restored and configured. The account foundation migration is prepared at
-  `supabase/migrations/20260722_account_foundation.sql` and is not applied.
+  `supabase/migrations/20260722000000_account_foundation.sql` and is not applied.
 - Premium is closed by default. `preview=premium` is a localhost-only preview;
   live mode clears the local Premium flag and opens it only after an authenticated
   server entitlement with `active`, `trialing`, or `grace` status and a valid
@@ -68,7 +68,7 @@ not a payment integration and must not be treated as one.
   Supabase client is initialized; never ship the local demo flag as an account
   fallback.
 - Deploy and verify the account-deletion Edge Function referenced by the app.
-- Apply and review `supabase/migrations/20260722_account_foundation.sql`; it
+- Apply and review `supabase/migrations/20260722000000_account_foundation.sql`; it
   creates owner-scoped `profiles`, `user_state`, and private `profile-media`
   storage policies with no anonymous table access.
 - Add monitoring for sign-in, callback, session refresh, and deletion failures.
@@ -81,7 +81,7 @@ not a payment integration and must not be treated as one.
   checkout flag, allowlisted product, and server function.
 - Create a server-authoritative entitlements table with `user_id`, provider,
   product, status, and expiration fields protected by RLS.
-- Apply `supabase/migrations/20260722_entitlements.sql`; only a verified
+- Apply `supabase/migrations/20260722000100_entitlements.sql`; only a verified
   webhook or StoreKit server notification may write entitlement rows.
 - Keep the catalog updater limits enabled: static assets reject traversal and
   update deltas are bounded before local persistence or catalog organization.

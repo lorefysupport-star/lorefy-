@@ -1,6 +1,6 @@
 # Lorefy Release Gate
 
-Last verified: 13 August 2026
+Last verified: 14 August 2026
 
 The code, database policies, Edge Functions, legal pages, and iOS bundle are prepared. Do not upload a new TestFlight build until every unchecked item below is complete.
 
@@ -34,7 +34,7 @@ The deployed `apple-authorization` function exchanges the one-time Apple authori
 
 ## Verified in this release candidate
 
-- 145 automated tests pass.
+- 148 automated tests pass.
 - The bundled catalog plus the lazy API baseline remains above 22,000 canonical works.
 - Google OAuth reaches Google; Apple currently returns HTTP 400 because its Supabase provider is disabled.
 - Profile blocking, server-owned review publishing, and private review-media path policies passed a live transactional smoke test with rollback.
@@ -45,7 +45,12 @@ The deployed `apple-authorization` function exchanges the one-time Apple authori
 - Native authentication now fails closed if the Keychain plugin is unavailable; it cannot silently fall back to web storage on iOS.
 - Community mutations use real Supabase UUIDs, inherit blocking/privacy rules, and serialize per-user quotas.
 - Account deletion blocks racing uploads before private media cleanup and auth deletion.
-- Supabase Edge Functions `apple-authorization` v3 and `delete-account` v8 are active with JWT verification.
+- Supabase Edge Functions `apple-authorization` v4 and `delete-account` v10 are active with JWT verification.
+- Review publishing now enforces at most 10 unique images and verifies every path exists in the private `review-media` bucket; migration `20260813214432_review_media_integrity` is active.
+- Review reactions are serialized and rate-limited per signed-in reader; migration `20260813221522_reaction_rate_limit` is active.
+- Apple authorization codes are accepted only when the verified Apple identity-token subject matches the Apple identity linked to the signed-in Supabase user.
+- Account deletion now requires a recently authenticated session before private media and the auth identity can be removed.
+- Account deletion bounds private-media traversal and Apple revocation requests, while the local catalog proxy rejects untrusted browser origins.
 - Supabase Auth is currently Google `enabled`, Apple `disabled`, Email `enabled`; Apple and Email remain release blockers.
 - A live rollback-only smoke test verified review publishing, comments, reactions, reports, and valid private image paths; invalid extensions and cross-user paths were denied.
 

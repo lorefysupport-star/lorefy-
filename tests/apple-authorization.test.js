@@ -20,6 +20,9 @@ test('native Apple sign-in registers the one-time authorization code server-side
   assert.match(fn, /authorization_code/);
   assert.match(fn, /store_apple_authorization/);
   assert.match(fn, /target_user_id:\s*user\.id/);
+  assert.match(fn, /verifyAppleIdentityToken/);
+  assert.match(fn, /tokens\.id_token/);
+  assert.match(fn, /appleSubject\s*!==\s*linkedAppleSubject/);
   assert.match(fn, /const admin = createClient\(supabaseUrl, serviceRoleKey/);
   assert.doesNotMatch(fn, /const admin = createClient[\s\S]{0,160}global:\s*\{\s*headers:\s*\{\s*Authorization:\s*authorization/);
   assert.match(bridge, /await BE\.signOut\(\)/);
@@ -27,8 +30,8 @@ test('native Apple sign-in registers the one-time authorization code server-side
 
 test('account deletion revokes the Apple grant before deleting the auth user', () => {
   const fn = read('supabase', 'functions', 'delete-account', 'index.ts');
-  const migration = read('supabase', 'migrations', '20260813_apple_authorization_revocation.sql');
-  const cleanupMigration = read('supabase', 'migrations', '20260813_apple_authorization_cleanup.sql');
+  const migration = read('supabase', 'migrations', '20260813112236_apple_authorization_revocation_v2.sql');
+  const cleanupMigration = read('supabase', 'migrations', '20260813113014_apple_authorization_cleanup.sql');
 
   assert.match(fn, /appleid\.apple\.com\/auth\/revoke/);
   assert.match(fn, /token_type_hint/);

@@ -8,12 +8,14 @@ const read = (...parts) => fs.readFileSync(path.join(root, ...parts), 'utf8');
 
 test('community publishing is server-owned and bounded', () => {
   const backend = read('backend', 'lorefy-backend.js');
-  const migration = read('supabase', 'migrations', '20260813_community_release_hardening.sql');
-  const storageMigration = read('supabase', 'migrations', '20260813_storage_release_hardening.sql');
-  const regexMigration = read('supabase', 'migrations', '20260813_storage_regex_fix.sql');
-  const moderationMigration = read('supabase', 'migrations', '20260813_community_moderation.sql');
-  const policyHelpers = read('supabase', 'migrations', '20260813_internal_policy_helpers.sql');
-  const remediation = read('supabase', 'migrations', '20260813_release_security_remediation.sql');
+  const migration = read('supabase', 'migrations', '20260813001712_community_release_hardening.sql');
+  const storageMigration = read('supabase', 'migrations', '20260813004416_storage_release_hardening.sql');
+  const regexMigration = read('supabase', 'migrations', '20260813004542_storage_regex_fix.sql');
+  const moderationMigration = read('supabase', 'migrations', '20260813113811_community_moderation.sql');
+  const policyHelpers = read('supabase', 'migrations', '20260813120306_internal_policy_helpers.sql');
+  const remediation = read('supabase', 'migrations', '20260813125105_release_security_remediation.sql');
+  const mediaIntegrity = read('supabase', 'migrations', '20260813214432_review_media_integrity.sql');
+  const reactionRateLimit = read('supabase', 'migrations', '20260813221522_reaction_rate_limit.sql');
   const productTools = read('modules', 'lorefy-product-tools.js');
   const productCore = read('modules', 'lorefy-product-core.js');
   const app = read('uploads', 'files', 'lorefy-app.js');
@@ -56,6 +58,12 @@ test('community publishing is server-owned and bounded', () => {
   assert.match(remediation, /private\.lock_actor_action\('review'\)/i);
   assert.match(remediation, /private\.lock_actor_action\('report'\)/i);
   assert.match(remediation, /private\.lock_actor_action\('comment'\)/i);
+  assert.match(reactionRateLimit, /private\.lock_actor_action\('reaction'\)/i);
+  assert.match(reactionRateLimit, /reaction_rate_limit/i);
+  assert.match(mediaIntegrity, /cardinality\(safe_paths\) > 10/i);
+  assert.match(mediaIntegrity, /count\(distinct p\)/i);
+  assert.match(mediaIntegrity, /bucket_id = 'review-media'/i);
+  assert.match(mediaIntegrity, /review_media_not_found/i);
   assert.match(remediation, /private\.account_deletions/i);
   assert.match(remediation, /begin_account_deletion/i);
   assert.match(backend, /setProfilePrivacy:\s*async/);
@@ -93,4 +101,9 @@ test('account deletion handles CORS and recursively empties every private media 
   assert.match(fn, /\["profile-media", "review-media", "custom-covers"\]/);
   assert.match(fn, /storage_cleanup_incomplete/);
   assert.match(fn, /rpc\("begin_account_deletion"/);
+  assert.match(fn, /MAX_AUTH_AGE_SECONDS/);
+  assert.match(fn, /recent_authentication_required/);
+  assert.match(fn, /MAX_STORAGE_FILES/);
+  assert.match(fn, /MAX_STORAGE_DEPTH/);
+  assert.match(fn, /AbortSignal\.timeout\(UPSTREAM_TIMEOUT_MS\)/);
 });

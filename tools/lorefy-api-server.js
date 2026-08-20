@@ -67,6 +67,18 @@ function isAllowedMediaHost(hostname) {
     hostname.endsWith(".wikia.nocookie.net") || hostname.endsWith(".wikimedia.org");
 }
 
+function isAllowedRequestOrigin(origin) {
+  if (!origin) return true;
+  try {
+    const value = new URL(origin);
+    if (value.protocol === "capacitor:" && value.hostname === "localhost") return true;
+    return (value.protocol === "http:" || value.protocol === "https:") &&
+      (value.hostname === "localhost" || value.hostname === "127.0.0.1" || value.hostname === "::1");
+  } catch {
+    return false;
+  }
+}
+
 function send(res, status, body, headers = {}) {
   res.writeHead(status, {
     "Access-Control-Allow-Origin": "*",
@@ -93,8 +105,9 @@ function safeStaticPath(urlPath) {
     return relative === "" ? full : null;
   }
   const normalized = relative.split(path.sep).join("/");
-  const segments = normalized.split("/");
-  if (segments.some((segment) => DENIED_STATIC_SEGMENTS.has(segment)) || DENIED_STATIC_FILES.has(normalized)) return null;
+  const normalizedLower = normalized.toLowerCase();
+  const segments = normalizedLower.split("/");
+  if (segments.some((segment) => DENIED_STATIC_SEGMENTS.has(segment)) || DENIED_STATIC_FILES.has(normalizedLower)) return null;
   return full;
 }
 
@@ -346,6 +359,10 @@ function serveStatic(req, res, url) {
 const server = http.createServer((req, res) => {
   const url = new URL(req.url || "/", `http://${req.headers.host || `${host}:${port}`}`);
   if (url.pathname.startsWith("/api/catalog/") || url.pathname === "/api/media") {
+    if (!isAllowedRequestOrigin(req.headers.origin)) {
+      send(res, 403, JSON.stringify({ error: "request origin is not allowed" }), { "Content-Type": "application/json; charset=utf-8" });
+      return;
+    }
     if (activeApiRequests >= MAX_ACTIVE_API_REQUESTS) {
       send(res, 429, JSON.stringify({ error: "server is busy" }), { "Content-Type": "application/json; charset=utf-8", "Retry-After": "1" });
       return;
@@ -377,4 +394,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { safeStaticPath, isAllowedMediaHost, server };
+module.exports = { safeStaticPath, isAllowedMediaHost, isAllowedRequestOrigin, server };

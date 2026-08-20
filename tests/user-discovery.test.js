@@ -59,7 +59,7 @@ test("a failed live follow request leaves the local follow state unchanged", asy
 
 test("ships a public profile RPC and mounts reader results inside the existing work search", () => {
   const root = path.resolve(__dirname, "..");
-  const migration = fs.readFileSync(path.join(root, "supabase/migrations/20260810_public_reader_discovery.sql"), "utf8");
+  const migration = fs.readFileSync(path.join(root, "supabase/migrations/20260813000911_public_reader_discovery.sql"), "utf8");
   const backend = fs.readFileSync(path.join(root, "backend/lorefy-backend.js"), "utf8");
   const index = fs.readFileSync(path.join(root, "index.html"), "utf8");
   const discovery = fs.readFileSync(path.join(root, "modules/lorefy-user-discovery.js"), "utf8");
