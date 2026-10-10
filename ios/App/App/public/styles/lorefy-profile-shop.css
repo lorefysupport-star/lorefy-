@@ -126,3 +126,104 @@ html[data-lorefy-motion='reduced'] .lf-shop-effect span { animation: none; }
   .lf-shop-detail { padding: 16px 12px; }
   .lf-shop-profile-banner { height: 180px; }
 }
+
+/* The Atelier storefront. Profile decoration geometry above is shared with
+   owner and public profiles; all retail layout stays within the shop dialog. */
+.lf-shop-dialog {
+  --atelier-surface: color-mix(in srgb,var(--ui-surface) 78%,var(--ui-bg));
+  background: var(--ui-bg);
+}
+.lf-shop-header { padding-inline: 20px; border: 0; padding-bottom: 16px; }
+.lf-shop-brand { text-align: center; }
+.lf-shop-brand-mark { display: flex; justify-content: center; align-items: center; gap: 6px; font-size: 8px; font-weight: 700; letter-spacing: 2.3px; color: var(--ui-action); direction: ltr; }
+.lf-shop-header h1 { font-size: 18px; font-weight: 800; margin-top: 3px; }
+.lf-app .lf-shop-dialog .lf-shop-icon-button { border-radius: 14px; background: var(--atelier-surface); border-color: var(--ui-line); }
+.lf-shop-tabs { margin: 0 20px 8px; padding: 5px; border: 1px solid var(--ui-line); border-radius: 16px; background: var(--atelier-surface); }
+.lf-app .lf-shop-dialog .lf-shop-tabs button { min-height: 44px; border: 0; border-radius: 11px; font-size: 12px; }
+.lf-app .lf-shop-dialog .lf-shop-tabs button[aria-pressed='true'] { background: var(--ui-bg); box-shadow: 0 2px 8px rgb(0 0 0 / .06); color: var(--ui-ink); }
+.lf-shop-tabs button span { background: var(--ui-fill); border-radius: 6px; padding: 2px 5px; }
+.lf-shop-editorial { padding: 14px 20px 0; }
+.lf-shop-eyebrow { display: block; font-size: 10px; font-weight: 700; color: var(--ui-action); }
+.lf-shop-intro h2 { font-size: clamp(23px,6vw,29px); line-height: 1.5; margin-top: 7px; font-weight: 800; }
+.lf-shop-intro p { margin-top: 5px; font-size: 12px; color: var(--ui-muted); line-height: 1.8; }
+.lf-app .lf-shop-dialog .lf-shop-featured {
+  position: relative; display: block; isolation: isolate; overflow: hidden;
+  width: 100%; min-height: 188px; padding: 56px 20px 17px; margin-top: 16px;
+  border: 1px solid #45636b; border-radius: 24px; background: #102e39; color: #fff5df;
+  text-align: start; box-shadow: 0 14px 30px rgb(12 32 38 / .15);
+}
+.lf-shop-featured-landscape { position: absolute; inset: 0; opacity: .52; z-index: -2; background-size: auto 300%; background-position: 65% 0; }
+.lf-shop-featured::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg,rgb(6 24 35 / .25),rgb(6 24 35 / .93)); }
+[dir='ltr'] .lf-shop-featured::after { background: linear-gradient(270deg,rgb(6 24 35 / .25),rgb(6 24 35 / .93)); }
+.lf-shop-featured-edition { position: absolute; top: 18px; inset-inline-start: 18px; display: flex; align-items: center; gap: 6px; padding: 6px 9px; border: 1px solid rgb(233 213 168 / .35); background: rgb(11 35 42 / .5); border-radius: 8px; font-size: 9px; color: #ead4aa; }
+.lf-shop-featured-portrait { position: absolute; inset-inline-end: 14px; top: 46px; }
+.lf-shop-featured-portrait::before { content: ''; position: absolute; inset: -14px; border-radius: 50%; border: 1px solid rgb(227 214 168 / .24); box-shadow: 0 0 0 13px rgb(206 222 212 / .04); }
+.lf-shop-featured-portrait .lf-shop-avatar { width: clamp(108px,29vw,136px); height: clamp(108px,29vw,136px); }
+.lf-shop-featured-copy { position: relative; max-width: 52%; padding: 0; text-align: start; }
+.lf-shop-featured-copy > span:first-child { font-size: 8px; color: #d9c6a2; letter-spacing: .8px; }
+.lf-shop-featured-copy h3 { font-size: 23px; margin-top: 7px; line-height: 1.5; font-weight: 800; }
+[dir='ltr'] .lf-shop-featured-copy h3 { font-size: clamp(16px,4.8vw,22px); overflow-wrap: normal; }
+.lf-shop-featured-copy p { margin-top: 4px; font-size: 10px; color: #c5d6d7; line-height: 1.7; }
+.lf-shop-featured-copy > .lf-shop-featured-link { display: flex; align-items: center; gap: 8px; margin-top: 17px; font-size: 11px; font-weight: 700; color: #f1d3a0; }
+.lf-shop-featured-number { position: absolute; bottom: 8px; inset-inline-end: 19px; font-family: Georgia,serif; font-size: 43px; color: rgb(235 216 175 / .27); line-height: 1; }
+.lf-shop-section-head { padding: 20px 20px 14px; align-items: center; }
+.lf-shop-section-head h2 { margin-top: 4px; font-size: 21px; font-weight: 800; }
+.lf-shop-total { padding: 5px 8px; border: 1px solid var(--ui-line); border-radius: 8px; white-space: nowrap; }
+.lf-shop-moods { display: flex; gap: 7px; padding: 0 20px 18px; overflow-x: auto; scrollbar-width: none; }
+.lf-app .lf-shop-dialog .lf-shop-moods button { flex: 1 0 auto; min-height: 44px; padding: 8px 12px; background: none; border: 1px solid var(--ui-line); border-radius: 11px; color: var(--ui-muted); font-size: 11px; }
+.lf-app .lf-shop-dialog .lf-shop-moods button[aria-pressed='true'] { color: var(--ui-bg); background: var(--ui-ink); border-color: var(--ui-ink); }
+.lf-shop-products { gap: 14px; padding-bottom: 8px; }
+.lf-shop-product { border-radius: 20px; background: var(--atelier-surface); border: 1px solid var(--ui-line); overflow: hidden; }
+.lf-app .lf-shop-dialog .lf-shop-product-preview {
+  aspect-ratio: 1 / 1.07; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%,color-mix(in srgb,var(--shop-accent) 26%,#253139),#18252c 74%);
+}
+.lf-shop-product-preview::after { content: ''; position: absolute; inset: 0; border: 7px solid rgb(255 255 255 / .025); border-radius: inherit; pointer-events: none; }
+.lf-shop-product-preview > .lf-shop-avatar { width: 77%; height: auto; aspect-ratio: 1; margin-top: 10px; transition: transform .25s ease; }
+.lf-shop-product-orbit { position: absolute; width: 68%; aspect-ratio: 1; border: 1px solid color-mix(in srgb,var(--shop-accent) 28%,transparent); border-radius: 50%; box-shadow: 0 0 0 12px rgb(255 255 255 / .025),0 0 0 24px rgb(255 255 255 / .02); }
+.lf-shop-piece-count { bottom: 10px; inset-inline-start: 10px; background: rgb(13 28 35 / .66); border: 1px solid rgb(255 255 255 / .1); color: #dce8e7; border-radius: 7px; padding: 4px 7px; font-size: 9px; }
+.lf-app .lf-shop-dialog .lf-shop-wishlist { top: 7px; inset-inline-end: 7px; width: 44px; height: 44px; color: #f1f5ef; background: rgb(18 34 42 / .6); border: 1px solid rgb(255 255 255 / .15); border-radius: 13px; z-index: 4; }
+.lf-shop-dialog .lf-shop-wishlist[aria-pressed='true'] svg { color: #f4cbb1; }
+.lf-shop-product-copy { padding: 13px 12px 11px; }
+.lf-shop-product-label { display: block; font-size: 8px; color: var(--ui-muted); line-height: 1.8; }
+.lf-shop-product-copy h3 { font-size: 14px; margin-top: 3px; line-height: 1.65; font-weight: 800; }
+.lf-shop-product-bottom { display: flex; justify-content: space-between; align-items: center; gap: 4px; margin-top: 10px; }
+.lf-shop-price { font-size: 12px; font-weight: 700; color: var(--ui-action); }
+.lf-app .lf-shop-dialog .lf-shop-view { width: 44px; height: 44px; min-height: 44px; padding: 0; border: 1px solid var(--ui-line); border-radius: 13px; justify-content: center; background: var(--ui-bg); color: var(--ui-ink); }
+.lf-shop-catalog-note { display: flex; justify-content: center; align-items: center; gap: 7px; padding: 25px 20px 35px; font-size: 10px; color: var(--ui-muted); }
+.lf-shop-preview-stage { padding: 14px 14px 0; background: radial-gradient(ellipse at top,color-mix(in srgb,var(--shop-accent) 18%,transparent),transparent 70%); }
+.lf-shop-preview-caption { display: flex; justify-content: center; align-items: center; gap: 6px; color: var(--ui-muted); font-size: 10px; padding: 7px 0 12px; }
+.lf-shop-preview-stage .lf-shop-profile { margin: 0; border: 1px solid var(--ui-line); border-radius: 22px; overflow: hidden; padding-bottom: 30px; background: var(--atelier-surface); }
+.lf-shop-preview-stage .lf-shop-profile-banner { height: 132px; }
+.lf-shop-preview-stage .lf-shop-profile-identity { margin-top: -35px; }
+.lf-shop-preview-stage .lf-shop-avatar { width: 126px; height: 126px; }
+.lf-shop-preview-stage .lf-shop-profile-identity h2 { font-size: 19px; margin-top: 12px; }
+.lf-shop-preview-stage .lf-decoration-page-border.is-preview { border-width: 28px 18px; border-radius: inherit; }
+.lf-shop-detail { border-top: 0; padding: 24px 20px; }
+.lf-shop-detail-title h2 { font-size: 24px; }
+.lf-shop-parts { margin-top: 20px; gap: 7px; }
+.lf-app .lf-shop-dialog .lf-shop-parts button { border-radius: 13px; min-height: 75px; font-size: 10px; background: var(--atelier-surface); }
+.lf-app .lf-shop-dialog .lf-shop-parts button[aria-pressed='true'] { background: var(--ui-action); color: var(--ui-bg); border-color: var(--ui-action); }
+.lf-shop-includes { padding: 14px; border: 1px solid var(--ui-line); border-radius: 13px; background: var(--atelier-surface); }
+.lf-shop-replay { margin-top: 12px; }
+.lf-shop-footer { background: var(--ui-bg); padding: 13px 20px calc(13px + var(--nc-bottom,0px)); box-shadow: 0 -8px 24px rgb(0 0 0 / .025); }
+.lf-shop-order-summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 12px; }
+.lf-shop-order-summary strong { display: block; font-size: 12px; }
+.lf-shop-order-summary small { display: block; color: var(--ui-muted); font-size: 10px; margin-top: 3px; }
+.lf-shop-order-summary > span { font-size: 17px; font-weight: 800; }
+.lf-app .lf-shop-dialog .lf-shop-footer .lf-shop-apply { min-height: 48px; border-radius: 14px; font-weight: 700; }
+.lf-shop-empty { padding-block: 45px; }
+@media (hover:hover) { .lf-shop-product-preview:hover > .lf-shop-avatar { transform: translateY(-4px); } }
+@media (max-width:350px) {
+  .lf-shop-header { padding-inline: 14px; }
+  .lf-shop-tabs { margin-inline: 14px; }
+  .lf-shop-editorial { padding-inline: 14px; }
+  .lf-shop-section-head { padding-inline: 14px; }
+  .lf-shop-moods { padding-inline: 14px; gap: 5px; }
+  .lf-app .lf-shop-dialog .lf-shop-moods button { padding-inline: 8px; font-size: 10px; }
+  .lf-shop-featured-copy h3 { font-size: 19px; }
+  .lf-shop-products { padding-inline: 14px; gap: 10px; }
+  .lf-shop-product-copy { padding-inline: 10px; }
+  .lf-shop-product-copy h3 { font-size: 13px; }
+}
+@media (prefers-reduced-motion:reduce) { .lf-shop-product-preview > .lf-shop-avatar { transition: none; } }

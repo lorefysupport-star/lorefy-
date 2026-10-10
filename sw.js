@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v425-dahla-identity';
+const CACHE = 'lorefy-v426-profile-atelier';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -92,8 +92,8 @@ const CORE = [
   './modules/lorefy-community.js?v=20261009-public-appearance-v4',
   './modules/lorefy-library-view.js?v=20261007-profile-shelf-heights-v1',
   './modules/lorefy-interface-settings.js?v=20261009-custom-appearance-v1',
-  './modules/lorefy-profile-shop.js?v=20261009-beta-decorations-v1',
-  './styles/lorefy-profile-shop.css?v=20261009-panoramic-identity-v3',
+  './modules/lorefy-profile-shop.js?v=20261010-atelier-v1',
+  './styles/lorefy-profile-shop.css?v=20261010-atelier-v1',
   './modules/lorefy-frame-motion.js?v=20261009-frame-fit-v2',
   './styles/lorefy-frame-motion.css?v=20261009-motion-v1',
   './styles/lorefy-interface-settings.css?v=20261009-custom-appearance-v1',

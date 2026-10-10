@@ -148,23 +148,42 @@
         !compact && profile.bio && h('p', {className:'lf-shop-profile-bio', dir:'auto'}, profile.bio)));
   }
   function Catalog({lang, profile, wishlist, onSelect, onWishlist, onlyWishlist = false}) {
-    const shown = onlyWishlist ? bundles.filter(pack => wishlist.includes(pack.id)) : bundles;
+    const [mood, setMood] = root.React.useState('all');
+    const moods = [['all','كل الأجواء','All moods'],['dream','حالم','Dreamy'],['bloom','طبيعة','Nature'],['mystery','غامض','Mystic']];
+    const moodOf = pack => ['flower','leaf','heart','bubble'].includes(pack.motion.motif) ? 'bloom' : ['ghost','rune'].includes(pack.motion.motif) ? 'mystery' : 'dream';
+    const saved = onlyWishlist ? bundles.filter(pack => wishlist.includes(pack.id)) : bundles;
+    const shown = saved.filter(pack => mood === 'all' || moodOf(pack) === mood);
+    const featured = bundles[0];
     return h('div', {className:'lf-shop-catalog'},
-      !onlyWishlist && h('div', {className:'lf-shop-featured', style:packStyle(bundles[0])},
-        h(ProfilePreview, {pack:bundles[0], profile, compact:true}),
-        h('div', {className:'lf-shop-featured-copy'}, h('span', null, text(lang,'مجموعة لورفاي الأصلية','Lorefy Originals')),
-          h('h2', null, text(lang,'بين السطور والنجوم','Between pages and stars')))),
-      h('header', {className:'lf-shop-section-head'}, h('h2', null, text(lang, onlyWishlist ? 'المفضلة' : 'الحزم', onlyWishlist ? 'Wishlist' : 'Collections')),
-        h('span', null, text(lang,'صورة · بروفايل · تأثير','Avatar · profile · effect'))),
+      !onlyWishlist && h('section', {className:'lf-shop-editorial'},
+        h('div', {className:'lf-shop-intro'}, h('h2',null,text(lang,'لبروفايلك، حكاية أخرى.','Give your profile a new story.')),
+          h('p',null,text(lang,'اختر ما يشبهك. ودع التفاصيل تحكي عنك.','Find your mood. Let the details tell your story.'))),
+        h('button',{type:'button',className:'lf-shop-featured',style:packStyle(featured),onClick:()=>onSelect(featured.id),
+          'aria-label':text(lang,'اكتشف مجموعة ','Discover ') + featured.names[lang]},
+          h(Art,{pack:featured,className:'lf-shop-featured-landscape'}),
+          h('span',{className:'lf-shop-featured-edition'},icon('Moon',13),text(lang,'اختيار الرواق','ATELIER PICK')),
+          h('div',{className:'lf-shop-featured-portrait'},h(Avatar,{profile,pack:featured})),
+          h('div',{className:'lf-shop-featured-copy'},h('span',null,text(lang,'مجموعة لورفاي الأصلية','LOREFY ORIGINALS')),
+            h('h3',null,featured.names[lang]),h('p',null,featured.collection[lang]),
+            h('span',{className:'lf-shop-featured-link'},text(lang,'اكتشف الحزمة','Explore collection'),icon(lang==='en'?'ArrowRight':'ArrowLeft',16))),
+          h('span',{className:'lf-shop-featured-number','aria-hidden':true},'01'))),
+      h('header', {className:'lf-shop-section-head'}, h('div',null,h('span',{className:'lf-shop-eyebrow'},text(lang,'اختر أجواءك','FIND YOUR MOOD')),
+        h('h2', null, text(lang, onlyWishlist ? 'اختياراتك المحفوظة' : 'تشكيلة الرواق', onlyWishlist ? 'Your saved picks' : 'The collection'))),
+        h('span', {className:'lf-shop-total'},new Intl.NumberFormat(lang).format(shown.length), ' ',text(lang,'حزمة','collections'))),
+      h('div',{className:'lf-shop-moods',role:'group','aria-label':text(lang,'أجواء الحزم','Collection moods')},moods.map(([value,ar,en])=>
+        h('button',{key:value,type:'button','aria-pressed':mood===value,onClick:()=>setMood(value)},text(lang,ar,en)))),
       h('div', {className:'lf-shop-products'}, shown.map(pack => h('article', {className:'lf-shop-product', key:pack.id, style:packStyle(pack)},
         h('button', {type:'button', className:'lf-shop-product-preview', 'aria-label':text(lang,'معاينة ','Preview ') + pack.names[lang], onClick:() => onSelect(pack.id)},
-          h(Art, {pack, banner:profile.banner || ''}), h(FrameArt,{pack,kind:'page',className:'lf-decoration-page-border is-product'}),
-          h(Avatar, {profile, pack}), h('span', {className:'lf-shop-piece-count'}, text(lang,'مجانية','Free'))),
+          h('span',{className:'lf-shop-product-orbit','aria-hidden':true}),
+          h(Avatar, {profile, pack}),h('span',{className:'lf-shop-piece-count'},text(lang,'٣ قطع','3 pieces'))),
         h('button', {type:'button', className:'lf-shop-wishlist', 'aria-pressed':wishlist.includes(pack.id),
           'aria-label':text(lang,'حفظ في المفضلة: ','Wishlist: ') + pack.names[lang], title:text(lang,'المفضلة','Wishlist'), onClick:() => onWishlist(pack.id)}, icon('Heart', 18)),
-        h('div', {className:'lf-shop-product-copy'}, h('h3', null, pack.names[lang]), h('p', null, pack.collection[lang]),
-          h('button', {type:'button', className:'lf-shop-view', onClick:() => onSelect(pack.id)}, text(lang,'عرض الحزمة','View bundle'), icon(lang === 'en' ? 'ArrowRight' : 'ArrowLeft', 16)))))),
-      !shown.length && h('div', {className:'lf-shop-empty', role:'status'}, icon('Heart', 28), h('p', null, text(lang,'لم تحفظ أي حزمة بعد','No saved bundles yet'))));
+        h('div', {className:'lf-shop-product-copy'}, h('span',{className:'lf-shop-product-label'},text(lang,pack.overlay?'مجموعة خاصة':'لورفاي الأصلية',pack.overlay?'SIGNATURE COLLECTION':'LOREFY ORIGINALS')),
+          h('h3', null, pack.names[lang]),h('div',{className:'lf-shop-product-bottom'},h('span',{className:'lf-shop-price'},text(lang,'مجانية','Free')),
+          h('button', {type:'button', className:'lf-shop-view', 'aria-label':text(lang,'عرض الحزمة: ','View collection: ')+pack.names[lang],onClick:() => onSelect(pack.id)},icon(lang === 'en' ? 'ArrowUpRight' : 'ArrowUpLeft', 18))))))),
+      !shown.length && h('div', {className:'lf-shop-empty', role:'status'}, icon(onlyWishlist?'Heart':'Sparkles', 28),
+        h('p', null, text(lang,onlyWishlist?'لم تحفظ حزمة بهذه الأجواء بعد':'لا توجد حزم بهذه الأجواء',onlyWishlist?'No saved picks in this mood yet':'No collections in this mood'))),
+      h('p',{className:'lf-shop-catalog-note'},icon('Gift',15),text(lang,'تشكيلة البيتا متاحة مجانًا الآن','The beta collection is currently free')));
   }
   function Entry({language}) {
     if (!isAvailable(root.LorefyBackend)) return null;
@@ -254,11 +273,13 @@
         h('header', {className:'lf-shop-header'},
           h('button', {type:'button', className:'lf-shop-icon-button', ref:closeButton, onClick:() => pack ? setSelection(null) : setRequest(null),
             'aria-label':text(lang,pack ? 'رجوع إلى الحزم' : 'إغلاق المتجر',pack ? 'Back to collections' : 'Close shop'), title:text(lang,'رجوع','Back')}, icon(lang === 'en' ? 'ChevronLeft' : 'ChevronRight',22)),
-          h('div', null, h('h1', {id:'lf-shop-title'}, pack ? pack.names[lang] : text(lang,'زينة البروفايل','Profile decorations')),
-            h('span', {className:'lf-shop-preview-label'}, text(lang,isLocalLab()?'مجموعة التجربة المحلية':'حزم لورفاي المجانية',isLocalLab()?'Local prototype collection':'Free Lorefy collections'))),
+          h('div', {className:'lf-shop-brand'},h('span',{className:'lf-shop-brand-mark'},icon('Feather',13),'LOREFY ATELIER'),
+            h('h1', {id:'lf-shop-title'}, pack ? pack.names[lang] : text(lang,'رواق لورفاي','Lorefy Atelier'))),
           h('button', {type:'button', className:'lf-shop-icon-button', onClick:() => setRequest(null), 'aria-label':text(lang,'إنهاء المعاينة','End preview'), title:text(lang,'إنهاء المعاينة','End preview')}, icon('X',20))),
         h('div', {className:'lf-shop-body', ref:body}, pack ? h(R.Fragment,null,
-          h(ProfilePreview, {pack, profile:request.profile, part, replay}),
+          h('div',{className:'lf-shop-preview-stage',style:packStyle(pack)},
+            h('span',{className:'lf-shop-preview-caption'},icon('Eye',15),text(lang,'على بروفايلك','ON YOUR PROFILE')),
+            h(ProfilePreview, {pack, profile:request.profile, part, replay})),
           h('div', {className:'lf-shop-detail'},
             h('div', {className:'lf-shop-detail-title'}, h('div',null,h('h2',null,pack.names[lang]),h('p',null,pack.collection[lang])),
               h('button',{className:'lf-shop-icon-button',type:'button',onClick:() => toggleWishlist(pack.id),'aria-pressed':wishlist.includes(pack.id),
@@ -266,14 +287,17 @@
             h('div', {className:'lf-shop-parts',role:'group','aria-label':text(lang,'أجزاء الحزمة','Bundle components')},
               [['all','Layers','الحزمة','Bundle'],['frame','CircleUserRound','إطار الصورة','Avatar frame'],['page','PanelTop','إطار الصفحة','Profile frame'],['effect','Sparkles','التأثير','Effect']].map(([value,symbol,ar,en]) =>
                 h('button',{key:value,type:'button','aria-pressed':part === value,onClick:() => {setPart(value); setReplay(count => count + 1);setStatus('');setError('');}},icon(symbol,20),h('span',null,text(lang,ar,en))))),
-            h('div', {className:'lf-shop-includes'}, icon('Package',18), h('span',null,text(lang,'إطار الصورة + إطار البروفايل + تأثير','Avatar frame + profile frame + effect'))),
+            h('div', {className:'lf-shop-includes'}, icon('Package',18), h('span',null,text(lang,'ثلاث قطع. حكاية واحدة.','Three pieces. One story.'))),
             h('button',{className:'lf-shop-replay',type:'button',onClick:() => setReplay(value => value + 1)},icon('RotateCcw',17),text(lang,'إعادة المعاينة','Replay preview')))) :
           h(R.Fragment,null,
             h('div', {className:'lf-shop-tabs',role:'group','aria-label':text(lang,'عرض المتجر','Shop view')},
-              [['collections','الحزم','Collections'],['wishlist','المفضلة','Wishlist']].map(([value,ar,en]) => h('button',{key:value,type:'button','aria-pressed':tab === value,onClick:() => setTab(value)},text(lang,ar,en),value === 'wishlist' && h('span',null,wishlist.length)))),
+              [['collections','اكتشف','Discover'],['wishlist','محفوظاتك','Saved']].map(([value,ar,en]) => h('button',{key:value,type:'button','aria-pressed':tab === value,onClick:() => setTab(value)},icon(value==='collections'?'Grid2X2':'Heart',15),text(lang,ar,en),value === 'wishlist' && h('span',null,wishlist.length)))),
             h(Catalog, {lang, profile:request.profile, wishlist, onSelect:selected, onWishlist:toggleWishlist, onlyWishlist:tab === 'wishlist'})),
           error && h('p',{className:'lf-shop-error',role:'alert'},error),status && h('p',{className:'lf-shop-status',role:'status'},status)),
-        h('footer', {className:'lf-shop-footer'}, pack && h('button',{type:'button',className:'lf-shop-apply',disabled:saving || isEquipped,onClick:() => apply(pack.id,part)},
+        pack && h('footer', {className:'lf-shop-footer'},h('div',{className:'lf-shop-order-summary'},
+          h('div',null,h('strong',null,text(lang,part==='all'?'الحزمة الكاملة':'القطعة المختارة',part==='all'?'Complete collection':'Selected component')),
+            h('small',null,text(lang,'متاحة مجانًا في البيتا','Free during beta'))),h('span',null,text(lang,'مجانية','Free'))),
+          pack && h('button',{type:'button',className:'lf-shop-apply',disabled:saving || isEquipped,onClick:() => apply(pack.id,part)},
           icon(isEquipped ? 'Check' : 'CheckCheck',17),saving ? text(lang,'جارٍ الحفظ','Saving') : isEquipped ? text(lang,'مطبّقة','Applied') : text(lang,part === 'all' ? 'تطبيق الحزمة مجانًا' : 'تطبيق هذا الجزء','Apply ' + (part === 'all' ? 'bundle for free' : 'this component'))),
           Object.values(equipped).some(Boolean) && h('button',{type:'button',className:'lf-shop-remove',disabled:saving,onClick:() => apply(null,'all')},icon('Eraser',17),text(lang,'إزالة الزينة','Remove decorations')),
           !pack && !Object.values(equipped).some(Boolean) && h('span',null,icon('Sparkles',16),text(lang,'مجانية للجميع','Free for everyone')))));
