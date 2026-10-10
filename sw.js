@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v424-community-live';
+const CACHE = 'lorefy-v425-dahla-identity';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -41,7 +41,7 @@ const CORE = [
   './modules/lorefy-catalog-plan.js?v=20261010-catalog-demand-v1',
   './modules/lorefy-catalog-loader.js?v=20261010-catalog-demand-v1',
   './modules/lorefy-catalog-search-worker.js?v=20261010-catalog-demand-v1',
-  './modules/lorefy-catalog-identity.js?v=20261008-arabic-breadth-v4',
+  './modules/lorefy-catalog-identity.js?v=20261010-identity-batch-v1',
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
   './modules/lorefy-catalog-worker.js?v=20261008-explore-studio-v1',
   './modules/lorefy-catalog-data.js?v=20261008-arabic-breadth-v4',

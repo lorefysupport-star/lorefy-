@@ -3,7 +3,7 @@
 self.window = self;
 importScripts(
   "lorefy-catalog-data.js?v=20261008-arabic-breadth-v4",
-  "lorefy-catalog-identity.js?v=20261008-arabic-breadth-v4",
+  "lorefy-catalog-identity.js?v=20261010-identity-batch-v1",
   "lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4",
   "lorefy-comics-taxonomy.js?v=20261008-arabic-library-v2",
   "lorefy-bibliographic-overrides.js?v=20261008-arabic-breadth-v4",

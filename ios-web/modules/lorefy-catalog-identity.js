@@ -252,7 +252,7 @@
     });
   }
 
-  function mergeRecord(primary, incoming) {
+  function mergeRecord(primary, incoming, deferMergedIds) {
     if (!primary || !incoming || primary === incoming) return primary;
     var comicEditions = null;
     if (isComicType(primary.type) && isComicType(incoming.type) && canonicalWorkKey(primary.title) === canonicalWorkKey(incoming.title)) {
@@ -306,10 +306,12 @@
       (Array.isArray(primary._catalogSources) ? primary._catalogSources : [sourceFamily(primary)])
         .concat(Array.isArray(incoming._catalogSources) ? incoming._catalogSources : [sourceFamily(incoming)])
     );
-    primary._catalogMergedIds = uniqueValues(
+    if (!deferMergedIds) primary._catalogMergedIds = uniqueValues(
       (Array.isArray(primary._catalogMergedIds) ? primary._catalogMergedIds : [String(primary.id)])
         .concat(Array.isArray(incoming._catalogMergedIds) ? incoming._catalogMergedIds : [String(incoming.id)])
     );
+    // Keep the serialized field order stable when a group fills the IDs later.
+    else if (!Array.isArray(primary._catalogMergedIds)) primary._catalogMergedIds = [];
     if (comicEditions) {
       var seenEditions = new Set();
       primary._catalogEditions = comicEditions.filter(function (edition) {
@@ -508,12 +510,23 @@
         return completenessScore(b) - completenessScore(a);
       });
       var primary = group[0];
+      // Deduplicate merged references once per group. Rebuilding this growing
+      // array for every duplicate made large same-title groups quadratic.
+      var mergedIds = [];
+      var initialIds = primary._catalogMergedIds;
+      if (group.length > 1 && (initialIds === undefined || initialIds === null || initialIds === "") && Array.isArray(group[1]._catalogMergedIds)) initialIds = group[1]._catalogMergedIds;
+      if (group.length > 1) (Array.isArray(initialIds) ? initialIds : [String(primary.id)]).forEach(function(id) { mergedIds.push(id); });
+      if (group.length > 1) group.slice(1).forEach(function(work) {
+        var ids = Array.isArray(work._catalogMergedIds) ? work._catalogMergedIds : [String(work.id)];
+        ids.forEach(function(id) { mergedIds.push(id); });
+      });
       for (var i = 1; i < group.length; i += 1) {
         var duplicate = group[i];
         aliases[String(duplicate.id)] = String(primary.id);
-        mergeRecord(primary, duplicate);
+        mergeRecord(primary, duplicate, true);
         duplicatesRemoved += 1;
       }
+      if (group.length > 1) primary._catalogMergedIds = uniqueValues(mergedIds);
       primary._catalogIdentityKey = normalizeType(primary.type) + "|" + canonicalWorkKey(primary.title);
       organized.push(primary);
     });

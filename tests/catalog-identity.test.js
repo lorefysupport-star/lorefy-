@@ -138,7 +138,9 @@ test('bounds colliding author-year candidates without changing their identity re
 
   assert.equal(report.after, 1);
   assert.equal(report.duplicatesRemoved, 7999);
-    assert.ok(elapsed < 5000, `colliding author-year organization took ${elapsed}ms`);
+  assert.equal(works[0]._catalogMergedIds.length, 8000);
+  assert.equal(new Set(works[0]._catalogMergedIds).size, 8000);
+  assert.ok(elapsed < 5000, `colliding author-year organization took ${elapsed}ms`);
 });
 
 test('rejects empty and numeric-only catalog titles', () => {
@@ -147,6 +149,23 @@ test('rejects empty and numeric-only catalog titles', () => {
   assert.equal(validWorkTitle('  '), false);
   assert.equal(validWorkTitle('One Piece'), true);
   assert.equal(validWorkTitle('1984: A Novel'), true);
+});
+
+test('batched merged IDs preserve pairwise metadata and serialization order', () => {
+  const {mergeRecord} = require('../modules/lorefy-catalog-identity.js');
+  for (const initial of [undefined, null, [], ['legacy-primary']]) {
+    const inputs = [
+      {id:'primary',title:'Same Title',type:'Manga',auth:'Author',yr:2000,pop:1000},
+      {id:'second',title:'Same Title',type:'Manga',auth:'Author',yr:2000,pop:10,_catalogMergedIds:['previous','second']},
+      {id:'third',title:'Same Title',type:'Manga',auth:'Author',yr:2000,pop:10,_catalogMergedIds:['previous','third']}
+    ];
+    if (initial !== undefined) inputs[0]._catalogMergedIds = initial;
+    const expected = structuredClone(inputs[0]);
+    mergeRecord(expected,inputs[1]); mergeRecord(expected,inputs[2]);
+    const grouped = structuredClone(inputs); organizeCatalog(grouped,{aliases:{}});
+    delete grouped[0]._catalogIdentityKey;
+    assert.equal(JSON.stringify(grouped[0]),JSON.stringify(expected));
+  }
 });
 
 test('organizes all bundled catalog parts with no remaining duplicate identities', () => {
