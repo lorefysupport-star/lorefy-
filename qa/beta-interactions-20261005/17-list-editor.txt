@@ -1,0 +1,179 @@
+- button "الإعدادات":
+- button "تبديل المظهر":
+- button "الإشعارات":
+- paragraph: قارئ Lorefy
+- paragraph: "@lorefy_demo"
+- paragraph: حساب العرض المحلي
+- button "الحسابات التي أتابعها":
+  - generic: "0"
+- button "الحسابات التي تتابعني":
+  - generic: "0"
+- paragraph: "1"
+- paragraph: مراجعة
+- button "عرض منشوراتي":
+  - strong: "1"
+  - generic: منشور
+- paragraph: "1"
+- paragraph: مكتملة
+- paragraph: "420"
+- paragraph: فصل
+- paragraph: "84"
+- paragraph: ساعة قراءة
+- paragraph: مانجا
+- paragraph: النوع المفضل
+- button "تعديل المفضلة":
+  - generic: المفضلة
+- button "تعديل العمل رقم 1 ضمن المفضلة":
+  - text: اختر الأعمال التي تحبها
+- region "الشخصيات المفضلة":
+  - button "تعديل الشخصيات المفضلة":
+    - strong: الشخصيات المفضلة
+  - button "اختيار شخصية للخانة 1":
+    - text: اختر شخصياتك المفضلة
+- generic: النشاط الأخير
+- generic: آخر تفاعل محفوظ
+- paragraph: مانجا
+- region "نشاط المجتمع":
+  - strong: نشاط المجتمع
+  - button "الردود 0":
+    - strong: الردود
+    - generic: "0"
+  - button "المحفوظات 1":
+    - strong: المحفوظات
+    - generic: "1"
+  - button "الشخصيات 0":
+    - strong: الشخصيات
+    - generic: "0"
+- button "فتح سجل القراءة":
+  - strong: سجل القراءة
+  - generic: جلساتك وملاحظاتك واقتباساتك
+- region "قوائم التفضيلات":
+  - button "قوائم التفضيلات 8 أقسام · 0 / 80 خانة":
+    - strong: قوائم التفضيلات
+    - emphasis: 8 أقسام · 0 / 80 خانة
+- button "قوائمي 1 قائمة":
+  - strong: قوائمي
+  - generic: 1 قائمة
+- button "ملخّص 2026 إحصاءات سنتك القرائية":
+  - strong: ملخّص 2026
+  - generic: إحصاءات سنتك القرائية
+- button "استيراد مكتبتك AniList · Kitsu · MAL · Goodreads · StoryGraph · أي موقع":
+  - strong: استيراد مكتبتك
+  - generic: AniList · Kitsu · MAL · Goodreads · StoryGraph · أي موقع
+- button "أقرأه حالياً"
+- button "قرأته"
+- button "أريد قراءته"
+- button "متوقف مؤقتًا"
+- button "توقفت نهائيًا"
+- paragraph: ما عندك شي تقرأه الحين
+- paragraph: أكثر ما تقرأ
+- generic: 1 عمل
+- generic: مانجا
+- paragraph: Premium قريباً
+- paragraph: غير متاح خلال النسخة التجريبية
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية
+- dialog "قوائمي":
+  - banner:
+    - button "رجوع": ‹
+    - strong: قوائمي
+  - button "‹ كل القوائم"
+  - textbox "اسم القائمة": قائمة فحص محلية
+  - button "#7C3AED"
+  - button "#0EA5E9"
+  - button "#10B981"
+  - button "#F59E0B"
+  - button "#EF4444"
+  - generic: "1"
+  - generic: Hunter x Hunter
+  - button "إزالة": ×
+  - searchbox "ابحث عن عمل لإضافته": Hunter
+  - button "Bonehunters رواية إضافة":
+    - generic: Bonehunters
+    - generic: رواية
+    - generic: إضافة
+  - button "Tales from the Shadowhunter Academy رواية إضافة":
+    - generic: Tales from the Shadowhunter Academy
+    - generic: رواية
+    - generic: إضافة
+  - button "Treasure hunters كوميكس إضافة":
+    - generic: Treasure hunters
+    - generic: كوميكس
+    - generic: إضافة
+  - button "The Dream Hunters كوميكس إضافة":
+    - generic: The Dream Hunters
+    - generic: كوميكس
+    - generic: إضافة
+  - button "Anita Blake, Vampire Hunter كوميكس إضافة":
+    - generic: Anita Blake, Vampire Hunter
+    - generic: كوميكس
+    - generic: إضافة
+  - button "Hunter x Hunter مانجا ✓":
+    - generic: Hunter x Hunter
+    - generic: مانجا
+    - generic: ✓
+  - button "Star wars - Bounty Hunters كوميكس إضافة":
+    - generic: Star wars - Bounty Hunters
+    - generic: كوميكس
+    - generic: إضافة
+  - button "Manhunter كوميكس إضافة":
+    - generic: Manhunter
+    - generic: كوميكس
+    - generic: إضافة
+  - button "Hunter x Hunter, Vol. 25 مانجا إضافة":
+    - generic: Hunter x Hunter, Vol. 25
+    - generic: مانجا
+    - generic: إضافة
+  - button "Spider-Man in Kraven the hunter كوميكس إضافة":
+    - generic: Spider-Man in Kraven the hunter
+    - generic: كوميكس
+    - generic: إضافة
+  - button "SSS-Class Revival Hunter مانهوا إضافة":
+    - generic: SSS-Class Revival Hunter
+    - generic: مانهوا
+    - generic: إضافة
+  - button "The Hunter's Gonna Lay Low مانهوا إضافة":
+    - generic: The Hunter's Gonna Lay Low
+    - generic: مانهوا
+    - generic: إضافة
+  - button "City Hunter مانجا إضافة":
+    - generic: City Hunter
+    - generic: مانجا
+    - generic: إضافة
+  - button "Vampire Hunter D لايت نوفل إضافة":
+    - generic: Vampire Hunter D
+    - generic: لايت نوفل
+    - generic: إضافة
+  - button "My S-Class Hunters مانهوا إضافة":
+    - generic: My S-Class Hunters
+    - generic: مانهوا
+    - generic: إضافة
+  - button "Illusion Hunter from Another World مانهوا إضافة":
+    - generic: Illusion Hunter from Another World
+    - generic: مانهوا
+    - generic: إضافة
+  - button "SM Hunter مانهوا إضافة":
+    - generic: SM Hunter
+    - generic: مانهوا
+    - generic: إضافة
+  - button "The S-Class Hunter's Peaceful Life with Monsters مانهوا إضافة":
+    - generic: The S-Class Hunter's Peaceful Life with Monsters
+    - generic: مانهوا
+    - generic: إضافة
+  - button "The Dungeon Cleaning Life of a Once Genius Hunter مانهوا إضافة":
+    - generic: The Dungeon Cleaning Life of a Once Genius Hunter
+    - generic: مانهوا
+    - generic: إضافة
+  - button "The Gardener in a Hunter World مانهوا إضافة":
+    - generic: The Gardener in a Hunter World
+    - generic: مانهوا
+    - generic: إضافة
+  - button "مشاركة أو حفظ الصورة"
+  - button "حذف القائمة"

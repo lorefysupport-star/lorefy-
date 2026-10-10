@@ -1,0 +1,88 @@
+- banner:
+  - button "حسابك"
+  - strong: Lorefy
+  - button "الإشعارات":
+- tablist "تصفية منشورات المجتمع":
+  - tab "For You" [selected]
+  - tab "Following"
+- region "منشورات المجتمع":
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · 6س":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · 6س"
+    - paragraph: xffgxfhxdfh
+    - button "فتح الردود":
+      - generic: "0"
+    - button "إعجاب":
+      - generic: "0"
+    - button "عدم إعجاب":
+      - generic: "0"
+    - button "مشاركة":
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · 21س":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · 21س"
+    - paragraph: اختبار محلي للردود والأبعاد. LongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenText
+    - button "فتح الردود":
+      - generic: "0"
+    - button "إعجاب":
+      - generic: "0"
+    - button "عدم إعجاب":
+      - generic: "0"
+    - button "مشاركة":
+- article:
+  - button "حذف المراجعة":
+  - button "خيارات المراجعة":
+  - generic: قارئ Lorefy
+  - generic: "@lorefy_demo"
+  - generic: · 21س
+  - img "5 من 5":
+  - generic: يوصي بها
+  - paragraph: Clear pacing and memorable characters. Local beta verification.
+  - paragraph: Hunter x Hunter
+  - generic: مانجا
+  - generic: Togashi, Yoshihiro
+  - button "تعليق":
+    - generic: "0"
+  - button "إعجاب، 0":
+    - generic: "0"
+  - button "عدم إعجاب، 0":
+    - generic: "0"
+  - button "حفظ":
+  - button "مشاركة":
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "بحث":
+    - generic: بحث
+  - button "الرئيسية":
+    - generic: الرئيسية
+- button "إنشاء منشور":
+- dialog "محادثة المنشور":
+  - button "إغلاق":
+  - strong: المنشور
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · 6س":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · 6س"
+    - paragraph: xffgxfhxdfh
+    - button "الرد على الرد":
+      - generic: "0"
+    - button "إعجاب":
+      - generic: "0"
+    - button "عدم إعجاب":
+      - generic: "0"
+    - button "مشاركة":
+  - paragraph: كن أول من يرد
+  - generic: ق
+  - textbox "اكتب رداً" [active]:
+    - /placeholder: اكتب رداً...
+    - text: مسودة رد للفحص فقط
+  - button "إرسال الرد":

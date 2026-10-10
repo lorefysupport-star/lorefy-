@@ -1,0 +1,359 @@
+.lf-reader-full {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: calc(var(--nc-bottom) + 128px);
+  color: var(--apple-label);
+  background: var(--apple-bg);
+}
+.lf-reader-result-type { display:block; margin-top:3px; font-size:11px; line-height:1.5; color:var(--ui-action); white-space:normal; }
+
+.lf-reader-banner {
+  position: relative;
+  height: clamp(178px, 25vh, 210px);
+  background: var(--apple-fill, #dfe2e5);
+}
+
+.lf-reader-banner > img { width: 100%; height: 100%; object-fit: cover; }
+.lf-reader-back {
+  position: absolute;
+  z-index: 2;
+  right: 16px;
+  top: calc(var(--nc-top) + 10px);
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ffffff24;
+  border-radius: 50%;
+  background: #171719b8;
+  color: #fff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.lf-reader-surface {
+  position: relative;
+  margin-top: -18px;
+  border-radius: 20px 20px 0 0;
+  background: var(--apple-bg);
+  padding-top: 1px;
+}
+
+.lf-reader-identity { padding: 0 16px; text-align: center; }
+.lf-reader-full .lf-reader-avatar {
+  display: block;
+  width: 84px;
+  height: 84px;
+  margin: -25px auto 10px;
+  position: relative;
+  border: 4px solid var(--apple-bg);
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 10px 26px #00000024;
+  background: var(--apple-fill, var(--apple-bg));
+}
+
+.lf-reader-full .lf-reader-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.lf-reader-identity h1 {
+  margin: 0 0 3px;
+  font-size: 22px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  letter-spacing: 0;
+}
+
+.lf-reader-handle { margin: 0 0 10px; color: var(--apple-label-2); font-size: 13px; }
+.lf-reader-bio {
+  max-width: 34rem;
+  margin: 0 auto 10px;
+  color: var(--apple-label-2);
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.lf-reader-type-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  margin-bottom: 12px;
+  padding: 5px 9px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--apple-label);
+  background: var(--apple-fill, transparent);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.lf-reader-type-chip small { color: var(--apple-label-2); font-size: 9px; font-weight: 600; }
+.lf-reader-actions {
+  display: grid;
+  grid-template-columns: minmax(116px, 1.35fr) minmax(82px, .8fr) minmax(82px, .8fr);
+  align-items: stretch;
+  gap: 7px;
+  max-width: 390px;
+  margin: 0 auto 9px;
+}
+
+.lf-reader-social-summary {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: -2px auto 8px;
+}
+
+.lf-reader-social-divider {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--apple-label-3, #8e8e93);
+}
+
+.lf-reader-primary-actions {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 14px;
+}
+
+.lf-reader-follow,
+.lf-reader-connection {
+  min-width: 0;
+  min-height: 44px;
+  border-radius: 10px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.lf-reader-follow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  min-width: 148px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--apple-blue-pressed, #0062cc);
+  color: #fff;
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--apple-blue-pressed, #0062cc) 16%, transparent);
+  font-size: 13px;
+  font-weight: 800;
+  transition: background-color 160ms ease-out, color 160ms ease-out, opacity 160ms ease-out, transform 160ms ease-out, box-shadow 160ms ease-out;
+}
+
+.lf-reader-follow.is-following {
+  border: 0;
+  background: var(--apple-fill, #f2f2f7);
+  color: var(--apple-label);
+  box-shadow: none;
+}
+
+.lf-reader-follow:active { transform: scale(.97); }
+.lf-reader-follow:disabled { cursor: wait; opacity: .65; }
+.lf-reader-connection {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 44px;
+  padding: 5px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--apple-label);
+}
+
+.lf-reader-connection strong { font-size: 13px; line-height: 1; font-variant-numeric: tabular-nums; }
+.lf-reader-connection span { color: var(--apple-label-2); font-size: 12px; line-height: 1.2; }
+.lf-reader-connection:active { opacity: .55; }
+.lf-reader-socials { display: flex; align-items: center; justify-content: center; gap: 7px; margin: 0; }
+.lf-reader-socials:empty { display: none; }
+.lf-reader-socials a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  color: inherit;
+  background: transparent;
+  text-decoration: none;
+  transition: background-color 160ms ease-out, transform 160ms ease-out;
+}
+
+.lf-reader-socials a:hover { background: var(--apple-fill, transparent); }
+.lf-reader-socials a:active { transform: scale(.92); }
+
+.lf-reader-error { margin: 8px 0; color: #c82837; font-size: 12px; }
+.lf-reader-metrics {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  max-width: 430px;
+  margin: 3px auto 0;
+  padding: 10px 0 4px;
+}
+
+.lf-reader-metrics > div,
+.lf-reader-metrics > button { display: flex; min-width: 0; min-height: 60px; align-items: center; justify-content: center; flex-direction: column; gap: 4px; padding: 0 3px; border: 0; background: transparent; color: inherit; font: inherit; }
+.lf-reader-metrics strong { font-size: 14px; overflow-wrap: anywhere; }
+.lf-reader-metrics span { color: var(--apple-label-2); font-size: 9px; line-height: 1.3; }
+.lf-reader-full h2 { margin: 0; font-size: 17px; letter-spacing: 0; }
+.lf-reader-shelf { margin: 24px 0 0; padding: 0 16px; }
+.lf-reader-shelf-head { display: flex; min-height: 30px; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 11px; }
+.lf-reader-shelf-rail { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.lf-reader-cover {
+  display: block;
+  min-width: 0;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--apple-separator-soft);
+  border-radius: 7px;
+  background: var(--apple-fill, transparent);
+  color: var(--apple-label);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.lf-reader-cover.is-work,
+.lf-reader-cover.is-empty { aspect-ratio: 2 / 3; }
+.lf-reader-cover img { width: 100%; height: 100%; object-fit: cover; }
+.lf-reader-cover.is-empty { border-style: dashed; background: transparent; cursor: default; }
+.lf-reader-cover.is-character { display: grid; gap: 6px; overflow: visible; border: 0; background: transparent; }
+.lf-reader-cover.is-character:disabled { opacity: 1; cursor: default; }
+.lf-reader-character-image {
+  display: block;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 1px solid var(--apple-separator-soft);
+  border-radius: 7px;
+  background: var(--apple-fill, transparent);
+}
+
+.lf-reader-cover.is-character strong {
+  overflow: hidden;
+  color: var(--apple-label);
+  font-size: 10px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lf-reader-image-placeholder { display: grid; width: 100%; height: 100%; place-items: center; color: var(--apple-label-2); }
+.lf-reader-view-all {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: var(--apple-fill, transparent);
+  color: #0780ff;
+  font: 750 11px inherit;
+}
+
+.lf-reader-view-all span {
+  display: grid;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, #0780ff 12%, transparent);
+  font-size: 9px;
+}
+
+.lf-reader-library-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
+.lf-reader-ranked-work { position: relative; min-width: 0; }
+.lf-reader-ranked-work .lf-reader-cover { width: 100%; }
+.lf-reader-work-rank { position: absolute; inset-inline-end: 4px; bottom: 4px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--lf-reader-bg, #fff); color: var(--lf-reader-text, #171521); border: 1px solid var(--lf-reader-border, #e5e0ed); font-size: 12px; font-weight: 800; pointer-events: none; }
+.lf-reader-library-grid.is-full { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
+.lf-reader-library-card {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--apple-label);
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.lf-reader-library-cover { display: block; aspect-ratio: 2 / 3; overflow: hidden; border: 1px solid var(--apple-separator-soft); border-radius: 7px; background: var(--apple-fill); }
+.lf-reader-library-cover > img { display: block; width: 100%; height: 100%; max-width: 100%; object-fit: contain; background: transparent !important; }
+.lf-reader-full .lf-reader-cover.is-work:not(.lf-library-card) > img { display: block; object-fit: contain; background: transparent !important; }
+.lf-reader-full .lf-reader-banner > img { object-position: center var(--owner-banner-position,50%) !important; }
+.lf-reader-full { color: var(--ui-ink); background: var(--ui-bg); }
+.lf-reader-library-grid.is-owner-list { grid-template-columns: minmax(0,1fr) !important; }
+.is-owner-list .lf-reader-library-card { grid-template-columns: 48px minmax(0,1fr); align-items: center; gap: 12px; }
+.is-owner-list .lf-reader-library-copy strong { font-size: 13px; }
+.is-owner-list .lf-reader-library-copy small { font-size: 11px; }
+html:root:root:root:root:root:root .lf-reader-full .lf-reader-shelf-rail.is-spine-view,
+html:root:root:root:root:root:root .lf-reader-full .lf-reader-library-preview .is-spine-view { grid-template-columns: repeat(4,minmax(0,1fr)) !important; }
+.lf-reader-full .lf-library-grid.is-spine-view .lf-reader-cover { aspect-ratio: auto; background: transparent; }
+.lf-reader-library-copy { display: grid; min-width: 0; gap: 2px; }
+.lf-reader-library-copy strong,
+.lf-reader-library-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lf-reader-library-copy strong { font-size: 10px; }
+.lf-reader-library-copy small { color: var(--apple-label-2); font-size: 8px; }
+.lf-reader-full .lf-public-profile-reviews { padding: 28px 16px 0 !important; }
+.lf-reader-empty { color: var(--apple-label-2); text-align: center; }
+.lf-reader-modal {
+  position: fixed;
+  z-index: 510;
+  inset-block: 0;
+  left: 50%;
+  width: min(100%, 460px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  background: #0007;
+}
+
+.lf-reader-modal > section {
+  width: 100%;
+  max-height: min(82%, 760px);
+  overflow: auto;
+  padding: 18px 16px;
+  border-radius: 20px 20px 0 0;
+  background: var(--apple-bg);
+}
+
+.lf-reader-modal header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; text-align: start; }
+.lf-reader-modal header h2 { margin: 0; font-size: 19px; }
+.lf-reader-modal header p { margin: 2px 0 0; color: var(--apple-label-2); font-size: 11px; }
+.lf-reader-modal button { color: inherit; font: inherit; }
+.lf-reader-modal header > button { width: 36px; height: 36px; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--apple-fill); }
+.lf-reader-connection-row { display: flex; width: 100%; align-items: center; gap: 12px; padding: 12px 0; border: 0; border-bottom: 1px solid var(--apple-separator-soft); background: none; text-align: start; }
+.lf-reader-connection-row img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
+.lf-reader-connection-row small { color: var(--apple-label-2); }
+
+.lf-reader-follow:focus-visible,
+.lf-reader-connection:focus-visible,
+.lf-reader-socials a:focus-visible,
+.lf-reader-cover:focus-visible,
+.lf-reader-view-all:focus-visible,
+.lf-reader-library-card:focus-visible {
+  outline: 2px solid #0780ff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 360px) {
+  .lf-reader-actions { grid-template-columns: 1fr 76px 76px; }
+  .lf-reader-follow { min-width: 136px; padding-inline: 14px; }
+  .lf-reader-shelf,
+  .lf-reader-identity { padding-inline: 13px; }
+  .lf-reader-shelf-rail,
+  .lf-reader-library-grid { gap: 6px; }
+}

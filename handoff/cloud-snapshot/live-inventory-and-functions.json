@@ -1,0 +1,350 @@
+{
+  "capturedAt": "2026-10-10",
+  "projectRef": "qsroxmltioxqozmykens",
+  "migrationInventory": {
+    "migrations": [
+      {
+        "version": "20260615063058",
+        "name": "beta_hardening_20260615"
+      },
+      {
+        "version": "20260618163251",
+        "name": "community_foundation_and_private_media"
+      },
+      {
+        "version": "20260618163405",
+        "name": "community_fk_indexes"
+      },
+      {
+        "version": "20260620032024",
+        "name": "fix_profile_media_policy"
+      },
+      {
+        "version": "20260726172526",
+        "name": "lorefy_entitlements"
+      },
+      {
+        "version": "20260813000911",
+        "name": "public_reader_discovery"
+      },
+      {
+        "version": "20260813001712",
+        "name": "community_release_hardening"
+      },
+      {
+        "version": "20260813002349",
+        "name": "community_least_privilege"
+      },
+      {
+        "version": "20260813003529",
+        "name": "community_follow_index"
+      },
+      {
+        "version": "20260813004416",
+        "name": "storage_release_hardening"
+      },
+      {
+        "version": "20260813004542",
+        "name": "storage_regex_fix"
+      },
+      {
+        "version": "20260813010252",
+        "name": "user_state_concurrency"
+      },
+      {
+        "version": "20260813010345",
+        "name": "user_state_concurrency_compat"
+      },
+      {
+        "version": "20260813112236",
+        "name": "apple_authorization_revocation_v2"
+      },
+      {
+        "version": "20260813113014",
+        "name": "apple_authorization_cleanup"
+      },
+      {
+        "version": "20260813113811",
+        "name": "community_moderation"
+      },
+      {
+        "version": "20260813114020",
+        "name": "community_moderation_record_fix"
+      },
+      {
+        "version": "20260813114750",
+        "name": "community_block_visibility"
+      },
+      {
+        "version": "20260813114929",
+        "name": "community_block_policy_fix"
+      },
+      {
+        "version": "20260813120306",
+        "name": "internal_policy_helpers"
+      },
+      {
+        "version": "20260813125105",
+        "name": "release_security_remediation"
+      },
+      {
+        "version": "20260813125437",
+        "name": "serialize_comment_quota"
+      },
+      {
+        "version": "20260813214432",
+        "name": "review_media_integrity"
+      },
+      {
+        "version": "20260813221522",
+        "name": "reaction_rate_limit"
+      },
+      {
+        "version": "20260824233736",
+        "name": "release_v11_review_upsert"
+      },
+      {
+        "version": "20260825010103",
+        "name": "account_identity_hardening"
+      },
+      {
+        "version": "20260830075859",
+        "name": "notifications_foundation"
+      },
+      {
+        "version": "20260830120611",
+        "name": "push_dispatch_webhook"
+      },
+      {
+        "version": "20260905092205",
+        "name": "fix_profile_genres_type"
+      },
+      {
+        "version": "20260914154544",
+        "name": "immutable_profile_usernames"
+      },
+      {
+        "version": "20260929180818",
+        "name": "community_posts_build31"
+      },
+      {
+        "version": "20261003114150",
+        "name": "profile_artwork_chapter_reviews"
+      },
+      {
+        "version": "20261003114352",
+        "name": "profile_artwork_key_aliases"
+      },
+      {
+        "version": "20261007035233",
+        "name": "beta_community_owner_tools"
+      },
+      {
+        "version": "20261007100005",
+        "name": "profile_username_changes"
+      },
+      {
+        "version": "20261007100539",
+        "name": "review_account_privacy"
+      },
+      {
+        "version": "20261007152557",
+        "name": "quarter_ratings"
+      },
+      {
+        "version": "20261008052857",
+        "name": "durable_custom_artwork_read"
+      },
+      {
+        "version": "20261008123935",
+        "name": "profile_layout_projection"
+      },
+      {
+        "version": "20261008180259",
+        "name": "free_profile_decorations"
+      },
+      {
+        "version": "20261009122449",
+        "name": "public_profile_appearance"
+      },
+      {
+        "version": "20261009165852",
+        "name": "beta_profile_decorations"
+      }
+    ]
+  },
+  "functionInventory": {
+    "functions": [
+      {
+        "id": "5d153708-2890-46cb-ac6e-6a2567165de6",
+        "slug": "delete-account",
+        "name": "delete-account",
+        "status": "ACTIVE",
+        "version": 11,
+        "created_at": 1781505061983,
+        "updated_at": 1786659876876,
+        "verify_jwt": true,
+        "import_map": false,
+        "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_5d153708-2890-46cb-ac6e-6a2567165de6_10/source/delete-account/index.ts",
+        "ezbr_sha256": "f9f54f4b08c71ce9aaf5bd628c89af57f8fdd8a6918cfd884e3c2c2cb5353108"
+      },
+      {
+        "id": "08103946-9038-464b-9f30-4c0a6281b945",
+        "slug": "lorefy-public",
+        "name": "lorefy-public",
+        "status": "ACTIVE",
+        "version": 11,
+        "created_at": 1786619143449,
+        "updated_at": 1791071536677,
+        "verify_jwt": false,
+        "import_map": false,
+        "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_08103946-9038-464b-9f30-4c0a6281b945_11/source/index.ts",
+        "ezbr_sha256": "ebac4d4ee79d20961290a4ed6f4d1976d169810f63566faf45f1e0071f3d0e9e"
+      },
+      {
+        "id": "457f418c-1760-4005-b404-59af251ea16f",
+        "slug": "lorefy-html-test",
+        "name": "lorefy-html-test",
+        "status": "ACTIVE",
+        "version": 3,
+        "created_at": 1786619370424,
+        "updated_at": 1786625899827,
+        "verify_jwt": true,
+        "import_map": false,
+        "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_457f418c-1760-4005-b404-59af251ea16f_2/source/index.ts",
+        "ezbr_sha256": "0aeb6f4f577850020743a8c0bcf4c165c6e8b27a02742a5ac0278b6d870b88f4"
+      },
+      {
+        "id": "4d122e2d-b9e8-483e-9256-46c678f57c53",
+        "slug": "apple-authorization",
+        "name": "apple-authorization",
+        "status": "ACTIVE",
+        "version": 5,
+        "created_at": 1786620199020,
+        "updated_at": 1786659555478,
+        "verify_jwt": true,
+        "import_map": false,
+        "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_4d122e2d-b9e8-483e-9256-46c678f57c53_4/source/apple-authorization/index.ts",
+        "ezbr_sha256": "80cd3a52fce0576c03e3d7c9faf0ff4b6c34a38a882639fec898688952b9bce8"
+      },
+      {
+        "id": "3fc128b9-5279-48df-adda-0a6ded7f8144",
+        "slug": "dispatch-notifications",
+        "name": "dispatch-notifications",
+        "status": "ACTIVE",
+        "version": 2,
+        "created_at": 1788076756684,
+        "updated_at": 1788076756684,
+        "verify_jwt": false,
+        "import_map": false,
+        "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_3fc128b9-5279-48df-adda-0a6ded7f8144_1/source/index.ts",
+        "ezbr_sha256": "634cace70e16d7a0d7a4ff96047fc92de22e196a9f85fd175af47c09f3503c49"
+      }
+    ]
+  },
+  "deployedFunctions": [
+    {
+      "id": "5d153708-2890-46cb-ac6e-6a2567165de6",
+      "slug": "delete-account",
+      "name": "delete-account",
+      "status": "ACTIVE",
+      "version": 11,
+      "created_at": 1781505061983,
+      "updated_at": 1786659876876,
+      "verify_jwt": true,
+      "import_map": false,
+      "entrypoint_path": "/tmp/user_fn_qsroxmltioxqozmykens_5d153708-2890-46cb-ac6e-6a2567165de6_10/source/delete-account/index.ts",
+      "ezbr_sha256": "f9f54f4b08c71ce9aaf5bd628c89af57f8fdd8a6918cfd884e3c2c2cb5353108",
+      "files": [
+        {
+          "name": "delete-account/index.ts",
+          "content": "import { createClient } from \"https://esm.sh/@supabase/supabase-js@2\";\nimport { appleConfiguration, createAppleClientSecret } from \"../_shared/apple.ts\";\n\nconst json = (body: unknown, status = 200) => new Response(JSON.stringify(body), {\n  status,\n  headers: {\n    \"Content-Type\": \"application/json\",\n    \"Access-Control-Allow-Origin\": \"*\",\n    \"Access-Control-Allow-Headers\": \"authorization, x-client-info, apikey, content-type\",\n    \"Access-Control-Allow-Methods\": \"POST, OPTIONS\"\n  }\n});\n\ntype StorageEntry = { name: string; id?: string | null; metadata?: unknown };\nconst MAX_AUTH_AGE_SECONDS = 10 * 60;\nconst MAX_STORAGE_FILES = 5000;\nconst MAX_STORAGE_FOLDERS = 1000;\nconst MAX_STORAGE_DEPTH = 8;\nconst UPSTREAM_TIMEOUT_MS = 10_000;\n\nfunction jwtPayload(authorization: string) {\n  try {\n    const token = authorization.replace(/^Bearer\\s+/i, \"\");\n    const part = token.split(\".\")[1];\n    if (!part) return null;\n    const normalized = part.replace(/-/g, \"+\").replace(/_/g, \"/\");\n    return JSON.parse(atob(normalized.padEnd(Math.ceil(normalized.length / 4) * 4, \"=\")));\n  } catch {\n    return null;\n  }\n}\n\nasync function listAllFiles(bucket: any, prefix: string) {\n  const files: string[] = [];\n  const pending = [prefix];\n  let folders = 0;\n  while (pending.length) {\n    const folder = pending.pop()!;\n    folders += 1;\n    if (folders > MAX_STORAGE_FOLDERS) throw new Error(\"storage_folder_limit_exceeded\");\n    const depth = folder.split(\"/\").filter(Boolean).length - prefix.split(\"/\").filter(Boolean).length;\n    if (depth > MAX_STORAGE_DEPTH) throw new Error(\"storage_depth_limit_exceeded\");\n    let offset = 0;\n    for (;;) {\n      const { data, error } = await bucket.list(folder, { limit: 1000, offset, sortBy: { column: \"name\", order: \"asc\" } });\n      if (error) throw error;\n      const entries = (data || []) as StorageEntry[];\n      for (const entry of entries) {\n        const fullPath = folder ? `${folder}/${entry.name}` : entry.name;\n        if (entry.id) {\n          files.push(fullPath);\n          if (files.length > MAX_STORAGE_FILES) throw new Error(\"storage_file_limit_exceeded\");\n        } else {\n          pending.push(fullPath);\n        }\n      }\n      if (entries.length < 1000) break;\n      offset += entries.length;\n    }\n  }\n  return files;\n}\n\nDeno.serve(async (request) => {\n  if (request.method === \"OPTIONS\") return new Response(null, { status: 204, headers: json(null).headers });\n  if (request.method !== \"POST\") return json({ error: \"method_not_allowed\" }, 405);\n\n  const authorization = request.headers.get(\"Authorization\");\n  if (!authorization) return json({ error: \"unauthorized\" }, 401);\n\n  let payload: { confirm?: boolean };\n  try {\n    payload = await request.json();\n  } catch {\n    return json({ error: \"invalid_json\" }, 400);\n  }\n  if (payload.confirm !== true) return json({ error: \"confirmation_required\" }, 400);\n\n  const supabaseUrl = Deno.env.get(\"SUPABASE_URL\");\n  const anonKey = Deno.env.get(\"SUPABASE_ANON_KEY\");\n  const serviceRoleKey = Deno.env.get(\"SUPABASE_SERVICE_ROLE_KEY\");\n  if (!supabaseUrl || !anonKey || !serviceRoleKey) return json({ error: \"server_not_configured\" }, 503);\n\n  const caller = createClient(supabaseUrl, anonKey, {\n    global: { headers: { Authorization: authorization } },\n    auth: { persistSession: false, autoRefreshToken: false }\n  });\n  const { data: userData, error: userError } = await caller.auth.getUser();\n  const user = userData.user;\n  if (userError || !user) return json({ error: \"unauthorized\" }, 401);\n  const claims = jwtPayload(authorization);\n  const authenticatedAt = Number(claims && claims.iat);\n  const now = Math.floor(Date.now() / 1000);\n  if (!Number.isFinite(authenticatedAt) || authenticatedAt > now + 60 || now - authenticatedAt > MAX_AUTH_AGE_SECONDS) {\n    return json({ error: \"recent_authentication_required\" }, 401);\n  }\n\n  const admin = createClient(supabaseUrl, serviceRoleKey, {\n    auth: { persistSession: false, autoRefreshToken: false }\n  });\n\n  try {\n    const { data: refreshToken, error: authorizationError } = await admin\n      .rpc(\"get_apple_authorization_for_deletion\", { target_user_id: user.id });\n    if (authorizationError) throw authorizationError;\n    if (refreshToken) {\n      const apple = appleConfiguration();\n      if (!apple) return json({ error: \"apple_revocation_not_configured\" }, 503);\n      const clientSecret = await createAppleClientSecret(apple);\n      const revokeResponse = await fetch(\"https://appleid.apple.com/auth/revoke\", {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/x-www-form-urlencoded\" },\n        body: new URLSearchParams({\n          client_id: apple.clientId,\n          client_secret: clientSecret,\n          token: refreshToken,\n          token_type_hint: \"refresh_token\"\n        }),\n        signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS)\n      });\n      if (!revokeResponse.ok) throw new Error(`apple_revocation_failed:${revokeResponse.status}`);\n    }\n    const { error: cleanupError } = await admin\n      .rpc(\"delete_apple_authorization\", { target_user_id: user.id });\n    if (cleanupError) throw cleanupError;\n  } catch (error) {\n    console.error(\"delete-account apple revocation\", error);\n    return json({ error: \"apple_revocation_failed\" }, 502);\n  }\n\n  const { error: deletionStartError } = await admin\n    .rpc(\"begin_account_deletion\", { target_user_id: user.id });\n  if (deletionStartError) {\n    console.error(\"delete-account lock\", deletionStartError);\n    return json({ error: \"account_deletion_failed\" }, 500);\n  }\n\n  try {\n    for (const bucketName of [\"profile-media\", \"review-media\", \"custom-covers\"]) {\n      const bucket = admin.storage.from(bucketName);\n      const files = await listAllFiles(bucket, user.id);\n      for (let index = 0; index < files.length; index += 1000) {\n        const { error } = await bucket.remove(files.slice(index, index + 1000));\n        if (error) throw error;\n      }\n      const remaining = await listAllFiles(bucket, user.id);\n      if (remaining.length) throw new Error(`storage_cleanup_incomplete:${bucketName}`);\n    }\n  } catch (error) {\n    console.error(\"delete-account storage cleanup\", error);\n    return json({ error: \"storage_cleanup_failed\" }, 500);\n  }\n\n  // Deleting the auth user invalidates refresh tokens and prevents new sessions.\n\n  const { error: deleteError } = await admin.auth.admin.deleteUser(user.id);\n  if (deleteError) return json({ error: \"account_deletion_failed\" }, 500);\n\n  return new Response(null, { status: 204 });\n});\n\r\n"
+        },
+        {
+          "name": "_shared/apple.ts",
+          "content": "import { SignJWT, createRemoteJWKSet, importPKCS8, jwtVerify } from \"npm:jose@5.10.0\";\n\nexport type AppleConfiguration = {\n  clientId: string;\n  keyId: string;\n  teamId: string;\n  privateKey: string;\n};\n\nexport function appleConfiguration(): AppleConfiguration | null {\n  const clientId = Deno.env.get(\"APPLE_CLIENT_ID\") || \"\";\n  const keyId = Deno.env.get(\"APPLE_KEY_ID\") || \"\";\n  const teamId = Deno.env.get(\"APPLE_TEAM_ID\") || \"\";\n  const privateKey = (Deno.env.get(\"APPLE_PRIVATE_KEY\") || \"\").replace(/\\\\n/g, \"\\n\");\n  if (!clientId || !keyId || !teamId || !privateKey) return null;\n  return { clientId, keyId, teamId, privateKey };\n}\n\nexport async function createAppleClientSecret(config: AppleConfiguration) {\n  const key = await importPKCS8(config.privateKey, \"ES256\");\n  const now = Math.floor(Date.now() / 1000);\n  return new SignJWT({})\n    .setProtectedHeader({ alg: \"ES256\", kid: config.keyId })\n    .setIssuer(config.teamId)\n    .setSubject(config.clientId)\n    .setAudience(\"https://appleid.apple.com\")\n    .setIssuedAt(now)\n    .setExpirationTime(now + 300)\n    .sign(key);\n}\n\nconst appleJwks = createRemoteJWKSet(new URL(\"https://appleid.apple.com/auth/keys\"));\n\nexport async function verifyAppleIdentityToken(identityToken: string, clientId: string) {\n  const { payload } = await jwtVerify(identityToken, appleJwks, {\n    issuer: \"https://appleid.apple.com\",\n    audience: clientId,\n    algorithms: [\"RS256\"]\n  });\n  if (typeof payload.sub !== \"string\" || !payload.sub) throw new Error(\"apple_subject_missing\");\n  return payload.sub;\n}\n\r\n"
+        }
+      ]
+    },
+    {
+      "id": "08103946-9038-464b-9f30-4c0a6281b945",
+      "slug": "lorefy-public",
+      "name": "lorefy-public",
+      "status": "ACTIVE",
+      "version": 11,
+      "created_at": 1786619143449,
+      "updated_at": 1791071536677,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "/tmp/user_fn_qsroxmltioxqozmykens_08103946-9038-464b-9f30-4c0a6281b945_11/source/index.ts",
+      "ezbr_sha256": "ebac4d4ee79d20961290a4ed6f4d1976d169810f63566faf45f1e0071f3d0e9e",
+      "files": [
+        {
+          "name": "index.ts",
+          "content": "const SUPPORT_EMAIL = \"lorefysupport@gmail.com\";\nconst baseUrl = \"https://qsroxmltioxqozmykens.supabase.co/functions/v1/lorefy-public\";\nconst IMAGE_HOSTS = new Set([\n  \"s3.anilist.co\", \"s4.anilist.co\", \"cdn.myanimelist.net\", \"myanimelist.net\",\n  \"covers.openlibrary.org\", \"images.ranobedb.org\", \"uploads.mangadex.org\", \"books.google.com\",\n  \"books.googleusercontent.com\", \"lh3.googleusercontent.com\", \"m.media-amazon.com\", \"media.kitsu.app\",\n  \"images-na.ssl-images-amazon.com\", \"commons.wikimedia.org\", \"upload.wikimedia.org\",\n  \"images.weserv.nl\", \"wsrv.nl\", \"archive.org\", \"ak-asset.jarir.com\", \"freewebnovel.com\"\n]);\nconst MAX_MEDIA_BYTES = 8 * 1024 * 1024;\nconst MAX_CATALOG_BYTES = 4 * 1024 * 1024;\nconst CATALOG_TARGETS: Record<string, string> = {\n  \"catalog-mangadex\": \"https://api.mangadex.org/manga\",\n  \"catalog-mangadex-covers\": \"https://api.mangadex.org/cover\",\n  \"catalog-openlibrary\": \"https://openlibrary.org/search.json\",\n  \"catalog-openlibrary-editions\": \"https://openlibrary.org/works\",\n  \"catalog-googlebooks\": \"https://www.googleapis.com/books/v1/volumes\",\n  \"catalog-jikan\": \"https://api.jikan.moe/v4\",\n  \"catalog-anilist\": \"https://graphql.anilist.co\",\n  \"catalog-wikipedia\": \"https://en.wikipedia.org/w/api.php\",\n  \"catalog-wikidata\": \"https://www.wikidata.org/w/api.php\",\n  \"catalog-commons\": \"https://commons.wikimedia.org/w/api.php\",\n  \"catalog-dc-fandom\": \"https://dc.fandom.com/api.php\",\n  \"catalog-marvel-fandom\": \"https://marvel.fandom.com/api.php\"\n};\n\nfunction corsHeaders() {\n  return {\n    \"Access-Control-Allow-Origin\": \"*\",\n    \"Access-Control-Allow-Methods\": \"GET,POST,HEAD,OPTIONS\",\n    \"Access-Control-Allow-Headers\": \"authorization,apikey,content-type,accept\",\n    \"Vary\": \"Origin\"\n  };\n}\n\nasync function catalogProxy(request: Request, provider: string, url: URL) {\n  const targetBase = CATALOG_TARGETS[provider];\n  if (!targetBase) return new Response(\"Not Found\", { status: 404, headers: corsHeaders() });\n  const allowPost = provider === \"catalog-anilist\";\n  if (!(request.method === \"GET\" || request.method === \"HEAD\" || (allowPost && request.method === \"POST\"))) {\n    return new Response(\"Method Not Allowed\", { status: 405, headers: corsHeaders() });\n  }\n  let body: string | undefined;\n  if (request.method === \"POST\") {\n    body = await request.text();\n    if (new TextEncoder().encode(body).byteLength > 256 * 1024) {\n      return new Response(\"Payload Too Large\", { status: 413, headers: corsHeaders() });\n    }\n  }\n  try {\n    let target = targetBase;\n    if (provider === \"catalog-anilist\") {\n      target = targetBase;\n    } else if (provider === \"catalog-jikan\") {\n      const safePath = String(url.searchParams.get(\"path\") || \"\").replace(/^\\/+/, \"\");\n      if (!/^(?:manga(?:\\/\\d+(?:\\/(?:characters|pictures))?)?|characters(?:\\/\\d+\\/pictures)?)$/.test(safePath)) {\n        return new Response(\"Invalid catalog path\", { status: 400, headers: corsHeaders() });\n      }\n      const search = new URLSearchParams(url.search);\n      search.delete(\"path\");\n      target = targetBase + \"/\" + safePath + (search.toString() ? \"?\" + search.toString() : \"\");\n    } else if (provider === \"catalog-openlibrary-editions\") {\n      const workId = String(url.searchParams.get(\"work\") || \"\").toUpperCase();\n      if (!/^OL\\d+W$/.test(workId)) return new Response(\"Invalid work id\", { status: 400, headers: corsHeaders() });\n      const search = new URLSearchParams(url.search);\n      search.delete(\"work\");\n      target = targetBase + \"/\" + workId + \"/editions.json\" + (search.toString() ? \"?\" + search.toString() : \"\");\n    } else if (provider === \"catalog-dc-fandom\" || provider === \"catalog-marvel-fandom\") {\n      const action = String(url.searchParams.get(\"action\") || \"\");\n      const prop = String(url.searchParams.get(\"prop\") || \"\");\n      const generator = String(url.searchParams.get(\"generator\") || \"\");\n      const allowedProps = new Set([\"pageimages\", \"images\", \"imageinfo\"]);\n      if (action !== \"query\" || !allowedProps.has(prop) || (generator && generator !== \"search\")) {\n        return new Response(\"Invalid Fandom query\", { status: 400, headers: corsHeaders() });\n      }\n      if (String(url.searchParams.get(\"titles\") || \"\").length > 1800 ||\n          String(url.searchParams.get(\"gsrsearch\") || \"\").length > 120 ||\n          !/^\\d*$/.test(String(url.searchParams.get(\"pageids\") || \"\"))) {\n        return new Response(\"Invalid Fandom query\", { status: 400, headers: corsHeaders() });\n      }\n      const search = new URLSearchParams(url.search);\n      search.delete(\"origin\");\n      search.set(\"format\", \"json\");\n      target = targetBase + \"?\" + search.toString();\n    } else {\n      target = targetBase + (url.search || \"\");\n    }\n    const headers: Record<string, string> = { \"Accept\": \"application/json\" };\n    if (body) headers[\"Content-Type\"] = \"application/json\";\n    // Open Library accepts the platform default but rejects this service's\n    // explicit User-Agent on its editions endpoint. Keep the identity header\n    // for the other catalog providers while allowing verified book editions.\n    if (provider !== \"catalog-openlibrary\" && provider !== \"catalog-openlibrary-editions\") {\n      headers[\"User-Agent\"] = \"Lorefy/1.0 (lorefysupport@gmail.com)\";\n    }\n    const upstream = await fetch(target, {\n      method: request.method === \"HEAD\" ? \"GET\" : request.method,\n      headers,\n      body,\n      signal: AbortSignal.timeout(10000)\n    });\n    const bytes = await upstream.arrayBuffer();\n    if (bytes.byteLength > MAX_CATALOG_BYTES) return new Response(\"Response Too Large\", { status: 413, headers: corsHeaders() });\n    return new Response(request.method === \"HEAD\" ? null : bytes, {\n      status: upstream.status,\n      headers: {\n        ...corsHeaders(),\n        \"Content-Type\": upstream.headers.get(\"content-type\") || \"application/json; charset=utf-8\",\n        \"Cache-Control\": \"public, max-age=300\",\n        \"X-Content-Type-Options\": \"nosniff\"\n      }\n    });\n  } catch (_) {\n    return new Response(\"Catalog source unavailable\", { status: 502, headers: corsHeaders() });\n  }\n}\n\nfunction approvedImageUrl(value: string): URL | null {\n  try {\n    const url = new URL(value);\n    const host = url.hostname.replace(/^www\\./i, \"\").toLowerCase();\n  const hostnameAllowed = IMAGE_HOSTS.has(host) || host.endsWith(\".archive.org\") || host.endsWith(\".wikimedia.org\") ||\n      host.endsWith(\".fandom.com\") || host.endsWith(\".wikia.nocookie.net\");\n    if (url.protocol !== \"https:\" || !hostnameAllowed) return null;\n    return url;\n  } catch (_) {\n    return null;\n  }\n}\n\nasync function mediaProxy(request: Request, rawUrl: string) {\n  const target = approvedImageUrl(rawUrl);\n  if (!target) return new Response(\"Invalid image source\", { status: 400 });\n  let upstream: Response;\n  try {\n    upstream = await fetch(target, { redirect: \"follow\" });\n  } catch (_) {\n    return new Response(\"Image source unavailable\", { status: 502 });\n  }\n  if (!upstream.ok || !approvedImageUrl(upstream.url)) return new Response(\"Image source unavailable\", { status: 502 });\n  const contentType = String(upstream.headers.get(\"content-type\") || \"\").toLowerCase().split(\";\")[0];\n  const length = Number(upstream.headers.get(\"content-length\") || 0);\n  if (!/^image\\/(?:avif|jpeg|png|webp|gif)$/.test(contentType) || (length && length > MAX_MEDIA_BYTES)) {\n    return new Response(\"Unsupported image\", { status: 415 });\n  }\n  const body = request.method === \"HEAD\" ? null : await upstream.arrayBuffer();\n  if (body && body.byteLength > MAX_MEDIA_BYTES) return new Response(\"Image too large\", { status: 413 });\n  return new Response(body, {\n    headers: {\n      \"Content-Type\": contentType,\n      \"Cache-Control\": \"public, max-age=86400, stale-while-revalidate=604800\",\n      \"Access-Control-Allow-Origin\": \"*\",\n      \"X-Content-Type-Options\": \"nosniff\",\n      \"Vary\": \"Origin\"\n    }\n  });\n}\n\nconst page = (title: string, body: string) => `<!doctype html>\n<html lang=\"ar\" dir=\"rtl\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,viewport-fit=cover\"><title>${title} - Lorefy</title>\n<style>:root{color-scheme:light dark;--bg:#f5f5f7;--surface:#fff;--text:#1d1d1f;--muted:#666;--line:#ddd;--accent:#7227d8}@media(prefers-color-scheme:dark){:root{--bg:#09080d;--surface:#15131a;--text:#f5f5f7;--muted:#aaa4b3;--line:#312e38;--accent:#bd83ff}}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Tahoma,sans-serif}.shell{width:min(100%,760px);min-height:100vh;margin:auto;padding:38px 24px 70px;background:var(--surface)}header{display:flex;align-items:center;justify-content:space-between;padding-bottom:24px;border-bottom:1px solid var(--line)}header strong{font-size:18px;letter-spacing:2px}.mark{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#251036;color:#c694ff;font-size:24px}h1{font-size:clamp(30px,8vw,44px);margin:34px 0 8px}h2{font-size:19px;margin:0 0 9px}p,li{color:var(--muted);font-size:15px;line-height:1.9}section{padding:23px 0;border-top:1px solid var(--line)}a{color:var(--accent);font-weight:700}.nav{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}.nav a{display:inline-block;padding:10px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none}</style></head>\n<body><main class=\"shell\"><header><strong>LOREFY</strong><span class=\"mark\">✦</span></header>${body}<nav class=\"nav\"><a href=\"${baseUrl}/privacy\">الخصوصية</a><a href=\"${baseUrl}/support\">الدعم</a><a href=\"${baseUrl}/terms\">الشروط</a><a href=\"${baseUrl}/community-guidelines\">المجتمع</a></nav></main></body></html>`;\n\nconst pages: Record<string, string> = {\n  \"/\": page(\"Lorefy\", `<h1>مكتبتك. قصصك. عالمك.</h1><p>نظّم قراءاتك، قيّم الأعمال والشخصيات، وأنشئ قوائمك وشارك مراجعاتك في Lorefy.</p><section><h2>الدعم</h2><p><a href=\"mailto:${SUPPORT_EMAIL}\">${SUPPORT_EMAIL}</a></p></section>`),\n  \"/privacy\": page(\"سياسة الخصوصية\", `<h1>سياسة الخصوصية</h1><p>آخر تحديث: 13 أغسطس 2026</p><section><h2>البيانات</h2><p>ينشئ Lorefy حسابك باستخدام Google أو Apple. نعالج معرّف الحساب والبريد والاسم والصورة التي يوفرها مزود الدخول، إضافة إلى المكتبة وتقدم القراءة والتقييمات والمراجعات والقوائم والتفضيلات والصور التي ترفعها.</p></section><section><h2>الاستخدام والمشاركة</h2><p>نستخدم البيانات لتسجيل الدخول والمزامنة والبحث والمجتمع ومنع الإساءة. تعالج Supabase الحساب والمزامنة والتخزين، ويعالج Google أو Apple تسجيل الدخول. لا نبيع بياناتك ولا نستخدمها للتتبع عبر تطبيقات أخرى.</p></section><section><h2>المحتوى العام</h2><p>قد تظهر المراجعات والتعليقات والصور التي تنشرها للمستخدمين الآخرين. يمكنك حذف محتواك والإبلاغ والحظر والكتم.</p></section><section><h2>الحفظ والحذف</h2><p>نحتفظ بالبيانات ما دام الحساب قائماً. يمكنك حذف الحساب من داخل التطبيق؛ يحذف المسار حسابك وملفاتك الخاصة وبيانات المزامنة ويلغي تفويض Apple عندما ينطبق.</p></section><section><h2>التواصل</h2><p>لطلب الوصول أو التصحيح أو الحذف: <a href=\"mailto:${SUPPORT_EMAIL}\">${SUPPORT_EMAIL}</a>.</p></section>`),\n  \"/support\": page(\"الدعم\", `<h1>دعم Lorefy</h1><section><h2>تواصل معنا</h2><p>أرسل وصف المشكلة وإصدار التطبيق ونوع الجهاز إلى <a href=\"mailto:${SUPPORT_EMAIL}\">${SUPPORT_EMAIL}</a>. لا ترسل كلمة المرور أو رمز التحقق.</p></section><section><h2>الحساب والحذف</h2><p>استخدم Google أو Apple نفسه الذي بدأت به. لحذف الحساب افتح الإعدادات ← الخصوصية والبيانات ← حذف الحساب.</p></section><section><h2>محتوى مسيء</h2><p>استخدم الإبلاغ من قائمة المراجعة أو التعليق، ثم اكتم المستخدم أو احظره عند الحاجة. نعالج المخاطر المباشرة بأولوية.</p></section>`),\n  \"/terms\": page(\"شروط الاستخدام\", `<h1>شروط الاستخدام</h1><p>آخر تحديث: 13 أغسطس 2026</p><section><h2>الخدمة والحساب</h2><p>Lorefy لتنظيم القراءات والتقييمات والقوائم والمراجعات. يجب استخدام حساب Google أو Apple صالح وأنت مسؤول عن نشاط حسابك.</p></section><section><h2>المحتوى والحقوق</h2><p>تظل حقوق الأعمال والأغلفة والصور لأصحابها. لا تنشر مادة لا تملك حق استخدامها، وقد نحذف المحتوى المخالف عند تلقي بلاغ صحيح.</p></section><section><h2>السلوك</h2><p>يمنع التحرش والتهديد والكراهية والمحتوى الجنسي الصريح وانتحال الهوية والرسائل المزعجة وانتهاك الخصوصية أو الملكية الفكرية.</p></section><section><h2>التواصل</h2><p><a href=\"mailto:${SUPPORT_EMAIL}\">${SUPPORT_EMAIL}</a></p></section>`),\n  \"/community-guidelines\": page(\"إرشادات المجتمع\", `<h1>إرشادات المجتمع</h1><section><h2>الممنوع</h2><p>التحرش والتهديد والكراهية والتنمر والمحتوى الجنسي الصريح واستغلال القاصرين وانتحال الهوية وكشف المعلومات الشخصية والرسائل المزعجة وانتهاك الحقوق.</p></section><section><h2>الحرق</h2><p>استخدم علامة الحرق قبل ذكر الأحداث المهمة.</p></section><section><h2>الإبلاغ والحظر</h2><p>يمكن الإبلاغ عن أي مراجعة أو تعليق. استخدم الكتم لإخفاء المحتوى أو الحظر لإخفائه ومنع التفاعل. يراجع فريق Lorefy البلاغات ويتخذ الإجراء المناسب.</p></section><section><h2>التواصل</h2><p><a href=\"mailto:${SUPPORT_EMAIL}\">${SUPPORT_EMAIL}</a></p></section>`)\n};\n\nDeno.serve(async (request) => {\n  if (request.method === \"OPTIONS\") return new Response(null, { status: 204, headers: corsHeaders() });\n  const url = new URL(request.url);\n  const segments = url.pathname.split(\"/\").filter(Boolean);\n  const lastSegment = segments.at(-1) || \"\";\n  if (lastSegment.startsWith(\"catalog-\")) return catalogProxy(request, lastSegment, url);\n  if (request.method !== \"GET\" && request.method !== \"HEAD\") return new Response(\"Method Not Allowed\", { status: 405, headers: corsHeaders() });\n  if (lastSegment === \"media\") return mediaProxy(request, url.searchParams.get(\"url\") || \"\");\n  const functionPath = lastSegment === \"lorefy-public\" ? \"/\" : `/${lastSegment}`;\n  const content = pages[functionPath];\n  if (!content) return new Response(\"Not Found\", { status: 404 });\n  return new Response(request.method === \"HEAD\" ? null : content, {\n    headers: {\n      \"Content-Type\": \"text/html; charset=utf-8\",\n      \"Cache-Control\": \"public, max-age=300\",\n      \"X-Content-Type-Options\": \"nosniff\",\n      \"Referrer-Policy\": \"strict-origin-when-cross-origin\",\n      \"Content-Security-Policy\": \"default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'\"\n    }\n  });\n});\n"
+        }
+      ]
+    },
+    {
+      "id": "457f418c-1760-4005-b404-59af251ea16f",
+      "slug": "lorefy-html-test",
+      "name": "lorefy-html-test",
+      "status": "ACTIVE",
+      "version": 3,
+      "created_at": 1786619370424,
+      "updated_at": 1786625899827,
+      "verify_jwt": true,
+      "import_map": false,
+      "entrypoint_path": "/tmp/user_fn_qsroxmltioxqozmykens_457f418c-1760-4005-b404-59af251ea16f_2/source/index.ts",
+      "ezbr_sha256": "0aeb6f4f577850020743a8c0bcf4c165c6e8b27a02742a5ac0278b6d870b88f4",
+      "files": [
+        {
+          "name": "index.ts",
+          "content": "Deno.serve(() => new Response(JSON.stringify({ error: \"not_found\" }), {\n  status: 404,\n  headers: {\n    \"Content-Type\": \"application/json; charset=utf-8\",\n    \"Cache-Control\": \"no-store\",\n    \"X-Content-Type-Options\": \"nosniff\"\n  }\n}));"
+        }
+      ]
+    },
+    {
+      "id": "4d122e2d-b9e8-483e-9256-46c678f57c53",
+      "slug": "apple-authorization",
+      "name": "apple-authorization",
+      "status": "ACTIVE",
+      "version": 5,
+      "created_at": 1786620199020,
+      "updated_at": 1786659555478,
+      "verify_jwt": true,
+      "import_map": false,
+      "entrypoint_path": "/tmp/user_fn_qsroxmltioxqozmykens_4d122e2d-b9e8-483e-9256-46c678f57c53_4/source/apple-authorization/index.ts",
+      "ezbr_sha256": "80cd3a52fce0576c03e3d7c9faf0ff4b6c34a38a882639fec898688952b9bce8",
+      "files": [
+        {
+          "name": "apple-authorization/index.ts",
+          "content": "import { createClient } from \"https://esm.sh/@supabase/supabase-js@2\";\nimport { appleConfiguration, createAppleClientSecret, verifyAppleIdentityToken } from \"../_shared/apple.ts\";\n\nconst json = (body: unknown, status = 200) => new Response(JSON.stringify(body), {\n  status,\n  headers: {\n    \"Content-Type\": \"application/json\",\n    \"Access-Control-Allow-Origin\": \"*\",\n    \"Access-Control-Allow-Headers\": \"authorization, x-client-info, apikey, content-type\",\n    \"Access-Control-Allow-Methods\": \"POST, OPTIONS\"\n  }\n});\n\nconst isCode = (value: unknown): value is string =>\n  typeof value === \"string\" && value.length >= 10 && value.length <= 4096;\n\nDeno.serve(async (request) => {\n  if (request.method === \"OPTIONS\") return new Response(null, { status: 204, headers: json(null).headers });\n  if (request.method !== \"POST\") return json({ error: \"method_not_allowed\" }, 405);\n\n  const authorization = request.headers.get(\"Authorization\");\n  if (!authorization) return json({ error: \"unauthorized\" }, 401);\n  let payload: { authorizationCode?: unknown };\n  try { payload = await request.json(); } catch { return json({ error: \"invalid_json\" }, 400); }\n  if (!isCode(payload.authorizationCode)) return json({ error: \"invalid_authorization_code\" }, 400);\n\n  const supabaseUrl = Deno.env.get(\"SUPABASE_URL\");\n  const anonKey = Deno.env.get(\"SUPABASE_ANON_KEY\");\n  const serviceRoleKey = Deno.env.get(\"SUPABASE_SERVICE_ROLE_KEY\");\n  const apple = appleConfiguration();\n  if (!supabaseUrl || !anonKey || !serviceRoleKey || !apple) return json({ error: \"server_not_configured\" }, 503);\n\n  const caller = createClient(supabaseUrl, anonKey, {\n    global: { headers: { Authorization: authorization } },\n    auth: { persistSession: false, autoRefreshToken: false }\n  });\n  const { data: userData, error: userError } = await caller.auth.getUser();\n  const user = userData.user;\n  if (userError || !user) return json({ error: \"unauthorized\" }, 401);\n\n  const linkedAppleIdentity = (user.identities || []).find((identity) => identity.provider === \"apple\");\n  if (!linkedAppleIdentity) return json({ error: \"apple_identity_required\" }, 409);\n  const linkedAppleSubject = linkedAppleIdentity.identity_data?.sub;\n  if (typeof linkedAppleSubject !== \"string\" || !linkedAppleSubject) {\n    return json({ error: \"apple_identity_invalid\" }, 409);\n  }\n\n  try {\n    const clientSecret = await createAppleClientSecret(apple);\n    const tokenResponse = await fetch(\"https://appleid.apple.com/auth/token\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/x-www-form-urlencoded\" },\n      body: new URLSearchParams({\n        client_id: apple.clientId,\n        client_secret: clientSecret,\n        code: payload.authorizationCode,\n        grant_type: \"authorization_code\"\n      })\n    });\n    const tokens = await tokenResponse.json();\n    if (!tokenResponse.ok || typeof tokens.refresh_token !== \"string\" || !tokens.refresh_token || typeof tokens.id_token !== \"string\") {\n      console.error(\"apple token exchange\", tokenResponse.status, tokens.error || \"missing_refresh_token\");\n      return json({ error: \"apple_token_exchange_failed\" }, 502);\n    }\n    const appleSubject = await verifyAppleIdentityToken(tokens.id_token, apple.clientId);\n    if (appleSubject !== linkedAppleSubject) return json({ error: \"apple_identity_mismatch\" }, 409);\n\n    const admin = createClient(supabaseUrl, serviceRoleKey, {\n      auth: { persistSession: false, autoRefreshToken: false }\n    });\n    const stored = await admin.rpc(\"store_apple_authorization\", {\n      target_user_id: user.id,\n      refresh_token: tokens.refresh_token,\n      apple_subject: appleSubject\n    });\n    if (stored.error) throw stored.error;\n    return json({ registered: true });\n  } catch (error) {\n    console.error(\"apple authorization storage\", error);\n    return json({ error: \"apple_authorization_storage_failed\" }, 500);\n  }\n});\n\r\n"
+        },
+        {
+          "name": "_shared/apple.ts",
+          "content": "import { SignJWT, createRemoteJWKSet, importPKCS8, jwtVerify } from \"npm:jose@5.10.0\";\n\nexport type AppleConfiguration = {\n  clientId: string;\n  keyId: string;\n  teamId: string;\n  privateKey: string;\n};\n\nexport function appleConfiguration(): AppleConfiguration | null {\n  const clientId = Deno.env.get(\"APPLE_CLIENT_ID\") || \"\";\n  const keyId = Deno.env.get(\"APPLE_KEY_ID\") || \"\";\n  const teamId = Deno.env.get(\"APPLE_TEAM_ID\") || \"\";\n  const privateKey = (Deno.env.get(\"APPLE_PRIVATE_KEY\") || \"\").replace(/\\\\n/g, \"\\n\");\n  if (!clientId || !keyId || !teamId || !privateKey) return null;\n  return { clientId, keyId, teamId, privateKey };\n}\n\nexport async function createAppleClientSecret(config: AppleConfiguration) {\n  const key = await importPKCS8(config.privateKey, \"ES256\");\n  const now = Math.floor(Date.now() / 1000);\n  return new SignJWT({})\n    .setProtectedHeader({ alg: \"ES256\", kid: config.keyId })\n    .setIssuer(config.teamId)\n    .setSubject(config.clientId)\n    .setAudience(\"https://appleid.apple.com\")\n    .setIssuedAt(now)\n    .setExpirationTime(now + 300)\n    .sign(key);\n}\n\nconst appleJwks = createRemoteJWKSet(new URL(\"https://appleid.apple.com/auth/keys\"));\n\nexport async function verifyAppleIdentityToken(identityToken: string, clientId: string) {\n  const { payload } = await jwtVerify(identityToken, appleJwks, {\n    issuer: \"https://appleid.apple.com\",\n    audience: clientId,\n    algorithms: [\"RS256\"]\n  });\n  if (typeof payload.sub !== \"string\" || !payload.sub) throw new Error(\"apple_subject_missing\");\n  return payload.sub;\n}\n\r\n"
+        }
+      ]
+    },
+    {
+      "id": "3fc128b9-5279-48df-adda-0a6ded7f8144",
+      "slug": "dispatch-notifications",
+      "name": "dispatch-notifications",
+      "status": "ACTIVE",
+      "version": 2,
+      "created_at": 1788076756684,
+      "updated_at": 1788076756684,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "/tmp/user_fn_qsroxmltioxqozmykens_3fc128b9-5279-48df-adda-0a6ded7f8144_1/source/index.ts",
+      "ezbr_sha256": "634cace70e16d7a0d7a4ff96047fc92de22e196a9f85fd175af47c09f3503c49",
+      "files": [
+        {
+          "name": "index.ts",
+          "content": "import { createClient } from \"https://esm.sh/@supabase/supabase-js@2\";\n\nconst APNS_PRODUCTION_URL = \"https://api.push.apple.com/3/device\";\nconst APNS_SANDBOX_URL = \"https://api.sandbox.push.apple.com/3/device\";\n\nconst json = (body: unknown, status = 200) => new Response(JSON.stringify(body), {\n  status,\n  headers: { \"Content-Type\": \"application/json\", \"Cache-Control\": \"no-store\" }\n});\n\nfunction base64Url(value: string | Uint8Array) {\n  const bytes = typeof value === \"string\" ? new TextEncoder().encode(value) : value;\n  let binary = \"\";\n  for (const byte of bytes) binary += String.fromCharCode(byte);\n  return btoa(binary).replace(/\\+/g, \"-\").replace(/\\//g, \"_\").replace(/=+$/g, \"\");\n}\n\nfunction pemBytes(value: string) {\n  const normalized = value.replace(/\\\\n/g, \"\\n\");\n  const encoded = normalized\n    .replace(/-----BEGIN PRIVATE KEY-----/g, \"\")\n    .replace(/-----END PRIVATE KEY-----/g, \"\")\n    .replace(/\\s+/g, \"\");\n  return Uint8Array.from(atob(encoded), (character) => character.charCodeAt(0));\n}\n\nasync function secureEqual(left: string, right: string) {\n  const encoder = new TextEncoder();\n  const [leftHash, rightHash] = await Promise.all([\n    crypto.subtle.digest(\"SHA-256\", encoder.encode(left)),\n    crypto.subtle.digest(\"SHA-256\", encoder.encode(right))\n  ]);\n  const leftBytes = new Uint8Array(leftHash);\n  const rightBytes = new Uint8Array(rightHash);\n  let difference = 0;\n  for (let index = 0; index < leftBytes.length; index += 1) difference |= leftBytes[index] ^ rightBytes[index];\n  return difference === 0 && left.length === right.length;\n}\n\nasync function createApnsJwt(teamId: string, keyId: string, privateKey: string) {\n  const header = base64Url(JSON.stringify({ alg: \"ES256\", kid: keyId }));\n  const claims = base64Url(JSON.stringify({ iss: teamId, iat: Math.floor(Date.now() / 1000) }));\n  const unsigned = `${header}.${claims}`;\n  const key = await crypto.subtle.importKey(\n    \"pkcs8\",\n    pemBytes(privateKey),\n    { name: \"ECDSA\", namedCurve: \"P-256\" },\n    false,\n    [\"sign\"]\n  );\n  const signature = await crypto.subtle.sign(\n    { name: \"ECDSA\", hash: \"SHA-256\" },\n    key,\n    new TextEncoder().encode(unsigned)\n  );\n  return `${unsigned}.${base64Url(new Uint8Array(signature))}`;\n}\n\ntype WebhookPayload = {\n  type?: string;\n  schema?: string;\n  table?: string;\n  record?: { id?: string; user_id?: string };\n};\n\nDeno.serve(async (request) => {\n  if (request.method !== \"POST\") return json({ error: \"method_not_allowed\" }, 405);\n\n  const webhookSecret = Deno.env.get(\"PUSH_WEBHOOK_SECRET\") || \"\";\n  const suppliedSecret = request.headers.get(\"x-lorefy-webhook-secret\") || \"\";\n  if (!webhookSecret || !suppliedSecret || !await secureEqual(webhookSecret, suppliedSecret)) {\n    return json({ error: \"unauthorized\" }, 401);\n  }\n\n  let payload: WebhookPayload;\n  try { payload = await request.json(); }\n  catch { return json({ error: \"invalid_json\" }, 400); }\n  if (payload.type !== \"INSERT\" || payload.schema !== \"public\" || payload.table !== \"notifications\") {\n    return json({ error: \"unsupported_webhook\" }, 400);\n  }\n\n  const notificationId = String(payload.record?.id || \"\");\n  const userId = String(payload.record?.user_id || \"\");\n  if (!/^[0-9a-f-]{36}$/i.test(notificationId) || !/^[0-9a-f-]{36}$/i.test(userId)) {\n    return json({ error: \"invalid_notification\" }, 400);\n  }\n\n  const supabaseUrl = Deno.env.get(\"SUPABASE_URL\");\n  const serviceRoleKey = Deno.env.get(\"SUPABASE_SERVICE_ROLE_KEY\");\n  const teamId = Deno.env.get(\"APNS_TEAM_ID\");\n  const keyId = Deno.env.get(\"APNS_KEY_ID\");\n  const privateKey = Deno.env.get(\"APNS_PRIVATE_KEY\");\n  const topic = Deno.env.get(\"APNS_BUNDLE_ID\") || \"com.lorefy.app\";\n  const environment = Deno.env.get(\"APNS_ENVIRONMENT\") === \"development\" ? \"development\" : \"production\";\n  if (!supabaseUrl || !serviceRoleKey || !teamId || !keyId || !privateKey) {\n    return json({ error: \"server_not_configured\" }, 503);\n  }\n\n  const admin = createClient(supabaseUrl, serviceRoleKey, {\n    auth: { persistSession: false, autoRefreshToken: false }\n  });\n  const [{ data: notification, error: notificationError }, { data: devices, error: deviceError }] = await Promise.all([\n    admin.from(\"notifications\")\n      .select(\"id,user_id,kind,title,body,target_path,data,event_key\")\n      .eq(\"id\", notificationId).eq(\"user_id\", userId).maybeSingle(),\n    admin.from(\"push_device_tokens\")\n      .select(\"id,token,environment\")\n      .eq(\"user_id\", userId).eq(\"platform\", \"ios\")\n      .eq(\"environment\", environment)\n      .order(\"last_seen_at\", { ascending: false }).limit(20)\n  ]);\n  if (notificationError || deviceError) return json({ error: \"notification_lookup_failed\" }, 502);\n  if (!notification) return json({ error: \"notification_not_found\" }, 404);\n  if (!devices?.length) return json({ delivered: 0, unavailable: 0 }, 202);\n\n  let authorization: string;\n  try { authorization = await createApnsJwt(teamId, keyId, privateKey); }\n  catch { return json({ error: \"apns_key_invalid\" }, 503); }\n\n  const invalidDeviceIds: string[] = [];\n  let delivered = 0;\n  let unavailable = 0;\n  await Promise.all(devices.map(async (device) => {\n    const endpoint = device.environment === \"development\" ? APNS_SANDBOX_URL : APNS_PRODUCTION_URL;\n    const response = await fetch(`${endpoint}/${encodeURIComponent(device.token)}`, {\n      method: \"POST\",\n      headers: {\n        \"Authorization\": `bearer ${authorization}`,\n        \"Content-Type\": \"application/json\",\n        \"apns-topic\": topic,\n        \"apns-push-type\": \"alert\",\n        \"apns-priority\": \"10\",\n        \"apns-collapse-id\": String(notification.event_key).slice(0, 64)\n      },\n      body: JSON.stringify({\n        aps: {\n          alert: { title: notification.title, body: notification.body },\n          badge: 1,\n          sound: \"default\"\n        },\n        notificationId: notification.id,\n        kind: notification.kind,\n        targetPath: notification.target_path,\n        data: notification.data\n      })\n    });\n    if (response.ok) { delivered += 1; return; }\n    unavailable += 1;\n    let reason = \"\";\n    try { reason = String((await response.json())?.reason || \"\"); } catch {}\n    if (response.status === 410 || [\"BadDeviceToken\", \"Unregistered\", \"DeviceTokenNotForTopic\"].includes(reason)) {\n      invalidDeviceIds.push(device.id);\n    }\n  }));\n\n  if (invalidDeviceIds.length) {\n    await admin.from(\"push_device_tokens\").delete().in(\"id\", invalidDeviceIds);\n  }\n  return json({ delivered, unavailable }, 202);\n});\n\r\n"
+        }
+      ]
+    }
+  ]
+}

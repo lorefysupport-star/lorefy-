@@ -1,0 +1,139 @@
+- button "Settings":
+- button "Toggle appearance":
+- button "Notifications":
+  - generic: "1"
+- paragraph: قارئ Lorefy
+- paragraph: "@lorefy_demo"
+- paragraph: حساب العرض المحلي
+- button "Following accounts":
+  - generic: "0"
+- button "Followers":
+  - generic: "0"
+- paragraph: "1"
+- paragraph: Review
+- button "عرض منشوراتي":
+  - strong: "1"
+  - generic: Post
+- paragraph: "2"
+- paragraph: Completed
+- paragraph: "420"
+- paragraph: chapters
+- paragraph: "84"
+- paragraph: reading hours
+- paragraph: Manga
+- paragraph: Favorite type
+- generic: Favorites
+- button "Edit favorite work 1":
+  - text: اختر الأعمال التي تحبها
+- region "Favorite characters":
+  - button "Edit favorite characters":
+    - strong: Favorite characters
+  - button "Choose character for slot 1":
+    - text: اختر شخصياتك المفضلة
+- generic: Recent activity
+- generic: Last saved activity
+- paragraph: Comics
+- paragraph: Manga
+- region "Community activity":
+  - strong: Community activity
+  - button "Replies 0":
+    - strong: Replies
+    - generic: "0"
+  - button "Saved posts 1":
+    - strong: Saved posts
+    - generic: "1"
+  - button "Characters 0":
+    - strong: Characters
+    - generic: "0"
+- button "Open reading diary":
+  - strong: Reading diary
+  - generic: Sessions, notes and quotes
+- region "Preference lists":
+  - button "Preference lists 8 categories · 1 / 80 slots":
+    - strong: Preference lists
+    - emphasis: 8 categories · 1 / 80 slots
+- button "My lists 1 List":
+  - strong: My lists
+  - generic: 1 List
+- button "2026 recap Your year in reading":
+  - strong: 2026 recap
+  - generic: Your year in reading
+- button "Import library AniList · Kitsu · MAL · Goodreads · StoryGraph · other sources":
+  - strong: Import library
+  - generic: AniList · Kitsu · MAL · Goodreads · StoryGraph · other sources
+- button "Reading"
+- button "Read"
+- button "Want to read"
+- button "Paused"
+- button "Dropped"
+- paragraph: Your reading list is empty
+- paragraph: Your most-read formats
+- generic: 1 عمل
+- generic: Manga
+- generic: 1 عمل
+- generic: Comics
+- paragraph: Premium coming soon
+- paragraph: Unavailable during beta
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Home":
+    - generic: Home
+- generic: Settings
+- button "Done"
+- paragraph: Appearance
+- group "Appearance":
+  - button "Light": Light
+  - button "Dark": Dark
+  - button "Pink" [pressed]: Pink
+- paragraph: Language
+- button "App language English":
+  - generic: App language
+  - text: English
+- paragraph: Notifications
+- generic: New chapter alerts
+- switch "New chapter alerts" [checked]
+- generic: Push notifications
+- switch "Push notifications"
+- paragraph: Privacy
+- generic: Private account
+- switch "Private account"
+- button "Privacy policy":
+  - generic: Privacy policy
+- paragraph: Account
+- button "My preferences":
+  - generic: My preferences
+- button "Edit profile":
+  - generic: Edit profile
+- button "Log out":
+  - generic: Log out
+- button "Delete account":
+  - generic: Delete account
+- paragraph: Lorefy · 1.0.0 · Beta
+- region "Privacy and safety":
+  - heading "Privacy and safety" [level=2]
+  - paragraph: Manage your data, corrections and content preferences.
+  - button "Data and list privacy Export your data and control who sees your lists":
+    - strong: Data and list privacy
+    - generic: Export your data and control who sees your lists
+    - generic: ‹
+  - button "Correction center Track cover, character and catalog corrections":
+    - strong: Correction center
+    - generic: Track cover, character and catalog corrections
+    - generic: ‹
+  - button "Safety and content Reports, blocked accounts and muted accounts":
+    - strong: Safety and content
+    - generic: Reports, blocked accounts and muted accounts
+    - generic: ‹
+- dialog "مركز التصحيحات":
+  - banner:
+    - button "Close" [active]:
+    - heading "مركز التصحيحات" [level=2]
+    - paragraph: تتبّع الملاحظات المرسلة على بيانات الأعمال
+  - heading "طلباتك" [level=3]
+  - paragraph: التصحيح لا يغير بيانات العمل فوراً؛ يبقى في قائمة مراجعة لحماية المكتبة من التعديلات الخاطئة.
+  - generic: لم ترسل أي تصحيح بعد. افتح صفحة أي عمل واختر تصحيح البيانات.

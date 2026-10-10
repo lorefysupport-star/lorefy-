@@ -1,0 +1,14 @@
+node_modules/
+ios-web/
+config/lorefy-release.json
+ios/App/App/public/
+output/
+artifacts/
+.playwright-cli/
+tools/.cache/
+*.log
+*.p8
+*.p12
+*.mobileprovision
+.env
+.env.*

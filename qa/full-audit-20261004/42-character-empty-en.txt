@@ -1,0 +1,854 @@
+- button "Back":
+- button "Share work":
+- button "Chapter notifications":
+- banner:
+  - img "Hunter x Hunter"
+  - paragraph: Manga · 1998
+  - heading "Hunter x Hunter" [level=1]
+  - paragraph: Togashi, Yoshihiro
+  - strong: "4.4"
+  - generic: out of 5
+  - generic: Ongoing
+  - generic: 420 chapters
+  - generic: Shounen Jump (Weekly)
+  - navigation "Work sections":
+    - button "Overview"
+    - button "Chapters"
+    - button "Reader reviews"
+- generic: Read
+- button "Edit"
+- generic: No reading progress saved yet
+- generic: Ongoing
+- generic "Detailed ratings"
+- paragraph: Story
+- paragraph: "\"Secret treasure hoards, undiscovered wealth... mystical places, unexplored frontiers... 'The mysterious unknown.' There's magic in such words for those captivated by its spell. They are called 'Hunters'!\" Gon Freecss wants to become a Hunter so he can find his father, a man who abandoned him to pursue a life of adventure. But it's not that simple: only one in one hundred thousand can pass the Hunter Exam, and that is just the first obstacle on his journey. During the Hunter Exam, Gon befriends many other potential Hunters, such as the mysterious Killua; the revenge-driven Kurapika; and Leorio, who aims to become a doctor. There's a world of adventure and peril awaiting, and those who embrace it with open arms can become the greatest Hunters of them all! [Written by MAL Rewrite]"
+- button "More"
+- button "Add to library":
+  - generic: Read
+- button "Write a review":
+  - generic: Review work
+- button "More work options":
+- region "فصول Hunter x Hunter":
+  - heading "Chapters" [level=2]
+  - generic: 420 chapters
+  - button "العودة إلى آخر فصل قيّمته، الفصل 2":
+    - generic: آخر تقييم · Chapter 2
+  - strong: Reading progress
+  - generic: 420 / 420
+  - progressbar "Chapters read"
+  - generic: Chapter range
+  - combobox "Chapter range":
+    - option "1–10"
+    - option "11–20"
+    - option "21–30"
+    - option "31–40"
+    - option "41–50"
+    - option "51–60"
+    - option "61–70"
+    - option "71–80"
+    - option "81–90"
+    - option "91–100"
+    - option "101–110"
+    - option "111–120"
+    - option "121–130"
+    - option "131–140"
+    - option "141–150"
+    - option "151–160"
+    - option "161–170"
+    - option "171–180"
+    - option "181–190"
+    - option "191–200"
+    - option "201–210"
+    - option "211–220"
+    - option "221–230"
+    - option "231–240"
+    - option "241–250"
+    - option "251–260"
+    - option "261–270"
+    - option "271–280"
+    - option "281–290"
+    - option "291–300"
+    - option "301–310"
+    - option "311–320"
+    - option "321–330"
+    - option "331–340"
+    - option "341–350"
+    - option "351–360"
+    - option "361–370"
+    - option "371–380"
+    - option "381–390"
+    - option "391–400"
+    - option "401–410"
+    - option "411–420" [selected]
+  - button "Go to chapter":
+  - button "Chapter 411, open rating and comment":
+    - img "غلاف الفصل 411"
+    - generic: Chapter 411
+    - generic: Announcement
+    - generic: 20 pages
+    - generic: June 29, 2026
+    - generic: Rate now
+  - button "Read through chapter 411" [pressed]:
+    - generic: Read
+  - button "Chapter 412, open rating and comment":
+    - img "غلاف الفصل 412"
+    - generic: Chapter 412
+    - generic: Question
+    - generic: 19 pages
+    - generic: July 6, 2026
+    - generic: Rate now
+  - button "Read through chapter 412" [pressed]:
+    - generic: Read
+  - button "Chapter 413, open rating and comment":
+    - img "غلاف الفصل 413"
+    - generic: Chapter 413
+    - generic: Loyalty
+    - generic: 19 pages
+    - generic: July 13, 2026
+    - generic: Rate now
+  - button "Read through chapter 413" [pressed]:
+    - generic: Read
+  - button "Chapter 414, open rating and comment":
+    - img "غلاف الفصل 414"
+    - generic: Chapter 414
+    - generic: Friends
+    - generic: 19 pages
+    - generic: July 20, 2026
+    - generic: Rate now
+  - button "Read through chapter 414" [pressed]:
+    - generic: Read
+  - button "Chapter 415, open rating and comment":
+    - img "غلاف الفصل 415"
+    - generic: Chapter 415
+    - generic: Authenticity
+    - generic: 19 pages
+    - generic: July 27, 2026
+    - generic: Rate now
+  - button "Read through chapter 415" [pressed]:
+    - generic: Read
+  - button "Chapter 416, open rating and comment":
+    - img "غلاف الفصل 416"
+    - generic: Chapter 416
+    - generic: Proclamation
+    - generic: 19 pages
+    - generic: August 3, 2026
+    - generic: Rate now
+  - button "Read through chapter 416" [pressed]:
+    - generic: Read
+  - button "Chapter 417, open rating and comment":
+    - img "غلاف الفصل 417"
+    - generic: Chapter 417
+    - generic: Contingency
+    - generic: 19 pages
+    - generic: August 10, 2026
+    - generic: Rate now
+  - button "Read through chapter 417" [pressed]:
+    - generic: Read
+  - button "Chapter 418, open rating and comment":
+    - img "غلاف الفصل 418"
+    - generic: Chapter 418
+    - generic: Hypothesis
+    - generic: 19 pages
+    - generic: August 24, 2026
+    - generic: Rate now
+  - button "Read through chapter 418" [pressed]:
+    - generic: Read
+  - button "Chapter 419, open rating and comment":
+    - img "غلاف الفصل 419"
+    - generic: Chapter 419
+    - generic: Implementation
+    - generic: 19 pages
+    - generic: August 31, 2026
+    - generic: Rate now
+  - button "Read through chapter 419" [pressed]:
+    - generic: Read
+  - button "Chapter 420, close rating" [expanded]:
+    - img "غلاف الفصل 420"
+    - generic: Chapter 420
+    - generic: Encounter
+    - generic: 19 pages
+    - generic: September 7, 2026
+    - generic: Rate now
+  - button "Read through chapter 420" [pressed]:
+    - generic: Read
+  - strong: Encounter
+  - generic: Your rating وتعليقك
+  - group "Chapter rating out of 5":
+    - button "تقييم الفصل 1 من 5": "1"
+    - button "تقييم الفصل 2 من 5": "2"
+    - button "تقييم الفصل 3 من 5": "3"
+    - button "تقييم الفصل 4 من 5": "4"
+    - button "تقييم الفصل 5 من 5": "5"
+  - generic: اختر Your rating
+  - text: Your comment
+  - textbox "Your chapter comment":
+    - /placeholder: Your thoughts on this chapter
+  - checkbox "Contains spoilers"
+  - generic: Contains spoilers
+  - generic: Published reviews appear only in this chapter
+  - button "حفظ اقتباس من الفصل 420":
+    - generic: Save a quote from this chapter
+  - button "Save privately":
+    - generic: Save privately
+  - button "Close chapter rating": Cancel
+  - button "Add to chapter"
+  - status: "Local preview: additions appear here only, not to other users."
+  - region "Chapter discussion":
+    - heading "Chapter discussion" [level=3]
+    - paragraph: No reviews yet. Be the first to rate this chapter.
+  - button "Open reading diary for this work":
+    - generic: Reading diary
+  - 'link "عناوين وأغلفة Chapters: Hunterpedia"':
+    - /url: https://hunterxhunter.fandom.com/wiki/Category:Chapters
+  - status
+- button "Start reading session":
+  - generic: Start reading session
+- button "Friends"
+- button "Completed"
+- button "Reading"
+- button "Reviews"
+- region "Work details and recommendations":
+  - heading "Work details and recommendations" [level=3]
+  - button "Suggest a correction"
+  - button "More like this"
+  - button "Not interested"
+  - button "Togashi, Yoshihiro":
+    - generic: Togashi, Yoshihiro
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Search":
+    - generic: Search
+  - button "Home":
+    - generic: Home
+- dialog "تقييم شخصيات Hunter x Hunter":
+  - button "رجوع": ›
+  - strong: تقييم الشخصيات
+  - generic: Hunter x Hunter
+  - img "Hunter x Hunter"
+  - strong: Hunter x Hunter
+  - generic: "666"
+  - generic: شخصية
+  - generic: "0"
+  - generic: قيّمتها
+  - generic: —
+  - generic: متوسّطك
+  - strong: الشخصيات
+  - searchbox "ابحث عن شخصية" [active]: zzzz-audit-no-character
+  - tablist:
+    - tab "الكل" [selected]
+    - tab "قيّمتها"
+    - tab "رئيسية"
+    - tab "مساعدة"
+  - img "Killua Zoldyck"
+  - button "تعديل صورة Killua Zoldyck":
+  - strong: Killua Zoldyck
+  - emphasis: رئيسية
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Kurapika"
+  - button "تعديل صورة Kurapika":
+  - strong: Kurapika
+  - emphasis: رئيسية
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Gon Freecss"
+  - button "تعديل صورة Gon Freecss":
+  - strong: Gon Freecss
+  - emphasis: رئيسية
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Hisoka Morow"
+  - button "تعديل صورة Hisoka Morow":
+  - strong: Hisoka Morow
+  - emphasis: رئيسية
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Leorio Paradinight"
+  - button "تعديل صورة Leorio Paradinight":
+  - strong: Leorio Paradinight
+  - emphasis: رئيسية
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Chrollo Lucilfer"
+  - button "تعديل صورة Chrollo Lucilfer":
+  - strong: Chrollo Lucilfer
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Meruem"
+  - button "تعديل صورة Meruem":
+  - strong: Meruem
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Feitan Portor"
+  - button "تعديل صورة Feitan Portor":
+  - strong: Feitan Portor
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Illumi Zoldyck"
+  - button "تعديل صورة Illumi Zoldyck":
+  - strong: Illumi Zoldyck
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Isaac Netero"
+  - button "تعديل صورة Isaac Netero":
+  - strong: Isaac Netero
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Shizuku Murasaki"
+  - button "تعديل صورة Shizuku Murasaki":
+  - strong: Shizuku Murasaki
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Neferpitou"
+  - button "تعديل صورة Neferpitou":
+  - strong: Neferpitou
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Kite"
+  - button "تعديل صورة Kite":
+  - strong: Kite
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Biscuit Krueger"
+  - button "تعديل صورة Biscuit Krueger":
+  - strong: Biscuit Krueger
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Alluka Zoldyck"
+  - button "تعديل صورة Alluka Zoldyck":
+  - strong: Alluka Zoldyck
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Machi Komacine"
+  - button "تعديل صورة Machi Komacine":
+  - strong: Machi Komacine
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Komugi"
+  - button "تعديل صورة Komugi":
+  - strong: Komugi
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Ging Freecss"
+  - button "تعديل صورة Ging Freecss":
+  - strong: Ging Freecss
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Knuckle Bine"
+  - button "تعديل صورة Knuckle Bine":
+  - strong: Knuckle Bine
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Pakunoda"
+  - button "تعديل صورة Pakunoda":
+  - strong: Pakunoda
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Shaiapouf"
+  - button "تعديل صورة Shaiapouf":
+  - strong: Shaiapouf
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Ikalgo"
+  - button "تعديل صورة Ikalgo":
+  - strong: Ikalgo
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Morel Mackernasey"
+  - button "تعديل صورة Morel Mackernasey":
+  - strong: Morel Mackernasey
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Shalnark Ryuseih"
+  - button "تعديل صورة Shalnark Ryuseih":
+  - strong: Shalnark Ryuseih
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Canary"
+  - button "تعديل صورة Canary":
+  - strong: Canary
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Wing"
+  - button "تعديل صورة Wing":
+  - strong: Wing
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Zeno Zoldyck"
+  - button "تعديل صورة Zeno Zoldyck":
+  - strong: Zeno Zoldyck
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Pariston Hill"
+  - button "تعديل صورة Pariston Hill":
+  - strong: Pariston Hill
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Kalluto Zoldyck"
+  - button "تعديل صورة Kalluto Zoldyck":
+  - strong: Kalluto Zoldyck
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Silva Zoldyck"
+  - button "تعديل صورة Silva Zoldyck":
+  - strong: Silva Zoldyck
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Uvogin"
+  - button "تعديل صورة Uvogin":
+  - strong: Uvogin
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Menchi"
+  - button "تعديل صورة Menchi":
+  - strong: Menchi
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Nobunaga Hazama"
+  - button "تعديل صورة Nobunaga Hazama":
+  - strong: Nobunaga Hazama
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Meleoron"
+  - button "تعديل صورة Meleoron":
+  - strong: Meleoron
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Knov"
+  - button "تعديل صورة Knov":
+  - strong: Knov
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Ponzu"
+  - button "تعديل صورة Ponzu":
+  - strong: Ponzu
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Palm Siberia"
+  - button "تعديل صورة Palm Siberia":
+  - strong: Palm Siberia
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Nanika"
+  - button "تعديل صورة Nanika":
+  - strong: Nanika
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Tserriednich Hui Guo Rou"
+  - button "تعديل صورة Tserriednich Hui Guo Rou":
+  - strong: Tserriednich Hui Guo Rou
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Phinks Magcub"
+  - button "تعديل صورة Phinks Magcub":
+  - strong: Phinks Magcub
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Senritsu"
+  - button "تعديل صورة Senritsu":
+  - strong: Senritsu
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Shoot McMahon"
+  - button "تعديل صورة Shoot McMahon":
+  - strong: Shoot McMahon
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Mito Freecss"
+  - button "تعديل صورة Mito Freecss":
+  - strong: Mito Freecss
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Zushi"
+  - button "تعديل صورة Zushi":
+  - strong: Zushi
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Satotz"
+  - button "تعديل صورة Satotz":
+  - strong: Satotz
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Neon Nostrade"
+  - button "تعديل صورة Neon Nostrade":
+  - strong: Neon Nostrade
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Colt"
+  - button "تعديل صورة Colt":
+  - strong: Colt
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Menthuthuyoupi"
+  - button "تعديل صورة Menthuthuyoupi":
+  - strong: Menthuthuyoupi
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Morena Prudo"
+  - button "تعديل صورة Morena Prudo":
+  - strong: Morena Prudo
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Beans"
+  - button "تعديل صورة Beans":
+  - strong: Beans
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Gotou"
+  - button "تعديل صورة Gotou":
+  - strong: Gotou
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Razor"
+  - button "تعديل صورة Razor":
+  - strong: Razor
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Leroute"
+  - button "تعديل صورة Leroute":
+  - strong: Leroute
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Cheadle Yorkshire"
+  - button "تعديل صورة Cheadle Yorkshire":
+  - strong: Cheadle Yorkshire
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Hanzou"
+  - button "تعديل صورة Hanzou":
+  - strong: Hanzou
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Pokkle"
+  - button "تعديل صورة Pokkle":
+  - strong: Pokkle
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Cheetu"
+  - button "تعديل صورة Cheetu":
+  - strong: Cheetu
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Baise"
+  - button "تعديل صورة Baise":
+  - strong: Baise
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Welfin"
+  - button "تعديل صورة Welfin":
+  - strong: Welfin
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - img "Tonpa"
+  - button "تعديل صورة Tonpa":
+  - strong: Tonpa
+  - emphasis: مساعدة
+  - group "اختر تقييم الشخصية من 5":
+    - button "1 من 5": "1"
+    - button "2 من 5": "2"
+    - button "3 من 5": "3"
+    - button "4 من 5": "4"
+    - button "5 من 5": "5"
+  - button "عرض 60 شخصية أخرى"
+  - textbox "أضف شخصية":
+    - /placeholder: أضف شخصية غير مدرجة…
+  - button "إضافة"
+  - generic: "المصدر: MAL · AniList"
+  - link "MAL ↗":
+    - /url: https://myanimelist.net/manga/26
+  - generic "مراجعة العمل"

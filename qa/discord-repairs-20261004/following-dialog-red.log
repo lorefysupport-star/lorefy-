@@ -1,0 +1,465 @@
+✔ library search and sorting are independent of catalog search (9.0704ms)
+✔ own reviews do not get a moderation menu (0.5894ms)
+✔ Togashi manga volumes are not western comics (6.0197ms)
+✔ onboarding inherits the selected appearance (0.3992ms)
+✔ followers dialog supports Escape and traps focus (0.3243ms)
+✖ growth dialogs share keyboard dismissal and return focus (2.2579ms)
+✖ Following empty state has a reader discovery action (0.7228ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 99.962
+
+✖ failing tests:
+
+test at tests\audit-library-safety.test.js:41:1
+✖ growth dialogs share keyboard dismissal and return focus (2.2579ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /function bindDialogKeys\(/. Input:
+  
+  '/* ════════════════════════════════════════════════════════════════════════\n' +
+    '   Lorefy — Growth features  ·  Character Rating system   (growth-v15)\n' +
+    '   → window.LorefyGrowth\n' +
+    '\n' +
+    '   What this module does\n' +
+    '   ─────────────────────\n' +
+    '   • Adds a "تقييم الشخصيات" (Rate Characters) action on every work‑detail\n' +
+    '     screen, sitting RIGHT NEXT TO the "اكتب مراجعة" (Write a review) button.\n' +
+    '   • Opens a full, Apple‑styled character‑rating page: hero, search + filters,\n' +
+    '     a per‑character 1–5 score control, an inline review composer, and an\n' +
+    '     "add character" row.\n' +
+    '   • Loads the cast from MAL / Jikan with an AniList GraphQL fallback. Works\n' +
+    '     fully as a TEMPLATE with zero network (cast falls back to a sample set),\n' +
+    '     so the design is always populated.\n' +
+    '   • Persists scores + review to NEW localStorage keys only — it never touches\n' +
+    "     the app's existing keys, routes, data or DOM ownership.\n" +
+    '\n' +
+    '   Styling lives in styles/lorefy-system.css (the .lf-character-* classes).\n' +
+    '   This file only builds DOM + behaviour; it adds no colors of its own.\n' +
+    '   ════════════════════════════════════════════════════════════════════════ */\n' +
+    '(function (global) {\n' +
+    '  "use strict";\n' +
+    '\n' +
+    '  var doc = global.document;\n' +
+    '  if (!doc) return;\n' +
+    '\n' +
+    '  /* ── small helpers ─────────────────────────────────────────────────── */\n' +
+    '  var params = (function () { try { return new URLSearchParams(location.search); } catch (e) { return new URLSearchParams(""); } });\n' +
+    '  function qp(key) { try { return params().get(key); } catch (e) { return null; } }\n' +
+    '  function el(tag, props, kids) {\n' +
+    '    var node = doc.createElement(tag);\n' +
+    '    if (props) for (var k in props) {\n' +
+    '      if (k === "class") node.className = props[k];\n' +
+    '      else if (k === "html") node.innerHTML = props[k];\n' +
+    '      else if (k === "text") node.textContent = props[k];\n' +
+    '      else if (k.slice(0, 2) === "on" && typeof props[k] === "function") node.addEventListener(k.slice(2).toLowerCase(), props[k]);\n' +
+    '      else if (k === "style") node.setAttribute("style", props[k]);\n' +
+    '      else if (props[k] != null) node.setAttribute(k, props[k]);\n' +
+    '    }\n' +
+    '    if (kids != null) (Array.isArray(kids) ? kids : [kids]).forEach(function (c) {\n' +
+    '      if (c == null) return;\n' +
+    '      node.appendChild(typeof c === "string" ? doc.createTextNode(c) : c);\n' +
+    '    });\n' +
+    '    return node;\n' +
+    '  }\n' +
+    '  function read(key, fallback) { try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; } }\n' +
+    '  function write(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch (e) { return false; } }\n' +
+    "  global.addEventListener('lorefy:image-error', function (event) {\n" +
+    "    toastSafe(event.detail && event.detail.message || 'تعذر قراءة الصورة');\n" +
+    '  });\n' +
+    '  function slug(s) { return String(s || "").trim().toLowerCase().replace(/\\s+/g, "-").replace(/[^\\w\\u0600-\\u06FF-]/g, ""); }\n' +
+    '  function uiText(ar, en) { return doc.documentElement.lang === "en" ? en : ar; }\n' +
+    '\n' +
+    '  /* ── storage (new namespaces — additive, never collide with app keys) ─ */\n' +
+    '  var K_SCORES = "lorefy.characterRatings.v1";   // { [workId]: { [charKey]: 1..5 } }\n' +
+    '  var K_REVIEW = "lorefy.characterReview.v1";     // { [workId]: { overall, text, ts } }\n' +
+    '  var K_CHARIMG    = "lorefy.characterBoardImages.v2";  // invalidate unverified legacy portraits\n' +
+    '  var K_CHARCUSTOM = "lorefy.characterCustomImages.v1"; // { [charId]: dataURL|url } user-picked\n' +
+    '  function getScores(workId) { var all = read(K_SCORES, {}); return (all && all[workId]) || {}; }\n' +
+    '  function setScore(workId, charKey, value) {\n' +
+    '    var all = read(K_SCORES, {}); if (!all[workId]) all[workId] = {};\n' +
+    '    if (value) all[workId][charKey] = value; else delete all[workId][charKey];\n' +
+    '    write(K_SCORES, all);\n' +
+    '  }\n' +
+    '  function getReview(workId) { var all = read(K_REVIEW, {}); return (all && all[workId]) || { overall: 0, text: "" }; }\n' +
+    '  function setReview(workId, data) { var all = read(K_REVIEW, {}); all[workId] = Object.assign({}, all[workId], data, { ts: Date.now() }); write(K_REVIEW, all); }\n' +
+    '\n' +
+    '  /* ── template cast (used until real data arrives; design never looks empty) */\n' +
+    '  var CHARACTER_LOADING_TEXT = "\\u062c\\u0627\\u0631\\u064a \\u062a\\u062d\\u0645\\u064a\\u0644 \\u0627\\u0644\\u0634\\u062e\\u0635\\u064a\\u0627\\u062a \\u0627\\u0644\\u0645\\u0648\\u062b\\u0642\\u0629...";\n' +
+    '  var CHARACTER_NO_SOURCE_TEXT = "\\u0644\\u0627 \\u062a\\u0648\\u062c\\u062f \\u0634\\u062e\\u0635\\u064a\\u0627\\u062a \\u0645\\u0648\\u062b\\u0642\\u0629 \\u0644\\u0647\\u0630\\u0627 \\u0627\\u0644\\u0639\\u0645\\u0644 \\u062d\\u062a\\u0649 \\u0627\\u0644\\u0622\\u0646.";\n' +
+    '  var CHARACTER_EMPTY_SEARCH_TEXT = "\\u0644\\u0627 \\u062a\\u0648\\u062c\\u062f \\u0634\\u062e\\u0635\\u064a\\u0629 \\u0628\\u0647\\u0630\\u0627 \\u0627\\u0644\\u0627\\u0633\\u0645.";\n' +
+    '  var TEMPLATE_CAST = [\n' +
+    '    { id: "luffy",  name: "مونكي د. لوفي", latin: "Monkey D. Luffy", role: "رئيسية", note: "قبعة القش — الكابتن" },\n' +
+    '    { id: "zoro",   name: "رورونوا زورو", latin: "Roronoa Zoro", role: "رئيسية", note: "السيّاف — ثلاثة سيوف" },\n' +
+    '    { id: "nami",   name: "نامي", latin: "Nami", role: "رئيسية", note: "ملاّحة الطاقم" },\n' +
+    '    { id: "usopp",  name: "أوسوب", latin: "Usopp", role: "رئيسية", note: "القنّاص" },\n' +
+    '    { id: "sanji",  name: "سانجي", latin: "Sanji", role: "رئيسية", note: "الطبّاخ" },\n' +
+    '    { id: "chopper",name: "توني توني تشوبر", latin: "Tony Tony Chopper", role: "رئيسية", note: "الطبيب" },\n' +
+    '    { id: "robin",  name: "نيكو روبن", latin: "Nico Robin", role: "رئيسية", note: "عالمة الآثار" },\n' +
+    '    { id: "franky", name: "فرانكي", latin: "Franky", role: "مساعدة", note: "المهندس" },\n' +
+    '    { id: "brook",  name: "بروك", latin: "Brook", role: "مساعدة", note: "الموسيقيّ" },\n' +
+    '    { id: "jinbe",  name: "جينبي", latin: "Jinbe", role: "مساعدة", note: "القائد البحري" },\n' +
+    '    { id: "shanks", name: "شانكس", latin: "Shanks", role: "مساعدة", note: "أحد اليونكو" },\n' +
+    '    { id: "law",    name: "تراف. د. لو", latin: "Trafalgar Law", role: "مساعدة", note: "حليف" }\n' +
+    '  ];\n' +
+    '  function castKey(c) { return c.key || c.id || slug(c.latin || c.name); }\n' +
+    '  function initials(c) {\n' +
+    '    var base = (c.latin || c.name || "?").trim();\n' +
+    '    var parts = base.split(/\\s+/).filter(Boolean);\n' +
+    '    var s = parts.length > 1 ? (parts[0][0] + parts[1][0]) : base.slice(0, 2);\n' +
+    '    return s.toUpperCase();\n' +
+    '  }\n' +
+    '  function characterImageKey(c) { return String((c && (c.id || c.key)) || slug(c && (c.latin || c.name)) || "").trim(); }\n' +
+    '  function characterImageUrl(c) {\n' +
+    '    var key = characterImageKey(c), custom = read(K_CHARCUSTOM, {}), cache = read(K_CHARIMG, {});\n' +
+    '    return (custom && custom[key]) || (cache && cache[key]) || (c && (c.image || c.img || c.cover)) || "";\n' +
+    '  }\n' +
+    '  function setCharacterImage(c, url) {\n' +
+    '    var key = characterImageKey(c); if (!key) return;\n' +
+    '    var custom = read(K_CHARCUSTOM, {});\n' +
+    '    if (!custom || typeof custom !== "object" || Array.isArray(custom)) custom = {};\n' +
+    '    if (url) custom[key] = url; else delete custom[key];\n' +
+    "    if (!write(K_CHARCUSTOM, custom)) throw new Error('تعذر حفظ الصورة. مساحة التخزين غير كافية.');\n" +
+    '    cbInvalidateEmbeds();\n' +
+    '  }\n' +
+    '  function renderCharacterPortraitImage(wrap, c) {\n' +
+    '    if (!wrap) return;\n' +
+    '    var old = wrap.querySelector("img");\n' +
+    '    if (old) old.remove();\n' +
+    '    var label = wrap.querySelector(".lf-character-initial");\n' +
+    '    if (!label) {\n' +
+    '      label = el("span", { class: "lf-character-initial", text: initials(c) });\n' +
+    '      wrap.insertBefore(label, wrap.firstChild || null);\n' +
+    '    }\n' +
+    '    label.textContent = initials(c);\n' +
+    '    var url = characterImageUrl(c);\n' +
+    '    label.hidden = !!url;\n' +
+    '    if (url) {\n' +
+    '      var img = el("img", { src: url, alt: c.name || c.latin || "", loading: "lazy", referrerpolicy: "no-referrer" });\n' +
+    '      img.addEventListener("error", function () {\n' +
+    '        try { img.remove(); } catch (e) {}\n' +
+    '        label.hidden = false;\n' +
+    '      });\n' +
+    '      wrap.insertBefore(img, label);\n' +
+    '    }\n' +
+    '  }\n' +
+    '  function characterPortrait(c, cls, onChange, work) {\n' +
+    '    var portrait = el("div", { class: cls || "lf-character-portrait" });\n' +
+    '    renderCharacterPortraitImage(portrait, c);\n' +
+    '    var edit = el("button", {\n' +
+    '      type: "button",\n' +
+    '      class: "lf-character-image-edit",\n' +
+    '      "data-character-image-edit": characterImageKey(c),\n' +
+    '      "aria-label": "تعديل صورة " + (c.name || c.latin || "الشخصية"),\n' +
+    '      title: "تعديل صورة " + (c.name || c.latin || "الشخصية")\n' +
+    '    }, el("i", { "data-lucide": "pencil", "aria-hidden": "true" }));\n' +
+    '    edit.addEventListener("click", function (e) {\n' +
+    '      e.preventDefault(); e.stopPropagation();\n' +
+    '      openCharacterImagePicker(c, function () {\n' +
+    '        renderCharacterPortraitImage(portrait, c);\n' +
+    '        if (onChange) onChange(c);\n' +
+    '      }, work);\n' +
+    '    });\n' +
+    '    portrait.appendChild(edit);\n' +
+    '    return portrait;\n' +
+    '  }\n' +
+    '\n' +
+    "  /* ── resolve which work we're on (real app) ───────────────────────────── */\n" +
+    '  function malIdFromWorkId(workId) {\n' +
+    '    var m = String(workId || "").match(/mal-(?:manga|novel|anime|manhwa|manhua)?-?(\\d+)/i);\n' +
+    '    if (m) return m[1];\n' +
+    '    m = String(workId || "").match(/(\\d{2,})/);\n' +
+    '    return m ? m[1] : null;\n' +
+    '  }\n' +
+    '  function findWork(workId) {\n' +
+    '    if (!workId) return null;\n' +
+    '    var data = global.LorefyMangaData || [];\n' +
+    '    for (var i = 0; i < data.length; i++) if (String(data[i].id) === String(workId)) return data[i];\n' +
+    '    return null;\n' +
+    '  }\n' +
+    '  function addWorkTitleCandidate(out, value) {\n' +
+    '    value = String(value || "").replace(/\\s+/g, " ").trim();\n' +
+    '    if (value && out.indexOf(value) < 0) out.push(value);\n' +
+    '  }\n' +
+    '  function workContext(opts) {\n' +
+    '    opts = opts || {};\n' +
+    '    var workId = opts.workId || qp("novel") || "preview-one-piece";\n' +
+    '    var work = opts.work || findWork(workId) || null;\n' +
+    '    var routeSearch = opts.searchTitle || qp("search") || "";\n' +
+    '    var title = mlTitleOf(work) || (isSupportedDisplayTitle(opts.title) ? opts.title : "") || routeSearch || "عمل في مكتبتك";\n' +
+    '    var type = opts.type || (work && work.type) || qp("type") || "";\n' +
+    '    var mal = opts.mal || (work && (work.mal || work.malId)) || malIdFromWorkId(workId) || "13";\n' +
+    '    var cover = opts.cover || (work && (work.cover || work.image || work.sourceCoverUrl || (work.covers && work.covers[0]))) || "";\n' +
+    '    var titleCandidates = [];\n' +
+    '    addWorkTitleCandidate(titleCandidates, routeSearch);\n' +
+    '    addWorkTitleCandidate(titleCandid'... 315855 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\audit-library-safety.test.js:43:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `/* ════════════════════════════════════════════════════════════════════════\n   Lorefy — Growth features  ·  Character Rating system   (growth-v15)\n   → window.LorefyGrowth\n\n   What this module does\n   ─────────────────────\n   • Adds a "تقييم الشخصيات" (Rate Characters) action on every work‑detail\n     screen, sitting RIGHT NEXT TO the "اكتب مراجعة" (Write a review) button.\n   • Opens a full, Apple‑styled character‑rating page: hero, search + filters,\n     a per‑character 1–5 score control, an inline review composer, and an\n     "add character" row.\n   • Loads the cast from MAL / Jikan with an AniList GraphQL fallback. Works\n     fully as a TEMPLATE with zero network (cast falls back to a sample set),\n     so the design is always populated.\n   • Persists scores + review to NEW localStorage keys only — it never touches\n     the app's existing keys, routes, data or DOM ownership.\n\n   Styling lives in styles/lorefy-system.css (the .lf-character-* classes).\n   This file only builds DOM + behaviour; it adds no colors of its own.\n   ════════════════════════════════════════════════════════════════════════ */\n(function (global) {\n  "use strict";\n\n  var doc = global.document;\n  if (!doc) return;\n\n  /* ── small helpers ─────────────────────────────────────────────────── */\n  var params = (function () { try { return new URLSearchParams(location.search); } catch (e) { return new URLSearchParams(""); } });\n  function qp(key) { try { return params().get(key); } catch (e) { return null; } }\n  function el(tag, props, kids) {\n    var node = doc.createElement(tag);\n    if (props) for (var k in props) {\n      if (k === "class") node.className = props[k];\n      else if (k === "html") node.innerHTML = props[k];\n      else if (k === "text") node.textContent = props[k];\n      else if (k.slice(0, 2) === "on" && typeof props[k] === "function") node.addEventListener(k.slice(2).toLowerCase(), props[k]);\n      else if (k === "style") node.setAttribute("style", props[k]);\n      else if (props[k] != null) node.setAttribute(k, props[k]);\n    }\n    if (kids != null) (Array.isArray(kids) ? kids : [kids]).forEach(function (c) {\n      if (c == null) return;\n      node.appendChild(typeof c === "string" ? doc.createTextNode(c) : c);\n    });\n    return node;\n  }\n  function read(key, fallback) { try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; } }\n  function write(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch (e) { return false; } }\n  global.addEventListener('lorefy:image-error', function (event) {\n    toastSafe(event.detail && event.detail.message || 'تعذر قراءة الصورة');\n  });\n  function slug(s) { return String(s || "").trim().toLowerCase().replace(/\\s+/g, "-").replace(/[^\\w\\u0600-\\u06FF-]/g, ""); }\n  function uiText(ar, en) { return doc.documentElement.lang === "en" ? en : ar; }\n\n  /* ── storage (new namespaces — additive, never collide with app keys) ─ */\n  var K_SCORES = "lorefy.characterRatings.v1";   // { [workId]: { [charKey]: 1..5 } }\n  var K_REVIEW = "lorefy.characterReview.v1";     // { [workId]: { overall, text, ts } }\n  var K_CHARIMG    = "lorefy.characterBoardImages.v2";  // invalidate unverified legacy portraits\n  var K_CHARCUSTOM = "lorefy.characterCustomImages.v1"; // { [charId]: dataURL|url } user-picked\n  function getScores(workId) { var all = read(K_SCORES, {}); return (all && all[workId]) || {}; }\n  function setScore(workId, charKey, value) {\n    var all = read(K_SCORES, {}); if (!all[workId]) all[workId] = {};\n    if (value) all[workId][charKey] = value; else delete all[workId][charKey];\n    write(K_SCORES, all);\n  }\n  function getReview(workId) { var all = read(K_REVIEW, {}); return (all && all[workId]) || { overall: 0, text: "" }; }\n  function setReview(workId, data) { var all = read(K_REVIEW, {}); all[workId] = Object.assign({}, all[workId], data, { ts: Date.now() }); write(K_REVIEW, all); }\n\n  /* ── template cast (used until real data arrives; design never looks empty) */\n  var CHARACTER_LOADING_TEXT = "\\u062c\\u0627\\u0631\\u064a \\u062a\\u062d\\u0645\\u064a\\u0644 \\u0627\\u0644\\u0634\\u062e\\u0635\\u064a\\u0627\\u062a \\u0627\\u0644\\u0645\\u0648\\u062b\\u0642\\u0629...";\n  var CHARACTER_NO_SOURCE_TEXT = "\\u0644\\u0627 \\u062a\\u0648\\u062c\\u062f \\u0634\\u062e\\u0635\\u064a\\u0627\\u062a \\u0645\\u0648\\u062b\\u0642\\u0629 \\u0644\\u0647\\u0630\\u0627 \\u0627\\u0644\\u0639\\u0645\\u0644 \\u062d\\u062a\\u0649 \\u0627\\u0644\\u0622\\u0646.";\n  var CHARACTER_EMPTY_SEARCH_TEXT = "\\u0644\\u0627 \\u062a\\u0648\\u062c\\u062f \\u0634\\u062e\\u0635\\u064a\\u0629 \\u0628\\u0647\\u0630\\u0627 \\u0627\\u0644\\u0627\\u0633\\u0645.";\n  var TEMPLATE_CAST = [\n    { id: "luffy",  name: "مونكي د. لوفي", latin: "Monkey D. Luffy", role: "رئيسية", note: "قبعة القش — الكابتن" },\n    { id: "zoro",   name: "رورونوا زورو", latin: "Roronoa Zoro", role: "رئيسية", note: "السيّاف — ثلاثة سيوف" },\n    { id: "nami",   name: "نامي", latin: "Nami", role: "رئيسية", note: "ملاّحة الطاقم" },\n    { id: "usopp",  name: "أوسوب", latin: "Usopp", role: "رئيسية", note: "القنّاص" },\n    { id: "sanji",  name: "سانجي", latin: "Sanji", role: "رئيسية", note: "الطبّاخ" },\n    { id: "chopper",name: "توني توني تشوبر", latin: "Tony Tony Chopper", role: "رئيسية", note: "الطبيب" },\n    { id: "robin",  name: "نيكو روبن", latin: "Nico Robin", role: "رئيسية", note: "عالمة الآثار" },\n    { id: "franky", name: "فرانكي", latin: "Franky", role: "مساعدة", note: "المهندس" },\n    { id: "brook",  name: "بروك", latin: "Brook", role: "مساعدة", note: "الموسيقيّ" },\n    { id: "jinbe",  name: "جينبي", latin: "Jinbe", role: "مساعدة", note: "القائد البحري" },\n    { id: "shanks", name: "شانكس", latin: "Shanks", role: "مساعدة", note: "أحد اليونكو" },\n    { id: "law",    name: "تراف. د. لو", latin: "Trafalgar Law", role: "مساعدة", note: "حليف" }\n  ];\n  function castKey(c) { return c.key || c.id || slug(c.latin || c.name); }\n  function initials(c) {\n    var base = (c.latin || c.name || "?").trim();\n    var parts = base.split(/\\s+/).filter(Boolean);\n    var s = parts.length > 1 ? (parts[0][0] + parts[1][0]) : base.slice(0, 2);\n    return s.toUpperCase();\n  }\n  function characterImageKey(c) { return String((c && (c.id || c.key)) || slug(c && (c.latin || c.name)) || "").trim(); }\n  function characterImageUrl(c) {\n    var key = characterImageKey(c), custom = read(K_CHARCUSTOM, {}), cache = read(K_CHARIMG, {});\n    return (custom && custom[key]) || (cache && cache[key]) || (c && (c.image || c.img || c.cover)) || "";\n  }\n  function setCharacterImage(c, url) {\n    var key = characterImageKey(c); if (!key) return;\n    var custom = read(K_CHARCUSTOM, {});\n    if (!custom || typeof custom !== "object" || Array.isArray(custom)) custom = {};\n    if (url) custom[key] = url; else delete custom[key];\n    if (!write(K_CHARCUSTOM, custom)) throw new Error('تعذر حفظ الصورة. مساحة التخزين غير كافية.');\n    cbInvalidateEmbeds();\n  }\n  function renderCharacterPortraitImage(wrap, c) {\n    if (!wrap) return;\n    var old = wrap.querySelector("img");\n    if (old) old.remove();\n    var label = wrap.querySelector(".lf-character-initial");\n    if (!label) {\n      label = el("span", { class: "lf-character-initial", text: initials(c) });\n      wrap.insertBefore(label, wrap.firstChild || null);\n    }\n    label.textContent = initials(c);\n    var url = characterImageUrl(c);\n    label.hidden = !!url;\n    if (url) {\n      var img = el("img", { src: url, alt: c.name || c.latin || "", loading: "lazy", referrerpolicy: "no-referrer" });\n      img.addEventListener("error", function () {\n        try { img.remove(); } catch (e) {}\n        label.hidden = false;\n      });\n      wrap.insertBefore(img, label);\n    }\n  }\n  function characterPortrait(c, cls, onChange, work) {\n    var portrait = el("div", { class: cls || "lf-character-portrait" });\n    renderCharacterPortraitImage(portrait, c);\n    var edit = el("button", {\n      type: "button",\n      class: "lf-character-image-edit",\n      "data-character-image-edit": characterImageKey(c),\n      "aria-label": "تعديل صورة " + (c.name || c.latin || "الشخصية"),\n      title: "تعديل صورة " + (c.name || c.latin || "الشخصية")\n    }, el("i", { "data-lucide": "pencil", "aria-hidden": "true" }));\n    edit.addEventListener("click", function (e) {\n      e.preventDefault(); e.stopPropagation();\n      openCharacterImagePicker(c, function () {\n        renderCharacterPortraitImage(portrait, c);\n        if (onChange) onChange(c);\n      }, work);\n    });\n    portrait.appendChild(edit);\n    return portrait;\n  }\n\n  /* ── resolve which work we're on (real app) ───────────────────────────── */\n  function malIdFromWorkId(workId) {\n    var m = String(workId || "").match(/mal-(?:manga|novel|anime|manhwa|manhua)?-?(\\d+)/i);\n    if (m) return m[1];\n    m = String(workId || "").match(/(\\d{2,})/);\n    return m ? m[1] : null;\n  }\n  function findWork(workId) {\n    if (!workId) return null;\n    var data = global.LorefyMangaData || [];\n    for (var i = 0; i < data.length; i++) if (String(data[i].id) === String(workId)) return data[i];\n    return null;\n  }\n  function addWorkTitleCandidate(out, value) {\n    value = String(value || "").replace(/\\s+/g, " ").trim();\n    if (value && out.indexOf(value) < 0) out.push(value);\n  }\n  function workContext(opts) {\n    opts = opts || {};\n    var workId = opts.workId || qp("novel") || "preview-one-piece";\n    var work = opts.work || findWork(workId) || null;\n    var routeSearch = opts.searchTitle || qp("search") || "";\n    var title = mlTitleOf(work) || (isSupportedDisplayTitle(opts.title) ? opts.title : "") || routeSearch || "عمل في مكتبتك";\n    var type = opts.type || (work && work.type) || qp("type") || "";\n    var mal = opts.mal || (work && (work.mal || work.malId)) || malIdFromWorkId(workId) || "13";\n    var cover = opts.cover || (work && (work.cover || work.image || work.sourceCoverUrl || (work.covers && work.covers[0]))) || "";\n    var titleCandidates = [];\n    addWorkTitleCandidate(titleCandidates, routeSearch);\n    addWorkTitleCandidate(titleCandid`... 315855 more characters,
+    expected: /function bindDialogKeys\(/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\audit-library-safety.test.js:47:1
+✖ Following empty state has a reader discovery action (0.7228ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /lorefy:find-readers/. Input:
+  
+  '(function (global) {\n' +
+    '  "use strict";\n' +
+    '\n' +
+    '  var doc = global.document;\n' +
+    '  if (!doc) return;\n' +
+    '\n' +
+    '  var LOCAL_POSTS_KEY = "lorefy.user.communityPosts.v1";\n' +
+    '  var LOCAL_REACTIONS_KEY = "lorefy.user.communityReactions.v1";\n' +
+    '  var LISTS_KEY = "lorefy.customLists.v1";\n' +
+    '  var TOPS_KEY = "lorefy.charTopLists.v1";\n' +
+    '  var DIARY_KEY = "lorefy.user.readingDiary.v1";\n' +
+    '  var state = { page:null, posts:[], loaded:false, loading:false, attachment:null, composeSheet:null, unsubscribe:null, refreshTimer:0, legacySeedAttempted:false, filter:"all", followedIds:[], followsLoaded:false };\n' +
+    '  var composerDrafts = new Map();\n' +
+    '  var composerViewportCleanup = null;\n' +
+    '  var composerReturnFocus = null;\n' +
+    '\n' +
+    '  function read(key, fallback) {\n' +
+    '    try {\n' +
+    '      var value = JSON.parse(global.localStorage.getItem(key) || "null");\n' +
+    '      return value == null ? fallback : value;\n' +
+    '    } catch (error) { return fallback; }\n' +
+    '  }\n' +
+    '\n' +
+    '  function write(key, value) {\n' +
+    '    try { global.localStorage.setItem(key, JSON.stringify(value)); }\n' +
+    '    catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function el(tag, attrs, children) {\n' +
+    '    var node = doc.createElement(tag);\n' +
+    '    attrs = attrs || {};\n' +
+    '    Object.keys(attrs).forEach(function (key) {\n' +
+    '      var value = attrs[key];\n' +
+    '      if (key === "class") node.className = value;\n' +
+    '      else if (key === "text") node.textContent = value;\n' +
+    '      else if (key === "html") node.innerHTML = value;\n' +
+    '      else if (key === "hidden") node.hidden = !!value;\n' +
+    '      else if (key.indexOf("on") === 0 && typeof value === "function") node.addEventListener(key.slice(2), value);\n' +
+    '      else if (value != null) node.setAttribute(key, value);\n' +
+    '    });\n' +
+    '    (Array.isArray(children) ? children : children ? [children] : []).forEach(function (child) {\n' +
+    '      if (child) node.appendChild(child);\n' +
+    '    });\n' +
+    '    return node;\n' +
+    '  }\n' +
+    '\n' +
+    '  function icon(name, size) {\n' +
+    '    return el("i", { "data-lucide":name, width:String(size || 18), height:String(size || 18), "aria-hidden":"true" });\n' +
+    '  }\n' +
+    '\n' +
+    '  function hydrateIcons(root) {\n' +
+    '    try {\n' +
+    '      if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ root:root || doc });\n' +
+    '    } catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function toast(message) {\n' +
+    '    try {\n' +
+    '      if (global.LorefyUI && global.LorefyUI.toast) return global.LorefyUI.toast(message);\n' +
+    '      global.dispatchEvent(new global.CustomEvent("lorefy:toast", { detail:{ message:message } }));\n' +
+    '    } catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function communityOverlayHost() {\n' +
+    '    return doc.querySelector(".lf-app") || doc.getElementById("screen") || doc.body;\n' +
+    '  }\n' +
+    '  var replyDrafts = new Map();\n' +
+    '\n' +
+    '  function isDemo() {\n' +
+    '    var params = new URLSearchParams(global.location.search || "");\n' +
+    '    return /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(global.location.hostname) && params.get("preview") === "demo";\n' +
+    '  }\n' +
+    '\n' +
+    '  function uuid() {\n' +
+    '    if (global.crypto && global.crypto.randomUUID) return global.crypto.randomUUID();\n' +
+    '    return "00000000-0000-4000-8000-" + String(Date.now()).slice(-12);\n' +
+    '  }\n' +
+    '\n' +
+    '  function identity() {\n' +
+    '    var raw = read("lorefy.identity.v1", {}) || {};\n' +
+    '    var session = read("lorefy.session.v1", {}) || {};\n' +
+    '    return {\n' +
+    '      id:session.userId || raw.id || "00000000-0000-4000-8000-000000000099",\n' +
+    '      name:raw.name || raw.displayName || "قارئ Lorefy",\n' +
+    '      username:String(raw.un || raw.username || "lorefy_reader").replace(/^@/, ""),\n' +
+    '      avatar:raw.avatar || raw.av || ""\n' +
+    '    };\n' +
+    '  }\n' +
+    '\n' +
+    '  function works() {\n' +
+    '    if (Array.isArray(global.LorefyMangaData) && global.LorefyMangaData.length) return global.LorefyMangaData;\n' +
+    '    var seen = {};\n' +
+    '    return Array.prototype.map.call(doc.querySelectorAll(".lf-review-card"), function (card, index) {\n' +
+    '      var paragraphs = card.querySelectorAll("p");\n' +
+    '      var images = card.querySelectorAll("img");\n' +
+    '      var title = String(paragraphs.length > 1 ? paragraphs[paragraphs.length - 1].textContent : "").trim();\n' +
+    '      if (!title || seen[title]) return null;\n' +
+    '      seen[title] = true;\n' +
+    '      return {\n' +
+    '        id:"community-visible-work-" + index,\n' +
+    '        title:title,\n' +
+    '        cover:images.length ? images[images.length - 1].src : ""\n' +
+    '      };\n' +
+    '    }).filter(Boolean);\n' +
+    '  }\n' +
+    '\n' +
+    '  function workById(id) {\n' +
+    '    id = String(id || "");\n' +
+    '    var rows = works();\n' +
+    '    for (var i=0; i<rows.length; i++) if (String(rows[i].id) === id) return rows[i];\n' +
+    '    return null;\n' +
+    '  }\n' +
+    '\n' +
+    '  function workTitle(work) {\n' +
+    '    return String(work && (work.titleEnglish || work.english || work.title || work.ar) || "عمل على Lorefy");\n' +
+    '  }\n' +
+    '\n' +
+    '  function workCover(work) {\n' +
+    '    return String(work && (work.sourceCoverUrl || work.cover || work.coverImage) || "");\n' +
+    '  }\n' +
+    '\n' +
+    '  function timeLabel(value) {\n' +
+    '    var age = Date.now() - new Date(value || Date.now()).getTime();\n' +
+    '    if (age < 60000) return "الآن";\n' +
+    '    if (age < 3600000) return Math.max(1, Math.floor(age / 60000)) + "د";\n' +
+    '    if (age < 86400000) return Math.floor(age / 3600000) + "س";\n' +
+    '    return Math.floor(age / 86400000) + "ي";\n' +
+    '  }\n' +
+    '\n' +
+    '  function avatar(profile, size) {\n' +
+    '    var wrap = el("span", { class:"lf-community-post-avatar", style:"--avatar-size:" + (size || 42) + "px" });\n' +
+    '    if (profile && profile.avatar) {\n' +
+    '      var image = el("img", { src:profile.avatar, alt:"", loading:"lazy", decoding:"async", referrerpolicy:"no-referrer" });\n' +
+    '      image.addEventListener("error", function () { image.remove(); wrap.textContent = String((profile.name || profile.username || "L")).slice(0, 1); });\n' +
+    '      wrap.appendChild(image);\n' +
+    '    } else wrap.textContent = String(profile && (profile.name || profile.username) || "L").slice(0, 1);\n' +
+    '    return wrap;\n' +
+    '  }\n' +
+    '\n' +
+    '  function openProfile(profile) {\n' +
+    '    if (!profile || !profile.id) return;\n' +
+    '    global.dispatchEvent(new global.CustomEvent("lorefy:open-reader-profile", { detail:profile }));\n' +
+    '  }\n' +
+    '\n' +
+    '  function normalizePost(row) {\n' +
+    '    row = row || {};\n' +
+    '    var sourceReactions = row.reactions || {};\n' +
+    '    var sourceMine = sourceReactions.mine;\n' +
+    '    var mine = typeof sourceMine === "object" && sourceMine ? sourceMine : { like:!!sourceMine, dislike:false };\n' +
+    '    return {\n' +
+    '      id:String(row.id || uuid()),\n' +
+    '      user_id:String(row.user_id || row.userId || ""),\n' +
+    '      kind:["text", "list", "top"].indexOf(row.kind) >= 0 ? row.kind : "text",\n' +
+    '      body:String(row.body || ""),\n' +
+    '      attachment:row.attachment && typeof row.attachment === "object" ? row.attachment : {},\n' +
+    '      parent_id:row.parent_id || null,\n' +
+    '      created_at:row.created_at || new Date().toISOString(),\n' +
+    '      profile:row.profile || { id:row.user_id || row.userId, name:row.user || "قارئ Lorefy", username:row.un || "lorefy_reader", avatar:row.av || "" },\n' +
+    '      reactions:{\n' +
+    '        like:Number(sourceReactions.like != null ? sourceReactions.like : row.likes || 0),\n' +
+    '        dislike:Number(sourceReactions.dislike != null ? sourceReactions.dislike : row.dislikes || 0),\n' +
+    '        mine:{ like:!!mine.like, dislike:!!mine.dislike }\n' +
+    '      },\n' +
+    '      replyCount:Number(row.replyCount || 0),\n' +
+    '      demoReplies:Array.isArray(row.demoReplies) ? row.demoReplies : []\n' +
+    '    };\n' +
+    '  }\n' +
+    '\n' +
+    '  function applyLocalReaction(post) {\n' +
+    '    var saved = read(LOCAL_REACTIONS_KEY, {}) || {};\n' +
+    '    var reaction = saved[post.id];\n' +
+    '    if (!reaction || typeof reaction !== "object") return post;\n' +
+    '    var mine = reaction.mine || {};\n' +
+    '    post.reactions = {\n' +
+    '      like:Math.max(0, Number(reaction.like || 0)),\n' +
+    '      dislike:Math.max(0, Number(reaction.dislike || 0)),\n' +
+    '      mine:{ like:!!mine.like, dislike:!!mine.dislike }\n' +
+    '    };\n' +
+    '    return post;\n' +
+    '  }\n' +
+    '\n' +
+    '  function demoPosts() {\n' +
+    '    var seeded = [];\n' +
+    '    if (global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildPosts) {\n' +
+    '      seeded = global.LorefyDemoCommunity.buildPosts(works().slice(0, 30).map(function (work) { return work.id; }));\n' +
+    '    }\n' +
+    '    var mine = read(LOCAL_POSTS_KEY, []);\n' +
+    '    return mine.concat(seeded).map(normalizePost).map(applyLocalReaction).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });\n' +
+    '  }\n' +
+    '\n' +
+    '  async function loadFollowedProfileIds(force) {\n' +
+    '    if (state.followsLoaded && !force) return state.followedIds;\n' +
+    '    var ids = [];\n' +
+    '    var backend = global.LorefyBackend;\n' +
+    '    try {\n' +
+    '      if (backend && backend.getFollowedProfileIds) ids = await backend.getFollowedProfileIds();\n' +
+    '    } catch (error) { console.warn("[Lorefy] followed profiles:", error); }\n' +
+    '    if (isDemo() && (!Array.isArray(ids) || !ids.length) && global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildReaders) {\n' +
+    '      ids = global.LorefyDemoCommunity.buildReaders(works().slice(0, 30).map(function (work) { return work.id; }))\n' +
+    '        .filter(function (profile) { return profile.is_following === true; })\n' +
+    '        .map(function (profile) { return profile.id; });\n' +
+    '    }\n' +
+    '    state.followedIds = Array.from(new Set((Array.isArray(ids) ? ids : []).map(String)));\n' +
+    '    state.followsLoaded = true;\n' +
+    '    return state.followedIds;\n' +
+    '  }\n' +
+    '\n' +
+    '  async function loadPosts(force, older) {\n' +
+    '    if (state.loading || (state.loaded && !force)) return;\n' +
+    '    state.loading = true;\n' +
+    '    state.error = false;\n' +
+    '    var request = state.feedRequest = (state.feedRequest || 0) + 1;\n' +
+    '    var feedPage = state.page;\n' +
+    "    var accountId = String(global.LorefyBackend && global.LorefyBackend.user && global.LorefyBackend.user.id || '');\n" +
+    '    try {\n' +
+    '      var backend = global.LorefyBackend;\n' +
+    '      if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {\n' +
+    '        var cursor = older && state.posts[state.posts.length - 1];\n' +
+    '        var rows = (await backend.listCommunityPosts({ limit:60, before:cursor || null })).map(normalizePost);\n' +
+    "        if (request !== state.feedRequest || feedPage !== state.page || accountId !== String(backend.user && backend.user.id || '')) return;\n" +
+    '        state.hasMore = rows.length === 60;\n' +
+    '        var merged = older ? state.posts.concat(rows) : rows;\n' +
+    '        state.posts = Array.from(new Map(merged.map(function (row) { return [row.id, row]; })).values());\n' +
+    '      }\n' +
+    '      else if (isDemo()) state.posts = demoPosts();\n' +
+    "      else throw new Error('Community connection is unavailable.');\n" +
+    '      await loadFollowedProfileIds(false);\n' +
+    '      if (request !== state.feedRequest || feedPage !== state.page) return;\n' +
+    '      state.loaded = true;\n' +
+    '      renderPostFeed();\n' +
+    '    } catch (error) {\n' +
+    '      if (request !'... 47207 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\audit-library-safety.test.js:49:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `(function (global) {\n  "use strict";\n\n  var doc = global.document;\n  if (!doc) return;\n\n  var LOCAL_POSTS_KEY = "lorefy.user.communityPosts.v1";\n  var LOCAL_REACTIONS_KEY = "lorefy.user.communityReactions.v1";\n  var LISTS_KEY = "lorefy.customLists.v1";\n  var TOPS_KEY = "lorefy.charTopLists.v1";\n  var DIARY_KEY = "lorefy.user.readingDiary.v1";\n  var state = { page:null, posts:[], loaded:false, loading:false, attachment:null, composeSheet:null, unsubscribe:null, refreshTimer:0, legacySeedAttempted:false, filter:"all", followedIds:[], followsLoaded:false };\n  var composerDrafts = new Map();\n  var composerViewportCleanup = null;\n  var composerReturnFocus = null;\n\n  function read(key, fallback) {\n    try {\n      var value = JSON.parse(global.localStorage.getItem(key) || "null");\n      return value == null ? fallback : value;\n    } catch (error) { return fallback; }\n  }\n\n  function write(key, value) {\n    try { global.localStorage.setItem(key, JSON.stringify(value)); }\n    catch (error) {}\n  }\n\n  function el(tag, attrs, children) {\n    var node = doc.createElement(tag);\n    attrs = attrs || {};\n    Object.keys(attrs).forEach(function (key) {\n      var value = attrs[key];\n      if (key === "class") node.className = value;\n      else if (key === "text") node.textContent = value;\n      else if (key === "html") node.innerHTML = value;\n      else if (key === "hidden") node.hidden = !!value;\n      else if (key.indexOf("on") === 0 && typeof value === "function") node.addEventListener(key.slice(2), value);\n      else if (value != null) node.setAttribute(key, value);\n    });\n    (Array.isArray(children) ? children : children ? [children] : []).forEach(function (child) {\n      if (child) node.appendChild(child);\n    });\n    return node;\n  }\n\n  function icon(name, size) {\n    return el("i", { "data-lucide":name, width:String(size || 18), height:String(size || 18), "aria-hidden":"true" });\n  }\n\n  function hydrateIcons(root) {\n    try {\n      if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ root:root || doc });\n    } catch (error) {}\n  }\n\n  function toast(message) {\n    try {\n      if (global.LorefyUI && global.LorefyUI.toast) return global.LorefyUI.toast(message);\n      global.dispatchEvent(new global.CustomEvent("lorefy:toast", { detail:{ message:message } }));\n    } catch (error) {}\n  }\n\n  function communityOverlayHost() {\n    return doc.querySelector(".lf-app") || doc.getElementById("screen") || doc.body;\n  }\n  var replyDrafts = new Map();\n\n  function isDemo() {\n    var params = new URLSearchParams(global.location.search || "");\n    return /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(global.location.hostname) && params.get("preview") === "demo";\n  }\n\n  function uuid() {\n    if (global.crypto && global.crypto.randomUUID) return global.crypto.randomUUID();\n    return "00000000-0000-4000-8000-" + String(Date.now()).slice(-12);\n  }\n\n  function identity() {\n    var raw = read("lorefy.identity.v1", {}) || {};\n    var session = read("lorefy.session.v1", {}) || {};\n    return {\n      id:session.userId || raw.id || "00000000-0000-4000-8000-000000000099",\n      name:raw.name || raw.displayName || "قارئ Lorefy",\n      username:String(raw.un || raw.username || "lorefy_reader").replace(/^@/, ""),\n      avatar:raw.avatar || raw.av || ""\n    };\n  }\n\n  function works() {\n    if (Array.isArray(global.LorefyMangaData) && global.LorefyMangaData.length) return global.LorefyMangaData;\n    var seen = {};\n    return Array.prototype.map.call(doc.querySelectorAll(".lf-review-card"), function (card, index) {\n      var paragraphs = card.querySelectorAll("p");\n      var images = card.querySelectorAll("img");\n      var title = String(paragraphs.length > 1 ? paragraphs[paragraphs.length - 1].textContent : "").trim();\n      if (!title || seen[title]) return null;\n      seen[title] = true;\n      return {\n        id:"community-visible-work-" + index,\n        title:title,\n        cover:images.length ? images[images.length - 1].src : ""\n      };\n    }).filter(Boolean);\n  }\n\n  function workById(id) {\n    id = String(id || "");\n    var rows = works();\n    for (var i=0; i<rows.length; i++) if (String(rows[i].id) === id) return rows[i];\n    return null;\n  }\n\n  function workTitle(work) {\n    return String(work && (work.titleEnglish || work.english || work.title || work.ar) || "عمل على Lorefy");\n  }\n\n  function workCover(work) {\n    return String(work && (work.sourceCoverUrl || work.cover || work.coverImage) || "");\n  }\n\n  function timeLabel(value) {\n    var age = Date.now() - new Date(value || Date.now()).getTime();\n    if (age < 60000) return "الآن";\n    if (age < 3600000) return Math.max(1, Math.floor(age / 60000)) + "د";\n    if (age < 86400000) return Math.floor(age / 3600000) + "س";\n    return Math.floor(age / 86400000) + "ي";\n  }\n\n  function avatar(profile, size) {\n    var wrap = el("span", { class:"lf-community-post-avatar", style:"--avatar-size:" + (size || 42) + "px" });\n    if (profile && profile.avatar) {\n      var image = el("img", { src:profile.avatar, alt:"", loading:"lazy", decoding:"async", referrerpolicy:"no-referrer" });\n      image.addEventListener("error", function () { image.remove(); wrap.textContent = String((profile.name || profile.username || "L")).slice(0, 1); });\n      wrap.appendChild(image);\n    } else wrap.textContent = String(profile && (profile.name || profile.username) || "L").slice(0, 1);\n    return wrap;\n  }\n\n  function openProfile(profile) {\n    if (!profile || !profile.id) return;\n    global.dispatchEvent(new global.CustomEvent("lorefy:open-reader-profile", { detail:profile }));\n  }\n\n  function normalizePost(row) {\n    row = row || {};\n    var sourceReactions = row.reactions || {};\n    var sourceMine = sourceReactions.mine;\n    var mine = typeof sourceMine === "object" && sourceMine ? sourceMine : { like:!!sourceMine, dislike:false };\n    return {\n      id:String(row.id || uuid()),\n      user_id:String(row.user_id || row.userId || ""),\n      kind:["text", "list", "top"].indexOf(row.kind) >= 0 ? row.kind : "text",\n      body:String(row.body || ""),\n      attachment:row.attachment && typeof row.attachment === "object" ? row.attachment : {},\n      parent_id:row.parent_id || null,\n      created_at:row.created_at || new Date().toISOString(),\n      profile:row.profile || { id:row.user_id || row.userId, name:row.user || "قارئ Lorefy", username:row.un || "lorefy_reader", avatar:row.av || "" },\n      reactions:{\n        like:Number(sourceReactions.like != null ? sourceReactions.like : row.likes || 0),\n        dislike:Number(sourceReactions.dislike != null ? sourceReactions.dislike : row.dislikes || 0),\n        mine:{ like:!!mine.like, dislike:!!mine.dislike }\n      },\n      replyCount:Number(row.replyCount || 0),\n      demoReplies:Array.isArray(row.demoReplies) ? row.demoReplies : []\n    };\n  }\n\n  function applyLocalReaction(post) {\n    var saved = read(LOCAL_REACTIONS_KEY, {}) || {};\n    var reaction = saved[post.id];\n    if (!reaction || typeof reaction !== "object") return post;\n    var mine = reaction.mine || {};\n    post.reactions = {\n      like:Math.max(0, Number(reaction.like || 0)),\n      dislike:Math.max(0, Number(reaction.dislike || 0)),\n      mine:{ like:!!mine.like, dislike:!!mine.dislike }\n    };\n    return post;\n  }\n\n  function demoPosts() {\n    var seeded = [];\n    if (global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildPosts) {\n      seeded = global.LorefyDemoCommunity.buildPosts(works().slice(0, 30).map(function (work) { return work.id; }));\n    }\n    var mine = read(LOCAL_POSTS_KEY, []);\n    return mine.concat(seeded).map(normalizePost).map(applyLocalReaction).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });\n  }\n\n  async function loadFollowedProfileIds(force) {\n    if (state.followsLoaded && !force) return state.followedIds;\n    var ids = [];\n    var backend = global.LorefyBackend;\n    try {\n      if (backend && backend.getFollowedProfileIds) ids = await backend.getFollowedProfileIds();\n    } catch (error) { console.warn("[Lorefy] followed profiles:", error); }\n    if (isDemo() && (!Array.isArray(ids) || !ids.length) && global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildReaders) {\n      ids = global.LorefyDemoCommunity.buildReaders(works().slice(0, 30).map(function (work) { return work.id; }))\n        .filter(function (profile) { return profile.is_following === true; })\n        .map(function (profile) { return profile.id; });\n    }\n    state.followedIds = Array.from(new Set((Array.isArray(ids) ? ids : []).map(String)));\n    state.followsLoaded = true;\n    return state.followedIds;\n  }\n\n  async function loadPosts(force, older) {\n    if (state.loading || (state.loaded && !force)) return;\n    state.loading = true;\n    state.error = false;\n    var request = state.feedRequest = (state.feedRequest || 0) + 1;\n    var feedPage = state.page;\n    var accountId = String(global.LorefyBackend && global.LorefyBackend.user && global.LorefyBackend.user.id || '');\n    try {\n      var backend = global.LorefyBackend;\n      if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {\n        var cursor = older && state.posts[state.posts.length - 1];\n        var rows = (await backend.listCommunityPosts({ limit:60, before:cursor || null })).map(normalizePost);\n        if (request !== state.feedRequest || feedPage !== state.page || accountId !== String(backend.user && backend.user.id || '')) return;\n        state.hasMore = rows.length === 60;\n        var merged = older ? state.posts.concat(rows) : rows;\n        state.posts = Array.from(new Map(merged.map(function (row) { return [row.id, row]; })).values());\n      }\n      else if (isDemo()) state.posts = demoPosts();\n      else throw new Error('Community connection is unavailable.');\n      await loadFollowedProfileIds(false);\n      if (request !== state.feedRequest || feedPage !== state.page) return;\n      state.loaded = true;\n      renderPostFeed();\n    } catch (error) {\n      if (request !`... 47207 more characters,
+    expected: /lorefy:find-readers/,
+    operator: 'match',
+    diff: 'simple'
+  }

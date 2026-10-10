@@ -1,0 +1,22 @@
+{
+  "appUrl": "https://YOUR_APP_DOMAIN",
+  "apiUrl": "https://YOUR_API_DOMAIN",
+  "privacyPolicyUrl": "https://YOUR_APP_DOMAIN/privacy-policy.html",
+  "supportUrl": "https://YOUR_APP_DOMAIN/support.html",
+  "supabaseUrl": "https://YOUR_PROJECT.supabase.co",
+  "supabasePublishableKey": "YOUR_SUPABASE_PUBLISHABLE_KEY",
+  "appleBundleId": "com.lorefy.app",
+  "appleServiceId": "com.lorefy.app",
+  "storeKit": {
+    "enabled": false,
+    "monthlyProductId": "",
+    "yearlyProductId": ""
+  },
+  "appReview": {
+    "reviewNotesProvidedInAppStoreConnect": false,
+    "privacyNutritionLabelVerified": false,
+    "contentRightsVerified": false,
+    "ugcModerationReady": false,
+    "appleTokenRevocationReady": false
+  }
+}

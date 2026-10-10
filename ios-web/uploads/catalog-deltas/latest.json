@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "version": "2026-W28-local",
+  "generatedAt": "2026-07-06T03:00:00+03:00",
+  "sources": [
+    {
+      "id": "local-bootstrap",
+      "status": "ready",
+      "description": "Empty starter delta for the local preview."
+    }
+  ],
+  "upserts": [],
+  "patches": [],
+  "removeIds": [],
+  "aliases": {}
+}

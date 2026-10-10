@@ -1,0 +1,33 @@
+
+> lorefy@1.0.0 ios:sync
+> node tools/patch-apple-sign-in.mjs && npm run ios:prepare && npx cap sync ios && node tools/fix-capacitor-spm-paths.mjs
+
+Apple native credential guards verified.
+
+> lorefy@1.0.0 ios:prepare
+> node tools/prepare-ios-web.mjs
+
+{
+  sourceBytes: 144707260,
+  runtimeBytes: 136089695,
+  count: 121920,
+  contentHash: 'e8caf7bc8e10bd54d18309d5877623a17d146ab931b14d55704ea075f67734a9'
+}
+Prepared 16 Lorefy runtime entries in ios-web.
+√ Copying web assets from ios-web to ios\App\App\public in 462.72ms
+√ Creating capacitor.config.json in ios\App\App in 727.70μs
+√ copy ios in 506.82ms
+√ Updating iOS plugins in 1.14ms
+[info] All Capacitor plugins have a Package.swift file and will be included in Package.swift
+[info] Writing Package.swift
+[info] Found 8 Capacitor plugins for ios:
+       @aparajita/capacitor-secure-storage@8.0.0
+       @capacitor-community/apple-sign-in@7.1.0
+       @capacitor/app@8.1.1
+       @capacitor/browser@8.0.4
+       @capacitor/camera@8.2.4
+       @capacitor/filesystem@8.1.3
+       @capacitor/push-notifications@8.1.2
+       @capacitor/share@8.0.1
+√ update ios in 39.15ms
+[info] Sync finished in 0.582s

@@ -1,0 +1,258 @@
+{
+  "verifiedAt": "2026-10-10T09:04:16Z",
+  "readOnly": true,
+  "project": {
+    "id": "qsroxmltioxqozmykens",
+    "ref": "qsroxmltioxqozmykens",
+    "organization_id": "tzkqptyscqmolpkldrev",
+    "organization_slug": "tzkqptyscqmolpkldrev",
+    "name": "fahadaturki1-sudo's Project",
+    "region": "ap-southeast-1",
+    "status": "ACTIVE_HEALTHY",
+    "database": {
+      "host": "db.qsroxmltioxqozmykens.supabase.co",
+      "version": "17.6.1.155",
+      "postgres_engine": "17",
+      "release_channel": "ga"
+    },
+    "created_at": "2026-06-14T11:19:48.681141Z"
+  },
+  "url": "https://qsroxmltioxqozmykens.supabase.co",
+  "migrations": [
+    {
+      "version": "20260615063058",
+      "name": "beta_hardening_20260615"
+    },
+    {
+      "version": "20260618163251",
+      "name": "community_foundation_and_private_media"
+    },
+    {
+      "version": "20260618163405",
+      "name": "community_fk_indexes"
+    },
+    {
+      "version": "20260620032024",
+      "name": "fix_profile_media_policy"
+    },
+    {
+      "version": "20260726172526",
+      "name": "lorefy_entitlements"
+    },
+    {
+      "version": "20260813000911",
+      "name": "public_reader_discovery"
+    },
+    {
+      "version": "20260813001712",
+      "name": "community_release_hardening"
+    },
+    {
+      "version": "20260813002349",
+      "name": "community_least_privilege"
+    },
+    {
+      "version": "20260813003529",
+      "name": "community_follow_index"
+    },
+    {
+      "version": "20260813004416",
+      "name": "storage_release_hardening"
+    },
+    {
+      "version": "20260813004542",
+      "name": "storage_regex_fix"
+    },
+    {
+      "version": "20260813010252",
+      "name": "user_state_concurrency"
+    },
+    {
+      "version": "20260813010345",
+      "name": "user_state_concurrency_compat"
+    },
+    {
+      "version": "20260813112236",
+      "name": "apple_authorization_revocation_v2"
+    },
+    {
+      "version": "20260813113014",
+      "name": "apple_authorization_cleanup"
+    },
+    {
+      "version": "20260813113811",
+      "name": "community_moderation"
+    },
+    {
+      "version": "20260813114020",
+      "name": "community_moderation_record_fix"
+    },
+    {
+      "version": "20260813114750",
+      "name": "community_block_visibility"
+    },
+    {
+      "version": "20260813114929",
+      "name": "community_block_policy_fix"
+    },
+    {
+      "version": "20260813120306",
+      "name": "internal_policy_helpers"
+    },
+    {
+      "version": "20260813125105",
+      "name": "release_security_remediation"
+    },
+    {
+      "version": "20260813125437",
+      "name": "serialize_comment_quota"
+    },
+    {
+      "version": "20260813214432",
+      "name": "review_media_integrity"
+    },
+    {
+      "version": "20260813221522",
+      "name": "reaction_rate_limit"
+    },
+    {
+      "version": "20260824233736",
+      "name": "release_v11_review_upsert"
+    },
+    {
+      "version": "20260825010103",
+      "name": "account_identity_hardening"
+    },
+    {
+      "version": "20260830075859",
+      "name": "notifications_foundation"
+    },
+    {
+      "version": "20260830120611",
+      "name": "push_dispatch_webhook"
+    },
+    {
+      "version": "20260905092205",
+      "name": "fix_profile_genres_type"
+    },
+    {
+      "version": "20260914154544",
+      "name": "immutable_profile_usernames"
+    },
+    {
+      "version": "20260929180818",
+      "name": "community_posts_build31"
+    },
+    {
+      "version": "20261003114150",
+      "name": "profile_artwork_chapter_reviews"
+    },
+    {
+      "version": "20261003114352",
+      "name": "profile_artwork_key_aliases"
+    },
+    {
+      "version": "20261007035233",
+      "name": "beta_community_owner_tools"
+    },
+    {
+      "version": "20261007100005",
+      "name": "profile_username_changes"
+    },
+    {
+      "version": "20261007100539",
+      "name": "review_account_privacy"
+    },
+    {
+      "version": "20261007152557",
+      "name": "quarter_ratings"
+    },
+    {
+      "version": "20261008052857",
+      "name": "durable_custom_artwork_read"
+    },
+    {
+      "version": "20261008123935",
+      "name": "profile_layout_projection"
+    },
+    {
+      "version": "20261008180259",
+      "name": "free_profile_decorations"
+    },
+    {
+      "version": "20261009122449",
+      "name": "public_profile_appearance"
+    },
+    {
+      "version": "20261009165852",
+      "name": "beta_profile_decorations"
+    }
+  ],
+  "functions": [
+    {
+      "id": "5d153708-2890-46cb-ac6e-6a2567165de6",
+      "slug": "delete-account",
+      "name": "delete-account",
+      "status": "ACTIVE",
+      "version": 11,
+      "created_at": 1781505061983,
+      "updated_at": 1786659876876,
+      "verify_jwt": true,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_5d153708-2890-46cb-ac6e-6a2567165de6_10/source/delete-account/index.ts",
+      "ezbr_sha256": "f9f54f4b08c71ce9aaf5bd628c89af57f8fdd8a6918cfd884e3c2c2cb5353108"
+    },
+    {
+      "id": "08103946-9038-464b-9f30-4c0a6281b945",
+      "slug": "lorefy-public",
+      "name": "lorefy-public",
+      "status": "ACTIVE",
+      "version": 11,
+      "created_at": 1786619143449,
+      "updated_at": 1791071536677,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_08103946-9038-464b-9f30-4c0a6281b945_11/source/index.ts",
+      "ezbr_sha256": "ebac4d4ee79d20961290a4ed6f4d1976d169810f63566faf45f1e0071f3d0e9e"
+    },
+    {
+      "id": "457f418c-1760-4005-b404-59af251ea16f",
+      "slug": "lorefy-html-test",
+      "name": "lorefy-html-test",
+      "status": "ACTIVE",
+      "version": 3,
+      "created_at": 1786619370424,
+      "updated_at": 1786625899827,
+      "verify_jwt": true,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_457f418c-1760-4005-b404-59af251ea16f_2/source/index.ts",
+      "ezbr_sha256": "0aeb6f4f577850020743a8c0bcf4c165c6e8b27a02742a5ac0278b6d870b88f4"
+    },
+    {
+      "id": "4d122e2d-b9e8-483e-9256-46c678f57c53",
+      "slug": "apple-authorization",
+      "name": "apple-authorization",
+      "status": "ACTIVE",
+      "version": 5,
+      "created_at": 1786620199020,
+      "updated_at": 1786659555478,
+      "verify_jwt": true,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_4d122e2d-b9e8-483e-9256-46c678f57c53_4/source/apple-authorization/index.ts",
+      "ezbr_sha256": "80cd3a52fce0576c03e3d7c9faf0ff4b6c34a38a882639fec898688952b9bce8"
+    },
+    {
+      "id": "3fc128b9-5279-48df-adda-0a6ded7f8144",
+      "slug": "dispatch-notifications",
+      "name": "dispatch-notifications",
+      "status": "ACTIVE",
+      "version": 2,
+      "created_at": 1788076756684,
+      "updated_at": 1788076756684,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_qsroxmltioxqozmykens_3fc128b9-5279-48df-adda-0a6ded7f8144_1/source/index.ts",
+      "ezbr_sha256": "634cace70e16d7a0d7a4ff96047fc92de22e196a9f85fd175af47c09f3503c49"
+    }
+  ]
+}

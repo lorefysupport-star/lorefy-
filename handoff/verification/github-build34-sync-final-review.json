@@ -1,0 +1,15 @@
+{
+  "trackedFiles": 2706,
+  "matchedOriginalFiles": 2676,
+  "secretScanMatches": [],
+  "oversizedNormalGitFiles": [],
+  "signingKeys": [],
+  "tests": {
+    "pass": 985,
+    "fail": 0,
+    "skipped": 0
+  },
+  "currentBranch": "codex/sync-build34",
+  "originalMain": "4a38560f33f0fefa1b948b737c2c17f48e7ebf47",
+  "gitLfsObjects": "387b082cc4 * archives/Lorefy-build34-project.zip"
+}

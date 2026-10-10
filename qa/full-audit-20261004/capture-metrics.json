@@ -1,0 +1,775 @@
+[
+  {
+    "name": "01-home-pink",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=home",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "02-following-empty",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=home",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "03-composer-characters",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=home",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "إنشاء منشور",
+          "scroll": 390,
+          "width": 390
+        },
+        {
+          "name": "اختر ما تريد مشاركته",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "04-thread-reply",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=home",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "محادثة المنشور",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "05-review-moderation",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=home",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "خيارات المراجعة",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "06-notifications-empty",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=home",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "07-library",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=library",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "08-library-shelf",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=library",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "09-search-top-rated",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=explore",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "10-search-martin",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=explore&search=George+R.+R.+Martin",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "11-search-empty",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=explore&search=zzzz_no_work_audit_364837",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "12-comics-newest",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=explore&type=Comics",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "13-discover",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=discover",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "14-profile-pink",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "15-profile-dropped-empty",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "16-followers-no-close",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "17-reading-diary",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "سجل القراءة",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "18-diary-validation",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "سجل القراءة",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "19-reading-session-active",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "سجل القراءة",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "20-lists",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "21-list-editor",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "22-share-work-list",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "23-year-summary",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "24-import-sources",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "25-import-result",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "26-settings",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "27-settings-stable",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "28-settings-dark",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "29-profile-editor-en-dark",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "30-profile-editor-stable",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "31-privacy-en-dark",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "الخصوصية والبيانات",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [
+        {
+          "height": 18,
+          "name": "سياسة الخصوصية",
+          "tag": "A",
+          "width": 96
+        },
+        {
+          "height": 18,
+          "name": "شروط الاستخدام",
+          "tag": "A",
+          "width": 83
+        },
+        {
+          "height": 18,
+          "name": "الدعم وجودة البيانات",
+          "tag": "A",
+          "width": 103
+        }
+      ],
+      "width": 390
+    }
+  },
+  {
+    "name": "32-privacy-dark-stable",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "الخصوصية والبيانات",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [
+        {
+          "height": 18,
+          "name": "سياسة الخصوصية",
+          "tag": "A",
+          "width": 96
+        },
+        {
+          "height": 18,
+          "name": "شروط الاستخدام",
+          "tag": "A",
+          "width": 83
+        },
+        {
+          "height": 18,
+          "name": "الدعم وجودة البيانات",
+          "tag": "A",
+          "width": 103
+        }
+      ],
+      "width": 390
+    }
+  },
+  {
+    "name": "33-corrections-dark",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "مركز التصحيحات",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "34-safety-dark",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "السلامة والمحتوى",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "35-onboarding-zero",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "36-onboarding-genres-dark",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "37-onboarding-works",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "38-work-dark-en",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=detail&novel=mal-manga-26-hunter-x-hunter",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "39-review-detailed-en-dark",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=detail&novel=mal-manga-26-hunter-x-hunter",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": null,
+          "scroll": 388,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [
+        {
+          "height": 44,
+          "name": "",
+          "tag": "INPUT",
+          "width": 18
+        }
+      ],
+      "width": 390
+    }
+  },
+  {
+    "name": "40-chapter-local-comment",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=detail&novel=mal-manga-26-hunter-x-hunter",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [
+        {
+          "height": 44,
+          "name": "",
+          "tag": "INPUT",
+          "width": 17
+        }
+      ],
+      "width": 390
+    }
+  },
+  {
+    "name": "41-author-taxonomy",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=detail&novel=mal-manga-26-hunter-x-hunter",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "Togashi, Yoshihiro",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [
+        {
+          "height": 44,
+          "name": "",
+          "tag": "INPUT",
+          "width": 17
+        }
+      ],
+      "width": 390
+    }
+  },
+  {
+    "name": "42-character-empty-en",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=detail&novel=mal-manga-26-hunter-x-hunter",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": "تقييم شخصيات Hunter x Hunter",
+          "scroll": 390,
+          "width": 390
+        }
+      ],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [
+        {
+          "height": 44,
+          "name": "",
+          "tag": "INPUT",
+          "width": 17
+        },
+        {
+          "height": 18,
+          "name": "MAL ↗",
+          "tag": "A",
+          "width": 36
+        }
+      ],
+      "width": 390
+    }
+  },
+  {
+    "name": "44-profile-en-dark",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "45-favorite-character-picker",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "46-profile-tablet-light",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 1024,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 768
+    }
+  },
+  {
+    "name": "47-home-tablet-light",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=home",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 1024,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 768
+    }
+  },
+  {
+    "name": "48-discover-desktop-light",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=discover",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 900,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 1280
+    }
+  },
+  {
+    "name": "49-search-desktop-light",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=explore",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 900,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 1280
+    }
+  },
+  {
+    "name": "51-library-light-mobile",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=library",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 900,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 1280
+    }
+  },
+  {
+    "name": "52-library-light-mobile",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=library",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [],
+      "height": 844,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 390
+    }
+  },
+  {
+    "name": "53-preference-launcher",
+    "url": "http://127.0.0.1:8795/index.html?fresh=full-audit-20261004&adaptive=1&preview=demo&demo=ready&route=profile&profileBoard=%D9%85%D8%A7%D9%86%D8%AC%D8%A7",
+    "metrics": {
+      "brokenImages": [],
+      "dialogs": [
+        {
+          "name": null,
+          "scroll": 1280,
+          "width": 1280
+        }
+      ],
+      "height": 900,
+      "pageOverflow": false,
+      "smallTargets": [],
+      "width": 1280
+    }
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "ipa": "build34/Lorefy-build34.ipa",
+  "bytes": 73994237,
+  "sha256": "d876366302c741c8cee52dfe9fd051aa41411a4f1410632c0cc057773de2bbba",
+  "bundleId": "com.lorefy.app",
+  "version": "1.0",
+  "build": "34",
+  "publicFiles": 489,
+  "importedCollections": 24,
+  "allImportedOverlaysPresent": true,
+  "qaFilesInNativePublic": [],
+  "betaDecorationsEnabled": true,
+  "nativeWebComparisons": {
+    "ios-web": {
+      "matched": 487,
+      "different": [],
+      "missing": [
+        "cordova.js",
+        "cordova_plugins.js"
+      ],
+      "extra": []
+    },
+    "ios/App/App/public": {
+      "matched": 489,
+      "different": [],
+      "missing": [],
+      "extra": []
+    }
+  },
+  "scope": "Signed IPA verified locally; not a new Apple upload or physical-device crash test."
+}

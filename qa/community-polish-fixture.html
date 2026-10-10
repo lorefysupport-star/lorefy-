@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Local community layout verification</title>
+<link rel="stylesheet" href="../styles/lorefy-community.css">
+<link rel="stylesheet" href="../styles/lorefy-design-system.css">
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif} .lf-app{height:100vh;overflow:auto;background:var(--ui-bg);color:var(--ui-ink)} .lf-community-page{max-width:680px;margin:auto} .lf-community-tabs{display:flex} button,textarea{font:inherit}
+</style>
+<main class="lf-app is-pink" style="--nc-top:16px;--ui-bg:#fff7fa;--ui-ink:#33212a;--ui-muted:#79616c;--ui-action:#a53662;--ui-line:#ebd9e1;--ui-fill:#f8eaf0;--ui-fill-soft:#fff0f5;--ui-selected:#f7dfe9;--ui-shadow:0 12px 32px #5c233c19;--lf-card:#fffafc">
+<div class="lf-community-page lf-social-timeline"><header class="lf-community-tabs"><button data-community-filter="all" aria-selected="true">For You</button><button data-community-filter="friends">Following</button></header></div>
+</main>
+<script src="../vendor/lucide.js"></script>
+<script>
+var art='../launch/brand/lorefy-reading-scene.jpg';
+var rows=['text','list','top'].map(function(kind,i){return{id:'qa-'+kind,user_id:'qa-reader',kind:kind,body:kind==='text'?'نص محلي لفحص محاذاة المنشورات.':'اختيارات القراءة المفضلة',created_at:new Date(Date.now()-i*1000).toISOString(),profile:{name:'قارئ تجريبي',username:'layout_qa'},attachment:kind==='text'?{}:{kind:kind,title:kind==='list'?'قائمة أعمال':'أفضل الشخصيات',items:Array.from({length:4},function(_,n){return{id:String(n),name:'اختيار '+(n+1),image:art}})}}});
+window.LorefyBackend={mode:'live',user:{id:'qa-owner'},listCommunityPosts:async function(){return rows},listFollowedProfiles:async function(){return[]},subscribeCommunity:async function(){return function(){}}};
+</script>
+<script src="../modules/lorefy-community.js"></script>
+</html>

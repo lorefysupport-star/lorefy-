@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "generatedAt": "2026-09-24T14:42:07.249Z",
+  "targetPerType": 500,
+  "targetByType": {
+    "Novel": 900,
+    "Book": 800
+  },
+  "verifiedAgainstBundled": true,
+  "bundledWorksChecked": 22469,
+  "sources": [
+    "AniList GraphQL API",
+    "MangaDex API",
+    "Open Library Search API"
+  ],
+  "types": {
+    "Manga": {
+      "file": "manga.json",
+      "count": 500,
+      "sources": {
+        "AniList": 500
+      }
+    },
+    "Manhwa": {
+      "file": "manhwa.json",
+      "count": 500,
+      "sources": {
+        "AniList": 500
+      }
+    },
+    "Manhua": {
+      "file": "manhua.json",
+      "count": 500,
+      "sources": {
+        "AniList": 500
+      }
+    },
+    "Comics": {
+      "file": "comics.json",
+      "count": 500,
+      "sources": {
+        "Open Library": 500
+      }
+    },
+    "Novel": {
+      "file": "novel.json",
+      "count": 900,
+      "sources": {
+        "Open Library": 900
+      }
+    },
+    "Book": {
+      "file": "book.json",
+      "count": 800,
+      "sources": {
+        "Open Library": 800
+      }
+    },
+    "Light Novel": {
+      "file": "light-novel.json",
+      "count": 500,
+      "sources": {
+        "AniList": 500
+      }
+    },
+    "Web Novel": {
+      "file": "web-novel.json",
+      "count": 500,
+      "sources": {
+        "Open Library": 500
+      }
+    }
+  },
+  "totalWorks": 4700
+}

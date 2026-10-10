@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lorefy Share Export QA</title>
+<style>
+body{font:16px system-ui;margin:24px;color:#132d30;background:#f4f8f8}button,a{padding:12px;display:inline-block}label{margin:12px}#results{display:flex;gap:24px;flex-wrap:wrap}article{max-width:340px}article img{width:100%;height:auto}#fixtures{display:none}pre{white-space:pre-wrap}
+</style>
+<script defer src="../../config/lorefy-runtime.js"></script>
+<script defer src="../../modules/lorefy-data-proxy.js"></script>
+<script defer src="../../modules/lorefy-share-studio.js?v=20261001-share-verified-v2"></script>
+<script defer src="share-export-qa.js"></script>
+<h1>Share Export QA</h1>
+<label><input id="native" type="checkbox"> Native image loading path</label>
+<button id="run" type="button">Export and verify images</button>
+<pre id="status" role="status">Ready</pre>
+<div id="results"></div><div id="fixtures"></div>
+</html>

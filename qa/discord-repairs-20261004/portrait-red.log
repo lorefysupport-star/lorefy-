@@ -1,0 +1,35 @@
+✔ work preference search filters the full category before paging (1.8184ms)
+✔ search is nested inside discovery rather than a duplicate navigation destination (0.2591ms)
+✔ Arabic title aliases are available to every catalog picker (2.8789ms)
+✔ preference character picker includes bundled cast beyond the short curated list (0.9825ms)
+✔ loading a selected work adds its full remote cast to the category picker (1.0725ms)
+✔ cast search matches aliases rather than only the first display name (1.1516ms)
+✔ comic preference portraits never query an anime character provider (0.7329ms)
+✖ fallback portraits reject a different character returned by fuzzy search (1.8ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 85.95
+
+✖ failing tests:
+
+test at tests\preference-catalog-recovery.test.js:64:1
+✖ fallback portraits reject a different character returned by fuzzy search (1.8ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'wrong.jpg' !== ''
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\preference-catalog-recovery.test.js:70:10)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'wrong.jpg',
+    expected: '',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

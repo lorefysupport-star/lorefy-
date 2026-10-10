@@ -1,0 +1,19 @@
+.lf-work-relations { margin-block: 24px; color: var(--ui-ink); }
+.lf-work-relations header { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--ui-line); }
+.lf-work-relations h2 { margin: 0; padding-block: 12px; font-size: 18px; line-height: 1.5; }
+.lf-work-relations header a { display: grid; place-items: center; min-height: 44px; color: var(--ui-muted); font-size: 12px; text-decoration: none; }
+.lf-work-relations-list { display: grid; }
+.lf-app .lf-work-relation { display: grid; grid-template-columns: 52px minmax(0, 1fr) 20px; align-items: center; gap: 16px; width: 100%; min-height: 106px; padding: 14px 0; border: 0; border-bottom: 1px solid var(--ui-line); border-radius: 0; background: transparent; color: var(--ui-ink); text-align: start; font: inherit; cursor: pointer; }
+.lf-work-relation img,.lf-work-relation-cover { width: 52px; height: 78px; object-fit: cover; border-radius: 4px; background: var(--ui-fill); }
+.lf-work-relation-copy { display: grid; gap: 4px; min-width: 0; }
+.lf-work-relation small { font-size: 12px; color: var(--ui-action); }
+.lf-work-relation strong { font-size: 15px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; text-align: match-parent; }
+html .lf-app .lf-work-relations[dir="rtl"] .lf-work-relation strong { text-align: right !important; }
+html .lf-app .lf-work-relations[dir="ltr"] .lf-work-relation strong { text-align: left !important; }
+.lf-work-relation-year { color: var(--ui-muted); font-size: 12px; }
+.lf-work-relation svg { color: var(--ui-muted); }
+[dir="ltr"] .lf-work-relation svg { transform: rotate(180deg); }
+.lf-work-relations-status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 0; min-height: 64px; color: var(--ui-muted); font-size: 13px; line-height: 1.6; }
+.lf-work-relations-status button { min-height: 44px; padding-inline: 12px; border: 0; border-radius: 6px; background: var(--ui-fill); color: var(--ui-action); font: inherit; cursor: pointer; }
+.lf-work-relation:focus-visible,.lf-work-relations a:focus-visible,.lf-work-relations-status button:focus-visible { outline: 2px solid var(--ui-action); outline-offset: 3px; }
+@media (hover: hover) { .lf-work-relation:hover { background: var(--ui-fill); } }

@@ -1,0 +1,20 @@
+{
+  "name": "Lorefy — تتبّع · قيّم · اكتشف",
+  "short_name": "Lorefy",
+  "description": "تتبّع المانجا والمانهوا والروايات، قيّمها، واكتشف جديدها بواجهة عربية أنيقة.",
+  "lang": "ar",
+  "dir": "rtl",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#2A1257",
+  "theme_color": "#7B2FD6",
+  "categories": ["books", "entertainment", "lifestyle"],
+  "icons": [
+    { "src": "launch/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "launch/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "launch/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

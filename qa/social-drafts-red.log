@@ -1,0 +1,272 @@
+✔ visitor artwork uses the owner snapshot, never viewer cover preferences (1.256ms)
+✔ public chapter reviews stay in chapters; existing private notes are not auto-published (0.7584ms)
+✔ reply refresh is race-safe, retryable, and bounded by viewport (1.1456ms)
+✖ reply targeting preserves the draft and closing a thread does not discard it (1.4124ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 78.5631
+
+✖ failing tests:
+
+test at tests\social-artwork-chapters.test.js:35:1
+✖ reply targeting preserves the draft and closing a thread does not discard it (1.4124ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /input\.value\.replace\(/. Input:
+  
+  '(function (global) {\n' +
+    '  "use strict";\n' +
+    '\n' +
+    '  var doc = global.document;\n' +
+    '  if (!doc) return;\n' +
+    '\n' +
+    '  var LOCAL_POSTS_KEY = "lorefy.user.communityPosts.v1";\n' +
+    '  var LOCAL_REACTIONS_KEY = "lorefy.user.communityReactions.v1";\n' +
+    '  var LISTS_KEY = "lorefy.customLists.v1";\n' +
+    '  var TOPS_KEY = "lorefy.charTopLists.v1";\n' +
+    '  var DIARY_KEY = "lorefy.user.readingDiary.v1";\n' +
+    '  var state = { page:null, posts:[], loaded:false, loading:false, attachment:null, composeSheet:null, unsubscribe:null, refreshTimer:0, legacySeedAttempted:false, filter:"all", followedIds:[], followsLoaded:false };\n' +
+    '\n' +
+    '  function read(key, fallback) {\n' +
+    '    try {\n' +
+    '      var value = JSON.parse(global.localStorage.getItem(key) || "null");\n' +
+    '      return value == null ? fallback : value;\n' +
+    '    } catch (error) { return fallback; }\n' +
+    '  }\n' +
+    '\n' +
+    '  function write(key, value) {\n' +
+    '    try { global.localStorage.setItem(key, JSON.stringify(value)); }\n' +
+    '    catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function el(tag, attrs, children) {\n' +
+    '    var node = doc.createElement(tag);\n' +
+    '    attrs = attrs || {};\n' +
+    '    Object.keys(attrs).forEach(function (key) {\n' +
+    '      var value = attrs[key];\n' +
+    '      if (key === "class") node.className = value;\n' +
+    '      else if (key === "text") node.textContent = value;\n' +
+    '      else if (key === "html") node.innerHTML = value;\n' +
+    '      else if (key === "hidden") node.hidden = !!value;\n' +
+    '      else if (key.indexOf("on") === 0 && typeof value === "function") node.addEventListener(key.slice(2), value);\n' +
+    '      else if (value != null) node.setAttribute(key, value);\n' +
+    '    });\n' +
+    '    (Array.isArray(children) ? children : children ? [children] : []).forEach(function (child) {\n' +
+    '      if (child) node.appendChild(child);\n' +
+    '    });\n' +
+    '    return node;\n' +
+    '  }\n' +
+    '\n' +
+    '  function icon(name, size) {\n' +
+    '    return el("i", { "data-lucide":name, width:String(size || 18), height:String(size || 18), "aria-hidden":"true" });\n' +
+    '  }\n' +
+    '\n' +
+    '  function hydrateIcons(root) {\n' +
+    '    try {\n' +
+    '      if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ root:root || doc });\n' +
+    '    } catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function toast(message) {\n' +
+    '    try {\n' +
+    '      if (global.LorefyUI && global.LorefyUI.toast) return global.LorefyUI.toast(message);\n' +
+    '      global.dispatchEvent(new global.CustomEvent("lorefy:toast", { detail:{ message:message } }));\n' +
+    '    } catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function communityOverlayHost() {\n' +
+    '    return doc.querySelector(".lf-app") || doc.getElementById("screen") || doc.body;\n' +
+    '  }\n' +
+    '\n' +
+    '  function isDemo() {\n' +
+    '    var params = new URLSearchParams(global.location.search || "");\n' +
+    '    return /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(global.location.hostname) && params.get("preview") === "demo";\n' +
+    '  }\n' +
+    '\n' +
+    '  function uuid() {\n' +
+    '    if (global.crypto && global.crypto.randomUUID) return global.crypto.randomUUID();\n' +
+    '    return "00000000-0000-4000-8000-" + String(Date.now()).slice(-12);\n' +
+    '  }\n' +
+    '\n' +
+    '  function identity() {\n' +
+    '    var raw = read("lorefy.identity.v1", {}) || {};\n' +
+    '    var session = read("lorefy.session.v1", {}) || {};\n' +
+    '    return {\n' +
+    '      id:session.userId || raw.id || "00000000-0000-4000-8000-000000000099",\n' +
+    '      name:raw.name || raw.displayName || "قارئ Lorefy",\n' +
+    '      username:String(raw.un || raw.username || "lorefy_reader").replace(/^@/, ""),\n' +
+    '      avatar:raw.avatar || raw.av || ""\n' +
+    '    };\n' +
+    '  }\n' +
+    '\n' +
+    '  function works() {\n' +
+    '    if (Array.isArray(global.LorefyMangaData) && global.LorefyMangaData.length) return global.LorefyMangaData;\n' +
+    '    var seen = {};\n' +
+    '    return Array.prototype.map.call(doc.querySelectorAll(".lf-review-card"), function (card, index) {\n' +
+    '      var paragraphs = card.querySelectorAll("p");\n' +
+    '      var images = card.querySelectorAll("img");\n' +
+    '      var title = String(paragraphs.length > 1 ? paragraphs[paragraphs.length - 1].textContent : "").trim();\n' +
+    '      if (!title || seen[title]) return null;\n' +
+    '      seen[title] = true;\n' +
+    '      return {\n' +
+    '        id:"community-visible-work-" + index,\n' +
+    '        title:title,\n' +
+    '        cover:images.length ? images[images.length - 1].src : ""\n' +
+    '      };\n' +
+    '    }).filter(Boolean);\n' +
+    '  }\n' +
+    '\n' +
+    '  function workById(id) {\n' +
+    '    id = String(id || "");\n' +
+    '    var rows = works();\n' +
+    '    for (var i=0; i<rows.length; i++) if (String(rows[i].id) === id) return rows[i];\n' +
+    '    return null;\n' +
+    '  }\n' +
+    '\n' +
+    '  function workTitle(work) {\n' +
+    '    return String(work && (work.titleEnglish || work.english || work.title || work.ar) || "عمل على Lorefy");\n' +
+    '  }\n' +
+    '\n' +
+    '  function workCover(work) {\n' +
+    '    return String(work && (work.sourceCoverUrl || work.cover || work.coverImage) || "");\n' +
+    '  }\n' +
+    '\n' +
+    '  function timeLabel(value) {\n' +
+    '    var age = Date.now() - new Date(value || Date.now()).getTime();\n' +
+    '    if (age < 60000) return "الآن";\n' +
+    '    if (age < 3600000) return Math.max(1, Math.floor(age / 60000)) + "د";\n' +
+    '    if (age < 86400000) return Math.floor(age / 3600000) + "س";\n' +
+    '    return Math.floor(age / 86400000) + "ي";\n' +
+    '  }\n' +
+    '\n' +
+    '  function avatar(profile, size) {\n' +
+    '    var wrap = el("span", { class:"lf-community-post-avatar", style:"--avatar-size:" + (size || 42) + "px" });\n' +
+    '    if (profile && profile.avatar) {\n' +
+    '      var image = el("img", { src:profile.avatar, alt:"", loading:"lazy", decoding:"async", referrerpolicy:"no-referrer" });\n' +
+    '      image.addEventListener("error", function () { image.remove(); wrap.textContent = String((profile.name || profile.username || "L")).slice(0, 1); });\n' +
+    '      wrap.appendChild(image);\n' +
+    '    } else wrap.textContent = String(profile && (profile.name || profile.username) || "L").slice(0, 1);\n' +
+    '    return wrap;\n' +
+    '  }\n' +
+    '\n' +
+    '  function openProfile(profile) {\n' +
+    '    if (!profile || !profile.id) return;\n' +
+    '    global.dispatchEvent(new global.CustomEvent("lorefy:open-reader-profile", { detail:profile }));\n' +
+    '  }\n' +
+    '\n' +
+    '  function normalizePost(row) {\n' +
+    '    row = row || {};\n' +
+    '    var sourceReactions = row.reactions || {};\n' +
+    '    var sourceMine = sourceReactions.mine;\n' +
+    '    var mine = typeof sourceMine === "object" && sourceMine ? sourceMine : { like:!!sourceMine, dislike:false };\n' +
+    '    return {\n' +
+    '      id:String(row.id || uuid()),\n' +
+    '      user_id:String(row.user_id || row.userId || ""),\n' +
+    '      kind:["text", "list", "top"].indexOf(row.kind) >= 0 ? row.kind : "text",\n' +
+    '      body:String(row.body || ""),\n' +
+    '      attachment:row.attachment && typeof row.attachment === "object" ? row.attachment : {},\n' +
+    '      parent_id:row.parent_id || null,\n' +
+    '      created_at:row.created_at || new Date().toISOString(),\n' +
+    '      profile:row.profile || { id:row.user_id || row.userId, name:row.user || "قارئ Lorefy", username:row.un || "lorefy_reader", avatar:row.av || "" },\n' +
+    '      reactions:{\n' +
+    '        like:Number(sourceReactions.like != null ? sourceReactions.like : row.likes || 0),\n' +
+    '        dislike:Number(sourceReactions.dislike != null ? sourceReactions.dislike : row.dislikes || 0),\n' +
+    '        mine:{ like:!!mine.like, dislike:!!mine.dislike }\n' +
+    '      },\n' +
+    '      replyCount:Number(row.replyCount || 0),\n' +
+    '      demoReplies:Array.isArray(row.demoReplies) ? row.demoReplies : []\n' +
+    '    };\n' +
+    '  }\n' +
+    '\n' +
+    '  function applyLocalReaction(post) {\n' +
+    '    var saved = read(LOCAL_REACTIONS_KEY, {}) || {};\n' +
+    '    var reaction = saved[post.id];\n' +
+    '    if (!reaction || typeof reaction !== "object") return post;\n' +
+    '    var mine = reaction.mine || {};\n' +
+    '    post.reactions = {\n' +
+    '      like:Math.max(0, Number(reaction.like || 0)),\n' +
+    '      dislike:Math.max(0, Number(reaction.dislike || 0)),\n' +
+    '      mine:{ like:!!mine.like, dislike:!!mine.dislike }\n' +
+    '    };\n' +
+    '    return post;\n' +
+    '  }\n' +
+    '\n' +
+    '  function demoPosts() {\n' +
+    '    var seeded = [];\n' +
+    '    if (global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildPosts) {\n' +
+    '      seeded = global.LorefyDemoCommunity.buildPosts(works().slice(0, 30).map(function (work) { return work.id; }));\n' +
+    '    }\n' +
+    '    var mine = read(LOCAL_POSTS_KEY, []);\n' +
+    '    return mine.concat(seeded).map(normalizePost).map(applyLocalReaction).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });\n' +
+    '  }\n' +
+    '\n' +
+    '  async function loadFollowedProfileIds(force) {\n' +
+    '    if (state.followsLoaded && !force) return state.followedIds;\n' +
+    '    var ids = [];\n' +
+    '    var backend = global.LorefyBackend;\n' +
+    '    try {\n' +
+    '      if (backend && backend.getFollowedProfileIds) ids = await backend.getFollowedProfileIds();\n' +
+    '    } catch (error) { console.warn("[Lorefy] followed profiles:", error); }\n' +
+    '    if (isDemo() && (!Array.isArray(ids) || !ids.length) && global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildReaders) {\n' +
+    '      ids = global.LorefyDemoCommunity.buildReaders(works().slice(0, 30).map(function (work) { return work.id; }))\n' +
+    '        .filter(function (profile) { return profile.is_following === true; })\n' +
+    '        .map(function (profile) { return profile.id; });\n' +
+    '    }\n' +
+    '    state.followedIds = Array.from(new Set((Array.isArray(ids) ? ids : []).map(String)));\n' +
+    '    state.followsLoaded = true;\n' +
+    '    return state.followedIds;\n' +
+    '  }\n' +
+    '\n' +
+    '  async function loadPosts(force, older) {\n' +
+    '    if (state.loading || (state.loaded && !force)) return;\n' +
+    '    state.loading = true;\n' +
+    '    state.error = false;\n' +
+    '    try {\n' +
+    '      var backend = global.LorefyBackend;\n' +
+    '      if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {\n' +
+    '        var cursor = older && state.posts[state.posts.length - 1];\n' +
+    '        var rows = (await backend.listCommunityPosts({ limit:60, before:cursor || null })).map(normalizePost);\n' +
+    '        state.hasMore = rows.length === 60;\n' +
+    '        var merged = older ? state.posts.concat(rows) : rows;\n' +
+    '        state.posts = Array.from(new Map(merged.map(function (row) { return [row.id, row]; })).values());\n' +
+    '      }\n' +
+    '      else state.posts = demoPosts();\n' +
+    '      await loadFollowedProfileIds(false);\n' +
+    '      state.loaded = true;\n' +
+    '      renderPostFeed();\n' +
+    '    } catch (error) {\n' +
+    '      console.warn("[Lorefy] community posts:", error);\n' +
+    '      state.error = true;\n' +
+    '      state.loaded = true;\n' +
+    '      renderPostFeed();\n' +
+    '    } finally { state.loading = false; renderPostFeed(); }\n' +
+    '  }\n' +
+    '\n' +
+    '  function localSavePost(input) {\n' +
+    '    var me = identity();\n' +
+    '    var rows = read(LOCAL_POSTS_KEY, []);\n' +
+    '    var post = normalizePost({\n' +
+    '      id:uuid(), user_id:me.id, kind:input.kind, body:input.body, attachment:input.attachment,\n' +
+    '      parent_id:input.parentId || null, created_at:new Date().toISOString(), profile:me,\n' +
+    '      reactions:{ like:0, dislike:0, mine:{ like:false, dislike:false } }, replyCount:0\n' +
+    '    });\n' +
+    '    rows.unshift(post);\n' +
+    '    write(LOCAL_POSTS_KEY, rows.slice('... 40945 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\social-artwork-chapters.test.js:37:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '(function (global) {\n  "use strict";\n\n  var doc = global.document;\n  if (!doc) return;\n\n  var LOCAL_POSTS_KEY = "lorefy.user.communityPosts.v1";\n  var LOCAL_REACTIONS_KEY = "lorefy.user.communityReactions.v1";\n  var LISTS_KEY = "lorefy.customLists.v1";\n  var TOPS_KEY = "lorefy.charTopLists.v1";\n  var DIARY_KEY = "lorefy.user.readingDiary.v1";\n  var state = { page:null, posts:[], loaded:false, loading:false, attachment:null, composeSheet:null, unsubscribe:null, refreshTimer:0, legacySeedAttempted:false, filter:"all", followedIds:[], followsLoaded:false };\n\n  function read(key, fallback) {\n    try {\n      var value = JSON.parse(global.localStorage.getItem(key) || "null");\n      return value == null ? fallback : value;\n    } catch (error) { return fallback; }\n  }\n\n  function write(key, value) {\n    try { global.localStorage.setItem(key, JSON.stringify(value)); }\n    catch (error) {}\n  }\n\n  function el(tag, attrs, children) {\n    var node = doc.createElement(tag);\n    attrs = attrs || {};\n    Object.keys(attrs).forEach(function (key) {\n      var value = attrs[key];\n      if (key === "class") node.className = value;\n      else if (key === "text") node.textContent = value;\n      else if (key === "html") node.innerHTML = value;\n      else if (key === "hidden") node.hidden = !!value;\n      else if (key.indexOf("on") === 0 && typeof value === "function") node.addEventListener(key.slice(2), value);\n      else if (value != null) node.setAttribute(key, value);\n    });\n    (Array.isArray(children) ? children : children ? [children] : []).forEach(function (child) {\n      if (child) node.appendChild(child);\n    });\n    return node;\n  }\n\n  function icon(name, size) {\n    return el("i", { "data-lucide":name, width:String(size || 18), height:String(size || 18), "aria-hidden":"true" });\n  }\n\n  function hydrateIcons(root) {\n    try {\n      if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ root:root || doc });\n    } catch (error) {}\n  }\n\n  function toast(message) {\n    try {\n      if (global.LorefyUI && global.LorefyUI.toast) return global.LorefyUI.toast(message);\n      global.dispatchEvent(new global.CustomEvent("lorefy:toast", { detail:{ message:message } }));\n    } catch (error) {}\n  }\n\n  function communityOverlayHost() {\n    return doc.querySelector(".lf-app") || doc.getElementById("screen") || doc.body;\n  }\n\n  function isDemo() {\n    var params = new URLSearchParams(global.location.search || "");\n    return /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(global.location.hostname) && params.get("preview") === "demo";\n  }\n\n  function uuid() {\n    if (global.crypto && global.crypto.randomUUID) return global.crypto.randomUUID();\n    return "00000000-0000-4000-8000-" + String(Date.now()).slice(-12);\n  }\n\n  function identity() {\n    var raw = read("lorefy.identity.v1", {}) || {};\n    var session = read("lorefy.session.v1", {}) || {};\n    return {\n      id:session.userId || raw.id || "00000000-0000-4000-8000-000000000099",\n      name:raw.name || raw.displayName || "قارئ Lorefy",\n      username:String(raw.un || raw.username || "lorefy_reader").replace(/^@/, ""),\n      avatar:raw.avatar || raw.av || ""\n    };\n  }\n\n  function works() {\n    if (Array.isArray(global.LorefyMangaData) && global.LorefyMangaData.length) return global.LorefyMangaData;\n    var seen = {};\n    return Array.prototype.map.call(doc.querySelectorAll(".lf-review-card"), function (card, index) {\n      var paragraphs = card.querySelectorAll("p");\n      var images = card.querySelectorAll("img");\n      var title = String(paragraphs.length > 1 ? paragraphs[paragraphs.length - 1].textContent : "").trim();\n      if (!title || seen[title]) return null;\n      seen[title] = true;\n      return {\n        id:"community-visible-work-" + index,\n        title:title,\n        cover:images.length ? images[images.length - 1].src : ""\n      };\n    }).filter(Boolean);\n  }\n\n  function workById(id) {\n    id = String(id || "");\n    var rows = works();\n    for (var i=0; i<rows.length; i++) if (String(rows[i].id) === id) return rows[i];\n    return null;\n  }\n\n  function workTitle(work) {\n    return String(work && (work.titleEnglish || work.english || work.title || work.ar) || "عمل على Lorefy");\n  }\n\n  function workCover(work) {\n    return String(work && (work.sourceCoverUrl || work.cover || work.coverImage) || "");\n  }\n\n  function timeLabel(value) {\n    var age = Date.now() - new Date(value || Date.now()).getTime();\n    if (age < 60000) return "الآن";\n    if (age < 3600000) return Math.max(1, Math.floor(age / 60000)) + "د";\n    if (age < 86400000) return Math.floor(age / 3600000) + "س";\n    return Math.floor(age / 86400000) + "ي";\n  }\n\n  function avatar(profile, size) {\n    var wrap = el("span", { class:"lf-community-post-avatar", style:"--avatar-size:" + (size || 42) + "px" });\n    if (profile && profile.avatar) {\n      var image = el("img", { src:profile.avatar, alt:"", loading:"lazy", decoding:"async", referrerpolicy:"no-referrer" });\n      image.addEventListener("error", function () { image.remove(); wrap.textContent = String((profile.name || profile.username || "L")).slice(0, 1); });\n      wrap.appendChild(image);\n    } else wrap.textContent = String(profile && (profile.name || profile.username) || "L").slice(0, 1);\n    return wrap;\n  }\n\n  function openProfile(profile) {\n    if (!profile || !profile.id) return;\n    global.dispatchEvent(new global.CustomEvent("lorefy:open-reader-profile", { detail:profile }));\n  }\n\n  function normalizePost(row) {\n    row = row || {};\n    var sourceReactions = row.reactions || {};\n    var sourceMine = sourceReactions.mine;\n    var mine = typeof sourceMine === "object" && sourceMine ? sourceMine : { like:!!sourceMine, dislike:false };\n    return {\n      id:String(row.id || uuid()),\n      user_id:String(row.user_id || row.userId || ""),\n      kind:["text", "list", "top"].indexOf(row.kind) >= 0 ? row.kind : "text",\n      body:String(row.body || ""),\n      attachment:row.attachment && typeof row.attachment === "object" ? row.attachment : {},\n      parent_id:row.parent_id || null,\n      created_at:row.created_at || new Date().toISOString(),\n      profile:row.profile || { id:row.user_id || row.userId, name:row.user || "قارئ Lorefy", username:row.un || "lorefy_reader", avatar:row.av || "" },\n      reactions:{\n        like:Number(sourceReactions.like != null ? sourceReactions.like : row.likes || 0),\n        dislike:Number(sourceReactions.dislike != null ? sourceReactions.dislike : row.dislikes || 0),\n        mine:{ like:!!mine.like, dislike:!!mine.dislike }\n      },\n      replyCount:Number(row.replyCount || 0),\n      demoReplies:Array.isArray(row.demoReplies) ? row.demoReplies : []\n    };\n  }\n\n  function applyLocalReaction(post) {\n    var saved = read(LOCAL_REACTIONS_KEY, {}) || {};\n    var reaction = saved[post.id];\n    if (!reaction || typeof reaction !== "object") return post;\n    var mine = reaction.mine || {};\n    post.reactions = {\n      like:Math.max(0, Number(reaction.like || 0)),\n      dislike:Math.max(0, Number(reaction.dislike || 0)),\n      mine:{ like:!!mine.like, dislike:!!mine.dislike }\n    };\n    return post;\n  }\n\n  function demoPosts() {\n    var seeded = [];\n    if (global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildPosts) {\n      seeded = global.LorefyDemoCommunity.buildPosts(works().slice(0, 30).map(function (work) { return work.id; }));\n    }\n    var mine = read(LOCAL_POSTS_KEY, []);\n    return mine.concat(seeded).map(normalizePost).map(applyLocalReaction).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });\n  }\n\n  async function loadFollowedProfileIds(force) {\n    if (state.followsLoaded && !force) return state.followedIds;\n    var ids = [];\n    var backend = global.LorefyBackend;\n    try {\n      if (backend && backend.getFollowedProfileIds) ids = await backend.getFollowedProfileIds();\n    } catch (error) { console.warn("[Lorefy] followed profiles:", error); }\n    if (isDemo() && (!Array.isArray(ids) || !ids.length) && global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildReaders) {\n      ids = global.LorefyDemoCommunity.buildReaders(works().slice(0, 30).map(function (work) { return work.id; }))\n        .filter(function (profile) { return profile.is_following === true; })\n        .map(function (profile) { return profile.id; });\n    }\n    state.followedIds = Array.from(new Set((Array.isArray(ids) ? ids : []).map(String)));\n    state.followsLoaded = true;\n    return state.followedIds;\n  }\n\n  async function loadPosts(force, older) {\n    if (state.loading || (state.loaded && !force)) return;\n    state.loading = true;\n    state.error = false;\n    try {\n      var backend = global.LorefyBackend;\n      if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {\n        var cursor = older && state.posts[state.posts.length - 1];\n        var rows = (await backend.listCommunityPosts({ limit:60, before:cursor || null })).map(normalizePost);\n        state.hasMore = rows.length === 60;\n        var merged = older ? state.posts.concat(rows) : rows;\n        state.posts = Array.from(new Map(merged.map(function (row) { return [row.id, row]; })).values());\n      }\n      else state.posts = demoPosts();\n      await loadFollowedProfileIds(false);\n      state.loaded = true;\n      renderPostFeed();\n    } catch (error) {\n      console.warn("[Lorefy] community posts:", error);\n      state.error = true;\n      state.loaded = true;\n      renderPostFeed();\n    } finally { state.loading = false; renderPostFeed(); }\n  }\n\n  function localSavePost(input) {\n    var me = identity();\n    var rows = read(LOCAL_POSTS_KEY, []);\n    var post = normalizePost({\n      id:uuid(), user_id:me.id, kind:input.kind, body:input.body, attachment:input.attachment,\n      parent_id:input.parentId || null, created_at:new Date().toISOString(), profile:me,\n      reactions:{ like:0, dislike:0, mine:{ like:false, dislike:false } }, replyCount:0\n    });\n    rows.unshift(post);\n    write(LOCAL_POSTS_KEY, rows.slice('... 40945 more characters,
+    expected: /input\.value\.replace\(/,
+    operator: 'match',
+    diff: 'simple'
+  }

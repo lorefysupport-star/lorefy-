@@ -1,0 +1,448 @@
+- banner:
+  - heading "بحث" [level=1]
+  - textbox "ابحث بالعنوان أو المؤلف..."
+  - button "الكل" [pressed]
+  - button "مانجا"
+  - button "مانهوا"
+  - button "مانهوا صيني"
+  - button "كوميكس"
+  - button "رواية"
+  - button "كتاب"
+  - button "لايت نوفل"
+  - button "ويب نوفل"
+  - button "الأعلى تقييماً"
+  - button "الأشهر"
+  - button "الأحدث"
+- status: 113,174 نتيجة
+- button "فتح My Divine Pet Enables Me To Become The Biggest Winnerويب نوفلويب نوفل صيني ·2024 ·2037 فصل":
+  - paragraph: My Divine Pet Enables Me To Become The Biggest Winner
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·2037 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة My Divine Pet Enables Me To Become The Biggest Winner إلى المكتبة":
+- button "فتح No Substitutes for the Bigshots' Dream Girl Anymore!ويب نوفلرواية إنجليزية ·2024 ·1958 فصل":
+  - paragraph: No Substitutes for the Bigshots' Dream Girl Anymore!
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·1958 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة No Substitutes for the Bigshots' Dream Girl Anymore! إلى المكتبة":
+- button "فتح Starting from a Fake Universityويب نوفلويب نوفل صيني ·2024 ·1940 فصل5":
+  - paragraph: Starting from a Fake University
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·1940 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Starting from a Fake University إلى المكتبة":
+- button "فتح Yarra's Adventure Notesويب نوفلويب نوفل صيني ·2024 ·1583 فصل5":
+  - paragraph: Yarra's Adventure Notes
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·1583 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Yarra's Adventure Notes إلى المكتبة":
+- button "فتح Adopting A Stray Cat By The Roadويب نوفلويب نوفل صيني ·2024 ·1451 فصل5":
+  - paragraph: Adopting A Stray Cat By The Road
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·1451 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Adopting A Stray Cat By The Road إلى المكتبة":
+- button "فتح The Master's Mask Unveiled Againويب نوفلويب نوفل صيني ·2024 ·1291 فصل5":
+  - paragraph: The Master's Mask Unveiled Again
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·1291 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The Master's Mask Unveiled Again إلى المكتبة":
+- 'button "فتح Indian Mythology: the Heavenly Emperor is not working todayويب نوفلويب نوفل صيني ·2024 ·10"':
+  - paragraph: "Indian Mythology: the Heavenly Emperor is not working today"
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·1098 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Indian Mythology: the Heavenly Emperor is not working today إلى المكتبة"':
+- button "فتح On Our Wedding Night, I Discovered the Crown Prince's Hidden Illnessويب نوفلويب نوفل صيني":
+  - paragraph: On Our Wedding Night, I Discovered the Crown Prince's Hidden Illness
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·1046 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة On Our Wedding Night, I Discovered the Crown Prince's Hidden Illness إلى المكتبة":
+- button "فتح Dear Mr. Shiويب نوفلويب نوفل صيني ·2024 ·997 فصل5":
+  - paragraph: Dear Mr. Shi
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·997 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Dear Mr. Shi إلى المكتبة":
+- button "فتح Mommy Alert! The CEO Daddy Won't Stop Courtingويب نوفلويب نوفل صيني ·2024 ·918 فصل5":
+  - paragraph: Mommy Alert! The CEO Daddy Won't Stop Courting
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·918 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Mommy Alert! The CEO Daddy Won't Stop Courting إلى المكتبة":
+- button "فتح The CEO's Unkown Wifeويب نوفلويب نوفل صيني ·2024 ·866 فصل5":
+  - paragraph: The CEO's Unkown Wife
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·866 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The CEO's Unkown Wife إلى المكتبة":
+- button "فتح Embers of the Deepويب نوفلويب نوفل صيني ·2024 ·856 فصل5":
+  - paragraph: Embers of the Deep
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·856 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Embers of the Deep إلى المكتبة":
+- 'button "فتح Transmigration: Lady Chi Woos The Ice cold Professor Junويب نوفلويب نوفل صيني ·2024 ·689 ف"':
+  - paragraph: "Transmigration: Lady Chi Woos The Ice cold Professor Jun"
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·689 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Transmigration: Lady Chi Woos The Ice cold Professor Jun إلى المكتبة"':
+- button "فتح Domineering Loveويب نوفلويب نوفل صيني ·2024 ·687 فصل5":
+  - paragraph: Domineering Love
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·687 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Domineering Love إلى المكتبة":
+- button "فتح Secretly Married to the Ice-Cold CEOويب نوفلويب نوفل صيني ·2024 ·682 فصل5":
+  - paragraph: Secretly Married to the Ice-Cold CEO
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·682 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Secretly Married to the Ice-Cold CEO إلى المكتبة":
+- button "فتح After Rebirth, She Becomes the Revenge Queenويب نوفلويب نوفل صيني ·2024 ·677 فصل5":
+  - paragraph: After Rebirth, She Becomes the Revenge Queen
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·677 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة After Rebirth, She Becomes the Revenge Queen إلى المكتبة":
+- button "فتح America 1982ويب نوفلرواية إنجليزية ·2024 ·673 فصل5":
+  - paragraph: America 1982
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·673 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة America 1982 إلى المكتبة":
+- button "فتح Reborn As Divine Doctor to Rule the Worldويب نوفلويب نوفل صيني ·2024 ·661 فصل5":
+  - paragraph: Reborn As Divine Doctor to Rule the World
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·661 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Reborn As Divine Doctor to Rule the World إلى المكتبة":
+- 'button "فتح Rebirth: I Am Not the Movie Queen This Timeويب نوفلويب نوفل صيني ·2024 ·656 فصل5"':
+  - paragraph: "Rebirth: I Am Not the Movie Queen This Time"
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·656 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Rebirth: I Am Not the Movie Queen This Time إلى المكتبة"':
+- button "فتح The Wicked Female Is Wild and Scheming, Living in a Love Battlefield Every Dayويب نوفلرواي":
+  - paragraph: The Wicked Female Is Wild and Scheming, Living in a Love Battlefield Every Day
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·544 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The Wicked Female Is Wild and Scheming, Living in a Love Battlefield Every Day إلى المكتبة":
+- button "فتح Medical Examiner Can Revive the Deadويب نوفلويب نوفل صيني ·2024 ·503 فصل5":
+  - paragraph: Medical Examiner Can Revive the Dead
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·503 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Medical Examiner Can Revive the Dead إلى المكتبة":
+- button "فتح Tale of the Red Dragon Without Dragon's Mightويب نوفلويب نوفل صيني ·2024 ·500 فصل5":
+  - paragraph: Tale of the Red Dragon Without Dragon's Might
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·500 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Tale of the Red Dragon Without Dragon's Might إلى المكتبة":
+- 'button "فتح Mr. Tycoon''s Beloved Wife: The Madam No One Dares to Offendويب نوفلرواية إنجليزية ·2024 ·4"':
+  - paragraph: "Mr. Tycoon's Beloved Wife: The Madam No One Dares to Offend"
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·495 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Mr. Tycoon''s Beloved Wife: The Madam No One Dares to Offend إلى المكتبة"':
+- button "فتح The Reborn Kingويب نوفلرواية إنجليزية ·2024 ·487 فصل5":
+  - paragraph: The Reborn King
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·487 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The Reborn King إلى المكتبة":
+- button "فتح Elven Encounter With A Blood Seekerويب نوفلرواية إنجليزية ·2024 ·483 فصل5":
+  - paragraph: Elven Encounter With A Blood Seeker
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·483 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Elven Encounter With A Blood Seeker إلى المكتبة":
+- 'button "فتح Magical Academy: Rise of the Supreme Magic Craftsmanويب نوفلرواية إنجليزية ·2024 ·482 فصل5"':
+  - paragraph: "Magical Academy: Rise of the Supreme Magic Craftsman"
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·482 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Magical Academy: Rise of the Supreme Magic Craftsman إلى المكتبة"':
+- button "فتح What Bad Intentions can the Yandere Crown Prince have?ويب نوفلويب نوفل صيني ·2024 ·478 فصل":
+  - paragraph: What Bad Intentions can the Yandere Crown Prince have?
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·478 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة What Bad Intentions can the Yandere Crown Prince have? إلى المكتبة":
+- button "فتح OMG! I Transmigrated into Four Books at the Same Time!ويب نوفلويب نوفل صيني ·2024 ·474 فصل":
+  - paragraph: OMG! I Transmigrated into Four Books at the Same Time!
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·474 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة OMG! I Transmigrated into Four Books at the Same Time! إلى المكتبة":
+- 'button "فتح Dominant Marriage: The CEO''s Overbearing Loveويب نوفلويب نوفل صيني ·2024 ·469 فصل5"':
+  - paragraph: "Dominant Marriage: The CEO's Overbearing Love"
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·469 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Dominant Marriage: The CEO''s Overbearing Love إلى المكتبة"':
+- button "فتح Strange Life of a Catويب نوفلويب نوفل صيني ·2024 ·452 فصل5":
+  - paragraph: Strange Life of a Cat
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·452 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Strange Life of a Cat إلى المكتبة":
+- 'button "فتح Contract Marriage: Let''s Make It Real, Mrs. Sterling!ويب نوفلويب نوفل صيني ·2024 ·450 فصل5"':
+  - paragraph: "Contract Marriage: Let's Make It Real, Mrs. Sterling!"
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·450 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Contract Marriage: Let''s Make It Real, Mrs. Sterling! إلى المكتبة"':
+- 'button "فتح Rustic Charm: The Doctor Immortalويب نوفلويب نوفل صيني ·2024 ·434 فصل5"':
+  - paragraph: "Rustic Charm: The Doctor Immortal"
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·434 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Rustic Charm: The Doctor Immortal إلى المكتبة"':
+- button "فتح The Female General Dominates All After Transmigrationويب نوفلويب نوفل صيني ·2024 ·411 فصل5":
+  - paragraph: The Female General Dominates All After Transmigration
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·411 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The Female General Dominates All After Transmigration إلى المكتبة":
+- button "فتح The Vampire King's Petويب نوفلرواية إنجليزية ·2024 ·400 فصل5":
+  - paragraph: The Vampire King's Pet
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·400 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The Vampire King's Pet إلى المكتبة":
+- button "فتح Walker Of The Blue Skyويب نوفلرواية إنجليزية ·2024 ·397 فصل5":
+  - paragraph: Walker Of The Blue Sky
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·397 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Walker Of The Blue Sky إلى المكتبة":
+- button "فتح MY PRINCE HUSBAND HAS SEVEN WIVES AND I AM HIS FAVOURITE!ويب نوفلرواية إنجليزية ·2024 ·395":
+  - paragraph: MY PRINCE HUSBAND HAS SEVEN WIVES AND I AM HIS FAVOURITE!
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·395 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة MY PRINCE HUSBAND HAS SEVEN WIVES AND I AM HIS FAVOURITE! إلى المكتبة":
+- button "فتح Doomsday Pillarsويب نوفلرواية إنجليزية ·2024 ·382 فصل5":
+  - paragraph: Doomsday Pillars
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·382 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Doomsday Pillars إلى المكتبة":
+- button "فتح The General Who Hates Meويب نوفلرواية إنجليزية ·2024 ·371 فصل5":
+  - paragraph: The General Who Hates Me
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·371 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The General Who Hates Me إلى المكتبة":
+- 'button "فتح The Untamed: Game of Heartsويب نوفلرواية إنجليزية ·2024 ·370 فصل5"':
+  - paragraph: "The Untamed: Game of Hearts"
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·370 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة The Untamed: Game of Hearts إلى المكتبة"':
+- button "فتح I'm a spinosaurus with a System to raise a dinosaur armyويب نوفلويب نوفل صيني ·2024 ·365 ف":
+  - paragraph: I'm a spinosaurus with a System to raise a dinosaur army
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·365 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة I'm a spinosaurus with a System to raise a dinosaur army إلى المكتبة":
+- button "فتح The Debt Of Fateويب نوفلرواية إنجليزية ·2024 ·354 فصل5":
+  - paragraph: The Debt Of Fate
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·354 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The Debt Of Fate إلى المكتبة":
+- 'button "فتح Seventies Sweetheart: From Breakup to Billionaireويب نوفلويب نوفل صيني ·2024 ·350 فصل5"':
+  - paragraph: "Seventies Sweetheart: From Breakup to Billionaire"
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·350 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Seventies Sweetheart: From Breakup to Billionaire إلى المكتبة"':
+- button "فتح The Bride Of Immortal Crown Princeويب نوفلرواية إنجليزية ·2024 ·342 فصل5":
+  - paragraph: The Bride Of Immortal Crown Prince
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·342 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The Bride Of Immortal Crown Prince إلى المكتبة":
+- button "فتح Wife of The Demon Princeويب نوفلرواية إنجليزية ·2024 ·341 فصل5":
+  - paragraph: Wife of The Demon Prince
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·341 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Wife of The Demon Prince إلى المكتبة":
+- button "فتح Heart Over Swordويب نوفلرواية إنجليزية ·2024 ·332 فصل5":
+  - paragraph: Heart Over Sword
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·332 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Heart Over Sword إلى المكتبة":
+- button "فتح I'm a Walking Disaster With My Unwanted Virginityويب نوفلرواية إنجليزية ·2024 ·331 فصل5":
+  - paragraph: I'm a Walking Disaster With My Unwanted Virginity
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·331 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة I'm a Walking Disaster With My Unwanted Virginity إلى المكتبة":
+- button "فتح Married To The Dragon Prince Against My Willويب نوفلرواية إنجليزية ·2024 ·322 فصل5":
+  - paragraph: Married To The Dragon Prince Against My Will
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·322 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Married To The Dragon Prince Against My Will إلى المكتبة":
+- button "فتح The CEO Of My Dreams Returned To Meويب نوفلرواية إنجليزية ·2024 ·316 فصل5":
+  - paragraph: The CEO Of My Dreams Returned To Me
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·316 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The CEO Of My Dreams Returned To Me إلى المكتبة":
+- button "فتح Crashing into an Old Flameويب نوفلرواية إنجليزية ·2024 ·316 فصل5":
+  - paragraph: Crashing into an Old Flame
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·316 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Crashing into an Old Flame إلى المكتبة":
+- 'button "فتح Healing a Fallen S-Rank Beastman: Everyone Fights Over the Little Femaleويب نوفلويب نوفل ص"':
+  - paragraph: "Healing a Fallen S-Rank Beastman: Everyone Fights Over the Little Female"
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·306 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Healing a Fallen S-Rank Beastman: Everyone Fights Over the Little Female إلى المكتبة"':
+- button "فتح Marked By The Mad King Alphaويب نوفلرواية إنجليزية ·2024 ·302 فصل5":
+  - paragraph: Marked By The Mad King Alpha
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·302 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Marked By The Mad King Alpha إلى المكتبة":
+- button "فتح The Mafia King's Hacker Brideويب نوفلرواية إنجليزية ·2024 ·300 فصل5":
+  - paragraph: The Mafia King's Hacker Bride
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·300 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The Mafia King's Hacker Bride إلى المكتبة":
+- button "فتح A Crazy Love Proposalويب نوفلويب نوفل صيني ·2024 ·295 فصل5":
+  - paragraph: A Crazy Love Proposal
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·295 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة A Crazy Love Proposal إلى المكتبة":
+- 'button "فتح Reborn: The Duke''s Obsessionويب نوفلرواية إنجليزية ·2024 ·291 فصل5"':
+  - paragraph: "Reborn: The Duke's Obsession"
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·291 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Reborn: The Duke''s Obsession إلى المكتبة"':
+- button "فتح Awakening the Divine Sparkويب نوفلرواية إنجليزية ·2024 ·290 فصل5":
+  - paragraph: Awakening the Divine Spark
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·290 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Awakening the Divine Spark إلى المكتبة":
+- button "فتح Lord Theodore's Favorite Ritualويب نوفلرواية إنجليزية ·2024 ·290 فصل5":
+  - paragraph: Lord Theodore's Favorite Ritual
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·290 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Lord Theodore's Favorite Ritual إلى المكتبة":
+- button "فتح The Masked princeويب نوفلرواية إنجليزية ·2024 ·289 فصل5":
+  - paragraph: The Masked prince
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·289 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة The Masked prince إلى المكتبة":
+- button "فتح Carlotta's Daily Reportويب نوفلرواية إنجليزية ·2024 ·280 فصل5":
+  - paragraph: Carlotta's Daily Report
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·280 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Carlotta's Daily Report إلى المكتبة":
+- button "فتح Supreme Elixir Godويب نوفلويب نوفل صيني ·2024 ·279 فصل5":
+  - paragraph: Supreme Elixir God
+  - generic: ويب نوفل
+  - paragraph: ويب نوفل صيني ·2024 ·279 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Supreme Elixir God إلى المكتبة":
+- 'button "فتح Bastard Homunculus: Reborn in the Corpse Pitويب نوفلرواية إنجليزية ·2024 ·265 فصل5"':
+  - paragraph: "Bastard Homunculus: Reborn in the Corpse Pit"
+  - generic: ويب نوفل
+  - paragraph: رواية إنجليزية ·2024 ·265 فصل
+  - img "5 من 5":
+  - generic: "5"
+  - 'button "إضافة Bastard Homunculus: Reborn in the Corpse Pit إلى المكتبة"':
+- button "عرض المزيد — بقي 113,114"
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "بحث" [active]:
+    - generic: بحث
+  - button "الرئيسية":
+    - generic: الرئيسية

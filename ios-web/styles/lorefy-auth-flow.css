@@ -1,0 +1,478 @@
+/* The account and first-library journey is deliberately separate from app chrome. */
+.lf-auth {
+  --auth-paper: var(--ui-bg);
+  --auth-ink: var(--ui-ink);
+  --auth-muted: var(--ui-muted);
+  --auth-line: var(--ui-line);
+  --auth-action: var(--ui-action);
+  --auth-action-pressed: var(--ui-action-pressed);
+  --auth-selected: var(--ui-selected);
+  --auth-coral: #d56e56;
+  color: var(--auth-ink) !important;
+  background: var(--auth-paper) !important;
+}
+
+.lf-auth .lf-page {
+  width: min(100%, 560px) !important;
+  padding: calc(var(--nc-top) + 16px) 20px calc(var(--nc-bottom) + 18px) !important;
+  color: var(--auth-ink) !important;
+  background: var(--auth-paper) !important;
+  overflow: hidden;
+}
+
+.lf-auth :where(.lf-title, h1, h2, h3, strong) {
+  color: var(--auth-ink) !important;
+  letter-spacing: 0 !important;
+}
+
+.lf-auth .lf-title {
+  margin-block: 0 9px !important;
+  color: var(--auth-ink) !important;
+  font-size: 26px !important;
+  line-height: 1.35 !important;
+  font-weight: 800 !important;
+}
+
+.lf-auth .lf-sub {
+  max-width: 36ch;
+  color: var(--auth-muted) !important;
+  font-size: 13px !important;
+  line-height: 1.75 !important;
+}
+
+.lf-auth .lf-head {
+  min-height: 46px;
+  margin-bottom: 18px !important;
+}
+
+.lf-auth .lf-head small {
+  color: var(--auth-muted) !important;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.lf-auth .lf-back,
+.lf-auth .lf-lang {
+  min-width: 44px !important;
+  min-height: 44px !important;
+  border: 1px solid var(--auth-line) !important;
+  border-radius: 50% !important;
+  color: var(--auth-ink) !important;
+  background: var(--ui-surface) !important;
+  box-shadow: none !important;
+}
+
+.lf-auth .lf-progress {
+  gap: 5px;
+  margin: 0 0 26px;
+}
+
+.lf-auth .lf-progress span {
+  height: 3px;
+  background: var(--auth-line) !important;
+}
+
+.lf-auth .lf-progress span.on {
+  background: var(--auth-action) !important;
+}
+
+.lf-auth .lf-btn {
+  min-height: 54px !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: none !important;
+}
+
+.lf-auth .lf-primary {
+  color: #fff !important;
+  background: var(--auth-action) !important;
+  border: 1px solid var(--auth-action) !important;
+}
+
+.lf-auth .lf-primary:active {
+  background: var(--auth-action-pressed) !important;
+}
+
+.lf-auth .lf-white {
+  color: var(--auth-ink) !important;
+  background: var(--ui-surface) !important;
+  border: 1px solid var(--auth-line) !important;
+}
+
+.lf-auth .lf-label {
+  margin: 0 0 8px !important;
+  color: var(--auth-ink) !important;
+  font-size: 12px !important;
+}
+
+.lf-auth .lf-field {
+  min-height: 52px !important;
+  padding-inline: 14px !important;
+  color: var(--auth-ink) !important;
+  background: var(--ui-surface) !important;
+  border: 1px solid var(--auth-line) !important;
+  border-radius: 8px !important;
+  font-size: 16px !important;
+}
+
+.lf-auth .lf-field:focus,
+.lf-auth .lf-work-search:focus-within {
+  border-color: var(--auth-action) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb,var(--auth-action) 20%,transparent) !important;
+}
+
+.lf-auth .lf-tabs {
+  gap: 0;
+  margin: 24px 0 18px;
+  padding: 0;
+  border-bottom: 1px solid var(--auth-line);
+  border-radius: 0;
+  background: transparent !important;
+}
+
+.lf-auth .lf-tab,
+.lf-auth .lf-tab.on {
+  min-height: 46px !important;
+  border: 0 !important;
+  border-bottom: 2px solid transparent !important;
+  border-radius: 0 !important;
+  color: var(--auth-muted) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.lf-auth .lf-tab.on {
+  color: var(--auth-action) !important;
+  border-bottom-color: var(--auth-action) !important;
+}
+
+.lf-auth .lf-sticky {
+  inset-inline: 20px;
+  bottom: calc(var(--nc-bottom) + 14px);
+  padding-bottom: 0 !important;
+  background: var(--auth-paper) !important;
+}
+
+.lf-auth .lf-error {
+  color: #ab3d3d !important;
+}
+
+.lf-auth .lf-selection-status {
+  margin: 0 0 8px;
+  color: var(--auth-ink);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* An editorial opening with real reading imagery, then a quiet sign-in area. */
+.lf-auth[data-lf-auth-stage="welcome"],
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page {
+  background: #142e30 !important;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 50%;
+  background: url("../launch/brand/lorefy-reading-scene.jpg") center 38% / cover no-repeat;
+  border-bottom: 3px solid var(--auth-coral);
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-lang {
+  z-index: 2;
+  color: #fff !important;
+  background: #142e30d9 !important;
+  border-color: #ffffff4d !important;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) {
+  min-height: 0;
+  justify-content: flex-end !important;
+  align-items: flex-start !important;
+  padding: 0 0 20px !important;
+  text-align: start !important;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child {
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 14px;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child > div {
+  width: 33px;
+  height: 33px;
+  background: url("../launch/brand/lorefy-feather.png") center / contain no-repeat;
+  mix-blend-mode: screen;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child svg {
+  display: none;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) strong {
+  color: #fff !important;
+  font-size: 26px !important;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] h1 {
+  max-width: 15ch;
+  margin: 0 0 9px !important;
+  color: #fff !important;
+  font-size: 23px !important;
+  line-height: 1.38 !important;
+  text-align: start !important;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-sub {
+  max-width: 34ch !important;
+  margin: 0 !important;
+  color: #c9d9d6 !important;
+  text-align: start !important;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) {
+  flex: none;
+  gap: 8px !important;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-white {
+  border-color: #fff !important;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) > .lf-btn:not(.lf-white) {
+  color: #fff !important;
+  background: transparent !important;
+  border: 1px solid #708886 !important;
+}
+
+.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) > p:last-child {
+  margin: 10px 4px 0 !important;
+  color: #b9cbc8 !important;
+  font-size: 10px !important;
+  line-height: 1.6;
+}
+
+/* Reading formats have clear, stable hit areas instead of floating pills. */
+.lf-auth .lf-chip-wrap {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  align-content: start;
+  margin-top: 25px;
+  padding-bottom: 86px;
+  overflow-y: auto;
+}
+
+.lf-auth .lf-chip {
+  min-height: 56px !important;
+  padding: 10px 13px !important;
+  border: 1px solid var(--auth-line) !important;
+  border-radius: 8px !important;
+  color: var(--auth-ink) !important;
+  background: var(--ui-surface) !important;
+  text-align: start;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.lf-auth .lf-chip.on {
+  color: var(--auth-action-pressed) !important;
+  background: var(--auth-selected) !important;
+  border-color: var(--auth-action) !important;
+}
+
+/* Genre swatches are restrained but give each mood an identifiable signal. */
+.lf-auth .lf-genre-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 74px;
+  gap: 9px;
+  align-content: start;
+  flex: 1;
+  min-height: 0;
+  margin-top: 25px;
+  padding: 2px 0 86px;
+  overflow-y: auto;
+}
+
+.lf-auth .lf-genre {
+  height: 74px !important;
+  min-height: 74px !important;
+  padding: 15px !important;
+  border: 1px solid var(--auth-line) !important;
+  border-radius: 8px !important;
+  color: var(--auth-ink) !important;
+  background: var(--ui-surface) !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+  font-size: 14px;
+}
+
+.lf-auth .lf-genre::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--mood, var(--auth-action));
+}
+
+.lf-auth .lf-genre:nth-child(1) { --mood: #cb79a0; }
+.lf-auth .lf-genre:nth-child(2) { --mood: #dc8066; }
+.lf-auth .lf-genre:nth-child(3) { --mood: #6a9bab; }
+.lf-auth .lf-genre:nth-child(4) { --mood: #719179; }
+.lf-auth .lf-genre:nth-child(5) { --mood: #6694b3; }
+.lf-auth .lf-genre:nth-child(6) { --mood: #c69659; }
+.lf-auth .lf-genre:nth-child(7) { --mood: #d0a967; }
+.lf-auth .lf-genre:nth-child(8) { --mood: #817596; }
+
+.lf-auth .lf-genre.on {
+  color: var(--auth-action-pressed) !important;
+  background: var(--auth-selected) !important;
+  border-color: var(--auth-action) !important;
+}
+
+.lf-auth .lf-mark {
+  width: 24px;
+  height: 24px;
+  top: 8px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--auth-action) !important;
+}
+
+/* Browsable work rows keep every title readable beside its actual cover. */
+.lf-auth .lf-work-search {
+  flex: none;
+  min-height: 48px;
+  margin: 24px 0 11px;
+  color: var(--auth-muted) !important;
+  background: var(--ui-surface) !important;
+  border: 1px solid var(--auth-line) !important;
+  border-radius: 8px !important;
+}
+
+.lf-auth .lf-work-search input {
+  color: var(--auth-ink) !important;
+  font-size: 16px;
+}
+
+.lf-auth .lf-work-grid {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  gap: 0;
+  padding: 0 0 92px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.lf-auth .lf-work-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.lf-auth .lf-work {
+  display: flex;
+  align-items: center;
+  flex: none;
+  width: 100%;
+  min-height: 90px;
+  aspect-ratio: auto;
+  gap: 14px;
+  padding: 8px 10px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--auth-line) !important;
+  border-radius: 0 !important;
+  color: var(--auth-ink) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: start;
+}
+
+.lf-auth .lf-work img {
+  flex: none;
+  width: 52px;
+  height: 72px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: #dfe8e5;
+}
+
+.lf-auth .lf-work-title {
+  position: static;
+  display: -webkit-box;
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  color: var(--auth-ink) !important;
+  background: none !important;
+  font-size: 13px !important;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: start;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.lf-auth .lf-work.on {
+  color: var(--auth-action-pressed) !important;
+  background: var(--auth-selected) !important;
+  outline: 0 !important;
+}
+
+.lf-auth .lf-work.on .lf-work-title {
+  color: var(--auth-action-pressed) !important;
+}
+
+.lf-auth .lf-work .lf-mark {
+  position: static;
+  order: 3;
+  flex: none;
+}
+
+.lf-auth[data-lf-auth-stage="account"] .lf-page .lf-head::after {
+  content: "Lorefy";
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  direction: ltr;
+}
+
+.lf-auth[data-lf-auth-stage="account"] .lf-page::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 120px;
+  background: #142e30;
+  border-bottom: 3px solid var(--auth-coral);
+}
+
+.lf-auth[data-lf-auth-stage="account"] .lf-page > * {
+  position: relative;
+}
+
+body:has(.lf-auth .lf-progress) #statusbar {
+  color: var(--auth-ink, #193638) !important;
+}
+
+@media (max-height: 700px) {
+  .lf-auth[data-lf-auth-stage="welcome"] .lf-page::before { height: 45%; }
+  .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) { padding-bottom: 12px !important; }
+  .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child { margin-bottom: 7px; }
+  .lf-auth[data-lf-auth-stage="welcome"] h1 { font-size: 21px !important; }
+  .lf-auth .lf-genre-grid { margin-top: 17px; }
+  .lf-auth .lf-genre { height: 68px !important; min-height: 68px !important; }
+  .lf-auth .lf-genre-grid { grid-auto-rows: 68px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-auth * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

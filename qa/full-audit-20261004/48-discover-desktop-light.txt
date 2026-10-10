@@ -1,0 +1,309 @@
+- banner:
+  - heading "Explore" [level=1]
+  - button "Search works":
+    - generic: Search works or authors
+- paragraph: Browse by format
+- button "Manga 11900 عمل":
+  - strong: Manga
+  - generic: 11900 عمل
+- button "Manhwa 9241 عمل":
+  - strong: Manhwa
+  - generic: 9241 عمل
+- button "Manhua 977 عمل":
+  - strong: Manhua
+  - generic: 977 عمل
+- button "Comics 15191 عمل":
+  - strong: Comics
+  - generic: 15191 عمل
+- button "Novel 23900 عمل":
+  - strong: Novel
+  - generic: 23900 عمل
+- button "Book 28333 عمل":
+  - strong: Book
+  - generic: 28333 عمل
+- button "Light Novel 13702 عمل":
+  - strong: Light Novel
+  - generic: 13702 عمل
+- button "Web Novel 3785 عمل":
+  - strong: Web Novel
+  - generic: 3785 عمل
+- heading "اختيار المحرّر" [level=2]
+- generic: Manga
+- text: "4.1"
+- 'heading "Demon Slayer: Kimetsu no Yaiba" [level=3]'
+- paragraph: Tanjirou Kamado lives with his impoverished family on a remote mountain. As the oldest sibling, he took upon the responsibility of ensuring his family's livelihood after the death of his father. On a cold winter day, he goes down to the local village in order to sell some charcoal. As dusk falls, he is forced to spend the night in the house of a curious man who cautions him of strange creatures th
+- button "All" [pressed]
+- button "Manga"
+- button "Manhwa"
+- button "Manhua"
+- button "Comics"
+- button "Novel"
+- button "Book"
+- button "Light Novel"
+- button "Web Novel"
+- heading "الأكثر رواجاً" [level=2]
+- button "See all":
+  - text: See all
+- article:
+  - generic: Manga
+  - paragraph: "Demon Slayer: Kimetsu no Yaiba"
+  - img "4.1 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Alchemy Emperor of the Divine Dao
+  - img "3.9 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Catastrophic necromancer
+  - img "3.6 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Berserk
+  - img "4.7 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Chainsaw Man
+  - img "4.3 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: One Piece
+  - img "4.6 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: "Everyone Is A Lord: My Talent Is A Little Too Strong"
+  - img "3.4 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Attack on Titan
+  - img "4.3 out of 5":
+- article:
+  - generic: Manhwa
+  - paragraph: Solo Leveling
+  - img "4.3 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Myth Beyond Heaven
+  - img "3.7 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Entangled with An Evil Lord
+  - img "4.1 out of 5":
+- article:
+  - generic: Light Novel
+  - paragraph: Tokyo Ghoul
+  - img "4 out of 5":
+- heading "مختارة لك" [level=2]
+- button "See all":
+  - text: See all
+- article:
+  - generic: Manga
+  - paragraph: Jigokuraku
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: "Demon Slayer: Kimetsu no Yaiba"
+  - img "4.1 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Mairimashita! Iruma-kun Koushiki Anthology - Houkago no! Iruma-kun
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Kuni wo Owareta Ryuushi-san, Hirowareta Ringoku de Ukkari Musou Shite Shimau. ~Jakushou Kokka ga Tairiku Saikyou no Ryuu no Rakuen ni Naru made~
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Kizokuka Sannan no Nariagari Life - Umarete Sugu ni Jingai Nintei Sareta Shounen wa Isekai wo Mankitsu Suru
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: "Black Clover Side Story: Quartet Knights"
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Mannen 2-idakara to Kandousareta Shounen, Mujikaku ni Musou suru
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Hazure Skill Level Up no Sei de Party wo Tsuihou Sareta Shounen wa, Level wo Agete Butsuri de Naguru
+  - img "0 out of 5":
+- article:
+  - generic: Manhwa
+  - paragraph: Ghost Hammer (Pre-Serialization)
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Shoukoku no Altair
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Kikori no Isekai Tan ~Tensei shita Shounen wa, Ono 1-pon de Nariagaru~
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Munou Yuusha no Fukushuutan ~Isekai de Suterareta Shounen wa Hangyaku wo Chikau~
+  - img "0 out of 5":
+- heading "New releases" [level=2]
+- button "See all":
+  - text: See all
+- article:
+  - generic: Manga
+  - paragraph: Muteki no Ansatsu Madoushi, Last Boss Musume to Tabi o Suru @COMIC
+  - img "0 out of 5":
+- article:
+  - generic: Manhwa
+  - paragraph: There's No Such Thing as a Bad Lady
+  - img "3.6 out of 5":
+- article:
+  - generic: Manhwa
+  - paragraph: The Shepherd Wizard
+  - img "3.8 out of 5":
+- article:
+  - generic: Manhwa
+  - paragraph: "I Became the First Prince: Legend of Sword's Song"
+  - img "3.5 out of 5":
+- article:
+  - generic: Manhwa
+  - paragraph: I Only See You
+  - img "3.6 out of 5":
+- article:
+  - generic: Manhwa
+  - paragraph: The Secretly Capable Child Is Looking for Her Dad
+  - img "3.8 out of 5":
+- article:
+  - generic: Manhwa
+  - paragraph: Only I Have an EX-Grade Summon
+  - img "3.5 out of 5":
+- article:
+  - generic: Manhwa
+  - paragraph: Daytime in the Bunker
+  - img "3.5 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Shujinkou no Osananajimi ga, Wakiyaku no Ore ni Guigui Kuru
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Nakama wo Mamotte Shindara 20-nengo no Onaji Sekai ni Umarekawatta Ken...... demo Ore, Tensei 2-kaime Nanda kedo?
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Shujinkou-sama no Imouto ni Aisareteiru kedo, Shikkari Yandere.
+  - img "0 out of 5":
+- article:
+  - generic: Manga
+  - paragraph: Tatakai shika Shiranai Onna Kishi wo Amayakashi Tsuzuketa
+  - img "0 out of 5":
+- heading "Top rated" [level=2]
+- button "See all":
+  - text: See all
+- article:
+  - generic: Web Novel
+  - paragraph: My Divine Pet Enables Me To Become The Biggest Winner
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: No Substitutes for the Bigshots' Dream Girl Anymore!
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Starting from a Fake University
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Yarra's Adventure Notes
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Adopting A Stray Cat By The Road
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: The Master's Mask Unveiled Again
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: "Indian Mythology: the Heavenly Emperor is not working today"
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: On Our Wedding Night, I Discovered the Crown Prince's Hidden Illness
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Dear Mr. Shi
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Mommy Alert! The CEO Daddy Won't Stop Courting
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: The CEO's Unkown Wife
+  - img "5 out of 5":
+- article:
+  - generic: Web Novel
+  - paragraph: Embers of the Deep
+  - img "5 out of 5":
+- heading "Featured books" [level=2]
+- button "See all":
+  - text: See all
+- article:
+  - generic: Book
+  - paragraph: الداء والدواء
+  - img "4.4 out of 5":
+- article:
+  - generic: Book
+  - paragraph: Invitation to world religions
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: Anatomy of the Sacred
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: The perennial philosophy
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: The anthropology of religion, magic, and witchcraft
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: Ifa Divination
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: Witch Crafting
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: A concise introduction to world religions
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: Karma
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: Divine horsemen
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: Where God Came Down
+  - img "5 out of 5":
+- article:
+  - generic: Book
+  - paragraph: Fundamentals of the Yorùbá religion (Òrìṣà worship)
+  - img "5 out of 5":
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore" [active]:
+    - generic: Explore
+  - button "Search":
+    - generic: Search
+  - button "Home":
+    - generic: Home

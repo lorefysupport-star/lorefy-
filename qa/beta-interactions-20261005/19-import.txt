@@ -1,0 +1,122 @@
+- button "الإعدادات":
+- button "تبديل المظهر":
+- button "الإشعارات":
+- paragraph: قارئ Lorefy
+- paragraph: "@lorefy_demo"
+- paragraph: حساب العرض المحلي
+- button "الحسابات التي أتابعها":
+  - generic: "0"
+- button "الحسابات التي تتابعني":
+  - generic: "0"
+- paragraph: "1"
+- paragraph: مراجعة
+- button "عرض منشوراتي":
+  - strong: "1"
+  - generic: منشور
+- paragraph: "1"
+- paragraph: مكتملة
+- paragraph: "420"
+- paragraph: فصل
+- paragraph: "84"
+- paragraph: ساعة قراءة
+- paragraph: مانجا
+- paragraph: النوع المفضل
+- button "تعديل المفضلة":
+  - generic: المفضلة
+- button "تعديل العمل رقم 1 ضمن المفضلة":
+  - text: اختر الأعمال التي تحبها
+- region "الشخصيات المفضلة":
+  - button "تعديل الشخصيات المفضلة":
+    - strong: الشخصيات المفضلة
+  - button "اختيار شخصية للخانة 1":
+    - text: اختر شخصياتك المفضلة
+- generic: النشاط الأخير
+- generic: آخر تفاعل محفوظ
+- paragraph: مانجا
+- region "نشاط المجتمع":
+  - strong: نشاط المجتمع
+  - button "الردود 0":
+    - strong: الردود
+    - generic: "0"
+  - button "المحفوظات 1":
+    - strong: المحفوظات
+    - generic: "1"
+  - button "الشخصيات 0":
+    - strong: الشخصيات
+    - generic: "0"
+- button "فتح سجل القراءة":
+  - strong: سجل القراءة
+  - generic: جلساتك وملاحظاتك واقتباساتك
+- region "قوائم التفضيلات":
+  - button "قوائم التفضيلات 8 أقسام · 0 / 80 خانة":
+    - strong: قوائم التفضيلات
+    - emphasis: 8 أقسام · 0 / 80 خانة
+- button "قوائمي 1 قائمة":
+  - strong: قوائمي
+  - generic: 1 قائمة
+- button "ملخّص 2026 إحصاءات سنتك القرائية":
+  - strong: ملخّص 2026
+  - generic: إحصاءات سنتك القرائية
+- button "استيراد مكتبتك AniList · Kitsu · MAL · Goodreads · StoryGraph · أي موقع":
+  - strong: استيراد مكتبتك
+  - generic: AniList · Kitsu · MAL · Goodreads · StoryGraph · أي موقع
+- button "أقرأه حالياً"
+- button "قرأته"
+- button "أريد قراءته"
+- button "متوقف مؤقتًا"
+- button "توقفت نهائيًا"
+- paragraph: ما عندك شي تقرأه الحين
+- paragraph: أكثر ما تقرأ
+- generic: 1 عمل
+- generic: مانجا
+- paragraph: Premium قريباً
+- paragraph: غير متاح خلال النسخة التجريبية
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية
+- dialog "استيراد مكتبتك":
+  - banner:
+    - button "رجوع": ‹
+    - strong: استيراد مكتبتك
+  - paragraph: انقل مكتبتك من حساباتك القديمة بدل إضافة كل عمل يدويًا. الأعمال الموجودة مسبقًا في مكتبتك لن تُمس.
+  - strong: AniList
+  - emphasis: بزر واحد — اكتب اسمك فقط
+  - textbox "اسم المستخدم في AniList"
+  - button "استيراد"
+  - paragraph: "لو مكتبتك في MAL: اربطها بـ AniList (مزامنة تلقائية) أو استخدم ملف التصدير بالأسفل."
+  - strong: MyAnimeList
+  - emphasis: ملف التصدير الرسمي
+  - paragraph: "من MAL: Settings ← Export ← Manga List — ثم ارفع الملف هنا."
+  - button "اختر ملف التصدير (.xml)"
+  - strong: Goodreads
+  - emphasis: للروايات والكتب
+  - paragraph: "من Goodreads: My Books ← Import and export ← Export Library — ثم ارفع ملف CSV هنا."
+  - button "اختر ملف التصدير (.csv)"
+  - strong: Kitsu
+  - emphasis: بزر واحد — اسم المستخدم فقط
+  - textbox "اسم المستخدم في Kitsu"
+  - button "استيراد"
+  - strong: StoryGraph وأي موقع آخر (CSV)
+  - emphasis: أعمدة تُكتشف تلقائيًا
+  - paragraph: يقبل تصدير StoryGraph وLibraryThing وAnime-Planet ومواقع الكوميكس — يكفي وجود عمود Title، وتُقرأ الحالة والتقييم إن وُجدا.
+  - button "اختر ملف CSV"
+  - strong: أي موقع — الصق العناوين
+  - emphasis: NovelUpdates وغيره
+  - paragraph: ما عنده تصدير؟ انسخ أسماء الأعمال من أي موقع والصقها — واختر حالتها.
+  - button "قرأتها"
+  - button "أقرأها"
+  - button "أريد قراءتها"
+  - button "متوقف مؤقتًا"
+  - button "توقفت نهائيًا"
+  - textbox "الصق العناوين هنا — عنوان واحد في كل سطر…": Naruto zzzz_audit_unknown_title_20261005
+  - button "استيراد القائمة" [active]
+  - strong: تم الاستيراد من قائمة العناوين
+  - generic: ✓ 1 عمل أُضيف إلى مكتبتك
+  - generic: — 1 عمل غير موجود في كتالوج لورفي
+  - button "تطبيق وإعادة التشغيل"

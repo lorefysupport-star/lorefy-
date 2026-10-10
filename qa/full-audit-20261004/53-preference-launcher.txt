@@ -1,0 +1,99 @@
+- region "Preference lists":
+  - dialog "Preference lists":
+    - button "الرجوع للبروفايل":
+    - heading "Preference lists" [level=2]
+    - paragraph: تفضيلات Manga · 0 / 10 خانات
+    - button "إظهار قوائم أخرى لليسار":
+    - generic "أنواع قوائم التفضيلات":
+      - button "Manga"
+      - button "Manhwa"
+      - button "Manhua"
+      - button "Comics"
+      - button "Novel"
+      - button "Book"
+      - button "Light Novel"
+      - button "Web Novel"
+    - button "إظهار قوائم أخرى لليمين":
+    - generic "قائمة لوحات التفضيلات":
+      - article:
+        - button "تفضيلات Manga 0 / 10 خانات" [pressed]:
+          - generic: تفضيلات Manga
+          - generic: 0 / 10 خانات
+        - button "شير":
+          - text: شير
+        - paragraph: اختر 10 أعمال من نفس تصنيف Manga
+        - button "خانة فارغة 1 لعمل من مانجا":
+          - generic: "1"
+          - text: +
+        - button "خانة فارغة 2 لعمل من مانجا":
+          - generic: "2"
+          - text: +
+        - button "خانة فارغة 3 لعمل من مانجا":
+          - generic: "3"
+          - text: +
+        - button "خانة فارغة 4 لعمل من مانجا":
+          - generic: "4"
+          - text: +
+        - button "خانة فارغة 5 لعمل من مانجا":
+          - generic: "5"
+          - text: +
+        - button "خانة فارغة 6 لعمل من مانجا":
+          - generic: "6"
+          - text: +
+        - button "خانة فارغة 7 لعمل من مانجا":
+          - generic: "7"
+          - text: +
+        - button "خانة فارغة 8 لعمل من مانجا":
+          - generic: "8"
+          - text: +
+        - button "خانة فارغة 9 لعمل من مانجا":
+          - generic: "9"
+          - text: +
+        - button "خانة فارغة 10 لعمل من مانجا":
+          - generic: "10"
+          - text: +
+        - button "Open اللوحة"
+        - button "نسخ النص"
+      - region "أفضل الشخصيات":
+        - generic: List قابلة للمشاركة
+        - heading "أفضل Characters" [level=3]
+        - paragraph: نفس فكرة قوائم Works — عشر شخصيات لكل تصنيف، تتبع القسم المحدّد بالأعلى.
+        - article:
+          - generic: أفضل شخصيات Manga
+          - generic: 0 / 10 شخصيات
+          - button "شير":
+            - generic: □
+            - text: شير
+          - paragraph: رتّب أفضل 10 شخصيات من تصنيف Manga
+          - button "خانة فارغة 1":
+            - generic: "1"
+            - text: +
+          - button "خانة فارغة 2":
+            - generic: "2"
+            - text: +
+          - button "خانة فارغة 3":
+            - generic: "3"
+            - text: +
+          - button "خانة فارغة 4":
+            - generic: "4"
+            - text: +
+          - button "خانة فارغة 5":
+            - generic: "5"
+            - text: +
+          - button "خانة فارغة 6":
+            - generic: "6"
+            - text: +
+          - button "خانة فارغة 7":
+            - generic: "7"
+            - text: +
+          - button "خانة فارغة 8":
+            - generic: "8"
+            - text: +
+          - button "خانة فارغة 9":
+            - generic: "9"
+            - text: +
+          - button "خانة فارغة 10":
+            - generic: "10"
+            - text: +
+          - button "ابدأ الاختيار"
+          - button "نسخ النص"

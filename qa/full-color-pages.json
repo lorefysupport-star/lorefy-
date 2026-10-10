@@ -1,0 +1,50 @@
+[
+  {
+    "bg": "rgb(99, 55, 30)",
+    "nav": "rgb(122, 67, 37)",
+    "overflow": false,
+    "pages": [
+      {
+        "background": "rgb(99, 55, 30)",
+        "class": "lf-screen-scroll lf-home-screen"
+      }
+    ],
+    "theme": "lf-app is-dark is-custom"
+  },
+  {
+    "bg": "rgb(99, 55, 30)",
+    "nav": "rgb(122, 67, 37)",
+    "overflow": false,
+    "pages": [
+      {
+        "background": "rgb(99, 55, 30)",
+        "class": "lf-screen-scroll lf-library-page"
+      }
+    ],
+    "theme": "lf-app is-dark is-custom"
+  },
+  {
+    "bg": "rgb(99, 55, 30)",
+    "nav": "rgb(122, 67, 37)",
+    "overflow": false,
+    "pages": [
+      {
+        "background": "rgb(99, 55, 30)",
+        "class": "lf-screen-scroll lf-discover-page lf-explore-studio"
+      }
+    ],
+    "theme": "lf-app is-dark is-custom"
+  },
+  {
+    "bg": "rgb(99, 55, 30)",
+    "nav": "rgb(122, 67, 37)",
+    "overflow": false,
+    "pages": [
+      {
+        "background": "rgb(99, 55, 30)",
+        "class": "lf-screen-scroll lf-profile-page lf-profile-merged has-page-decoration"
+      }
+    ],
+    "theme": "lf-app is-dark is-custom"
+  }
+]

@@ -1,0 +1,229 @@
+✔ library search and sorting are independent of catalog search (9.0316ms)
+✔ own reviews do not get a moderation menu (0.5729ms)
+✔ Togashi manga volumes are not western comics (5.6446ms)
+✔ onboarding inherits the selected appearance (0.3516ms)
+✔ followers dialog supports Escape and traps focus (0.3078ms)
+✔ growth dialogs share keyboard dismissal and return focus (1.2421ms)
+✔ Following empty state has a reader discovery action (0.5711ms)
+✖ preference work and character boards share the locale direction (1.4742ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 93.6763
+
+✖ failing tests:
+
+test at tests\audit-library-safety.test.js:54:1
+✖ preference work and character boards share the locale direction (1.4742ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /html\[dir='rtl'\][^\n]*lf-pref-board-cover-grid[^\n]*lf-cb-cover-grid[^\n]*direction:\s*rtl\s*!important/. Input:
+  
+  '/* Shared visual contract. Legacy screen variables resolve to these tokens. */\n' +
+    '.lf-reader-discovery-page { position:absolute; inset:0; z-index:7600; display:flex; flex-direction:column; padding:calc(var(--nc-top,0px) + 16px) 20px calc(var(--nc-bottom,0px) + 20px); gap:20px; color:var(--ui-ink); background:var(--ui-bg); }\n' +
+    '.lf-reader-discovery-page header { display:flex; align-items:center; gap:14px; }\n' +
+    '.lf-reader-discovery-page h2 { margin:0; font-size:20px; }\n' +
+    '.lf-reader-discovery-page header button { width:44px; height:44px; flex:none; border:0; border-radius:50%; background:var(--ui-fill); color:var(--ui-ink); font-size:24px; }\n' +
+    '.lf-reader-discovery-page input { min-height:48px; padding:10px 14px; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-surface); color:var(--ui-ink); font:inherit; }\n' +
+    '.lf-reader-discovery-page section { overflow:auto; color:var(--ui-muted); font-size:14px; }\n' +
+    '.lf-reader-discovery-page .lf-reader-inline-row { color:var(--ui-ink); text-align:start; }\n' +
+    '.lf-reader-discovery-page .lf-reader-result-copy { display:grid; gap:4px; }\n' +
+    '.lf-library-controls { display:flex; gap:8px; padding:8px 16px 16px; }\n' +
+    '.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-card:only-child { grid-template-columns:104px minmax(0,1fr); min-height:176px; gap:20px; }\n' +
+    '.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-card:only-child .lf-library-cover { width:104px !important; }\n' +
+    '.lf-library-controls input { flex:1; min-width:0; }\n' +
+    '.lf-library-controls :is(input,select) { min-height:44px; padding:8px 12px; border:1px solid var(--ui-line); border-radius:8px; color:var(--ui-ink); background:var(--ui-surface); font:inherit; font-size:13px; }\n' +
+    '.lf-followers-close { display:grid; place-items:center; width:44px; height:44px; margin:0 0 10px; border:0; border-radius:50%; background:var(--ui-fill); color:var(--ui-ink); cursor:pointer; }\n' +
+    '.lf-cb-picker .lf-cb-picker-card { max-width:620px; margin-inline:auto; }\n' +
+    '.lf-cb-picker .lf-ml-results { flex:none; max-height:160px; overflow:auto; margin-inline:18px; }\n' +
+    '.lf-cb-picker .lf-cb-picker-status { flex:none; margin:0 18px 8px; font-size:12px; color:var(--ui-muted); }\n' +
+    '.lf-cb-picker .lf-cb-picker-head button { min-width:44px; min-height:44px; }\n' +
+    '.lf-auth .lf-btn.lf-primary,.lf-auth .lf-mark { color:var(--ui-on-action) !important; }\n' +
+    '.lf-wr-goal-controls { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }\n' +
+    '.lf-wr-goal-controls input { width:120px; min-height:44px; padding:8px 12px; box-sizing:border-box; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-fill); color:var(--ui-ink); font:inherit; }\n' +
+    '.lf-wr-goal-controls button { min-height:44px; padding:8px 14px; border:0; border-radius:8px; background:var(--ui-action); color:var(--ui-on-action); font:inherit; }\n' +
+    "html[lang='en'] :is(.lf-product-sheet,.lf-product-settings,.lf-product-detail-tools,.lf-character-page,.lf-ov) { direction:ltr; text-align:start; }\n" +
+    "html[lang='en'] :is(.lf-product-action,.lf-top-works-editor-result) { text-align:start; }\n" +
+    "html[dir='rtl'] :is(.lf-top-characters-editor-slots,.lf-top-works-editor-slots) { direction:rtl; }\n" +
+    "html[dir='ltr'] :is(.lf-top-characters-editor-slots,.lf-top-works-editor-slots) { direction:ltr; }\n" +
+    ':root,\n' +
+    '.lf-app.is-light {\n' +
+    '  --ui-bg: #f7f9f9;\n' +
+    '  --ui-surface: #fff;\n' +
+    '  --ui-fill: #eef3f3;\n' +
+    '  --ui-fill-soft: #f3f6f6;\n' +
+    '  --ui-ink: #17282b;\n' +
+    '  --ui-secondary: #344d51;\n' +
+    '  --ui-muted: #566c70;\n' +
+    '  --ui-line: #dce5e6;\n' +
+    '  --ui-separator: #c6d5d7;\n' +
+    '  --ui-action: #006f6b;\n' +
+    '  --ui-action-pressed: #005a57;\n' +
+    '  --ui-on-action: #fff;\n' +
+    '  --ui-selected: #e1f1ee;\n' +
+    '  --ui-danger: #b83240;\n' +
+    '  --ui-success: #187a48;\n' +
+    '  --ui-gold: #a85d00;\n' +
+    '  --ui-rating: #006f6b;\n' +
+    '  --ui-nav: rgba(255, 255, 255, .96);\n' +
+    '  --ui-bar: rgba(247, 249, 249, .97);\n' +
+    '  --ui-shadow: 0 12px 32px rgba(23, 40, 43, .1);\n' +
+    "  --ui-font: 'Readex Pro', 'Cairo', system-ui, sans-serif;\n" +
+    '  --ui-inline: 20px;\n' +
+    '  --ui-radius: 8px;\n' +
+    '}\n' +
+    '\n' +
+    ":root[data-lorefy-theme='dark'],\n" +
+    '.lf-app.is-dark {\n' +
+    '  color-scheme: dark;\n' +
+    '  --ui-bg: #0b0b0c;\n' +
+    '  --ui-surface: #171719;\n' +
+    '  --ui-fill: #242426;\n' +
+    '  --ui-fill-soft: #1d1d1f;\n' +
+    '  --ui-ink: #f5f5f7;\n' +
+    '  --ui-secondary: #d8d8dc;\n' +
+    '  --ui-muted: #a8a8b0;\n' +
+    '  --ui-line: #303033;\n' +
+    '  --ui-separator: #45454a;\n' +
+    '  --ui-action: #f0f0f3;\n' +
+    '  --ui-action-pressed: #d8d8dc;\n' +
+    '  --ui-on-action: #171719;\n' +
+    '  --ui-selected: #29292c;\n' +
+    '  --ui-rating: #e7e7ec;\n' +
+    '  --ui-danger: #ff8c8c;\n' +
+    '  --ui-success: #73d49a;\n' +
+    '  --ui-gold: #f4b65e;\n' +
+    '  --ui-nav: rgba(23, 23, 25, .96);\n' +
+    '  --ui-bar: rgba(11, 11, 12, .97);\n' +
+    '  --ui-shadow: 0 12px 32px rgba(0, 0, 0, .26);\n' +
+    '}\n' +
+    '\n' +
+    ":root[data-lorefy-theme='pink'],\n" +
+    '.lf-app.is-pink {\n' +
+    '  color-scheme: light;\n' +
+    '  --ui-bg: #fff7fa;\n' +
+    '  --ui-surface: #fffafc;\n' +
+    '  --ui-fill: #f9eaf0;\n' +
+    '  --ui-fill-soft: #fff0f5;\n' +
+    '  --ui-ink: #30222a;\n' +
+    '  --ui-secondary: #59434d;\n' +
+    '  --ui-muted: #79616c;\n' +
+    '  --ui-line: #ebd9e1;\n' +
+    '  --ui-separator: #ddc3cf;\n' +
+    '  --ui-action: #a53662;\n' +
+    '  --ui-action-pressed: #83264b;\n' +
+    '  --ui-on-action: #fff;\n' +
+    '  --ui-selected: #f7dfe9;\n' +
+    '  --ui-rating: #a53662;\n' +
+    '  --ui-success: #a53662;\n' +
+    '  --ui-gold: #a53662;\n' +
+    '  --ui-shadow: 0 12px 32px rgba(92,35,60,.10);\n' +
+    '  --ui-nav: rgba(255,250,252,.96);\n' +
+    '  --ui-bar: rgba(255,247,250,.97);\n' +
+    '}\n' +
+    '\n' +
+    '.lf-app.lf-app.lf-app .lf-appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px; }\n' +
+    '.lf-app.lf-app.lf-app .lf-appearance-option { min-height: 76px; display: grid; justify-items: center; align-content: center; gap: 8px; padding: 10px 4px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-surface); color: var(--ui-ink); font-size: 13px; cursor: pointer; }\n' +
+    ".lf-app.lf-app.lf-app .lf-appearance-option[aria-pressed='true'] { border: 2px solid var(--ui-action); background: var(--ui-selected); }\n" +
+    '.lf-appearance-swatch { width: 26px; height: 26px; border: 1px solid #9996; border-radius: 50%; }\n' +
+    '.lf-app.lf-app.lf-app .lf-diary-entrypoint { border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-diary-entrypoint-icon { border-radius: 8px !important; box-shadow: none !important; }\n' +
+    '.lf-app.lf-app.lf-app :is(.lf-chapter-star.is-filled,.lf-chapter-personal-summary,.lf-rating-display) { color: var(--ui-rating) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-feather { stroke: var(--ui-rating); stroke-width: 1.6; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-pick-glyph > .lf-rating-feather { stroke: var(--ui-muted) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-star > svg { stroke: var(--ui-muted); }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-star > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-pick-glyph > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-profile-banner > div:last-child:has(> span):not(:has(img)) { background: var(--ui-selected) !important; color: var(--ui-action) !important; }\n' +
+    '.lf-app.is-dark .lf-profile-banner { background: #171719 !important; }\n' +
+    '\n' +
+    ':root,\n' +
+    '.lf-app.lf-app.lf-app,\n' +
+    '.lf-auth {\n' +
+    '  --apple-bg: var(--ui-bg);\n' +
+    '  --apple-surface: var(--ui-surface);\n' +
+    '  --apple-surface-2: var(--ui-fill-soft);\n' +
+    '  --apple-fill: var(--ui-fill);\n' +
+    '  --apple-fill-strong: var(--ui-line);\n' +
+    '  --apple-label: var(--ui-ink);\n' +
+    '  --apple-label-2: var(--ui-muted);\n' +
+    '  --apple-label-3: var(--ui-muted);\n' +
+    '  --apple-blue: var(--ui-action);\n' +
+    '  --apple-blue-pressed: var(--ui-action-pressed);\n' +
+    '  --apple-blue-soft: var(--ui-selected);\n' +
+    '  --apple-green: var(--ui-success);\n' +
+    '  --apple-red: var(--ui-danger);\n' +
+    '  --apple-orange: var(--ui-gold);\n' +
+    '  --apple-separator: var(--ui-separator);\n' +
+    '  --apple-separator-soft: var(--ui-line);\n' +
+    '  --apple-card-radius: var(--ui-radius);\n' +
+    '  --apple-inline: var(--ui-inline);\n' +
+    '  --lf-bg: var(--ui-bg);\n' +
+    '  --lf-card: var(--ui-surface);\n' +
+    '  --lf-card-2: var(--ui-fill);\n' +
+    '  --lf-surface: var(--ui-surface);\n' +
+    '  --lf-surface-soft: var(--ui-fill-soft);\n' +
+    '  --lf-surface-raised: var(--ui-surface);\n' +
+    '  --lf-muted: var(--ui-muted);\n' +
+    '  --lf-line: var(--ui-line);\n' +
+    '  --lf-accent-soft: var(--ui-selected);\n' +
+    '  --lf-danger: var(--ui-danger);\n' +
+    '  --lf-purple: var(--ui-action);\n' +
+    '  --lf-purple-soft: var(--ui-selected);\n' +
+    '  --lf-purple-strong: var(--ui-action);\n' +
+    '  --lf-ink: var(--ui-ink);\n' +
+    '  --lf-ink-secondary: var(--ui-secondary);\n' +
+    '  --lf-ink-muted: var(--ui-muted);\n' +
+    '  --lf-field: var(--ui-fill);\n' +
+    '  --lf-text: var(--ui-ink);\n' +
+    '  --lf-sub: var(--ui-muted);\n' +
+    '  --lf-border: var(--ui-line);\n' +
+    '  --lf-fill: var(--ui-fill);\n' +
+    '  --lf-blue: var(--ui-action);\n' +
+    '  --lf-blue-soft: var(--ui-selected);\n' +
+    '  --lf-accent: var(--ui-action);\n' +
+    '  --lf-accent-text: var(--ui-action);\n' +
+    '  --lf-green: var(--ui-success);\n' +
+    '  --lf-gold: var(--ui-gold);\n' +
+    '  --lf-red: var(--ui-danger);\n' +
+    '  --cinema-bg: var(--ui-bg);\n' +
+    '  --cinema-surface: var(--ui-surface);\n' +
+    '  --cinema-raised: var(--ui-fill);\n' +
+    '  --cinema-ink: var(--ui-ink);\n' +
+    '  --cinema-muted: var(--ui-muted);\n' +
+    '  --cinema-line: var(--ui-line);\n' +
+    '  --cinema-active: var(--ui-action);\n' +
+    '  color: var(--ui-ink);\n' +
+    '  font-family: var(--ui-font) !important;\n' +
+    '  font-size: 14px;\n' +
+    '  line-height: 1.6;\n' +
+    '  background: var(--ui-bg) !important;\n' +
+    '  -webkit-font-smoothing: antialiased;\n' +
+    '  accent-color: var(--ui-action);\n' +
+    '}\n' +
+    '\n' +
+    '.lf-app.lf-app.lf-app *, .lf-auth * { box-sizing: border-box; letter-spacing: 0 !important; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, input, textarea, select), .lf-auth :is(button, input, textarea, select) { font-family: var(--ui-font) !important; }\n' +
+    '.lf-app.lf-app.lf-app :is(h1, h2, h3), .lf-auth :is(h1, h2, h3, .lf-title) { font-family: var(--ui-font) !important; text-wrap: balance; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, a, [role="button"]) { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, a, input, textarea, select, [role="button"]):focus-visible,\n' +
+    '.lf-auth :is(button, a, input, textarea, select):focus-visible { outline: 2px solid var(--ui-action) !important; outline-offset: 3px; }\n' +
+    '.lf-app.lf-app.lf-app ::selection, .lf-auth ::selection { color: var(--ui-ink); background: var(--ui-selected); }\n' +
+    '.lf-app.lf-app.lf-app :is(input, textar'... 67227 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\audit-library-safety.test.js:56:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `/* Shared visual contract. Legacy screen variables resolve to these tokens. */\n.lf-reader-discovery-page { position:absolute; inset:0; z-index:7600; display:flex; flex-direction:column; padding:calc(var(--nc-top,0px) + 16px) 20px calc(var(--nc-bottom,0px) + 20px); gap:20px; color:var(--ui-ink); background:var(--ui-bg); }\n.lf-reader-discovery-page header { display:flex; align-items:center; gap:14px; }\n.lf-reader-discovery-page h2 { margin:0; font-size:20px; }\n.lf-reader-discovery-page header button { width:44px; height:44px; flex:none; border:0; border-radius:50%; background:var(--ui-fill); color:var(--ui-ink); font-size:24px; }\n.lf-reader-discovery-page input { min-height:48px; padding:10px 14px; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-surface); color:var(--ui-ink); font:inherit; }\n.lf-reader-discovery-page section { overflow:auto; color:var(--ui-muted); font-size:14px; }\n.lf-reader-discovery-page .lf-reader-inline-row { color:var(--ui-ink); text-align:start; }\n.lf-reader-discovery-page .lf-reader-result-copy { display:grid; gap:4px; }\n.lf-library-controls { display:flex; gap:8px; padding:8px 16px 16px; }\n.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-card:only-child { grid-template-columns:104px minmax(0,1fr); min-height:176px; gap:20px; }\n.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-card:only-child .lf-library-cover { width:104px !important; }\n.lf-library-controls input { flex:1; min-width:0; }\n.lf-library-controls :is(input,select) { min-height:44px; padding:8px 12px; border:1px solid var(--ui-line); border-radius:8px; color:var(--ui-ink); background:var(--ui-surface); font:inherit; font-size:13px; }\n.lf-followers-close { display:grid; place-items:center; width:44px; height:44px; margin:0 0 10px; border:0; border-radius:50%; background:var(--ui-fill); color:var(--ui-ink); cursor:pointer; }\n.lf-cb-picker .lf-cb-picker-card { max-width:620px; margin-inline:auto; }\n.lf-cb-picker .lf-ml-results { flex:none; max-height:160px; overflow:auto; margin-inline:18px; }\n.lf-cb-picker .lf-cb-picker-status { flex:none; margin:0 18px 8px; font-size:12px; color:var(--ui-muted); }\n.lf-cb-picker .lf-cb-picker-head button { min-width:44px; min-height:44px; }\n.lf-auth .lf-btn.lf-primary,.lf-auth .lf-mark { color:var(--ui-on-action) !important; }\n.lf-wr-goal-controls { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }\n.lf-wr-goal-controls input { width:120px; min-height:44px; padding:8px 12px; box-sizing:border-box; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-fill); color:var(--ui-ink); font:inherit; }\n.lf-wr-goal-controls button { min-height:44px; padding:8px 14px; border:0; border-radius:8px; background:var(--ui-action); color:var(--ui-on-action); font:inherit; }\nhtml[lang='en'] :is(.lf-product-sheet,.lf-product-settings,.lf-product-detail-tools,.lf-character-page,.lf-ov) { direction:ltr; text-align:start; }\nhtml[lang='en'] :is(.lf-product-action,.lf-top-works-editor-result) { text-align:start; }\nhtml[dir='rtl'] :is(.lf-top-characters-editor-slots,.lf-top-works-editor-slots) { direction:rtl; }\nhtml[dir='ltr'] :is(.lf-top-characters-editor-slots,.lf-top-works-editor-slots) { direction:ltr; }\n:root,\n.lf-app.is-light {\n  --ui-bg: #f7f9f9;\n  --ui-surface: #fff;\n  --ui-fill: #eef3f3;\n  --ui-fill-soft: #f3f6f6;\n  --ui-ink: #17282b;\n  --ui-secondary: #344d51;\n  --ui-muted: #566c70;\n  --ui-line: #dce5e6;\n  --ui-separator: #c6d5d7;\n  --ui-action: #006f6b;\n  --ui-action-pressed: #005a57;\n  --ui-on-action: #fff;\n  --ui-selected: #e1f1ee;\n  --ui-danger: #b83240;\n  --ui-success: #187a48;\n  --ui-gold: #a85d00;\n  --ui-rating: #006f6b;\n  --ui-nav: rgba(255, 255, 255, .96);\n  --ui-bar: rgba(247, 249, 249, .97);\n  --ui-shadow: 0 12px 32px rgba(23, 40, 43, .1);\n  --ui-font: 'Readex Pro', 'Cairo', system-ui, sans-serif;\n  --ui-inline: 20px;\n  --ui-radius: 8px;\n}\n\n:root[data-lorefy-theme='dark'],\n.lf-app.is-dark {\n  color-scheme: dark;\n  --ui-bg: #0b0b0c;\n  --ui-surface: #171719;\n  --ui-fill: #242426;\n  --ui-fill-soft: #1d1d1f;\n  --ui-ink: #f5f5f7;\n  --ui-secondary: #d8d8dc;\n  --ui-muted: #a8a8b0;\n  --ui-line: #303033;\n  --ui-separator: #45454a;\n  --ui-action: #f0f0f3;\n  --ui-action-pressed: #d8d8dc;\n  --ui-on-action: #171719;\n  --ui-selected: #29292c;\n  --ui-rating: #e7e7ec;\n  --ui-danger: #ff8c8c;\n  --ui-success: #73d49a;\n  --ui-gold: #f4b65e;\n  --ui-nav: rgba(23, 23, 25, .96);\n  --ui-bar: rgba(11, 11, 12, .97);\n  --ui-shadow: 0 12px 32px rgba(0, 0, 0, .26);\n}\n\n:root[data-lorefy-theme='pink'],\n.lf-app.is-pink {\n  color-scheme: light;\n  --ui-bg: #fff7fa;\n  --ui-surface: #fffafc;\n  --ui-fill: #f9eaf0;\n  --ui-fill-soft: #fff0f5;\n  --ui-ink: #30222a;\n  --ui-secondary: #59434d;\n  --ui-muted: #79616c;\n  --ui-line: #ebd9e1;\n  --ui-separator: #ddc3cf;\n  --ui-action: #a53662;\n  --ui-action-pressed: #83264b;\n  --ui-on-action: #fff;\n  --ui-selected: #f7dfe9;\n  --ui-rating: #a53662;\n  --ui-success: #a53662;\n  --ui-gold: #a53662;\n  --ui-shadow: 0 12px 32px rgba(92,35,60,.10);\n  --ui-nav: rgba(255,250,252,.96);\n  --ui-bar: rgba(255,247,250,.97);\n}\n\n.lf-app.lf-app.lf-app .lf-appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px; }\n.lf-app.lf-app.lf-app .lf-appearance-option { min-height: 76px; display: grid; justify-items: center; align-content: center; gap: 8px; padding: 10px 4px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-surface); color: var(--ui-ink); font-size: 13px; cursor: pointer; }\n.lf-app.lf-app.lf-app .lf-appearance-option[aria-pressed='true'] { border: 2px solid var(--ui-action); background: var(--ui-selected); }\n.lf-appearance-swatch { width: 26px; height: 26px; border: 1px solid #9996; border-radius: 50%; }\n.lf-app.lf-app.lf-app .lf-diary-entrypoint { border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }\n.lf-app.lf-app.lf-app .lf-diary-entrypoint-icon { border-radius: 8px !important; box-shadow: none !important; }\n.lf-app.lf-app.lf-app :is(.lf-chapter-star.is-filled,.lf-chapter-personal-summary,.lf-rating-display) { color: var(--ui-rating) !important; }\n.lf-app.lf-app.lf-app .lf-rating-feather { stroke: var(--ui-rating); stroke-width: 1.6; }\n.lf-app.lf-app.lf-app .lf-rating-pick-glyph > .lf-rating-feather { stroke: var(--ui-muted) !important; }\n.lf-app.lf-app.lf-app .lf-rating-star > svg { stroke: var(--ui-muted); }\n.lf-app.lf-app.lf-app .lf-rating-star > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n.lf-app.lf-app.lf-app .lf-rating-pick-glyph > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n.lf-app.lf-app.lf-app .lf-profile-banner > div:last-child:has(> span):not(:has(img)) { background: var(--ui-selected) !important; color: var(--ui-action) !important; }\n.lf-app.is-dark .lf-profile-banner { background: #171719 !important; }\n\n:root,\n.lf-app.lf-app.lf-app,\n.lf-auth {\n  --apple-bg: var(--ui-bg);\n  --apple-surface: var(--ui-surface);\n  --apple-surface-2: var(--ui-fill-soft);\n  --apple-fill: var(--ui-fill);\n  --apple-fill-strong: var(--ui-line);\n  --apple-label: var(--ui-ink);\n  --apple-label-2: var(--ui-muted);\n  --apple-label-3: var(--ui-muted);\n  --apple-blue: var(--ui-action);\n  --apple-blue-pressed: var(--ui-action-pressed);\n  --apple-blue-soft: var(--ui-selected);\n  --apple-green: var(--ui-success);\n  --apple-red: var(--ui-danger);\n  --apple-orange: var(--ui-gold);\n  --apple-separator: var(--ui-separator);\n  --apple-separator-soft: var(--ui-line);\n  --apple-card-radius: var(--ui-radius);\n  --apple-inline: var(--ui-inline);\n  --lf-bg: var(--ui-bg);\n  --lf-card: var(--ui-surface);\n  --lf-card-2: var(--ui-fill);\n  --lf-surface: var(--ui-surface);\n  --lf-surface-soft: var(--ui-fill-soft);\n  --lf-surface-raised: var(--ui-surface);\n  --lf-muted: var(--ui-muted);\n  --lf-line: var(--ui-line);\n  --lf-accent-soft: var(--ui-selected);\n  --lf-danger: var(--ui-danger);\n  --lf-purple: var(--ui-action);\n  --lf-purple-soft: var(--ui-selected);\n  --lf-purple-strong: var(--ui-action);\n  --lf-ink: var(--ui-ink);\n  --lf-ink-secondary: var(--ui-secondary);\n  --lf-ink-muted: var(--ui-muted);\n  --lf-field: var(--ui-fill);\n  --lf-text: var(--ui-ink);\n  --lf-sub: var(--ui-muted);\n  --lf-border: var(--ui-line);\n  --lf-fill: var(--ui-fill);\n  --lf-blue: var(--ui-action);\n  --lf-blue-soft: var(--ui-selected);\n  --lf-accent: var(--ui-action);\n  --lf-accent-text: var(--ui-action);\n  --lf-green: var(--ui-success);\n  --lf-gold: var(--ui-gold);\n  --lf-red: var(--ui-danger);\n  --cinema-bg: var(--ui-bg);\n  --cinema-surface: var(--ui-surface);\n  --cinema-raised: var(--ui-fill);\n  --cinema-ink: var(--ui-ink);\n  --cinema-muted: var(--ui-muted);\n  --cinema-line: var(--ui-line);\n  --cinema-active: var(--ui-action);\n  color: var(--ui-ink);\n  font-family: var(--ui-font) !important;\n  font-size: 14px;\n  line-height: 1.6;\n  background: var(--ui-bg) !important;\n  -webkit-font-smoothing: antialiased;\n  accent-color: var(--ui-action);\n}\n\n.lf-app.lf-app.lf-app *, .lf-auth * { box-sizing: border-box; letter-spacing: 0 !important; }\n.lf-app.lf-app.lf-app :is(button, input, textarea, select), .lf-auth :is(button, input, textarea, select) { font-family: var(--ui-font) !important; }\n.lf-app.lf-app.lf-app :is(h1, h2, h3), .lf-auth :is(h1, h2, h3, .lf-title) { font-family: var(--ui-font) !important; text-wrap: balance; }\n.lf-app.lf-app.lf-app :is(button, a, [role="button"]) { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }\n.lf-app.lf-app.lf-app :is(button, a, input, textarea, select, [role="button"]):focus-visible,\n.lf-auth :is(button, a, input, textarea, select):focus-visible { outline: 2px solid var(--ui-action) !important; outline-offset: 3px; }\n.lf-app.lf-app.lf-app ::selection, .lf-auth ::selection { color: var(--ui-ink); background: var(--ui-selected); }\n.lf-app.lf-app.lf-app :is(input, textar`... 67227 more characters,
+    expected: /html\[dir='rtl'\][^\n]*lf-pref-board-cover-grid[^\n]*lf-cb-cover-grid[^\n]*direction:\s*rtl\s*!important/,
+    operator: 'match',
+    diff: 'simple'
+  }

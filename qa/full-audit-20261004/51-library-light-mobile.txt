@@ -1,0 +1,39 @@
+- banner:
+  - heading "مكتبتي" [level=1]
+  - group "طريقة عرض المكتبة":
+    - button "عرض شبكة":
+      - generic: شبكة
+    - button "عرض رف" [pressed]:
+      - generic: رف
+  - button "الكل 1" [pressed]:
+    - generic: الكل
+    - generic: "1"
+  - button "أقرأ الآن 0":
+    - generic: أقرأ الآن
+    - generic: "0"
+  - button "مكتملة 1":
+    - generic: مكتملة
+    - generic: "1"
+  - button "الأمنيات 0":
+    - generic: الأمنيات
+    - generic: "0"
+  - button "متوقف مؤقتًا 0":
+    - generic: متوقف مؤقتًا
+    - generic: "0"
+  - button "توقفت نهائيًا 0":
+    - generic: توقفت نهائيًا
+    - generic: "0"
+- article:
+  - strong: Hunter x Hunter
+  - generic: مكتمل
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library" [active]:
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Search":
+    - generic: Search
+  - button "Home":
+    - generic: Home

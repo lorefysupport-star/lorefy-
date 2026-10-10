@@ -1,0 +1,42 @@
+- banner:
+  - heading "مكتبتي" [level=1]
+  - group "طريقة عرض المكتبة":
+    - button "عرض شبكة":
+      - generic: شبكة
+    - button "عرض رف" [pressed]:
+      - generic: رف
+  - button "جرّب اسم العمل أو المؤلف. 1" [pressed]:
+    - generic: جرّب اسم العمل أو المؤلف.
+    - generic: "1"
+  - button "جرّب اسم العمل أو المؤلف. 0":
+    - generic: جرّب اسم العمل أو المؤلف.
+    - generic: "0"
+  - button "جرّب اسم العمل أو المؤلف. 1":
+    - generic: جرّب اسم العمل أو المؤلف.
+    - generic: "1"
+  - button "جرّب اسم العمل أو المؤلف. 0":
+    - generic: جرّب اسم العمل أو المؤلف.
+    - generic: "0"
+  - button "جرّب اسم العمل أو المؤلف. 0":
+    - generic: جرّب اسم العمل أو المؤلف.
+    - generic: "0"
+  - button "جرّب اسم العمل أو المؤلف. 0":
+    - generic: جرّب اسم العمل أو المؤلف.
+    - generic: "0"
+- searchbox "البحث في المكتبة" [active]: هنتر
+- combobox "ترتيب المكتبة":
+  - option "ترتيب الإضافة"
+  - option "العنوان" [selected]
+  - option "تقدم القراءة"
+- button "فتح Hunter x Hunter":
+  - strong: Hunter x Hunter
+  - generic: 100% · 420 فصل
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية

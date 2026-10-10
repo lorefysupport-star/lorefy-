@@ -1,0 +1,136 @@
+.lf-app.lf-app.lf-app .lf-detail-page { background: var(--ui-bg, #f7f9f9) !important; }
+.lf-app.lf-app.lf-app .lf-detail-hero { height: 218px !important; min-height: 218px !important; border-radius: 0 !important; }
+.lf-app.lf-app.lf-app .lf-detail-hero > img { filter: none !important; }
+.lf-app.lf-app.lf-app .lf-detail-content { padding: 19px var(--ui-inline, 20px) calc(var(--nc-bottom, 24px) + 110px) !important; }
+.lf-app.lf-app.lf-app .lf-detail-content h1 { margin-block: 7px 4px !important; font-size: 23px !important; line-height: 1.38 !important; font-weight: 700 !important; overflow-wrap: anywhere; }
+.lf-app.lf-app.lf-app .lf-detail-scores { margin-block: 20px 18px !important; padding-block: 13px !important; }
+.lf-app.lf-app.lf-app .lf-detail-actions.lf-chapter-actions-ready { display: none !important; }
+.lf-chapter-quick-actions { position: relative; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr) 44px; gap: 8px; margin: 10px 0 18px; }
+.lf-chapter-quick-actions:not(:has(.lf-chapter-quick-review)) { grid-template-columns: minmax(0,1fr) 44px; }
+.lf-chapter-quick-actions > button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: 0; min-height: 44px; padding: 0 8px; border: 1px solid var(--ui-line, #dce5e6); border-radius: 8px; background: var(--ui-surface, #fff); color: var(--ui-ink, #17282b); font-family: inherit; font-size: 11px; font-weight: 600; white-space: normal; cursor: pointer; }
+.lf-chapter-quick-actions > button > span { overflow: hidden; text-overflow: ellipsis; }
+.lf-chapter-quick-actions > .lf-chapter-quick-add { background: var(--ui-action, #006f6b); border-color: var(--ui-action, #006f6b); color: var(--ui-on-action, #fff); }
+.lf-chapter-quick-actions > .lf-chapter-more { padding: 0; }
+.lf-chapter-quick-actions > button:focus-visible { outline: 2px solid var(--ui-action, #006f6b); outline-offset: 2px; }
+.lf-chapter-more-menu { position: absolute; inset-inline-end: 0; top: 52px; z-index: 8; width: min(240px, 78vw); padding: 5px; border: 1px solid var(--ui-line, #dce5e6); border-radius: 8px; background: var(--ui-surface, #fff); box-shadow: 0 12px 28px rgba(23,40,43,.13); }
+.lf-chapter-more-menu button { width: 100%; min-height: 44px; display: flex; align-items: center; gap: 10px; padding: 8px 11px; border: 0; border-radius: 5px; background: transparent; color: var(--ui-ink, #17282b); font: inherit; font-size: 12px; text-align: start; cursor: pointer; }
+.lf-chapter-more-menu button:focus-visible, .lf-chapter-more-menu button:hover { background: var(--ui-selected, #e1f1ee); outline: 0; }
+.lf-detail-content:has(.lf-chapter-section) > .lf-diary-detail-entrypoint { display: none !important; }
+
+.lf-chapter-section { --chapter-line: var(--ui-line, #dce5e6); --chapter-ink: var(--ui-ink, #17282b); --chapter-muted: var(--ui-muted, #566c70); --chapter-accent: var(--ui-action, #006f6b); --chapter-surface: var(--ui-surface, #fff); --chapter-selected: var(--ui-selected, #e1f1ee); direction: rtl; margin-top: 30px; border-top: 1px solid var(--chapter-line); color: var(--chapter-ink); font-family: 'Readex Pro', 'Cairo', system-ui, sans-serif; }
+.lf-chapter-section * { box-sizing: border-box; }
+.lf-chapter-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 25px 0 17px; }
+.lf-chapter-heading-copy { display: grid; gap: 1px; }
+.lf-chapter-heading h2 { margin: 0; color: var(--chapter-ink); font-size: 24px; line-height: 1.34; font-weight: 700; }
+.lf-chapter-total { color: var(--chapter-muted); font-size: 12px; line-height: 1.6; }
+.lf-chapter-retry { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--chapter-accent); font: inherit; font-size: 13px; cursor: pointer; }
+.lf-chapter-retry:focus-visible { outline: 2px solid var(--chapter-accent); outline-offset: 3px; }
+.lf-chapter-resume { display: inline-flex; align-items: center; justify-content: flex-end; gap: 7px; min-height: 44px; max-width: 62%; padding: 0; border: 0; background: transparent; color: var(--chapter-accent); font: inherit; font-size: 12px; font-weight: 600; text-align: end; cursor: pointer; }
+.lf-chapter-resume svg { flex: none; }
+.lf-chapter-resume:focus-visible { outline: 2px solid var(--chapter-accent); outline-offset: 4px; border-radius: 3px; }
+.lf-chapter-controls { display: grid; grid-template-columns: minmax(0, 1fr) 44px; gap: 0 8px; margin-bottom: 4px; border-block: 1px solid var(--chapter-line); }
+.lf-chapter-controls:has(.lf-chapter-jump:first-child) { grid-template-columns: 1fr; }
+.lf-chapter-range-wrap { display: flex; align-items: center; gap: 10px; min-width: 0; color: var(--chapter-muted); font-size: 12px; }
+.lf-chapter-range-wrap > span { flex: none; }
+.lf-chapter-range, .lf-chapter-jump { min-height: 48px; border: 0; background: transparent; color: var(--chapter-ink); font-family: inherit; font-size: 13px; }
+.lf-chapter-range { width: 100%; min-width: 0; padding: 0 8px; cursor: pointer; }
+.lf-chapter-jump-toggle { display: grid; place-items: center; width: 44px; height: 48px; border: 0; background: transparent; color: var(--chapter-accent); cursor: pointer; }
+.lf-chapter-jump { display: flex; grid-column: 1 / -1; align-items: stretch; min-width: 0; border-top: 1px solid var(--chapter-line); }
+.lf-chapter-jump[hidden] { display: none; }
+.lf-chapter-jump input { width: 100%; min-width: 0; padding: 0 12px; border: 0; border-radius: 0 !important; outline: 0 !important; background: transparent; color: var(--chapter-ink); font-family: inherit; font-size: 13px; }
+.lf-app .lf-chapter-jump input:focus-visible { outline: 0 !important; }
+.lf-chapter-jump input::placeholder { color: var(--chapter-muted); opacity: 1; }
+.lf-chapter-jump button { flex: none; min-width: 52px; padding: 0 5px; border: 0; background: transparent; color: var(--chapter-accent); font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.lf-chapter-range:focus-visible, .lf-chapter-jump:focus-within, .lf-chapter-jump-toggle:focus-visible { outline: 2px solid var(--chapter-accent); outline-offset: -2px; }
+.lf-chapter-unavailable { margin: 0; padding: 22px 0; color: var(--chapter-muted); font-size: 13px; line-height: 1.6; }
+.lf-chapter-item { border-bottom: 1px solid var(--chapter-line); }
+.lf-chapter-row { display: grid; grid-template-columns: 100px minmax(0,1fr) 20px; align-items: center; gap: 13px; width: 100%; min-height: 148px; padding: 13px 0; border: 0; background: transparent; color: var(--chapter-ink); font-family: inherit; text-align: start; cursor: pointer; }
+.lf-chapter-row:hover, .lf-chapter-item.is-expanded .lf-chapter-row { background: color-mix(in srgb, var(--chapter-selected) 25%, transparent); }
+.lf-chapter-row:focus-visible { outline: 2px solid var(--chapter-accent); outline-offset: -2px; }
+.lf-chapter-art { position: relative; display: grid; place-items: center; width: 100px; height: 122px; overflow: hidden; border-radius: 5px; background: var(--chapter-selected); box-shadow: 0 3px 10px rgba(13, 32, 36, .1); }
+.lf-chapter-art img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.lf-chapter-copy { display: flex; flex-direction: column; justify-content: center; min-width: 0; gap: 4px; }
+.lf-chapter-number { color: var(--chapter-accent); font-size: 12px; font-weight: 700; }
+.lf-chapter-title { display: -webkit-box; min-width: 0; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; color: var(--chapter-ink); font-size: 16px; font-weight: 700; line-height: 1.4; text-align: start; }
+.lf-chapter-meta { display: block; overflow: hidden; color: var(--chapter-muted); font-size: 11px; line-height: 1.5; text-overflow: ellipsis; white-space: nowrap; }
+.lf-chapter-date { color: var(--chapter-muted); font-size: 11px; line-height: 1.5; }
+.lf-chapter-date:empty { display: none; }
+.lf-chapter-trailing { display: grid; place-items: center; width: 20px; color: var(--chapter-muted); }
+.lf-chapter-summary { display: inline-flex; align-items: center; gap: 6px; margin-top: 5px; color: var(--chapter-accent); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.lf-chapter-summary svg { color: var(--chapter-accent); }
+.lf-chapter-trailing > svg:last-child { color: var(--chapter-muted); }
+.lf-chapter-editor { padding: 18px 16px 20px; margin: 0 0 16px; border-radius: 8px; background: color-mix(in srgb, var(--chapter-selected) 70%, var(--chapter-surface)); }
+.lf-chapter-editor-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 13px; }
+.lf-chapter-editor-heading strong { min-width: 0; color: var(--chapter-ink); font-size: 15px; line-height: 1.5; }
+.lf-chapter-editor-heading span { flex: none; color: var(--chapter-muted); font-size: 11px; }
+.lf-chapter-rating-line { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 15px; }
+.lf-chapter-stars { display: flex; align-items: center; gap: 0; }
+.lf-chapter-stars.lf-rating-scale { display: block; width: 100%; flex: 0 0 100%; }
+.lf-chapter-score-text { color: var(--chapter-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.lf-chapter-star { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 6px; background: transparent; color: var(--chapter-muted); font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; }
+.lf-chapter-star.is-filled { color: var(--chapter-accent); background: var(--chapter-selected); box-shadow: inset 0 0 0 1px var(--chapter-accent); }
+.lf-chapter-stars > svg { color: var(--chapter-accent); width: 18px; height: 18px; margin-inline-end: 8px; }
+.lf-chapter-star.is-filled svg { fill: currentColor; }
+.lf-chapter-star:focus-visible { outline: 2px solid var(--chapter-accent); border-radius: 5px; }
+.lf-chapter-note-label { display: grid; gap: 8px; color: var(--chapter-ink); font-size: 13px; font-weight: 600; }
+.lf-chapter-note { display: block; width: 100%; min-height: 102px; padding: 12px; border: 1px solid var(--chapter-line); border-radius: 7px; resize: vertical; background: var(--chapter-surface); color: var(--chapter-ink); font-family: inherit; font-size: 13px; line-height: 1.6; }
+.lf-chapter-note:focus-visible { outline: 2px solid var(--chapter-accent); outline-offset: 1px; }
+.lf-chapter-editor-options, .lf-chapter-editor-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+.lf-chapter-spoiler { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--chapter-ink); font-size: 12px; cursor: pointer; }
+.lf-chapter-spoiler input { width: 17px; height: 17px; margin: 0; accent-color: var(--chapter-accent); }
+.lf-chapter-editor-options small { color: var(--chapter-muted); font-size: 11px; }
+.lf-chapter-quote-action { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 5px; padding: 0; border: 0; background: transparent; color: var(--chapter-accent); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.lf-chapter-quote-action:focus-visible { outline: 2px solid var(--chapter-accent); outline-offset: 3px; }
+.lf-chapter-editor-actions { justify-content: flex-end; }
+.lf-chapter-editor-actions button { min-height: 44px; padding: 0 13px; border: 0; border-radius: 7px; background: transparent; color: var(--chapter-muted); font: inherit; font-size: 12px; cursor: pointer; }
+.lf-chapter-editor-actions .lf-chapter-publish { display: inline-flex; align-items: center; gap: 5px; margin-inline-end: auto; padding-inline: 0 3px; color: var(--chapter-accent); font-size: 11px; }
+.lf-chapter-editor-actions .lf-chapter-save { min-width: 78px; background: var(--chapter-accent); color: var(--ui-on-action, #fff); font-weight: 700; }
+.lf-chapter-publish-status { min-height: 0; margin: 12px 0 0; color: var(--chapter-muted); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.lf-chapter-publish-status:empty { display: none; }
+.lf-chapter-publish-status[data-kind="error"] { color: var(--ui-danger, #bf2948); }
+.lf-chapter-publish-status[data-kind="success"] { color: var(--chapter-accent); }
+.lf-chapter-editor[aria-busy="true"] .lf-chapter-save { opacity: .65; cursor: wait; }
+.lf-chapter-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; padding: 16px 0 5px; }
+.lf-chapter-footer button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--chapter-accent); font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.lf-chapter-credit { display: inline-flex; align-items: center; min-height: 44px; color: var(--chapter-muted); font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
+.lf-chapter-status:not(:empty) { display: block; padding: 4px 0 12px; color: var(--chapter-accent); font-size: 12px; }
+@media (max-width: 360px) { .lf-chapter-row { grid-template-columns: 88px minmax(0,1fr) 16px; gap: 9px; min-height: 132px; } .lf-chapter-art { width: 88px; height: 106px; } .lf-chapter-title { font-size: 15px; } .lf-chapter-summary { font-size: 11px; } .lf-chapter-editor { padding-inline: 12px; } }
+@media (min-width: 700px) { .lf-app.lf-app.lf-app .lf-detail-hero { height: 290px !important; } }
+
+.lf-chapter-discussion { padding: 4px 0 20px; color: var(--chapter-ink); }
+.lf-chapter-discussion h3 { margin: 0 0 12px; font-size: 16px; }
+.lf-chapter-reader-review { padding: 16px 0; border-block-start: 1px solid var(--chapter-line); }
+.lf-chapter-reader-review header { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.lf-chapter-reader-review header img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex: none; }
+.lf-chapter-reader-name { flex: 1; min-width: 0; min-height: 44px; padding: 0; text-align: start; border: 0; background: transparent; color: inherit; font: inherit; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.lf-chapter-reader-rating { display: inline-flex; flex: none; align-items: center; gap: 5px; color: var(--chapter-accent); font-size: 13px; }
+.lf-chapter-reader-review time { color: var(--chapter-muted); font-size: 11px; }
+.lf-chapter-reader-comment { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.8; margin: 8px 0 0; }
+.lf-chapter-reader-spoiler summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; color: var(--chapter-muted); font-size: 13px; }
+.lf-chapter-discussion-status, .lf-chapter-discussion-list > p { color: var(--chapter-muted); font-size: 13px; line-height: 1.7; }
+.lf-chapter-discussion button:focus-visible { outline: 2px solid var(--chapter-accent); outline-offset: 3px; }
+.lf-chapter-discussion-more, .lf-chapter-discussion-status button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--chapter-line); border-radius: 7px; background: transparent; color: var(--chapter-accent); font: inherit; font-size: 13px; }
+.lf-chapter-editor-actions { flex-wrap: wrap; gap: 8px; }
+.lf-chapter-editor-actions .lf-chapter-private-save { display: inline-flex; align-items: center; gap: 5px; margin-inline-end: auto; padding-inline: 0; }
+.lf-chapter-editor-options { align-items: start; flex-wrap: wrap; }
+.lf-chapter-editor-options small { max-width: 230px; line-height: 1.6; }
+.lf-chapter-editor button:disabled { opacity: .55; cursor: wait; }
+.lf-chapter-reader-actions { margin-top: 8px; color: var(--chapter-muted); }
+.lf-chapter-reader-actions > summary { display: grid; place-items: center; width: 44px; height: 44px; cursor: pointer; list-style: none; }
+.lf-chapter-reader-actions > summary::-webkit-details-marker { display: none; }
+.lf-chapter-reader-actions > button { display: inline-flex; align-items: center; gap: 8px; }
+.lf-chapter-reader-actions button, .lf-chapter-report select { min-height: 44px; padding: 8px; border: 1px solid var(--chapter-line); border-radius: 6px; background: var(--chapter-surface); color: var(--chapter-ink); font: inherit; font-size: 12px; }
+.lf-chapter-report { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 8px; }
+.lf-chapter-report select { flex: 1; min-width: 0; }
+.lf-chapter-reading { display:flex; flex-wrap:wrap; align-items:center; gap:14px 24px; padding:16px 0; border-block:1px solid var(--chapter-line); margin-bottom:12px; }
+.lf-chapter-reading-copy { display:grid; grid-template-columns:1fr auto; gap:8px 12px; flex:1; min-width:180px; font-size:13px; }
+.lf-chapter-reading-copy span { color:var(--chapter-muted); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate; }
+.lf-chapter-reading progress { grid-column:1/-1; width:100%; height:4px; appearance:none; border:0; background:var(--chapter-line); accent-color:var(--chapter-accent); }
+.lf-chapter-reading progress::-webkit-progress-bar { background:var(--chapter-line); }
+.lf-chapter-reading progress::-webkit-progress-value { background:var(--chapter-accent); }
+.lf-chapter-reading-actions { display:flex; flex-wrap:wrap; gap:8px 16px; }
+.lf-chapter-reading-actions button, .lf-chapter-read-mark { display:inline-flex; align-items:center; gap:6px; min-height:44px; border:0; background:transparent; color:var(--chapter-accent); padding:0; font:inherit; font-size:12px; cursor:pointer; }
+.lf-chapter-read-mark { margin-inline-start:132px; color:var(--chapter-muted); }
+.lf-chapter-read-mark[aria-pressed="true"] { color:var(--chapter-accent); }
+.lf-chapter-reading button:focus-visible, .lf-chapter-read-mark:focus-visible { outline:2px solid var(--chapter-accent); outline-offset:3px; }
+@media(max-width:360px) { .lf-chapter-read-mark { margin-inline-start:97px; } }

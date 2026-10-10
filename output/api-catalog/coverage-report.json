@@ -1,0 +1,14 @@
+{
+  "valid": true,
+  "counts": {
+    "Manga": 500,
+    "Manhwa": 500,
+    "Manhua": 500,
+    "Comics": 500,
+    "Novel": 900,
+    "Book": 800,
+    "Light Novel": 500,
+    "Web Novel": 500
+  },
+  "errors": []
+}

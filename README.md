@@ -1,43 +1,54 @@
-# Lorefy Native
+# Lorefy — Build 34
 
-Native Expo / React Native foundation for Lorefy. It replaces the old browser shell with native screens and components for iOS and Android.
+المصدر الحالي لتطبيق Lorefy، مُزامن من نسخة التسليم بتاريخ 10 أكتوبر 2026. يتضمن تعديلات البروفايل والرفوف والألوان والزينة والمجتمع والمكتبة وتسجيل الدخول الخاصة ببيتا Build 34. النسخة القديمة من أغسطس محفوظة في تاريخ Git.
 
-## Run locally
+التطبيق HTML/CSS/JavaScript مع React/ReactDOM محليين، داخل غلاف iOS من Capacitor وSwift. Expo/EAS مستخدم للبناء والرفع.
 
-```powershell
-npm install
+## التشغيل المحلي
+
+استخدم Node.js 22 أو أحدث (بيئة EAS المحددة: 22.14.0):
+
+```sh
+npm ci --ignore-scripts
+node tools/lorefy-api-server.js 8795
+```
+
+افتح http://127.0.0.1:8795/index.html للتطبيق، أو http://127.0.0.1:8795/phone-preview.html?preview=demo&demo=ready&route=profile&decorationLab=1 للمعاينة الهاتفية بحسابات وهمية محلية.
+
+## الفحص
+
+```sh
 npm test
-npx expo start
 ```
 
-For a browser preview:
+## خريطة المصدر
 
-```powershell
-npm run web
-```
+- `modules/` و`styles/`: الواجهة والمنطق والثيمات والبروفايلات.
+- `auth/` و`backend/`: تسجيل الدخول وربط Supabase.
+- `uploads/` و`output/api-catalog/`: بيانات الكتالوج اللازمة للتشغيل والبناء.
+- `launch/`: أصول التطبيق ومجموعات الزينة الـ27 للبيتا.
+- `ios/`: مشروع iOS؛ تُولَّد ملفات `ios-web/` و`ios/App/App/public/` بواسطة أدوات التحزيم.
+- `tests/` و`tools/` و`docs/`: الاختبارات والأدوات والتوثيق.
 
-Scan the QR code from Expo Go on an iPhone or Android device to test the native UI. A development build is recommended once device-only integrations are added.
+يحافظ المصدر على نفس المشروع في Expo `@lorefy/lorefy` ونفس الحزمة `com.lorefy.app` ونفس Supabase `qsroxmltioxqozmykens`.
 
-## Current scope
+## بناء iOS
 
-- Native tabs: home, unified work/reader search, library, and profile.
-- Native work and reader-detail modals.
-- Local, persistent library using AsyncStorage.
-- Dark Lorefy visual system and the new feather icon.
-- EAS profiles for development, TestFlight preview, and production.
+المشروع يحضّر الأصول في خطوة EAS post-install. للتحضير يدويًا استخدم `npm run ios:sync` في نسخة العمل. لا ترفع Build 34 مرة أخرى تلقائيًا؛ إصدار جديد يحتاج طلبًا مستقلاً والتحقق من التوقيع واختبارات الجهاز.
 
-## Before TestFlight
+حُفظت حزمة Build 34 كاملة بطلب المستخدم، بما فيها إعداد الإصدار الحالي الذي يحتوي قيمًا عامة للعميل فقط. كلمات المرور ومفاتيح الخادم والتوقيع غير موجودة في الحزمة. يستخدم البناء `config/lorefy-build-public.json` الآمن للعميل.
 
-1. Configure the production Supabase URL and public key through Expo environment variables.
-2. Migrate the web catalog loader to a paginated API or local database; do not bundle the full catalog into the app binary.
-3. Register `com.lorefy.app` in Apple Developer, create the App Store Connect record, then run `eas build --platform ios --profile preview`.
-4. Replace demo reader/work data with authenticated profiles, the production catalog, image proxying, and server-side access policies.
+راجع [ملاحظات Build 34](docs/BUILD34_READINESS.md) و[الفجوات المعروفة](docs/BUILD34_KNOWN_GAPS.md)، بما فيها ملاحظات الاعتماديات وحقوق المحتوى وفحوص الأجهزة؛ مزامنة المصدر لا تعني نشر إصدار أو معالجة هذه الفجوات.
 
-## Checks
+## الحزمة الكاملة ومطابقة الملفات
 
-```powershell
-npm test
-npx tsc --noEmit
-npx expo-doctor
-npx expo export --platform web
-```
+- المصدر الحالي في جذر المستودع، بما فيه جميع الأصول والكتالوجات والمخرجات الأصلية.
+- `build34/Lorefy-build34.ipa`: الـIPA المجمد الأصلي.
+- `handoff/`: شرح التسليم ونتائج التحقق ولقطات الدوال المنشورة وملفات العمل الإضافية؛ ليست تعليمات لنشرها أو تشغيل migrations تلقائيًا.
+- `handoff/GITHUB_SYNC_MANIFEST.json`: خريطة كل ملفات الحزمة الأصلية الـ2676، مع المسار الجديد والحجم وبصمة SHA-256.
+- `handoff/original-source-metadata/`: README وgitignore الأصليان محفوظان كما هما، إلى جانب التوثيق المحدث في الجذر.
+- `archives/Lorefy-build34-project.zip`: أرشيف التسليم الأصلي الكامل، محفوظ بواسطة Git LFS.
+
+للحصول على الأرشيف الكبير بعد clone، ثبّت Git LFS ثم نفّذ `git lfs pull`. ملف ZIP الذي ينزله GitHub للفرع قد يحتوي مؤشر LFS بدل محتوى الأرشيف؛ استخدم clone مع LFS للحصول على النسخة الكاملة. الاعتماديات الحالية موصوفة في package-lock.json وتُثبت عبر npm ci.
+
+التحقق المحلي في نسخة المزامنة: نجحت الاختبارات الـ985 بتاريخ 10 أكتوبر 2026، وأظهرت المعاينة الهاتفية البروفايل ومجموعات الزينة الـ27. هذا ليس بناء iOS جديدًا.

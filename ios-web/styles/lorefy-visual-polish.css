@@ -1,0 +1,269 @@
+/* Media-led reading surfaces. Keep the teal system and RTL geometry intact. */
+.lf-app.lf-app.lf-app .lf-detail-hero {
+  height: 210px !important;
+  min-height: 210px !important;
+}
+.lf-app.lf-app.lf-app .lf-detail-hero > div:nth-child(2) {
+  background: linear-gradient(180deg, rgba(9, 21, 24, .05) 8%, rgba(9, 21, 24, .14) 55%, var(--ui-bg) 100%) !important;
+}
+.lf-app.lf-app.lf-app .lf-detail-hero > div:last-child {
+  width: 72px !important;
+  height: 100px !important;
+  bottom: 9px !important;
+  box-shadow: 0 8px 22px rgba(10, 25, 27, .22) !important;
+}
+.lf-app.lf-app.lf-app .lf-detail-content {
+  padding-top: 12px !important;
+}
+.lf-app.lf-app.lf-app .lf-detail-content > div:first-child {
+  margin-bottom: 5px !important;
+}
+.lf-app.lf-app.lf-app .lf-detail-content h1 {
+  margin-block: 3px 3px !important;
+  font-size: 23px !important;
+  line-height: 1.35 !important;
+}
+.lf-app.lf-app.lf-app .lf-detail-content > p:first-of-type {
+  margin-bottom: 6px !important;
+}
+.lf-app.lf-app.lf-app .lf-detail-scores {
+  margin-bottom: 10px !important;
+  padding-block: 10px !important;
+}
+.lf-app.lf-app.lf-app .lf-chapter-quick-actions {
+  margin: 12px 0 19px;
+}
+.lf-app.lf-app.lf-app .lf-chapter-quick-actions > button {
+  min-height: 48px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.lf-app.lf-app.lf-app .lf-chapter-quick-add {
+  box-shadow: 0 4px 12px rgba(0, 95, 91, .16);
+}
+
+/* One compact identity followed by a scannable single-row summary. */
+.lf-app.lf-app.lf-app .lf-profile-banner {
+  height: calc(var(--nc-top) + 142px) !important;
+}
+.lf-app.lf-app.lf-app .lf-profile-identity {
+  padding-top: 42px !important;
+}
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts {
+  max-width: 660px !important;
+  margin-top: 4px !important;
+  padding-block: 10px !important;
+}
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts > :is(div, button) {
+  min-height: 64px !important;
+}
+.lf-app.lf-app.lf-app .lf-profile-top-works-head,
+.lf-app.lf-app.lf-app .lf-profile-favorites,
+.lf-app.lf-app.lf-app .lf-profile-top-characters,
+.lf-app.lf-app.lf-app .lf-profile-recent {
+  max-width: 720px !important;
+  margin-inline: auto !important;
+}
+.lf-app.lf-app.lf-app .lf-profile-favorites {
+  gap: 8px !important;
+  margin-top: 10px !important;
+}
+.lf-app.lf-app.lf-app .lf-profile-favorites > div {
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border: 0 !important;
+  background: var(--ui-fill-soft);
+}
+
+/* Different post types use the same chrome, but let their content lead. */
+.lf-app.lf-app.lf-app .lf-community-post-card {
+  padding-block: 15px 12px !important;
+}
+.lf-app.lf-app.lf-app .lf-community-post-card[data-community-post-kind="text"] .lf-community-post-kind {
+  display: none;
+}
+.lf-app.lf-app.lf-app .lf-community-post-card[data-community-post-kind="text"] .lf-community-post-body {
+  font-size: 15px !important;
+  line-height: 1.8 !important;
+}
+.lf-app.lf-app.lf-app .lf-community-post-kind {
+  min-height: 22px;
+  padding-inline: 8px;
+  background: var(--ui-fill-soft);
+  color: var(--ui-muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+.lf-app.lf-app.lf-app .lf-community-post-kind.is-top {
+  background: var(--ui-selected);
+  color: var(--ui-action);
+}
+.lf-app.lf-app.lf-app .lf-community-post-card[data-community-post-kind="quote"] .lf-community-post-body {
+  margin-bottom: 8px !important;
+  color: var(--ui-muted) !important;
+  font-size: 12px !important;
+}
+.lf-app.lf-app.lf-app .lf-community-quote-attachment {
+  margin-top: 10px;
+  padding: 4px 0 10px;
+  border-block: 0;
+}
+.lf-app.lf-app.lf-app .lf-community-quote-attachment blockquote {
+  margin: 0;
+  padding-inline-start: 15px;
+  border-inline-start: 3px solid var(--ui-action);
+  color: var(--ui-ink);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.85;
+}
+.lf-app.lf-app.lf-app .lf-community-quote-source {
+  margin-top: 14px;
+  padding-top: 11px;
+  border-top: 1px solid var(--ui-line);
+}
+.lf-app.lf-app.lf-app .lf-community-quote-cover {
+  width: 44px;
+  border-radius: 4px;
+}
+.lf-app.lf-app.lf-app .lf-community-attachment {
+  margin-top: 12px;
+  padding: 12px 0 2px;
+  border: 0;
+  border-top: 1px solid var(--ui-line);
+  border-radius: 0;
+  background: transparent;
+}
+.lf-app.lf-app.lf-app .lf-community-attachment > header {
+  margin-bottom: 10px;
+}
+.lf-app.lf-app.lf-app .lf-community-attachment > header strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+.lf-app.lf-app.lf-app .lf-community-attachment-grid {
+  gap: 7px;
+}
+.lf-app.lf-app.lf-app .lf-community-attachment-list .lf-community-attachment-item {
+  aspect-ratio: 2 / 3;
+}
+.lf-app.lf-app.lf-app .lf-community-attachment-top .lf-community-attachment-item {
+  aspect-ratio: 3 / 4;
+}
+.lf-app.lf-app.lf-app .lf-community-attachment-item {
+  border-radius: 5px;
+  background: var(--ui-fill-soft);
+  color: var(--ui-secondary);
+}
+.lf-app.lf-app.lf-app .lf-community-attachment-fallback {
+  display: -webkit-box;
+  padding: 5px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/* An optional compact shelf; standard cover grid remains the default. */
+.lf-app.lf-app.lf-app .lf-library-header { position: sticky; }
+.lf-app.lf-app.lf-app .lf-library-header h1 { padding-inline-end: 132px; }
+.lf-app.lf-app.lf-app .lf-library-view-switch {
+  position: absolute;
+  inset-inline-end: var(--ui-inline);
+  top: calc(var(--nc-top) + 12px);
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 9px;
+  background: var(--ui-fill);
+}
+.lf-app.lf-app.lf-app .lf-library-view-switch button {
+  display: inline-flex;
+  min-width: 60px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ui-muted);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+.lf-app.lf-app.lf-app .lf-library-view-switch button[aria-pressed="true"] {
+  background: var(--ui-surface);
+  color: var(--ui-action);
+  box-shadow: 0 1px 3px rgba(23, 40, 43, .08);
+}
+.lf-app.lf-app.lf-app .lf-library-view-switch svg { width: 15px; height: 15px; stroke-width: 1.8; }
+.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view {
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 0 !important;
+  max-width: 760px;
+  margin-inline: auto;
+  padding-block: 6px 28px !important;
+}
+.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-card {
+  display: grid !important;
+  grid-template-columns: 76px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 128px;
+  padding: 9px 0 !important;
+  border-bottom: 1px solid var(--ui-line) !important;
+  text-align: start !important;
+}
+.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-card:focus-visible {
+  outline: 2px solid var(--ui-action);
+  outline-offset: -2px;
+}
+.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-cover {
+  width: 76px !important;
+  aspect-ratio: 2 / 3 !important;
+  margin: 0 !important;
+  border-radius: 5px !important;
+  box-shadow: 0 3px 9px rgba(20, 45, 49, .12) !important;
+}
+.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-cover img {
+  object-fit: contain;
+}
+.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-copy {
+  min-width: 0;
+  padding: 0 !important;
+}
+.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-copy strong {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  white-space: normal;
+  text-align: start;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+}
+.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-copy span {
+  display: block;
+  margin-top: 7px;
+  text-align: start;
+  white-space: normal;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+@media (min-width: 700px) {
+  .lf-app.lf-app.lf-app .lf-detail-hero { height: 268px !important; min-height: 268px !important; }
+  .lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view { width: min(100%, 760px); }
+}
+
+@media (max-width: 360px) {
+  .lf-app.lf-app.lf-app .lf-library-view-switch button { min-width: 52px; }
+  .lf-app.lf-app.lf-app .lf-library-header h1 { padding-inline-end: 118px; }
+}

@@ -1,0 +1,16 @@
+- banner:
+  - button:
+  - paragraph: الإشعارات
+  - button "قراءة الكل" [active]
+- paragraph: لا إشعارات بعد
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "بحث":
+    - generic: بحث
+  - button "الرئيسية":
+    - generic: الرئيسية

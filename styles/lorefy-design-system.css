@@ -1,0 +1,753 @@
+/* Shared visual contract. Legacy screen variables resolve to these tokens. */
+/* Custom themes own legacy chrome too; media and semantic status colors stay intact. */
+:root[data-lorefy-theme^='custom-'], .lf-app.lf-app.lf-app.is-custom {
+  --apple-field:var(--ui-fill); --apple-sheet:var(--ui-surface);
+  --apple-fill-2:var(--ui-fill-soft); --apple-elevated:var(--ui-surface);
+  --apple-nav:var(--ui-nav); --apple-bar:var(--ui-bar);
+  --cinema-dock:var(--ui-nav); --cinema-active-soft:var(--ui-selected);
+}
+.lf-app.lf-app.lf-app.is-custom :is(input:not([type='checkbox']):not([type='range']),textarea,select) {
+  background:var(--ui-fill) !important; color:var(--ui-ink) !important; border-color:var(--ui-line) !important;
+}
+.lf-app.lf-app.lf-app.is-custom :is(.lf-library-header,.lf-search-header,.lf-discover-header,.lf-character-page-top,.lf-character-toolbar,.lf-review-detail-header,.lf-pref-board-hub-head,.lf-ov-head) {
+  background:var(--ui-bar) !important; border-color:var(--ui-line) !important;
+}
+.lf-app.lf-app.lf-app.is-custom :is(.lf-icon-button,.lf-back,.lf-profile-action,.lf-cover-edit-button) { background:var(--ui-fill) !important; }
+.lf-app.lf-app.lf-app.is-custom :is(.lf-cover-frame,.lf-profile-banner) { background-color:var(--ui-fill) !important; }
+.lf-community-reply-target { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 16px; background:var(--ui-fill); color:var(--ui-action); font-size:13px; }
+.lf-community-reply-target[hidden] { display:none; }
+.lf-community-reply-target button { width:44px; height:44px; display:grid; place-items:center; border:0; background:transparent; color:inherit; }
+.lf-community-reply-reference { display:block; min-height:44px; padding:4px 0; border:0; background:transparent; color:var(--ui-action); font:inherit; font-size:12px; text-align:start; }
+.lf-home-reply-open { grid-column:2; justify-self:start; white-space:nowrap; min-height:44px; border:0; padding:8px 12px; background:var(--ui-fill); color:var(--ui-action); border-radius:8px; font:inherit; font-size:13px; }
+html .lf-wr-summary-goal { grid-template-columns:minmax(0,1fr) !important; gap:16px !important; }
+html .lf-wr-summary-goal-copy { grid-template-columns:minmax(0,1fr) auto !important; min-width:0; }
+html .lf-wr-summary-goal-copy strong { font-size:18px !important; white-space:nowrap; color:var(--ui-action) !important; }
+html .lf-wr-goal-controls { grid-column:1 / -1; }
+html .lf-wr-summary-goal-track { border-radius:4px; background:var(--ui-fill); }
+html .lf-wr-summary-goal-track i { min-width:0; background:var(--ui-action); }
+.lf-app.lf-app.lf-app .lf-community-post-menu { position:relative; flex:none; color:var(--ui-muted); }
+.lf-community-post-menu > summary { display:grid; place-items:center; width:44px; height:44px; list-style:none; cursor:pointer; border-radius:8px; }
+.lf-community-post-menu > summary::-webkit-details-marker { display:none; }
+.lf-community-post-menu[open] > summary { background:var(--ui-fill); }
+.lf-community-post-menu > div { position:absolute; z-index:8; inset-inline-end:0; top:44px; min-width:180px; padding:4px; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-surface); box-shadow:var(--ui-shadow); }
+.lf-community-post-menu > div > button { display:flex; align-items:center; gap:10px; width:100%; min-height:44px; border:0; padding:10px 12px; background:transparent; color:var(--ui-ink); font:inherit; font-size:14px; text-align:start; }
+.lf-community-post-menu > div > button:last-child { color:var(--ui-danger); }
+.lf-community-edit { position:absolute; inset:0; z-index:8000; display:grid; place-items:center; padding:16px; background:rgb(0 0 0 / .4); }
+.lf-community-edit > section { width:min(100%,580px); max-height:100%; overflow:auto; box-sizing:border-box; display:grid; gap:16px; padding:20px; background:var(--ui-bg); color:var(--ui-ink); border:1px solid var(--ui-line); border-radius:8px; box-shadow:var(--ui-shadow); }
+.lf-community-edit header { display:flex; align-items:center; justify-content:space-between; }
+.lf-community-edit header button { display:grid; place-items:center; width:44px; height:44px; border:0; border-radius:50%; background:var(--ui-fill); color:var(--ui-ink); }
+.lf-community-edit textarea { min-height:160px; width:100%; box-sizing:border-box; padding:12px; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-surface); color:var(--ui-ink); font:inherit; font-size:16px; line-height:1.6; resize:vertical; }
+.lf-community-edit p { margin:0; color:var(--ui-danger); font-size:13px; }
+.lf-community-edit-save { min-height:44px; padding:10px 16px; border:0; border-radius:8px; background:var(--ui-action); color:var(--ui-on-action); font:inherit; }
+.lf-community-edit-save:disabled { opacity:.45; }
+.lf-community-undo { position:absolute; z-index:8100; bottom:calc(var(--nc-bottom,0px) + 92px); inset-inline:16px; max-width:560px; margin-inline:auto; display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:8px 12px; background:var(--ui-surface); color:var(--ui-ink); border:1px solid var(--ui-line); border-radius:8px; box-shadow:var(--ui-shadow); }
+.lf-community-undo span { flex:1; }
+.lf-community-undo button { min-width:44px; min-height:44px; border:0; border-radius:8px; background:var(--ui-fill); color:var(--ui-action); font:inherit; }
+.lf-im-preview { margin-block:16px; color:var(--ui-ink); }
+.lf-im-preview h3 { font-size:16px; }
+.lf-im-preview > p { color:var(--ui-muted); font-size:13px; line-height:1.6; }
+.lf-im-preview-row { display:grid; grid-template-columns:44px minmax(0,1fr); gap:12px; align-items:center; padding-block:12px; border-bottom:1px solid var(--ui-line); }
+.lf-im-preview-row > :first-child { width:44px; height:66px; object-fit:cover; border-radius:4px; }
+.lf-im-preview-row select { width:100%; min-width:0; min-height:44px; padding:8px; font:inherit; font-size:13px; background:var(--ui-surface); color:var(--ui-ink); border:1px solid var(--ui-line); border-radius:8px; }
+html .lf-pref-share-sheet .lf-pref-share-sheet-card,
+html .lf-cb-share-sheet .lf-cb-share-card,
+html .lf-work-share-sheet .nc-sheet { background:var(--ui-bg) !important; color:var(--ui-ink) !important; }
+html :is(.lf-pref-share-sheet-head,.lf-cb-share-head) strong { color:var(--ui-ink) !important; }
+html :is(.lf-pref-share-sheet-actions,.lf-cb-share-actions) button { min-height:44px; background:var(--ui-fill) !important; color:var(--ui-ink) !important; border-color:var(--ui-line) !important; }
+html :is(.lf-pref-share-sheet-actions,.lf-cb-share-actions) button:first-child { background:var(--ui-action) !important; color:var(--ui-on-action) !important; }
+html .lf-share-save-image { min-height:44px; background:var(--ui-action) !important; color:var(--ui-on-action) !important; }
+html .lf-cb-poster { --lf-cb-accent:var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline button[aria-label='حذف المراجعة'],
+.lf-app.lf-app.lf-app .lf-social-timeline button[aria-label='Delete review'] { min-width:44px !important; min-height:44px !important; }
+.lf-reader-discovery-page { position:absolute; inset:0; z-index:7600; display:flex; flex-direction:column; padding:calc(var(--nc-top,0px) + 16px) 20px calc(var(--nc-bottom,0px) + 20px); gap:20px; color:var(--ui-ink); background:var(--ui-bg); }
+.lf-reader-discovery-page header { display:flex; align-items:center; gap:14px; }
+.lf-reader-discovery-page h2 { margin:0; font-size:20px; }
+.lf-reader-discovery-page header button { width:44px; height:44px; flex:none; border:0; border-radius:50%; background:var(--ui-fill); color:var(--ui-ink); font-size:24px; }
+.lf-reader-discovery-page input { min-height:48px; padding:10px 14px; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-surface); color:var(--ui-ink); font:inherit; }
+.lf-reader-discovery-page section { overflow:auto; color:var(--ui-muted); font-size:14px; }
+.lf-reader-discovery-page .lf-reader-inline-row { color:var(--ui-ink); text-align:start; }
+.lf-reader-discovery-page .lf-reader-result-copy { display:grid; gap:4px; }
+.lf-library-controls { display:flex; gap:8px; padding:8px 16px 16px; }
+.lf-app.lf-app.lf-app .lf-library-grid.is-shelf-view .lf-library-card { width:100% !important; max-width:none !important; min-width:0; box-sizing:border-box; }
+.lf-library-controls input { flex:1; min-width:0; }
+.lf-library-controls :is(input,select) { min-height:44px; padding:8px 12px; border:1px solid var(--ui-line); border-radius:8px; color:var(--ui-ink); background:var(--ui-surface); font:inherit; font-size:13px; }
+.lf-followers-close { display:grid; place-items:center; width:44px; height:44px; margin:0 0 10px; border:0; border-radius:50%; background:var(--ui-fill); color:var(--ui-ink); cursor:pointer; }
+.lf-cb-picker .lf-cb-picker-card { max-width:620px; margin-inline:auto; }
+.lf-cb-picker .lf-ml-results { flex:none; max-height:160px; overflow:auto; margin-inline:18px; }
+.lf-cb-picker .lf-cb-picker-status { flex:none; margin:0 18px 8px; font-size:12px; color:var(--ui-muted); }
+.lf-cb-picker .lf-cb-picker-head button { min-width:44px; min-height:44px; }
+.lf-auth .lf-btn.lf-primary,.lf-auth .lf-mark { color:var(--ui-on-action) !important; }
+.lf-wr-goal-controls { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.lf-wr-goal-controls input { width:120px; min-height:44px; padding:8px 12px; box-sizing:border-box; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-fill); color:var(--ui-ink); font:inherit; }
+.lf-wr-goal-controls button { min-height:44px; padding:8px 14px; border:0; border-radius:8px; background:var(--ui-action); color:var(--ui-on-action); font:inherit; }
+html[lang='en'] .lf-app.lf-app.lf-app { direction:ltr !important; }
+html[lang='en'] :is(.lf-community-thread,.lf-community-compose-sheet,.lf-community-profile-posts,.lf-community-picker) { direction:ltr !important; }
+html .lf-community-post-body { text-align:start; unicode-bidi:plaintext; }
+html .lf-community-thread-rail { right:auto; inset-inline-start:36px; }
+html[lang='en'] .lf-app.lf-app.lf-app .lf-profile-favorites.is-empty > [role="button"]:first-child::after { content:'Choose your favorite works'; }
+html[lang='en'] .lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty > .lf-profile-top-character:first-child::after { content:'Choose your favorite characters'; }
+html[lang='en'] :is(.lf-product-sheet,.lf-product-settings,.lf-product-detail-tools,.lf-character-page,.lf-ov,.lf-ov-page) { direction:ltr; text-align:start; }
+html[lang='en'] :is(.lf-product-action,.lf-top-works-editor-result) { text-align:start; }
+html[dir='rtl'] :is(.lf-top-characters-editor-slots,.lf-top-works-editor-slots) { direction:rtl; }
+html[dir='ltr'] :is(.lf-top-characters-editor-slots,.lf-top-works-editor-slots) { direction:ltr; }
+html[dir='rtl'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:rtl !important; }
+html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr !important; }
+:root,
+.lf-app.is-light {
+  --ui-bg: #f7f9f9;
+  --ui-surface: #fff;
+  --ui-fill: #eef3f3;
+  --ui-fill-soft: #f3f6f6;
+  --ui-ink: #17282b;
+  --ui-secondary: #344d51;
+  --ui-muted: #566c70;
+  --ui-line: #dce5e6;
+  --ui-separator: #c6d5d7;
+  --ui-action: #006f6b;
+  --ui-action-pressed: #005a57;
+  --ui-on-action: #fff;
+  --ui-selected: #e1f1ee;
+  --ui-danger: #b83240;
+  --ui-success: #187a48;
+  --ui-gold: #a85d00;
+  --ui-rating: #006f6b;
+  --ui-nav: rgba(255, 255, 255, .96);
+  --ui-bar: rgba(247, 249, 249, .97);
+  --ui-shadow: 0 12px 32px rgba(23, 40, 43, .1);
+  --ui-font: 'Readex Pro', 'Cairo', system-ui, sans-serif;
+  --ui-inline: 20px;
+  --ui-radius: 8px;
+}
+
+:root[data-lorefy-theme='dark'],
+.lf-app.is-dark {
+  color-scheme: dark;
+  --ui-bg: #0b0b0c;
+  --ui-surface: #171719;
+  --ui-fill: #242426;
+  --ui-fill-soft: #1d1d1f;
+  --ui-ink: #f5f5f7;
+  --ui-secondary: #d8d8dc;
+  --ui-muted: #a8a8b0;
+  --ui-line: #303033;
+  --ui-separator: #45454a;
+  --ui-action: #f0f0f3;
+  --ui-action-pressed: #d8d8dc;
+  --ui-on-action: #171719;
+  --ui-selected: #29292c;
+  --ui-rating: #e7e7ec;
+  --ui-danger: #ff8c8c;
+  --ui-success: #73d49a;
+  --ui-gold: #f4b65e;
+  --ui-nav: rgba(23, 23, 25, .96);
+  --ui-bar: rgba(11, 11, 12, .97);
+  --ui-shadow: 0 12px 32px rgba(0, 0, 0, .26);
+}
+
+:root[data-lorefy-theme='pink'],
+.lf-app.is-pink {
+  color-scheme: light;
+  --ui-bg: #fff7fa;
+  --ui-surface: #fffafc;
+  --ui-fill: #f9eaf0;
+  --ui-fill-soft: #fff0f5;
+  --ui-ink: #30222a;
+  --ui-secondary: #59434d;
+  --ui-muted: #79616c;
+  --ui-line: #ebd9e1;
+  --ui-separator: #ddc3cf;
+  --ui-action: #a53662;
+  --ui-action-pressed: #83264b;
+  --ui-on-action: #fff;
+  --ui-selected: #f7dfe9;
+  --ui-rating: #a53662;
+  --ui-success: #a53662;
+  --ui-gold: #a53662;
+  --ui-shadow: 0 12px 32px rgba(92,35,60,.10);
+  --ui-nav: rgba(255,250,252,.96);
+  --ui-bar: rgba(255,247,250,.97);
+}
+
+.lf-app.lf-app.lf-app .lf-appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px; }
+.lf-app.lf-app.lf-app .lf-appearance-option { min-height: 76px; display: grid; justify-items: center; align-content: center; gap: 8px; padding: 10px 4px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-surface); color: var(--ui-ink); font-size: 13px; cursor: pointer; }
+.lf-app.lf-app.lf-app .lf-appearance-option[aria-pressed='true'] { border: 2px solid var(--ui-action); background: var(--ui-selected); }
+.lf-appearance-swatch { width: 26px; height: 26px; border: 1px solid #9996; border-radius: 50%; }
+.lf-app.lf-app.lf-app .lf-diary-entrypoint { border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-diary-entrypoint-icon { border-radius: 8px !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app :is(.lf-chapter-star.is-filled,.lf-chapter-personal-summary,.lf-rating-display) { color: var(--ui-rating) !important; }
+.lf-app.lf-app.lf-app .lf-rating-feather { stroke: var(--ui-rating); stroke-width: 1.6; }
+.lf-app.lf-app.lf-app .lf-rating-pick-glyph > .lf-rating-feather { stroke: var(--ui-muted) !important; }
+.lf-app.lf-app.lf-app .lf-rating-star > svg { stroke: var(--ui-muted); }
+.lf-app.lf-app.lf-app .lf-rating-star > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }
+.lf-app.lf-app.lf-app .lf-rating-pick-glyph > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }
+.lf-app.lf-app.lf-app .lf-profile-banner > div:last-child:has(> span):not(:has(img)) { background: var(--ui-selected) !important; color: var(--ui-action) !important; }
+.lf-app.is-dark .lf-profile-banner { background: #171719 !important; }
+
+:root,
+.lf-app.lf-app.lf-app,
+.lf-auth {
+  --apple-bg: var(--ui-bg);
+  --apple-surface: var(--ui-surface);
+  --apple-surface-2: var(--ui-fill-soft);
+  --apple-fill: var(--ui-fill);
+  --apple-fill-strong: var(--ui-line);
+  --apple-label: var(--ui-ink);
+  --apple-label-2: var(--ui-muted);
+  --apple-label-3: var(--ui-muted);
+  --apple-blue: var(--ui-action);
+  --apple-blue-pressed: var(--ui-action-pressed);
+  --apple-blue-soft: var(--ui-selected);
+  --apple-green: var(--ui-success);
+  --apple-red: var(--ui-danger);
+  --apple-orange: var(--ui-gold);
+  --apple-separator: var(--ui-separator);
+  --apple-separator-soft: var(--ui-line);
+  --apple-card-radius: var(--ui-radius);
+  --apple-inline: var(--ui-inline);
+  --lf-bg: var(--ui-bg);
+  --lf-card: var(--ui-surface);
+  --lf-card-2: var(--ui-fill);
+  --lf-surface: var(--ui-surface);
+  --lf-surface-soft: var(--ui-fill-soft);
+  --lf-surface-raised: var(--ui-surface);
+  --lf-muted: var(--ui-muted);
+  --lf-line: var(--ui-line);
+  --lf-accent-soft: var(--ui-selected);
+  --lf-danger: var(--ui-danger);
+  --lf-purple: var(--ui-action);
+  --lf-purple-soft: var(--ui-selected);
+  --lf-purple-strong: var(--ui-action);
+  --lf-ink: var(--ui-ink);
+  --lf-ink-secondary: var(--ui-secondary);
+  --lf-ink-muted: var(--ui-muted);
+  --lf-field: var(--ui-fill);
+  --lf-text: var(--ui-ink);
+  --lf-sub: var(--ui-muted);
+  --lf-border: var(--ui-line);
+  --lf-fill: var(--ui-fill);
+  --lf-blue: var(--ui-action);
+  --lf-blue-soft: var(--ui-selected);
+  --lf-accent: var(--ui-action);
+  --lf-accent-text: var(--ui-action);
+  --lf-green: var(--ui-success);
+  --lf-gold: var(--ui-gold);
+  --lf-red: var(--ui-danger);
+  --cinema-bg: var(--ui-bg);
+  --cinema-surface: var(--ui-surface);
+  --cinema-raised: var(--ui-fill);
+  --cinema-ink: var(--ui-ink);
+  --cinema-muted: var(--ui-muted);
+  --cinema-line: var(--ui-line);
+  --cinema-active: var(--ui-action);
+  color: var(--ui-ink);
+  font-family: var(--ui-font) !important;
+  font-size: 14px;
+  line-height: 1.6;
+  background: var(--ui-bg) !important;
+  -webkit-font-smoothing: antialiased;
+  accent-color: var(--ui-action);
+}
+
+.lf-app.lf-app.lf-app *, .lf-auth * { box-sizing: border-box; letter-spacing: 0 !important; }
+.lf-app.lf-app.lf-app :is(button, input, textarea, select), .lf-auth :is(button, input, textarea, select) { font-family: var(--ui-font) !important; }
+.lf-app.lf-app.lf-app :is(h1, h2, h3), .lf-auth :is(h1, h2, h3, .lf-title) { font-family: var(--ui-font) !important; text-wrap: balance; }
+.lf-app.lf-app.lf-app :is(button, a, [role="button"]) { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.lf-app.lf-app.lf-app :is(button, a, input, textarea, select, [role="button"]):focus-visible,
+.lf-auth :is(button, a, input, textarea, select):focus-visible { outline: 2px solid var(--ui-action) !important; outline-offset: 3px; }
+.lf-app.lf-app.lf-app ::selection, .lf-auth ::selection { color: var(--ui-ink); background: var(--ui-selected); }
+.lf-app.lf-app.lf-app :is(input, textarea), .lf-auth :is(input, textarea) { caret-color: var(--ui-action); color: var(--ui-ink); }
+.lf-app.lf-app.lf-app ::placeholder, .lf-auth ::placeholder { color: var(--ui-muted) !important; opacity: 1; }
+.lf-app.lf-app.lf-app :is(button, input, textarea, select):disabled { cursor: default; }
+.lf-app.lf-app.lf-app :is(button, input, textarea):disabled:not(.lf-reader-cover) { opacity: .55; }
+.lf-app.lf-app.lf-app :is(strong, b, output), .lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p { font-variant-numeric: tabular-nums; }
+.lf-app.lf-app.lf-app a { text-underline-offset: 3px; }
+.lf-app.lf-app.lf-app :is(.lf-screen-scroll, .lf-reader-full, .lf-community-thread-body, .nc-sheet) { scrollbar-width: thin; scrollbar-color: var(--ui-separator) transparent; }
+
+/* Repeated app scope outranks late legacy theme rules without touching layout logic. */
+/* Screen chrome stays quiet; the catalog and reader content lead. */
+.lf-app.lf-app.lf-app .lf-page-header,
+.lf-app.lf-app.lf-app .lf-home-header { padding-inline: var(--ui-inline) !important; background: var(--ui-bar) !important; border-bottom-color: var(--ui-line) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-page-header h1 { margin: 0 0 16px !important; font-size: 24px !important; font-weight: 650 !important; line-height: 1.4 !important; }
+.lf-app.lf-app.lf-app .lf-page-header { padding-top: calc(var(--nc-top) + 20px) !important; padding-bottom: 12px !important; }
+.lf-app.lf-app.lf-app .lf-greeting-row { min-height: 58px; }
+.lf-app.lf-app.lf-app .lf-user-greeting strong { font-size: 17px !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app .lf-user-greeting small { color: var(--ui-muted) !important; font-size: 11px !important; }
+.lf-app.lf-app.lf-app .lf-icon-button { width: 44px !important; height: 44px !important; border: 0 !important; background: var(--ui-fill) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-home-tabs > div { padding: 4px !important; border: 0 !important; border-radius: 12px !important; background: var(--ui-fill) !important; }
+.lf-app.lf-app.lf-app .lf-home-tabs button { min-height: 44px !important; border-radius: 8px !important; color: var(--ui-muted) !important; font-size: 13px !important; font-weight: 550 !important; }
+.lf-app.lf-app.lf-app .lf-home-tabs button.is-active { color: var(--ui-ink) !important; background: var(--ui-surface) !important; box-shadow: 0 1px 3px rgba(23,40,43,.07) !important; }
+.lf-app.lf-app.lf-app .lf-bottom-nav {
+  width: calc(100% - 24px) !important;
+  max-width: 520px !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: calc(var(--nc-bottom) + 10px) !important;
+  transform: translateX(-50%) !important;
+  min-height: 68px !important;
+  padding: 5px 6px !important;
+  border: 1px solid var(--ui-line) !important;
+  border-radius: 22px !important;
+  background: var(--ui-nav) !important;
+  box-shadow: 0 6px 20px rgba(12,29,32,.08) !important;
+  backdrop-filter: blur(12px) !important;
+}
+.lf-app.lf-app.lf-app .lf-nav-item { min-width: 0; min-height: 56px !important; gap: 2px !important; padding: 3px 2px !important; border-radius: 14px !important; color: var(--ui-muted) !important; background: transparent !important; font-size: 10px !important; font-weight: 500 !important; }
+.lf-app.lf-app.lf-app .lf-nav-item .lf-nav-icon { width: 42px !important; height: 29px !important; padding: 4px !important; border-radius: 12px !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-nav-item svg { width: 21px !important; height: 21px !important; stroke-width: 1.7 !important; }
+.lf-app.lf-app.lf-app .lf-nav-item.is-active { color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-nav-item.is-active .lf-nav-icon { background: var(--ui-selected) !important; }
+.lf-app.lf-app.lf-app :is(.lf-screen-scroll, .lf-reader-full, .lf-home-content, .lf-community-page) { padding-bottom: calc(var(--nc-bottom) + 112px) !important; }
+
+/* Search and library share filters, metadata and cover geometry. */
+.lf-app.lf-app.lf-app .lf-search-box { min-height: 48px !important; padding: 0 14px !important; gap: 10px !important; margin-bottom: 12px !important; border: 1px solid transparent !important; border-radius: 12px !important; background: var(--ui-fill) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-search-box:focus-within { border-color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-search-box input { width: 100%; min-width: 0; min-height: 46px !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent !important; font-size: 14px !important; }
+.lf-app.lf-app.lf-app .lf-search-box svg { color: var(--ui-muted) !important; stroke: currentColor !important; width: 18px; height: 18px; }
+.lf-app.lf-app.lf-app :is(.lf-type-filters, .lf-filter-row, .lf-library-tabs) { display: flex !important; gap: 4px !important; overflow-x: auto !important; scrollbar-width: none; padding-block: 2px 6px !important; border: 0 !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-pill,
+.lf-app.lf-app.lf-app .lf-library-tabs > button { min-height: 44px !important; flex: 0 0 auto !important; padding: 8px 12px !important; border: 0 !important; border-radius: 10px !important; background: transparent !important; color: var(--ui-muted) !important; font-size: 12px !important; font-weight: 500 !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-pill[aria-pressed="true"],
+.lf-app.lf-app.lf-app .lf-library-tabs > button.is-active { color: var(--ui-action) !important; background: var(--ui-selected) !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app .lf-library-tabs b { background: transparent !important; color: inherit !important; font-size: 10px !important; font-weight: 550 !important; }
+.lf-app.lf-app.lf-app .lf-sort-control { display: grid !important; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0 !important; padding: 3px !important; margin-top: 4px; background: var(--ui-fill) !important; border: 0 !important; border-radius: 10px !important; }
+.lf-app.lf-app.lf-app .lf-sort-control > button { min-width: 0 !important; min-height: 40px !important; padding: 6px 4px !important; border: 0 !important; border-radius: 7px !important; font-size: 11px !important; font-weight: 500 !important; color: var(--ui-muted) !important; }
+.lf-app.lf-app.lf-app .lf-sort-control > button[aria-pressed="true"] { color: var(--ui-ink) !important; background: var(--ui-surface) !important; box-shadow: 0 1px 3px rgba(23,40,43,.06) !important; }
+.lf-app.lf-app.lf-app .lf-type-filters > button,
+.lf-app.lf-app.lf-app .lf-library-tabs > button { width: auto !important; min-width: max-content !important; }
+.lf-app.lf-app.lf-app .lf-search-result > div:first-child { width: 58px !important; height: 87px !important; border-radius: 8px !important; }
+.lf-app.lf-app.lf-app .lf-search-result > div:nth-child(2) > div:first-child > p { color: var(--ui-ink) !important; font-size: 14px !important; font-weight: 550 !important; line-height: 1.5 !important; }
+.lf-app.lf-app.lf-app .lf-search-result { min-height: 116px !important; padding-block: 14px !important; gap: 13px !important; border-color: var(--ui-line) !important; }
+.lf-app.lf-app.lf-app .lf-search-result > img { width: 58px !important; height: 87px !important; border-radius: var(--ui-radius) !important; object-fit: cover; }
+.lf-app.lf-app.lf-app .lf-search-result h3 { font-size: 14px !important; line-height: 1.5 !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app .lf-search-result p { color: var(--ui-muted) !important; font-size: 11px !important; line-height: 1.5 !important; }
+.lf-app.lf-app.lf-app .lf-search-result > button { flex: 0 0 44px !important; width: 44px !important; height: 44px !important; border: 0 !important; border-radius: 50% !important; background: var(--ui-fill) !important; color: var(--ui-action) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-search-result > button svg { stroke: currentColor !important; }
+.lf-app.lf-app.lf-app .lf-section-head { padding-inline: var(--ui-inline) !important; margin-bottom: 12px !important; }
+.lf-app.lf-app.lf-app :is(.lf-section-head h2, .lf-profile-top-works-head > span, .lf-profile-character-title) { color: var(--ui-ink) !important; font-size: 17px !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app :is(.lf-text-action, .lf-reader-view-all) { min-height: 44px !important; padding: 4px 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; color: var(--ui-action) !important; font-size: 11px !important; font-weight: 500 !important; }
+.lf-app.lf-app.lf-app .lf-shelf { margin-bottom: 28px !important; }
+.lf-app.lf-app.lf-app .lf-cover-row { gap: 12px !important; padding-inline: var(--ui-inline) !important; }
+.lf-app.lf-app.lf-app .lf-cover-card { flex: 0 0 110px !important; width: 110px !important; }
+.lf-app.lf-app.lf-app .lf-cover-frame { width: 100% !important; height: auto !important; aspect-ratio: 2 / 3; border: 0 !important; border-radius: var(--ui-radius) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-cover-title { margin-top: 8px !important; color: var(--ui-ink) !important; font-size: 11px !important; font-weight: 500 !important; line-height: 1.5 !important; }
+.lf-app.lf-app.lf-app .lf-library-grid { display: grid !important; grid-template-columns: repeat(3,minmax(0,1fr)) !important; gap: 22px 12px !important; padding: 20px var(--ui-inline) 28px !important; }
+.lf-app.lf-app.lf-app .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):has(> .lf-library-card:nth-child(2):last-child) { grid-template-columns: repeat(2,minmax(0,150px)) !important; justify-content: center; gap: 18px !important; }
+.lf-app.lf-app.lf-app .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):has(> .lf-library-card:first-child:last-child) { grid-template-columns: minmax(0,176px) !important; justify-content: center; }
+.lf-app.lf-app.lf-app .lf-library-card { min-width: 0; background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-library-cover { aspect-ratio: 2 / 3; border-radius: var(--ui-radius) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-library-copy { padding-top: 8px !important; }
+.lf-app.lf-app.lf-app .lf-library-copy strong { font-size: 11px !important; font-weight: 550 !important; line-height: 1.5 !important; }
+.lf-app.lf-app.lf-app .lf-library-copy :is(small,span) { font-size: 10px !important; color: var(--ui-muted) !important; }
+.lf-app.lf-app.lf-app .lf-empty-state { grid-column: 1 / -1; min-height: 240px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px; padding: 32px 24px !important; color: var(--ui-muted) !important; background: transparent !important; border: 0 !important; box-shadow: none !important; text-align: center; }
+.lf-app.lf-app.lf-app .lf-empty-state strong { color: var(--ui-ink); font-size: 16px; font-weight: 600; }
+.lf-app.lf-app.lf-app .lf-empty-state span { max-width: 32ch; font-size: 13px; line-height: 1.75; }
+.lf-app.lf-app.lf-app .lf-continue-card { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-continue-row { padding-inline: var(--ui-inline) !important; }
+.lf-app.lf-app.lf-app .lf-mood-row { padding-inline: var(--ui-inline) !important; }
+.lf-app.lf-app.lf-app .lf-feature-card { border-radius: var(--ui-radius) !important; }
+.lf-app.lf-app.lf-app .lf-feature-shade { background: linear-gradient(0deg, rgba(6,16,20,.91), rgba(6,16,20,.30) 66%, rgba(6,16,20,.07)) !important; }
+.lf-app.lf-app.lf-app .lf-feature-meta { color: #fff !important; text-shadow: 0 1px 5px rgba(0,0,0,.38); }
+.lf-app.lf-app.lf-app .lf-feature-meta h3 { color: #fff !important; font-size: 20px !important; line-height: 1.35 !important; font-weight: 700 !important; }
+.lf-app.lf-app.lf-app .lf-feature-meta p { color: rgba(255,255,255,.92) !important; }
+.lf-app.lf-app.lf-app .lf-home-reply-shelf:has(.lf-home-reply-empty) { display: none !important; }
+
+/* Personal and public profiles follow the same scale, without social frames. */
+.lf-app.lf-app.lf-app :is(.lf-profile-banner, .lf-reader-banner) { height: calc(var(--nc-top) + 166px) !important; min-height: 0 !important; margin: 0 !important; width: 100% !important; overflow: visible !important; border-radius: 0 !important; }
+.lf-app.lf-app.lf-app .lf-profile-banner > img { filter: none !important; border-radius: 0 !important; }
+.lf-app.lf-app.lf-app .lf-profile-banner:has(> img[src^="data:image/svg+xml"]) { background: url('../launch/brand/lorefy-reading-scene.jpg') center 36% / cover no-repeat !important; }
+.lf-app.lf-app.lf-app .lf-profile-banner > img[src^="data:image/svg+xml"] { opacity: 0 !important; }
+.lf-app.lf-app.lf-app .lf-profile-banner > div:last-child { width: 88px !important; height: 88px !important; bottom: -34px !important; border: 4px solid var(--ui-bg) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-profile-identity { padding: 46px var(--ui-inline) 0 !important; margin: 0 !important; background: var(--ui-bg) !important; }
+.lf-app.lf-app.lf-app :is(.lf-profile-page, .lf-profile-favorites, .lf-profile-recent, .lf-profile-top-characters) { background: var(--ui-bg) !important; }
+.lf-app.lf-app.lf-app .lf-profile-page { scrollbar-width: none !important; -ms-overflow-style: none; }
+.lf-app.lf-app.lf-app .lf-profile-page::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+.lf-app.lf-app.lf-app .lf-profile-favorites { padding: 0 var(--ui-inline) 0 !important; margin-inline: 0 !important; width: 100% !important; }
+.lf-app.lf-app.lf-app .lf-profile-favorites { grid-template-columns: repeat(4,minmax(0,1fr)) !important; gap: 10px !important; }
+.lf-app.lf-app.lf-app .lf-profile-favorites > div { min-width: 0 !important; width: auto !important; border-width: 1px !important; border-radius: 8px !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-profile-favorites.is-empty { grid-template-columns: minmax(0, 1fr) !important; }
+.lf-app.lf-app.lf-app .lf-profile-favorites.is-empty > [role="button"]:not(:first-child) { display: none !important; }
+.lf-app.lf-app.lf-app .lf-profile-favorites.is-empty > [role="button"]:first-child { display: flex !important; min-height: 84px !important; aspect-ratio: auto !important; justify-content: flex-start !important; gap: 14px; padding: 14px 18px; border: 1px dashed var(--ui-separator) !important; background: var(--ui-fill-soft) !important; }
+.lf-app.lf-app.lf-app .lf-profile-favorites.is-empty > [role="button"]:first-child svg { width: 20px; height: 20px; flex: none; stroke: var(--ui-action); }
+.lf-app.lf-app.lf-app .lf-profile-favorites.is-empty > [role="button"]:first-child::after { content: 'اختر الأعمال التي تحبها'; color: var(--ui-secondary); font-size: 13px; font-weight: 550; text-align: start; }
+.lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty { grid-template-columns: minmax(0, 1fr) !important; }
+.lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty > .lf-profile-top-character:not(:first-child) { display: none !important; }
+.lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty > .lf-profile-top-character:first-child { display: flex !important; min-height: 84px !important; aspect-ratio: auto !important; align-items: center; justify-content: flex-start; gap: 14px; padding: 14px 18px; border: 1px dashed var(--ui-separator) !important; background: var(--ui-fill-soft) !important; }
+.lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty > .lf-profile-top-character:first-child::after { content: 'اختر شخصياتك المفضلة'; color: var(--ui-secondary); font-size: 13px; font-weight: 550; text-align: start; }
+.lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty .lf-profile-top-character-empty { color: var(--ui-action); }
+.lf-app.lf-app.lf-app .lf-profile-identity > div:first-child > p { font-size: 22px !important; font-weight: 650 !important; }
+.lf-app.lf-app.lf-app .lf-profile-identity > p { margin-bottom: 12px !important; color: var(--ui-muted) !important; font-size: 13px !important; }
+.lf-app.lf-app.lf-app .lf-profile-identity > div:has(> button[aria-label="الحسابات التي أتابعها"]) { margin-bottom: 14px !important; gap: 18px !important; }
+.lf-app.lf-app.lf-app .lf-profile-identity > div > button[aria-label] { min-height: 44px; min-width: 44px; color: var(--ui-ink); }
+.lf-app.lf-app.lf-app .lf-profile-identity > p:first-of-type { color: var(--ui-ink) !important; }
+.lf-app.lf-app.lf-app .lf-profile-identity button:is([aria-label="الحسابات التي أتابعها"], [aria-label="الحسابات التي تتابعني"]) { border: 0 !important; background: transparent !important; box-shadow: none !important; color: var(--ui-ink) !important; }
+.lf-app.lf-app.lf-app .lf-profile-identity { background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-profile-favorites button { background: var(--ui-fill-soft) !important; border-color: var(--ui-line) !important; }
+.lf-app.lf-app.lf-app .lf-profile-identity > div > a { width: 44px !important; height: 44px !important; border: 0 !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-reader-surface { border-radius: 20px 20px 0 0 !important; background: var(--ui-bg) !important; }
+.lf-app.lf-app.lf-app .lf-reader-identity { padding-inline: var(--ui-inline) !important; }
+.lf-app.lf-app.lf-app .lf-reader-full .lf-reader-avatar { width: 88px !important; height: 88px !important; margin-bottom: 12px !important; border-color: var(--ui-bg) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-reader-identity h1 { font-size: 22px !important; font-weight: 650 !important; }
+.lf-app.lf-app.lf-app .lf-reader-bio { color: var(--ui-muted) !important; margin-bottom: 12px !important; font-size: 13px !important; line-height: 1.75 !important; }
+.lf-app.lf-app.lf-app .lf-reader-type-chip { padding: 2px 0 !important; min-height: 28px !important; gap: 6px !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; font-weight: 550 !important; }
+.lf-app.lf-app.lf-app .lf-reader-type-chip small { font-size: 10px !important; }
+.lf-app.lf-app.lf-app .lf-reader-social-summary { gap: 14px !important; margin-bottom: 8px !important; }
+.lf-app.lf-app.lf-app .lf-reader-connection strong { font-size: 15px !important; font-weight: 650 !important; }
+.lf-app.lf-app.lf-app .lf-reader-connection span { font-size: 12px !important; }
+.lf-app.lf-app.lf-app .lf-reader-follow { min-width: 128px !important; min-height: 44px !important; border: 0 !important; border-radius: 999px !important; padding: 9px 22px !important; color: var(--ui-on-action) !important; background: var(--ui-action) !important; font-size: 13px !important; font-weight: 550 !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-reader-follow.is-following { background: var(--ui-selected) !important; color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app :is(.lf-owner-metrics-with-posts, .lf-reader-metrics) { max-width: 560px !important; margin: 8px auto 0 !important; padding-block: 14px !important; border-block: 1px solid var(--ui-line) !important; background: transparent !important; gap: 0 !important; }
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts { grid-template-columns: repeat(6,minmax(0,1fr)) !important; row-gap: 0 !important; }
+.lf-app.lf-app.lf-app .lf-reader-metrics { grid-template-columns: repeat(5,minmax(0,1fr)) !important; }
+.lf-app.lf-app.lf-app :is(.lf-owner-metrics-with-posts, .lf-reader-metrics) > :is(div,button) { min-width: 0 !important; min-height: 68px !important; padding: 0 2px !important; border: 0 !important; background: transparent !important; }
+.lf-app.lf-app.lf-app :is(.lf-owner-metrics-with-posts, .lf-reader-metrics) svg { width: 19px !important; height: 19px !important; color: var(--ui-secondary) !important; stroke: currentColor !important; stroke-width: 1.7; }
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p:first-of-type,
+.lf-app.lf-app.lf-app .lf-reader-metrics strong { color: var(--ui-ink) !important; font-size: 15px !important; font-weight: 650 !important; }
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p:last-of-type,
+.lf-app.lf-app.lf-app .lf-reader-metrics span { color: var(--ui-muted) !important; font-size: 10px !important; line-height: 1.4 !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; }
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts > :is(div,button) { min-height: 72px !important; }
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts svg { width: 18px !important; height: 18px !important; }
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p { margin-block: 4px !important; }
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p:first-of-type { font-size: 14px !important; line-height: 1.5 !important; overflow-wrap: anywhere; }
+.lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p:last-of-type { font-size: 9px !important; }
+.lf-app.lf-app.lf-app :is(.lf-profile-favorites, .lf-profile-recent, .lf-reader-shelf) { margin-top: 24px !important; }
+.lf-app.lf-app.lf-app .lf-reader-shelf { padding-inline: var(--ui-inline) !important; }
+.lf-app.lf-app.lf-app .lf-reader-full h2 { font-size: 17px !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app .lf-reader-character-image { border: 0 !important; border-radius: var(--ui-radius) !important; }
+.lf-app.lf-app.lf-app .lf-reader-cover.is-character strong { font-size: 11px !important; font-weight: 500 !important; }
+.lf-app.lf-app.lf-app .lf-profile-community-summary { border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-profile-community-summary > header span { display: none; }
+.lf-app.lf-app.lf-app .lf-profile-community-summary > p { display: none; }
+.lf-app.lf-app.lf-app .lf-profile-community-summary button { min-height: 80px; gap: 6px !important; grid-template-rows: 24px auto auto; border: 0 !important; background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-profile-community-action-icon { width: 24px !important; height: 24px !important; color: var(--ui-action) !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-profile-community-action strong { font-size: 12px !important; font-weight: 550 !important; line-height: 1.5 !important; }
+.lf-app.lf-app.lf-app .lf-profile-community-action small { font-size: 12px !important; line-height: 1.5 !important; }
+.lf-app.lf-app.lf-app .lf-extras-row { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 12px !important; margin: 24px var(--ui-inline) !important; border: 0 !important; }
+.lf-app.lf-app.lf-app .lf-profile-preference-boards { margin-inline: var(--ui-inline) !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-extra-card { min-width: 0; min-height: 76px !important; padding: 16px !important; grid-template-columns: 32px minmax(0,1fr) 16px; column-gap: 12px; border: 0 !important; border-radius: 8px !important; background: var(--ui-fill) !important; box-shadow: none !important; transition: background-color 160ms ease-out; }
+.lf-app.lf-app.lf-app .lf-extra-card:last-child { border-bottom: 0 !important; }
+.lf-app.lf-app.lf-app .lf-extra-card:is(.lf-extra-lists,.lf-extra-wrap) { min-height: 138px !important; grid-template-columns: minmax(0,1fr) 16px; grid-template-rows: 32px auto auto; gap: 8px; align-content: start; }
+.lf-app.lf-app.lf-app .lf-extra-lists { background: var(--ui-selected) !important; }
+.lf-app.lf-app.lf-app .lf-extra-wrap { background: color-mix(in srgb, var(--ui-gold) 10%, var(--ui-bg)) !important; }
+.lf-app.lf-app.lf-app .lf-extra-import { grid-column: 1 / -1; }
+.lf-app.lf-app.lf-app .lf-extra-saved { grid-column: 1 / -1 !important; }
+.lf-app.lf-app.lf-app .lf-extra-saved-copy { grid-row: 1 / 3; }
+.lf-app.lf-app.lf-app .lf-extra-ic { width: 32px; height: 32px; color: var(--ui-action); }
+.lf-app.lf-app.lf-app .lf-extra-ic svg { width: 26px; height: 26px; stroke-width: 1.6; }
+.lf-app.lf-app.lf-app .lf-extra-wrap .lf-extra-ic { color: var(--ui-gold); }
+.lf-app.lf-app.lf-app .lf-extra-card:is(.lf-extra-lists,.lf-extra-wrap) .lf-extra-ic { grid-column: 1; grid-row: 1; justify-items: start; }
+.lf-app.lf-app.lf-app .lf-extra-card:is(.lf-extra-lists,.lf-extra-wrap) .lf-extra-name { grid-column: 1 / -1; grid-row: 2; }
+.lf-app.lf-app.lf-app .lf-extra-card:is(.lf-extra-lists,.lf-extra-wrap) .lf-extra-sub { grid-column: 1 / -1; grid-row: 3; }
+.lf-app.lf-app.lf-app .lf-extra-card:is(.lf-extra-lists,.lf-extra-wrap) .lf-extra-chevron { grid-column: 2; grid-row: 1; }
+.lf-app.lf-app.lf-app .lf-extra-name { color: var(--ui-ink); font-size: 15px; font-weight: 600; line-height: 1.5; }
+.lf-app.lf-app.lf-app .lf-extra-sub { color: var(--ui-muted); font-size: 11px; font-weight: 400; line-height: 1.65; overflow-wrap: anywhere; }
+.lf-app.lf-app.lf-app .lf-extra-chevron { color: var(--ui-muted); }
+.lf-app.lf-app.lf-app .lf-pref-board-launcher { grid-template-columns: 24px minmax(0,1fr) 20px !important; gap: 12px !important; min-height: 76px !important; border: 0 !important; border-block: 1px solid var(--ui-line) !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; padding: 16px 0 !important; }
+.lf-app.lf-app.lf-app .lf-pref-launcher-icon { width: 24px !important; height: 24px !important; color: var(--ui-action) !important; background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-pref-launcher-copy strong { white-space: normal !important; overflow: visible !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.5 !important; }
+.lf-app.lf-app.lf-app .lf-pref-launcher-copy em { white-space: normal !important; overflow: visible !important; font-size: 11px !important; font-weight: 400 !important; }
+.lf-app.lf-app.lf-app .lf-pref-launcher-preview { display: none !important; }
+.lf-app.lf-app.lf-app .lf-pref-board-card { border: 0 !important; border-bottom: 1px solid var(--ui-line) !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+
+/* Community rows, replies and writing tools share one content rhythm. */
+.lf-app.lf-app.lf-app .lf-community-page { background: var(--ui-bg) !important; }
+.lf-app.lf-app.lf-app .lf-community-post-list { border-top-color: var(--ui-line) !important; }
+.lf-app.lf-app.lf-app .lf-community-post-card,
+.lf-app.lf-app.lf-app .lf-review-card { margin: 0 !important; padding: 18px var(--ui-inline) 12px !important; border: 0 !important; border-bottom: 1px solid var(--ui-line) !important; border-radius: 0 !important; background: var(--ui-surface) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-community-post-author img { width: 42px !important; height: 42px !important; }
+.lf-app.lf-app.lf-app .lf-community-post-author strong { color: var(--ui-ink) !important; font-size: 13px !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app .lf-community-post-author small { color: var(--ui-muted) !important; font-size: 11px !important; }
+.lf-app.lf-app.lf-app .lf-community-post-body { margin-block: 14px !important; color: var(--ui-ink) !important; font-size: 14px !important; line-height: 1.9 !important; }
+.lf-app.lf-app.lf-app .lf-community-post-attachment { margin-inline: 0 !important; padding: 12px 0 !important; border: 0 !important; background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-community-post-attachment h4 { font-size: 12px !important; font-weight: 550 !important; }
+.lf-app.lf-app.lf-app .lf-community-post-actions { margin-top: 6px !important; color: var(--ui-muted) !important; }
+.lf-app.lf-app.lf-app .lf-community-post-actions button { min-height: 44px !important; color: var(--ui-muted) !important; border: 0 !important; border-radius: 8px !important; background: transparent !important; box-shadow: none !important; font-size: 11px !important; }
+.lf-app.lf-app.lf-app .lf-chapter-quick-actions > button { border-radius: 8px !important; box-shadow: none !important; color: var(--ui-ink) !important; background: var(--ui-surface) !important; }
+.lf-app.lf-app.lf-app .lf-chapter-quick-actions > .lf-chapter-quick-add { color: var(--ui-on-action) !important; background: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-chapter-section { direction: inherit; }
+.lf-app.lf-app.lf-app .lf-community-post-actions svg { width: 19px !important; height: 19px !important; stroke-width: 1.6 !important; }
+.lf-app.lf-app.lf-app .lf-community-post-actions button.is-active { color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-fab { width: 54px !important; height: 54px !important; background: var(--ui-action) !important; color: var(--ui-on-action) !important; box-shadow: 0 6px 16px rgba(0,75,71,.16) !important; bottom: calc(var(--nc-bottom) + 94px) !important; right: 20px !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-fab svg { stroke-width: 1.8; }
+.lf-app.lf-app.lf-app :is(.lf-community-compose-sheet, .lf-community-thread, .lf-community-profile-posts) { background: var(--ui-surface) !important; }
+.lf-app.lf-app.lf-app :is(.lf-community-compose-sheet, .lf-community-thread) > section { background: var(--ui-surface) !important; }
+.lf-app.lf-app.lf-app :is(.lf-community-compose-head, .lf-community-thread-head) { min-height: 64px !important; padding-inline: var(--ui-inline) !important; border-bottom-color: var(--ui-line) !important; }
+.lf-app.lf-app.lf-app :is(.lf-community-compose-head h2, .lf-community-thread-head strong) { font-size: 16px !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-close { color: var(--ui-muted) !important; min-height: 44px; font-size: 13px !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-submit { min-height: 40px !important; border-radius: 999px !important; color: var(--ui-on-action) !important; background: var(--ui-action) !important; font-size: 13px !important; font-weight: 550 !important; }
+.lf-app.lf-app.lf-app .lf-community-composer-main { padding: 22px var(--ui-inline) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-text { font-size: 17px !important; line-height: 1.85 !important; color: var(--ui-ink) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-text:focus-visible { outline: 0 !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app :is(.lf-community-compose-sheet, .lf-community-thread) { padding-top: var(--lf-safe-top) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-sheet > section { border-radius: 0 !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app :is(.lf-community-compose-head, .lf-community-thread-head) { padding-block: 8px !important; }
+.lf-app.lf-app.lf-app .lf-community-post-kind { background: var(--ui-fill) !important; color: var(--ui-muted) !important; font-size: 10px !important; font-weight: 500 !important; }
+.lf-app.lf-app.lf-app .lf-community-post-body { font-size: 14px !important; line-height: 1.9 !important; }
+.lf-app.lf-app.lf-app .lf-community-page [role="tab"] { min-height: 44px !important; color: var(--ui-muted) !important; background: transparent !important; border: 0 !important; border-radius: 10px !important; font-weight: 500 !important; }
+.lf-app.lf-app.lf-app .lf-community-page [role="tab"][aria-selected="true"] { color: var(--ui-action) !important; background: var(--ui-selected) !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-footer { border-color: var(--ui-line) !important; padding-inline: var(--ui-inline) !important; background: var(--ui-surface) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-tools button { color: var(--ui-action) !important; background: transparent !important; border: 0 !important; }
+.lf-app.lf-app.lf-app .lf-community-thread-row { padding: 16px var(--ui-inline) !important; border-color: var(--ui-line) !important; }
+.lf-app.lf-app.lf-app .lf-community-thread-rail { background: var(--ui-line) !important; }
+.lf-app.lf-app.lf-app .lf-community-thread-compose { padding-inline: var(--ui-inline) !important; border-color: var(--ui-line) !important; background: var(--ui-surface) !important; }
+.lf-app.lf-app.lf-app .lf-community-thread-compose textarea { color: var(--ui-ink) !important; background: var(--ui-fill) !important; border: 1px solid transparent !important; border-radius: 16px !important; font-size: 14px !important; }
+.lf-app.lf-app.lf-app .lf-community-thread-compose textarea:focus { border-color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-community-thread-compose > button { color: var(--ui-on-action) !important; background: var(--ui-action) !important; }
+
+/* Detail, settings and secondary tools use the same separators and controls. */
+.lf-app.lf-app.lf-app .lf-detail-hero { height: 240px !important; }
+.lf-app.lf-app.lf-app .lf-detail-content { padding-inline: var(--ui-inline) !important; }
+.lf-app.lf-app.lf-app .lf-detail-content h1 { font-size: 24px !important; line-height: 1.4 !important; font-weight: 650 !important; }
+.lf-app.lf-app.lf-app .lf-detail-scores { display: grid !important; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0 !important; padding-block: 14px !important; border-block: 1px solid var(--ui-line); }
+.lf-app.lf-app.lf-app .lf-detail-scores > div { padding: 4px !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-detail-actions { display: grid !important; grid-template-columns: minmax(0,1fr) minmax(0,1fr) 44px !important; gap: 10px !important; }
+.lf-app.lf-app.lf-app .lf-detail-actions > button { min-width: 0 !important; width: auto !important; grid-area: auto !important; order: 0 !important; }
+.lf-app.lf-app.lf-app .lf-detail-actions > button:first-child { grid-column: 1 !important; grid-row: 1 !important; }
+.lf-app.lf-app.lf-app .lf-detail-actions > .lf-review-action-button { grid-column: 2 !important; grid-row: 1 !important; color: var(--ui-on-action) !important; background: var(--ui-action) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-detail-actions > button[title] { grid-column: 3 !important; grid-row: 1 !important; padding: 0 !important; }
+.lf-app.lf-app.lf-app .lf-detail-actions > .lf-character-action-button { grid-column: 1 !important; grid-row: 2 !important; background: transparent !important; border: 0 !important; box-shadow: none !important; color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-detail-actions > .lf-topchars-action-button { grid-column: 2 / 4 !important; grid-row: 2 !important; }
+.lf-app.lf-app.lf-app .lf-detail-scores > div > div:last-child { color: var(--ui-muted) !important; font-size: 11px !important; }
+.lf-app.lf-app.lf-app .lf-detail-actions button { min-height: 48px !important; border-radius: 12px !important; font-size: 13px !important; font-weight: 550 !important; }
+
+/* Ratings are one criterion per row: five touch targets never compete for half a sheet. */
+.lf-app.lf-app.lf-app .lf-review-composer { --lf-review-v2-accent: var(--ui-action); --lf-review-text: var(--ui-ink); --lf-review-muted: var(--ui-muted); --lf-review-surface: var(--ui-surface); --lf-review-border: var(--ui-line); --lf-review-track: var(--ui-separator); padding-inline: var(--ui-inline) !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-header { background: var(--ui-surface) !important; min-height: 56px !important; margin-bottom: 8px !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-heading > p:first-child { font-size: 19px !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app :is(.lf-review-composer-intro, .lf-review-composer-kicker, .lf-review-composer-pulse) { display: none !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-work { grid-template-columns: 48px minmax(0,1fr) !important; gap: 12px !important; margin-bottom: 12px !important; padding: 8px 0 16px !important; border: 0 !important; border-bottom: 1px solid var(--ui-line) !important; border-radius: 0 !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-cover { width: 48px !important; height: 68px !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-work-copy strong { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; font-size: 14px !important; font-weight: 550 !important; line-height: 1.5 !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-steps { border: 0 !important; background: var(--ui-fill) !important; margin-bottom: 16px !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-steps span.is-active { color: var(--ui-action) !important; background: var(--ui-selected) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-section-title { color: var(--ui-ink) !important; font-weight: 600 !important; margin-top: 24px !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-section-title::before { display: none !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-metrics-grid { grid-template-columns: minmax(0,1fr) !important; gap: 0 !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-metric { --lf-review-v2-accent: var(--ui-action); grid-template-columns: 24px minmax(0,1fr) !important; grid-template-areas: 'icon title' 'stars stars' !important; min-height: 100px !important; padding: 12px 0 !important; gap: 6px 10px !important; border: 0 !important; border-bottom: 1px solid var(--ui-line) !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-metric-icon { width: 24px !important; height: 24px !important; color: var(--ui-action) !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-metric-icon svg { width: 20px !important; height: 20px !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-metric > span:not(.lf-review-composer-metric-icon) { font-size: 13px !important; font-weight: 550 !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-metric > div { width: max-content !important; max-width: 100%; display: grid !important; grid-template-columns: repeat(5,44px) !important; justify-content: start !important; gap: 2px !important; padding: 4px !important; border-radius: 12px; background: var(--ui-fill-soft); }
+.lf-app.lf-app.lf-app .lf-review-composer-metric button { min-width: 44px !important; width: 44px !important; min-height: 44px !important; height: 44px !important; padding: 0 !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-metric button svg { width: 24px !important; height: 24px !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-metric button path[fill='none'] { stroke: var(--ui-muted) !important; }
+.lf-app.lf-app.lf-app .lf-rating-pick { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 0 !important; border-radius: 8px !important; box-shadow: none !important; transition: background-color 160ms ease-out; }
+.lf-app.lf-app.lf-app .lf-rating-pick.is-filled { background: var(--ui-selected) !important; }
+.lf-app.lf-app.lf-app .lf-rating-pick-glyph { width: 24px !important; height: 24px !important; }
+.lf-app.lf-app.lf-app .lf-rating-pick-glyph > svg { stroke: var(--ui-muted) !important; }
+.lf-app.lf-app.lf-app .lf-rating-star-glyph { stroke-width: 1.6 !important; }
+.lf-app.lf-app.lf-app .lf-rating-display { gap: 3px !important; }
+.lf-app.lf-app.lf-app :is(.lf-character-score-row,.lf-cr-star-row) { width: max-content; max-width: 100%; display: flex; gap: 2px !important; direction: ltr; padding: 4px; border-radius: 12px; background: var(--ui-fill-soft); }
+.lf-app.lf-app.lf-app :is(.lf-character-score-button,.lf-cr-star) { display: grid; place-items: center; min-width: 44px !important; width: 44px !important; min-height: 44px !important; height: 44px !important; padding: 0 !important; border: 0 !important; border-radius: 8px !important; color: var(--ui-muted) !important; background: transparent !important; box-shadow: none !important; transform: none !important; }
+.lf-app.lf-app.lf-app :is(.lf-character-score-button.is-active,.lf-cr-star.is-on) { color: var(--ui-rating) !important; background: var(--ui-selected) !important; }
+.lf-app.lf-app.lf-app :is(.lf-character-score-button,.lf-cr-star) svg { width: 24px; height: 24px; stroke-width: 1.6; fill: none; pointer-events: none; }
+.lf-app.lf-app.lf-app :is(.lf-character-score-button.is-active,.lf-cr-star.is-on) svg { fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)); }
+.lf-app.lf-app.lf-app .lf-profile-rated-character-stars { display: inline-flex; gap: 3px; direction: ltr; }
+.lf-app.lf-app.lf-app .lf-profile-rated-character-star { position: relative; display: block; width: 12px; height: 12px; color: var(--ui-muted); }
+.lf-app.lf-app.lf-app .lf-profile-rated-character-star svg { display: block; width: 12px; height: 12px; fill: none; stroke-width: 1.6; }
+.lf-app.lf-app.lf-app .lf-profile-rated-character-star-fill { position: absolute; inset: 0 auto 0 0; overflow: hidden; color: var(--ui-rating); }
+.lf-app.lf-app.lf-app .lf-profile-rated-character-star-fill svg { fill: currentColor; }
+.lf-app.lf-app.lf-app .lf-review-composer-overall { border: 0 !important; margin-block: 16px !important; background: var(--ui-selected) !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-overall > :not(.lf-review-composer-overall-summary) { display: none !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-overall-summary { min-height: 88px !important; background: transparent !important; padding: 14px !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-overall-score { width: 60px !important; height: auto !important; border: 0 !important; border-radius: 0 !important; color: var(--ui-action) !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-overall-star { display: inline-flex; color: var(--ui-muted) !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-overall-star.is-on { color: var(--ui-rating) !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-overall-star svg { width: 16px !important; height: 16px !important; fill: none !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-overall-star.is-on svg { fill: currentColor !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-recommendation { border: 0 !important; background: var(--ui-fill) !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-recommendation button { min-height: 44px !important; color: var(--ui-muted) !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-recommendation button[aria-pressed='true'] { color: var(--ui-action) !important; background: var(--ui-selected) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-review-composer-submit { background: var(--ui-action) !important; color: var(--ui-on-action) !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-cover-choice { min-width: 0; margin: 0; padding: 0; border: 0; font: inherit; background: transparent; text-align: center; }
+.lf-app.lf-app.lf-app .lf-cover-choice img { display: block; background: var(--ui-fill); }
+.lf-app.lf-app.lf-app .lf-cover-choice[data-cover-state='loading'] img { opacity: .5; }
+.lf-app.lf-app.lf-app .lf-cover-choice[data-cover-state='error'] > div { background: var(--ui-fill); }
+.lf-app.lf-app.lf-app .lf-discover-page .lf-feature-label { color: var(--ui-muted) !important; font-size: 12px !important; }
+.lf-app.lf-app.lf-app .nc-sheet { border-color: var(--ui-line) !important; background: var(--ui-surface) !important; border-radius: 22px 22px 0 0 !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .nc-sheet input:not([type="checkbox"]),
+.lf-app.lf-app.lf-app .nc-sheet textarea { color: var(--ui-ink) !important; background: var(--ui-fill) !important; border-color: var(--ui-line) !important; border-radius: 10px !important; font-size: 16px !important; }
+.lf-app.lf-app.lf-app .lf-settings-sheet { background: var(--ui-bg) !important; border: 0 !important; }
+.lf-app.lf-app.lf-app .lf-settings-head { min-height: 64px !important; border-bottom-color: var(--ui-line) !important; }
+.lf-app.lf-app.lf-app .lf-settings-head button { min-height: 44px; }
+.lf-app.lf-app.lf-app .lf-settings-group { margin-bottom: 26px !important; }
+.lf-app.lf-app.lf-app .lf-settings-group > p { color: var(--ui-muted) !important; font-size: 12px !important; font-weight: 500 !important; margin: 0 0 8px !important; }
+.lf-app.lf-app.lf-app .lf-settings-cells { border: 0 !important; border-radius: 12px !important; background: var(--ui-surface) !important; }
+.lf-app.lf-app.lf-app .lf-settings-row { width: 100%; min-height: 56px; border: 0; background: transparent; text-align: start; font: inherit; }
+.lf-app.lf-app.lf-app .lf-settings-row > div:first-child { background: transparent !important; width: 26px !important; height: 26px !important; }
+.lf-app.lf-app.lf-app .lf-settings-row > span { font-size: 14px !important; }
+.lf-app.lf-app.lf-app .lf-settings-switch { display: block; position: relative; width: 52px !important; height: 44px !important; padding: 0; border: 0; border-radius: 999px; background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-settings-switch::before { content: ''; position: absolute; width: 46px; height: 28px; top: 8px; left: 3px; border-radius: 999px; background: var(--ui-separator); transition: background-color 160ms ease-out; }
+.lf-app.lf-app.lf-app .lf-settings-switch[aria-checked="true"]::before { background: var(--ui-action); }
+.lf-app.lf-app.lf-app .lf-settings-switch > div { top: 10px !important; margin-inline: 3px; box-shadow: 0 1px 3px rgba(12,29,32,.15) !important; }
+.lf-app.lf-app.lf-app .lf-product-settings { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-product-action { min-height: 58px !important; border: 0 !important; border-bottom: 1px solid var(--ui-line) !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-product-action-icon { color: var(--ui-action) !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-wr-summary-hero { color: var(--ui-ink) !important; background: var(--ui-fill) !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+.lf-app.lf-app.lf-app .lf-wr-summary-hero::after { display: none !important; }
+.lf-app.lf-app.lf-app .lf-wr-summary-primary { color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-home-reply-shelf { margin: 24px var(--ui-inline) !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-home-reply-head strong { font-size: 17px !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app .lf-home-reply-all { min-height: 44px; color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-home-reply-empty { color: var(--ui-muted) !important; font-size: 13px !important; }
+.lf-app.lf-app.lf-app .lf-discover-filters { display: flex; gap: 4px !important; padding: 10px var(--ui-inline) 18px !important; }
+.lf-app.lf-app.lf-app .lf-discover-header { position: relative !important; top: auto !important; padding-bottom: 0 !important; }
+.lf-app.lf-app.lf-app .lf-discover-header h1 { font-size: 22px !important; line-height: 1.5 !important; margin-bottom: 0 !important; }
+.lf-app.lf-app.lf-app .lf-discover-filters > button { min-height: 44px; padding: 8px 14px !important; border: 0 !important; border-radius: 10px !important; box-shadow: none !important; font-size: 12px !important; font-weight: 500 !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-discover-filters > button[aria-pressed="true"] { color: var(--ui-action) !important; background: var(--ui-selected) !important; }
+.lf-app.lf-app.lf-app .lf-discover-feature { padding: 0 var(--ui-inline) !important; margin-bottom: 28px !important; min-height: 0 !important; }
+.lf-app.lf-app.lf-app .lf-discover-feature-card { border: 0 !important; border-radius: 8px !important; }
+.lf-app.lf-app.lf-app .lf-discover-feature-card h2 { color: #fff !important; font-size: 23px !important; font-weight: 600 !important; }
+.lf-app.lf-app.lf-app .lf-discover-feature-card p { color: #eef6f4 !important; }
+.lf-app.lf-app.lf-app .lf-discover-categories { padding: 0 var(--ui-inline) !important; margin-block: 0 28px !important; min-height: 0 !important; }
+.lf-app.lf-app.lf-app .lf-discover-categories { container-type: inline-size; }
+.lf-app.lf-app.lf-app .lf-discover-category-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px !important; background: transparent !important; }
+.lf-app.lf-app.lf-app .lf-discover-category { position: relative; display: flex; width: 100%; min-width: 0; min-height: 102px !important; align-items: center; gap: 10px; padding: 12px 10px !important; border: 0 !important; border-radius: 8px !important; color: var(--ui-ink) !important; background: var(--ui-selected) !important; text-align: start; cursor: pointer; }
+.lf-app.lf-app.lf-app .lf-discover-category:nth-child(4n+2) { background: color-mix(in srgb, var(--ui-gold) 10%, var(--ui-bg)) !important; }
+.lf-app.lf-app.lf-app .lf-discover-category:nth-child(4n+3) { background: var(--ui-fill) !important; }
+.lf-app.lf-app.lf-app .lf-discover-category:nth-child(4n+4) { background: color-mix(in srgb, var(--ui-danger) 7%, var(--ui-bg)) !important; }
+.lf-app.lf-app.lf-app .lf-discover-category-cover { width: 48px; height: 72px; aspect-ratio: 2 / 3; object-fit: cover; flex: 0 0 48px; border-radius: 4px; box-shadow: 0 3px 8px rgba(23,40,43,.12); }
+.lf-app.lf-app.lf-app .lf-discover-category > span { display: grid; min-width: 0; flex: 1; gap: 2px; }
+.lf-app.lf-app.lf-app .lf-discover-category strong { font-size: 13px; font-weight: 600; line-height: 1.6; overflow-wrap: anywhere; }
+.lf-app.lf-app.lf-app .lf-discover-category small { color: var(--ui-muted); font-size: 10px; line-height: 1.6; }
+.lf-app.lf-app.lf-app .lf-discover-category > svg { display: none; }
+@container (min-width: 600px) {
+  .lf-app.lf-app.lf-app .lf-discover-category-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+}
+
+/* Auth and onboarding are part of the same visual language, not another theme. */
+.lf-auth {
+  color-scheme: inherit;
+  --auth-paper: var(--ui-bg);
+  --auth-ink: var(--ui-ink);
+  --auth-muted: var(--ui-muted);
+  --auth-line: var(--ui-line);
+  --auth-action: var(--ui-action);
+  --auth-action-pressed: var(--ui-action-pressed);
+  --auth-selected: var(--ui-selected);
+}
+.lf-auth .lf-title { font-size: 25px !important; font-weight: 650 !important; }
+.lf-auth .lf-sub { font-size: 13px !important; }
+.lf-auth .lf-btn { min-height: 52px !important; border-radius: 12px !important; font-weight: 550 !important; }
+.lf-auth .lf-field { border-radius: 12px !important; background: var(--ui-surface) !important; }
+.lf-auth .lf-back,
+.lf-auth .lf-lang { border: 0 !important; background: var(--ui-fill) !important; }
+.lf-auth .lf-work-search { min-height: 48px !important; border-radius: 12px !important; border-color: var(--ui-line) !important; background: var(--ui-surface) !important; }
+.lf-auth .lf-work-search input { font-size: 14px !important; }
+.lf-auth .lf-work { border-color: var(--ui-line) !important; border-radius: 0 !important; }
+.lf-auth .lf-work.on { background: var(--ui-selected) !important; }
+.lf-auth .lf-work img { border-radius: var(--ui-radius) !important; }
+
+@media (hover: hover) {
+  .lf-app.lf-app.lf-app :is(.lf-nav-item, .lf-pill, .lf-reader-connection, .lf-text-action, .lf-community-compose-tools button):hover { background: var(--ui-fill) !important; }
+  .lf-app.lf-app.lf-app :is(.lf-reader-follow, .lf-community-compose-submit, .lf-community-compose-fab):hover { background: var(--ui-action-pressed) !important; }
+}
+@media (max-width: 374px) {
+  .lf-app.lf-app.lf-app { --ui-inline: 16px; }
+}
+@media (min-width: 768px) {
+  .lf-app.lf-app.lf-app { --ui-inline: 32px; }
+  .lf-app.lf-app.lf-app :is(.lf-search-page, .lf-library-page, .lf-discover-page, .lf-home-content, .lf-profile-page, .lf-reader-full) { max-width: 1180px; margin-inline: auto; }
+  .lf-app.lf-app.lf-app .lf-page-header { padding-top: calc(var(--nc-top) + 26px) !important; }
+  .lf-app.lf-app.lf-app .lf-library-grid { grid-template-columns: repeat(6,minmax(0,1fr)) !important; gap: 28px 20px !important; }
+  .lf-app.lf-app.lf-app .lf-cover-card { width: 142px !important; flex-basis: 142px !important; }
+  .lf-app.lf-app.lf-app .lf-profile-banner,
+  .lf-app.lf-app.lf-app .lf-reader-banner { height: calc(var(--nc-top) + 230px) !important; }
+  .lf-app.lf-app.lf-app .lf-community-page { max-width: 680px; margin-inline: auto; }
+  .lf-app.lf-app.lf-app .lf-community-compose-fab { right: max(32px, calc((100% - 680px) / 2 + 16px)) !important; }
+  .lf-app.lf-app.lf-app :is(.lf-community-compose-sheet, .lf-community-thread, .lf-community-profile-posts) > section { width: min(100%,680px) !important; margin-inline: auto; border-inline: 1px solid var(--ui-line) !important; }
+  .lf-app.lf-app.lf-app .lf-detail-content { max-width: 760px; margin-inline: auto; }
+  .lf-app.lf-app.lf-app .lf-detail-hero { height: 310px !important; }
+  .lf-app.lf-app.lf-app .nc-sheet { max-width: 680px; margin-inline: auto; }
+  .lf-app.lf-app.lf-app .lf-reader-shelf-rail { max-width: 620px; margin-inline: auto; gap: 16px !important; }
+  .lf-app.lf-app.lf-app .lf-reader-library-grid { grid-template-columns: repeat(6,minmax(0,1fr)) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-app.lf-app.lf-app *, .lf-auth * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* One content spine for every community post type. */
+.lf-app.lf-app.lf-app .lf-social-timeline { --social-avatar: 48px; }
+.lf-app.lf-app.lf-app .lf-social-timeline :is(.lf-community-post-card,.lf-community-card) { display: grid !important; grid-template-columns: var(--social-avatar) minmax(0,1fr); column-gap: 12px !important; row-gap: 8px; align-items: start !important; padding: 18px 16px 10px !important; width: 100% !important; max-width: none !important; margin-inline: 0 !important; box-sizing: border-box; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-header { grid-column: 1 / -1; grid-row: 1; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-author { display: grid !important; grid-template-columns: var(--social-avatar) minmax(0,1fr); gap: 12px !important; width: 100%; text-align: start; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-kind { display: none !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-author > .lf-community-post-avatar { grid-column: 1; grid-row: 1; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-author > span:last-child { grid-column: 2; grid-row: 1; display: grid; gap: 3px; text-align: start; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-avatar { width: var(--social-avatar) !important; height: var(--social-avatar) !important; min-width: var(--social-avatar); font-size: 20px; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-card > span { grid-column: 1; grid-row: 1; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-card > span > img { width: var(--social-avatar) !important; height: var(--social-avatar) !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-card > span:has(> img) { position: static !important; inset: auto !important; width: var(--social-avatar) !important; height: var(--social-avatar) !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-review-body { grid-column: 2; grid-row: 1; width: 100%; min-width: 0; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-body { grid-column: 2; grid-row: 2; margin: 0 !important; padding: 0 !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-card > .lf-community-attachment { grid-column: 2; grid-row: 3; margin: 4px 0 0 !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-card > .lf-community-quote-attachment { grid-column: 2; grid-row: 3; margin: 4px 0 0 !important; min-width: 0; }
+.lf-app.lf-app.lf-app .lf-social-timeline :is(.lf-community-post-body,.lf-community-review-copy) { font-size: 16px !important; line-height: 1.65 !important; text-align: start; overflow-wrap: anywhere; }
+.lf-app.lf-app.lf-app .lf-social-timeline :is(.lf-community-post-author strong,.lf-community-author-row > span:first-child) { font-size: 14px !important; font-weight: 650 !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline :is(.lf-community-post-author small,.lf-community-author-row > span:not(:first-child)) { font-size: 12px !important; color: var(--ui-muted) !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-author-row { display: grid !important; grid-template-columns: max-content minmax(0,1fr); gap: 3px 4px !important; margin-bottom: 8px !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-author-row > span:first-child { grid-column: 1 / -1; grid-row: 1; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-author-row > span:not(:first-child) { grid-row: 2; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-review-body .lf-rating-display { gap: 3px !important; margin-block: 4px 8px; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-rating-star,
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-rating-star svg { width: 16px !important; height: 16px !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-work-card { min-height: 112px !important; padding: 10px !important; margin-block: 12px 4px !important; background: var(--ui-fill-soft) !important; border: 1px solid var(--ui-line) !important; border-radius: 8px !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-work-card > img { width: 64px !important; height: 92px !important; border-radius: 5px !important; object-fit: cover; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-work-card :is(strong,p:first-child) { font-size: 14px !important; line-height: 1.4 !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline :is(.lf-community-post-actions,.lf-community-action-row) { display: grid !important; grid-template-columns: repeat(5,minmax(0,1fr)) !important; gap: 0 !important; align-items: center; padding: 0 !important; margin: 8px 0 0 !important; background: transparent !important; border: 0 !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-actions { grid-column: 2; grid-row: 4; }
+.lf-app.lf-app.lf-app .lf-social-timeline :is(.lf-community-post-actions,.lf-community-action-row) > button { display: flex !important; align-items: center; justify-content: center; gap: 5px; min-height: 44px !important; min-width: 0 !important; width: 100% !important; padding: 0 !important; font-size: 12px !important; background: transparent !important; border: 0 !important; border-radius: 8px !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline :is(.lf-community-post-actions,.lf-community-action-row) svg { width: 21px !important; height: 21px !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-post-actions > button:last-child { grid-column: 5; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-comment-button { order: 0; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-like-button { order: 1; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-dislike-button { order: 2; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-save-button { order: 3; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-share-button { order: 4; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-attachment { width: 100%; padding: 12px !important; border-radius: 8px !important; border: 1px solid var(--ui-line) !important; background: var(--ui-fill-soft) !important; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-attachment header { gap: 5px; margin-bottom: 10px; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-attachment header strong { font-size: 14px; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-attachment-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-attachment-item { aspect-ratio: 2 / 3; min-width: 0; border-radius: 5px; }
+.lf-app.lf-app.lf-app .lf-social-timeline .lf-community-attachment-item img { width: 100%; height: 100%; object-fit: cover; }
+
+/* A compact, appearance-aware writing sheet. */
+.lf-app.lf-app.lf-app .lf-community-compose-sheet { inset: auto 0 auto; top: var(--composer-viewport-top,0px); height: var(--composer-viewport-height,100%); align-items: center !important; padding: 24px 16px !important; background: color-mix(in srgb,var(--ui-ink) 30%,transparent) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-sheet > section { width: min(100%,620px) !important; height: auto !important; max-height: 100%; border-radius: 18px !important; border: 1px solid var(--ui-line) !important; background: var(--ui-bg) !important; box-shadow: var(--ui-shadow) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-head { min-height: 68px !important; padding: 12px 16px !important; border-bottom: 1px solid var(--ui-line); background: var(--ui-bg); }
+.lf-app.lf-app.lf-app .lf-community-compose-close { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; color: var(--ui-muted); background: var(--ui-fill) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-submit { min-height: 40px; min-width: 64px; padding: 8px 18px; border-radius: 8px !important; }
+.lf-app.lf-app.lf-app .lf-community-composer-main { display: grid; grid-template-columns: 48px minmax(0,1fr) !important; gap: 12px; padding: 20px 16px !important; flex: 0 1 auto !important; min-height: 0; overflow-y: auto; }
+.lf-app.lf-app.lf-app .lf-community-composer-main > .lf-community-post-avatar { width: 48px !important; height: 48px !important; }
+.lf-app.lf-app.lf-app .lf-community-composer-identity { display: grid; gap: 3px; font-size: 14px; }
+.lf-app.lf-app.lf-app .lf-community-composer-identity small { font-size: 12px; color: var(--ui-muted); }
+.lf-app.lf-app.lf-app .lf-community-compose-audience { display: inline-flex; align-items: center; align-self: flex-start; gap: 5px; margin-top: 10px; font-size: 12px; color: var(--ui-action); }
+.lf-app.lf-app.lf-app .lf-community-compose-text { width: 100%; min-height: 150px !important; height: 180px; max-height: 30vh !important; flex: none !important; margin: 14px 0 0 !important; padding: 0 !important; font-size: 18px !important; line-height: 1.65 !important; background: transparent !important; color: var(--ui-ink) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-footer { display: grid; gap: 14px; padding: 14px 16px max(16px,env(safe-area-inset-bottom)) !important; background: var(--ui-fill-soft) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-tools { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px !important; width: 100%; }
+.lf-app.lf-app.lf-app .lf-community-compose-tools button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 100% !important; min-height: 64px !important; padding: 8px 4px !important; border: 1px solid var(--ui-line) !important; border-radius: 8px !important; background: var(--ui-bg) !important; color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-tools button span { display: block !important; font-size: 11px; text-align: center; line-height: 1.4; }
+.lf-app.lf-app.lf-app .lf-community-compose-length { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.lf-app.lf-app.lf-app .lf-community-compose-meter { appearance: none; width: 92px; height: 4px; border: 0; border-radius: 4px; overflow: hidden; background: var(--ui-line); accent-color: var(--ui-action); }
+.lf-community-compose-meter::-webkit-progress-bar { background: var(--ui-line); }
+.lf-community-compose-meter::-webkit-progress-value { background: var(--ui-action); }
+.lf-community-compose-meter::-moz-progress-bar { background: var(--ui-action); }
+.lf-app.lf-app.lf-app .lf-community-compose-count { font-size: 11px; color: var(--ui-muted); font-variant-numeric: tabular-nums; }
+
+.lf-app.lf-app.lf-app.is-pink .lf-type-badge { color: var(--ui-action) !important; background: var(--ui-selected) !important; border-color: var(--ui-line) !important; }
+.lf-app.lf-app.lf-app.is-pink .lf-profile-banner button { color: var(--ui-action) !important; background: var(--ui-fill-soft) !important; border-color: var(--ui-line) !important; }
+.lf-app.lf-app.lf-app.is-pink .lf-profile-banner:has(> img[src^="data:image/svg+xml"]) { background: var(--ui-selected) !important; }
+.lf-app.lf-app.lf-app.is-pink .lf-profile-banner:has(> img[src^="data:image/svg+xml"])::before { background: none !important; }
+.lf-app.lf-app.lf-app.is-pink :is(.lf-social-avatar,.lf-community-post-avatar,.lf-reader-avatar,.lf-profile-banner > div:last-child,.lf-community-card > span) img[src^="data:image/svg+xml"] { filter: grayscale(1) sepia(1) saturate(3) hue-rotate(285deg) !important; }
+.lf-app.lf-app.lf-app.is-pink .lf-profile-banner button svg { stroke: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app.is-pink .lf-profile-banner:has(> img[src^="data:image/svg+xml"]) > div:first-of-type { background: transparent !important; }
+.lf-app.lf-app.lf-app.is-pink :is(.lf-profile-rated-character,.lf-profile-preference-board,.lf-pref-board-icon,.lf-diary-entrypoint-icon,.lf-product-action-icon) { color: var(--ui-action) !important; }
+@media (max-width: 600px) {
+  .lf-app.lf-app.lf-app .lf-community-compose-sheet { align-items: flex-end !important; padding: max(16px,var(--nc-top)) 0 0 !important; }
+  .lf-app.lf-app.lf-app .lf-community-compose-sheet > section { border-radius: 18px 18px 0 0 !important; border-inline: 0 !important; border-bottom: 0 !important; }
+}
+@media (max-height: 560px) {
+  .lf-app.lf-app.lf-app .lf-community-compose-text { min-height: 90px !important; height: 110px; }
+  .lf-app.lf-app.lf-app .lf-community-compose-head { min-height: 56px !important; padding-block: 6px !important; }
+  .lf-app.lf-app.lf-app .lf-community-composer-main { padding-block: 12px !important; }
+  .lf-app.lf-app.lf-app .lf-community-compose-tools button { min-height: 44px !important; flex-direction: row; }
+}

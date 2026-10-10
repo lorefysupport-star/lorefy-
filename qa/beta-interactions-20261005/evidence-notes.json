@@ -1,0 +1,149 @@
+{
+  "notes": [
+    {
+      "name": "01-home",
+      "note": "Isolated local demo origin; initially empty feed."
+    },
+    {
+      "name": "02-composer",
+      "note": "Empty submit disabled; filled Arabic/English draft."
+    },
+    {
+      "name": "03-thread",
+      "note": "Local reply submitted; counters updated."
+    },
+    {
+      "name": "04-thread-reload",
+      "note": "After reload reply count resets to zero; inspect whether replies remain."
+    },
+    {
+      "name": "05-reader-search",
+      "note": "Reader search opens correctly; local demo no users."
+    },
+    {
+      "name": "06-discover",
+      "note": "8 genres; Manhua977 WebNovel3785; first recommended row duplicates popular row."
+    },
+    {
+      "name": "07-martin-search",
+      "note": "Arabic author query after search debounce."
+    },
+    {
+      "name": "08-work",
+      "note": "Hunter detail shows420 chapters; recommendation includes Hunter itself; completed badge must be verified against source."
+    },
+    {
+      "name": "09-review",
+      "note": "Rating keyboard increments and filled draft; no real account publication."
+    },
+    {
+      "name": "10-chapters-completed",
+      "note": "Compare completed work and chapter progress after review."
+    },
+    {
+      "name": "11-chapter-discussion",
+      "note": "Empty form validation; rating4 comment persisted locally in chapter."
+    },
+    {
+      "name": "12-feed-review",
+      "note": "Feed contains own text post and work review, not chapter discussion."
+    },
+    {
+      "name": "13-library-shelf",
+      "note": "One-item shelf;100%420 chapters after review."
+    },
+    {
+      "name": "14-library-filter-labels",
+      "note": "Search-no-result replaces all library filter labels with search hint; stable after returning known query."
+    },
+    {
+      "name": "15-profile-replies",
+      "note": "Profile replies empty despite two text-post replies in thread."
+    },
+    {
+      "name": "16-session-paused",
+      "note": "Session timer runs and pause state works."
+    },
+    {
+      "name": "17-list-editor",
+      "note": "List added work; raw color hex swatches; artwork rendered."
+    },
+    {
+      "name": "18-year-summary",
+      "note": "Current library separated from dated readLog; completed via review yields0 annual logged chapters."
+    },
+    {
+      "name": "19-import",
+      "note": "Pasted2titles:1matched,1unmatched; no false match."
+    },
+    {
+      "name": "20-import-library-restoring",
+      "note": "Initial imported-work restore has explicit loading status; not final failure."
+    },
+    {
+      "name": "21-import-wrong-edition",
+      "note": "PastingNaruto selected OpenLibraryComics2003, missing chapters instead of canonical manga; no choice before apply."
+    },
+    {
+      "name": "22-preferences-en-pink",
+      "note": "English locale but preference hub remains Arabic; pink fields."
+    },
+    {
+      "name": "23-character-picker",
+      "note": "ArabicKurapika query matches proper image duringEnglish; source loading status if not finished is excluded from readiness claim."
+    },
+    {
+      "name": "24-character-search-stable",
+      "note": "After loading completes query must be re-entered; then matchesKurapika."
+    },
+    {
+      "name": "25-profile-editor-en",
+      "note": "Editor systemlabels remainArabic inEnglish; image upload/native visibility nottested."
+    },
+    {
+      "name": "26-review-en-pink",
+      "note": "English entry and4.5 keyboard rating work; existing review not loaded into editor."
+    },
+    {
+      "name": "27-home-en-pink",
+      "note": "English review posted; local text post controls stillArabic; persistedreplycount0."
+    },
+    {
+      "name": "29-safety",
+      "note": "Safety center opened; no production reports, blocks or mutes submitted."
+    },
+    {
+      "name": "30-data-privacy",
+      "note": "Data/privacy opens; newly created local list is private by default. Export buttons present, file contents not validated."
+    },
+    {
+      "name": "31-corrections",
+      "note": "Correction center opens empty state, no actual correction submitted."
+    },
+    {
+      "name": "32-tablet-home",
+      "note": "768x1024 English Pink community layout sample."
+    },
+    {
+      "name": "33-desktop-home",
+      "note": "1280x900 desktop community layout sample."
+    },
+    {
+      "name": "34-desktop-stable",
+      "note": "1280x900 stable desktop after resize; reject initial 33 screenshot (resize transition)."
+    },
+    {
+      "name": "35-generated-share-preview",
+      "note": "Generated raster preview displayed. Actual native share/download not verified; listener did not observe download despite toast."
+    }
+  ],
+  "reviewCorrections": {
+    "05-reader-search": "Loading; not accepted as final result",
+    "10-chapters-completed": "Transient widget state; later reached 420/420",
+    "20-import-library-restoring": "Final screenshot shows two imported library items",
+    "25-profile-editor-en": "Partially untranslated controls; not entirely untranslated editor",
+    "27-home-en-pink": "Buttons translated after stabilization; relative timestamps remain Arabic",
+    "33-desktop-home": "Resize transition; replaced by 34-desktop-stable",
+    "28-character-export": "Not validated, excluded; use 35-generated-share-preview"
+  }
+}

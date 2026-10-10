@@ -1,0 +1,1015 @@
+
+> lorefy@1.0.0 test
+> node --test --test-concurrency=1 tests/*.test.js
+
+✔ live account deletion cannot succeed without a session (2.3796ms)
+✔ recent-auth rejection is actionable and preserves the account session (20.1014ms)
+✔ failed storage cleanup does not report successful deletion or sign out (0.9434ms)
+✔ concurrent deletion submits only one server request (3.1029ms)
+✔ username claims are atomic, normalized, and never rely on a client availability check (2.4937ms)
+✔ the deployed profile genres column is migrated to the canonical jsonb shape (1.1288ms)
+✔ cloud account state contains library, lists, character ratings, and review choices for a later production build (0.5909ms)
+✔ a newly authenticated account never adopts unowned local device state (2.1152ms)
+✔ sign-out clears every account-owned local storage namespace (0.7618ms)
+✔ sign-out and invalid-session cleanup clear locally retained diagnostics (0.1629ms)
+✔ owner profile and My Reviews only use reviews authored by the active account (2.7838ms)
+✔ home continuation requires active reading status and a real saved stop point (1.9387ms)
+✔ followers and following rows open the full public reader profile (1.1952ms)
+✔ public profile snapshots include the account's own reading summary (2.5035ms)
+✔ profile hydration does not replace a pending offline identity edit (1.5284ms)
+✔ profile response from the previous account cannot overwrite current identity (0.7302ms)
+✔ profile hydration preserves an edit made while the request is pending (0.5741ms)
+✔ profile media signing also checks the active account after awaiting (1.2152ms)
+✔ a stale push does not clear the next account journal or send its next batch (1.6752ms)
+✔ catalog expansion policy covers every section with 500 new works (1.9385ms)
+✔ candidate selection excludes bundled identities and duplicate editions (1.037ms)
+✔ legacy API additions remain available when promoted into the larger bundled catalog (10466.9727ms)
+✔ the canonical bundled catalog plus the lightweight API baseline stays above 21.9k series-level works (1545.8163ms)
+✔ app serves and consumes the paginated expansion endpoint lazily (0.8136ms)
+✔ three distinct palettes retain boolean compatibility and neutral dark actions (1.1939ms)
+✔ appearance normalizes persisted values without treating pink as dark (0.1096ms)
+✔ rating glyph is a feather and diary geometry cannot inherit a circular button (3.3324ms)
+✔ share ratings use the same feather library instead of a text star (0.4067ms)
+✔ overlays outside React inherit the selected appearance from the document (1.2524ms)
+✔ dark utility styling cannot make every accessible button circular (0.7693ms)
+✔ native Apple sign-in registers the one-time authorization code server-side (2.0727ms)
+✔ account deletion revokes the Apple grant before deleting the auth user (1.7694ms)
+✔ Apple native credential patch removes forced unwraps and is repeatable (4.3844ms)
+✔ configures a native iOS release shell (3.1463ms)
+✔ builds TestFlight from the complete Capacitor app instead of the Expo demo (5.5122ms)
+✔ native iPad orientations support multitasking while iPhone stays portrait (4.2394ms)
+✔ Expo iPad configuration matches the native device support (3.0227ms)
+✔ keeps every shipped web asset synchronized with the Xcode bundle (8300.7255ms)
+✔ prepares a native runtime config without exposing server secrets (8945.3208ms)
+✔ EAS receives the browser-safe auth configuration without the editable release file (1.2751ms)
+✔ uses the configured public API instead of a localhost-relative catalog path in native release (0.3614ms)
+✔ includes Apple privacy, deletion, and review artifacts (1.5614ms)
+✔ wires Apple privacy and mandatory Sign in with Apple (1.7247ms)
+✔ handles native Google OAuth through an app callback instead of localhost (0.2863ms)
+✔ routes the Apple button through the native Apple credential bridge (0.342ms)
+✔ native auth bridges replace provider internals with user-safe Arabic errors (0.3931ms)
+✔ reports only the remaining App Store release blockers (59.7047ms)
+✔ Arabic library expansion provides a substantial, searchable local catalog (13.93ms)
+✔ Arabic religious books are explicitly classified without relying on title matching alone (5.4063ms)
+✔ catalog quality pass removes synthetic five-star defaults before the app mounts (1.2869ms)
+✔ the Arabic library and quality pass load before catalog identity and the React app (0.5749ms)
+✔ library search and sorting are independent of catalog search (9.5981ms)
+✔ own reviews do not get a moderation menu (0.5838ms)
+✔ Togashi manga volumes are not western comics (5.5467ms)
+✔ onboarding inherits the selected appearance (0.9057ms)
+✔ followers dialog supports Escape and traps focus (0.3219ms)
+✔ growth dialogs share keyboard dismissal and return focus (1.3845ms)
+✔ Following empty state has a reader discovery action (0.9126ms)
+✔ preference work and character boards share the locale direction (0.4469ms)
+✔ legacy product surfaces resolve to the same adaptive theme tokens (1.057ms)
+✔ runtime catalog manifests are content-derived, not wall-clock-derived (0.3404ms)
+✔ browser zoom is not disabled (0.3369ms)
+✔ product dialogs support Escape and keep keyboard focus inside the dialog (0.9443ms)
+✔ the auth journey loads its own brand layer after the general app styles (1.3806ms)
+✔ onboarding choices use readable rows and touch-sized controls (2.2629ms)
+✔ demo accounts are restricted to an explicit local preview (4.0581ms)
+✔ local demo accounts require the explicit demo preview flag (2.0951ms)
+✔ email auth methods honor the disabled policy (1.3206ms)
+✔ production config cannot enable demo auth accidentally (0.8182ms)
+✔ temporary auth network failure never signs out or clears account data (1.2911ms)
+✔ native sign-in cannot use the web fallback before its provider bridge is ready (2.8511ms)
+✔ signed-out session checks do not repeatedly call the logout endpoint (1.2576ms)
+✔ concurrent session verification shares one remote request (16.3755ms)
+✔ Apple authorization survives reload in secure storage and is only sent by its owner (2.5055ms)
+✔ failed Apple authorization registration retains its secure retry record (1.3607ms)
+✔ Supabase requests abort at the deadline instead of leaving auth locked indefinitely (12.2637ms)
+✔ a revoked session is cleared instead of reused (1.4117ms)
+✔ saving an existing profile cannot change its chosen username (1.6847ms)
+✔ author identity recognizes surname-first without merging similar names (1.3406ms)
+✔ bibliography includes attributed coauthors and deduplicates work identity (0.1866ms)
+✔ generic missing-author metadata cannot become a fictional author page (0.1504ms)
+✔ bibliography uses the actual runtime auth field (0.1195ms)
+✔ author action can arrive after the detail toolbar has mounted (1.6682ms)
+✔ explicit records are never recommendation eligible even with high ratings (1.8425ms)
+✔ unknown content classification fails closed for automatic recommendations (0.3145ms)
+✔ religious scholarship is not inherently explicit (0.0965ms)
+✔ unrated records stay searchable but cannot be an automatic surprise (0.153ms)
+✔ importers retain the source content classification (1.3152ms)
+✔ recommendation, editorial and catalog rows apply eligibility before selecting (1.4619ms)
+✔ onboarding exposes minimum and remaining selections before continuing (1.0252ms)
+✔ imperative profile subtitles do not overwrite English on every observer pass (2.8177ms)
+✔ a failed identity-specific image lookup cannot fall back to name-only search (1.5253ms)
+✔ notification list suppresses own actions but preserves system and other-user events (1.1867ms)
+✔ library filter names remain their status names during a search (1.3182ms)
+✔ community reply counts are reconstructed from stored replies after reload (1.9012ms)
+✔ title imports prefer the primary manga record independent of catalog order (1.1024ms)
+✔ import title index refreshes when the catalog gains records (0.6897ms)
+✔ character loader keeps the live character search while the request finishes (0.665ms)
+✔ English system labels cover privacy, corrections and image positioning (1.9612ms)
+✔ import offers a review step before it changes the library (0.5398ms)
+✔ profile reply activity merges standalone community replies without duplicates (1.2249ms)
+✔ all standalone post types have ownership tools and a bookmark action (0.1625ms)
+✔ audited compact surfaces use stable dimensions and appearance tokens (0.6078ms)
+✔ editing a review restores the saved rating and optional fields without sharing references (1.1156ms)
+✔ related works exclude the current title across providers and duplicate suggestions (3.7644ms)
+✔ English preference labels and timestamps translate without changing a title (0.8881ms)
+✔ community mutations require a session and server-side ownership without opening table writes (0.6631ms)
+✔ replying to a reply retains the target instead of only inserting a mention (0.4016ms)
+✔ localization observes the shared screen including imperative overlays (0.1112ms)
+✔ English main surfaces follow a left-to-right layout (0.4646ms)
+✔ import and reading navigation system labels are localized (0.2734ms)
+✔ unsaving a post removes it from the open saved collection (0.2858ms)
+✔ opening a reply conversation dismisses the inbox that would cover it (0.1949ms)
+✔ saved-post tools dismiss their collection before opening an overlay (0.1422ms)
+✔ share artwork colors follow the appearance with readable badge text (0.9142ms)
+✔ annual recap numbers and goal captions respect English (12.4521ms)
+✔ favorite slots capture clicks before the legacy React editor (0.8197ms)
+✔ favorite editor refreshes when the deferred catalog becomes ready (0.2688ms)
+✔ share heading fits a long work title without cutting its name (0.9513ms)
+✔ partial catalog boot preserves library and progress for unloaded works (1.2167ms)
+✔ work selection persists immediately and swaps duplicates without losing a slot (0.7737ms)
+✔ character selection persists immediately before leaving the editor (0.7228ms)
+✔ top-character search ranks matching work titles ahead of author matches (0.9542ms)
+✔ favorite character searches normalize Arabic spelling and work author aliases (3.7522ms)
+✔ background enrichment does not query manga APIs for books or western comics (1.8995ms)
+✔ enrichment uses the data gateway and pauses after provider throttling (1.2473ms)
+✔ native image sharing sends the file without an internal capacitor URL (0.9812ms)
+[Lorefy] push: { message: 'temporary network error' }
+✔ review action identity survives translated labels (2.7414ms)
+✔ chapter toolbar finds review action without character enhancement (1.9209ms)
+✔ React dark palette matches the shared CSS surface tokens (1.6879ms)
+✔ cloud synchronization respects the deployed twenty-key patch limit (2.0715ms)
+✔ community reply submit remains busy while editing during a request (0.5409ms)
+✔ translation coverage includes imperative chapter and community controls (2.3914ms)
+✔ interface translations restore Arabic and preserve reader-authored content (0.288ms)
+✔ failed cloud batches retain unacknowledged local changes for retry (2.213ms)
+✔ English community filters retain their semantic identity (1.4201ms)
+✔ post publishing cannot be re-enabled by editing during the request (0.5683ms)
+✔ BookTok library ships a curated current-trends shelf with usable records (2.9631ms)
+✔ BookTok library loads before catalog identity and is included in the offline shell (1.942ms)
+✔ first paint has a Lorefy bootstrap surface while deferred bundles load (1.3279ms)
+✔ OAuth fails closed until a real Supabase project is configured (0.1897ms)
+✔ local unconfigured auth offers an explicit demo route instead of a dead provider (0.128ms)
+✔ the local auth fallback uses a fresh config asset version (0.2311ms)
+✔ an existing local demo session is preserved across reloads (0.1228ms)
+✔ local preview exposes providers while native releases require an account (0.1898ms)
+✔ an unauthenticated native user always lands on the welcome gate (0.1019ms)
+✔ local OAuth buttons have a UI-level direct demo fallback (0.1352ms)
+✔ the direct local preview seeds a complete demo identity before mounting the app (0.1839ms)
+✔ native OAuth completion reloads the authenticated app (0.177ms)
+✔ uses the feather logo for every shipped application icon (5.3249ms)
+✔ renders the new feather mark in the central Lorefy brand components (1.1575ms)
+✔ local tool caches are excluded from Git and cloud build uploads (1.6031ms)
+✔ cloud archives include the catalog inputs required by native preparation without reports or caches (1.2251ms)
+✔ MAL manga merge the paginated Kitsu cast when AniList is unavailable (9.913ms)
+✔ AniList-only works supplement short manga casts with the exact anime adaptation (2.5882ms)
+✔ Demon Slayer merges every paginated Fandom category character when tracker APIs are incomplete (7.1937ms)
+✔ Dr. Stone loads the complete work-scoped character category instead of a short tracker preview (4.0136ms)
+✔ a short tracker cast stays retryable when the work-scoped character source fails (1025.9494ms)
+✔ multi-word manga titles can discover an exact matching Fandom character category (1.9313ms)
+✔ single-word visual titles can discover a title-verified Fandom character category (1.4102ms)
+✔ a title-derived domain accepts a branded community name (1.1923ms)
+✔ all visual-work categories merge their exact work-scoped character community (3.7497ms)
+✔ work-scoped character communities include paginated descendant categories (2.4882ms)
+✔ a broad root character category does not fan out into unrelated taxonomy branches (4.2968ms)
+✔ an empty root prefers a complete gender partition over every taxonomy branch (4.2129ms)
+✔ visual character categories are not truncated at one thousand rows (15.0642ms)
+✔ comic communities prefer their comic-only character category over franchise-wide characters (1.9208ms)
+✔ character deduplication keeps artwork supplied by a later source (0.8905ms)
+✔ review recommendation buttons expose their selected state (1.2912ms)
+✔ profile boards use a supported Arabic or English display title (1.0494ms)
+✔ native full-screen routes apply the top safe area exactly once (0.8443ms)
+✔ dark preference headers preserve readable dark-mode contrast (0.363ms)
+✔ Kitsu character artwork is accepted by local and share-image allowlists (0.8015ms)
+✔ the Top 4 editor shows the complete roster for a selected work (1.1161ms)
+✔ top-list image actions await the native iOS share sheet (1.1632ms)
+✔ profile top-four works keeps a bounded picker and exactly four persisted ids (0.251ms)
+✔ profile favorite search limits remote covers and exposes incremental results (0.1749ms)
+✔ profile top-four works stop the legacy handler before opening the native editor (0.1622ms)
+✔ profile fixes use fresh browser and offline-cache asset versions (0.2953ms)
+✔ review share previews keep a visible cover fallback when remote media fails (1.3054ms)
+✔ best-four works use the native editor and persist without opening the React sheet (0.2563ms)
+✔ best-four editors are protected against duplicate overlays (0.2329ms)
+✔ favourite work ids survive a partial catalog boot until the full catalog is ingested (0.1331ms)
+✔ profile work lookup resolves records appended by progressive catalog loading (0.1735ms)
+✔ favourite state validation does not delete ids before progressive catalog loading completes (0.1879ms)
+✔ completed works contribute catalog totals without recording fictional progress (1.2498ms)
+✔ multiple representations of the same reading do not triple its time (0.1666ms)
+✔ completed books use pages; unknown totals preserve explicit progress (0.1911ms)
+✔ native photo picker returns JPEG files and cancellation preserves the old input (1.7553ms)
+✔ permission registration is single-flight and denied notifications remain disabled (1.2958ms)
+✔ custom character photos are account scoped and dark surfaces are neutral (0.9584ms)
+✔ author search tolerates initials and punctuation without matching unrelated authors (1.6778ms)
+✔ bulk taxonomy never relabels manga or serial fiction as western comics or novels (0.6628ms)
+✔ only work records with real author names, covers and conservative pre-AI publication evidence import (1.4297ms)
+✔ AI authorship filtering does not remove books about AI (0.1981ms)
+✔ declared AI and erotic classifications are rejected in remote catalog paths (0.7364ms)
+✔ dump parser rejects malformed records and editions (0.1414ms)
+✔ large browser catalogs never use an unbounded splice argument list (16.6787ms)
+✔ discovery excludes scripture editions and tarot, but keeps religious scholarship (2.1464ms)
+✔ catalog quality removes excluded discovery records before app ingest (1.61ms)
+✔ local Arabic collection includes Ibn Battuta and primary philosophy texts (12.9348ms)
+✔ new novel and book shards grow, and new comics have source covers (23.1252ms)
+✔ expanded books include substantial philosophy coverage (5.7511ms)
+✔ expanded books include works authored by major philosophers (5.9374ms)
+✔ search loads the full expanded novel and book shards by default (0.8334ms)
+✔ merges MAL and AniList records for Solo Leveling into one complete work (3.3587ms)
+✔ keeps genuinely different works with the same title separate (1.1696ms)
+✔ merges duplicate editions by matching cover or author and year (0.4094ms)
+✔ merges shared coauthors when one source omits publication year in either order (0.6385ms)
+✔ bounds same-title organization for hostile large groups (11.0397ms)
+✔ bounds colliding author-year candidates without changing their identity result (2151.6289ms)
+✔ rejects empty and numeric-only catalog titles (0.1712ms)
+✔ organizes all bundled catalog parts with no remaining duplicate identities (3304.9434ms)
+✔ browser bootstrap organizes loaded catalog parts before the app mounts (3.9055ms)
+✔ every catalog entrypoint organizes records before refreshing the interface (0.979ms)
+✔ private drafts, profile fields, chapter numbers and character search never reach catalog APIs (1.6749ms)
+✔ catalog search still runs, and clearing or removing the field cancels queued requests (1.8525ms)
+✔ navigation cancels a pending catalog query (0.7572ms)
+✔ estimated Open Library popularity and rating do not masquerade as reader activity (1.771ms)
+✔ templated Arabic Open Library descriptions are removed instead of claiming a false format (0.8544ms)
+✔ Open Library source ratings stay intact without invented engagement counts (1.364ms)
+✔ Open Library results without a source rating do not invent scores or reader counts (3.1984ms)
+✔ editorial choice skips estimated entries when a sourced work is available (0.9949ms)
+✔ comics search keeps different works with the same title separate (4.1115ms)
+✔ comics search groups actual duplicate editions while preserving alternate choices (0.2779ms)
+✔ bundled expansion can be loaded from a local type shard without a catalog gateway (2.8986ms)
+✔ normalizes Arabic and English route types (1.286ms)
+✔ detail routes load the exact catalog part first (0.6099ms)
+✔ browse routes load only one useful part at startup (0.1341ms)
+✔ remaining plan excludes parts already loaded and preserves order (0.1251ms)
+✔ full catalog plan restores every bundled part after the first useful paint (0.1457ms)
+✔ interaction-window helper preserves its standalone timing contract (0.1065ms)
+✔ the full catalog is imported as one paced background batch (0.6258ms)
+✔ route updates only hydrate an explicitly requested work part (0.3439ms)
+✔ worker-safe catalog extraction reads only the bundled records payload (0.2588ms)
+✔ worker records always retain the search fields required by the app (0.256ms)
+✔ the catalog worker canonicalizes records before returning them to the UI thread (0.4839ms)
+✔ background canonicalization reloads every part so it cannot discard the route bootstrap part (0.3267ms)
+✔ catalog ingest is cooperative once the React app has mounted (1.3287ms)
+✔ featured work selection is safe when catalog loading fails (0.2285ms)
+✔ offline shell precaches the first useful catalog part (1.0404ms)
+✔ the complete application bundle parses after performance transformations (6.5112ms)
+✔ bounded top ranking matches full sort without rescoring comparisons (3.3399ms)
+✔ full search ordering scores each record once and preserves tied source order (4.7899ms)
+✔ recommendation cache includes library statuses, not just work IDs (4.0522ms)
+✔ precomputed taste features avoid repeated text analysis during ranking (2.0579ms)
+✔ discovery uses only the active account reviews and immutable account ID (1.1977ms)
+✔ different reader tastes produce different recommendations and exclude already-read works (2.5923ms)
+✔ compact catalog keeps authors, identities and complete genre metadata (6.144ms)
+✔ detail cards preserve available source scores without requiring absent ones (3.003ms)
+✔ worker loads lightweight cards and full descriptions hydrate on detail navigation (0.8667ms)
+✔ content eligibility refreshes after adult, AI or title metadata changes (0.4388ms)
+✔ background search indexes retain punctuation, Arabic aliases and changed author metadata (0.5094ms)
+✔ MangaDex imports do not manufacture ratings or engagement (2.7249ms)
+✔ legacy MangaDex records are cleaned without modifying personal progress (1.0813ms)
+✔ unattributed web novel scores and counters are not displayed as sourced ratings (0.816ms)
+✔ expanded works use the existing search results, not a second home browser (2.2195ms)
+✔ a search result keeps its exact expanded work available after detail reload (1.5428ms)
+✔ adding a search result to a list does not replace the cached detail work (1.3088ms)
+✔ search accepts unindexed records and rejects invalid records without throwing (1.3236ms)
+✔ Arabic search handles diacritics and alef variants (0.1618ms)
+✔ search includes alternate titles and author names before indexing completes (0.7578ms)
+✔ Arabic readers see the original source instead of an invented translation (0.8319ms)
+✔ real Arabic synopsis is preferred and missing plot remains missing (0.3396ms)
+✔ catalog placeholders are not presented as plot summaries (0.1243ms)
+✔ search cache follows record edits, including aliases (1.1429ms)
+✔ generic generated Arabic plots cannot replace an actual source (0.1835ms)
+✔ bibliographic boilerplate is not a plot in either language (0.1179ms)
+✔ Arabic author search accepts transliteration, reversed names and tatweel (0.3695ms)
+✔ character poster headings keep the work name on its own line (2.0745ms)
+✔ an incomplete cast stops reporting loading after the final retry (0.7411ms)
+✔ work display titles prefer English over native script and Arabic aliases (0.7946ms)
+✔ saved character-list titles resolve from the current work without changing rankings (0.6946ms)
+✔ uses verified chapter totals and never invents a count (0.9071ms)
+✔ chapter ranges are bounded and jumping picks the containing group (0.6457ms)
+✔ chapter review replaces its own slot and preserves other chapters and works (0.2015ms)
+✔ unknown totals show only chapters the reader has actually saved (0.1509ms)
+✔ verified chapter indexes render only sourced numbers in the current range (0.2537ms)
+✔ the chapter page loads missing catalogs and offers retry without clearing saved reviews (0.6039ms)
+✔ return shortcut targets the most recently saved valid chapter (0.1659ms)
+✔ direct chapter jump is an accessible secondary control (1.109ms)
+✔ detail action bar accepts a review action that mounts after its first render (1.0549ms)
+✔ Hunter x Hunter has a verified chapter source and an official offline baseline (1.5058ms)
+✔ the official offline baseline initializes shared progress metadata before the app mounts (1.3908ms)
+✔ Hunterpedia fields retain the English title, real cover, volume and first publication date (0.9516ms)
+✔ ongoing chapter catalogs traverse every API page and exclude extras and other series (1.3643ms)
+✔ missing chapter totals can use the exact MAL identity without inventing ongoing totals (0.6693ms)
+✔ failed catalogs never turn partial pages into a complete list and can be retried (0.7255ms)
+✔ indented chapter infobox fields and release date aliases are supported (0.3264ms)
+✔ Kingdom accepts its verified historical image namespace and a final inline infobox field (0.3226ms)
+✔ One-Punch Man includes the online manga chapters but not the different webcomic (0.5874ms)
+✔ wiki metadata is limited to verified work identities (0.7533ms)
+✔ chapter infoboxes using singular page still supply the page count (0.2422ms)
+✔ wiki query requests only the visible chapter range (0.2497ms)
+✔ extracts real chapter title, cover, volume, and date while rejecting unrelated images (0.4007ms)
+✔ malformed wiki fields do not become chapter titles or clickable images (0.3578ms)
+✔ wiki release dates are rendered in Arabic without changing the sourced day (13.7396ms)
+✔ chapter metadata enriches the work page and ships in the offline shell (0.7543ms)
+✔ chapter preview addition is local to the chapter and reports success beside the button (3.1112ms)
+✔ live chapter publishing accepts comment-only input and refreshes its discussion, not the feed (0.8791ms)
+✔ failed publishing keeps the comment, exposes the error inline, and allows retry (0.7978ms)
+✔ chapter forms do not invoke community publishing (0.1827ms)
+✔ duplicate taps submit once while the request is pending (0.7425ms)
+✔ empty input reports inline without a server request (0.6866ms)
+✔ private save never adds a comment to the public or preview discussion (1.3994ms)
+✔ reading checkpoint preserves other works and progress fields (1.2371ms)
+✔ all available chapters of an ongoing work do not imply completion (0.1301ms)
+✔ finished work becomes completed only at the verified final chapter (0.0866ms)
+✔ moving a completed work checkpoint back restores Reading status (0.0941ms)
+✔ checkpoint rejects invalid counts rather than inventing read totals (0.6896ms)
+✔ next chapter is bounded and completed progress has no next chapter (0.1262ms)
+✔ completed legacy work with no checkpoint is shown as fully read (0.0772ms)
+✔ failed library write restores the progress and keeps unrelated state (0.4429ms)
+✔ verified ongoing publisher status overrides stale completed catalog status (0.2699ms)
+✔ quick action label follows the latest React library status (1.22ms)
+✔ shared character images use the public image gateway before the direct URL (3.4439ms)
+✔ old top lists recover missing portraits from the loaded cast (1.6946ms)
+✔ native sharing uses the configured media gateway without depending on the auth client (1.0231ms)
+✔ the exported top-ten poster draws all available character portraits (4.2724ms)
+✔ local preview config exposes the same public gateway as the release manifest (1.0779ms)
+✔ a failed portrait prevents exporting a misleading placeholder poster (1.6677ms)
+✔ browser fallback downloads the image instead of sharing only a URL (1.0866ms)
+✔ cinematic library UI is registered after the Apple UI layer (0.9923ms)
+✔ cinematic UI defines the dark shelves, circular icons, and floating dock (1.3529ms)
+✔ comic issues group by run while unrelated same-title works keep separate identities (4.6034ms)
+✔ the background catalog worker uses the current identity implementation (0.6912ms)
+✔ comic search keeps different Batman runs separate despite matching titles (2.2935ms)
+✔ Open Library edition count is metadata, not a comic volume count (4.0883ms)
+✔ reading totals infer completed works and preserve explicit partial progress (1.2498ms)
+✔ legacy auto-completed progress is removed without touching real partial progress (0.7308ms)
+✔ legacy progress migration waits for unloaded completed works (2.2006ms)
+✔ the app does not synthesize completed progress from catalog totals (1.2987ms)
+✔ Mahfouz prose translations are not comics because of one generic subject tag (6.5755ms)
+✔ comic taxonomy separates Marvel, DC, and other comics without discarding graphic novels (2.4647ms)
+✔ comic taxonomy only reclassifies explicit non-comic material (1.0426ms)
+✔ Open Library manga creators and original prose are not filed as comics (1.8538ms)
+✔ comic histories and criticism are reference books, not comic stories (1.0863ms)
+✔ comic taxonomy removes original classic prose while retaining later graphic adaptations (1.3261ms)
+✔ the comics remote catalog excludes MangaDex, which is reserved for manga formats (0.5206ms)
+✔ persisted MangaDex rows are moved out of Comics when the catalog is normalized (0.7873ms)
+✔ short bundled comic rosters are seeds and are enriched with the verified remote cast (8.8965ms)
+✔ a short comic catalog cast remains available when remote enrichment fails (2.9662ms)
+✔ an incomplete cached comic roster is retried instead of becoming permanently final (2.9438ms)
+✔ comic catalog portrait hydration retries one transient Wikipedia failure (254.4255ms)
+✔ DC comic catalog portraits use the DC wiki before Wikipedia (2.0015ms)
+✔ DC comic portraits search the scoped wiki when the exact page title has no image (2.5594ms)
+✔ unmapped comics use a comic-specific verified title fallback (1.6143ms)
+✔ comic character sections prefer definition entries over incidental links (1.9023ms)
+✔ comic cast deduplication joins civilian aliases and legacy numeral variants (1.1974ms)
+✔ comic fallback follows a dedicated character-list page and merges its character headings (2.43ms)
+✔ comic fallback excludes publishers and real-world credits from a character section (2.1554ms)
+✔ comic fallback refuses a generic character-search page without an explicit character section (1.6566ms)
+✔ comic taxonomy and catalog load before character routes and the app (0.4205ms)
+✔ the Batman universe ships a broad local roster before any remote enrichment (1.2581ms)
+✔ Comics and expanded works stay in the existing search page (1.9457ms)
+✔ community publishing is server-owned and bounded (10.2886ms)
+✔ native Google OAuth uses PKCE code exchange without fragment token installation (0.7454ms)
+✔ account deletion handles CORS and recursively empties every private media bucket (1.0663ms)
+✔ community actions have stable identities and share one interaction model (2.8531ms)
+✔ community review share reads the rendered review rating including partial stars (2.0569ms)
+✔ community review share resolves and preserves the real profile avatar (1.5191ms)
+✔ community profiles and feeds are driven by shared cloud state (3.2242ms)
+✔ public reader profiles expose the same social and favorite details as the full profile (3.4047ms)
+✔ review comments support replies to comments and replies (2.6593ms)
+✔ community and public profile pages are constrained to the iOS viewport (0.7206ms)
+✔ review author navigation keeps the canonical profile UUID (1.0336ms)
+✔ identity and review uniqueness are enforced by the database (2.4218ms)
+✔ the attachment picker sits above the post composer (1.3013ms)
+✔ community publishing uses plain, accurate Arabic labels (0.6532ms)
+✔ community selects its filter row instead of the home reply shelf (0.5419ms)
+✔ scroll memory keeps separate positions for tabs and works (1.0836ms)
+✔ a removed screen cannot overwrite its saved scroll position (0.7346ms)
+✔ community supports standalone text, list, and top posts with replies (2.156ms)
+✔ saved non-spoiler quotes can be attached to ordinary community posts (2.2488ms)
+✔ community post database contract is private by default and realtime enabled (1.2623ms)
+✔ community UI is loaded and constrained across narrow mobile widths (1.6964ms)
+✔ community floating controls stay inside the app shell and composer stays focused on writing (1.2161ms)
+✔ shared lists and tops use the existing image share studio (0.804ms)
+✔ community feed distinguishes text, list, and top posts without generic nested cards (1.7516ms)
+✔ community posts and replies expose exclusive like and dislike actions (0.8029ms)
+✔ demo reactions survive periodic feed refreshes for seeded posts (0.4271ms)
+✔ profile integration exposes the reader posts entry between reviews and completed (0.7347ms)
+✔ community realtime subscription includes standalone posts and reactions (0.6575ms)
+✔ community social feed follows the selected accessible tab (1.1986ms)
+✔ community interactive controls meet the 44px mobile touch target (0.5379ms)
+✔ community thread fills its app host instead of the outer preview viewport (0.6401ms)
+✔ post types use the same avatar and content-column geometry (1.2395ms)
+✔ composer is a compact themed sheet with an accessible character meter (0.4829ms)
+✔ pink surface and supplementary accents are pink, not inherited teal and white (1.2301ms)
+✔ pink default profile art and type badges use appearance tokens (0.6548ms)
+✔ closing the composer keeps account-scoped drafts and releases viewport listeners (2.2396ms)
+✔ successful publishing clears only the current readers draft (1.1031ms)
+✔ composer placeholders follow the English interface language (1.6673ms)
+✔ completed progress shown in detail agrees with calculated totals (1.9319ms)
+✔ in-progress work keeps the actual stopping point and notes (0.2173ms)
+✔ verified RanobeDB covers display and use the native gateway without allowing lookalike hosts (5.5577ms)
+✔ an inactive rights filter does not bypass the image gateway (0.9618ms)
+✔ static local demo displays allowed source covers without a missing media endpoint (0.9506ms)
+✔ local demo routes MangaDex volumes through the referrer-free media gateway (2.362ms)
+✔ the local data gateway uses the implemented media route (1.124ms)
+✔ MAL works keep their exact source but also try a title-verified volume provider (2.6176ms)
+✔ Google Books paginates the exact series volume covers beyond its first forty results (3.7151ms)
+✔ MangaDex retries verified alternate work titles when the primary title has no result (3.0329ms)
+✔ MangaDex prefers the exact canonical work and loads every cover page (4.1477ms)
+✔ browser cover requests use the same-origin catalog proxy for MangaDex metadata (1.5772ms)
+✔ cover alternatives retain catalog alternates before remote retrieval (1.7661ms)
+✔ page URLs are excluded from cover sources and image URLs use the validated media proxy (1.3259ms)
+✔ Capacitor iOS keeps remote cover URLs instead of routing them to the unavailable localhost proxy (0.8058ms)
+✔ Open Library work ids use exact editions and never title-search another work (1.0614ms)
+✔ Open Library comics use only exact-work editions instead of broad manga and book searches (1.2551ms)
+✔ cover title matching rejects a different work with overlapping metadata (1.9516ms)
+✔ cleanup identifies only known preview identities and fixture records (0.9197ms)
+✔ cleanup removes fake posts, their replies and reactions without touching real data (1.2164ms)
+✔ pending sync and its base cannot restore deleted preview reviews (0.294ms)
+✔ production loads cleanup before boot and ships no generated reader directory (2.3622ms)
+✔ shared palettes preserve the app contract and readable text in both themes (1.9519ms)
+✔ authoritative stylesheet and palette load after legacy styles and before rendering (2.4846ms)
+✔ shared UI covers all primary surfaces, safe areas, keyboard focus and motion (0.8729ms)
+✔ visible subtitles do not reintroduce Asian-script or duplicate catalog names (0.2479ms)
+✔ home reply activity never inserts above navigation chrome or into community (1.8075ms)
+✔ async replies hydrate their icons after being attached to the document (0.6195ms)
+✔ home renders community without the former catalog switch (1.9095ms)
+✔ community has exactly two explicit audience tabs (2.1723ms)
+✔ explore owns the former home catalog and discovery categories (1.5887ms)
+✔ social feed interleaves reviews and posts without moving React nodes (1.4933ms)
+✔ returning to home retains the React-selected audience (1.5911ms)
+✔ owner delete action cannot be mistaken for the review interaction row (1.236ms)
+✔ each audience has its own scroll memory key (1.089ms)
+✔ timeline orders a newer review before a post without relocating either node (1.0933ms)
+✔ Following excludes strangers and replies, while For You keeps public top-level posts (2.3189ms)
+✔ community enhancement does not loop on its own text updates (1.1526ms)
+✔ growth maintenance ignores text-only mutations and avoids redundant reaction writes (1.6438ms)
+✔ remote artwork has a visible local fallback and bounded failure path (0.6897ms)
+✔ native image and sharing paths bypass the browser-only localhost media proxy (0.2327ms)
+✔ top-list export keeps every character label paired with its own image (2.0808ms)
+✔ library view accepts only grid and shelf modes (0.6213ms)
+✔ library shelf mode updates the layout and both button states (0.2326ms)
+✔ library shelf presents full-width readable rows instead of miniature covers (1.1358ms)
+✔ completed works do not claim the reader still needs to save a stopping point (0.1244ms)
+✔ browser character requests use the same-origin AniList proxy when configured (6.1149ms)
+✔ AniList retries a rate-limit error returned inside a GraphQL success response (1406.3412ms)
+✔ MAL works merge a bundled preview with every completed remote page (4.7353ms)
+✔ a current 25-row complete cache cannot suppress a fresh full cast request (3.2845ms)
+✔ a work-scoped verified short cast remains complete without a numeric threshold (1.2901ms)
+✔ old complete caches refresh when AniList was not part of verification (1.0325ms)
+✔ a current 25-row comic cache cannot suppress a roster refresh (2.154ms)
+✔ MAL fallback walks every AniList character page when Jikan is unavailable (610.3298ms)
+✔ AniList follows the latest pageInfo instead of a stale first-page total (1218.8561ms)
+✔ an empty continuation page is not treated as a complete cast (612.6461ms)
+✔ wrong AniList MAL mappings are rejected before title-verified pagination (617.5028ms)
+✔ AniList title fallback rejects a spin-off whose title only contains the requested work (1.3259ms)
+✔ AniList title fallback preserves Japanese titles when rejecting a spin-off (1.1026ms)
+✔ large bundled MAL casts are still checked against remote pagination (2.8169ms)
+✔ literary catalog casts hydrate missing images from a work-scoped source (1.5849ms)
+✔ literary image options never fall back to an unrelated Jikan name search (1.3234ms)
+✔ comic image options use the character gallery and reject people and cosplay results (267.9114ms)
+✔ DC image options prefer the canonical Prime Earth gallery over side-universe search results (1.8448ms)
+✔ literary remote casts keep a broad work-scoped list and batch image hydration (6.0631ms)
+✔ literary image hydration follows Wikipedia redirects and normalized titles (1.2759ms)
+✔ literary image hydration matches accented names to normalized Wikipedia titles (1.8742ms)
+✔ literary image hydration uses character-scoped Wikidata portraits when Wikipedia has no thumbnail (1.1899ms)
+✔ Fandom literary casts use the same work-scoped image hydration (1.6023ms)
+✔ Fandom cast tables keep character rows and discard actors or locations (2.2926ms)
+✔ literary works can fall back to a dedicated Wikipedia character page (2.3384ms)
+✔ the browser loads the image-scoped character system after the catalog (0.6772ms)
+✔ chapter editor and favorite messages translate as complete phrases (0.7067ms)
+✔ legacy dictionary cannot turn unknown phrases into hybrid system copy (0.6071ms)
+✔ monitoring redacts query strings and common secrets (1.0796ms)
+✔ monitoring redacts structured credentials and account identifiers (0.1537ms)
+✔ monitoring keeps only the newest bounded events (0.5926ms)
+✔ Google waits for native callback listener registration before opening the provider (42.8756ms)
+✔ Google OAuth resolves when the app callback arrives before Browser.open returns (15.4557ms)
+✔ Google OAuth exchanges a returned authorization code only once (64.8288ms)
+✔ Google OAuth reloads the native WebView after session exchange (1.751ms)
+✔ Google OAuth completes without waiting for redundant post-login synchronization (0.9126ms)
+✔ Google OAuth cancellation clears the pending flow so the user can retry (2044.7111ms)
+✔ browser dismissal during Google code exchange does not cancel a successful login (16.4479ms)
+✔ Google browser dismissal before appUrlOpen preserves the native handoff (49.2163ms)
+[Lorefy] Apple authorization retention failed; keeping the authenticated session: Error: Keychain queue temporarily unavailable
+    at Object.queueAppleAuthorization (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\native-auth-flow.test.js:245:50)
+    at Object.nativeAppleSignIn [as signInWithApple] (evalmachine.<anonymous>:79:22)
+    at async TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\native-auth-flow.test.js:272:18)
+    at async Test.run (node:internal/test_runner/test:1313:7)
+    at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+✔ Apple keeps a valid Supabase session when authorization-code storage is temporarily unavailable (16.0298ms)
+✔ native Google never falls back to browser OAuth while the client is unavailable (1.4117ms)
+✔ a cold-launch Google callback waits for the Supabase client instead of dropping the login (161.0682ms)
+[Lorefy] Apple did not return an authorization code; keeping the authenticated session.
+WebCrypto API is not supported. Code challenge method will default to use plain instead of sha256.
+✔ Apple does not wait for cloud hydration after storing a valid native session (16.3601ms)
+✔ Apple can sign in from a native WebView without crypto.subtle (2.1433ms)
+✔ shipped SDK uses native S256 without WebCrypto and restores Google and Apple from Keychain (12.7006ms)
+✔ the native hash plugin is registered in the active iOS controller and uses system CryptoKit (3.019ms)
+✔ native links accept Lorefy routes and reject foreign origins (3.1818ms)
+✔ iOS push registration and custom-scheme links are wired into the native shell (3.6665ms)
+✔ notification backend is owner scoped and exposed through narrow RPCs (1.5664ms)
+✔ native runtime is loaded in the app and cached for release (1.3711ms)
+✔ push dispatch is server-only and sends APNs alert payloads (0.7791ms)
+✔ notification database dispatch keeps its webhook secret inside Vault (0.67ms)
+✔ native png photo keeps matching extension and MIME (1.3595ms)
+✔ native jpeg photo keeps matching extension and MIME (0.5574ms)
+✔ native webp photo keeps matching extension and MIME (0.5101ms)
+✔ unsupported native photo format is not disguised as JPEG (1.173ms)
+✔ onboarding shows Arabic or English names, never Japanese catalog metadata (1.2154ms)
+✔ onboarding omits untranslated works but retains native names as search terms (0.1666ms)
+✔ real AniList records have readable onboarding titles (23.4664ms)
+✔ work preference search filters the full category before paging (1.7464ms)
+✔ search is nested inside discovery rather than a duplicate navigation destination (0.2795ms)
+✔ Arabic title aliases are available to every catalog picker (2.3286ms)
+✔ preference character picker includes bundled cast beyond the short curated list (0.9047ms)
+✔ loading a selected work adds its full remote cast to the category picker (0.981ms)
+✔ cast search matches aliases rather than only the first display name (1.2098ms)
+✔ comic preference portraits never query an anime character provider (0.7068ms)
+✔ fallback portraits reject a different character returned by fuzzy search (1.2587ms)
+✔ local preview explicitly unlocks Premium features (0.9831ms)
+✔ Premium preview state is applied before the app starts (0.5283ms)
+✔ billing is explicitly unconfigured until server entitlements exist (0.3262ms)
+✔ advanced statistics screen is available in the Premium module (0.8718ms)
+✔ rating sort uses vote confidence instead of a raw five-star average (1.7516ms)
+✔ library resolves saved work parts and derives every tab count from visible records (1.978ms)
+✔ search exposes catalog indexing state instead of presenting a partial count as final (1.132ms)
+✔ large character catalogs are loaded only when a character surface needs them (0.9844ms)
+✔ community and profile controls expose descriptive accessible names and full touch targets (3.0599ms)
+✔ adaptive tablet layout targets the actual home screen and uses the wider canvas (0.8599ms)
+✔ reports require a target and a supported reason (1.9083ms)
+✔ blocked and muted readers are filtered from community content (0.6957ms)
+✔ data corrections are queued without mutating the catalog record (0.2025ms)
+✔ list visibility defaults to private and can be changed explicitly (0.7506ms)
+✔ recommendation feedback hides rejected works but keeps liked works (0.2828ms)
+✔ portable export excludes sessions and premium state (0.3675ms)
+✔ canonical keys merge volume and edition labels without merging different titles (0.4755ms)
+✔ visitor profile renders the full identity, reading metrics, and both favorite shelves (3.6709ms)
+✔ visitor profile separates quiet connection counts from the primary follow action (1.0747ms)
+✔ primary follow action keeps small white text at WCAG AA contrast (1.0018ms)
+✔ profile social controls use smooth borderless surfaces instead of framed controls (0.9045ms)
+✔ visitor profile puts posts between reviews and completed and opens the post feed (1.7343ms)
+✔ visitor top characters are buttons that open their linked work (1.4805ms)
+✔ visitor library exposes a dedicated view-all control and a compact preview (1.0234ms)
+✔ an empty visitor profile still has both shelves without editable plus buttons (0.8792ms)
+✔ owner artwork wins over stale character snapshots and viewer artwork (0.999ms)
+✔ a reader without overrides gets the source cover, not the viewers custom cover (0.9824ms)
+✔ verified web originals stay distinct from print light novels without duplicating either format (1.7904ms)
+✔ RanobeDB rejects adult tags, post-2021 publications, unsafe covers and missing authors (0.3452ms)
+✔ COPY escape decoding preserves literal backslashes, tabs, nulls and line breaks (0.2066ms)
+✔ only an explicit checkpoint increase contributes reading history (0.5981ms)
+✔ saved progress remains countable while catalog metadata is unavailable (0.383ms)
+✔ rendering metrics and removing a library item never rewrite historical reading (2.2987ms)
+✔ records genuine library and progress transitions without backdating (1.2645ms)
+✔ ignores non-reading lists, decreases, unchanged data and removed works (0.1254ms)
+✔ bounds and deduplicates stored events (0.9628ms)
+✔ spoiler notes stay hidden until the matching reading position is reached (0.2118ms)
+✔ unanchored spoilers never auto-reveal and shares omit spoiler text by default (0.2505ms)
+✔ note identity allows multiple annotations at the same reading position (0.1513ms)
+✔ quote drafts require a short passage and a valid reading position (0.2303ms)
+✔ quote sharing keeps attribution and does not leak spoiler content (0.1904ms)
+✔ community quote attachments preserve the source and reject spoilers (0.2238ms)
+✔ reading sessions count only active time across pauses and resume (0.2835ms)
+✔ reading sessions reject invalid state and cap abandoned timers (0.1023ms)
+✔ session totals ignore malformed entries and other works (0.2015ms)
+✔ reading-session controls persist their active state and completed events (1.1599ms)
+✔ active session belongs to the account and has responsive accessible styling (1.1486ms)
+✔ profile characters follow favorite works while the diary stays below community activity (1.9393ms)
+✔ legacy Paused stays valid while Dropped is a separate persisted status (2.0825ms)
+✔ library and profile expose separate Dropped filters (2.8242ms)
+✔ dropped works are a negative taste signal rather than a positive fallback (0.9082ms)
+✔ imported Dropped and Paused lists retain separate meanings (2.1842ms)
+✔ zero-reading weeks have zero-height bars (1.6825ms)
+✔ annual target is explicitly saved, never inferred from completed chapters (0.325ms)
+✔ release legal pages describe the live account and moderation flows (2.8479ms)
+✔ the iOS bundle and public Edge Function include every release page (0.886ms)
+✔ App Store review documentation covers privacy, moderation, and source rights (1.81ms)
+✔ catalog and saved character selections expose Arabic or Latin titles only (2.433ms)
+✖ shelf shares render only selected items while work reviews remain a single card (3.4203ms)
+✔ adaptive layouts retain their intended scale without disabling browser zoom (0.4459ms)
+✔ unsynced account edits are journaled before a later cloud pull can replace local storage (0.5543ms)
+✔ the service worker updates the audited share and persistence modules (0.863ms)
+✔ cloud state includes the reader collections and character ranking state (1.2999ms)
+✔ character ratings refresh their old preview cache and render more than 25 rows initially (1.6624ms)
+✔ cover alternatives are normalized before the picker renders them (1.9785ms)
+✔ native sharing writes a real image file before opening the system share sheet (0.5915ms)
+✔ the public media proxy permits the trusted Open Library archive redirect (1.6088ms)
+✔ community reactions persist remotely and use semantic action mapping (1.5962ms)
+✔ native layout reserves variable safe areas for headers and bottom controls (1.1623ms)
+✔ native shell follows every modern iPhone and iPad viewport (1.2381ms)
+✔ review publishing upserts a reader work review rather than exposing the unique constraint (0.7976ms)
+✔ all runtime AniList requests use the shared Supabase catalog proxy (3.5696ms)
+✔ character boards and review Top 4 are included in the authenticated cloud sync (0.579ms)
+✔ the shipped native configuration exposes the public catalog proxy (1.0819ms)
+✔ iPhone builds are portrait-only while keeping exported share images available in Files (4.7607ms)
+✔ share exports unwrap proxied covers and regenerate the image from its latest sources (0.4299ms)
+✔ MAL works use verified multi-source cover alternatives through the proxy (0.3223ms)
+✔ preference boards reserve the device safe area before their headers (0.6777ms)
+✔ the public gateway bounds provider paths instead of proxying arbitrary URLs (0.8657ms)
+✔ the native character cache trusts provider pagination instead of a row threshold (1.5241ms)
+✔ a quick review requires only a valid overall rating (1.6977ms)
+✔ rating interaction retains half steps and detailed scores stay optional (1.2885ms)
+✔ the editor has explicit Arabic and English copy without DOM text translation (0.8238ms)
+✔ the app directly mounts the focused editor and does not erase a manual rating on partial details (1.3683ms)
+✔ the new editor is included in the runtime, with fixed footer and theme tokens (1.1684ms)
+✔ publishing is guarded against duplicate taps and retains the draft on failure (1.4479ms)
+✔ writing updates the existing draft refs and preserves English text (1.5134ms)
+✔ rating uses a labelled native slider with visible half-step values (0.8974ms)
+✔ work identity is a compact poster-and-title layout with one metadata line (0.9128ms)
+✔ work sections navigate to actual chapters and reader reviews rather than duplicating data (0.3152ms)
+✔ optional character slots localize generated labels without changing character names (2.0439ms)
+✔ native beta releases retain verified HTTPS catalog artwork by default (1.6505ms)
+✔ the generated iOS runtime keeps catalog artwork enabled (1.8882ms)
+✔ web previews retain their remote artwork while release shares use the same safe-media gate (1.895ms)
+✔ review overall score is unavailable until every criterion has been rated (1.3029ms)
+✔ review summary preserves half stars and keyboard selection chooses a whole star (2.5573ms)
+✔ review criteria and profile activity use the shared icon system (0.3925ms)
+✔ review stars have full-width touch rows and discover does not mask its content (0.3722ms)
+✔ cover choices never turn broken images into selectable blank covers (1.0065ms)
+[Lorefy] Session migration to Keychain failed closed: Error: Keychain write failed
+    at Object.setItem (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\secure-storage.test.js:36:34)
+    at Object.setItem (evalmachine.<anonymous>:26:62)
+    at evalmachine.<anonymous>:77:25
+    at async waitForActual (node:assert:646:5)
+    at async strict.rejects (node:assert:769:25)
+    at async TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\secure-storage.test.js:41:3)
+    at async Test.run (node:internal/test_runner/test:1313:7)
+    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+[Lorefy] Native secure storage plugin is unavailable.
+✔ failed legacy-session migration deletes web storage and fails closed (2.6177ms)
+✔ browser previews do not install the native Keychain adapter (0.5539ms)
+✔ native auth fails closed when the Keychain plugin is unavailable (1.16ms)
+✔ native auth uses the Keychain plugin when available (1.422ms)
+✔ native OAuth keeps its temporary PKCE verifier outside the Keychain (0.6769ms)
+✔ native auth adapts the raw Capacitor 8 secure-storage bridge (0.7944ms)
+✔ static server rejects prefix-confusion and traversal paths (6.3255ms)
+✔ CSV export neutralizes spreadsheet formulas from catalog fields (0.5222ms)
+✔ api proxy bounds JSON traffic and cannot serve SVG as same-origin media (0.4878ms)
+✔ local proxy accepts only Lorefy local browser origins (0.2313ms)
+✔ native Supabase sessions use Keychain storage (0.7586ms)
+✔ catalog ingestion bounds identity keys, alias resolution, and delta indexing (0.415ms)
+✔ catalog updater rejects oversized deltas before persistence or organization (4.3394ms)
+✔ catalog updater accepts the supported weekly expansion size (4.5241ms)
+✔ catalog updater rejects prototype-polluting update keys before state changes (1.0151ms)
+✔ cloud state sync rejects stale whole-document writes (1.2663ms)
+✔ visitor artwork uses the owner snapshot, never viewer cover preferences (1.2961ms)
+✔ public chapter reviews stay in chapters; existing private notes are not auto-published (1.8455ms)
+✔ reply refresh is race-safe, retryable, and bounded by viewport (0.7167ms)
+✔ reply targeting preserves the draft and closing a thread does not discard it (1.0106ms)
+✔ a feed response from an abandoned screen cannot overwrite the current screen (0.3625ms)
+✔ chapter discussion supports owner deletion and reader reporting without public draft migration (0.5487ms)
+✔ chapter publishing uses a dedicated RPC and rejects invalid or empty input (2.5592ms)
+✔ chapter review pagination is stable and signs avatars before rendering (2.362ms)
+[Lorefy] pull: { message: 'offline' }
+✔ rating saved while cloud hydration is waiting survives the remote response (1.6659ms)
+✔ deletion made while cloud hydration waits is not resurrected (0.6795ms)
+✔ cold reopen replays a persisted rating-only journal over an older cloud copy (0.666ms)
+✔ failed cold hydration leaves the local library and journal available (1.0734ms)
+✔ unmodified acknowledged state adopts the newer cloud library (0.6211ms)
+✔ cold reopen preserves a local change missed by the sync observer (0.6387ms)
+✔ an unobserved local deletion is not resurrected on reopen (0.668ms)
+✔ a response for a previous account cannot hydrate the next account (0.5569ms)
+✔ sync observes Storage exotic objects without touching sessionStorage (1.3845ms)
+✔ premium entitlement is never synchronized as ordinary user state (1.213ms)
+✔ billing facade is read-only until a verified provider is configured (1.798ms)
+✔ premium preview is scoped to localhost and explicit query only (2.4226ms)
+✔ configured billing still requires an explicit checkout flag (0.678ms)
+✔ configured checkout delegates to the live backend and never accepts an unknown product (0.83ms)
+✔ entitlements are exposed only through a live server backend (1.1693ms)
+✔ the entitlement migration is server-authoritative and RLS protected (0.9107ms)
+✔ index loads the billing facade before the application bundle (0.327ms)
+✔ account foundation migration protects profile, state, and media ownership (0.8165ms)
+✔ theme state is wired from the app to the document shell (2.1062ms)
+✔ the dark authentication surface defines the core tokens used by account fields (1.3812ms)
+✔ community feed uses continuous rows while attachments retain their own treatment (1.7917ms)
+✔ search filters have full touch targets (0.3918ms)
+✔ profile reading progress shares the navigation accent (0.9838ms)
+✔ profile shortcuts use library icons and a single row style (3.7332ms)
+✔ editorial cover keeps its title and supporting copy legible over artwork (0.7429ms)
+✔ empty owner favorites offer one intentional selection action (0.3744ms)
+✔ profile character shelf has a distinct title and one useful empty action (0.3194ms)
+✔ default profile banner uses reading photography while preserving custom banners (0.1893ms)
+✔ sparse library and empty home replies do not leave dead space (0.1685ms)
+✔ privacy and safety tools are mounted in settings instead of the profile body (1.7005ms)
+✔ community enhancement never creates the promotional hero or feed label (1.2292ms)
+✔ community actions ignore the review options menu and enhance the real action row (1.8363ms)
+✔ community cards use the compact review-detail visual treatment (0.9822ms)
+✔ home screen renders a retry state instead of crashing with an empty catalog (1.0488ms)
+✔ large image galleries keep the first paint bounded while retaining pagination (2.1443ms)
+✔ list work search results render a cover thumbnail instead of text-only rows (1.21ms)
+✔ share and review labels stay valid Arabic UTF-8 (1.0132ms)
+✔ interface motion avoids broad transition-all rules (1.4533ms)
+✔ review, profile, and home social layers use the new review design hooks (1.8537ms)
+✔ character ratings use explicit numbers with a feather emblem and the profile shelf mirrors favourites (1.8345ms)
+✔ rated-character view-all control is rewired when the profile section already exists (1.5269ms)
+✔ profile character sections preserve the requested order and responsive grids (2.1663ms)
+✔ every best-four character tile uses a direct native button editor trigger (2.0891ms)
+✔ best-four character controls survive React replacing a pressed profile card (3.1982ms)
+✔ best-four character shelf keeps stable press targets and opens from its heading (1.1651ms)
+✔ best-four character cards keep the shelf shape in dark mode (0.3595ms)
+✔ best-four characters reuse the exact favorite-works shelf structure (1.8663ms)
+✔ best-four character editor can search the full catalog and keeps unrated selections (1.2464ms)
+✔ best-four character editor explicitly targets a slot and replaces a full selection (1.0863ms)
+✔ best-four works use the native editor from the heading while shelf slots remain stable (1.7063ms)
+✔ profile page does not ship the removed profile customization studio (2.0053ms)
+✔ yearly summary is a single clean reading dashboard instead of nested tabs (1.8817ms)
+✔ review overall score uses an isolated summary instead of styling source text as a circle (1.5684ms)
+✔ review criteria use descriptive icons and profile exposes the community activity hub (1.5317ms)
+✔ light bottom navigation reuses the dark floating dock geometry (0.3683ms)
+✔ device safe-area variables resolve inside the app instead of collapsing at root (0.7909ms)
+✔ library filter pills size to their label and badge instead of the header icon width (0.3614ms)
+✔ rating glyphs share Lucide and selectable stars form a compact touch strip (1.0962ms)
+✔ discover categories carry real representative covers and retain search navigation (0.4102ms)
+✔ owner statistics stay in a single six-column row and profile scrollbar is hidden (0.4333ms)
+✔ profile launchers have distinct lightweight surfaces without an outer frame (0.3981ms)
+✔ restored rating controls report their exact fill without relying on animation (0.8719ms)
+✔ legacy control tokens follow the current light and dark accent (1.6915ms)
+✔ icon-only suggested-people search button has a specific accessible name (1.3609ms)
+✔ updated UI assets use fresh cache keys (1.0979ms)
+✔ thread body fills available height and its posts are unframed rows (0.4475ms)
+✔ detail character actions use the shared icon library, not text glyphs (1.2949ms)
+✔ reader search normalizes handles and refuses one-character enumeration (1.4117ms)
+✔ reader search ranks exact usernames first and excludes the signed-in or blocked reader (0.2549ms)
+✔ following is persisted locally and delegates to the live account adapter when available (0.2148ms)
+✔ an explicitly empty live directory never falls back to demo readers (0.7177ms)
+✔ a failed live follow request leaves the local follow state unchanged (0.4827ms)
+✔ ships a public profile RPC and mounts reader results inside the existing work search (1.6869ms)
+✔ reader results open the full app profile and broadcast cloud follow changes (0.313ms)
+✔ service worker precaches the exact interface asset versions loaded by index (1.5165ms)
+✔ localhost preview removes stale service workers and caches before registration (1.0267ms)
+✔ service worker does not cache arbitrary same-origin GET responses (0.1862ms)
+ℹ tests 706
+ℹ suites 0
+ℹ pass 705
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54672.2996
+
+✖ failing tests:
+
+test at tests\release-output-integrity.test.js:24:1
+✖ shelf shares render only selected items while work reviews remain a single card (3.4203ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /var useSingle = !isShelfShare && images\.length <= 1/. Input:
+  
+  '(function (global) {\n' +
+    '  "use strict";\n' +
+    '\n' +
+    '  var doc = global.document;\n' +
+    '  if (!doc || global.LorefyShareStudio) return;\n' +
+    '\n' +
+    '  var SHARE_W = 1080;\n' +
+    '  var SHARE_H = 1920;\n' +
+    '  var scheduled = false;\n' +
+    '\n' +
+    '  function ratingColor() {\n' +
+    "    var app = doc.querySelector('.lf-app');\n" +
+    "    return app ? getComputedStyle(app).getPropertyValue('--ui-rating').trim() || '#006f6b' : '#006f6b';\n" +
+    '  }\n' +
+    '  function ratingFeather() {\n' +
+    '    var nodes = global.lucide.icons.Feather[2];\n' +
+    "    var svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');\n" +
+    "    ['viewBox', 'fill', 'stroke', 'stroke-width'].forEach(function (key, index) {\n" +
+    "      svg.setAttribute(key, ['0 0 24 24', 'none', 'currentColor', '1.8'][index]);\n" +
+    '    });\n' +
+    "    svg.setAttribute('width', '16'); svg.setAttribute('height', '16'); svg.setAttribute('aria-hidden', 'true');\n" +
+    '    nodes.forEach(function (node) {\n' +
+    "      var child = doc.createElementNS('http://www.w3.org/2000/svg', node[0]);\n" +
+    '      Object.keys(node[1]).forEach(function (key) { child.setAttribute(key, node[1][key]); }); svg.appendChild(child);\n' +
+    '    });\n' +
+    '    svg.style.color = ratingColor();\n' +
+    "    var app = doc.querySelector('.lf-app');\n" +
+    "    svg.style.background = app ? getComputedStyle(app).getPropertyValue('--ui-selected') : 'transparent';\n" +
+    "    svg.style.borderRadius = '4px';\n" +
+    '    return svg;\n' +
+    '  }\n' +
+    '  function drawRatingFeather(ctx, x, y, size) {\n' +
+    "    var app = doc.querySelector('.lf-app');\n" +
+    "    ctx.save(); ctx.fillStyle = app ? getComputedStyle(app).getPropertyValue('--ui-selected').trim() : '#e1f1ee';\n" +
+    '    roundRect(ctx, x - 4, y - 4, size + 8, size + 8, 6); ctx.fill(); ctx.restore();\n' +
+    '    ctx.save(); ctx.translate(x, y); ctx.scale(size / 24, size / 24);\n' +
+    "    ctx.strokeStyle = ratingColor(); ctx.lineWidth = 1.8; ctx.lineCap = 'round'; ctx.lineJoin = 'round';\n" +
+    '    global.lucide.icons.Feather[2].forEach(function (node) { ctx.stroke(new Path2D(node[1].d)); });\n' +
+    '    ctx.restore();\n' +
+    '  }\n' +
+    '\n' +
+    '  function toast(message) {\n' +
+    '    try {\n' +
+    '      if (global.LorefyToast) return global.LorefyToast(message);\n' +
+    '    } catch (error) {}\n' +
+    '    var current = doc.querySelector(".lf-share-studio-status.is-toast");\n' +
+    '    if (current) current.remove();\n' +
+    '    var el = doc.createElement("div");\n' +
+    '    el.className = "lf-share-studio-status is-toast";\n' +
+    '    el.textContent = message;\n' +
+    '    (doc.getElementById("screen") || doc.body).appendChild(el);\n' +
+    '    setTimeout(function () { el.remove(); }, 2200);\n' +
+    '  }\n' +
+    '\n' +
+    '  function sanitizeUrl() {\n' +
+    '    var url = new URL(global.location.href);\n' +
+    '    url.searchParams.delete("fresh");\n' +
+    '    return url.href;\n' +
+    '  }\n' +
+    '\n' +
+    '  function roundRect(ctx, x, y, w, h, r) {\n' +
+    '    r = Math.min(r, w / 2, h / 2);\n' +
+    '    ctx.beginPath();\n' +
+    '    ctx.moveTo(x + r, y);\n' +
+    '    ctx.arcTo(x + w, y, x + w, y + h, r);\n' +
+    '    ctx.arcTo(x + w, y + h, x, y + h, r);\n' +
+    '    ctx.arcTo(x, y + h, x, y, r);\n' +
+    '    ctx.arcTo(x, y, x + w, y, r);\n' +
+    '    ctx.closePath();\n' +
+    '  }\n' +
+    '\n' +
+    '  function trimText(ctx, text, maxWidth) {\n' +
+    '    var raw = String(text || "");\n' +
+    '    var value = raw;\n' +
+    '    while (value.length > 1 && ctx.measureText(value + "…").width > maxWidth) value = value.slice(0, -1);\n' +
+    '    return value === raw ? value : value + "…";\n' +
+    '  }\n' +
+    '\n' +
+    '  function fitHeading(ctx, text, maxWidth, maxSize) {\n' +
+    '    var size = maxSize || 74;\n' +
+    '    do {\n' +
+    '      ctx.font = "900 " + size + "px Cairo, Arial";\n' +
+    '      if (ctx.measureText(text).width <= maxWidth) break;\n' +
+    '      size -= 2;\n' +
+    '    } while (size >= 32);\n' +
+    '  }\n' +
+    '\n' +
+    '  function shelfHeadingLines(title, isShelf) {\n' +
+    '    var split = String(title || "").indexOf(" · ");\n' +
+    '    return isShelf && split > 0 ? [title.slice(0, split), title.slice(split + 3)] : [title];\n' +
+    '  }\n' +
+    '\n' +
+    '  function canvasFile(canvas, name) {\n' +
+    '    return new Promise(function (resolve, reject) {\n' +
+    '      canvas.toBlob(function (blob) {\n' +
+    '        if (!blob) return reject(new Error("share-image-empty"));\n' +
+    '        resolve(new File([blob], name || "lorefy-story.png", { type: "image/png" }));\n' +
+    '      }, "image/png", 0.94);\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  function sourceToFile(src, name) {\n' +
+    '    return fetch(src).then(function (response) { return response.blob(); }).then(function (blob) {\n' +
+    '      return new File([blob], name || "lorefy-story.png", { type: blob.type || "image/png" });\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  function fileToDataUrl(file) {\n' +
+    '    return new Promise(function (resolve, reject) {\n' +
+    '      var reader = new FileReader();\n' +
+    '      reader.onload = function () { resolve(String(reader.result || "")); };\n' +
+    '      reader.onerror = reject;\n' +
+    '      reader.readAsDataURL(file);\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  function isNativeRuntime() {\n' +
+    '    var capacitor = global.Capacitor;\n' +
+    '    try {\n' +
+    '      return !!(capacitor && (\n' +
+    '        (typeof capacitor.isNativePlatform === "function" && capacitor.isNativePlatform()) ||\n' +
+    '        (typeof capacitor.getPlatform === "function" && capacitor.getPlatform() !== "web")\n' +
+    '      ));\n' +
+    '    } catch (error) {\n' +
+    '      return false;\n' +
+    '    }\n' +
+    '  }\n' +
+    '\n' +
+    '  function getCapacitorPlugin(name) {\n' +
+    '    var capacitor = global.Capacitor;\n' +
+    '    if (!capacitor || !name) return null;\n' +
+    '    try {\n' +
+    '      if (capacitor.Plugins && capacitor.Plugins[name]) return capacitor.Plugins[name];\n' +
+    '      if (typeof capacitor.getPlugin === "function") return capacitor.getPlugin(name);\n' +
+    '    } catch (error) {}\n' +
+    '    return null;\n' +
+    '  }\n' +
+    '\n' +
+    '  function nativeMediaProxySource(src) {\n' +
+    '    var value = String(src || "").trim();\n' +
+    '    if (!/^https:\\/\\//i.test(value)) return value;\n' +
+    '    if (global.LorefyDataProxy && typeof global.LorefyDataProxy.mediaUrl === "function") {\n' +
+    '      var gateway = global.LorefyDataProxy.mediaUrl(value);\n' +
+    '      if (gateway !== value) return gateway;\n' +
+    '    }\n' +
+    '    var release = global.LOREFY_RELEASE || {};\n' +
+    '    var supabase = (release.supabase && release.supabase.url) || (global.LOREFY_SUPABASE && global.LOREFY_SUPABASE.url) || "";\n' +
+    '    if (!/^https:\\/\\//i.test(String(supabase))) return value;\n' +
+    '    return String(supabase).replace(/\\/+$/, "") + "/functions/v1/lorefy-public/media?url=" + encodeURIComponent(value);\n' +
+    '  }\n' +
+    '\n' +
+    '  function mediaProxySource(src) {\n' +
+    '    var value = String(src || "").trim();\n' +
+    '    if (!/^https:\\/\\//i.test(value) || isNativeRuntime()) return value;\n' +
+    '    if (global.LorefyDataProxy && typeof global.LorefyDataProxy.mediaUrl === "function") {\n' +
+    '      return global.LorefyDataProxy.mediaUrl(value);\n' +
+    '    }\n' +
+    '    return "/api/media?url=" + encodeURIComponent(value);\n' +
+    '  }\n' +
+    '\n' +
+    '  function shareSourceCandidates(src) {\n' +
+    '    var value = String(src || "").trim();\n' +
+    '    if (!value) return [];\n' +
+    '    try {\n' +
+    '      var safeMedia = global.LorefyRightsSafeMedia;\n' +
+    '      if (safeMedia && typeof safeMedia.enabled === "function" && safeMedia.enabled() &&\n' +
+    '          typeof safeMedia.isAllowedUrl === "function" && !safeMedia.isAllowedUrl(value)) return [];\n' +
+    '    } catch (error) {}\n' +
+    '    if (/^(data:|blob:)/i.test(value)) return [value];\n' +
+    '    try {\n' +
+    '      var parsed = new URL(value, global.location.href);\n' +
+    '      if (parsed.pathname === "/api/media" || /\\/functions\\/v1\\/lorefy-public\\/media$/i.test(parsed.pathname)) {\n' +
+    '        var original = parsed.searchParams.get("url") || "";\n' +
+    '        if (!original) return [value];\n' +
+    '        return isNativeRuntime()\n' +
+    '          ? [nativeMediaProxySource(original), original]\n' +
+    '          : [mediaProxySource(original), original];\n' +
+    '      }\n' +
+    '    } catch (error) {}\n' +
+    '    if (/^https:\\/\\//i.test(value)) {\n' +
+    '      return Array.from(new Set(isNativeRuntime() ? [nativeMediaProxySource(value), value] : [mediaProxySource(value), value]));\n' +
+    '    }\n' +
+    '    return [value];\n' +
+    '  }\n' +
+    '\n' +
+    '  function characterShareItems(selected, cast, imageOf) {\n' +
+    '    cast = Array.isArray(cast) ? cast : [];\n' +
+    '    return (selected || []).map(function (character) {\n' +
+    '      var name = String(character && character.name || "").trim();\n' +
+    '      var image = imageOf(character) || "";\n' +
+    '      if (!image) {\n' +
+    '        var match = cast.find(function (row) {\n' +
+    '          return character && row && String(character.id || "") === String(row.id || "") && !!character.id;\n' +
+    '        }) || cast.find(function (row) {\n' +
+    '          return row && name && String(row.name || "").trim().toLowerCase() === name.toLowerCase();\n' +
+    '        });\n' +
+    '        if (match) image = imageOf(match) || "";\n' +
+    '      }\n' +
+    '      return { name: name, img: image };\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  function loadImage(src) {\n' +
+    '    var candidates = shareSourceCandidates(src);\n' +
+    '    return new Promise(function (resolve) {\n' +
+    '      var index = 0;\n' +
+    '      var seen = {};\n' +
+    '      function next() {\n' +
+    '        var candidate = candidates[index++];\n' +
+    '        if (!candidate) return resolve(null);\n' +
+    '        if (seen[candidate]) return next();\n' +
+    '        seen[candidate] = true;\n' +
+    '        var image = new Image();\n' +
+    '        var settled = false;\n' +
+    '        var finish = function (value) {\n' +
+    '          if (settled) return;\n' +
+    '          settled = true;\n' +
+    '          clearTimeout(timer);\n' +
+    '          if (value) resolve(value);\n' +
+    '          else next();\n' +
+    '        };\n' +
+    '        var timer = setTimeout(function () { finish(null); }, 12000);\n' +
+    '        if (!/^(data:|blob:)/i.test(candidate)) image.crossOrigin = "anonymous";\n' +
+    '        image.onload = function () { finish(image); };\n' +
+    '        image.onerror = function () { finish(null); };\n' +
+    '        image.src = candidate;\n' +
+    '      }\n' +
+    '      next();\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  function requireShareImages(sources, images, labels) {\n' +
+    '    var missing = sources.filter(function (source, index) { return (!!source || !!(labels && labels[index])) && !images[index]; }).length;\n' +
+    '    if (!missing) return;\n' +
+    '    var error = new Error("تعذر تحميل بعض الصور. تحقق من اتصالك ثم أعد المشاركة.");\n' +
+    '    error.code = "LOREFY_SHARE_MEDIA_UNAVAILABLE";\n' +
+    '    error.missingImages = missing;\n' +
+    '    throw error;\n' +
+    '  }\n' +
+    '\n' +
+    '  function drawCover(ctx, image, x, y, w, h, radius, seed) {\n' +
+    '    ctx.save();\n' +
+    '    roundRect(ctx, x, y, w, h, radius);\n' +
+    '    ctx.clip();\n' +
+    '    if (image) {\n' +
+    '      var scale = Math.max(w / image.naturalWidth, h / image.naturalHeight);\n' +
+    '      var dw = image.naturalWidth * scale;\n' +
+    '      var dh = image.naturalHeight * scale;\n' +
+    '      ctx.drawImage(image, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);\n' +
+    '    } else {\n' +
+    '      var hue = Math.abs(String(seed || "Lorefy").split("").reduce(function (sum, char) { return sum * 31 + char.charCodeAt(0); }, 7)) % 360;\n' +
+    '      var fill = ctx.createLinearGradient(x, y, x + w, y + h);\n' +
+    '      fill.addColorStop(0, "hsl(" + hue + " 34% 50%)");\n' +
+    '      fill.addColorStop(1, "hsl(" + ((hue + 28) % 360) + " 28% 28%)");\n' +
+    '      ctx.fill'... 29389 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\release-output-integrity.test.js:34:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `(function (global) {\n  "use strict";\n\n  var doc = global.document;\n  if (!doc || global.LorefyShareStudio) return;\n\n  var SHARE_W = 1080;\n  var SHARE_H = 1920;\n  var scheduled = false;\n\n  function ratingColor() {\n    var app = doc.querySelector('.lf-app');\n    return app ? getComputedStyle(app).getPropertyValue('--ui-rating').trim() || '#006f6b' : '#006f6b';\n  }\n  function ratingFeather() {\n    var nodes = global.lucide.icons.Feather[2];\n    var svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');\n    ['viewBox', 'fill', 'stroke', 'stroke-width'].forEach(function (key, index) {\n      svg.setAttribute(key, ['0 0 24 24', 'none', 'currentColor', '1.8'][index]);\n    });\n    svg.setAttribute('width', '16'); svg.setAttribute('height', '16'); svg.setAttribute('aria-hidden', 'true');\n    nodes.forEach(function (node) {\n      var child = doc.createElementNS('http://www.w3.org/2000/svg', node[0]);\n      Object.keys(node[1]).forEach(function (key) { child.setAttribute(key, node[1][key]); }); svg.appendChild(child);\n    });\n    svg.style.color = ratingColor();\n    var app = doc.querySelector('.lf-app');\n    svg.style.background = app ? getComputedStyle(app).getPropertyValue('--ui-selected') : 'transparent';\n    svg.style.borderRadius = '4px';\n    return svg;\n  }\n  function drawRatingFeather(ctx, x, y, size) {\n    var app = doc.querySelector('.lf-app');\n    ctx.save(); ctx.fillStyle = app ? getComputedStyle(app).getPropertyValue('--ui-selected').trim() : '#e1f1ee';\n    roundRect(ctx, x - 4, y - 4, size + 8, size + 8, 6); ctx.fill(); ctx.restore();\n    ctx.save(); ctx.translate(x, y); ctx.scale(size / 24, size / 24);\n    ctx.strokeStyle = ratingColor(); ctx.lineWidth = 1.8; ctx.lineCap = 'round'; ctx.lineJoin = 'round';\n    global.lucide.icons.Feather[2].forEach(function (node) { ctx.stroke(new Path2D(node[1].d)); });\n    ctx.restore();\n  }\n\n  function toast(message) {\n    try {\n      if (global.LorefyToast) return global.LorefyToast(message);\n    } catch (error) {}\n    var current = doc.querySelector(".lf-share-studio-status.is-toast");\n    if (current) current.remove();\n    var el = doc.createElement("div");\n    el.className = "lf-share-studio-status is-toast";\n    el.textContent = message;\n    (doc.getElementById("screen") || doc.body).appendChild(el);\n    setTimeout(function () { el.remove(); }, 2200);\n  }\n\n  function sanitizeUrl() {\n    var url = new URL(global.location.href);\n    url.searchParams.delete("fresh");\n    return url.href;\n  }\n\n  function roundRect(ctx, x, y, w, h, r) {\n    r = Math.min(r, w / 2, h / 2);\n    ctx.beginPath();\n    ctx.moveTo(x + r, y);\n    ctx.arcTo(x + w, y, x + w, y + h, r);\n    ctx.arcTo(x + w, y + h, x, y + h, r);\n    ctx.arcTo(x, y + h, x, y, r);\n    ctx.arcTo(x, y, x + w, y, r);\n    ctx.closePath();\n  }\n\n  function trimText(ctx, text, maxWidth) {\n    var raw = String(text || "");\n    var value = raw;\n    while (value.length > 1 && ctx.measureText(value + "…").width > maxWidth) value = value.slice(0, -1);\n    return value === raw ? value : value + "…";\n  }\n\n  function fitHeading(ctx, text, maxWidth, maxSize) {\n    var size = maxSize || 74;\n    do {\n      ctx.font = "900 " + size + "px Cairo, Arial";\n      if (ctx.measureText(text).width <= maxWidth) break;\n      size -= 2;\n    } while (size >= 32);\n  }\n\n  function shelfHeadingLines(title, isShelf) {\n    var split = String(title || "").indexOf(" · ");\n    return isShelf && split > 0 ? [title.slice(0, split), title.slice(split + 3)] : [title];\n  }\n\n  function canvasFile(canvas, name) {\n    return new Promise(function (resolve, reject) {\n      canvas.toBlob(function (blob) {\n        if (!blob) return reject(new Error("share-image-empty"));\n        resolve(new File([blob], name || "lorefy-story.png", { type: "image/png" }));\n      }, "image/png", 0.94);\n    });\n  }\n\n  function sourceToFile(src, name) {\n    return fetch(src).then(function (response) { return response.blob(); }).then(function (blob) {\n      return new File([blob], name || "lorefy-story.png", { type: blob.type || "image/png" });\n    });\n  }\n\n  function fileToDataUrl(file) {\n    return new Promise(function (resolve, reject) {\n      var reader = new FileReader();\n      reader.onload = function () { resolve(String(reader.result || "")); };\n      reader.onerror = reject;\n      reader.readAsDataURL(file);\n    });\n  }\n\n  function isNativeRuntime() {\n    var capacitor = global.Capacitor;\n    try {\n      return !!(capacitor && (\n        (typeof capacitor.isNativePlatform === "function" && capacitor.isNativePlatform()) ||\n        (typeof capacitor.getPlatform === "function" && capacitor.getPlatform() !== "web")\n      ));\n    } catch (error) {\n      return false;\n    }\n  }\n\n  function getCapacitorPlugin(name) {\n    var capacitor = global.Capacitor;\n    if (!capacitor || !name) return null;\n    try {\n      if (capacitor.Plugins && capacitor.Plugins[name]) return capacitor.Plugins[name];\n      if (typeof capacitor.getPlugin === "function") return capacitor.getPlugin(name);\n    } catch (error) {}\n    return null;\n  }\n\n  function nativeMediaProxySource(src) {\n    var value = String(src || "").trim();\n    if (!/^https:\\/\\//i.test(value)) return value;\n    if (global.LorefyDataProxy && typeof global.LorefyDataProxy.mediaUrl === "function") {\n      var gateway = global.LorefyDataProxy.mediaUrl(value);\n      if (gateway !== value) return gateway;\n    }\n    var release = global.LOREFY_RELEASE || {};\n    var supabase = (release.supabase && release.supabase.url) || (global.LOREFY_SUPABASE && global.LOREFY_SUPABASE.url) || "";\n    if (!/^https:\\/\\//i.test(String(supabase))) return value;\n    return String(supabase).replace(/\\/+$/, "") + "/functions/v1/lorefy-public/media?url=" + encodeURIComponent(value);\n  }\n\n  function mediaProxySource(src) {\n    var value = String(src || "").trim();\n    if (!/^https:\\/\\//i.test(value) || isNativeRuntime()) return value;\n    if (global.LorefyDataProxy && typeof global.LorefyDataProxy.mediaUrl === "function") {\n      return global.LorefyDataProxy.mediaUrl(value);\n    }\n    return "/api/media?url=" + encodeURIComponent(value);\n  }\n\n  function shareSourceCandidates(src) {\n    var value = String(src || "").trim();\n    if (!value) return [];\n    try {\n      var safeMedia = global.LorefyRightsSafeMedia;\n      if (safeMedia && typeof safeMedia.enabled === "function" && safeMedia.enabled() &&\n          typeof safeMedia.isAllowedUrl === "function" && !safeMedia.isAllowedUrl(value)) return [];\n    } catch (error) {}\n    if (/^(data:|blob:)/i.test(value)) return [value];\n    try {\n      var parsed = new URL(value, global.location.href);\n      if (parsed.pathname === "/api/media" || /\\/functions\\/v1\\/lorefy-public\\/media$/i.test(parsed.pathname)) {\n        var original = parsed.searchParams.get("url") || "";\n        if (!original) return [value];\n        return isNativeRuntime()\n          ? [nativeMediaProxySource(original), original]\n          : [mediaProxySource(original), original];\n      }\n    } catch (error) {}\n    if (/^https:\\/\\//i.test(value)) {\n      return Array.from(new Set(isNativeRuntime() ? [nativeMediaProxySource(value), value] : [mediaProxySource(value), value]));\n    }\n    return [value];\n  }\n\n  function characterShareItems(selected, cast, imageOf) {\n    cast = Array.isArray(cast) ? cast : [];\n    return (selected || []).map(function (character) {\n      var name = String(character && character.name || "").trim();\n      var image = imageOf(character) || "";\n      if (!image) {\n        var match = cast.find(function (row) {\n          return character && row && String(character.id || "") === String(row.id || "") && !!character.id;\n        }) || cast.find(function (row) {\n          return row && name && String(row.name || "").trim().toLowerCase() === name.toLowerCase();\n        });\n        if (match) image = imageOf(match) || "";\n      }\n      return { name: name, img: image };\n    });\n  }\n\n  function loadImage(src) {\n    var candidates = shareSourceCandidates(src);\n    return new Promise(function (resolve) {\n      var index = 0;\n      var seen = {};\n      function next() {\n        var candidate = candidates[index++];\n        if (!candidate) return resolve(null);\n        if (seen[candidate]) return next();\n        seen[candidate] = true;\n        var image = new Image();\n        var settled = false;\n        var finish = function (value) {\n          if (settled) return;\n          settled = true;\n          clearTimeout(timer);\n          if (value) resolve(value);\n          else next();\n        };\n        var timer = setTimeout(function () { finish(null); }, 12000);\n        if (!/^(data:|blob:)/i.test(candidate)) image.crossOrigin = "anonymous";\n        image.onload = function () { finish(image); };\n        image.onerror = function () { finish(null); };\n        image.src = candidate;\n      }\n      next();\n    });\n  }\n\n  function requireShareImages(sources, images, labels) {\n    var missing = sources.filter(function (source, index) { return (!!source || !!(labels && labels[index])) && !images[index]; }).length;\n    if (!missing) return;\n    var error = new Error("تعذر تحميل بعض الصور. تحقق من اتصالك ثم أعد المشاركة.");\n    error.code = "LOREFY_SHARE_MEDIA_UNAVAILABLE";\n    error.missingImages = missing;\n    throw error;\n  }\n\n  function drawCover(ctx, image, x, y, w, h, radius, seed) {\n    ctx.save();\n    roundRect(ctx, x, y, w, h, radius);\n    ctx.clip();\n    if (image) {\n      var scale = Math.max(w / image.naturalWidth, h / image.naturalHeight);\n      var dw = image.naturalWidth * scale;\n      var dh = image.naturalHeight * scale;\n      ctx.drawImage(image, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);\n    } else {\n      var hue = Math.abs(String(seed || "Lorefy").split("").reduce(function (sum, char) { return sum * 31 + char.charCodeAt(0); }, 7)) % 360;\n      var fill = ctx.createLinearGradient(x, y, x + w, y + h);\n      fill.addColorStop(0, "hsl(" + hue + " 34% 50%)");\n      fill.addColorStop(1, "hsl(" + ((hue + 28) % 360) + " 28% 28%)");\n      ctx.fill`... 29389 more characters,
+    expected: /var useSingle = !isShelfShare && images\.length <= 1/,
+    operator: 'match',
+    diff: 'simple'
+  }

@@ -1,0 +1,88 @@
+- button "الإعدادات":
+- button "تبديل المظهر":
+- button "الإشعارات":
+- paragraph: قارئ Lorefy
+- paragraph: "@lorefy_demo"
+- paragraph: حساب العرض المحلي
+- button "الحسابات التي أتابعها":
+  - generic: "0"
+- button "الحسابات التي تتابعني":
+  - generic: "0"
+- paragraph: "1"
+- paragraph: مراجعة
+- button "عرض منشوراتي":
+  - strong: "1"
+  - generic: منشور
+- paragraph: "1"
+- paragraph: مكتملة
+- paragraph: "420"
+- paragraph: فصل
+- paragraph: "84"
+- paragraph: ساعة قراءة
+- paragraph: مانجا
+- paragraph: النوع المفضل
+- button "تعديل المفضلة":
+  - generic: المفضلة
+- button "تعديل العمل رقم 1 ضمن المفضلة":
+  - text: اختر الأعمال التي تحبها
+- region "الشخصيات المفضلة":
+  - button "تعديل الشخصيات المفضلة":
+    - strong: الشخصيات المفضلة
+  - button "اختيار شخصية للخانة 1":
+    - text: اختر شخصياتك المفضلة
+- generic: النشاط الأخير
+- generic: آخر تفاعل محفوظ
+- paragraph: مانجا
+- region "نشاط المجتمع":
+  - strong: نشاط المجتمع
+  - button "الردود 0":
+    - strong: الردود
+    - generic: "0"
+  - button "المحفوظات 1":
+    - strong: المحفوظات
+    - generic: "1"
+  - button "الشخصيات 0":
+    - strong: الشخصيات
+    - generic: "0"
+- button "فتح سجل القراءة":
+  - strong: سجل القراءة
+  - generic: جلساتك وملاحظاتك واقتباساتك
+- region "قوائم التفضيلات":
+  - button "قوائم التفضيلات 8 أقسام · 0 / 80 خانة":
+    - strong: قوائم التفضيلات
+    - emphasis: 8 أقسام · 0 / 80 خانة
+- button "قوائمي أنشئ قوائم خاصة وشاركها":
+  - strong: قوائمي
+  - generic: أنشئ قوائم خاصة وشاركها
+- button "ملخّص 2026 إحصاءات سنتك القرائية":
+  - strong: ملخّص 2026
+  - generic: إحصاءات سنتك القرائية
+- button "استيراد مكتبتك AniList · Kitsu · MAL · Goodreads · StoryGraph · أي موقع":
+  - strong: استيراد مكتبتك
+  - generic: AniList · Kitsu · MAL · Goodreads · StoryGraph · أي موقع
+- button "أقرأه حالياً"
+- button "قرأته"
+- button "أريد قراءته"
+- button "متوقف مؤقتًا"
+- button "توقفت نهائيًا"
+- paragraph: ما عندك شي تقرأه الحين
+- paragraph: أكثر ما تقرأ
+- generic: 1 عمل
+- generic: مانجا
+- paragraph: Premium قريباً
+- paragraph: غير متاح خلال النسخة التجريبية
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية
+- dialog "الردود":
+  - banner:
+    - button "رجوع" [active]: ‹
+    - strong: الردود
+  - strong: لا توجد ردود بعد
+  - paragraph: عند كتابة رد في أي مراجعة أو وصول رد على مراجعتك، ستجده هنا.

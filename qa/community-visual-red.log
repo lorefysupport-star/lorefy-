@@ -1,0 +1,706 @@
+✖ post types use the same avatar and content-column geometry (2.6181ms)
+✖ composer is a compact themed sheet with an accessible character meter (0.9973ms)
+✖ pink surface and supplementary accents are pink, not inherited teal and white (1.2877ms)
+✖ pink default profile art and type badges use appearance tokens (1.0706ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 84.1698
+
+✖ failing tests:
+
+test at tests\community-visual-contract.test.js:7:1
+✖ post types use the same avatar and content-column geometry (2.6181ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /--social-avatar: 48px/. Input:
+  
+  '/* Shared visual contract. Legacy screen variables resolve to these tokens. */\n' +
+    ':root,\n' +
+    '.lf-app.is-light,\n' +
+    '.lf-auth {\n' +
+    '  --ui-bg: #f7f9f9;\n' +
+    '  --ui-surface: #fff;\n' +
+    '  --ui-fill: #eef3f3;\n' +
+    '  --ui-fill-soft: #f3f6f6;\n' +
+    '  --ui-ink: #17282b;\n' +
+    '  --ui-secondary: #344d51;\n' +
+    '  --ui-muted: #566c70;\n' +
+    '  --ui-line: #dce5e6;\n' +
+    '  --ui-separator: #c6d5d7;\n' +
+    '  --ui-action: #006f6b;\n' +
+    '  --ui-action-pressed: #005a57;\n' +
+    '  --ui-on-action: #fff;\n' +
+    '  --ui-selected: #e1f1ee;\n' +
+    '  --ui-danger: #b83240;\n' +
+    '  --ui-success: #187a48;\n' +
+    '  --ui-gold: #a85d00;\n' +
+    '  --ui-rating: #006f6b;\n' +
+    '  --ui-nav: rgba(255, 255, 255, .96);\n' +
+    '  --ui-bar: rgba(247, 249, 249, .97);\n' +
+    '  --ui-shadow: 0 12px 32px rgba(23, 40, 43, .1);\n' +
+    "  --ui-font: 'Readex Pro', 'Cairo', system-ui, sans-serif;\n" +
+    '  --ui-inline: 20px;\n' +
+    '  --ui-radius: 8px;\n' +
+    '}\n' +
+    '\n' +
+    ":root[data-lorefy-theme='dark'],\n" +
+    '.lf-app.is-dark {\n' +
+    '  color-scheme: dark;\n' +
+    '  --ui-bg: #0b0b0c;\n' +
+    '  --ui-surface: #171719;\n' +
+    '  --ui-fill: #242426;\n' +
+    '  --ui-fill-soft: #1d1d1f;\n' +
+    '  --ui-ink: #f5f5f7;\n' +
+    '  --ui-secondary: #d8d8dc;\n' +
+    '  --ui-muted: #a8a8b0;\n' +
+    '  --ui-line: #303033;\n' +
+    '  --ui-separator: #45454a;\n' +
+    '  --ui-action: #f0f0f3;\n' +
+    '  --ui-action-pressed: #d8d8dc;\n' +
+    '  --ui-on-action: #171719;\n' +
+    '  --ui-selected: #29292c;\n' +
+    '  --ui-rating: #e7e7ec;\n' +
+    '  --ui-danger: #ff8c8c;\n' +
+    '  --ui-success: #73d49a;\n' +
+    '  --ui-gold: #f4b65e;\n' +
+    '  --ui-nav: rgba(23, 23, 25, .96);\n' +
+    '  --ui-bar: rgba(11, 11, 12, .97);\n' +
+    '  --ui-shadow: 0 12px 32px rgba(0, 0, 0, .26);\n' +
+    '}\n' +
+    '\n' +
+    ":root[data-lorefy-theme='pink'],\n" +
+    '.lf-app.is-pink {\n' +
+    '  color-scheme: light;\n' +
+    '  --ui-bg: #fff7fa;\n' +
+    '  --ui-surface: #fff;\n' +
+    '  --ui-fill: #f9eaf0;\n' +
+    '  --ui-fill-soft: #fff0f5;\n' +
+    '  --ui-ink: #30222a;\n' +
+    '  --ui-secondary: #59434d;\n' +
+    '  --ui-muted: #79616c;\n' +
+    '  --ui-line: #ebd9e1;\n' +
+    '  --ui-separator: #ddc3cf;\n' +
+    '  --ui-action: #a53662;\n' +
+    '  --ui-action-pressed: #83264b;\n' +
+    '  --ui-on-action: #fff;\n' +
+    '  --ui-selected: #f7dfe9;\n' +
+    '  --ui-rating: #a53662;\n' +
+    '  --ui-nav: rgba(255,250,252,.96);\n' +
+    '  --ui-bar: rgba(255,247,250,.97);\n' +
+    '}\n' +
+    '\n' +
+    '.lf-app.lf-app.lf-app .lf-appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px; }\n' +
+    '.lf-app.lf-app.lf-app .lf-appearance-option { min-height: 76px; display: grid; justify-items: center; align-content: center; gap: 8px; padding: 10px 4px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-surface); color: var(--ui-ink); font-size: 13px; cursor: pointer; }\n' +
+    ".lf-app.lf-app.lf-app .lf-appearance-option[aria-pressed='true'] { border: 2px solid var(--ui-action); background: var(--ui-selected); }\n" +
+    '.lf-appearance-swatch { width: 26px; height: 26px; border: 1px solid #9996; border-radius: 50%; }\n' +
+    '.lf-app.lf-app.lf-app .lf-diary-entrypoint { border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-diary-entrypoint-icon { border-radius: 8px !important; box-shadow: none !important; }\n' +
+    '.lf-app.lf-app.lf-app :is(.lf-chapter-star.is-filled,.lf-chapter-personal-summary,.lf-rating-display) { color: var(--ui-rating) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-feather { stroke: var(--ui-rating); stroke-width: 1.6; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-pick-glyph > .lf-rating-feather { stroke: var(--ui-muted) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-star > svg { stroke: var(--ui-muted); }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-star > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-pick-glyph > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-profile-banner > div:last-child:has(> span):not(:has(img)) { background: var(--ui-selected) !important; color: var(--ui-action) !important; }\n' +
+    '.lf-app.is-dark .lf-profile-banner { background: #171719 !important; }\n' +
+    '\n' +
+    ':root,\n' +
+    '.lf-app.lf-app.lf-app,\n' +
+    '.lf-auth {\n' +
+    '  --apple-bg: var(--ui-bg);\n' +
+    '  --apple-surface: var(--ui-surface);\n' +
+    '  --apple-surface-2: var(--ui-fill-soft);\n' +
+    '  --apple-fill: var(--ui-fill);\n' +
+    '  --apple-fill-strong: var(--ui-line);\n' +
+    '  --apple-label: var(--ui-ink);\n' +
+    '  --apple-label-2: var(--ui-muted);\n' +
+    '  --apple-label-3: var(--ui-muted);\n' +
+    '  --apple-blue: var(--ui-action);\n' +
+    '  --apple-blue-pressed: var(--ui-action-pressed);\n' +
+    '  --apple-blue-soft: var(--ui-selected);\n' +
+    '  --apple-green: var(--ui-success);\n' +
+    '  --apple-red: var(--ui-danger);\n' +
+    '  --apple-orange: var(--ui-gold);\n' +
+    '  --apple-separator: var(--ui-separator);\n' +
+    '  --apple-separator-soft: var(--ui-line);\n' +
+    '  --apple-card-radius: var(--ui-radius);\n' +
+    '  --apple-inline: var(--ui-inline);\n' +
+    '  --lf-bg: var(--ui-bg);\n' +
+    '  --lf-card: var(--ui-surface);\n' +
+    '  --lf-card-2: var(--ui-fill);\n' +
+    '  --lf-field: var(--ui-fill);\n' +
+    '  --lf-text: var(--ui-ink);\n' +
+    '  --lf-sub: var(--ui-muted);\n' +
+    '  --lf-border: var(--ui-line);\n' +
+    '  --lf-fill: var(--ui-fill);\n' +
+    '  --lf-blue: var(--ui-action);\n' +
+    '  --lf-blue-soft: var(--ui-selected);\n' +
+    '  --lf-accent: var(--ui-action);\n' +
+    '  --lf-accent-text: var(--ui-action);\n' +
+    '  --lf-green: var(--ui-success);\n' +
+    '  --lf-gold: var(--ui-gold);\n' +
+    '  --lf-red: var(--ui-danger);\n' +
+    '  --cinema-bg: var(--ui-bg);\n' +
+    '  --cinema-surface: var(--ui-surface);\n' +
+    '  --cinema-raised: var(--ui-fill);\n' +
+    '  --cinema-ink: var(--ui-ink);\n' +
+    '  --cinema-muted: var(--ui-muted);\n' +
+    '  --cinema-line: var(--ui-line);\n' +
+    '  --cinema-active: var(--ui-action);\n' +
+    '  color: var(--ui-ink);\n' +
+    '  font-family: var(--ui-font) !important;\n' +
+    '  font-size: 14px;\n' +
+    '  line-height: 1.6;\n' +
+    '  background: var(--ui-bg) !important;\n' +
+    '  -webkit-font-smoothing: antialiased;\n' +
+    '  accent-color: var(--ui-action);\n' +
+    '}\n' +
+    '\n' +
+    '.lf-app.lf-app.lf-app *, .lf-auth * { box-sizing: border-box; letter-spacing: 0 !important; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, input, textarea, select), .lf-auth :is(button, input, textarea, select) { font-family: var(--ui-font) !important; }\n' +
+    '.lf-app.lf-app.lf-app :is(h1, h2, h3), .lf-auth :is(h1, h2, h3, .lf-title) { font-family: var(--ui-font) !important; text-wrap: balance; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, a, [role="button"]) { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, a, input, textarea, select, [role="button"]):focus-visible,\n' +
+    '.lf-auth :is(button, a, input, textarea, select):focus-visible { outline: 2px solid var(--ui-action) !important; outline-offset: 3px; }\n' +
+    '.lf-app.lf-app.lf-app ::selection, .lf-auth ::selection { color: var(--ui-ink); background: var(--ui-selected); }\n' +
+    '.lf-app.lf-app.lf-app :is(input, textarea), .lf-auth :is(input, textarea) { caret-color: var(--ui-action); color: var(--ui-ink); }\n' +
+    '.lf-app.lf-app.lf-app ::placeholder, .lf-auth ::placeholder { color: var(--ui-muted) !important; opacity: 1; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, input, textarea, select):disabled { cursor: default; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, input, textarea):disabled:not(.lf-reader-cover) { opacity: .55; }\n' +
+    '.lf-app.lf-app.lf-app :is(strong, b, output), .lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p { font-variant-numeric: tabular-nums; }\n' +
+    '.lf-app.lf-app.lf-app a { text-underline-offset: 3px; }\n' +
+    '.lf-app.lf-app.lf-app :is(.lf-screen-scroll, .lf-reader-full, .lf-community-thread-body, .nc-sheet) { scrollbar-width: thin; scrollbar-color: var(--ui-separator) transparent; }\n' +
+    '\n' +
+    '/* Repeated app scope outranks late legacy theme rules without touching layout logic. */\n' +
+    '/* Screen chrome stays quiet; the catalog and reader content lead. */\n' +
+    '.lf-app.lf-app.lf-app .lf-page-header,\n' +
+    '.lf-app.lf-app.lf-app .lf-home-header { padding-inline: var(--ui-inline) !important; background: var(--ui-bar) !important; border-bottom-color: var(--ui-line) !important; box-shadow: none !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-page-header h1 { margin: 0 0 16px !important; font-size: 24px !important; font-weight: 650 !important; line-height: 1.4 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-page-header { padding-top: calc(var(--nc-top) + 20px) !important; padding-bottom: 12px !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-greeting-row { min-height: 58px; }\n' +
+    '.lf-app.lf-app.lf-app .lf-user-greeting strong { font-size: 17px !important; font-weight: 600 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-user-greeting small { color: var(--ui-muted) !important; font-size: 11px !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-icon-button { width: 44px !important; height: 44px !important; border: 0 !important; background: var(--ui-fill) !important; box-shadow: none !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-home-tabs > div { padding: 4px !important; border: 0 !important; border-radius: 12px !important; background: var(--ui-fill) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-home-tabs button { min-height: 44px !important; border-radius: 8px !important; color: var(--ui-muted) !important; font-size: 13px !important; font-weight: 550 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-home-tabs button.is-active { color: var(--ui-ink) !important; background: var(--ui-surface) !important; box-shadow: 0 1px 3px rgba(23,40,43,.07) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-bottom-nav {\n' +
+    '  width: calc(100% - 24px) !important;\n' +
+    '  max-width: 520px !important;\n' +
+    '  left: 50% !important;\n' +
+    '  right: auto !important;\n' +
+    '  bottom: calc(var(--nc-bottom) + 10px) !important;\n' +
+    '  transform: translateX(-50%) !important;\n' +
+    '  min-height: 68px !important;\n' +
+    '  padding: 5px 6px !important;\n' +
+    '  border: 1px solid var(--ui-line) !important;\n' +
+    '  border-radius: 22px !important;\n' +
+    '  background: var(--ui-nav) !important;\n' +
+    '  box-shadow: 0 6px 20px rgba(12,29,32,.08) !important;\n' +
+    '  backdrop-filter: blur(12px) !important;\n' +
+    '}\n' +
+    '.lf-app.lf-app.lf-app .lf-nav-item { min-width: 0; min-height: 56px !important; gap: 2px !important; padding: 3px 2px !important; border-radius: 14px !important; color: var(--ui-muted) !important; background: transparent !important; font-size: 10px !important; font-weight: 500 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-nav-item .lf-nav-icon { width: 42px !important; height: 29px !important; padding: 4px !important; border-radius: 12px !important; background: transparent !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-nav-item svg { width: 21px !important; height: 21px !important; stroke-width: 1.7 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-nav-item.is-active { color: var(--ui-action) !important; }\n' +
+    '.lf-app.lf-app.lf-app .'... 50700 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\community-visual-contract.test.js:9:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.start (node:internal/test_runner/test:1177:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `/* Shared visual contract. Legacy screen variables resolve to these tokens. */\n:root,\n.lf-app.is-light,\n.lf-auth {\n  --ui-bg: #f7f9f9;\n  --ui-surface: #fff;\n  --ui-fill: #eef3f3;\n  --ui-fill-soft: #f3f6f6;\n  --ui-ink: #17282b;\n  --ui-secondary: #344d51;\n  --ui-muted: #566c70;\n  --ui-line: #dce5e6;\n  --ui-separator: #c6d5d7;\n  --ui-action: #006f6b;\n  --ui-action-pressed: #005a57;\n  --ui-on-action: #fff;\n  --ui-selected: #e1f1ee;\n  --ui-danger: #b83240;\n  --ui-success: #187a48;\n  --ui-gold: #a85d00;\n  --ui-rating: #006f6b;\n  --ui-nav: rgba(255, 255, 255, .96);\n  --ui-bar: rgba(247, 249, 249, .97);\n  --ui-shadow: 0 12px 32px rgba(23, 40, 43, .1);\n  --ui-font: 'Readex Pro', 'Cairo', system-ui, sans-serif;\n  --ui-inline: 20px;\n  --ui-radius: 8px;\n}\n\n:root[data-lorefy-theme='dark'],\n.lf-app.is-dark {\n  color-scheme: dark;\n  --ui-bg: #0b0b0c;\n  --ui-surface: #171719;\n  --ui-fill: #242426;\n  --ui-fill-soft: #1d1d1f;\n  --ui-ink: #f5f5f7;\n  --ui-secondary: #d8d8dc;\n  --ui-muted: #a8a8b0;\n  --ui-line: #303033;\n  --ui-separator: #45454a;\n  --ui-action: #f0f0f3;\n  --ui-action-pressed: #d8d8dc;\n  --ui-on-action: #171719;\n  --ui-selected: #29292c;\n  --ui-rating: #e7e7ec;\n  --ui-danger: #ff8c8c;\n  --ui-success: #73d49a;\n  --ui-gold: #f4b65e;\n  --ui-nav: rgba(23, 23, 25, .96);\n  --ui-bar: rgba(11, 11, 12, .97);\n  --ui-shadow: 0 12px 32px rgba(0, 0, 0, .26);\n}\n\n:root[data-lorefy-theme='pink'],\n.lf-app.is-pink {\n  color-scheme: light;\n  --ui-bg: #fff7fa;\n  --ui-surface: #fff;\n  --ui-fill: #f9eaf0;\n  --ui-fill-soft: #fff0f5;\n  --ui-ink: #30222a;\n  --ui-secondary: #59434d;\n  --ui-muted: #79616c;\n  --ui-line: #ebd9e1;\n  --ui-separator: #ddc3cf;\n  --ui-action: #a53662;\n  --ui-action-pressed: #83264b;\n  --ui-on-action: #fff;\n  --ui-selected: #f7dfe9;\n  --ui-rating: #a53662;\n  --ui-nav: rgba(255,250,252,.96);\n  --ui-bar: rgba(255,247,250,.97);\n}\n\n.lf-app.lf-app.lf-app .lf-appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px; }\n.lf-app.lf-app.lf-app .lf-appearance-option { min-height: 76px; display: grid; justify-items: center; align-content: center; gap: 8px; padding: 10px 4px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-surface); color: var(--ui-ink); font-size: 13px; cursor: pointer; }\n.lf-app.lf-app.lf-app .lf-appearance-option[aria-pressed='true'] { border: 2px solid var(--ui-action); background: var(--ui-selected); }\n.lf-appearance-swatch { width: 26px; height: 26px; border: 1px solid #9996; border-radius: 50%; }\n.lf-app.lf-app.lf-app .lf-diary-entrypoint { border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }\n.lf-app.lf-app.lf-app .lf-diary-entrypoint-icon { border-radius: 8px !important; box-shadow: none !important; }\n.lf-app.lf-app.lf-app :is(.lf-chapter-star.is-filled,.lf-chapter-personal-summary,.lf-rating-display) { color: var(--ui-rating) !important; }\n.lf-app.lf-app.lf-app .lf-rating-feather { stroke: var(--ui-rating); stroke-width: 1.6; }\n.lf-app.lf-app.lf-app .lf-rating-pick-glyph > .lf-rating-feather { stroke: var(--ui-muted) !important; }\n.lf-app.lf-app.lf-app .lf-rating-star > svg { stroke: var(--ui-muted); }\n.lf-app.lf-app.lf-app .lf-rating-star > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n.lf-app.lf-app.lf-app .lf-rating-pick-glyph > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n.lf-app.lf-app.lf-app .lf-profile-banner > div:last-child:has(> span):not(:has(img)) { background: var(--ui-selected) !important; color: var(--ui-action) !important; }\n.lf-app.is-dark .lf-profile-banner { background: #171719 !important; }\n\n:root,\n.lf-app.lf-app.lf-app,\n.lf-auth {\n  --apple-bg: var(--ui-bg);\n  --apple-surface: var(--ui-surface);\n  --apple-surface-2: var(--ui-fill-soft);\n  --apple-fill: var(--ui-fill);\n  --apple-fill-strong: var(--ui-line);\n  --apple-label: var(--ui-ink);\n  --apple-label-2: var(--ui-muted);\n  --apple-label-3: var(--ui-muted);\n  --apple-blue: var(--ui-action);\n  --apple-blue-pressed: var(--ui-action-pressed);\n  --apple-blue-soft: var(--ui-selected);\n  --apple-green: var(--ui-success);\n  --apple-red: var(--ui-danger);\n  --apple-orange: var(--ui-gold);\n  --apple-separator: var(--ui-separator);\n  --apple-separator-soft: var(--ui-line);\n  --apple-card-radius: var(--ui-radius);\n  --apple-inline: var(--ui-inline);\n  --lf-bg: var(--ui-bg);\n  --lf-card: var(--ui-surface);\n  --lf-card-2: var(--ui-fill);\n  --lf-field: var(--ui-fill);\n  --lf-text: var(--ui-ink);\n  --lf-sub: var(--ui-muted);\n  --lf-border: var(--ui-line);\n  --lf-fill: var(--ui-fill);\n  --lf-blue: var(--ui-action);\n  --lf-blue-soft: var(--ui-selected);\n  --lf-accent: var(--ui-action);\n  --lf-accent-text: var(--ui-action);\n  --lf-green: var(--ui-success);\n  --lf-gold: var(--ui-gold);\n  --lf-red: var(--ui-danger);\n  --cinema-bg: var(--ui-bg);\n  --cinema-surface: var(--ui-surface);\n  --cinema-raised: var(--ui-fill);\n  --cinema-ink: var(--ui-ink);\n  --cinema-muted: var(--ui-muted);\n  --cinema-line: var(--ui-line);\n  --cinema-active: var(--ui-action);\n  color: var(--ui-ink);\n  font-family: var(--ui-font) !important;\n  font-size: 14px;\n  line-height: 1.6;\n  background: var(--ui-bg) !important;\n  -webkit-font-smoothing: antialiased;\n  accent-color: var(--ui-action);\n}\n\n.lf-app.lf-app.lf-app *, .lf-auth * { box-sizing: border-box; letter-spacing: 0 !important; }\n.lf-app.lf-app.lf-app :is(button, input, textarea, select), .lf-auth :is(button, input, textarea, select) { font-family: var(--ui-font) !important; }\n.lf-app.lf-app.lf-app :is(h1, h2, h3), .lf-auth :is(h1, h2, h3, .lf-title) { font-family: var(--ui-font) !important; text-wrap: balance; }\n.lf-app.lf-app.lf-app :is(button, a, [role="button"]) { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }\n.lf-app.lf-app.lf-app :is(button, a, input, textarea, select, [role="button"]):focus-visible,\n.lf-auth :is(button, a, input, textarea, select):focus-visible { outline: 2px solid var(--ui-action) !important; outline-offset: 3px; }\n.lf-app.lf-app.lf-app ::selection, .lf-auth ::selection { color: var(--ui-ink); background: var(--ui-selected); }\n.lf-app.lf-app.lf-app :is(input, textarea), .lf-auth :is(input, textarea) { caret-color: var(--ui-action); color: var(--ui-ink); }\n.lf-app.lf-app.lf-app ::placeholder, .lf-auth ::placeholder { color: var(--ui-muted) !important; opacity: 1; }\n.lf-app.lf-app.lf-app :is(button, input, textarea, select):disabled { cursor: default; }\n.lf-app.lf-app.lf-app :is(button, input, textarea):disabled:not(.lf-reader-cover) { opacity: .55; }\n.lf-app.lf-app.lf-app :is(strong, b, output), .lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p { font-variant-numeric: tabular-nums; }\n.lf-app.lf-app.lf-app a { text-underline-offset: 3px; }\n.lf-app.lf-app.lf-app :is(.lf-screen-scroll, .lf-reader-full, .lf-community-thread-body, .nc-sheet) { scrollbar-width: thin; scrollbar-color: var(--ui-separator) transparent; }\n\n/* Repeated app scope outranks late legacy theme rules without touching layout logic. */\n/* Screen chrome stays quiet; the catalog and reader content lead. */\n.lf-app.lf-app.lf-app .lf-page-header,\n.lf-app.lf-app.lf-app .lf-home-header { padding-inline: var(--ui-inline) !important; background: var(--ui-bar) !important; border-bottom-color: var(--ui-line) !important; box-shadow: none !important; }\n.lf-app.lf-app.lf-app .lf-page-header h1 { margin: 0 0 16px !important; font-size: 24px !important; font-weight: 650 !important; line-height: 1.4 !important; }\n.lf-app.lf-app.lf-app .lf-page-header { padding-top: calc(var(--nc-top) + 20px) !important; padding-bottom: 12px !important; }\n.lf-app.lf-app.lf-app .lf-greeting-row { min-height: 58px; }\n.lf-app.lf-app.lf-app .lf-user-greeting strong { font-size: 17px !important; font-weight: 600 !important; }\n.lf-app.lf-app.lf-app .lf-user-greeting small { color: var(--ui-muted) !important; font-size: 11px !important; }\n.lf-app.lf-app.lf-app .lf-icon-button { width: 44px !important; height: 44px !important; border: 0 !important; background: var(--ui-fill) !important; box-shadow: none !important; }\n.lf-app.lf-app.lf-app .lf-home-tabs > div { padding: 4px !important; border: 0 !important; border-radius: 12px !important; background: var(--ui-fill) !important; }\n.lf-app.lf-app.lf-app .lf-home-tabs button { min-height: 44px !important; border-radius: 8px !important; color: var(--ui-muted) !important; font-size: 13px !important; font-weight: 550 !important; }\n.lf-app.lf-app.lf-app .lf-home-tabs button.is-active { color: var(--ui-ink) !important; background: var(--ui-surface) !important; box-shadow: 0 1px 3px rgba(23,40,43,.07) !important; }\n.lf-app.lf-app.lf-app .lf-bottom-nav {\n  width: calc(100% - 24px) !important;\n  max-width: 520px !important;\n  left: 50% !important;\n  right: auto !important;\n  bottom: calc(var(--nc-bottom) + 10px) !important;\n  transform: translateX(-50%) !important;\n  min-height: 68px !important;\n  padding: 5px 6px !important;\n  border: 1px solid var(--ui-line) !important;\n  border-radius: 22px !important;\n  background: var(--ui-nav) !important;\n  box-shadow: 0 6px 20px rgba(12,29,32,.08) !important;\n  backdrop-filter: blur(12px) !important;\n}\n.lf-app.lf-app.lf-app .lf-nav-item { min-width: 0; min-height: 56px !important; gap: 2px !important; padding: 3px 2px !important; border-radius: 14px !important; color: var(--ui-muted) !important; background: transparent !important; font-size: 10px !important; font-weight: 500 !important; }\n.lf-app.lf-app.lf-app .lf-nav-item .lf-nav-icon { width: 42px !important; height: 29px !important; padding: 4px !important; border-radius: 12px !important; background: transparent !important; }\n.lf-app.lf-app.lf-app .lf-nav-item svg { width: 21px !important; height: 21px !important; stroke-width: 1.7 !important; }\n.lf-app.lf-app.lf-app .lf-nav-item.is-active { color: var(--ui-action) !important; }\n.lf-app.lf-app.lf-app .`... 50700 more characters,
+    expected: /--social-avatar: 48px/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\community-visual-contract.test.js:15:1
+✖ composer is a compact themed sheet with an accessible character meter (0.9973ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /lf-community-compose-meter/. Input:
+  
+  '(function (global) {\n' +
+    '  "use strict";\n' +
+    '\n' +
+    '  var doc = global.document;\n' +
+    '  if (!doc) return;\n' +
+    '\n' +
+    '  var LOCAL_POSTS_KEY = "lorefy.user.communityPosts.v1";\n' +
+    '  var LOCAL_REACTIONS_KEY = "lorefy.user.communityReactions.v1";\n' +
+    '  var LISTS_KEY = "lorefy.customLists.v1";\n' +
+    '  var TOPS_KEY = "lorefy.charTopLists.v1";\n' +
+    '  var DIARY_KEY = "lorefy.user.readingDiary.v1";\n' +
+    '  var state = { page:null, posts:[], loaded:false, loading:false, attachment:null, composeSheet:null, unsubscribe:null, refreshTimer:0, legacySeedAttempted:false, filter:"all", followedIds:[], followsLoaded:false };\n' +
+    '\n' +
+    '  function read(key, fallback) {\n' +
+    '    try {\n' +
+    '      var value = JSON.parse(global.localStorage.getItem(key) || "null");\n' +
+    '      return value == null ? fallback : value;\n' +
+    '    } catch (error) { return fallback; }\n' +
+    '  }\n' +
+    '\n' +
+    '  function write(key, value) {\n' +
+    '    try { global.localStorage.setItem(key, JSON.stringify(value)); }\n' +
+    '    catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function el(tag, attrs, children) {\n' +
+    '    var node = doc.createElement(tag);\n' +
+    '    attrs = attrs || {};\n' +
+    '    Object.keys(attrs).forEach(function (key) {\n' +
+    '      var value = attrs[key];\n' +
+    '      if (key === "class") node.className = value;\n' +
+    '      else if (key === "text") node.textContent = value;\n' +
+    '      else if (key === "html") node.innerHTML = value;\n' +
+    '      else if (key === "hidden") node.hidden = !!value;\n' +
+    '      else if (key.indexOf("on") === 0 && typeof value === "function") node.addEventListener(key.slice(2), value);\n' +
+    '      else if (value != null) node.setAttribute(key, value);\n' +
+    '    });\n' +
+    '    (Array.isArray(children) ? children : children ? [children] : []).forEach(function (child) {\n' +
+    '      if (child) node.appendChild(child);\n' +
+    '    });\n' +
+    '    return node;\n' +
+    '  }\n' +
+    '\n' +
+    '  function icon(name, size) {\n' +
+    '    return el("i", { "data-lucide":name, width:String(size || 18), height:String(size || 18), "aria-hidden":"true" });\n' +
+    '  }\n' +
+    '\n' +
+    '  function hydrateIcons(root) {\n' +
+    '    try {\n' +
+    '      if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ root:root || doc });\n' +
+    '    } catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function toast(message) {\n' +
+    '    try {\n' +
+    '      if (global.LorefyUI && global.LorefyUI.toast) return global.LorefyUI.toast(message);\n' +
+    '      global.dispatchEvent(new global.CustomEvent("lorefy:toast", { detail:{ message:message } }));\n' +
+    '    } catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function communityOverlayHost() {\n' +
+    '    return doc.querySelector(".lf-app") || doc.getElementById("screen") || doc.body;\n' +
+    '  }\n' +
+    '  var replyDrafts = new Map();\n' +
+    '\n' +
+    '  function isDemo() {\n' +
+    '    var params = new URLSearchParams(global.location.search || "");\n' +
+    '    return /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(global.location.hostname) && params.get("preview") === "demo";\n' +
+    '  }\n' +
+    '\n' +
+    '  function uuid() {\n' +
+    '    if (global.crypto && global.crypto.randomUUID) return global.crypto.randomUUID();\n' +
+    '    return "00000000-0000-4000-8000-" + String(Date.now()).slice(-12);\n' +
+    '  }\n' +
+    '\n' +
+    '  function identity() {\n' +
+    '    var raw = read("lorefy.identity.v1", {}) || {};\n' +
+    '    var session = read("lorefy.session.v1", {}) || {};\n' +
+    '    return {\n' +
+    '      id:session.userId || raw.id || "00000000-0000-4000-8000-000000000099",\n' +
+    '      name:raw.name || raw.displayName || "قارئ Lorefy",\n' +
+    '      username:String(raw.un || raw.username || "lorefy_reader").replace(/^@/, ""),\n' +
+    '      avatar:raw.avatar || raw.av || ""\n' +
+    '    };\n' +
+    '  }\n' +
+    '\n' +
+    '  function works() {\n' +
+    '    if (Array.isArray(global.LorefyMangaData) && global.LorefyMangaData.length) return global.LorefyMangaData;\n' +
+    '    var seen = {};\n' +
+    '    return Array.prototype.map.call(doc.querySelectorAll(".lf-review-card"), function (card, index) {\n' +
+    '      var paragraphs = card.querySelectorAll("p");\n' +
+    '      var images = card.querySelectorAll("img");\n' +
+    '      var title = String(paragraphs.length > 1 ? paragraphs[paragraphs.length - 1].textContent : "").trim();\n' +
+    '      if (!title || seen[title]) return null;\n' +
+    '      seen[title] = true;\n' +
+    '      return {\n' +
+    '        id:"community-visible-work-" + index,\n' +
+    '        title:title,\n' +
+    '        cover:images.length ? images[images.length - 1].src : ""\n' +
+    '      };\n' +
+    '    }).filter(Boolean);\n' +
+    '  }\n' +
+    '\n' +
+    '  function workById(id) {\n' +
+    '    id = String(id || "");\n' +
+    '    var rows = works();\n' +
+    '    for (var i=0; i<rows.length; i++) if (String(rows[i].id) === id) return rows[i];\n' +
+    '    return null;\n' +
+    '  }\n' +
+    '\n' +
+    '  function workTitle(work) {\n' +
+    '    return String(work && (work.titleEnglish || work.english || work.title || work.ar) || "عمل على Lorefy");\n' +
+    '  }\n' +
+    '\n' +
+    '  function workCover(work) {\n' +
+    '    return String(work && (work.sourceCoverUrl || work.cover || work.coverImage) || "");\n' +
+    '  }\n' +
+    '\n' +
+    '  function timeLabel(value) {\n' +
+    '    var age = Date.now() - new Date(value || Date.now()).getTime();\n' +
+    '    if (age < 60000) return "الآن";\n' +
+    '    if (age < 3600000) return Math.max(1, Math.floor(age / 60000)) + "د";\n' +
+    '    if (age < 86400000) return Math.floor(age / 3600000) + "س";\n' +
+    '    return Math.floor(age / 86400000) + "ي";\n' +
+    '  }\n' +
+    '\n' +
+    '  function avatar(profile, size) {\n' +
+    '    var wrap = el("span", { class:"lf-community-post-avatar", style:"--avatar-size:" + (size || 42) + "px" });\n' +
+    '    if (profile && profile.avatar) {\n' +
+    '      var image = el("img", { src:profile.avatar, alt:"", loading:"lazy", decoding:"async", referrerpolicy:"no-referrer" });\n' +
+    '      image.addEventListener("error", function () { image.remove(); wrap.textContent = String((profile.name || profile.username || "L")).slice(0, 1); });\n' +
+    '      wrap.appendChild(image);\n' +
+    '    } else wrap.textContent = String(profile && (profile.name || profile.username) || "L").slice(0, 1);\n' +
+    '    return wrap;\n' +
+    '  }\n' +
+    '\n' +
+    '  function openProfile(profile) {\n' +
+    '    if (!profile || !profile.id) return;\n' +
+    '    global.dispatchEvent(new global.CustomEvent("lorefy:open-reader-profile", { detail:profile }));\n' +
+    '  }\n' +
+    '\n' +
+    '  function normalizePost(row) {\n' +
+    '    row = row || {};\n' +
+    '    var sourceReactions = row.reactions || {};\n' +
+    '    var sourceMine = sourceReactions.mine;\n' +
+    '    var mine = typeof sourceMine === "object" && sourceMine ? sourceMine : { like:!!sourceMine, dislike:false };\n' +
+    '    return {\n' +
+    '      id:String(row.id || uuid()),\n' +
+    '      user_id:String(row.user_id || row.userId || ""),\n' +
+    '      kind:["text", "list", "top"].indexOf(row.kind) >= 0 ? row.kind : "text",\n' +
+    '      body:String(row.body || ""),\n' +
+    '      attachment:row.attachment && typeof row.attachment === "object" ? row.attachment : {},\n' +
+    '      parent_id:row.parent_id || null,\n' +
+    '      created_at:row.created_at || new Date().toISOString(),\n' +
+    '      profile:row.profile || { id:row.user_id || row.userId, name:row.user || "قارئ Lorefy", username:row.un || "lorefy_reader", avatar:row.av || "" },\n' +
+    '      reactions:{\n' +
+    '        like:Number(sourceReactions.like != null ? sourceReactions.like : row.likes || 0),\n' +
+    '        dislike:Number(sourceReactions.dislike != null ? sourceReactions.dislike : row.dislikes || 0),\n' +
+    '        mine:{ like:!!mine.like, dislike:!!mine.dislike }\n' +
+    '      },\n' +
+    '      replyCount:Number(row.replyCount || 0),\n' +
+    '      demoReplies:Array.isArray(row.demoReplies) ? row.demoReplies : []\n' +
+    '    };\n' +
+    '  }\n' +
+    '\n' +
+    '  function applyLocalReaction(post) {\n' +
+    '    var saved = read(LOCAL_REACTIONS_KEY, {}) || {};\n' +
+    '    var reaction = saved[post.id];\n' +
+    '    if (!reaction || typeof reaction !== "object") return post;\n' +
+    '    var mine = reaction.mine || {};\n' +
+    '    post.reactions = {\n' +
+    '      like:Math.max(0, Number(reaction.like || 0)),\n' +
+    '      dislike:Math.max(0, Number(reaction.dislike || 0)),\n' +
+    '      mine:{ like:!!mine.like, dislike:!!mine.dislike }\n' +
+    '    };\n' +
+    '    return post;\n' +
+    '  }\n' +
+    '\n' +
+    '  function demoPosts() {\n' +
+    '    var seeded = [];\n' +
+    '    if (global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildPosts) {\n' +
+    '      seeded = global.LorefyDemoCommunity.buildPosts(works().slice(0, 30).map(function (work) { return work.id; }));\n' +
+    '    }\n' +
+    '    var mine = read(LOCAL_POSTS_KEY, []);\n' +
+    '    return mine.concat(seeded).map(normalizePost).map(applyLocalReaction).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });\n' +
+    '  }\n' +
+    '\n' +
+    '  async function loadFollowedProfileIds(force) {\n' +
+    '    if (state.followsLoaded && !force) return state.followedIds;\n' +
+    '    var ids = [];\n' +
+    '    var backend = global.LorefyBackend;\n' +
+    '    try {\n' +
+    '      if (backend && backend.getFollowedProfileIds) ids = await backend.getFollowedProfileIds();\n' +
+    '    } catch (error) { console.warn("[Lorefy] followed profiles:", error); }\n' +
+    '    if (isDemo() && (!Array.isArray(ids) || !ids.length) && global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildReaders) {\n' +
+    '      ids = global.LorefyDemoCommunity.buildReaders(works().slice(0, 30).map(function (work) { return work.id; }))\n' +
+    '        .filter(function (profile) { return profile.is_following === true; })\n' +
+    '        .map(function (profile) { return profile.id; });\n' +
+    '    }\n' +
+    '    state.followedIds = Array.from(new Set((Array.isArray(ids) ? ids : []).map(String)));\n' +
+    '    state.followsLoaded = true;\n' +
+    '    return state.followedIds;\n' +
+    '  }\n' +
+    '\n' +
+    '  async function loadPosts(force, older) {\n' +
+    '    if (state.loading || (state.loaded && !force)) return;\n' +
+    '    state.loading = true;\n' +
+    '    state.error = false;\n' +
+    '    var request = state.feedRequest = (state.feedRequest || 0) + 1;\n' +
+    '    var feedPage = state.page;\n' +
+    "    var accountId = String(global.LorefyBackend && global.LorefyBackend.user && global.LorefyBackend.user.id || '');\n" +
+    '    try {\n' +
+    '      var backend = global.LorefyBackend;\n' +
+    '      if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {\n' +
+    '        var cursor = older && state.posts[state.posts.length - 1];\n' +
+    '        var rows = (await backend.listCommunityPosts({ limit:60, before:cursor || null })).map(normalizePost);\n' +
+    "        if (request !== state.feedRequest || feedPage !== state.page || accountId !== String(backend.user && backend.user.id || '')) return;\n" +
+    '        state.hasMore = rows.length === 60;\n' +
+    '        var merged = older ? state.posts.concat(rows) : rows;\n' +
+    '        state.posts = Array.from(new Map(merged.map(function (row) { return [row.id, row]; })).values());\n' +
+    '      }\n' +
+    '      else if (isDemo()) state.posts = demoPosts();\n' +
+    "      else throw new Error('Community connection is unavailable.');\n" +
+    '      await loadFollowedProfileIds(false);\n' +
+    '      if (request !== state.feedRequest || feedPage !== state.page) return;\n' +
+    '      state.loaded = true;\n' +
+    '      renderPostFeed();\n' +
+    '    } catch (error) {\n' +
+    '      if (request !== state.feedRequest || feedPage !== state.page) return;\n' +
+    '      console.warn("[Lorefy] community posts:", e'... 43792 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\community-visual-contract.test.js:17:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `(function (global) {\n  "use strict";\n\n  var doc = global.document;\n  if (!doc) return;\n\n  var LOCAL_POSTS_KEY = "lorefy.user.communityPosts.v1";\n  var LOCAL_REACTIONS_KEY = "lorefy.user.communityReactions.v1";\n  var LISTS_KEY = "lorefy.customLists.v1";\n  var TOPS_KEY = "lorefy.charTopLists.v1";\n  var DIARY_KEY = "lorefy.user.readingDiary.v1";\n  var state = { page:null, posts:[], loaded:false, loading:false, attachment:null, composeSheet:null, unsubscribe:null, refreshTimer:0, legacySeedAttempted:false, filter:"all", followedIds:[], followsLoaded:false };\n\n  function read(key, fallback) {\n    try {\n      var value = JSON.parse(global.localStorage.getItem(key) || "null");\n      return value == null ? fallback : value;\n    } catch (error) { return fallback; }\n  }\n\n  function write(key, value) {\n    try { global.localStorage.setItem(key, JSON.stringify(value)); }\n    catch (error) {}\n  }\n\n  function el(tag, attrs, children) {\n    var node = doc.createElement(tag);\n    attrs = attrs || {};\n    Object.keys(attrs).forEach(function (key) {\n      var value = attrs[key];\n      if (key === "class") node.className = value;\n      else if (key === "text") node.textContent = value;\n      else if (key === "html") node.innerHTML = value;\n      else if (key === "hidden") node.hidden = !!value;\n      else if (key.indexOf("on") === 0 && typeof value === "function") node.addEventListener(key.slice(2), value);\n      else if (value != null) node.setAttribute(key, value);\n    });\n    (Array.isArray(children) ? children : children ? [children] : []).forEach(function (child) {\n      if (child) node.appendChild(child);\n    });\n    return node;\n  }\n\n  function icon(name, size) {\n    return el("i", { "data-lucide":name, width:String(size || 18), height:String(size || 18), "aria-hidden":"true" });\n  }\n\n  function hydrateIcons(root) {\n    try {\n      if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ root:root || doc });\n    } catch (error) {}\n  }\n\n  function toast(message) {\n    try {\n      if (global.LorefyUI && global.LorefyUI.toast) return global.LorefyUI.toast(message);\n      global.dispatchEvent(new global.CustomEvent("lorefy:toast", { detail:{ message:message } }));\n    } catch (error) {}\n  }\n\n  function communityOverlayHost() {\n    return doc.querySelector(".lf-app") || doc.getElementById("screen") || doc.body;\n  }\n  var replyDrafts = new Map();\n\n  function isDemo() {\n    var params = new URLSearchParams(global.location.search || "");\n    return /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(global.location.hostname) && params.get("preview") === "demo";\n  }\n\n  function uuid() {\n    if (global.crypto && global.crypto.randomUUID) return global.crypto.randomUUID();\n    return "00000000-0000-4000-8000-" + String(Date.now()).slice(-12);\n  }\n\n  function identity() {\n    var raw = read("lorefy.identity.v1", {}) || {};\n    var session = read("lorefy.session.v1", {}) || {};\n    return {\n      id:session.userId || raw.id || "00000000-0000-4000-8000-000000000099",\n      name:raw.name || raw.displayName || "قارئ Lorefy",\n      username:String(raw.un || raw.username || "lorefy_reader").replace(/^@/, ""),\n      avatar:raw.avatar || raw.av || ""\n    };\n  }\n\n  function works() {\n    if (Array.isArray(global.LorefyMangaData) && global.LorefyMangaData.length) return global.LorefyMangaData;\n    var seen = {};\n    return Array.prototype.map.call(doc.querySelectorAll(".lf-review-card"), function (card, index) {\n      var paragraphs = card.querySelectorAll("p");\n      var images = card.querySelectorAll("img");\n      var title = String(paragraphs.length > 1 ? paragraphs[paragraphs.length - 1].textContent : "").trim();\n      if (!title || seen[title]) return null;\n      seen[title] = true;\n      return {\n        id:"community-visible-work-" + index,\n        title:title,\n        cover:images.length ? images[images.length - 1].src : ""\n      };\n    }).filter(Boolean);\n  }\n\n  function workById(id) {\n    id = String(id || "");\n    var rows = works();\n    for (var i=0; i<rows.length; i++) if (String(rows[i].id) === id) return rows[i];\n    return null;\n  }\n\n  function workTitle(work) {\n    return String(work && (work.titleEnglish || work.english || work.title || work.ar) || "عمل على Lorefy");\n  }\n\n  function workCover(work) {\n    return String(work && (work.sourceCoverUrl || work.cover || work.coverImage) || "");\n  }\n\n  function timeLabel(value) {\n    var age = Date.now() - new Date(value || Date.now()).getTime();\n    if (age < 60000) return "الآن";\n    if (age < 3600000) return Math.max(1, Math.floor(age / 60000)) + "د";\n    if (age < 86400000) return Math.floor(age / 3600000) + "س";\n    return Math.floor(age / 86400000) + "ي";\n  }\n\n  function avatar(profile, size) {\n    var wrap = el("span", { class:"lf-community-post-avatar", style:"--avatar-size:" + (size || 42) + "px" });\n    if (profile && profile.avatar) {\n      var image = el("img", { src:profile.avatar, alt:"", loading:"lazy", decoding:"async", referrerpolicy:"no-referrer" });\n      image.addEventListener("error", function () { image.remove(); wrap.textContent = String((profile.name || profile.username || "L")).slice(0, 1); });\n      wrap.appendChild(image);\n    } else wrap.textContent = String(profile && (profile.name || profile.username) || "L").slice(0, 1);\n    return wrap;\n  }\n\n  function openProfile(profile) {\n    if (!profile || !profile.id) return;\n    global.dispatchEvent(new global.CustomEvent("lorefy:open-reader-profile", { detail:profile }));\n  }\n\n  function normalizePost(row) {\n    row = row || {};\n    var sourceReactions = row.reactions || {};\n    var sourceMine = sourceReactions.mine;\n    var mine = typeof sourceMine === "object" && sourceMine ? sourceMine : { like:!!sourceMine, dislike:false };\n    return {\n      id:String(row.id || uuid()),\n      user_id:String(row.user_id || row.userId || ""),\n      kind:["text", "list", "top"].indexOf(row.kind) >= 0 ? row.kind : "text",\n      body:String(row.body || ""),\n      attachment:row.attachment && typeof row.attachment === "object" ? row.attachment : {},\n      parent_id:row.parent_id || null,\n      created_at:row.created_at || new Date().toISOString(),\n      profile:row.profile || { id:row.user_id || row.userId, name:row.user || "قارئ Lorefy", username:row.un || "lorefy_reader", avatar:row.av || "" },\n      reactions:{\n        like:Number(sourceReactions.like != null ? sourceReactions.like : row.likes || 0),\n        dislike:Number(sourceReactions.dislike != null ? sourceReactions.dislike : row.dislikes || 0),\n        mine:{ like:!!mine.like, dislike:!!mine.dislike }\n      },\n      replyCount:Number(row.replyCount || 0),\n      demoReplies:Array.isArray(row.demoReplies) ? row.demoReplies : []\n    };\n  }\n\n  function applyLocalReaction(post) {\n    var saved = read(LOCAL_REACTIONS_KEY, {}) || {};\n    var reaction = saved[post.id];\n    if (!reaction || typeof reaction !== "object") return post;\n    var mine = reaction.mine || {};\n    post.reactions = {\n      like:Math.max(0, Number(reaction.like || 0)),\n      dislike:Math.max(0, Number(reaction.dislike || 0)),\n      mine:{ like:!!mine.like, dislike:!!mine.dislike }\n    };\n    return post;\n  }\n\n  function demoPosts() {\n    var seeded = [];\n    if (global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildPosts) {\n      seeded = global.LorefyDemoCommunity.buildPosts(works().slice(0, 30).map(function (work) { return work.id; }));\n    }\n    var mine = read(LOCAL_POSTS_KEY, []);\n    return mine.concat(seeded).map(normalizePost).map(applyLocalReaction).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });\n  }\n\n  async function loadFollowedProfileIds(force) {\n    if (state.followsLoaded && !force) return state.followedIds;\n    var ids = [];\n    var backend = global.LorefyBackend;\n    try {\n      if (backend && backend.getFollowedProfileIds) ids = await backend.getFollowedProfileIds();\n    } catch (error) { console.warn("[Lorefy] followed profiles:", error); }\n    if (isDemo() && (!Array.isArray(ids) || !ids.length) && global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildReaders) {\n      ids = global.LorefyDemoCommunity.buildReaders(works().slice(0, 30).map(function (work) { return work.id; }))\n        .filter(function (profile) { return profile.is_following === true; })\n        .map(function (profile) { return profile.id; });\n    }\n    state.followedIds = Array.from(new Set((Array.isArray(ids) ? ids : []).map(String)));\n    state.followsLoaded = true;\n    return state.followedIds;\n  }\n\n  async function loadPosts(force, older) {\n    if (state.loading || (state.loaded && !force)) return;\n    state.loading = true;\n    state.error = false;\n    var request = state.feedRequest = (state.feedRequest || 0) + 1;\n    var feedPage = state.page;\n    var accountId = String(global.LorefyBackend && global.LorefyBackend.user && global.LorefyBackend.user.id || '');\n    try {\n      var backend = global.LorefyBackend;\n      if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {\n        var cursor = older && state.posts[state.posts.length - 1];\n        var rows = (await backend.listCommunityPosts({ limit:60, before:cursor || null })).map(normalizePost);\n        if (request !== state.feedRequest || feedPage !== state.page || accountId !== String(backend.user && backend.user.id || '')) return;\n        state.hasMore = rows.length === 60;\n        var merged = older ? state.posts.concat(rows) : rows;\n        state.posts = Array.from(new Map(merged.map(function (row) { return [row.id, row]; })).values());\n      }\n      else if (isDemo()) state.posts = demoPosts();\n      else throw new Error('Community connection is unavailable.');\n      await loadFollowedProfileIds(false);\n      if (request !== state.feedRequest || feedPage !== state.page) return;\n      state.loaded = true;\n      renderPostFeed();\n    } catch (error) {\n      if (request !== state.feedRequest || feedPage !== state.page) return;\n      console.warn("[Lorefy] community posts:", e`... 43792 more characters,
+    expected: /lf-community-compose-meter/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\community-visual-contract.test.js:23:1
+✖ pink surface and supplementary accents are pink, not inherited teal and white (1.2877ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '#FFFFFF'
+  - '#FFFAFC'
+         ^
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\community-visual-contract.test.js:26:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '#FFFFFF',
+    expected: '#FFFAFC',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\community-visual-contract.test.js:32:1
+✖ pink default profile art and type badges use appearance tokens (1.0706ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /\.is-pink \.lf-type-badge/. Input:
+  
+  '/* Shared visual contract. Legacy screen variables resolve to these tokens. */\n' +
+    ':root,\n' +
+    '.lf-app.is-light,\n' +
+    '.lf-auth {\n' +
+    '  --ui-bg: #f7f9f9;\n' +
+    '  --ui-surface: #fff;\n' +
+    '  --ui-fill: #eef3f3;\n' +
+    '  --ui-fill-soft: #f3f6f6;\n' +
+    '  --ui-ink: #17282b;\n' +
+    '  --ui-secondary: #344d51;\n' +
+    '  --ui-muted: #566c70;\n' +
+    '  --ui-line: #dce5e6;\n' +
+    '  --ui-separator: #c6d5d7;\n' +
+    '  --ui-action: #006f6b;\n' +
+    '  --ui-action-pressed: #005a57;\n' +
+    '  --ui-on-action: #fff;\n' +
+    '  --ui-selected: #e1f1ee;\n' +
+    '  --ui-danger: #b83240;\n' +
+    '  --ui-success: #187a48;\n' +
+    '  --ui-gold: #a85d00;\n' +
+    '  --ui-rating: #006f6b;\n' +
+    '  --ui-nav: rgba(255, 255, 255, .96);\n' +
+    '  --ui-bar: rgba(247, 249, 249, .97);\n' +
+    '  --ui-shadow: 0 12px 32px rgba(23, 40, 43, .1);\n' +
+    "  --ui-font: 'Readex Pro', 'Cairo', system-ui, sans-serif;\n" +
+    '  --ui-inline: 20px;\n' +
+    '  --ui-radius: 8px;\n' +
+    '}\n' +
+    '\n' +
+    ":root[data-lorefy-theme='dark'],\n" +
+    '.lf-app.is-dark {\n' +
+    '  color-scheme: dark;\n' +
+    '  --ui-bg: #0b0b0c;\n' +
+    '  --ui-surface: #171719;\n' +
+    '  --ui-fill: #242426;\n' +
+    '  --ui-fill-soft: #1d1d1f;\n' +
+    '  --ui-ink: #f5f5f7;\n' +
+    '  --ui-secondary: #d8d8dc;\n' +
+    '  --ui-muted: #a8a8b0;\n' +
+    '  --ui-line: #303033;\n' +
+    '  --ui-separator: #45454a;\n' +
+    '  --ui-action: #f0f0f3;\n' +
+    '  --ui-action-pressed: #d8d8dc;\n' +
+    '  --ui-on-action: #171719;\n' +
+    '  --ui-selected: #29292c;\n' +
+    '  --ui-rating: #e7e7ec;\n' +
+    '  --ui-danger: #ff8c8c;\n' +
+    '  --ui-success: #73d49a;\n' +
+    '  --ui-gold: #f4b65e;\n' +
+    '  --ui-nav: rgba(23, 23, 25, .96);\n' +
+    '  --ui-bar: rgba(11, 11, 12, .97);\n' +
+    '  --ui-shadow: 0 12px 32px rgba(0, 0, 0, .26);\n' +
+    '}\n' +
+    '\n' +
+    ":root[data-lorefy-theme='pink'],\n" +
+    '.lf-app.is-pink {\n' +
+    '  color-scheme: light;\n' +
+    '  --ui-bg: #fff7fa;\n' +
+    '  --ui-surface: #fff;\n' +
+    '  --ui-fill: #f9eaf0;\n' +
+    '  --ui-fill-soft: #fff0f5;\n' +
+    '  --ui-ink: #30222a;\n' +
+    '  --ui-secondary: #59434d;\n' +
+    '  --ui-muted: #79616c;\n' +
+    '  --ui-line: #ebd9e1;\n' +
+    '  --ui-separator: #ddc3cf;\n' +
+    '  --ui-action: #a53662;\n' +
+    '  --ui-action-pressed: #83264b;\n' +
+    '  --ui-on-action: #fff;\n' +
+    '  --ui-selected: #f7dfe9;\n' +
+    '  --ui-rating: #a53662;\n' +
+    '  --ui-nav: rgba(255,250,252,.96);\n' +
+    '  --ui-bar: rgba(255,247,250,.97);\n' +
+    '}\n' +
+    '\n' +
+    '.lf-app.lf-app.lf-app .lf-appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px; }\n' +
+    '.lf-app.lf-app.lf-app .lf-appearance-option { min-height: 76px; display: grid; justify-items: center; align-content: center; gap: 8px; padding: 10px 4px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-surface); color: var(--ui-ink); font-size: 13px; cursor: pointer; }\n' +
+    ".lf-app.lf-app.lf-app .lf-appearance-option[aria-pressed='true'] { border: 2px solid var(--ui-action); background: var(--ui-selected); }\n" +
+    '.lf-appearance-swatch { width: 26px; height: 26px; border: 1px solid #9996; border-radius: 50%; }\n' +
+    '.lf-app.lf-app.lf-app .lf-diary-entrypoint { border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-diary-entrypoint-icon { border-radius: 8px !important; box-shadow: none !important; }\n' +
+    '.lf-app.lf-app.lf-app :is(.lf-chapter-star.is-filled,.lf-chapter-personal-summary,.lf-rating-display) { color: var(--ui-rating) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-feather { stroke: var(--ui-rating); stroke-width: 1.6; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-pick-glyph > .lf-rating-feather { stroke: var(--ui-muted) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-star > svg { stroke: var(--ui-muted); }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-star > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-rating-pick-glyph > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-profile-banner > div:last-child:has(> span):not(:has(img)) { background: var(--ui-selected) !important; color: var(--ui-action) !important; }\n' +
+    '.lf-app.is-dark .lf-profile-banner { background: #171719 !important; }\n' +
+    '\n' +
+    ':root,\n' +
+    '.lf-app.lf-app.lf-app,\n' +
+    '.lf-auth {\n' +
+    '  --apple-bg: var(--ui-bg);\n' +
+    '  --apple-surface: var(--ui-surface);\n' +
+    '  --apple-surface-2: var(--ui-fill-soft);\n' +
+    '  --apple-fill: var(--ui-fill);\n' +
+    '  --apple-fill-strong: var(--ui-line);\n' +
+    '  --apple-label: var(--ui-ink);\n' +
+    '  --apple-label-2: var(--ui-muted);\n' +
+    '  --apple-label-3: var(--ui-muted);\n' +
+    '  --apple-blue: var(--ui-action);\n' +
+    '  --apple-blue-pressed: var(--ui-action-pressed);\n' +
+    '  --apple-blue-soft: var(--ui-selected);\n' +
+    '  --apple-green: var(--ui-success);\n' +
+    '  --apple-red: var(--ui-danger);\n' +
+    '  --apple-orange: var(--ui-gold);\n' +
+    '  --apple-separator: var(--ui-separator);\n' +
+    '  --apple-separator-soft: var(--ui-line);\n' +
+    '  --apple-card-radius: var(--ui-radius);\n' +
+    '  --apple-inline: var(--ui-inline);\n' +
+    '  --lf-bg: var(--ui-bg);\n' +
+    '  --lf-card: var(--ui-surface);\n' +
+    '  --lf-card-2: var(--ui-fill);\n' +
+    '  --lf-field: var(--ui-fill);\n' +
+    '  --lf-text: var(--ui-ink);\n' +
+    '  --lf-sub: var(--ui-muted);\n' +
+    '  --lf-border: var(--ui-line);\n' +
+    '  --lf-fill: var(--ui-fill);\n' +
+    '  --lf-blue: var(--ui-action);\n' +
+    '  --lf-blue-soft: var(--ui-selected);\n' +
+    '  --lf-accent: var(--ui-action);\n' +
+    '  --lf-accent-text: var(--ui-action);\n' +
+    '  --lf-green: var(--ui-success);\n' +
+    '  --lf-gold: var(--ui-gold);\n' +
+    '  --lf-red: var(--ui-danger);\n' +
+    '  --cinema-bg: var(--ui-bg);\n' +
+    '  --cinema-surface: var(--ui-surface);\n' +
+    '  --cinema-raised: var(--ui-fill);\n' +
+    '  --cinema-ink: var(--ui-ink);\n' +
+    '  --cinema-muted: var(--ui-muted);\n' +
+    '  --cinema-line: var(--ui-line);\n' +
+    '  --cinema-active: var(--ui-action);\n' +
+    '  color: var(--ui-ink);\n' +
+    '  font-family: var(--ui-font) !important;\n' +
+    '  font-size: 14px;\n' +
+    '  line-height: 1.6;\n' +
+    '  background: var(--ui-bg) !important;\n' +
+    '  -webkit-font-smoothing: antialiased;\n' +
+    '  accent-color: var(--ui-action);\n' +
+    '}\n' +
+    '\n' +
+    '.lf-app.lf-app.lf-app *, .lf-auth * { box-sizing: border-box; letter-spacing: 0 !important; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, input, textarea, select), .lf-auth :is(button, input, textarea, select) { font-family: var(--ui-font) !important; }\n' +
+    '.lf-app.lf-app.lf-app :is(h1, h2, h3), .lf-auth :is(h1, h2, h3, .lf-title) { font-family: var(--ui-font) !important; text-wrap: balance; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, a, [role="button"]) { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, a, input, textarea, select, [role="button"]):focus-visible,\n' +
+    '.lf-auth :is(button, a, input, textarea, select):focus-visible { outline: 2px solid var(--ui-action) !important; outline-offset: 3px; }\n' +
+    '.lf-app.lf-app.lf-app ::selection, .lf-auth ::selection { color: var(--ui-ink); background: var(--ui-selected); }\n' +
+    '.lf-app.lf-app.lf-app :is(input, textarea), .lf-auth :is(input, textarea) { caret-color: var(--ui-action); color: var(--ui-ink); }\n' +
+    '.lf-app.lf-app.lf-app ::placeholder, .lf-auth ::placeholder { color: var(--ui-muted) !important; opacity: 1; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, input, textarea, select):disabled { cursor: default; }\n' +
+    '.lf-app.lf-app.lf-app :is(button, input, textarea):disabled:not(.lf-reader-cover) { opacity: .55; }\n' +
+    '.lf-app.lf-app.lf-app :is(strong, b, output), .lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p { font-variant-numeric: tabular-nums; }\n' +
+    '.lf-app.lf-app.lf-app a { text-underline-offset: 3px; }\n' +
+    '.lf-app.lf-app.lf-app :is(.lf-screen-scroll, .lf-reader-full, .lf-community-thread-body, .nc-sheet) { scrollbar-width: thin; scrollbar-color: var(--ui-separator) transparent; }\n' +
+    '\n' +
+    '/* Repeated app scope outranks late legacy theme rules without touching layout logic. */\n' +
+    '/* Screen chrome stays quiet; the catalog and reader content lead. */\n' +
+    '.lf-app.lf-app.lf-app .lf-page-header,\n' +
+    '.lf-app.lf-app.lf-app .lf-home-header { padding-inline: var(--ui-inline) !important; background: var(--ui-bar) !important; border-bottom-color: var(--ui-line) !important; box-shadow: none !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-page-header h1 { margin: 0 0 16px !important; font-size: 24px !important; font-weight: 650 !important; line-height: 1.4 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-page-header { padding-top: calc(var(--nc-top) + 20px) !important; padding-bottom: 12px !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-greeting-row { min-height: 58px; }\n' +
+    '.lf-app.lf-app.lf-app .lf-user-greeting strong { font-size: 17px !important; font-weight: 600 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-user-greeting small { color: var(--ui-muted) !important; font-size: 11px !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-icon-button { width: 44px !important; height: 44px !important; border: 0 !important; background: var(--ui-fill) !important; box-shadow: none !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-home-tabs > div { padding: 4px !important; border: 0 !important; border-radius: 12px !important; background: var(--ui-fill) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-home-tabs button { min-height: 44px !important; border-radius: 8px !important; color: var(--ui-muted) !important; font-size: 13px !important; font-weight: 550 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-home-tabs button.is-active { color: var(--ui-ink) !important; background: var(--ui-surface) !important; box-shadow: 0 1px 3px rgba(23,40,43,.07) !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-bottom-nav {\n' +
+    '  width: calc(100% - 24px) !important;\n' +
+    '  max-width: 520px !important;\n' +
+    '  left: 50% !important;\n' +
+    '  right: auto !important;\n' +
+    '  bottom: calc(var(--nc-bottom) + 10px) !important;\n' +
+    '  transform: translateX(-50%) !important;\n' +
+    '  min-height: 68px !important;\n' +
+    '  padding: 5px 6px !important;\n' +
+    '  border: 1px solid var(--ui-line) !important;\n' +
+    '  border-radius: 22px !important;\n' +
+    '  background: var(--ui-nav) !important;\n' +
+    '  box-shadow: 0 6px 20px rgba(12,29,32,.08) !important;\n' +
+    '  backdrop-filter: blur(12px) !important;\n' +
+    '}\n' +
+    '.lf-app.lf-app.lf-app .lf-nav-item { min-width: 0; min-height: 56px !important; gap: 2px !important; padding: 3px 2px !important; border-radius: 14px !important; color: var(--ui-muted) !important; background: transparent !important; font-size: 10px !important; font-weight: 500 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-nav-item .lf-nav-icon { width: 42px !important; height: 29px !important; padding: 4px !important; border-radius: 12px !important; background: transparent !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-nav-item svg { width: 21px !important; height: 21px !important; stroke-width: 1.7 !important; }\n' +
+    '.lf-app.lf-app.lf-app .lf-nav-item.is-active { color: var(--ui-action) !important; }\n' +
+    '.lf-app.lf-app.lf-app .'... 50700 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\community-visual-contract.test.js:34:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `/* Shared visual contract. Legacy screen variables resolve to these tokens. */\n:root,\n.lf-app.is-light,\n.lf-auth {\n  --ui-bg: #f7f9f9;\n  --ui-surface: #fff;\n  --ui-fill: #eef3f3;\n  --ui-fill-soft: #f3f6f6;\n  --ui-ink: #17282b;\n  --ui-secondary: #344d51;\n  --ui-muted: #566c70;\n  --ui-line: #dce5e6;\n  --ui-separator: #c6d5d7;\n  --ui-action: #006f6b;\n  --ui-action-pressed: #005a57;\n  --ui-on-action: #fff;\n  --ui-selected: #e1f1ee;\n  --ui-danger: #b83240;\n  --ui-success: #187a48;\n  --ui-gold: #a85d00;\n  --ui-rating: #006f6b;\n  --ui-nav: rgba(255, 255, 255, .96);\n  --ui-bar: rgba(247, 249, 249, .97);\n  --ui-shadow: 0 12px 32px rgba(23, 40, 43, .1);\n  --ui-font: 'Readex Pro', 'Cairo', system-ui, sans-serif;\n  --ui-inline: 20px;\n  --ui-radius: 8px;\n}\n\n:root[data-lorefy-theme='dark'],\n.lf-app.is-dark {\n  color-scheme: dark;\n  --ui-bg: #0b0b0c;\n  --ui-surface: #171719;\n  --ui-fill: #242426;\n  --ui-fill-soft: #1d1d1f;\n  --ui-ink: #f5f5f7;\n  --ui-secondary: #d8d8dc;\n  --ui-muted: #a8a8b0;\n  --ui-line: #303033;\n  --ui-separator: #45454a;\n  --ui-action: #f0f0f3;\n  --ui-action-pressed: #d8d8dc;\n  --ui-on-action: #171719;\n  --ui-selected: #29292c;\n  --ui-rating: #e7e7ec;\n  --ui-danger: #ff8c8c;\n  --ui-success: #73d49a;\n  --ui-gold: #f4b65e;\n  --ui-nav: rgba(23, 23, 25, .96);\n  --ui-bar: rgba(11, 11, 12, .97);\n  --ui-shadow: 0 12px 32px rgba(0, 0, 0, .26);\n}\n\n:root[data-lorefy-theme='pink'],\n.lf-app.is-pink {\n  color-scheme: light;\n  --ui-bg: #fff7fa;\n  --ui-surface: #fff;\n  --ui-fill: #f9eaf0;\n  --ui-fill-soft: #fff0f5;\n  --ui-ink: #30222a;\n  --ui-secondary: #59434d;\n  --ui-muted: #79616c;\n  --ui-line: #ebd9e1;\n  --ui-separator: #ddc3cf;\n  --ui-action: #a53662;\n  --ui-action-pressed: #83264b;\n  --ui-on-action: #fff;\n  --ui-selected: #f7dfe9;\n  --ui-rating: #a53662;\n  --ui-nav: rgba(255,250,252,.96);\n  --ui-bar: rgba(255,247,250,.97);\n}\n\n.lf-app.lf-app.lf-app .lf-appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px; }\n.lf-app.lf-app.lf-app .lf-appearance-option { min-height: 76px; display: grid; justify-items: center; align-content: center; gap: 8px; padding: 10px 4px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-surface); color: var(--ui-ink); font-size: 13px; cursor: pointer; }\n.lf-app.lf-app.lf-app .lf-appearance-option[aria-pressed='true'] { border: 2px solid var(--ui-action); background: var(--ui-selected); }\n.lf-appearance-swatch { width: 26px; height: 26px; border: 1px solid #9996; border-radius: 50%; }\n.lf-app.lf-app.lf-app .lf-diary-entrypoint { border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }\n.lf-app.lf-app.lf-app .lf-diary-entrypoint-icon { border-radius: 8px !important; box-shadow: none !important; }\n.lf-app.lf-app.lf-app :is(.lf-chapter-star.is-filled,.lf-chapter-personal-summary,.lf-rating-display) { color: var(--ui-rating) !important; }\n.lf-app.lf-app.lf-app .lf-rating-feather { stroke: var(--ui-rating); stroke-width: 1.6; }\n.lf-app.lf-app.lf-app .lf-rating-pick-glyph > .lf-rating-feather { stroke: var(--ui-muted) !important; }\n.lf-app.lf-app.lf-app .lf-rating-star > svg { stroke: var(--ui-muted); }\n.lf-app.lf-app.lf-app .lf-rating-star > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n.lf-app.lf-app.lf-app .lf-rating-pick-glyph > span > svg { stroke: var(--ui-rating); fill: color-mix(in srgb, var(--ui-rating) 22%, var(--ui-surface)) !important; }\n.lf-app.lf-app.lf-app .lf-profile-banner > div:last-child:has(> span):not(:has(img)) { background: var(--ui-selected) !important; color: var(--ui-action) !important; }\n.lf-app.is-dark .lf-profile-banner { background: #171719 !important; }\n\n:root,\n.lf-app.lf-app.lf-app,\n.lf-auth {\n  --apple-bg: var(--ui-bg);\n  --apple-surface: var(--ui-surface);\n  --apple-surface-2: var(--ui-fill-soft);\n  --apple-fill: var(--ui-fill);\n  --apple-fill-strong: var(--ui-line);\n  --apple-label: var(--ui-ink);\n  --apple-label-2: var(--ui-muted);\n  --apple-label-3: var(--ui-muted);\n  --apple-blue: var(--ui-action);\n  --apple-blue-pressed: var(--ui-action-pressed);\n  --apple-blue-soft: var(--ui-selected);\n  --apple-green: var(--ui-success);\n  --apple-red: var(--ui-danger);\n  --apple-orange: var(--ui-gold);\n  --apple-separator: var(--ui-separator);\n  --apple-separator-soft: var(--ui-line);\n  --apple-card-radius: var(--ui-radius);\n  --apple-inline: var(--ui-inline);\n  --lf-bg: var(--ui-bg);\n  --lf-card: var(--ui-surface);\n  --lf-card-2: var(--ui-fill);\n  --lf-field: var(--ui-fill);\n  --lf-text: var(--ui-ink);\n  --lf-sub: var(--ui-muted);\n  --lf-border: var(--ui-line);\n  --lf-fill: var(--ui-fill);\n  --lf-blue: var(--ui-action);\n  --lf-blue-soft: var(--ui-selected);\n  --lf-accent: var(--ui-action);\n  --lf-accent-text: var(--ui-action);\n  --lf-green: var(--ui-success);\n  --lf-gold: var(--ui-gold);\n  --lf-red: var(--ui-danger);\n  --cinema-bg: var(--ui-bg);\n  --cinema-surface: var(--ui-surface);\n  --cinema-raised: var(--ui-fill);\n  --cinema-ink: var(--ui-ink);\n  --cinema-muted: var(--ui-muted);\n  --cinema-line: var(--ui-line);\n  --cinema-active: var(--ui-action);\n  color: var(--ui-ink);\n  font-family: var(--ui-font) !important;\n  font-size: 14px;\n  line-height: 1.6;\n  background: var(--ui-bg) !important;\n  -webkit-font-smoothing: antialiased;\n  accent-color: var(--ui-action);\n}\n\n.lf-app.lf-app.lf-app *, .lf-auth * { box-sizing: border-box; letter-spacing: 0 !important; }\n.lf-app.lf-app.lf-app :is(button, input, textarea, select), .lf-auth :is(button, input, textarea, select) { font-family: var(--ui-font) !important; }\n.lf-app.lf-app.lf-app :is(h1, h2, h3), .lf-auth :is(h1, h2, h3, .lf-title) { font-family: var(--ui-font) !important; text-wrap: balance; }\n.lf-app.lf-app.lf-app :is(button, a, [role="button"]) { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }\n.lf-app.lf-app.lf-app :is(button, a, input, textarea, select, [role="button"]):focus-visible,\n.lf-auth :is(button, a, input, textarea, select):focus-visible { outline: 2px solid var(--ui-action) !important; outline-offset: 3px; }\n.lf-app.lf-app.lf-app ::selection, .lf-auth ::selection { color: var(--ui-ink); background: var(--ui-selected); }\n.lf-app.lf-app.lf-app :is(input, textarea), .lf-auth :is(input, textarea) { caret-color: var(--ui-action); color: var(--ui-ink); }\n.lf-app.lf-app.lf-app ::placeholder, .lf-auth ::placeholder { color: var(--ui-muted) !important; opacity: 1; }\n.lf-app.lf-app.lf-app :is(button, input, textarea, select):disabled { cursor: default; }\n.lf-app.lf-app.lf-app :is(button, input, textarea):disabled:not(.lf-reader-cover) { opacity: .55; }\n.lf-app.lf-app.lf-app :is(strong, b, output), .lf-app.lf-app.lf-app .lf-owner-metrics-with-posts p { font-variant-numeric: tabular-nums; }\n.lf-app.lf-app.lf-app a { text-underline-offset: 3px; }\n.lf-app.lf-app.lf-app :is(.lf-screen-scroll, .lf-reader-full, .lf-community-thread-body, .nc-sheet) { scrollbar-width: thin; scrollbar-color: var(--ui-separator) transparent; }\n\n/* Repeated app scope outranks late legacy theme rules without touching layout logic. */\n/* Screen chrome stays quiet; the catalog and reader content lead. */\n.lf-app.lf-app.lf-app .lf-page-header,\n.lf-app.lf-app.lf-app .lf-home-header { padding-inline: var(--ui-inline) !important; background: var(--ui-bar) !important; border-bottom-color: var(--ui-line) !important; box-shadow: none !important; }\n.lf-app.lf-app.lf-app .lf-page-header h1 { margin: 0 0 16px !important; font-size: 24px !important; font-weight: 650 !important; line-height: 1.4 !important; }\n.lf-app.lf-app.lf-app .lf-page-header { padding-top: calc(var(--nc-top) + 20px) !important; padding-bottom: 12px !important; }\n.lf-app.lf-app.lf-app .lf-greeting-row { min-height: 58px; }\n.lf-app.lf-app.lf-app .lf-user-greeting strong { font-size: 17px !important; font-weight: 600 !important; }\n.lf-app.lf-app.lf-app .lf-user-greeting small { color: var(--ui-muted) !important; font-size: 11px !important; }\n.lf-app.lf-app.lf-app .lf-icon-button { width: 44px !important; height: 44px !important; border: 0 !important; background: var(--ui-fill) !important; box-shadow: none !important; }\n.lf-app.lf-app.lf-app .lf-home-tabs > div { padding: 4px !important; border: 0 !important; border-radius: 12px !important; background: var(--ui-fill) !important; }\n.lf-app.lf-app.lf-app .lf-home-tabs button { min-height: 44px !important; border-radius: 8px !important; color: var(--ui-muted) !important; font-size: 13px !important; font-weight: 550 !important; }\n.lf-app.lf-app.lf-app .lf-home-tabs button.is-active { color: var(--ui-ink) !important; background: var(--ui-surface) !important; box-shadow: 0 1px 3px rgba(23,40,43,.07) !important; }\n.lf-app.lf-app.lf-app .lf-bottom-nav {\n  width: calc(100% - 24px) !important;\n  max-width: 520px !important;\n  left: 50% !important;\n  right: auto !important;\n  bottom: calc(var(--nc-bottom) + 10px) !important;\n  transform: translateX(-50%) !important;\n  min-height: 68px !important;\n  padding: 5px 6px !important;\n  border: 1px solid var(--ui-line) !important;\n  border-radius: 22px !important;\n  background: var(--ui-nav) !important;\n  box-shadow: 0 6px 20px rgba(12,29,32,.08) !important;\n  backdrop-filter: blur(12px) !important;\n}\n.lf-app.lf-app.lf-app .lf-nav-item { min-width: 0; min-height: 56px !important; gap: 2px !important; padding: 3px 2px !important; border-radius: 14px !important; color: var(--ui-muted) !important; background: transparent !important; font-size: 10px !important; font-weight: 500 !important; }\n.lf-app.lf-app.lf-app .lf-nav-item .lf-nav-icon { width: 42px !important; height: 29px !important; padding: 4px !important; border-radius: 12px !important; background: transparent !important; }\n.lf-app.lf-app.lf-app .lf-nav-item svg { width: 21px !important; height: 21px !important; stroke-width: 1.7 !important; }\n.lf-app.lf-app.lf-app .lf-nav-item.is-active { color: var(--ui-action) !important; }\n.lf-app.lf-app.lf-app .`... 50700 more characters,
+    expected: /\.is-pink \.lf-type-badge/,
+    operator: 'match',
+    diff: 'simple'
+  }

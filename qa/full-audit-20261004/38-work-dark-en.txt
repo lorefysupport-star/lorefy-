@@ -1,0 +1,200 @@
+- button "Back":
+- button "Share work":
+- button "Chapter notifications":
+- banner:
+  - img "Hunter x Hunter"
+  - paragraph: Manga · 1998
+  - heading "Hunter x Hunter" [level=1]
+  - paragraph: Togashi, Yoshihiro
+  - strong: "4.4"
+  - generic: out of 5
+  - generic: Ongoing
+  - generic: 420 chapters
+  - generic: Shounen Jump (Weekly)
+  - navigation "Work sections":
+    - button "Overview"
+    - button "Chapters"
+    - button "Reader reviews"
+- generic: Read
+- button "Edit"
+- generic: No reading progress saved yet
+- generic: Ongoing
+- generic "Detailed ratings"
+- paragraph: Story
+- paragraph: "\"Secret treasure hoards, undiscovered wealth... mystical places, unexplored frontiers... 'The mysterious unknown.' There's magic in such words for those captivated by its spell. They are called 'Hunters'!\" Gon Freecss wants to become a Hunter so he can find his father, a man who abandoned him to pursue a life of adventure. But it's not that simple: only one in one hundred thousand can pass the Hunter Exam, and that is just the first obstacle on his journey. During the Hunter Exam, Gon befriends many other potential Hunters, such as the mysterious Killua; the revenge-driven Kurapika; and Leorio, who aims to become a doctor. There's a world of adventure and peril awaiting, and those who embrace it with open arms can become the greatest Hunters of them all! [Written by MAL Rewrite]"
+- button "More"
+- button "Add to library":
+  - generic: Read
+- button "Write a review":
+  - generic: Review work
+- button "More work options":
+- region "فصول Hunter x Hunter":
+  - heading "Chapters" [level=2]
+  - generic: 420 chapters
+  - strong: Reading progress
+  - generic: 420 / 420
+  - progressbar "Chapters read"
+  - generic: Chapter range
+  - combobox "Chapter range":
+    - option "1–10" [selected]
+    - option "11–20"
+    - option "21–30"
+    - option "31–40"
+    - option "41–50"
+    - option "51–60"
+    - option "61–70"
+    - option "71–80"
+    - option "81–90"
+    - option "91–100"
+    - option "101–110"
+    - option "111–120"
+    - option "121–130"
+    - option "131–140"
+    - option "141–150"
+    - option "151–160"
+    - option "161–170"
+    - option "171–180"
+    - option "181–190"
+    - option "191–200"
+    - option "201–210"
+    - option "211–220"
+    - option "221–230"
+    - option "231–240"
+    - option "241–250"
+    - option "251–260"
+    - option "261–270"
+    - option "271–280"
+    - option "281–290"
+    - option "291–300"
+    - option "301–310"
+    - option "311–320"
+    - option "321–330"
+    - option "331–340"
+    - option "341–350"
+    - option "351–360"
+    - option "361–370"
+    - option "371–380"
+    - option "381–390"
+    - option "391–400"
+    - option "401–410"
+    - option "411–420"
+  - button "Go to chapter":
+  - button "Chapter 1, open rating and comment":
+    - img "غلاف الفصل 1"
+    - generic: Chapter 1
+    - generic: The Day of Departure
+    - generic: Volume 1 · 32 pages
+    - generic: March 2, 1998
+    - generic: Rate now
+  - button "Read through chapter 1" [pressed]:
+    - generic: Read
+  - button "Chapter 2, open rating and comment":
+    - img "غلاف الفصل 2"
+    - generic: Chapter 2
+    - generic: An Encounter in the Storm
+    - generic: Volume 1 · 23 pages
+    - generic: March 9, 1998
+    - generic: Rate now
+  - button "Read through chapter 2" [pressed]:
+    - generic: Read
+  - button "Chapter 3, open rating and comment":
+    - img "غلاف الفصل 3"
+    - generic: Chapter 3
+    - generic: The Ultimate Choice
+    - generic: Volume 1 · 19 pages
+    - generic: March 16, 1998
+    - generic: Rate now
+  - button "Read through chapter 3" [pressed]:
+    - generic: Read
+  - button "Chapter 4, open rating and comment":
+    - img "غلاف الفصل 4"
+    - generic: Chapter 4
+    - generic: "Kiriko: Wicked Magical Vulpes"
+    - generic: Volume 1 · 21 pages
+    - generic: March 23, 1998
+    - generic: Rate now
+  - button "Read through chapter 4" [pressed]:
+    - generic: Read
+  - button "Chapter 5, open rating and comment":
+    - img "غلاف الفصل 5"
+    - generic: Chapter 5
+    - generic: "The First Phase Begins: Part 1"
+    - generic: Volume 1 · 19 pages
+    - generic: March 30, 1998
+    - generic: Rate now
+  - button "Read through chapter 5" [pressed]:
+    - generic: Read
+  - button "Chapter 6, open rating and comment":
+    - img "غلاف الفصل 6"
+    - generic: Chapter 6
+    - generic: "The First Phase Begins: Part 2"
+    - generic: Volume 1 · 19 pages
+    - generic: April 6, 1998
+    - generic: Rate now
+  - button "Read through chapter 6" [pressed]:
+    - generic: Read
+  - button "Chapter 7, open rating and comment":
+    - img "غلاف الفصل 7"
+    - generic: Chapter 7
+    - generic: Respective Reasons
+    - generic: Volume 1 · 19 pages
+    - generic: April 13, 1998
+    - generic: Rate now
+  - button "Read through chapter 7" [pressed]:
+    - generic: Read
+  - button "Chapter 8, open rating and comment":
+    - img "غلاف الفصل 8"
+    - generic: Chapter 8
+    - generic: The Other Enemy
+    - generic: Volume 1 · 19 pages
+    - generic: April 20, 1998
+    - generic: Rate now
+  - button "Read through chapter 8" [pressed]:
+    - generic: Read
+  - button "Chapter 9, open rating and comment":
+    - img "غلاف الفصل 9"
+    - generic: Chapter 9
+    - generic: A Struggle in the Mist
+    - generic: Volume 2 · 18 pages
+    - generic: April 27, 1998
+    - generic: Rate now
+  - button "Read through chapter 9" [pressed]:
+    - generic: Read
+  - button "Chapter 10, open rating and comment":
+    - img "غلاف الفصل 10"
+    - generic: Chapter 10
+    - generic: An Unexpected Task
+    - generic: Volume 2 · 19 pages
+    - generic: May 11, 1998
+    - generic: Rate now
+  - button "Read through chapter 10" [pressed]:
+    - generic: Read
+  - button "Open reading diary for this work":
+    - generic: Reading diary
+  - 'link "عناوين وأغلفة Chapters: Hunterpedia"':
+    - /url: https://hunterxhunter.fandom.com/wiki/Category:Chapters
+  - status
+- button "Start reading session":
+  - generic: Start reading session
+- button "Friends"
+- button "Completed"
+- button "Reading"
+- button "Reviews"
+- region "Work details and recommendations":
+  - heading "Work details and recommendations" [level=3]
+  - button "Suggest a correction"
+  - button "More like this"
+  - button "Not interested"
+  - button "Togashi, Yoshihiro":
+    - generic: Togashi, Yoshihiro
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Search":
+    - generic: Search
+  - button "Home":
+    - generic: Home

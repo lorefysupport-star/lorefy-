@@ -1,0 +1,3303 @@
+{
+  "generatedAt": "2026-10-08T11:39:21.431Z",
+  "canonicalTotal": 121718,
+  "arabicRecords": 11952,
+  "definition": "At least 60% of primary-title letters are Arabic, after quality/policy/identity passes. Includes Arabic translations, not Arabic search aliases alone. Provider language flags alone do not count.",
+  "distinctAuthorLabels": 6921,
+  "authorLabelCaveat": "Name variants and coauthor strings are not independently verified distinct people.",
+  "byType": {
+    "رواية": 765,
+    "كتاب": 11186,
+    "مانجا": 1
+  },
+  "byGenre": {
+    "(CD/DVD) أقراص مدمجة صوتية ومرئية": 91,
+    "(القرآن الكريم (صوتي/مرئي": 5,
+    "18.74 modern Arabic literature": 1,
+    "5-1 كتب ماقبل المدرسة سن": 25,
+    "9-6 كتب للناشئة سن": 27,
+    "Arab Countries": 1,
+    "Arabic fiction": 3,
+    "Bahá'í literature": 3,
+    "Bildungsroman": 1,
+    "Biography": 1201,
+    "Bourgeoisie": 1,
+    "Cairo (egypt), fiction": 2,
+    "Comic Books, Strips": 1,
+    "Comics & graphic novels, general": 2,
+    "Divorced people, fiction": 1,
+    "Drama": 8,
+    "Egypt, fiction": 3,
+    "Egypte": 1,
+    "Father and child, fiction": 1,
+    "Fiction": 523,
+    "Fiction, family life": 1,
+    "Fiction, family life, general": 1,
+    "Fiction, general": 1,
+    "Fiction, historical, general": 2,
+    "Fiction, sagas": 1,
+    "Geography": 85,
+    "Goddesses": 1,
+    "Graphic Novels": 1,
+    "Historical Fiction": 1,
+    "History": 774,
+    "In literature": 1,
+    "Islamic Civilization": 1,
+    "Islamic Countries": 1,
+    "Linguistics": 718,
+    "Literature": 3787,
+    "Marriage, fiction": 1,
+    "Mathematics": 1,
+    "Medicine": 29,
+    "Musulmans": 1,
+    "Near and far eastern fiction (fictional works by one author)": 3,
+    "Novela": 1,
+    "Philosophy": 145,
+    "Poetry": 340,
+    "Psychology": 34,
+    "Qissa": 1,
+    "Quails": 1,
+    "Quran translations": 1,
+    "Rajaz": 1,
+    "Religion": 4090,
+    "Resurrection": 1,
+    "Romans": 1,
+    "Science": 220,
+    "Short Stories": 45,
+    "Social change": 1,
+    "Social life and customs": 1,
+    "Translations into English": 2,
+    "Travel": 73,
+    "Urdu poetry": 1,
+    "academic writing": 1,
+    "article": 1,
+    "autobiography": 4,
+    "bibliographic index": 1,
+    "bilingual dictionary": 12,
+    "biographical dictionary": 1,
+    "biography": 3,
+    "book": 1,
+    "collection of articles": 2,
+    "commentary": 7,
+    "crime fiction": 1,
+    "curriculum vitae": 1,
+    "detective fiction": 2,
+    "diwan": 5,
+    "drama": 2,
+    "encyclopedia": 4,
+    "essay": 1,
+    "exegesis": 6,
+    "fantasy": 2,
+    "fiction": 4,
+    "fiction literature": 1,
+    "folk tale": 1,
+    "geography": 2,
+    "historical fiction": 4,
+    "historical non-fiction": 1,
+    "historical non-fiction work": 1,
+    "historiography": 1,
+    "history": 1,
+    "history book": 1,
+    "horror and terror": 1,
+    "horror fiction": 3,
+    "lexicon": 1,
+    "literary criticism": 2,
+    "love": 1,
+    "manuscript": 1,
+    "memoir": 2,
+    "military fiction": 1,
+    "mirror for princes": 1,
+    "multilingual dictionary": 1,
+    "narrative": 2,
+    "non-fiction": 7,
+    "novella": 1,
+    "picaresque novel": 2,
+    "poetry": 11,
+    "political fiction": 1,
+    "political non-fiction literature": 2,
+    "political philosophy": 1,
+    "postcolonial literature": 1,
+    "prison literature": 1,
+    "prose": 2,
+    "religious text": 1,
+    "romance": 1,
+    "romantic fiction": 1,
+    "satire": 1,
+    "science fiction": 3,
+    "sign language dictionary": 1,
+    "social fiction": 4,
+    "social novel": 1,
+    "song book": 1,
+    "speculative fiction": 1,
+    "tafsir": 1,
+    "thriller": 1,
+    "travel book": 1,
+    "إصدارات مكتبة جرير": 280,
+    "ادارة التسويق والمبيعات": 9,
+    "افلام الاطفال": 58,
+    "اكتب وامسح للاطفال (3 - 5)": 5,
+    "الأدب": 11,
+    "الأدب والشعر": 115,
+    "الأشغال اليدوية": 8,
+    "الأطفال": 177,
+    "الأفضل مبيعاً": 2,
+    "الأكثر شيوعا": 8,
+    "الاحصاء": 3,
+    "الاحياء": 28,
+    "الادارة": 51,
+    "الادارة والأعمال": 94,
+    "الاسلامية والدينية": 92,
+    "الاعلام": 6,
+    "الاقتصاد": 18,
+    "التاريخ": 59,
+    "التاريخ والجغرافيا": 94,
+    "التراجم والسير": 93,
+    "التربية والتعليم": 95,
+    "التريية الخاصة": 15,
+    "التصميم الجرافيكي": 1,
+    "التصوير": 2,
+    "التعامل مع الأخرين": 4,
+    "التقنية والكمبيوتر": 33,
+    "الجغرافيا": 4,
+    "الحديث والسيرةالنبوية": 29,
+    "الحمية والتغذية": 11,
+    "الخياطة والتفصيل": 7,
+    "الخيال العلمي": 3,
+    "الرسم": 6,
+    "الروايات الخيالية": 63,
+    "الرومانسية": 2,
+    "الرياضة": 19,
+    "الرياضيات": 6,
+    "السفر والخرائط": 2,
+    "الشحن الدولي": 5,
+    "الشعر": 3,
+    "الصحة العامة": 76,
+    "الصحة العامة والتغذية والحمية": 94,
+    "الصحة واللياقة": 7,
+    "الطبخ": 25,
+    "الطبيعة والزراعة وعلم الحيوان": 8,
+    "العلوم الاجتماعية والسياسية": 96,
+    "العلوم والرياضيات": 60,
+    "العمارة": 5,
+    "العمارة والتصميم": 9,
+    "العناية بالطفل": 11,
+    "الفلسفة": 45,
+    "الفلك": 1,
+    "الفيزياء": 43,
+    "القانون": 94,
+    "القرآن وعلوم التفسير": 16,
+    "القصة والرواية": 115,
+    "الكتب الصوتية والفيديو": 3,
+    "الكتب الطبية": 29,
+    "الكتب المدرسية": 62,
+    "الكمبيوتر": 33,
+    "الكيمياء": 6,
+    "اللغة": 53,
+    "اللغة الانجليزية": 1,
+    "المال والاستثمار": 7,
+    "المجلات": 1,
+    "المحاسبة": 1,
+    "المراجع والموسوعات": 3,
+    "الموسيقى": 5,
+    "الهندسة": 11,
+    "الهندسة الكهربائية": 2,
+    "الهندسة المدنية": 2,
+    "الهوايات والأشغال": 3,
+    "الهوايات والأشغال اليدوية": 63,
+    "تاريخ المملكة العربية السعودية": 31,
+    "تربية وتعليم": 66,
+    "تطوير الذات": 94,
+    "تطوير العقل والذاكرة": 5,
+    "تعلم اللغات": 95,
+    "تعليم لغات أجنبية": 42,
+    "تنشئة الأبناء": 9,
+    "جريمة": 10,
+    "حصريا للموقع": 22,
+    "خرائط وأطلس": 1,
+    "دراسات اسلامية": 92,
+    "رحلات": 1,
+    "رعب": 3,
+    "روايات المحققين والجرائم": 20,
+    "روايات كﻼسيك عالمية للناشئة (8+)": 9,
+    "روايات للناشئة (9+)": 1,
+    "روايات مصورة للناشئة (9+)": 8,
+    "عروض التصفية": 6,
+    "علم الاجتماع": 6,
+    "علم نفس": 36,
+    "علوم زراعية": 8,
+    "علوم سياسية": 8,
+    "فرق ومذاهب": 3,
+    "فقه وشريعة": 12,
+    "قصص بولسية للناشئة (9+)": 1,
+    "قصص للاطفال (5 - 8)": 27,
+    "قصص للناشئة": 4,
+    "قواميس وموسوعات": 72,
+    "كتاب المدير": 3,
+    "كتب أطفال": 38,
+    "كتب أطفال تاريخية": 1,
+    "كتب أطفال حكايات وقصص": 9,
+    "كتب أطفال دينية": 17,
+    "كتب إلكترونية": 208,
+    "كتب اطفال دينية (8+)": 12,
+    "كتب المرحلة الابتدائية": 11,
+    "كتب المرحلة الثانوية": 49,
+    "كتب المرحلة المتوسطة": 2,
+    "كتب الهندسة": 15,
+    "كتب انشطة للاطفال (5 - 8)": 30,
+    "كتب بلغات أجنبية": 4,
+    "كتب تعليمية للاطفال (3 - 5)": 9,
+    "كتب تكوين الشخصية لﻼطفال (5 - 8)": 58,
+    "كتب تلوين للكبار": 13,
+    "كتب صوتية": 1,
+    "كتب صوتية للأطفال": 30,
+    "كتب صوتية للاطفال (3 - 5)": 1,
+    "كتب صوتية والكترونية": 175,
+    "كتب طبية عامة": 1,
+    "كتب قماش للاطفال (3 - 5)": 10,
+    "كتب قيمة بسعر مخفض": 7,
+    "كتب للرجل والمرأة": 6,
+    "مجلات الديكور": 1,
+    "معاجم وقواميس": 21,
+    "مكتبات والبحث العلمي": 15,
+    "موسوعات": 51,
+    "موسوعات علمية للاطفال (8+)": 3,
+    "هندسة الديكور": 3,
+    "وصل حديثاً": 111
+  },
+  "bySource": {
+    "Dorling Kindersley": 1,
+    "Dreamland": 1,
+    "Jarir catalog": 1758,
+    "Lorefy editorial": 101,
+    "Non Branded": 1,
+    "Open Library": 1095,
+    "Open Library Comics": 1,
+    "OpenITI / KITAB": 7757,
+    "Quadrille": 1,
+    "Wikidata": 1236
+  },
+  "representativeAuthors": [
+    {
+      "name": "نجيب محفوظ",
+      "count": 83,
+      "titles": [
+        {
+          "id": "jarir-JRB5000013835",
+          "title": "همس الجنون",
+          "type": "كتاب"
+        },
+        {
+          "id": "ol-OL1599738W",
+          "title": "قصر الشوق",
+          "type": "رواية"
+        },
+        {
+          "id": "ol-OL1599691W",
+          "title": "ليالي ألف ليلة",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q12234985",
+          "title": "كفاح طيبة",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q16207487",
+          "title": "ثرثرة فوق النيل",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q2275911",
+          "title": "أولاد حارتنا",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q7320048",
+          "title": "رادوبيس",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q7716304",
+          "title": "الشحاذ",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q7729227",
+          "title": "يوم قتل الزعيم",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q7738834",
+          "title": "ملحمة الحرافيش",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q7743683",
+          "title": "رحلة ابن فطومة",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q7762831",
+          "title": "الطريق",
+          "type": "رواية"
+        }
+      ]
+    },
+    {
+      "name": "أحمد خالد توفيق",
+      "count": 17,
+      "titles": [
+        {
+          "id": "jarir-JRB5000010976_A",
+          "title": "[كتاب صوتي] تجربة محرمة، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-JRB5000010985_A",
+          "title": "[كتاب صوتي] إنهم يعودون أحيانا، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-JRB5000010903_A",
+          "title": "[كتاب صوتي] أسطورة اللهب الأزرق، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-JRB5000010955_A",
+          "title": "[كتاب صوتي] أسطورة العلامات الدامية، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-JRB5000010928_A",
+          "title": "[كتاب صوتي] أسطورة النصف الآخر، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-JRB5000010932_A",
+          "title": "[كتاب صوتي] أسطورة الكلمات السبع، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-JRB5000010946_A",
+          "title": "[كتاب صوتي] أسطورة ملك الذباب، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-JRB5000010958_A",
+          "title": "[كتاب صوتي] أسطورة أرض الظلام، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-JRB5000010966_A",
+          "title": "[كتاب صوتي] أسطورة معرض الرعب، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-JRB5000010898_A",
+          "title": "[كتاب صوتي] أسطورة أرض أخرى، كتاب صوتي",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-442502",
+          "title": "يوتوبيا",
+          "type": "رواية"
+        },
+        {
+          "id": "jarir-499505",
+          "title": "روايات عالمية الجزء الرابع",
+          "type": "رواية"
+        }
+      ]
+    },
+    {
+      "name": "توفيق الحكيم",
+      "count": 4,
+      "titles": [
+        {
+          "id": "wikidata-Q12227320",
+          "title": "عصفور من الشرق",
+          "type": "رواية"
+        },
+        {
+          "id": "lorefy-ar-curated-عودة-الروح-توفيق-الحكيم",
+          "title": "عودة الروح",
+          "type": "رواية"
+        },
+        {
+          "id": "lorefy-ar-curated-يوميات-نايب-في-الارياف-توفيق-الحكيم",
+          "title": "يوميات نائب في الأرياف",
+          "type": "رواية"
+        },
+        {
+          "id": "lorefy-ar-curated-اهل-الكهف-توفيق-الحكيم",
+          "title": "أهل الكهف",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "طه حسين",
+      "count": 37,
+      "titles": [
+        {
+          "id": "jarir-681201",
+          "title": "الشيخان مجلد",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-681198",
+          "title": "الفتنة الكبرى الجزء الاول مجلد",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-681200",
+          "title": "الفتنة الكبرى الجزء الثاني مجلد",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-627161",
+          "title": "الايام",
+          "type": "كتاب"
+        },
+        {
+          "id": "jarir-681202",
+          "title": "الوعد الحق مجلد",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1392TahaHusayn.Adib",
+          "title": "أديب",
+          "type": "رواية"
+        },
+        {
+          "id": "openiti-1392TahaHusayn.Ahadith",
+          "title": "أحاديث",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1392TahaHusayn.AhlamShahrazad",
+          "title": "أحلام شهرزاد",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1392TahaHusayn.Alwan",
+          "title": "ألوان",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1392TahaHusayn.AraHurra",
+          "title": "آراء حرة",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1392TahaHusayn.BaynaBayna",
+          "title": "بين بين",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1392TahaHusayn.CalaHamishSira",
+          "title": "على هامش السيرة",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "يوسف إدريس",
+      "count": 31,
+      "titles": [
+        {
+          "id": "wikidata-Q113367493",
+          "title": "رجال وثيران",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q109298256",
+          "title": "بيت من لحم",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.ALaysaKadhalika",
+          "title": "أليس كذلك",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.AkhirDunya",
+          "title": "آخر الدنيا",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.AnaSultanQanunWujud",
+          "title": "أنا سلطان قانون الوجود",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.ArkhasLayali",
+          "title": "أرخص ليالي",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.Batal",
+          "title": "البطل",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.Bayda",
+          "title": "البيضاء",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.BaytMinLahm",
+          "title": "بيت من لحم: وقصص أخرى",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.BiSarahaGhayrMutlaqa",
+          "title": "بصراحة غير مطلقة",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.CanCamd",
+          "title": "عن عمد … اسمع تسمع‎",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1412YusufIdris.CaskariAswad",
+          "title": "العسكري الأسود",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "يوسف زيدان",
+      "count": 4,
+      "titles": [
+        {
+          "id": "wikidata-Q8134681",
+          "title": "عزازيل",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q12222056",
+          "title": "ظل الافعى",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q28717664",
+          "title": "النبطي",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q135458398",
+          "title": "نور",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "رضوى عاشور",
+      "count": 2,
+      "titles": [
+        {
+          "id": "jarir-347387",
+          "title": "ثلاثية غرناطة",
+          "type": "رواية"
+        },
+        {
+          "id": "jarir-394611",
+          "title": "الطنطورية",
+          "type": "رواية"
+        }
+      ]
+    },
+    {
+      "name": "غسان كنفاني",
+      "count": 8,
+      "titles": [
+        {
+          "id": "wikidata-Q2895697",
+          "title": "رجال في الشمس",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q12179383",
+          "title": "أرض البرتقال الحزين",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q12222078",
+          "title": "عائد إلى حيفا",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q60982155",
+          "title": "أم سعد",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q131830006",
+          "title": "الباب",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q131830452",
+          "title": "الأعمى والأطرش",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q131522996",
+          "title": "الاثار الكاملة",
+          "type": "كتاب"
+        },
+        {
+          "id": "lorefy-ar-curated-ما-تبقى-لكم-غسان-كنفاني",
+          "title": "ما تبقى لكم",
+          "type": "رواية"
+        }
+      ]
+    },
+    {
+      "name": "عبد الرحمن منيف",
+      "count": 3,
+      "titles": [
+        {
+          "id": "wikidata-Q6854984",
+          "title": "مدن الملح",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q12218534",
+          "title": "شرق المتوسط",
+          "type": "رواية"
+        },
+        {
+          "id": "lorefy-ar-curated-النهايات-عبد-الرحمن-منيف",
+          "title": "النهايات",
+          "type": "رواية"
+        }
+      ]
+    },
+    {
+      "name": "إبراهيم نصر الله",
+      "count": 5,
+      "titles": [
+        {
+          "id": "wikidata-Q22688483",
+          "title": "شرفة الهاوية",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q22689299",
+          "title": "قناديل ملك الجليل",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q131842044",
+          "title": "سيرة عين",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q131855364",
+          "title": "طفل الممحاة",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q131909666",
+          "title": "براري الحمى",
+          "type": "رواية"
+        }
+      ]
+    },
+    {
+      "name": "أحلام مستغانمي",
+      "count": 6,
+      "titles": [
+        {
+          "id": "jarir-612701",
+          "title": "أصبحت أنت",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q6826878",
+          "title": "فوضى الحواس",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q12212596",
+          "title": "ذاكرة الجسد",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q85869882",
+          "title": "أكاذيب سمكة",
+          "type": "كتاب"
+        },
+        {
+          "id": "lorefy-ar-curated-الاسود-يليق-بك-احلام-مستغانمي",
+          "title": "الأسود يليق بك",
+          "type": "رواية"
+        },
+        {
+          "id": "lorefy-ar-curated-عابر-سرير-احلام-مستغانمي",
+          "title": "عابر سرير",
+          "type": "رواية"
+        }
+      ]
+    },
+    {
+      "name": "نوال السعداوي",
+      "count": 35,
+      "titles": [
+        {
+          "id": "wikidata-Q8030711",
+          "title": "امرأة عند نقطة الصفر",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q30083000",
+          "title": "المرأة والجنس",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q20874778",
+          "title": "سقوط الإمام",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q139750282",
+          "title": "الرجل والجنس",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q139989690",
+          "title": "مذكرات طبيبة",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q137294246",
+          "title": "مـوت الـرجـل الـوحـيـد على الأرض",
+          "type": "رواية"
+        },
+        {
+          "id": "openiti-1442NawalSacdawi.AdabUmmQillatAdab",
+          "title": "أدب أم قلة أدب",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1442NawalSacdawi.Atfal",
+          "title": "الأطفال يغنون للحب",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1442NawalSacdawi.Awraqi",
+          "title": "أوراقي … حياتي (الجزء الأول)",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1442NawalSacdawi.Ghaib",
+          "title": "الغائب",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1442NawalSacdawi.HakimBiAmrAllah",
+          "title": "الحاكم بأمر الله",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1442NawalSacdawi.HananQalil",
+          "title": "حنان قليل",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "محمد شكري",
+      "count": 4,
+      "titles": [
+        {
+          "id": "wikidata-Q12229716",
+          "title": "غواية الشحرور الأبيض",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q3225152",
+          "title": "الخبز الحافي",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q6727899",
+          "title": "السوق الداخلي",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q136735709",
+          "title": "الخيمة",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "جبرا إبراهيم جبرا",
+      "count": 3,
+      "titles": [
+        {
+          "id": "wikidata-Q12184272",
+          "title": "البحث عن وليد مسعود",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q131944175",
+          "title": "البئر الأولى",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q131829761",
+          "title": "السفينة",
+          "type": "رواية"
+        }
+      ]
+    },
+    {
+      "name": "حنان لاشين",
+      "count": 4,
+      "titles": [
+        {
+          "id": "jarir-499689",
+          "title": "أوبال",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q139572989",
+          "title": "الهالة المقدسة",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q139555106",
+          "title": "كوني صحابية",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q139572280",
+          "title": "غزل البنات",
+          "type": "رواية"
+        }
+      ]
+    },
+    {
+      "name": "محمود درويش",
+      "count": 24,
+      "titles": [
+        {
+          "id": "wikidata-Q124421997",
+          "title": "عابرون في كلام عابر",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422006",
+          "title": "عاشق من فلسطين",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422018",
+          "title": "عصافير بلا أجنحة",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422030",
+          "title": "في انتظار البرابرة",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422047",
+          "title": "في وصف حالتنا",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422102",
+          "title": "في حضرة الغياب",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422113",
+          "title": "كزهر اللوز أو أبعد",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422125",
+          "title": "لا أريد لهذي القصيدة أن تنتهي",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422137",
+          "title": "لا تعتذر عما فعلت",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422168",
+          "title": "لماذا تركت الحصان وحيدا",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422181",
+          "title": "محاولة رقم 7",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124422194",
+          "title": "مديح الظل العالي",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "نزار قباني",
+      "count": 21,
+      "titles": [
+        {
+          "id": "wikidata-Q56365549",
+          "title": "أبجدية الياسمين",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q120595120",
+          "title": "كتاب الحب",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q120597938",
+          "title": "قصائد متوحشة",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124398918",
+          "title": "تنويعات نزارية على مقام العشق",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124398939",
+          "title": "خمسون عاما في مديح النساء",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124399074",
+          "title": "هوامش على الهوامش",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124399160",
+          "title": "هل تسمعين صهيل أحزاني؟",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124399200",
+          "title": "الكبريت في يدي ودويلاتكم من ورق",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124399278",
+          "title": "السيرة الذاتية لسياف عربي",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124399285",
+          "title": "الأوراق السرية لعاشق قرمطي",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124399310",
+          "title": "ثلاثية أطفال الحجارة",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q124399323",
+          "title": "سيبقى الحب سيدي",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "جبران خليل جبران",
+      "count": 14,
+      "titles": [
+        {
+          "id": "wikidata-Q12184301",
+          "title": "البدائع والطرائف",
+          "type": "رواية"
+        },
+        {
+          "id": "wikidata-Q12194064",
+          "title": "المواكب",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1349JibranKhalilJibran.AjnihaMutakassira",
+          "title": "الأجنحة المتكسرة",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1349JibranKhalilJibran.ArwahMutamarrida",
+          "title": "الأرواح المتمردة",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1349JibranKhalilJibran.Cawasif",
+          "title": "العواصف",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1349JibranKhalilJibran.DamcaWaIbtisama",
+          "title": "دمعة وابتسامة",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1349JibranKhalilJibran.Diwan",
+          "title": "ديوان جبران خليل جبران",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1349JibranKhalilJibran.MuhajatArwah",
+          "title": "مناجاة أرواح",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1385AntuniyusBashir.AlihatArd",
+          "title": "آلهة الأرض",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1385AntuniyusBashir.Nabi",
+          "title": "النبي",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1385AntuniyusBashir.RamlWaZabad",
+          "title": "رَمْلٌ وزَبَدٌ",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-1385AntuniyusBashir.Sabiq",
+          "title": "السابق",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "ابن خلدون",
+      "count": 4,
+      "titles": [
+        {
+          "id": "jarir-43601",
+          "title": "تاريخ ابن خلدون 7 مجلدات",
+          "type": "كتاب"
+        },
+        {
+          "id": "wikidata-Q19572707",
+          "title": "لباب المحصل في أصول الدين",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0808IbnKhaldun.Rihla",
+          "title": "رحلة",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0808IbnKhaldun.Tarikh",
+          "title": "تاريخ",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "الجاحظ",
+      "count": 18,
+      "titles": [
+        {
+          "id": "wikidata-Q62086891",
+          "title": "البرصان والعرجان والعميان والحولان",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.Cuthmaniyya",
+          "title": "العثمانية",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.AmilWaMamul",
+          "title": "الآمل والمأمول",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.BalaghaWaIjaz",
+          "title": "رسائل الجاحظ",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.BayanWaTabyin",
+          "title": "البيان والتبيين",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.Bighal",
+          "title": "كتاب البغال",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.Bukhala",
+          "title": "البخلاء",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.BursanWaCurjan",
+          "title": "كتاب البرصان والعرجان والعميان والحلان",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.FadlHashim",
+          "title": "الرسائل السياسية",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.Futya",
+          "title": "الرسائل الأدبية",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.HaninIlaAwtan",
+          "title": "الحنين الى الأوطان",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0255Jahiz.Hayawan",
+          "title": "الحيوان",
+          "type": "كتاب"
+        }
+      ]
+    },
+    {
+      "name": "ابن سينا",
+      "count": 15,
+      "titles": [
+        {
+          "id": "jarir-550717",
+          "title": "النجاة في الحكمةالمنطقية والطبيعية والالهية",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.IsharatWaTanbihat",
+          "title": "الاشارات والتنبيهات",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.MaHiyaCishq",
+          "title": "رسالة في ماهية العشق",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.MacrifatNafsNatiq",
+          "title": "رسالة في معرفة النفس الناطقة وأحوالها",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.QanunFiTibb",
+          "title": "القانون في الطب",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.ShifaAfcalWaInficalat",
+          "title": "فن الأفعال والانفعالات من كتاب الشفاء",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.ShifaIlahiyyat",
+          "title": "الالاهيات من كتاب الشفاء",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.ShifaKawnWaFasad",
+          "title": "الكون والفساد من كتاب الشفاء",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.ShifaMantiq",
+          "title": "المنطق",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.ShifaNafs",
+          "title": "النفس من كتاب الشفاء",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.ShifaShicr",
+          "title": "فن الشعر من كتاب الشفاء",
+          "type": "كتاب"
+        },
+        {
+          "id": "openiti-0428IbnSina.ShifaTabiciyyat",
+          "title": "الطبيعيات من كتاب الشفاء",
+          "type": "كتاب"
+        }
+      ]
+    }
+  ],
+  "newSourceRecords": 8980,
+  "metadataQuality": {
+    "scanned": 11952,
+    "recordsWithMetadataGaps": 11938,
+    "missingAuthor": 4,
+    "missingCoverReference": 10071,
+    "missingSynopsis": 11924,
+    "missingYear": 9560,
+    "missingGenres": 0,
+    "ambiguousComicTitles": 0,
+    "unrated": 11934,
+    "byType": {
+      "Manga": {
+        "scanned": 1,
+        "recordsWithMetadataGaps": 1,
+        "missingAuthor": 0,
+        "missingCoverReference": 0,
+        "missingSynopsis": 1,
+        "missingYear": 0,
+        "missingGenres": 0,
+        "ambiguousComicTitles": 0,
+        "unrated": 1
+      },
+      "Novel": {
+        "scanned": 765,
+        "recordsWithMetadataGaps": 761,
+        "missingAuthor": 1,
+        "missingCoverReference": 482,
+        "missingSynopsis": 759,
+        "missingYear": 255,
+        "missingGenres": 0,
+        "ambiguousComicTitles": 0,
+        "unrated": 754
+      },
+      "Book": {
+        "scanned": 11186,
+        "recordsWithMetadataGaps": 11176,
+        "missingAuthor": 3,
+        "missingCoverReference": 9589,
+        "missingSynopsis": 11164,
+        "missingYear": 9305,
+        "missingGenres": 0,
+        "ambiguousComicTitles": 0,
+        "unrated": 11179
+      }
+    },
+    "samples": [
+      {
+        "id": "ol-comics-works-ol19741231w",
+        "title": "مپ“مپ®ç´ و™´م‚‰مپ—مپ„ن¸–ç•Œمپ«ç¥‌ç¦ڈم‚’! 2 (manga)",
+        "type": "Manga",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library Comics"
+      },
+      {
+        "id": "jarir-214569",
+        "title": "هاري بوتر وحجر الفليسوف",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-651376",
+        "title": "‎كل أزرق السماء‎",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-535477",
+        "title": "العادات الذرية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-626677",
+        "title": "أول مرة أتدبر القرآن",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-684014",
+        "title": "‎عندما يضحك الاقتصاد‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-612735",
+        "title": "ممتلىء بالفراغ تأملات حول التعافي من الادمانات والسلوكيات القهرية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683954",
+        "title": "‎الماء سر الحياة‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-376717",
+        "title": "الجيتار",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683367",
+        "title": "الدراسات البينية، تحديات الواقع وتوجهات المستقبل",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-494282",
+        "title": "أوقات عصيبة",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679223",
+        "title": "معجزات الغذاء مع وفاء",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-442744",
+        "title": "عمارة المجتمعات الاسلامية تراث الماضي وتجارب الحاضر",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-677624",
+        "title": "مختصر البداية والنهاية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-665503",
+        "title": "المعاصر في القدرات 10 تأسيس كمي ورقي ومحوسب التأسيس على بنوك المحوسب الجديدة 3 كتب مع 2 دورة مجانية دورة قدرات للمبتدئين ودورة ملخص التأسيس",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-673103",
+        "title": "‎علماء الملوك والامراء عبر تاريخ المغرب‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-673608",
+        "title": "‎العلاج الروحي وتأثيره على الابدان‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-673591",
+        "title": "‎فقه اللغة وسر العربية‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683274",
+        "title": "اجراءات التحقيق الجنائي في نظام الاجراءات الجزائية السعودي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-677147",
+        "title": "سلسلة كيف تصبح",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683799",
+        "title": "‎كيف تشتري مسكنا جاهزا وفق كود البناء السعودي‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678592",
+        "title": "كشف أسرار الكون",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-327504",
+        "title": "أطلس تاريخ العالم القديم والمعاصر",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678590",
+        "title": "عصر الهيمنة الذكاء الاصطناعي وشات جي بي تي والصراع الذي سيغير العالم",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-673117",
+        "title": "‎ماذا لو، أسئلة خيالية وأجوبه علمية مبسطة عليها‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-454321",
+        "title": "أسعد طفل بالحي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB282210685",
+        "title": "حكايات فازبير المرعبة 1، كتاب إلكتروني",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB4140NA042_A",
+        "title": "[كتاب صوتي إنجليزي] الفرسان الثلاثة، كتاب صوتي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000001352",
+        "title": "الخروج عن النص من جديد، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-684017",
+        "title": "‎البن السعودي الطريق الى العالمية انتاجا وجودة‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB2851032",
+        "title": "1000 كلمة إنجليزية مستخدمة في حياتنا اليومية، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-476881",
+        "title": "أجساد جافة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB282210529",
+        "title": "الفتاة التي ترتكب ملايين الاخطاء، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681486",
+        "title": "أبي في جيبي غزو الهواتف الفضائية للارض",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678285",
+        "title": "‎صانعة النجوم‎",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-511747",
+        "title": "فن اللامبالاة لعيش حياة تخالف المألوف",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-643393",
+        "title": "الداء والدواء",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683368",
+        "title": "ادارة المعرفة والابتكار، النظرية والممارسة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-563593",
+        "title": "عقدك النفسية سجنك الابدي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679815",
+        "title": "الوراثة والجينات، نشأة العلم وتطوره",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-376718",
+        "title": "الفيولينة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-476171",
+        "title": "قواعد التعامل مع المراهقين",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-494284",
+        "title": "نذير العاصفة",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-335547",
+        "title": "فتافيت الاطباق العربية باللغة الاندونيسية والانجليزية والسرلنكيةوالفلبينية والعربية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-675067",
+        "title": "النسيج العمراني للمدينة المنورة الخصائص والمقومات",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-673105",
+        "title": "‎صور الكواكب صور الكوكبات النجمية الثمانية والاربعين الثابتة في السماء‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-674256",
+        "title": "التحصيلي علمي ثلاثة أجزاء ط 2026",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-673618",
+        "title": "‎سيف الله المسلول خالد بن بن الوليد، سيرته الشخصية وفنونه العسكرية‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683955",
+        "title": "‎الادوية الحديثة للسيطرة والتنظيم على السمنة والنوع الثاني من داء السكري‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-673620",
+        "title": "‎الاخطاء اللغوية المركبة، ماهيتها وأنواعها وتشخيصها وعلاجها‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683273",
+        "title": "الاختصاص النوعي للمحاكم التجارية في ضوء نظام المحاكم التجارية بالمملكة العربية السعودية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-677184",
+        "title": "سلسلة كيف تتخلص من",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-657824",
+        "title": "ثلاثون مترا تحت الارض مذكرات مهندس خلال تنفيذ مشروع مترو الرياض",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-415747",
+        "title": "مبادىء الرياضيات وتطبيقاتها في العلوم الادارية والانسانية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000012578",
+        "title": "رحلة ابن بطوطة، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679547",
+        "title": "حوكمة الذكاء الاصطناعي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681951",
+        "title": "‎العرافة العمياء، بابا فانجا وتنبؤات نهاية العالم‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB2550NA396",
+        "title": "الكتاب الذي تتمنّى لو قرأه أبواك، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB282210691",
+        "title": "رهاب النوم 3، كتاب إلكتروني",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000016866_A",
+        "title": "[كتاب صوتي] ساحر أرض الرعب، كتاب صوتي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000004068",
+        "title": "خلاصة الدليل التشخيصي والإحصائي الخامس للاضطرابات العقلية DSM - 5، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-497902",
+        "title": "نباتات محمية الغضى بعنيزة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000006648",
+        "title": "تحدث معي بالروسية، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-500124",
+        "title": "البنات هيجننوني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB282210532",
+        "title": "من هو ليونيل ميسي، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-251002",
+        "title": "هاري بوتر وكأس النار",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678985",
+        "title": "‎الليالي البيضاء وقصص أخرى‎",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-664508",
+        "title": "أفضل نسخة منك",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681084",
+        "title": "لا تخف",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-675608",
+        "title": "فن الاستثمار",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-673870",
+        "title": "الجلاد تحت جلدي، تأملات حول التعافي من الكمالية وجلد الذات",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-41315",
+        "title": "بيولوجية الحيوان العملية (الجزء الثاني)",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-673933",
+        "title": "الالعاب والمسابقات للكبار والصغار",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-578441",
+        "title": "فهارس المخطوطات الاصلية تفسير القرآن الكريم وعلومه 2",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-553682",
+        "title": "شفاء الاحياء",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-669327",
+        "title": "مهارة الساوردو",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-528446",
+        "title": "الخطط اللونية في التصميم الداخلي وسيكولوجية اللون",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681923",
+        "title": "‎بواسير نابليون، وأحداث صغيرة غيرت مجرى التاريخ‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-665731",
+        "title": "المعاصر 10 في القسم اللفظي ورقي ومحوسب 3 كتب كتاب التأسيس فنيات الاستيعاب القرائي اللفظي كتاب بنوك الاسئلة تدريبات علي الاستيعاب القرائي والمنطق اللغوي ملحق الاختبارات 20 اختبار",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681921",
+        "title": "‎أبو مسلم الخراساني، الجنرال الغامض الذي صنع دولة ثم صفي‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-682261",
+        "title": "التوتر الجذر الخفي لكل أمراض عصرنا",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-577654",
+        "title": "الجنى الداني في حروف المعاني مجلدين",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683275",
+        "title": "الحماية النظامية للعلامات التجارية غير التقليدية دراسة تحليلية مقارنة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-439517",
+        "title": "مجموعة قصص مكونة من 12 قصة لبناء الشخصية للاطفال",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-617427",
+        "title": "أساسيات الهندسة الكهربائية والالكترونية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-417578",
+        "title": "فيزياء العقل البشرى والعالم من منظورين",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-659961",
+        "title": "أسرار التحول الرقمي، مفاهيم استراتيجيات اليات النجاح",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681957",
+        "title": "‎موسوعة المعرفة الممتعة، المعلومات الاكثر اثارة واهتمام في العالم‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-323336",
+        "title": "2 اسالوا المربيةالمثالية لكل سؤال جواب",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB282210381",
+        "title": "انا و مشاعري، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000016806_A",
+        "title": "[كتاب صوتي] ضربة البداية، كتاب صوتي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB20719793",
+        "title": "تنبؤات نوستراداموس، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-364952",
+        "title": "أرض وورد، مبادىء وطرق العناية بالازهار والنباتات المنزلية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-313176",
+        "title": "1000 كلمة انجليزية مستخدمة في حياتنا اليومية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-227223",
+        "title": "هاري بوتر وسجين أزكابان",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-654765",
+        "title": "آزر ابن ذئبة الوادي",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-656508",
+        "title": "نعمة الام السعيدة، كيف تتحررى من وهم الكمال وتشعرين بالسعادة كل يوم",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-676320",
+        "title": "الاستثمار في الدردشة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-684058",
+        "title": "‎فكك عقدك النفسية‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-604501",
+        "title": "انتاج الفاكهة المتساقطة الاوراق",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-682005",
+        "title": "الدليل الشامل لاحتراف الالوان الزيتية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-438854",
+        "title": "قواعد تميز الطفل 99 قاعدة تساعدك في تربية طفلك",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678857",
+        "title": "ليل ونهار",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-527334",
+        "title": "ابداع للطبخ الجزء الاول",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-572571",
+        "title": "الفن الاسلامي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-390666",
+        "title": "البدو 5 مجلدات",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681394",
+        "title": "المنصف في القدرات القسم الكمي مع بنك أسئلة المحوسب الجديدة من 1 الى 121 الاصدار السابع جزئين",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681947",
+        "title": "‎كيف تفكر مثل عثمان بن عفان، ذو النورين‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-676337",
+        "title": "سيدة الجلوكوز",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679251",
+        "title": "معجم فقه اللغة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683272",
+        "title": "المسوؤلية المدنية للوسيط العقاري دراسة مقارنة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678204",
+        "title": "ساعة العصر،",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-640020",
+        "title": "هندسة القيمة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-443634",
+        "title": "مقدمة قصيرة جدا فيزياء الجسيمات",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-468075",
+        "title": "أسرار قمرة القيادة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-465323",
+        "title": "طفلك مزعج وأنت السبب",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-549574",
+        "title": "اصنع ذاتك",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB6275143",
+        "title": "من أنا؟، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000000912",
+        "title": "سلسلة ثقافية سيكولوجية جـ40 اضطرابات الطعام ومشكلاته، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-588432",
+        "title": "المياه في ينبع الصهاريج والكنداسة والعيون والتحلية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-438430",
+        "title": "1000 فعل انجليزي مستخدم في حياتنا اليومية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-404750",
+        "title": "سالم أصبح كبيرا",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-668167",
+        "title": "‎من قتل وليد‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678673",
+        "title": "السيادة بالحوار وفن الردود الذكية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-638398",
+        "title": "‎رسائل من القرآن‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683166",
+        "title": "مفاتيح الثراء ببساطة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-574353",
+        "title": "أبي الذي أكره تأملات حول التعافي من اساءات الابوين وصدمات النشأة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-675343",
+        "title": "العرتيمة، العلم المدهش في مملكة الحيوانات",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678281",
+        "title": "ثورة ريال مدريد",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-457457",
+        "title": "تقويم سلوكيات الاطفال قطوف تربوية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-347387",
+        "title": "ثلاثية غرناطة",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "https://www.wikidata.org/wiki/Q12203853"
+      },
+      {
+        "id": "jarir-350111",
+        "title": "سفرة اناهيد طبعه جديدة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-291923",
+        "title": "عناصر التصميم والبناء",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-675572",
+        "title": "التاريخ الامريكى الحديث والمعاصر",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-682016",
+        "title": "طبعة جديدة كليا STEP كفايات اللغة الانجليزية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681948",
+        "title": "‎كيف تفكر مثل عمر بن عبدالعزيز‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-675285",
+        "title": "اخيرا سانام جيدا",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-425949",
+        "title": "أوكسفورد قاموسي الاول لتعلم الانجليزية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-676146",
+        "title": "لهذه الاسباب ولالف سبب آخر",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-609735",
+        "title": "المشاعر للاطفال 50 نشاطا للتعرف على مشاعرك وفهمها والتعامل معها",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-564670",
+        "title": "الحلول الذكية والتوجهات المستقبلية للشبكات الكهربائية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-457320",
+        "title": "مقدمة قصيرة جدا علم التقشير",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-602675",
+        "title": "الكون استكشاف عالم الفلك",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-94091",
+        "title": "موسوعة الفراشة للعناية بالام والطفل",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-619848",
+        "title": "الهام 365 اقتباسا يوميا مقولات يومية ملهمة فى أوقاتنا العصيبة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000013928",
+        "title": "محمد عبده مجموعة فنان، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB20724464_A",
+        "title": "[كتاب صوتي] الأخلاق والسير، كتاب صوتي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-543093",
+        "title": "تربية الاغنام",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-276123",
+        "title": "هاري بوتر وجماعة العنقاء",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-536514",
+        "title": "ماجدولين",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-621944",
+        "title": "قوانين التحرر من الصراع النفسي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-597975",
+        "title": "لانك الله الجزء الاول رحلة الى السماء السابعة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683175",
+        "title": "تكامل الاقتصاد الاخضر والادارة البيئية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-560827",
+        "title": "ربما عليك أن تكلم أحدا معالج نفسي وحياتنا كما يكشفها",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-636599",
+        "title": "قطرة من بحر علم الخيل والفروسية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678151",
+        "title": "على حافة كرة القدم اللعبة الرابعة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-583295",
+        "title": "متى يمكن الوثوق في الخبراء",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB6362785",
+        "title": "لعبة العروش، كتاب إلكتروني",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-539059",
+        "title": "عيشها صحية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-317987",
+        "title": "عناصر التصميم والانشاءالمعماري (نوفرت)",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683083",
+        "title": "النجوم عند العرب",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-681868",
+        "title": "2027 كتاب التأسيس مع باركود شرح وكتاب التجميعات مع باركود شرح - المساعد في اختبار القدرة المعرفية 2026",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-122949",
+        "title": "حياة في الادارة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-675288",
+        "title": "أنا أعزز مناعتي قبيل فصل الشتاء",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-588627",
+        "title": "الميسر من علوم البلاغة والعروض",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-680422",
+        "title": "شرح النظام التجاري السعودي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-639594",
+        "title": "أشعر بالغضب",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-483131",
+        "title": "مبادىء عملية التطوير العقاري",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-457328",
+        "title": "تحدي تغير المناخ أي طريق نسلك",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679987",
+        "title": "‎الاكسل في عالم المال دليل شامل لاستخدام الدوال المالية‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679517",
+        "title": "مصطلحات ونصوص انجليزية في التربية الخاصة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB282204037",
+        "title": "الأطفال من الجنة، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000005853",
+        "title": "الكتاب الأسود، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-663315",
+        "title": "دليل نباتات الزينة الداخلية والخارجية",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-677751",
+        "title": "سيدة الشر",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-678983",
+        "title": "‎الفقراء المثل قلب ضعيف‎",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-643535",
+        "title": "محاط بالحمقى، الانماط الاربعة للسلوك البشري",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-650382",
+        "title": "لا يرد القدر الا الدعاء",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-683184",
+        "title": "مدخل الى الاقتصاد الكلي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-522126",
+        "title": "أحببت وغدا",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-590717",
+        "title": "2 / موسوعة الخيل والفروسية 1",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679219",
+        "title": "سلسلة التمرينات البدنية للمرأة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679246",
+        "title": "عمارة تدرك كيف تصنع المساحات وعي الطفل",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-296953",
+        "title": "جريمة في قطار الشرق السريع",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-636947",
+        "title": "مبادىء الخبز الحرفي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-398248",
+        "title": "نينا كامبل في الديكور المنزلي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-682743",
+        "title": "كتاب التاريخ",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679493",
+        "title": "2027 المساعد في اختبار القدرات للجامعيين - قدرات الجامعيين 2026",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-651207",
+        "title": "كرستيانو رونالدو، سيرة ومسيرة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-675290",
+        "title": "خشونة المفاصل داء له دواء",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-676068",
+        "title": "القاموس المساعد",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-575189",
+        "title": "المبرر القانوني والواقعي لانهاء عقد العمل بالارادة المنفردة وفقا لقانون العمل",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-446377",
+        "title": "تنمية العقل لسن 4 سنوات فما فوق كتاب أنشطة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-674366",
+        "title": "صوت المستقبل، العصر القادم لتكنولوجيا الصوت",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-465846",
+        "title": "مقدمة قصيرة جدا تاريخ الرياضيات",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-679990",
+        "title": "‎أساسيات الشبكات‎",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-347020",
+        "title": "معجم مصطلحات المسرح والدراما",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JBB282205132_A",
+        "title": "[كتاب صوتي] الذكاء العاطفي 2.0، كتاب صوتي",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-JRB5000001369",
+        "title": "علاقات خطرة، كتاب إلكتروني",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      },
+      {
+        "id": "jarir-131833",
+        "title": "الاستزراع السمكي الاساسيات وادارة المزرعة",
+        "type": "Book",
+        "gaps": [
+          "missingSynopsis",
+          "missingYear"
+        ],
+        "source": "Jarir catalog"
+      }
+    ],
+    "limitations": [
+      "Cover references are counted, not remotely validated.",
+      "Unrated works are not automatically defective; source ratings must never be invented.",
+      "Ambiguous comic titles require provider identity checks, not title-only merging.",
+      "This is a metadata audit, not a full-text content or human-authorship certification."
+    ]
+  },
+  "limitations": [
+    "No claim to all Arabic literature or complete publisher bibliographies.",
+    "OpenITI is predominantly historical; recent popular fiction still requires additional verified bibliographic feeds.",
+    "Missing cover/year/synopsis remains missing rather than using reuse graphs, author death years or generated descriptions.",
+    "AI/explicit metadata screening does not certify unseen full texts."
+  ],
+  "releaseStatus": "local-only-no-TestFlight-upload"
+}

@@ -1,0 +1,16 @@
+✔ visitor artwork uses the owner snapshot, never viewer cover preferences (1.2362ms)
+✔ public chapter reviews stay in chapters; existing private notes are not auto-published (1.726ms)
+✔ reply refresh is race-safe, retryable, and bounded by viewport (0.6608ms)
+✔ reply targeting preserves the draft and closing a thread does not discard it (0.6502ms)
+✔ a feed response from an abandoned screen cannot overwrite the current screen (0.4508ms)
+✔ chapter discussion supports owner deletion and reader reporting without public draft migration (1.2174ms)
+✔ chapter publishing uses a dedicated RPC and rejects invalid or empty input (2.5333ms)
+✔ chapter review pagination is stable and signs avatars before rendering (1.6698ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.2015

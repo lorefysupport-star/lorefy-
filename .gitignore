@@ -1,43 +1,30 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
-# dependencies
 node_modules/
-
-# Expo
-.expo/
-dist/
-web-build/
-expo-env.d.ts
-
-# Native
-.kotlin/
-*.orig.*
-*.jks
+ios-web/
+config/lorefy-release.json
+ios/App/App/public/
+output/*
+!output/api-catalog/
+output/api-catalog/*
+!output/api-catalog/manifest.json
+!output/api-catalog/manga.json
+!output/api-catalog/manhwa.json
+!output/api-catalog/manhua.json
+!output/api-catalog/comics.json
+!output/api-catalog/novel.json
+!output/api-catalog/book.json
+!output/api-catalog/light-novel.json
+!output/api-catalog/web-novel.json
+artifacts/
+.playwright-cli/
+tools/.cache/
+*.log
 *.p8
 *.p12
-*.key
 *.mobileprovision
+.env
+.env.*
 
-# Metro
-.metro-health-check*
-
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-expo-web.log
-expo-web.err.log
-
-# macOS
 .DS_Store
-*.pem
-
-# local env files
-.env*.local
-
-# typescript
-*.tsbuildinfo
-
-# generated native folders
-/ios
-/android
+Thumbs.db
+*.ipa
+*.zip

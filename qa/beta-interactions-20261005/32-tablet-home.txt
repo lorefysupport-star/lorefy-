@@ -1,0 +1,50 @@
+- banner:
+  - button "Your profile"
+  - strong: Lorefy
+  - button "Notifications":
+    - generic: "1"
+- tablist "Community filters":
+  - tab "For You" [selected]
+  - tab "Following"
+- region "Community posts":
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · 18د":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · 18د"
+    - paragraph: "فحص تفاعلات محلي 5 أكتوبر: نص عربي وEnglish 123."
+    - button "Open replies":
+      - generic: "0"
+    - button "Like":
+      - generic: "0"
+    - button "Dislike" [pressed]:
+      - generic: "1"
+    - button "Share":
+- article:
+  - button "Delete review":
+  - generic: قارئ Lorefy
+  - generic: "@lorefy_demo"
+  - generic: · 6د
+  - img "4.5 out of 5":
+  - paragraph: Local English interaction audit. Rating 4.5 and text should save.
+  - paragraph: Hunter x Hunter
+  - generic: Manga
+  - generic: Togashi, Yoshihiro
+  - button "Comment":
+    - generic: "0"
+  - button "Like, 0":
+    - generic: "0"
+  - button "Dislike, 0":
+    - generic: "0"
+  - button "Save":
+  - button "Share":
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Home" [active]:
+    - generic: Home
+- button "Create post":

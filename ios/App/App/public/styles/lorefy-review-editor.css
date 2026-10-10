@@ -1,0 +1,71 @@
+/* The focused review task uses semantic app tokens in every appearance. */
+.lf-app .lf-review-editor-overlay { position: absolute; inset: 0; z-index: 100; }
+.lf-app .lf-rating-scrim { position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,.46); border: 0; border-radius: 0; }
+.lf-app.lf-app.lf-app .nc-sheet.lf-rating-sheet {
+  position: absolute; inset: auto 0 0; display: flex; flex-direction: column;
+  width: min(100%,600px); max-height: calc(100% - 36px); margin-inline: auto;
+  padding: 0 !important; overflow: hidden !important; box-sizing: border-box;
+  background: var(--ui-surface, #fff) !important; color: var(--ui-ink, #182323);
+  border: 1px solid var(--ui-line, #dce4e4); border-bottom: 0;
+  border-radius: 22px 22px 0 0 !important; letter-spacing: 0;
+}
+.lf-rating-sheet * { box-sizing: border-box; }
+.lf-rating-sheet button, .lf-rating-sheet input, .lf-rating-sheet textarea { font-family: inherit; }
+.lf-rating-handle { flex: 0 0 auto; width: 32px; height: 4px; border-radius: 2px; background: var(--ui-separator); margin: 9px auto 0; }
+.lf-rating-header { flex: 0 0 auto; min-height: 56px; padding: 4px 20px 8px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--ui-line); }
+.lf-rating-header h2 { margin: 0; font-size: 18px; font-weight: 650; }
+.lf-rating-header button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; color: var(--ui-muted); background: transparent; }
+.lf-rating-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 20px; scrollbar-width: none; }
+.lf-rating-body::-webkit-scrollbar { display: none; }
+.lf-rating-work { display: flex; gap: 16px; align-items: center; padding-bottom: 20px; }
+.lf-rating-work img { width: 64px; height: 94px; flex: 0 0 64px; object-fit: cover; border-radius: 6px; background: var(--ui-fill); }
+.lf-rating-work > div { min-width: 0; }
+.lf-rating-work h3 { font-size: 20px; line-height: 1.35; font-weight: 650; margin: 5px 0 6px; overflow-wrap: anywhere; }
+.lf-rating-work span, .lf-rating-work p { font-size: 12px; line-height: 1.5; margin: 0; color: var(--ui-muted); overflow-wrap: anywhere; }
+.lf-rating-primary { border-block: 1px solid var(--ui-line); padding: 16px 0 12px; }
+.lf-rating-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.lf-rating-heading h3 { font-size: 14px; font-weight: 600; margin: 0; }
+.lf-rating-number { font-size: 32px; line-height: 1.1; font-weight: 650; color: var(--ui-rating, var(--ui-action)); font-variant-numeric: tabular-nums; text-align: end; }
+.lf-rating-number small { display: block; color: var(--ui-muted); font-size: 10px; line-height: 1.6; font-weight: 400; margin-top: 4px; }
+.lf-app .lf-rating-feathers { display: flex; direction: ltr; justify-content: space-between; gap: 4px; width: 100%; padding-top: 8px; }
+.lf-app .lf-rating-feathers button { flex: 0 0 44px; width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; padding: 0 !important; display: grid !important; place-items: center; color: var(--ui-rating) !important; background: transparent !important; border: 0 !important; border-radius: 6px !important; }
+.lf-rating-feathers.is-large { max-width: 320px; margin: 4px auto 0; }
+.lf-rating-recommendation { padding: 16px 0 18px; }
+.lf-rating-recommendation p { font-size: 13px; font-weight: 550; margin: 0 0 10px; }
+.lf-rating-recommendation > div { display: flex; gap: 8px; }
+.lf-rating-recommendation button { flex: 1; min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px; font-size: 13px; border: 1px solid var(--ui-line); border-radius: 8px; color: var(--ui-muted); background: transparent; }
+.lf-rating-recommendation button[aria-pressed="true"] { color: var(--ui-action); border-color: var(--ui-action); background: var(--ui-selected); }
+.lf-rating-recommendation .is-flipped { transform: rotate(180deg); }
+.lf-rating-writing > label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin: 0 0 10px; }
+.lf-rating-sheet small { color: var(--ui-muted); font-size: 11px; font-weight: 400; }
+.lf-app.lf-app.lf-app .lf-rating-sheet textarea { display: block; width: 100%; min-height: 104px; border-radius: 8px !important; border: 1px solid var(--ui-line) !important; background: var(--ui-fill) !important; padding: 12px !important; font-size: 16px !important; line-height: 1.6; resize: vertical; outline: none; color: var(--ui-ink) !important; }
+.lf-app .lf-rating-sheet textarea:focus { border-color: var(--ui-action) !important; }
+.lf-rating-writing-meta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin: 5px 0 10px; font-size: 10px; color: var(--ui-muted); }
+.lf-rating-spoiler { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; font-size: 12px; cursor: pointer; }
+.lf-rating-spoiler input { width: 18px; height: 18px; accent-color: var(--ui-action); }
+.lf-rating-sheet details { border-top: 1px solid var(--ui-line); }
+.lf-rating-sheet summary { min-height: 52px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; font-weight: 550; list-style: none; }
+.lf-rating-sheet summary::-webkit-details-marker { display: none; }
+.lf-rating-sheet summary::after { content: '+'; margin-inline-start: auto; color: var(--ui-muted); font-size: 20px; font-weight: 400; }
+.lf-rating-sheet details[open] > summary::after { content: '−'; }
+.lf-rating-metrics { padding-bottom: 10px; }
+.lf-rating-metric { border-top: 1px solid var(--ui-line); padding: 12px 0; }
+.lf-rating-metric > div:first-child { display: flex; justify-content: space-between; font-size: 13px; }
+.lf-rating-metric output { color: var(--ui-rating); font-variant-numeric: tabular-nums; }
+.lf-rating-extras > label { display: block; font-size: 13px; margin: 4px 0 8px; }
+.lf-rating-images { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.lf-rating-images > p { flex: 0 0 100%; margin: 0; font-size: 13px; }
+.lf-rating-images > div { position: relative; width: 72px; height: 72px; }
+.lf-rating-images img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+.lf-rating-images > div > button { position: absolute; top: 0; inset-inline-end: 0; width: 44px; height: 44px; display: grid; place-items: center; border: 0; color: white; background: rgba(0,0,0,.6); border-radius: 6px; }
+.lf-rating-images > button, .lf-rating-attach { position: relative; display: flex; align-items: center; gap: 8px; min-height: 44px; background: var(--ui-fill); color: var(--ui-muted); border: 1px solid var(--ui-line); border-radius: 8px; padding: 10px; font-size: 12px; }
+.lf-rating-attach input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
+.lf-rating-ranking .lf-top4-section { margin-top: 12px; border: 0; background: transparent; padding-inline: 0; }
+.lf-rating-footer { flex: 0 0 auto; padding: 12px 20px max(16px, env(safe-area-inset-bottom)); border-top: 1px solid var(--ui-line); background: var(--ui-surface); }
+.lf-rating-footer > button { width: 100%; min-height: 48px; background: var(--ui-action); color: var(--ui-on-action); border: 0; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+.lf-rating-footer > button:disabled { background: var(--ui-fill); color: var(--ui-muted); cursor: default; }
+.lf-rating-footer > p { color: var(--ui-danger, #d33d48); font-size: 12px; line-height: 1.5; margin: 0 0 8px; }
+.lf-rating-sheet button { cursor: pointer; touch-action: manipulation; }
+.lf-rating-sheet :is(button,input,summary):focus-visible { outline: 2px solid var(--ui-action); outline-offset: 2px; }
+@media (max-width: 360px) { .lf-rating-body { padding: 16px; } .lf-rating-header, .lf-rating-footer { padding-inline: 16px; } .lf-rating-work h3 { font-size: 18px; } }
+@media (prefers-reduced-motion: reduce) { .lf-review-editor-overlay, .lf-rating-sheet { animation: none !important; transition: none !important; } }

@@ -1,0 +1,15 @@
+{
+  "exitCode": 0,
+  "command": "node --test --test-reporter=tap --test-concurrency=1 tests/*.test.js",
+  "nodeVersion": "v24.16.0",
+  "summary": [
+    "# tests 985",
+    "# suites 0",
+    "# pass 985",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 60771.8092"
+  ]
+}

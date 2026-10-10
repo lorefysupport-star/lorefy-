@@ -1,0 +1,57 @@
+[
+  {
+    "path": ".git",
+    "reason": "cache/dependency/git/user-state",
+    "source": "Lorefy-clean-app"
+  },
+  {
+    "path": ".playwright-cli",
+    "reason": "cache/dependency/git/user-state",
+    "source": "Lorefy-clean-app"
+  },
+  {
+    "path": ".superdesign",
+    "reason": "cache/dependency/git/user-state",
+    "source": "Lorefy-clean-app"
+  },
+  {
+    "path": "artifacts",
+    "reason": "old-build-or-binary (build34 copied separately)",
+    "source": "Lorefy-clean-app"
+  },
+  {
+    "path": "node_modules",
+    "reason": "cache/dependency/git/user-state",
+    "source": "Lorefy-clean-app"
+  },
+  {
+    "path": "legal-site\\.git",
+    "reason": "cache/dependency/git/user-state",
+    "source": "Lorefy-clean-app"
+  },
+  {
+    "path": "output\\api-catalog\\.cache",
+    "reason": "cache/dependency/git/user-state",
+    "source": "Lorefy-clean-app"
+  },
+  {
+    "path": "supabase\\.temp",
+    "reason": "cache/dependency/git/user-state",
+    "source": "Lorefy-clean-app"
+  },
+  {
+    "path": "tools\\.cache",
+    "reason": "cache/dependency/git/user-state",
+    "source": "Lorefy-clean-app"
+  },
+  {
+    "path": ".temp",
+    "reason": "cache/dependency/git/user-state",
+    "source": "supabase"
+  },
+  {
+    "path": "__pycache__",
+    "reason": "cache/dependency/git/user-state",
+    "source": "lorefy-profile-promo"
+  }
+]

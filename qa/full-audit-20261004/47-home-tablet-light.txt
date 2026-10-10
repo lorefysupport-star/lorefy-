@@ -1,0 +1,65 @@
+- banner:
+  - button "Your profile"
+  - strong: Lorefy
+  - button "Notifications":
+- tablist "Community filters":
+  - tab "For You" [selected]
+  - tab "Following"
+- region "Community posts":
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · 16س":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · 16س"
+    - paragraph: xffgxfhxdfh
+    - button "Open replies":
+      - generic: "0"
+    - button "Like":
+      - generic: "0"
+    - button "Dislike":
+      - generic: "0"
+    - button "Share":
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · 1ي":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · 1ي"
+    - paragraph: اختبار محلي للردود والأبعاد. LongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenTextLongUnbrokenText
+    - button "Open replies":
+      - generic: "0"
+    - button "Like":
+      - generic: "0"
+    - button "Dislike":
+      - generic: "0"
+    - button "Share":
+- article:
+  - button "Review options":
+  - generic: قارئ Lorefy
+  - generic: "@lorefy_demo"
+  - generic: · 1ي
+  - img "5 out of 5":
+  - generic: Recommended
+  - paragraph: Clear pacing and memorable characters. Local beta verification.
+  - paragraph: Hunter x Hunter
+  - generic: Manga
+  - generic: Togashi, Yoshihiro
+  - button "0":
+    - generic: "0"
+  - button "0":
+    - generic: "0"
+  - button "0":
+    - generic: "0"
+  - button:
+  - button:
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Search":
+    - generic: Search
+  - button "Home" [active]:
+    - generic: Home
+- button "Create post":

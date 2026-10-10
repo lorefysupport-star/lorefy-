@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Public Profile Decoration QA</title>
+  <link rel="stylesheet" href="../styles/lorefy-public-profile.css">
+  <link rel="stylesheet" href="../styles/lorefy-profile-layout.css">
+  <link rel="stylesheet" href="../styles/lorefy-profile-shop.css">
+  <style>
+    :root { --ui-bg:#0b0b0c; --ui-ink:#f0f0f3; --ui-muted:#99999f; --ui-fill:#202022; --ui-surface:#141416; --ui-line:#39393e; --ui-action:#f0f0f3; --apple-bg:var(--ui-bg); --apple-label:var(--ui-ink); --apple-label-2:var(--ui-muted); --nc-top:0px; --nc-bottom:0px; }
+    * { box-sizing:border-box; }
+    body { margin:0; overflow:hidden; font:14px Arial,sans-serif; background:var(--ui-bg); }
+    .lf-app { height:100vh; height:100dvh; overflow:hidden; position:relative; }
+    .lf-reader-full { height:100%; scrollbar-width:none; }
+    .lf-reader-full::-webkit-scrollbar { display:none; }
+  </style>
+  <script src="../vendor/react.production.min.js"></script>
+  <script src="../vendor/react-dom.production.min.js"></script>
+  <script>window.NenIcons={};window.LorefyBackend={mode:'demo',user:{id:'fixture-viewer'}};</script>
+  <script defer src="../modules/lorefy-profile-shop.js"></script>
+  <script defer src="../modules/lorefy-public-profile.js"></script>
+</head>
+<body>
+  <div id="root" class="lf-app"></div>
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      const params=new URLSearchParams(location.search),pack=params.get('pack')||'observatory';
+      const profile={id:'fixture-owner',name:'Profile Fixture',username:'fixture-owner',bio:'Public profile geometry fixture',
+        avatar:new URL('../launch/icons/icon-512.png',location.href).href,
+        banner:new URL('../launch/shop/lorefy-collection-atlas.jpg',location.href).href,
+        profile_layout:params.get('layout')==='normal'?'normal':'immersive',
+        profile_decoration:{frame:pack,page:pack,effect:pack},following_count:12,follower_count:21,total_chapters:420,read_hours:84};
+      ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(LorefyPublicProfile,{profile,workById:()=>null,onBack:()=>{},onWork:()=>{},reviews:[]}));
+    },{once:true});
+  </script>
+</body>
+</html>

@@ -1,0 +1,2559 @@
+{
+  "generatedAt": "2026-10-08T11:39:30.272Z",
+  "bundledRaw": 122705,
+  "raw": 123993,
+  "policyExcluded": 785,
+  "knownDuplicatesRemoved": 1490,
+  "total": 121718,
+  "coverage": {
+    "Manga": {
+      "count": 11521,
+      "target": 7000,
+      "shortfall": 0,
+      "met": true
+    },
+    "Manhwa": {
+      "count": 9241,
+      "target": 7000,
+      "shortfall": 0,
+      "met": true
+    },
+    "Manhua": {
+      "count": 7045,
+      "target": 7000,
+      "shortfall": 0,
+      "met": true
+    },
+    "Comics": {
+      "count": 15161,
+      "target": 7000,
+      "shortfall": 0,
+      "met": true
+    },
+    "Novel": {
+      "count": 24097,
+      "target": 7000,
+      "shortfall": 0,
+      "met": true
+    },
+    "Book": {
+      "count": 37001,
+      "target": 7000,
+      "shortfall": 0,
+      "met": true
+    },
+    "Light Novel": {
+      "count": 13863,
+      "target": 7000,
+      "shortfall": 0,
+      "met": true
+    },
+    "Web Novel": {
+      "count": 3789,
+      "target": 7000,
+      "shortfall": 3211,
+      "met": false
+    }
+  },
+  "arabicExtensionCount": 1246,
+  "metadataQuality": {
+    "scanned": 121718,
+    "recordsWithMetadataGaps": 87474,
+    "missingAuthor": 164,
+    "missingCoverReference": 10291,
+    "missingSynopsis": 80448,
+    "missingYear": 27357,
+    "missingGenres": 13756,
+    "ambiguousComicTitles": 159,
+    "unrated": 112521,
+    "byType": {
+      "Novel": {
+        "scanned": 24097,
+        "recordsWithMetadataGaps": 15916,
+        "missingAuthor": 24,
+        "missingCoverReference": 498,
+        "missingSynopsis": 15652,
+        "missingYear": 682,
+        "missingGenres": 0,
+        "ambiguousComicTitles": 0,
+        "unrated": 22877
+      },
+      "Book": {
+        "scanned": 37001,
+        "recordsWithMetadataGaps": 33083,
+        "missingAuthor": 30,
+        "missingCoverReference": 9759,
+        "missingSynopsis": 32786,
+        "missingYear": 11076,
+        "missingGenres": 0,
+        "ambiguousComicTitles": 0,
+        "unrated": 35130
+      },
+      "Comics": {
+        "scanned": 15161,
+        "recordsWithMetadataGaps": 14987,
+        "missingAuthor": 80,
+        "missingCoverReference": 9,
+        "missingSynopsis": 12290,
+        "missingYear": 11454,
+        "missingGenres": 0,
+        "ambiguousComicTitles": 159,
+        "unrated": 14877
+      },
+      "Manga": {
+        "scanned": 11521,
+        "recordsWithMetadataGaps": 1750,
+        "missingAuthor": 1,
+        "missingCoverReference": 1,
+        "missingSynopsis": 1213,
+        "missingYear": 792,
+        "missingGenres": 1,
+        "ambiguousComicTitles": 0,
+        "unrated": 9898
+      },
+      "Manhwa": {
+        "scanned": 9241,
+        "recordsWithMetadataGaps": 1784,
+        "missingAuthor": 3,
+        "missingCoverReference": 0,
+        "missingSynopsis": 311,
+        "missingYear": 1531,
+        "missingGenres": 13,
+        "ambiguousComicTitles": 0,
+        "unrated": 6861
+      },
+      "Light Novel": {
+        "scanned": 13863,
+        "recordsWithMetadataGaps": 13618,
+        "missingAuthor": 0,
+        "missingCoverReference": 0,
+        "missingSynopsis": 13611,
+        "missingYear": 0,
+        "missingGenres": 12338,
+        "ambiguousComicTitles": 0,
+        "unrated": 13318
+      },
+      "Manhua": {
+        "scanned": 7045,
+        "recordsWithMetadataGaps": 2607,
+        "missingAuthor": 25,
+        "missingCoverReference": 0,
+        "missingSynopsis": 856,
+        "missingYear": 1822,
+        "missingGenres": 25,
+        "ambiguousComicTitles": 0,
+        "unrated": 6069
+      },
+      "Web Novel": {
+        "scanned": 3789,
+        "recordsWithMetadataGaps": 3729,
+        "missingAuthor": 1,
+        "missingCoverReference": 24,
+        "missingSynopsis": 3729,
+        "missingYear": 0,
+        "missingGenres": 1379,
+        "ambiguousComicTitles": 0,
+        "unrated": 3491
+      }
+    },
+    "samples": [
+      {
+        "id": "n-pride-and-prejudice",
+        "title": "Pride and Prejudice",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-1984",
+        "title": "Nineteen Eighty-Four",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-to-kill-a-mockingbird",
+        "title": "To Kill a Mockingbird",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-great-gatsby",
+        "title": "The Great Gatsby",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-moby-dick",
+        "title": "Moby-Dick",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-war-and-peace",
+        "title": "War and Peace",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-crime-and-punishment",
+        "title": "Crime and Punishment",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-brothers-karamazov",
+        "title": "The Brothers Karamazov",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-anna-karenina",
+        "title": "Anna Karenina",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-jane-eyre",
+        "title": "Jane Eyre",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-wuthering-heights",
+        "title": "Wuthering Heights",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-frankenstein",
+        "title": "Frankenstein",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-dracula",
+        "title": "Dracula",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-les-miserables",
+        "title": "Les Miserables",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-count-of-monte-cristo",
+        "title": "The Count of Monte Cristo",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-three-musketeers",
+        "title": "The Three Musketeers",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-don-quixote",
+        "title": "Don Quixote",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-hobbit",
+        "title": "The Hobbit",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-lord-of-the-rings",
+        "title": "The Lord of the Rings",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-dune",
+        "title": "Dune",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-fahrenheit-451",
+        "title": "Fahrenheit 451",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-brave-new-world",
+        "title": "Brave New World",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-handmaids-tale",
+        "title": "The Handmaid's Tale",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-catch-22",
+        "title": "Catch-22",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-slaughterhouse-five",
+        "title": "Slaughterhouse-Five",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-catcher-in-the-rye",
+        "title": "The Catcher in the Rye",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-little-women",
+        "title": "Little Women",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-alice-wonderland",
+        "title": "Alice's Adventures in Wonderland",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-wizard-of-oz",
+        "title": "The Wonderful Wizard of Oz",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-narnia",
+        "title": "The Lion, the Witch and the Wardrobe",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-harry-potter-stone",
+        "title": "Harry Potter and the Philosopher's Stone",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-harry-potter-azkaban",
+        "title": "Harry Potter and the Prisoner of Azkaban",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-hunger-games",
+        "title": "The Hunger Games",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-twilight",
+        "title": "Twilight",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-percy-jackson-lightning",
+        "title": "The Lightning Thief",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-game-of-thrones",
+        "title": "A Game of Thrones",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-name-of-the-wind",
+        "title": "The Name of the Wind",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-mistborn",
+        "title": "Mistborn: The Final Empire",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-way-of-kings",
+        "title": "The Way of Kings",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-wheel-of-time",
+        "title": "The Eye of the World",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-earthsea",
+        "title": "A Wizard of Earthsea",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-left-hand-darkness",
+        "title": "The Left Hand of Darkness",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-foundation",
+        "title": "Foundation",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-hyperion",
+        "title": "Hyperion",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-neuromancer",
+        "title": "Neuromancer",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-snow-crash",
+        "title": "Snow Crash",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-martian",
+        "title": "The Martian",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-project-hail-mary",
+        "title": "Project Hail Mary",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-hitchhiker",
+        "title": "The Hitchhiker's Guide to the Galaxy",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-ready-player-one",
+        "title": "Ready Player One",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-shining",
+        "title": "The Shining",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-it",
+        "title": "It",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-pet-sematary",
+        "title": "Pet Sematary",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-haunting-hill-house",
+        "title": "The Haunting of Hill House",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-rosemary-baby",
+        "title": "Rosemary's Baby",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-silence-of-lambs",
+        "title": "The Silence of the Lambs",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-gone-girl",
+        "title": "Gone Girl",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-girl-dragon-tattoo",
+        "title": "The Girl with the Dragon Tattoo",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-da-vinci-code",
+        "title": "The Da Vinci Code",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-murder-orient-express",
+        "title": "Murder on the Orient Express",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-and-then-there-were-none",
+        "title": "And Then There Were None",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-sherlock-holmes",
+        "title": "The Hound of the Baskervilles",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-name-of-rose",
+        "title": "The Name of the Rose",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-kite-runner",
+        "title": "The Kite Runner",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-thousand-splendid-suns",
+        "title": "A Thousand Splendid Suns",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-life-of-pi",
+        "title": "Life of Pi",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-book-thief",
+        "title": "The Book Thief",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-shadow-of-wind",
+        "title": "The Shadow of the Wind",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-alchemist",
+        "title": "The Alchemist",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-chemist",
+        "title": "The Chemist",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-secret-history",
+        "title": "The Secret History",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-goldfinch",
+        "title": "The Goldfinch",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-normal-people",
+        "title": "Normal People",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-where-crawdads-sing",
+        "title": "Where the Crawdads Sing",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-tomorrow-tomorrow",
+        "title": "Tomorrow, and Tomorrow, and Tomorrow",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-circe",
+        "title": "Circe",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-song-of-achilles",
+        "title": "The Song of Achilles",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-sea-of-tranquility",
+        "title": "Sea of Tranquility",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-station-eleven",
+        "title": "Station Eleven",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-never-let-me-go",
+        "title": "Never Let Me Go",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-remains-of-day",
+        "title": "The Remains of the Day",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-beloved",
+        "title": "Beloved",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-color-purple",
+        "title": "The Color Purple",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-invisible-man",
+        "title": "Invisible Man",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-their-eyes",
+        "title": "Their Eyes Were Watching God",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-one-hundred-years",
+        "title": "One Hundred Years of Solitude",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-love-in-time-cholera",
+        "title": "Love in the Time of Cholera",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-master-margarita",
+        "title": "The Master and Margarita",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-metamorphosis",
+        "title": "The Metamorphosis",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-trial",
+        "title": "The Trial",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-stranger",
+        "title": "The Stranger",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-siddhartha",
+        "title": "Siddhartha",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-glass-bead-game",
+        "title": "The Glass Bead Game",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "ol-novel-works-ol453936w",
+        "title": "Good Omens",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "n-american-gods",
+        "title": "American Gods",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-coraline",
+        "title": "Coraline",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-night-circus",
+        "title": "The Night Circus",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-piranesi",
+        "title": "Piranesi",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-jonathan-strange",
+        "title": "Jonathan Strange & Mr Norrell",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "n-the-road",
+        "title": "The Road",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Curated Famous Novels"
+      },
+      {
+        "id": "ol-works-ol25105676w",
+        "title": "Popular Fictions",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol3919194w",
+        "title": "Potboilers",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol3245706w",
+        "title": "Bestsellers",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol25336133w",
+        "title": "Indian Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol3465155w",
+        "title": "Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol25268897w",
+        "title": "Language in Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol5352278w",
+        "title": "Beacham's Encyclopedia of Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol1830265w",
+        "title": "Popular fiction before Richardson",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol5951555w",
+        "title": "Ghanaian popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol677034w",
+        "title": "Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol4498295w",
+        "title": "Victorian popular fiction, 1860-80",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol2280967w",
+        "title": "Pulp",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol20753707w",
+        "title": "Home Stretch",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol17692272w",
+        "title": "Political mythology and popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol497129w",
+        "title": "Writing popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21262334w",
+        "title": "Aestheticism and the Marriage Market in Victorian Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol15057739w",
+        "title": "Tales from a not-so-popular party girl",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol4626200w",
+        "title": "Lost narratives",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21258306w",
+        "title": "Visualisation in Popular Fiction 1860-1960",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol27385750w",
+        "title": "New Directions in Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol17799655w",
+        "title": "Big Nate - Mr. Popularity",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol4496244w",
+        "title": "Writing Popular Fiction (Books for Writers)",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol16632817w",
+        "title": "Popular fiction by women, 1660-1730",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol18513085w",
+        "title": "Readings in African popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol19672609w",
+        "title": "Popular fiction and social change",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol2471358w",
+        "title": "Creating popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol16027757w",
+        "title": "Popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol25335848w",
+        "title": "Indian Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol22908190w",
+        "title": "The Bloomsbury introduction to popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol20777184w",
+        "title": "Bestsellers",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21132642w",
+        "title": "Translating Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol22225224w",
+        "title": "Tales and Popular Fictions",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21319930w",
+        "title": "Twenty-First Century Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol2048404w",
+        "title": "Bestsellers",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol5857149w",
+        "title": "Tales and popular fictions",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol1997016w",
+        "title": "American nightmares",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol19019640w",
+        "title": "Stories for Saturday",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol4799308w",
+        "title": "Feminist popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol12298845w",
+        "title": "Un/popular fictions",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol2009833w",
+        "title": "Modernism, Romance and the Fin de Siècle",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol35627w",
+        "title": "Wild seed",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol17917331w",
+        "title": "The Progress of romance",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol6576865w",
+        "title": "Teaching and writing popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol26338317w",
+        "title": "Penny Politics of Victorian Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol19329576w",
+        "title": "Popular Fictions: Essays in Literature and History (New Accents)",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol4279477w",
+        "title": "Practical Tips for Writing Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol23306785w",
+        "title": "Great authors of popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol3258106w",
+        "title": "Small books and pleasant histories",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol4708393w",
+        "title": "Beacham's Popular Fiction 1991 Update",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol5815666w",
+        "title": "Language, science and popular fiction in the Victorian fin-de-siècle",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol20707483w",
+        "title": "Feminist Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol9695988w",
+        "title": "Popular Fiction By Oregon Authors",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21303373w",
+        "title": "Cultural Politics of Chick Lit",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol25793398w",
+        "title": "Aboriginal Writers and Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol27387650w",
+        "title": "Popular Fiction and Spatiality",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol16239913w",
+        "title": "The Cambridge companion to popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol36459751w",
+        "title": "Science, Medicine, and Aristocratic Lineage in Victorian Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol8072965w",
+        "title": "Chinese popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol7260538w",
+        "title": "Popular fiction 100 years ago",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21184028w",
+        "title": "Victorian Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21073677w",
+        "title": "Formulas of Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol38164344w",
+        "title": "Trouble",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol26864401w",
+        "title": "Genre Worlds",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol19295196w",
+        "title": "The study of popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol16176120w",
+        "title": "Dear Appalachia",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21640358w",
+        "title": "Sticking It to the Man",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol14508265m",
+        "title": "Popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingAuthor",
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol2813992w",
+        "title": "Bibliography of Hausa popular fiction 1987 - 2002",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol3465154w",
+        "title": "Page Turners!",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol5851711w",
+        "title": "Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol16152810w",
+        "title": "Popular fiction and brain science in the late nineteenth century",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol492868w",
+        "title": "How to Be Popular",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol29391691w",
+        "title": "Popular Fiction in the Age of Bismarck",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol17661293w",
+        "title": "The Study of popular fiction : a source book",
+        "type": "Novel",
+        "gaps": [
+          "missingAuthor",
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol13635625w",
+        "title": "POPULAR FICTION: THE LOGICS AND PRACTICES OF A LITERARY FIELD",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol3508383w",
+        "title": "Popular fiction in England, 1914-1918",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21573730w",
+        "title": "Island Genres Genre Islands",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol8089940w",
+        "title": "Popular Fiction Reader",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol25055206w",
+        "title": "Richard Marsh, Popular Fiction Literary Culture, 1890-1915",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol20827741w",
+        "title": "Narrative of Chinese and Western Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol17699981w",
+        "title": "American best sellers : a reader's guide to popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingAuthor",
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol19566055w",
+        "title": "Sweet dreams",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol3763017w",
+        "title": "Now read on",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol9638375w",
+        "title": "Lost Voices of Modernity",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol22426195w",
+        "title": "Writer",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol22318177w",
+        "title": "Conrad's popular fictions",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol38192789w",
+        "title": "Where Light in Darkness Lies",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol22062199w",
+        "title": "Nineteenth Century Popular Fiction, Medicine and Anatomy",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21564285w",
+        "title": "When Storyworlds Collide",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol871306w",
+        "title": "Reading by numbers",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol29351842w",
+        "title": "Childrens Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21307392w",
+        "title": "Routledge Revivals : the Progress of Romance",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol8022950w",
+        "title": "Nursing the Image",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol20817576w",
+        "title": "Popular Fiction, Translation and the Nahda in Egypt",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21090769w",
+        "title": "Popular Fiction in the Age of Bismarck",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol21273084w",
+        "title": "Crime and the Nation",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol25678402w",
+        "title": "Cambridge Companion to Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol31306621w",
+        "title": "POPULAR FICTION; 100 Yrs. Ago",
+        "type": "Novel",
+        "gaps": [
+          "missingAuthor",
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol27399030w",
+        "title": "Companion to Victorian Popular Fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      },
+      {
+        "id": "ol-works-ol3944435w",
+        "title": "Encyclopedia of American popular fiction",
+        "type": "Novel",
+        "gaps": [
+          "missingSynopsis"
+        ],
+        "source": "Open Library"
+      }
+    ],
+    "limitations": [
+      "Cover references are counted, not remotely validated.",
+      "Unrated works are not automatically defective; source ratings must never be invented.",
+      "Ambiguous comic titles require provider identity checks, not title-only merging.",
+      "This is a metadata audit, not a full-text content or human-authorship certification."
+    ]
+  },
+  "mahfouzTitles": [
+    {
+      "id": "jarir-JRB5000013835",
+      "title": "همس الجنون",
+      "type": "كتاب"
+    },
+    {
+      "id": "ol-OL1599738W",
+      "title": "قصر الشوق",
+      "type": "رواية"
+    },
+    {
+      "id": "ol-OL1599691W",
+      "title": "ليالي ألف ليلة",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q12234985",
+      "title": "كفاح طيبة",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q16207487",
+      "title": "ثرثرة فوق النيل",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q2275911",
+      "title": "أولاد حارتنا",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q7320048",
+      "title": "رادوبيس",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q7716304",
+      "title": "الشحاذ",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q7729227",
+      "title": "يوم قتل الزعيم",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q7738834",
+      "title": "ملحمة الحرافيش",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q7743683",
+      "title": "رحلة ابن فطومة",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q7762831",
+      "title": "الطريق",
+      "type": "رواية"
+    },
+    {
+      "id": "ol-OL1599727W",
+      "title": "السكرية",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q23307353",
+      "title": "أفراح القبة",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q48988873",
+      "title": "الكرنك",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q76320464",
+      "title": "زعبلاوي",
+      "type": "رواية"
+    },
+    {
+      "id": "wikidata-Q109298241",
+      "title": "قلب الليل",
+      "type": "رواية"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.BaqiMinZamanSaca",
+      "title": "الباقي من الزمن ساعة",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.BaynQasrayn",
+      "title": "بين القصرين",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.BidayaWaNihaya",
+      "title": "بداية ونهاية",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.CabathAqdar",
+      "title": "عبث الأقدار",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.CaishFiHaqiqa",
+      "title": "العائش في الحقيقة",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.CasrHubb",
+      "title": "عصر الحب",
+      "type": "رواية"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.HadithSabahWaMasa",
+      "title": "حديث الصباح والمساء",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.HadratMuhtaram",
+      "title": "حضرة المحترم",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Harafish",
+      "title": "الحرافيش",
+      "type": "كتاب"
+    },
+    {
+      "id": "ol-OL1599689W",
+      "title": "الحب تحت المطر",
+      "type": "رواية"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.KhanKhalili",
+      "title": "خان الخليلي",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.LissWaKilab",
+      "title": "اللص والكلاب",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Maraya",
+      "title": "المرايا",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Miramar",
+      "title": "ميرامار",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.QahiraJadida",
+      "title": "القاهرة الجديدة",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Qushtumur",
+      "title": "قشتمر",
+      "type": "رواية"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Sarab",
+      "title": "السراب",
+      "type": "كتاب"
+    },
+    {
+      "id": "ol-OL1599686W",
+      "title": "السمان والخريف",
+      "type": "رواية"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.YawmQutilaZacim",
+      "title": "يوم قتل الزعيم",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.ZuqaqMidaqq",
+      "title": "زقاق المدق",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-اصداء-السيرة-الذاتية-نجيب-محفوظ",
+      "title": "أصداء السيرة الذاتية",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-الجريمة-نجيب-محفوظ",
+      "title": "الجريمة",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-الحب-فوق-هضبة-الهرم-نجيب-محفوظ",
+      "title": "الحب فوق هضبة الهرم",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-الشيطان-يعظ-نجيب-محفوظ",
+      "title": "الشيطان يعظ",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-الفجر-الكاذب-نجيب-محفوظ",
+      "title": "الفجر الكاذب",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-القرار-الاخير-نجيب-محفوظ",
+      "title": "القرار الأخير",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-بيت-سيي-السمعة-نجيب-محفوظ",
+      "title": "بيت سيئ السمعة",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-تحت-المظلة-نجيب-محفوظ",
+      "title": "تحت المظلة",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-حكايات-حارتنا-نجيب-محفوظ",
+      "title": "حكايات حارتنا",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-حكاية-بلا-بداية-ولا-نهاية-نجيب-محفوظ",
+      "title": "حكاية بلا بداية ولا نهاية",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-خمارة-القط-الاسود-نجيب-محفوظ",
+      "title": "خمارة القط الأسود",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-دنيا-الله-نجيب-محفوظ",
+      "title": "دنيا الله",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-رايت-فيما-يرى-النايم-نجيب-محفوظ",
+      "title": "رأيت فيما يرى النائم",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-شهر-العسل-نجيب-محفوظ",
+      "title": "شهر العسل",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-صباح-الورد-نجيب-محفوظ",
+      "title": "صباح الورد",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-فتوة-العطوف-نجيب-محفوظ",
+      "title": "فتوة العطوف",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.AfrahQubba",
+      "title": "أفراح القبة",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.AwladHaratna",
+      "title": "أولاد حارتنا",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Karnak",
+      "title": "الكرنك",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.KifahTiba",
+      "title": "كفاح طيبة",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.QasrShawq",
+      "title": "قصر الشوق",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Radubis",
+      "title": "رادوبيس",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Shahhadh",
+      "title": "الشحاذ",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Sukkariyya",
+      "title": "السكرية",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.Tariq",
+      "title": "الطريق",
+      "type": "كتاب"
+    },
+    {
+      "id": "openiti-1427NajibMahfuz.ThartharaFawqNil",
+      "title": "ثرثرة فوق النيل",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-الباقي-من-الزمن-ساعة-نجيب-محفوظ",
+      "title": "الباقي من الزمن ساعة",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-الحرافيش-نجيب-محفوظ",
+      "title": "الحرافيش",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-السراب-نجيب-محفوظ",
+      "title": "السراب",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-العايش-في-الحقيقة-نجيب-محفوظ",
+      "title": "العائش في الحقيقة",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-القاهرة-الجديدة-نجيب-محفوظ",
+      "title": "القاهرة الجديدة",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-اللص-والكلاب-نجيب-محفوظ",
+      "title": "اللص والكلاب",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-المرايا-نجيب-محفوظ",
+      "title": "المرايا",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-بداية-ونهاية-نجيب-محفوظ",
+      "title": "بداية ونهاية",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-بين-القصرين-نجيب-محفوظ",
+      "title": "بين القصرين",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-حديث-الصباح-والمساء-نجيب-محفوظ",
+      "title": "حديث الصباح والمساء",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-حضرة-المحترم-نجيب-محفوظ",
+      "title": "حضرة المحترم",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-خان-الخليلي-نجيب-محفوظ",
+      "title": "خان الخليلي",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-زقاق-المدق-نجيب-محفوظ",
+      "title": "زقاق المدق",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-عبث-الاقدار-نجيب-محفوظ",
+      "title": "عبث الأقدار",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-ميرامار-نجيب-محفوظ",
+      "title": "ميرامار",
+      "type": "رواية"
+    },
+    {
+      "id": "lorefy-ar-curated-احلام-فترة-النقاهة-نجيب-محفوظ",
+      "title": "أحلام فترة النقاهة",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-احلام-فترة-النقاهة-الاحلام-الاخيرة-نجيب-محفوظ",
+      "title": "أحلام فترة النقاهة: الأحلام الأخيرة",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-التنظيم-السري-نجيب-محفوظ",
+      "title": "التنظيم السري",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-امام-العرش-حوار-مع-رجال-مصر-من-مينا-حتى-انور-السادات-نجيب-محفوظ",
+      "title": "أمام العرش: حوار مع رجال مصر من مينا حتى أنور السادات",
+      "type": "كتاب"
+    },
+    {
+      "id": "lorefy-ar-curated-صدى-النسيان-نجيب-محفوظ",
+      "title": "صدى النسيان",
+      "type": "كتاب"
+    },
+    {
+      "id": "ol-ar-ol44882012w",
+      "title": "قصص قصيرة",
+      "type": "كتاب"
+    }
+  ],
+  "keywordChecks": [
+    {
+      "query": "نجيب اللص",
+      "matches": [
+        {
+          "id": "openiti-1427NajibMahfuz.LissWaKilab",
+          "title": "اللص والكلاب"
+        },
+        {
+          "id": "lorefy-ar-curated-اللص-والكلاب-نجيب-محفوظ",
+          "title": "اللص والكلاب"
+        }
+      ]
+    },
+    {
+      "query": "اللص محفوظ",
+      "matches": [
+        {
+          "id": "openiti-1427NajibMahfuz.LissWaKilab",
+          "title": "اللص والكلاب"
+        },
+        {
+          "id": "lorefy-ar-curated-اللص-والكلاب-نجيب-محفوظ",
+          "title": "اللص والكلاب"
+        }
+      ]
+    },
+    {
+      "query": "Martin Thrones",
+      "matches": [
+        {
+          "id": "n-game-of-thrones",
+          "title": "A Game of Thrones"
+        },
+        {
+          "id": "ol-novel-works-ol17489309w",
+          "title": "A Song of Ice and Fire (A Game of Thrones / A Clash of Kings / A Storm of Swords / A Feast for Crows / A Dance with Dragons)"
+        }
+      ]
+    }
+  ],
+  "allTargetsMet": false,
+  "martinTitles": [
+    {
+      "id": "n-game-of-thrones",
+      "title": "A Game of Thrones"
+    },
+    {
+      "id": "ol-novel-works-ol257939w",
+      "title": "A Clash of Kings"
+    },
+    {
+      "id": "ol-novel-works-ol257948w",
+      "title": "A Feast for Crows"
+    },
+    {
+      "id": "ol-novel-works-ol257914w",
+      "title": "A Storm of Swords"
+    },
+    {
+      "id": "ol-novel-works-ol1955906w",
+      "title": "A Dance With Dragons"
+    },
+    {
+      "id": "ol-novel-works-ol257944w",
+      "title": "The Ice Dragon"
+    },
+    {
+      "id": "ol-novel-works-ol1955938w",
+      "title": "Aces Abroad"
+    },
+    {
+      "id": "ol-novel-works-ol17489309w",
+      "title": "A Song of Ice and Fire (A Game of Thrones / A Clash of Kings / A Storm of Swords / A Feast for Crows / A Dance with Dragons)"
+    },
+    {
+      "id": "ol-novel-works-ol17079158w",
+      "title": "Dangerous Women"
+    },
+    {
+      "id": "ol-novel-works-ol15181593w",
+      "title": "Deuces Down"
+    },
+    {
+      "id": "ol-novel-works-ol17463087w",
+      "title": "The World of Ice & Fire"
+    },
+    {
+      "id": "ol-OL19754759W",
+      "title": "Texas hold'em"
+    },
+    {
+      "id": "ol-OL1955925W",
+      "title": "Jokers Wild"
+    },
+    {
+      "id": "ol-OL19631217W",
+      "title": "Mississippi Roll"
+    },
+    {
+      "id": "ol-OL15980167W",
+      "title": "Fort Freak"
+    },
+    {
+      "id": "ol-OL20148801W",
+      "title": "Starport"
+    },
+    {
+      "id": "ol-OL1955929W",
+      "title": "Wild Cards"
+    },
+    {
+      "id": "ol-OL1955940W",
+      "title": "Fevre Dream"
+    },
+    {
+      "id": "ol-OL1955930W",
+      "title": "Windhaven"
+    },
+    {
+      "id": "ol-OL18016709W",
+      "title": "Fire & Blood"
+    },
+    {
+      "id": "ol-OL32350048W",
+      "title": "Winds of Winter"
+    },
+    {
+      "id": "ol-OL17563825W",
+      "title": "Blood and Gold"
+    },
+    {
+      "id": "ol-OL17553509W",
+      "title": "A Knight of the Seven Kingdoms"
+    },
+    {
+      "id": "ol-OL19800110W",
+      "title": "After the Feast"
+    },
+    {
+      "id": "ol-OL1955916W",
+      "title": "The Hedge Knight"
+    },
+    {
+      "id": "ol-OL1955943W",
+      "title": "Sandkings"
+    },
+    {
+      "id": "ol-OL1955928W",
+      "title": "Ace in the Hole"
+    },
+    {
+      "id": "ol-OL1955922W",
+      "title": "Songs of Stars and Shadows"
+    }
+  ],
+  "newlyImported": 75868,
+  "limitations": [
+    "Totals do not certify human authorship. Explicit/declaration metadata and conservative publication cutoffs are screening signals.",
+    "Provider works can contain translations or collections without canonical links; only known duplicate identities are merged.",
+    "Counts include the Arabic and BookTok local extensions after the runtime quality pass; offline canonical IDs can differ from the worker-selected IDs.",
+    "Coverage counts are bibliographic records, not a certification of every title, source genre, synopsis or cover.",
+    "MangaDex integration requires free/no-ad use; AniList mass collection was not used."
+  ],
+  "releaseStatus": "local-catalog-updated-not-uploaded-to-TestFlight"
+}

@@ -1,0 +1,224 @@
+- banner:
+  - heading "بحث" [level=1]
+  - textbox "ابحث بالعنوان أو المؤلف..." [active]: جورج مارتن
+  - button "إغلاق":
+  - button "الكل" [pressed]
+  - button "مانجا"
+  - button "مانهوا"
+  - button "مانهوا صيني"
+  - button "كوميكس"
+  - button "رواية"
+  - button "كتاب"
+  - button "لايت نوفل"
+  - button "ويب نوفل"
+  - button "الأعلى تقييماً"
+  - button "الأشهر"
+  - button "الأحدث"
+- status: 31 نتيجة
+- button "فتح A Game of ThronesروايةGeorge R. R. Martin ·19964.3":
+  - paragraph: A Game of Thrones
+  - generic: رواية
+  - paragraph: George R. R. Martin ·1996
+  - img "4.3 من 5":
+  - generic: "4.3"
+  - button "إضافة A Game of Thrones إلى المكتبة":
+- button "فتح صدام الملوك، كتاب إلكترونيروايةجورج ر. ر. مارتن4.2":
+  - paragraph: صدام الملوك، كتاب إلكتروني
+  - generic: رواية
+  - paragraph: جورج ر. ر. مارتن
+  - img "4.2 من 5":
+  - generic: "4.2"
+  - button "إضافة صدام الملوك، كتاب إلكتروني إلى المكتبة":
+- button "فتح 2 أجزاء - عاصفة السيوف 1كتابجورج مارتن4":
+  - paragraph: 2 أجزاء - عاصفة السيوف 1
+  - generic: كتاب
+  - paragraph: جورج مارتن
+  - img "4 من 5":
+  - generic: "4"
+  - button "إضافة 2 أجزاء - عاصفة السيوف 1 إلى المكتبة":
+- button "فتح لعبة العروش، كتاب إلكترونيروايةجورج ر. ر. مارتن3.9":
+  - paragraph: لعبة العروش، كتاب إلكتروني
+  - generic: رواية
+  - paragraph: جورج ر. ر. مارتن
+  - img "3.9 من 5":
+  - generic: "3.9"
+  - button "إضافة لعبة العروش، كتاب إلكتروني إلى المكتبة":
+- button "فتح A Clash of KingsروايةGeorge R. R. Martin ·1998—":
+  - paragraph: A Clash of Kings
+  - generic: رواية
+  - paragraph: George R. R. Martin ·1998
+  - generic: —
+  - button "إضافة A Clash of Kings إلى المكتبة":
+- button "فتح A Feast for CrowsروايةGeorge R. R. Martin ·2005—":
+  - paragraph: A Feast for Crows
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2005
+  - generic: —
+  - button "إضافة A Feast for Crows إلى المكتبة":
+- button "فتح A Storm of SwordsروايةGeorge R. R. Martin ·2000—":
+  - paragraph: A Storm of Swords
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2000
+  - generic: —
+  - button "إضافة A Storm of Swords إلى المكتبة":
+- button "فتح A Dance With DragonsروايةGeorge R. R. Martin ·2008—":
+  - paragraph: A Dance With Dragons
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2008
+  - generic: —
+  - button "إضافة A Dance With Dragons إلى المكتبة":
+- button "فتح The Ice DragonروايةGeorge R. R. Martin ·2006—":
+  - paragraph: The Ice Dragon
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2006
+  - generic: —
+  - button "إضافة The Ice Dragon إلى المكتبة":
+- button "فتح Aces AbroadروايةGeorge R. R. Martin ·1988—":
+  - paragraph: Aces Abroad
+  - generic: رواية
+  - paragraph: George R. R. Martin ·1988
+  - generic: —
+  - button "إضافة Aces Abroad إلى المكتبة":
+- button "فتح A Song of Ice and Fire (A Game of Thrones / A Clash of Kings / A Storm of Swords / A Feast":
+  - paragraph: A Song of Ice and Fire (A Game of Thrones / A Clash of Kings / A Storm of Swords / A Feast for Crows / A Dance with Dragons)
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2012
+  - generic: —
+  - button "إضافة A Song of Ice and Fire (A Game of Thrones / A Clash of Kings / A Storm of Swords / A Feast for Crows / A Dance with Dragons) إلى المكتبة":
+- button "فتح Dangerous WomenروايةGeorge R. R. Martin ·2013—":
+  - paragraph: Dangerous Women
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2013
+  - generic: —
+  - button "إضافة Dangerous Women إلى المكتبة":
+- button "فتح Deuces DownروايةGeorge R. R. Martin ·2002—":
+  - paragraph: Deuces Down
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2002
+  - generic: —
+  - button "إضافة Deuces Down إلى المكتبة":
+- button "فتح The World of Ice & FireروايةGeorge R. R. Martin ·2014—":
+  - paragraph: The World of Ice & Fire
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2014
+  - generic: —
+  - button "إضافة The World of Ice & Fire إلى المكتبة":
+- button "فتح Wild CardsكتابGeorge R. R. Martin ·19863.3":
+  - paragraph: Wild Cards
+  - generic: كتاب
+  - paragraph: George R. R. Martin ·1986
+  - img "3.3 من 5":
+  - generic: "3.3"
+  - button "إضافة Wild Cards إلى المكتبة":
+- button "فتح Fevre DreamكتابGeorge R. R. Martin ·19824.3":
+  - paragraph: Fevre Dream
+  - generic: كتاب
+  - paragraph: George R. R. Martin ·1982
+  - img "4.3 من 5":
+  - generic: "4.3"
+  - button "إضافة Fevre Dream إلى المكتبة":
+- button "فتح WindhavenروايةGeorge R. R. Martin ·19813.9":
+  - paragraph: Windhaven
+  - generic: رواية
+  - paragraph: George R. R. Martin ·1981
+  - img "3.9 من 5":
+  - generic: "3.9"
+  - button "إضافة Windhaven إلى المكتبة":
+- button "فتح Fire & BloodروايةGeorge R. R. Martin ·20144":
+  - paragraph: Fire & Blood
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2014
+  - img "4 من 5":
+  - generic: "4"
+  - button "إضافة Fire & Blood إلى المكتبة":
+- button "فتح Winds of WinterروايةGeorge R. R. Martin ·2016—":
+  - paragraph: Winds of Winter
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2016
+  - generic: —
+  - button "إضافة Winds of Winter إلى المكتبة":
+- button "فتح Blood and GoldروايةGeorge R. R. Martin ·20014.6":
+  - paragraph: Blood and Gold
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2001
+  - img "4.6 من 5":
+  - generic: "4.6"
+  - button "إضافة Blood and Gold إلى المكتبة":
+- button "فتح A Knight of the Seven KingdomsروايةGeorge R. R. Martin ·20134.1":
+  - paragraph: A Knight of the Seven Kingdoms
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2013
+  - img "4.1 من 5":
+  - generic: "4.1"
+  - button "إضافة A Knight of the Seven Kingdoms إلى المكتبة":
+- button "فتح After the FeastروايةGeorge R. R. Martin ·2001—":
+  - paragraph: After the Feast
+  - generic: رواية
+  - paragraph: George R. R. Martin ·2001
+  - generic: —
+  - button "إضافة After the Feast إلى المكتبة":
+- button "فتح The Hedge KnightكوميكسGeorge R. R. Martin ·19982.7":
+  - paragraph: The Hedge Knight
+  - generic: كوميكس
+  - paragraph: George R. R. Martin ·1998
+  - img "2.7 من 5":
+  - generic: "2.7"
+  - button "إضافة The Hedge Knight إلى المكتبة":
+- button "فتح SandkingsكوميكسGeorge R. R. Martin ·19814":
+  - paragraph: Sandkings
+  - generic: كوميكس
+  - paragraph: George R. R. Martin ·1981
+  - img "4 من 5":
+  - generic: "4"
+  - button "إضافة Sandkings إلى المكتبة":
+- button "فتح Ace in the HoleروايةGeorge R. R. Martin, Wild Cards Trust ·2003—":
+  - paragraph: Ace in the Hole
+  - generic: رواية
+  - paragraph: George R. R. Martin, Wild Cards Trust ·2003
+  - generic: —
+  - button "إضافة Ace in the Hole إلى المكتبة":
+- button "فتح Songs of Stars and ShadowsروايةGeorge R. R. Martin ·1977—":
+  - paragraph: Songs of Stars and Shadows
+  - generic: رواية
+  - paragraph: George R. R. Martin ·1977
+  - generic: —
+  - button "إضافة Songs of Stars and Shadows إلى المكتبة":
+- button "فتح Texas hold'emكتابGeorge R. R. Martin, Melinda Snodgrass, David Anthony Durham, Max Gladsto":
+  - paragraph: Texas hold'em
+  - generic: كتاب
+  - paragraph: George R. R. Martin, Melinda Snodgrass, David Anthony Durham, Max Gladstone, Diana Rowland, Walton Simons, Caroline Spector, William F. Wu, Wild Cards Trust
+  - generic: —
+  - button "إضافة Texas hold'em إلى المكتبة":
+- button "فتح Jokers WildكتابGeorge R. R. Martin, Wild Cards Trust, Melinda Snodgrass ·1990—":
+  - paragraph: Jokers Wild
+  - generic: كتاب
+  - paragraph: George R. R. Martin, Wild Cards Trust, Melinda Snodgrass ·1990
+  - generic: —
+  - button "إضافة Jokers Wild إلى المكتبة":
+- button "فتح Mississippi RollروايةGeorge R. R. Martin, Stephen Leigh, David D. Levine, John J. Miller,":
+  - paragraph: Mississippi Roll
+  - generic: رواية
+  - paragraph: George R. R. Martin, Stephen Leigh, David D. Levine, John J. Miller, Kevin Murphy, Cherie Priest, Carrie Vaughn, Wild Cards Trust
+  - generic: —
+  - button "إضافة Mississippi Roll إلى المكتبة":
+- button "فتح Fort FreakروايةGeorge R. R. Martin, Melinda Snodgrass, Wild Cards Trust Staff, Wild Cards":
+  - paragraph: Fort Freak
+  - generic: رواية
+  - paragraph: George R. R. Martin, Melinda Snodgrass, Wild Cards Trust Staff, Wild Cards Trust
+  - generic: —
+  - button "إضافة Fort Freak إلى المكتبة":
+- button "فتح StarportكوميكسGeorge R. R. Martin—":
+  - paragraph: Starport
+  - generic: كوميكس
+  - paragraph: George R. R. Martin
+  - generic: —
+  - button "إضافة Starport إلى المكتبة":
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية

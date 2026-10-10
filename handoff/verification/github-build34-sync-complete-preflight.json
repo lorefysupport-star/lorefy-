@@ -1,0 +1,16 @@
+{
+  "branch": "codex/sync-build34",
+  "baselineFiles": 2676,
+  "baselineBytes": 1394697840,
+  "matched": 2676,
+  "missing": [],
+  "mismatched": [],
+  "archiveSha256": "387b082cc4103e572802f9014c712416616d185465b7330639aad61eaa48eb70",
+  "archiveBytes": 389893475,
+  "archiveStorage": "Git LFS",
+  "sourceUnchanged": true,
+  "newBuildStarted": false,
+  "newSubmissionStarted": false,
+  "trackedFiles": 2706,
+  "trackedBytes": 1786588773
+}

@@ -1,0 +1,107 @@
+{
+  "owner": [
+    {
+      "countsGap": 24,
+      "links": [
+        {
+          "href": "https://instagram.com/dsfrhg",
+          "top": 448.09375,
+          "width": 44
+        },
+        {
+          "href": "https://www.tiktok.com/@dfrhds",
+          "top": 448.09375,
+          "width": 44
+        },
+        {
+          "href": "https://x.com/drhd",
+          "top": 448.09375,
+          "width": 44
+        }
+      ],
+      "nameAvatarSeparated": true,
+      "scrollWidth": 375,
+      "width": 375
+    },
+    {
+      "countsGap": 24,
+      "links": [
+        {
+          "href": "https://instagram.com/dsfrhg",
+          "top": 448.09375,
+          "width": 44
+        },
+        {
+          "href": "https://www.tiktok.com/@dfrhds",
+          "top": 448.09375,
+          "width": 44
+        },
+        {
+          "href": "https://x.com/drhd",
+          "top": 448.09375,
+          "width": 44
+        }
+      ],
+      "nameAvatarSeparated": true,
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "countsGap": 24,
+      "links": [
+        {
+          "href": "https://instagram.com/dsfrhg",
+          "top": 448.09375,
+          "width": 44
+        },
+        {
+          "href": "https://www.tiktok.com/@dfrhds",
+          "top": 448.09375,
+          "width": 44
+        },
+        {
+          "href": "https://x.com/drhd",
+          "top": 448.09375,
+          "width": 44
+        }
+      ],
+      "nameAvatarSeparated": true,
+      "scrollWidth": 440,
+      "width": 440
+    }
+  ],
+  "syntheticPublic": [
+    {
+      "linkRows": 2,
+      "links44px": true,
+      "linksFit": true,
+      "nameAvatarSeparated": true,
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "linkRows": 2,
+      "links44px": true,
+      "linksFit": true,
+      "nameAvatarSeparated": true,
+      "scrollWidth": 375,
+      "width": 375
+    },
+    {
+      "linkRows": 2,
+      "links44px": true,
+      "linksFit": true,
+      "nameAvatarSeparated": true,
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "linkRows": 2,
+      "links44px": true,
+      "linksFit": true,
+      "nameAvatarSeparated": true,
+      "scrollWidth": 440,
+      "width": 440
+    }
+  ]
+}

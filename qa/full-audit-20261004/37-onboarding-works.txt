@@ -1,0 +1,216 @@
+- button "Settings":
+- button "Toggle appearance":
+- button "Notifications":
+- paragraph: قارئ Lorefy
+- paragraph: "@lorefy_demo"
+- paragraph: حساب العرض المحلي
+- button "Following accounts":
+  - generic: "0"
+- button "Followers":
+  - generic: "0"
+- paragraph: "1"
+- paragraph: Review
+- paragraph: "1"
+- paragraph: Completed
+- paragraph: "420"
+- paragraph: chapters
+- paragraph: "84"
+- paragraph: reading hours
+- paragraph: Novel
+- paragraph: Favorite type
+- generic: Favorites
+- button "Edit favorite work 1"
+- button "Edit favorite work 2"
+- button "Edit favorite work 3"
+- button "Edit favorite work 4"
+- region "Favorite characters":
+  - button "Edit favorite characters":
+    - strong: Favorite characters
+  - button "Choose character for slot 1":
+    - text: اختر شخصياتك المفضلة
+- generic: Recent activity
+- generic: Last saved activity
+- paragraph: Manga
+- paragraph: Novel
+- paragraph: Novel
+- paragraph: Novel
+- paragraph: Novel
+- region "Community activity":
+  - strong: Community activity
+  - button "Replies 0":
+    - strong: Replies
+    - generic: "0"
+  - button "Saved posts 0":
+    - strong: Saved posts
+    - generic: "0"
+  - button "Characters 0":
+    - strong: Characters
+    - generic: "0"
+- button "Open reading diary":
+  - strong: Reading diary
+  - generic: Sessions, notes and quotes
+- region "Preference lists":
+  - button "Preference lists 8 categories · 0 / 80 slots":
+    - strong: Preference lists
+    - emphasis: 8 categories · 0 / 80 slots
+- button "My lists 1 List":
+  - strong: My lists
+  - generic: 1 List
+- button "2026 recap Your year in reading":
+  - strong: 2026 recap
+  - generic: Your year in reading
+- button "Import library AniList · Kitsu · MAL · Goodreads · StoryGraph · other sources":
+  - strong: Import library
+  - generic: AniList · Kitsu · MAL · Goodreads · StoryGraph · other sources
+- button "Saved reviews Save reviews to revisit later":
+  - strong: Saved reviews
+  - generic: Save reviews to revisit later
+- button "Reading"
+- button "Read"
+- button "Want to read"
+- button "Paused"
+- button "Dropped"
+- paragraph
+- paragraph: Your most-read formats
+- generic: 1 عمل
+- generic: Manga
+- paragraph: Premium coming soon
+- paragraph: Unavailable during beta
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Search":
+    - generic: Search
+  - button "Home":
+    - generic: Home
+- generic: Step 3 / 3
+- button:
+- heading "Pick works you love" [level=1]
+- paragraph: Your first recommendations will start from these choices. Choose at least 3 works.
+- textbox "Search for a work..."
+- button "Berserk":
+  - generic: Berserk
+- button "Chainsaw Man":
+  - generic: Chainsaw Man
+- button "One Piece":
+  - generic: One Piece
+- button "Attack on Titan":
+  - generic: Attack on Titan
+- button "One-Punch Man":
+  - generic: One-Punch Man
+- button "Goodnight Punpun":
+  - generic: Goodnight Punpun
+- button "Jujutsu Kaisen":
+  - generic: Jujutsu Kaisen
+- 'button "Demon Slayer: Kimetsu no Yaiba"':
+  - generic: "Demon Slayer: Kimetsu no Yaiba"
+- button "My Hero Academia":
+  - generic: My Hero Academia
+- button "Vagabond":
+  - generic: Vagabond
+- button "Naruto":
+  - generic: Naruto
+- button "Death Note":
+  - generic: Death Note
+- button "Bleach":
+  - generic: Bleach
+- button "Vinland Saga":
+  - generic: Vinland Saga
+- button "Horimiya":
+  - generic: Horimiya
+- button "Spy x Family":
+  - generic: Spy x Family
+- button "The Promised Neverland":
+  - generic: The Promised Neverland
+- 'button "JoJo''s Bizarre Adventure Part 7: Steel Ball Run"':
+  - generic: "JoJo's Bizarre Adventure Part 7: Steel Ball Run"
+- button "Tokyo Ghoul:re":
+  - generic: Tokyo Ghoul:re
+- button "Hunter x Hunter":
+  - generic: Hunter x Hunter
+- button "20th Century Boys":
+  - generic: 20th Century Boys
+- 'button "Kaguya-sama: Love Is War"':
+  - generic: "Kaguya-sama: Love Is War"
+- button "A Silent Voice":
+  - generic: A Silent Voice
+- button "Monster":
+  - generic: Monster
+- button "Komi Can't Communicate":
+  - generic: Komi Can't Communicate
+- button "Gantz":
+  - generic: Gantz
+- 'button "Uzumaki: Spiral into Horror"':
+  - generic: "Uzumaki: Spiral into Horror"
+- button "Black Clover":
+  - generic: Black Clover
+- button "Haikyu!!":
+  - generic: Haikyu!!
+- button "Claymore":
+  - generic: Claymore
+- button "Fire Punch":
+  - generic: Fire Punch
+- button "Blue Lock":
+  - generic: Blue Lock
+- button "[Oshi no Ko]":
+  - generic: "[Oshi no Ko]"
+- 'button "JoJo''s Bizarre Adventure Part 6: Stone Ocean"':
+  - generic: "JoJo's Bizarre Adventure Part 6: Stone Ocean"
+- button "Dr. Stone":
+  - generic: Dr. Stone
+- button "Dandadan":
+  - generic: Dandadan
+- button "Soul Eater":
+  - generic: Soul Eater
+- button "Deadman Wonderland":
+  - generic: Deadman Wonderland
+- button "Dorohedoro":
+  - generic: Dorohedoro
+- button "Grand Blue Dreaming":
+  - generic: Grand Blue Dreaming
+- button "Kingdom":
+  - generic: Kingdom
+- button "Slam Dunk":
+  - generic: Slam Dunk
+- 'button "Noragami: Stray God"':
+  - generic: "Noragami: Stray God"
+- button "My Dress-Up Darling":
+  - generic: My Dress-Up Darling
+- button "Tokyo Ghoul":
+  - generic: Tokyo Ghoul
+- button "Three Days of Happiness":
+  - generic: Three Days of Happiness
+- button "Pandora Hearts":
+  - generic: Pandora Hearts
+- 'button "Hell''s Paradise: Jigokuraku"':
+  - generic: "Hell's Paradise: Jigokuraku"
+- button "Akame ga Kill!":
+  - generic: Akame ga Kill!
+- 'button "GTO: Great Teacher Onizuka"':
+  - generic: "GTO: Great Teacher Onizuka"
+- button "Bakuman。":
+  - generic: Bakuman。
+- button "The Flowers of Evil":
+  - generic: The Flowers of Evil
+- 'button "Food Wars!: Shokugeki no Soma"':
+  - generic: "Food Wars!: Shokugeki no Soma"
+- button "Made in Abyss":
+  - generic: Made in Abyss
+- button "Dragon Ball":
+  - generic: Dragon Ball
+- button "Blame!":
+  - generic: Blame!
+- button "Yotsuba&!":
+  - generic: Yotsuba&!
+- button "The Quintessential Quintuplets":
+  - generic: The Quintessential Quintuplets
+- button "ReLIFE":
+  - generic: ReLIFE
+- button "Nana":
+  - generic: Nana
+- status: 3 remaining · 0 of 3 selected
+- button "Save preferences · selected 0" [disabled]

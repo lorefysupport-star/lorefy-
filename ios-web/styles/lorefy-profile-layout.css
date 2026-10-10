@@ -1,0 +1,108 @@
+.lf-profile-layout-picker { margin: 0 0 22px; padding: 0; border: 0; min-width: 0; color: var(--ui-ink); }
+.lf-profile-layout-picker legend { margin-bottom: 10px; font-size: 14px; font-weight: 750; }
+.lf-profile-layout-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.lf-profile-layout-option { position: relative; display: grid; gap: 8px; padding: 10px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-bg); cursor: pointer; }
+.lf-profile-layout-option:has(input:checked) { border-color: var(--ui-action); box-shadow: inset 0 0 0 1px var(--ui-action); }
+.lf-profile-layout-option:has(input:focus-visible) { outline: 2px solid var(--ui-action); outline-offset: 3px; }
+.lf-profile-layout-option input { position: absolute; inset-inline-end: 10px; bottom: 11px; margin: 0; width: 16px; height: 16px; accent-color: var(--ui-action); }
+.lf-profile-layout-option strong { font-size: 13px; padding-inline-end: 24px; }
+.lf-profile-layout-mini { position: relative; display: block; height: 104px; overflow: hidden; border-radius: 4px; background: var(--ui-fill); }
+.lf-layout-mini-banner { position: absolute; inset: 0 0 auto; width: 100%; height: 60px; object-fit: cover; mask-image: linear-gradient(to bottom, #000, transparent); }
+.lf-layout-mini-avatar { position: absolute; top: 32px; left: calc(50% - 16px); width: 32px; height: 32px; overflow: hidden; border: 2px solid var(--ui-bg); border-radius: 50%; background: var(--ui-action); }
+.lf-layout-mini-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.lf-profile-layout-mini i { position: absolute; height: 4px; background: var(--ui-muted); border-radius: 2px; opacity: .4; }
+.lf-layout-mini-name { width: 46%; top: 73px; left: 27%; }
+.lf-layout-mini-stats { width: 30%; top: 86px; left: 35%; }
+[data-mini-layout='immersive'] .lf-layout-mini-banner { height: 84px; }
+[data-mini-layout='immersive'] .lf-layout-mini-avatar { top: 44px; left: auto; right: 8px; width: 38px; height: 38px; }
+[data-mini-layout='immersive'] .lf-layout-mini-name { top: 87px; left: auto; inset-inline-start: 8px; width: 54%; }
+[data-mini-layout='immersive'] .lf-layout-mini-stats { top: 69px; left: 8px; width: 34%; }
+.lf-profile-connection-label { display: none; }
+.lf-profile-networks { display: contents; }
+
+/* The normal header keeps its existing rules. Only this saved variant is reshaped. */
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-banner,
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-banner {
+  height: calc(224px + var(--nc-top, 0px)) !important; position: relative; overflow: visible; background: var(--ui-bg) !important;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-banner::before { display: none !important; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-banner::after { display: none !important; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] :is(.lf-profile-banner, .lf-reader-banner) > img {
+  width: 100%; height: 100% !important; object-fit: cover;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 35%, transparent 100%) !important;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 35%, transparent 100%) !important;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-avatar {
+  width: 116px !important; height: 116px !important; bottom: -74px !important;
+  left: auto !important; right: 20px !important; transform: none !important;
+  border: 3px solid var(--ui-bg) !important; box-shadow: none !important; z-index: 6 !important;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-identity {
+  --identity-avatar-space: 136px;
+  display: grid; grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'name' 'handle' 'bio' 'social' 'metrics' 'favorites';
+  grid-template-rows: minmax(38px,auto) minmax(40px,auto) auto auto auto auto;
+  padding: 8px 20px 0 !important; text-align: start !important;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive']:has(.has-decoration) :is(.lf-profile-identity,.lf-reader-identity) { --identity-avatar-space: 156px; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] :is(.lf-profile-name, .lf-reader-identity h1) {
+  grid-area: name; justify-content: flex-start !important; margin: 0 0 4px !important;
+  min-width: 0; width: calc(100% - var(--identity-avatar-space)); justify-self: left;
+  text-align: start; overflow-wrap: anywhere; align-self: end;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-name p,
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-identity h1 {
+  font-size: 26px !important; line-height: 1.3; letter-spacing: 0 !important; margin: 0 !important;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] :is(.lf-profile-handle, .lf-reader-handle) {
+  grid-area: handle; margin: 0 !important; padding: 0 !important; text-align: left !important;
+  width: calc(100% - var(--identity-avatar-space)); justify-self: left;
+  min-height: 22px; font-size: 14px !important; direction: ltr; overflow-wrap: anywhere;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] :is(.lf-profile-connections, .lf-reader-social-summary) {
+  grid-area: social; display: grid !important; grid-template-columns: minmax(0,max-content) minmax(0,max-content) minmax(0,1fr);
+  justify-content: start !important; align-items: start !important; margin: 0 !important;
+  padding: 0 !important; min-height: 44px; gap: 4px 24px !important;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-connections > button {
+  flex-direction: row !important; align-items: center !important; justify-content: flex-start !important;
+  gap: 8px !important; padding: 0; min-width: 0; min-height: 44px;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-connections > button > svg { display: none; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-networks {
+  display: flex; grid-column: 1 / -1; grid-row: 2; flex-wrap: wrap; gap: 8px;
+  justify-content: flex-start; align-items: center; min-width: 0;
+}
+.lf-profile-networks:empty { display: none !important; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-connections > button > span:not(.lf-profile-connection-label),
+html:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-connection strong { font-size: 20px !important; line-height: 1.2; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-connection-label { display: block; font-size: 11px; color: var(--ui-muted); }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] :is(.lf-profile-bio, .lf-reader-bio) {
+  grid-area: bio; margin: 12px 0 8px !important; max-width: none !important;
+  text-align: start; font-size: 14px; line-height: 1.7; overflow-wrap: anywhere;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] :is(.lf-profile-metrics, .lf-reader-metrics) { grid-area: metrics; width: 100%; margin: 12px 0 20px !important; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-identity > div:last-child { grid-area: favorites; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-surface { position: relative; margin-top: 0; padding-top: 4px; background: transparent; border: 0; border-radius: 0; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-identity {
+  --identity-avatar-space: 136px;
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'name' 'handle' 'bio' 'social' 'type' 'actions' 'error' 'metrics';
+  grid-template-rows: minmax(38px,auto) minmax(40px,auto) auto auto auto auto auto auto;
+  padding: 8px 20px 0; text-align: start;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-identity > .lf-reader-avatar {
+  position: absolute; top: -46px; right: 20px; width: 116px; height: 116px;
+  margin: 0; border: 3px solid var(--ui-bg); box-shadow: none; z-index: 4;
+}
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-type-chip { grid-area: type; justify-self: start; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-primary-actions { grid-area: actions; justify-content: flex-start; flex-wrap: wrap; gap: 12px; width: 100%; min-width: 0; margin: 0 0 14px; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-socials { flex: 1 0 100%; justify-content: flex-start; flex-wrap: wrap; gap: 8px; min-width: 0; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-error { grid-area: error; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-connection { flex-direction: row; align-items: center; gap: 8px; min-width: 0; min-height: 44px; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-social-divider { display: none; }
+@media (max-width: 350px) {
+  html:root:root:root:root:root:root [data-profile-layout='immersive'] :is(.lf-profile-identity,.lf-reader-identity) { --identity-avatar-space: 120px; }
+  html:root:root:root:root:root:root [data-profile-layout='immersive']:has(.has-decoration) :is(.lf-profile-identity,.lf-reader-identity) { --identity-avatar-space: 136px; }
+  html:root:root:root:root:root:root [data-profile-layout='immersive'] :is(.lf-profile-avatar, .lf-reader-identity > .lf-reader-avatar) { width: 100px !important; height: 100px !important; right: 16px !important; }
+}

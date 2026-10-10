@@ -1,0 +1,45 @@
+- banner:
+  - heading "مكتبتي" [level=1]
+  - group "طريقة عرض المكتبة":
+    - button "عرض شبكة":
+      - generic: شبكة
+    - button "عرض رف" [pressed]:
+      - generic: رف
+  - button "الكل 2" [pressed]:
+    - generic: الكل
+    - generic: "2"
+  - button "أقرأ الآن 0":
+    - generic: أقرأ الآن
+    - generic: "0"
+  - button "مكتملة 2":
+    - generic: مكتملة
+    - generic: "2"
+  - button "الأمنيات 0":
+    - generic: الأمنيات
+    - generic: "0"
+  - button "متوقف مؤقتًا 0":
+    - generic: متوقف مؤقتًا
+    - generic: "0"
+  - button "توقفت نهائيًا 0":
+    - generic: توقفت نهائيًا
+    - generic: "0"
+- searchbox "البحث في المكتبة"
+- combobox "ترتيب المكتبة":
+  - option "ترتيب الإضافة" [selected]
+  - option "العنوان"
+  - option "تقدم القراءة"
+- button "فتح Hunter x Hunter":
+  - strong: Hunter x Hunter
+  - generic: 420 فصل
+- button "فتح Naruto":
+  - strong: Naruto
+  - generic: مكتمل
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي" [active]:
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية

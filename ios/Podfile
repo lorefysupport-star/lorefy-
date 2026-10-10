@@ -1,0 +1,10 @@
+platform :ios, '15.0'
+
+# EAS runs CocoaPods for generic iOS jobs. Capacitor 8 uses Swift Package
+# Manager here, so this target only lets that phase complete without altering
+# the native project or replacing its package dependencies.
+install! 'cocoapods', :integrate_targets => false
+
+target 'App' do
+  project 'App/App.xcodeproj'
+end

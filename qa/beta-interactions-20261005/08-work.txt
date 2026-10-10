@@ -1,0 +1,203 @@
+- button "رجوع":
+- button "مشاركة العمل":
+- button "تنبيهات الفصول":
+- banner:
+  - img "Hunter x Hunter"
+  - paragraph: مانجا · 1998
+  - heading "Hunter x Hunter" [level=1]
+  - paragraph: HUNTER×HUNTER
+  - paragraph: Togashi, Yoshihiro
+  - strong: "4.4"
+  - generic: من 5
+  - generic: حسب AniList
+  - generic: مكتملة
+  - generic: 420 فصل
+  - generic: Shounen Jump (Weekly)
+  - navigation "أقسام العمل":
+    - button "نظرة عامة"
+    - button "الفصول"
+    - button "آراء القراء"
+- generic "التقييمات التفصيلية"
+- paragraph: القصة
+- paragraph: "\"Secret treasure hoards, undiscovered wealth... mystical places, unexplored frontiers... 'The mysterious unknown.' There's magic in such words for those captivated by its spell. They are called 'Hunters'!\" Gon Freecss wants to become a Hunter so he can find his father, a man who abandoned him to pursue a life of adventure. But it's not that simple: only one in one hundred thousand can pass the Hun"
+- button "المزيد"
+- button "إضافة العمل للقائمة":
+  - generic: إضافة للقائمة
+- button "كتابة مراجعة للعمل":
+  - generic: مراجعة العمل
+- button "المزيد من خيارات العمل":
+- region "فصول Hunter x Hunter":
+  - heading "الفصول" [level=2]
+  - generic: 420 فصل
+  - strong: تقدم القراءة
+  - generic: 0 / 420
+  - progressbar "الفصول المقروءة"
+  - button "الفصل التالي":
+    - generic: الفصل التالي · 1
+  - button "قرأت كل الفصول المتاحة":
+    - generic: قرأت كل المتاح
+  - generic: عرض الفصول
+  - combobox "نطاق الفصول":
+    - option "1–10" [selected]
+    - option "11–20"
+    - option "21–30"
+    - option "31–40"
+    - option "41–50"
+    - option "51–60"
+    - option "61–70"
+    - option "71–80"
+    - option "81–90"
+    - option "91–100"
+    - option "101–110"
+    - option "111–120"
+    - option "121–130"
+    - option "131–140"
+    - option "141–150"
+    - option "151–160"
+    - option "161–170"
+    - option "171–180"
+    - option "181–190"
+    - option "191–200"
+    - option "201–210"
+    - option "211–220"
+    - option "221–230"
+    - option "231–240"
+    - option "241–250"
+    - option "251–260"
+    - option "261–270"
+    - option "271–280"
+    - option "281–290"
+    - option "291–300"
+    - option "301–310"
+    - option "311–320"
+    - option "321–330"
+    - option "331–340"
+    - option "341–350"
+    - option "351–360"
+    - option "361–370"
+    - option "371–380"
+    - option "381–390"
+    - option "391–400"
+    - option "401–410"
+    - option "411–420"
+  - button "الانتقال إلى رقم فصل":
+  - button "الفصل 1، فتح التقييم والتعليق":
+    - img "غلاف الفصل 1"
+    - generic: الفصل 1
+    - generic: The Day of Departure
+    - generic: المجلد 1 · 32 صفحة
+    - generic: ٢ مارس ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 1":
+    - generic: قرأت حتى هنا
+  - button "الفصل 2، فتح التقييم والتعليق":
+    - img "غلاف الفصل 2"
+    - generic: الفصل 2
+    - generic: An Encounter in the Storm
+    - generic: المجلد 1 · 23 صفحة
+    - generic: ٩ مارس ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 2":
+    - generic: قرأت حتى هنا
+  - button "الفصل 3، فتح التقييم والتعليق":
+    - img "غلاف الفصل 3"
+    - generic: الفصل 3
+    - generic: The Ultimate Choice
+    - generic: المجلد 1 · 19 صفحة
+    - generic: ١٦ مارس ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 3":
+    - generic: قرأت حتى هنا
+  - button "الفصل 4، فتح التقييم والتعليق":
+    - img "غلاف الفصل 4"
+    - generic: الفصل 4
+    - generic: "Kiriko: Wicked Magical Vulpes"
+    - generic: المجلد 1 · 21 صفحة
+    - generic: ٢٣ مارس ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 4":
+    - generic: قرأت حتى هنا
+  - button "الفصل 5، فتح التقييم والتعليق":
+    - img "غلاف الفصل 5"
+    - generic: الفصل 5
+    - generic: "The First Phase Begins: Part 1"
+    - generic: المجلد 1 · 19 صفحة
+    - generic: ٣٠ مارس ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 5":
+    - generic: قرأت حتى هنا
+  - button "الفصل 6، فتح التقييم والتعليق":
+    - img "غلاف الفصل 6"
+    - generic: الفصل 6
+    - generic: "The First Phase Begins: Part 2"
+    - generic: المجلد 1 · 19 صفحة
+    - generic: ٦ أبريل ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 6":
+    - generic: قرأت حتى هنا
+  - button "الفصل 7، فتح التقييم والتعليق":
+    - img "غلاف الفصل 7"
+    - generic: الفصل 7
+    - generic: Respective Reasons
+    - generic: المجلد 1 · 19 صفحة
+    - generic: ١٣ أبريل ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 7":
+    - generic: قرأت حتى هنا
+  - button "الفصل 8، فتح التقييم والتعليق":
+    - img "غلاف الفصل 8"
+    - generic: الفصل 8
+    - generic: The Other Enemy
+    - generic: المجلد 1 · 19 صفحة
+    - generic: ٢٠ أبريل ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 8":
+    - generic: قرأت حتى هنا
+  - button "الفصل 9، فتح التقييم والتعليق":
+    - img "غلاف الفصل 9"
+    - generic: الفصل 9
+    - generic: A Struggle in the Mist
+    - generic: المجلد 2 · 18 صفحة
+    - generic: ٢٧ أبريل ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 9":
+    - generic: قرأت حتى هنا
+  - button "الفصل 10، فتح التقييم والتعليق":
+    - img "غلاف الفصل 10"
+    - generic: الفصل 10
+    - generic: An Unexpected Task
+    - generic: المجلد 2 · 19 صفحة
+    - generic: ١١ مايو ١٩٩٨
+    - generic: قيّم الآن
+  - button "قرأت حتى الفصل 10":
+    - generic: قرأت حتى هنا
+  - button "عرض سجل القراءة لهذا العمل":
+    - generic: سجل القراءة
+  - 'link "عناوين وأغلفة الفصول: Hunterpedia"':
+    - /url: https://hunterxhunter.fandom.com/wiki/Category:Chapters
+  - status
+- button "بدء جلسة لهذا العمل":
+  - generic: ابدأ جلسة قراءة
+- button "الأصدقاء"
+- button "أتموها"
+- button "يقرؤون"
+- button "مراجعات"
+- paragraph: قد يعجبك أيضاً
+- paragraph: Hunter x Hunter
+- img "4.4 من 5":
+- region "بيانات العمل والاقتراحات":
+  - heading "بيانات العمل والاقتراحات" [level=3]
+  - button "تصحيح البيانات"
+  - button "المزيد مثل هذا"
+  - button "غير مهتم"
+  - button "Togashi, Yoshihiro":
+    - generic: Togashi, Yoshihiro
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية

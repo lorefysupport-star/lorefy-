@@ -1,0 +1,488 @@
+- region "Preference lists":
+  - dialog "Preference lists":
+    - button "الرجوع للبروفايل":
+    - heading "Preference lists" [level=2]
+    - paragraph: تفضيلات مانجا · 1 / 10 خانات
+    - button "إظهار قوائم أخرى لليسار":
+    - generic "أنواع قوائم التفضيلات":
+      - button "Manga"
+      - button "Manhwa"
+      - button "Manhua"
+      - button "Comics"
+      - button "Novel"
+      - button "Book"
+      - button "Light Novel"
+      - button "Web Novel"
+    - button "إظهار قوائم أخرى لليمين":
+    - generic "قائمة لوحات التفضيلات":
+      - article:
+        - button "تفضيلات مانجا 1 / 10 خانات" [pressed]:
+          - generic: تفضيلات مانجا
+          - generic: 1 / 10 خانات
+        - button "شير":
+          - text: شير
+        - paragraph: اختر 10 أعمال من نفس تصنيف Manga
+        - 'button "تعديل خانة 1: Hunter x Hunter"':
+          - generic: "1"
+        - button "خانة فارغة 2 لعمل من مانجا":
+          - generic: "2"
+          - text: +
+        - button "خانة فارغة 3 لعمل من مانجا":
+          - generic: "3"
+          - text: +
+        - button "خانة فارغة 4 لعمل من مانجا":
+          - generic: "4"
+          - text: +
+        - button "خانة فارغة 5 لعمل من مانجا":
+          - generic: "5"
+          - text: +
+        - button "خانة فارغة 6 لعمل من مانجا":
+          - generic: "6"
+          - text: +
+        - button "خانة فارغة 7 لعمل من مانجا":
+          - generic: "7"
+          - text: +
+        - button "خانة فارغة 8 لعمل من مانجا":
+          - generic: "8"
+          - text: +
+        - button "خانة فارغة 9 لعمل من مانجا":
+          - generic: "9"
+          - text: +
+        - button "خانة فارغة 10 لعمل من مانجا":
+          - generic: "10"
+          - text: +
+        - button "Open dashboard"
+        - button "نسخ النص"
+      - region "Favorite characters":
+        - generic: قائمة قابلة للمشاركة
+        - heading "Favorite characters" [level=3]
+        - paragraph: نفس فكرة قوائم الأعمال — عشر شخصيات لكل تصنيف، تتبع القسم المحدّد بالأعلى.
+        - article:
+          - generic: أفضل شخصيات مانجا
+          - generic: 0 / 10 شخصيات
+          - button "شير":
+            - generic: □
+            - text: شير
+          - paragraph: رتّب أفضل 10 شخصيات من تصنيف مانجا
+          - button "خانة فارغة 1":
+            - generic: "1"
+            - text: +
+          - button "خانة فارغة 2":
+            - generic: "2"
+            - text: +
+          - button "خانة فارغة 3":
+            - generic: "3"
+            - text: +
+          - button "خانة فارغة 4":
+            - generic: "4"
+            - text: +
+          - button "خانة فارغة 5":
+            - generic: "5"
+            - text: +
+          - button "خانة فارغة 6":
+            - generic: "6"
+            - text: +
+          - button "خانة فارغة 7":
+            - generic: "7"
+            - text: +
+          - button "خانة فارغة 8":
+            - generic: "8"
+            - text: +
+          - button "خانة فارغة 9":
+            - generic: "9"
+            - text: +
+          - button "خانة فارغة 10":
+            - generic: "10"
+            - text: +
+          - button "ابدأ الاختيار"
+          - button "نسخ النص"
+- dialog "Choose a character":
+  - strong: اختر شخصية
+  - generic: مانجا · خانة 1
+  - button "إغلاق": ✕
+  - searchbox "بحث" [active]
+  - searchbox "Find a work to load its characters": Hunter x Hunter
+  - status: 666 characters
+  - button "MD Monkey D. Luffy Monkey D. Luffy · ون بيس":
+    - generic: MD
+    - strong: Monkey D. Luffy
+    - emphasis: Monkey D. Luffy · ون بيس
+  - button "SG Son Goku Son Goku · دراغون بول":
+    - generic: SG
+    - strong: Son Goku
+    - emphasis: Son Goku · دراغون بول
+  - button "NU Naruto Uzumaki Naruto Uzumaki Naruto Uzumaki · ناروتو":
+    - generic: NU
+    - img "Naruto Uzumaki"
+    - strong: Naruto Uzumaki
+    - emphasis: Naruto Uzumaki · ناروتو
+  - button "SU Sasuke Uchiha Sasuke Uchiha Sasuke Uchiha · ناروتو":
+    - generic: SU
+    - img "Sasuke Uchiha"
+    - strong: Sasuke Uchiha
+    - emphasis: Sasuke Uchiha · ناروتو
+  - button "IK Ichigo Kurosaki Ichigo Kurosaki · بليتش":
+    - generic: IK
+    - strong: Ichigo Kurosaki
+    - emphasis: Ichigo Kurosaki · بليتش
+  - button "LY Light Yagami Light Yagami · مذكرة الموت":
+    - generic: LY
+    - strong: Light Yagami
+    - emphasis: Light Yagami · مذكرة الموت
+  - button "LA Levi Ackerman Levi Ackerman · هجوم العمالقة":
+    - generic: LA
+    - strong: Levi Ackerman
+    - emphasis: Levi Ackerman · هجوم العمالقة
+  - button "EY Eren Yeager Eren Yeager · هجوم العمالقة":
+    - generic: EY
+    - strong: Eren Yeager
+    - emphasis: Eren Yeager · هجوم العمالقة
+  - button "TK Tanjiro Kamado Tanjiro Kamado · قاتل الشياطين":
+    - generic: TK
+    - strong: Tanjiro Kamado
+    - emphasis: Tanjiro Kamado · قاتل الشياطين
+  - button "SG Satoru Gojo Satoru Gojo · جوجوتسو كايسن":
+    - generic: SG
+    - strong: Satoru Gojo
+    - emphasis: Satoru Gojo · جوجوتسو كايسن
+  - button "GU Guts Guts · بيرسيرك":
+    - generic: GU
+    - strong: Guts
+    - emphasis: Guts · بيرسيرك
+  - button "VE Vegeta Vegeta · دراغون بول":
+    - generic: VE
+    - strong: Vegeta
+    - emphasis: Vegeta · دراغون بول
+  - button "GF Gon Freecss Gon Freecss · هنتر × هنتر":
+    - generic: GF
+    - strong: Gon Freecss
+    - emphasis: Gon Freecss · هنتر × هنتر
+  - button "KZ Killua Zoldyck Killua Zoldyck · هنتر × هنتر":
+    - generic: KZ
+    - strong: Killua Zoldyck
+    - emphasis: Killua Zoldyck · هنتر × هنتر
+  - button "SA Saitama Saitama · ون بانش مان":
+    - generic: SA
+    - strong: Saitama
+    - emphasis: Saitama · ون بانش مان
+  - button "RZ Roronoa Zoro Roronoa Zoro · ون بيس":
+    - generic: RZ
+    - strong: Roronoa Zoro
+    - emphasis: Roronoa Zoro · ون بيس
+  - button "IU Itachi Uchiha Itachi Uchiha · ناروتو":
+    - generic: IU
+    - strong: Itachi Uchiha
+    - emphasis: Itachi Uchiha · ناروتو
+  - button "YI Yuji Itadori Yuji Itadori · جوجوتسو كايسن":
+    - generic: YI
+    - strong: Yuji Itadori
+    - emphasis: Yuji Itadori · جوجوتسو كايسن
+  - button "DE Denji Denji · تشينسو مان":
+    - generic: DE
+    - strong: Denji
+    - emphasis: Denji · تشينسو مان
+  - button "MA Mikasa Ackerman Mikasa Ackerman · هجوم العمالقة":
+    - generic: MA
+    - strong: Mikasa Ackerman
+    - emphasis: Mikasa Ackerman · هجوم العمالقة
+  - button "SI Senkuu Ishigami Senkuu Ishigami Senkuu Ishigami · Dr. Stone":
+    - generic: SI
+    - img "Senkuu Ishigami"
+    - strong: Senkuu Ishigami
+    - emphasis: Senkuu Ishigami · Dr. Stone
+  - button "GA Gen Asagiri Gen Asagiri Gen Asagiri · Dr. Stone":
+    - generic: GA
+    - img "Gen Asagiri"
+    - strong: Gen Asagiri
+    - emphasis: Gen Asagiri · Dr. Stone
+  - button "KO Kohaku Kohaku Kohaku · Dr. Stone":
+    - generic: KO
+    - img "Kohaku"
+    - strong: Kohaku
+    - emphasis: Kohaku · Dr. Stone
+  - button "CH Chrome Chrome Chrome · Dr. Stone":
+    - generic: CH
+    - img "Chrome"
+    - strong: Chrome
+    - emphasis: Chrome · Dr. Stone
+  - button "RN Ryuusui Nanami Ryuusui Nanami Ryuusui Nanami · Dr. Stone":
+    - generic: RN
+    - img "Ryuusui Nanami"
+    - strong: Ryuusui Nanami
+    - emphasis: Ryuusui Nanami · Dr. Stone
+  - button "TS Tsukasa Shishiou Tsukasa Shishiou Tsukasa Shishiou · Dr. Stone":
+    - generic: TS
+    - img "Tsukasa Shishiou"
+    - strong: Tsukasa Shishiou
+    - emphasis: Tsukasa Shishiou · Dr. Stone
+  - button "TO Taiju Ooki Taiju Ooki Taiju Ooki · Dr. Stone":
+    - generic: TO
+    - img "Taiju Ooki"
+    - strong: Taiju Ooki
+    - emphasis: Taiju Ooki · Dr. Stone
+  - button "SU Suika Suika Suika · Dr. Stone":
+    - generic: SU
+    - img "Suika"
+    - strong: Suika
+    - emphasis: Suika · Dr. Stone
+  - button "US Ukyou Saionji Ukyou Saionji Ukyou Saionji · Dr. Stone":
+    - generic: US
+    - img "Ukyou Saionji"
+    - strong: Ukyou Saionji
+    - emphasis: Ukyou Saionji · Dr. Stone
+  - button "KA Kaseki Kaseki Kaseki · Dr. Stone":
+    - generic: KA
+    - img "Kaseki"
+    - strong: Kaseki
+    - emphasis: Kaseki · Dr. Stone
+  - button "BI Byakuya Ishigami Byakuya Ishigami Byakuya Ishigami · Dr. Stone":
+    - generic: BI
+    - img "Byakuya Ishigami"
+    - strong: Byakuya Ishigami
+    - emphasis: Byakuya Ishigami · Dr. Stone
+  - button "YO Yuzuriha Ogawa Yuzuriha Ogawa Yuzuriha Ogawa · Dr. Stone":
+    - generic: YO
+    - img "Yuzuriha Ogawa"
+    - strong: Yuzuriha Ogawa
+    - emphasis: Yuzuriha Ogawa · Dr. Stone
+  - button "KI Kinrou Kinrou Kinrou · Dr. Stone":
+    - generic: KI
+    - img "Kinrou"
+    - strong: Kinrou
+    - emphasis: Kinrou · Dr. Stone
+  - button "HY Hyouga Hyouga Hyouga · Dr. Stone":
+    - generic: HY
+    - img "Hyouga"
+    - strong: Hyouga
+    - emphasis: Hyouga · Dr. Stone
+  - button "GI Ginrou Ginrou Ginrou · Dr. Stone":
+    - generic: GI
+    - img "Ginrou"
+    - strong: Ginrou
+    - emphasis: Ginrou · Dr. Stone
+  - button "RU Ruri Ruri Ruri · Dr. Stone":
+    - generic: RU
+    - img "Ruri"
+    - strong: Ruri
+    - emphasis: Ruri · Dr. Stone
+  - button "DX Dr. Xeno Dr. Xeno Dr. Xeno · Dr. Stone":
+    - generic: DX
+    - img "Dr. Xeno"
+    - strong: Dr. Xeno
+    - emphasis: Dr. Xeno · Dr. Stone
+  - button "FR Francois Francois Francois · Dr. Stone":
+    - generic: FR
+    - img "Francois"
+    - strong: Francois
+    - emphasis: Francois · Dr. Stone
+  - button "SS Stanley Snyder Stanley Snyder Stanley Snyder · Dr. Stone":
+    - generic: SS
+    - img "Stanley Snyder"
+    - strong: Stanley Snyder
+    - emphasis: Stanley Snyder · Dr. Stone
+  - button "HM Homura Momiji Homura Momiji Homura Momiji · Dr. Stone":
+    - generic: HM
+    - img "Homura Momiji"
+    - strong: Homura Momiji
+    - emphasis: Homura Momiji · Dr. Stone
+  - button "NH Nikki Hanada Nikki Hanada Nikki Hanada · Dr. Stone":
+    - generic: NH
+    - img "Nikki Hanada"
+    - strong: Nikki Hanada
+    - emphasis: Nikki Hanada · Dr. Stone
+  - button "LW Lillian Weinberg Lillian Weinberg Lillian Weinberg · Dr. Stone":
+    - generic: LW
+    - img "Lillian Weinberg"
+    - strong: Lillian Weinberg
+    - emphasis: Lillian Weinberg · Dr. Stone
+  - button "LW Luna Wright Luna Wright Luna Wright · Dr. Stone":
+    - generic: LW
+    - img "Luna Wright"
+    - strong: Luna Wright
+    - emphasis: Luna Wright · Dr. Stone
+  - button "SN SAI Nanami SAI Nanami SAI Nanami · Dr. Stone":
+    - generic: SN
+    - img "SAI Nanami"
+    - strong: SAI Nanami
+    - emphasis: SAI Nanami · Dr. Stone
+  - button "KI Kirisame Kirisame Kirisame · Dr. Stone":
+    - generic: KI
+    - img "Kirisame"
+    - strong: Kirisame
+    - emphasis: Kirisame · Dr. Stone
+  - button "GU Guts Guts Guts · Berserk":
+    - generic: GU
+    - img "Guts"
+    - strong: Guts
+    - emphasis: Guts · Berserk
+  - button "GR Griffith Griffith Griffith · Berserk":
+    - generic: GR
+    - img "Griffith"
+    - strong: Griffith
+    - emphasis: Griffith · Berserk
+  - button "CA Casca Casca Casca · Berserk":
+    - generic: CA
+    - img "Casca"
+    - strong: Casca
+    - emphasis: Casca · Berserk
+  - button "PU Puck Puck Puck · Berserk":
+    - generic: PU
+    - img "Puck"
+    - strong: Puck
+    - emphasis: Puck · Berserk
+  - button "FD Farnese de Vandimion Farnese de Vandimion Farnese de Vandimion · Berserk":
+    - generic: FD
+    - img "Farnese de Vandimion"
+    - strong: Farnese de Vandimion
+    - emphasis: Farnese de Vandimion · Berserk
+  - button "SC Schierke Schierke Schierke · Berserk":
+    - generic: SC
+    - img "Schierke"
+    - strong: Schierke
+    - emphasis: Schierke · Berserk
+  - button "SE Serpico Serpico Serpico · Berserk":
+    - generic: SE
+    - img "Serpico"
+    - strong: Serpico
+    - emphasis: Serpico · Berserk
+  - button "IS Isidro Isidro Isidro · Berserk":
+    - generic: IS
+    - img "Isidro"
+    - strong: Isidro
+    - emphasis: Isidro · Berserk
+  - button "TS The Skull Knight The Skull Knight The Skull Knight · Berserk":
+    - generic: TS
+    - img "The Skull Knight"
+    - strong: The Skull Knight
+    - emphasis: The Skull Knight · Berserk
+  - button "JU Judeau Judeau Judeau · Berserk":
+    - generic: JU
+    - img "Judeau"
+    - strong: Judeau
+    - emphasis: Judeau · Berserk
+  - button "ZO Zodd Zodd Zodd · Berserk":
+    - generic: ZO
+    - img "Zodd"
+    - strong: Zodd
+    - emphasis: Zodd · Berserk
+  - button "RI Rickert Rickert Rickert · Berserk":
+    - generic: RI
+    - img "Rickert"
+    - strong: Rickert
+    - emphasis: Rickert · Berserk
+  - button "PI Pippin Pippin Pippin · Berserk":
+    - generic: PI
+    - img "Pippin"
+    - strong: Pippin
+    - emphasis: Pippin · Berserk
+  - button "SL Slan Slan Slan · Berserk":
+    - generic: SL
+    - img "Slan"
+    - strong: Slan
+    - emphasis: Slan · Berserk
+  - button "LU Luca Luca Luca · Berserk":
+    - generic: LU
+    - img "Luca"
+    - strong: Luca
+    - emphasis: Luca · Berserk
+  - button "VO Void Void Void · Berserk":
+    - generic: VO
+    - img "Void"
+    - strong: Void
+    - emphasis: Void · Berserk
+  - button "GO Godot Godot Godot · Berserk":
+    - generic: GO
+    - img "Godot"
+    - strong: Godot
+    - emphasis: Godot · Berserk
+  - button "CH Chicchi Chicchi Chicchi · Berserk":
+    - generic: CH
+    - img "Chicchi"
+    - strong: Chicchi
+    - emphasis: Chicchi · Berserk
+  - button "IS Isma Isma Isma · Berserk":
+    - generic: IS
+    - img "Isma"
+    - strong: Isma
+    - emphasis: Isma · Berserk
+  - button "DO Donovan Donovan Donovan · Berserk":
+    - generic: DO
+    - img "Donovan"
+    - strong: Donovan
+    - emphasis: Donovan · Berserk
+  - button "IR Irvine Irvine Irvine · Berserk":
+    - generic: IR
+    - img "Irvine"
+    - strong: Irvine
+    - emphasis: Irvine · Berserk
+  - button "CO Corkus Corkus Corkus · Berserk":
+    - generic: CO
+    - img "Corkus"
+    - strong: Corkus
+    - emphasis: Corkus · Berserk
+  - button "MO Morda Morda Morda · Berserk":
+    - generic: MO
+    - img "Morda"
+    - strong: Morda
+    - emphasis: Morda · Berserk
+  - button "RO Rosine Rosine Rosine · Berserk":
+    - generic: RO
+    - img "Rosine"
+    - strong: Rosine
+    - emphasis: Rosine · Berserk
+  - button "MO Mozgus Mozgus Mozgus · Berserk":
+    - generic: MO
+    - img "Mozgus"
+    - strong: Mozgus
+    - emphasis: Mozgus · Berserk
+  - button "BR Brook Brook Brook · One Piece":
+    - generic: BR
+    - img "Brook"
+    - strong: Brook
+    - emphasis: Brook · One Piece
+  - button "FR Franky Franky Franky · One Piece":
+    - generic: FR
+    - img "Franky"
+    - strong: Franky
+    - emphasis: Franky · One Piece
+  - button "JI Jinbe Jinbe Jinbe · One Piece":
+    - generic: JI
+    - img "Jinbe"
+    - strong: Jinbe
+    - emphasis: Jinbe · One Piece
+  - button "MD Monkey D., Luffy Monkey D., Luffy Monkey D., Luffy · One Piece":
+    - generic: MD
+    - img "Monkey D., Luffy"
+    - strong: Monkey D., Luffy
+    - emphasis: Monkey D., Luffy · One Piece
+  - button "NA Nami Nami Nami · One Piece":
+    - generic: NA
+    - img "Nami"
+    - strong: Nami
+    - emphasis: Nami · One Piece
+  - button "NR Nico, Robin Nico, Robin Nico, Robin · One Piece":
+    - generic: NR
+    - img "Nico, Robin"
+    - strong: Nico, Robin
+    - emphasis: Nico, Robin · One Piece
+  - button "RZ Roronoa, Zoro Roronoa, Zoro Roronoa, Zoro · One Piece":
+    - generic: RZ
+    - img "Roronoa, Zoro"
+    - strong: Roronoa, Zoro
+    - emphasis: Roronoa, Zoro · One Piece
+  - button "SA Sanji Sanji Sanji · One Piece":
+    - generic: SA
+    - img "Sanji"
+    - strong: Sanji
+    - emphasis: Sanji · One Piece
+  - button "TT Tony Tony, Chopper Tony Tony, Chopper Tony Tony, Chopper · One Piece":
+    - generic: TT
+    - img "Tony Tony, Chopper"
+    - strong: Tony Tony, Chopper
+    - emphasis: Tony Tony, Chopper · One Piece
+  - button "US Usopp Usopp Usopp · One Piece":
+    - generic: US
+    - img "Usopp"
+    - strong: Usopp
+    - emphasis: Usopp · One Piece
+  - button "Show more"

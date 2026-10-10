@@ -1,0 +1,212 @@
+/* Native viewport contract: use the device-provided safe areas rather than
+   fixed iPhone measurements. This keeps every interactive target clear of
+   the Dynamic Island, status bar, and home indicator. */
+:root {
+  --lf-safe-top: max(env(safe-area-inset-top, 0px), var(--nc-top, 0px));
+  --lf-safe-bottom: max(env(safe-area-inset-bottom, 0px), var(--nc-bottom, 0px));
+}
+
+/* Re-resolve the safe-area contract where the device variables are defined. */
+#device,
+.lf-app {
+  --lf-safe-top: max(env(safe-area-inset-top, 0px), var(--nc-top, 0px));
+  --lf-safe-bottom: max(env(safe-area-inset-bottom, 0px), var(--nc-bottom, 0px));
+}
+
+#root,
+.lf-app,
+.lf-page,
+.lf-home-screen,
+.lf-home-page,
+.lf-profile-page,
+.lf-library-page,
+.lf-search-page,
+.lf-community-page,
+.lf-character-page {
+  min-height: 100%;
+}
+
+/* Full-screen route headers own the top inset exactly once. Keeping the inset
+   off the parent prevents the status-bar gap from being applied twice. */
+.lf-character-page,
+.lf-pref-board-hub {
+  box-sizing: border-box;
+  padding-top: 0 !important;
+  padding-bottom: var(--lf-safe-bottom) !important;
+}
+
+.lf-character-page-top,
+.lf-pref-board-hub-head,
+.lf-ov-head {
+  box-sizing: border-box;
+  padding-top: calc(var(--lf-safe-top) + 14px) !important;
+}
+
+.lf-character-page-top {
+  top: 0 !important;
+}
+
+.lf-page-header,
+.lf-home-header,
+.lf-profile-header,
+.lf-search-header,
+.lf-library-header,
+.lf-community-header {
+  padding-top: calc(var(--lf-safe-top) + 14px) !important;
+}
+
+.lf-app > main,
+.lf-page-content,
+.lf-home-screen,
+.lf-home-page,
+.lf-profile-page,
+.lf-library-page,
+.lf-search-page,
+.lf-community-page,
+.lf-character-page {
+  padding-bottom: calc(104px + max(8px, var(--lf-safe-bottom))) !important;
+  scroll-padding-bottom: calc(104px + max(8px, var(--lf-safe-bottom)));
+}
+
+.lf-bottom-nav {
+  bottom: max(8px, calc(var(--lf-safe-bottom) + 6px)) !important;
+  min-height: 66px;
+  padding-bottom: max(6px, var(--lf-safe-bottom)) !important;
+}
+
+/* Overlay sheets use the viewport that is actually available on the device,
+   rather than a hard-coded iPhone height. Their scrollable cards retain the
+   bottom inset so the final action remains tappable above the home indicator. */
+.lf-pref-share-sheet,
+.lf-image-choice-sheet,
+.lf-pref-slot-picker {
+  padding-top: var(--lf-safe-top) !important;
+  padding-bottom: var(--lf-safe-bottom) !important;
+  box-sizing: border-box;
+}
+
+.lf-pref-share-sheet-card,
+.lf-image-choice-card,
+.lf-pref-slot-picker-card {
+  max-height: calc(100dvh - var(--lf-safe-top) - var(--lf-safe-bottom) - 16px) !important;
+  padding-bottom: max(16px, var(--lf-safe-bottom)) !important;
+}
+
+.lf-pref-board-hub .lf-pref-board-rail {
+  padding-bottom: max(24px, calc(var(--lf-safe-bottom) + 16px)) !important;
+  scroll-padding-bottom: max(24px, calc(var(--lf-safe-bottom) + 16px));
+}
+
+.lf-bottom-nav button,
+.lf-community-card-action,
+.lf-share-platform,
+.lf-share-save-image {
+  min-width: 44px;
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+.lf-share-save-image {
+  width: 100%;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 12px;
+  min-height: 46px;
+  background: #007aff;
+  color: #fff;
+  font: 800 14px/1 inherit;
+  cursor: pointer;
+}
+
+.lf-share-save-image:disabled { opacity: .58; cursor: progress; }
+
+.lf-library-sync-status {
+  margin: 10px 16px 0;
+  color: var(--apple-secondary-label, #73737d);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 600px), (display-mode: standalone) {
+  #device {
+    --nc-top: max(env(safe-area-inset-top, 0px), 48px);
+    --nc-bottom: max(env(safe-area-inset-bottom, 0px), 26px);
+    height: 100dvh;
+    min-height: 100svh;
+  }
+
+  .nc-sheet {
+    max-height: min(86dvh, calc(100dvh - var(--lf-safe-top))) !important;
+    padding-bottom: max(0px, var(--lf-safe-bottom));
+  }
+}
+
+html[data-lorefy-adaptive-shell="true"] #root,
+html[data-lorefy-adaptive-shell="true"] .lf-app {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+}
+
+@media (min-width: 700px) {
+  html[data-lorefy-adaptive-shell="true"] {
+    --lf-tablet-gutter: clamp(20px, 4vw, 56px);
+    --lf-tablet-content: min(calc(100% - (var(--lf-tablet-gutter) * 2)), 980px);
+  }
+
+  html[data-lorefy-adaptive-shell="true"] #device {
+    --nc-top: max(env(safe-area-inset-top, 0px), 24px);
+    --nc-bottom: max(env(safe-area-inset-bottom, 0px), 20px);
+  }
+
+  html[data-lorefy-adaptive-shell="true"] :is(
+    .lf-home-screen,
+    .lf-home-page,
+    .lf-profile-page,
+    .lf-library-page,
+    .lf-search-page,
+    .lf-discover-page,
+    .lf-character-page
+  ) {
+    width: var(--lf-tablet-content) !important;
+    max-width: 980px !important;
+    margin-inline: auto !important;
+  }
+
+  html[data-lorefy-adaptive-shell="true"] .lf-community-page.lf-community-v2 {
+    width: min(calc(100% - (var(--lf-tablet-gutter) * 2)), 760px) !important;
+    max-width: 760px !important;
+    margin-inline: auto !important;
+  }
+
+  html[data-lorefy-adaptive-shell="true"] .lf-app .lf-bottom-nav {
+    right: auto !important;
+    left: 50% !important;
+    width: calc(100% - (var(--lf-tablet-gutter) * 2)) !important;
+    max-width: 760px !important;
+    transform: translateX(-50%) !important;
+  }
+
+  html[data-lorefy-adaptive-shell="true"] :is(.lf-library-grid, .lf-discover-grid) {
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  html[data-lorefy-adaptive-shell="true"] {
+    --lf-tablet-content: min(calc(100% - (var(--lf-tablet-gutter) * 2)), 980px);
+  }
+
+  html[data-lorefy-adaptive-shell="true"] .lf-home-screen,
+  html[data-lorefy-adaptive-shell="true"] .lf-profile-page {
+    width: var(--lf-tablet-content) !important;
+    max-width: 980px !important;
+    margin-inline: auto !important;
+  }
+
+  html[data-lorefy-adaptive-shell="true"] :is(.lf-profile-favorites, .lf-library-grid, .lf-discover-grid) {
+    grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  }
+}

@@ -1,0 +1,309 @@
+- banner:
+  - heading "استكشف" [level=1]
+  - button "ابحث عن الأعمال":
+    - generic: ابحث عن عمل أو مؤلف
+- paragraph: تصفّح حسب النوع
+- button "مانجا 11955 عمل":
+  - strong: مانجا
+  - generic: 11955 عمل
+- button "مانهوا 9241 عمل":
+  - strong: مانهوا
+  - generic: 9241 عمل
+- button "مانهوا صيني 977 عمل":
+  - strong: مانهوا صيني
+  - generic: 977 عمل
+- button "كوميكس 15400 عمل":
+  - strong: كوميكس
+  - generic: 15400 عمل
+- button "رواية 23901 عمل":
+  - strong: رواية
+  - generic: 23901 عمل
+- button "كتاب 28361 عمل":
+  - strong: كتاب
+  - generic: 28361 عمل
+- button "لايت نوفل 13702 عمل":
+  - strong: لايت نوفل
+  - generic: 13702 عمل
+- button "ويب نوفل 3785 عمل":
+  - strong: ويب نوفل
+  - generic: 3785 عمل
+- heading "اختيار المحرّر" [level=2]
+- generic: مانجا
+- text: "4.1"
+- 'heading "Demon Slayer: Kimetsu no Yaiba" [level=3]'
+- paragraph: Tanjirou Kamado lives with his impoverished family on a remote mountain. As the oldest sibling, he took upon the responsibility of ensuring his family's livelihood after the death of his father. On a cold winter day, he goes down to the local village in order to sell some charcoal. As dusk falls, he is forced to spend the night in the house of a curious man who cautions him of strange creatures th
+- button "الكل" [pressed]
+- button "مانجا"
+- button "مانهوا"
+- button "مانهوا صيني"
+- button "كوميكس"
+- button "رواية"
+- button "كتاب"
+- button "لايت نوفل"
+- button "ويب نوفل"
+- heading "الأكثر رواجاً" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: مانجا
+  - paragraph: "Demon Slayer: Kimetsu no Yaiba"
+  - img "4.1 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Alchemy Emperor of the Divine Dao
+  - img "3.9 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Catastrophic necromancer
+  - img "3.6 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Berserk
+  - img "4.7 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Chainsaw Man
+  - img "4.3 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: One Piece
+  - img "4.6 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: "Everyone Is A Lord: My Talent Is A Little Too Strong"
+  - img "3.4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Attack on Titan
+  - img "4.3 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: Solo Leveling
+  - img "4.3 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Myth Beyond Heaven
+  - img "3.7 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Entangled with An Evil Lord
+  - img "4.1 من 5":
+- article:
+  - generic: لايت نوفل
+  - paragraph: Tokyo Ghoul
+  - img "4 من 5":
+- heading "مختارة لك" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: مانجا
+  - paragraph: Jigokuraku
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: "Demon Slayer: Kimetsu no Yaiba"
+  - img "4.1 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Mairimashita! Iruma-kun Koushiki Anthology - Houkago no! Iruma-kun
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Kuni wo Owareta Ryuushi-san, Hirowareta Ringoku de Ukkari Musou Shite Shimau. ~Jakushou Kokka ga Tairiku Saikyou no Ryuu no Rakuen ni Naru made~
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Kizokuka Sannan no Nariagari Life - Umarete Sugu ni Jingai Nintei Sareta Shounen wa Isekai wo Mankitsu Suru
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: "Black Clover Side Story: Quartet Knights"
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Mannen 2-idakara to Kandousareta Shounen, Mujikaku ni Musou suru
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Hazure Skill Level Up no Sei de Party wo Tsuihou Sareta Shounen wa, Level wo Agete Butsuri de Naguru
+  - img "0 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: Ghost Hammer (Pre-Serialization)
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Shoukoku no Altair
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Kikori no Isekai Tan ~Tensei shita Shounen wa, Ono 1-pon de Nariagaru~
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Munou Yuusha no Fukushuutan ~Isekai de Suterareta Shounen wa Hangyaku wo Chikau~
+  - img "0 من 5":
+- heading "إصدارات جديدة" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: مانجا
+  - paragraph: Muteki no Ansatsu Madoushi, Last Boss Musume to Tabi o Suru @COMIC
+  - img "0 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: There's No Such Thing as a Bad Lady
+  - img "3.6 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: The Shepherd Wizard
+  - img "3.8 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: "I Became the First Prince: Legend of Sword's Song"
+  - img "3.5 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: I Only See You
+  - img "3.6 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: The Secretly Capable Child Is Looking for Her Dad
+  - img "3.8 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: Only I Have an EX-Grade Summon
+  - img "3.5 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: Daytime in the Bunker
+  - img "3.5 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Shujinkou no Osananajimi ga, Wakiyaku no Ore ni Guigui Kuru
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Nakama wo Mamotte Shindara 20-nengo no Onaji Sekai ni Umarekawatta Ken...... demo Ore, Tensei 2-kaime Nanda kedo?
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Shujinkou-sama no Imouto ni Aisareteiru kedo, Shikkari Yandere.
+  - img "0 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Tatakai shika Shiranai Onna Kishi wo Amayakashi Tsuzuketa
+  - img "0 من 5":
+- heading "الأعلى تقييماً" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: ويب نوفل
+  - paragraph: My Divine Pet Enables Me To Become The Biggest Winner
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: No Substitutes for the Bigshots' Dream Girl Anymore!
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Starting from a Fake University
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Yarra's Adventure Notes
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Adopting A Stray Cat By The Road
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: The Master's Mask Unveiled Again
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: "Indian Mythology: the Heavenly Emperor is not working today"
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: On Our Wedding Night, I Discovered the Crown Prince's Hidden Illness
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Dear Mr. Shi
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Mommy Alert! The CEO Daddy Won't Stop Courting
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: The CEO's Unkown Wife
+  - img "5 من 5":
+- article:
+  - generic: ويب نوفل
+  - paragraph: Embers of the Deep
+  - img "5 من 5":
+- heading "كتب مختارة" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: كتاب
+  - paragraph: الداء والدواء
+  - img "4.4 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Invitation to world religions
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Anatomy of the Sacred
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: The perennial philosophy
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: The anthropology of religion, magic, and witchcraft
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Ifa Divination
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Witch Crafting
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: A concise introduction to world religions
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Karma
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Divine horsemen
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Where God Came Down
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Fundamentals of the Yorùbá religion (Òrìṣà worship)
+  - img "5 من 5":
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف" [active]:
+    - generic: استكشف
+  - button "بحث":
+    - generic: بحث
+  - button "الرئيسية":
+    - generic: الرئيسية

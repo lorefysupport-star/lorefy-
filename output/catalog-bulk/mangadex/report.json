@@ -1,0 +1,20 @@
+{
+  "generatedAt": "2026-10-03T18:18:18.720Z",
+  "sources": {
+    "Manga": {
+      "providerTotal": 68297,
+      "usable": 9996,
+      "added": 0
+    },
+    "Manhwa": {
+      "providerTotal": 7506,
+      "usable": 7489,
+      "added": 0
+    },
+    "Manhua": {
+      "providerTotal": 6262,
+      "usable": 6236,
+      "added": 6101
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "checkedAt": "2026-10-09T16:51:18.974Z",
+  "passed": false,
+  "checks": [
+    {
+      "name": "live-auth-providers",
+      "passed": true,
+      "status": 200,
+      "providers": {
+        "google": true,
+        "apple": true,
+        "email": false
+      }
+    },
+    {
+      "name": "google-authorization-redirect",
+      "passed": true,
+      "status": 302,
+      "host": "accounts.google.com"
+    },
+    {
+      "name": "apple-authorization-redirect",
+      "passed": false,
+      "status": 400,
+      "host": null
+    },
+    {
+      "name": "privacyPolicyUrl",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "supportUrl",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "appUrl",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "delete-account-rejects-anonymous",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "name": "apple-authorization-rejects-anonymous",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "name": "sync_user_state-rejects-anonymous",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "name": "save_my_profile-rejects-anonymous",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "name": "share-media-1",
+      "passed": true,
+      "status": 200,
+      "type": "image/png",
+      "bytes": 159522,
+      "cors": "*"
+    },
+    {
+      "name": "share-media-2",
+      "passed": true,
+      "status": 200,
+      "type": "image/png",
+      "bytes": 181893,
+      "cors": "*"
+    },
+    {
+      "name": "share-media-3",
+      "passed": true,
+      "status": 200,
+      "type": "image/png",
+      "bytes": 152556,
+      "cors": "*"
+    },
+    {
+      "name": "share-media-4",
+      "passed": true,
+      "status": 200,
+      "type": "image/jpeg",
+      "bytes": 58824,
+      "cors": "*"
+    },
+    {
+      "name": "share-media-5",
+      "passed": true,
+      "status": 200,
+      "type": "image/jpeg",
+      "bytes": 156239,
+      "cors": "*"
+    }
+  ]
+}

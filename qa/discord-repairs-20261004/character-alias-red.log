@@ -1,0 +1,38 @@
+✔ work preference search filters the full category before paging (1.7099ms)
+✔ search is nested inside discovery rather than a duplicate navigation destination (0.2318ms)
+✔ Arabic title aliases are available to every catalog picker (2.2904ms)
+✔ preference character picker includes bundled cast beyond the short curated list (0.8633ms)
+✔ loading a selected work adds its full remote cast to the category picker (0.9049ms)
+✖ cast search matches aliases rather than only the first display name (1.6607ms)
+✔ comic preference portraits never query an anime character provider (0.7388ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87.9666
+
+✖ failing tests:
+
+test at tests\preference-catalog-recovery.test.js:47:1
+✖ cast search matches aliases rather than only the first display name (1.6607ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\preference-catalog-recovery.test.js:52:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

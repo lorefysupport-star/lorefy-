@@ -1,0 +1,202 @@
+✔ visitor artwork uses the owner snapshot, never viewer cover preferences (1.5033ms)
+✔ public chapter reviews stay in chapters; existing private notes are not auto-published (1.3115ms)
+✔ reply refresh is race-safe, retryable, and bounded by viewport (0.5986ms)
+✔ reply targeting preserves the draft and closing a thread does not discard it (0.3639ms)
+✔ a feed response from an abandoned screen cannot overwrite the current screen (0.3354ms)
+✖ chapter discussion supports owner deletion and reader reporting without public draft migration (1.8986ms)
+✔ chapter publishing uses a dedicated RPC and rejects invalid or empty input (2.4874ms)
+✔ chapter review pagination is stable and signs avatars before rendering (1.6647ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.1374
+
+✖ failing tests:
+
+test at tests\social-artwork-chapters.test.js:57:1
+✖ chapter discussion supports owner deletion and reader reporting without public draft migration (1.8986ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /deleteChapterReview/. Input:
+  
+  '(function (global) {\n' +
+    "  'use strict';\n" +
+    '  var doc = global.document;\n' +
+    '  var core = global.LorefyChapterDetailCore;\n' +
+    '  var metadata = global.LorefyChapterMetadata;\n' +
+    '  if (!doc || !core) return;\n' +
+    '\n' +
+    "  var KEY = 'lorefy.user.chapterReviews.v1';\n" +
+    '  var scheduled = false;\n' +
+    '  var selected = 1;\n' +
+    '  var expanded = 0;\n' +
+    "  var activeWork = '';\n" +
+    "  var catalogCache = { source: null, length: 0, id: '', title: '', work: null, idExists: false };\n" +
+    '\n' +
+    '  function el(tag, className, text) {\n' +
+    '    var item = doc.createElement(tag);\n' +
+    '    if (className) item.className = className;\n' +
+    '    if (text !== undefined) item.textContent = text;\n' +
+    '    return item;\n' +
+    '  }\n' +
+    '  function icon(name, size) {\n' +
+    "    var item = el('i'); item.setAttribute('data-lucide', name);\n" +
+    "    item.setAttribute('width', String(size || 18)); item.setAttribute('height', String(size || 18));\n" +
+    "    item.setAttribute('aria-hidden', 'true'); return item;\n" +
+    '  }\n' +
+    '  function button(label, className, name, action) {\n' +
+    "    var item = el('button', className); item.type = 'button'; item.setAttribute('aria-label', label);\n" +
+    "    if (name) item.appendChild(icon(name)); item.addEventListener('click', action); return item;\n" +
+    '  }\n' +
+    '  function refreshIcons(root) {\n' +
+    '    try { if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ nodes: [root] }); } catch (error) {}\n' +
+    '  }\n' +
+    '  function read() {\n' +
+    '    try {\n' +
+    "      var value = JSON.parse(global.localStorage.getItem(KEY) || '{}');\n" +
+    "      return value && typeof value === 'object' && !Array.isArray(value) ? value : {};\n" +
+    '    } catch (error) { return {}; }\n' +
+    '  }\n' +
+    '  function write(value) {\n' +
+    '    try { global.localStorage.setItem(KEY, JSON.stringify(value)); return true; }\n' +
+    '    catch (error) { return false; }\n' +
+    '  }\n' +
+    '  function catalogWork(id, title) {\n' +
+    '    var catalog = global.LorefyMangaData;\n' +
+    '    if (!Array.isArray(catalog)) return null;\n' +
+    '    if (catalogCache.source === catalog && catalogCache.length === catalog.length && catalogCache.id === id && catalogCache.title === title) return catalogCache.work;\n' +
+    '    var byId = catalog.find(function (work) { return work && String(work.id) === id; });\n' +
+    "    var sameTitle = function (work) { return work && [work.title, work.ar, work.en, work.titleEnglish].some(function (value) { return String(value || '').trim() === title; }); };\n" +
+    '    var match = sameTitle(byId) ? byId : catalog.find(sameTitle) || null;\n' +
+    '    catalogCache = { source: catalog, length: catalog.length, id: id, title: title, work: match, idExists: !!byId };\n' +
+    '    return match;\n' +
+    '  }\n' +
+    '  function context() {\n' +
+    "    var content = doc.querySelector('.lf-detail-page .lf-detail-content');\n" +
+    "    var title = content && content.querySelector('h1');\n" +
+    '    if (!content || !title) return null;\n' +
+    '    var label = title.textContent.trim();\n' +
+    "    var queryId = new URLSearchParams(global.location.search).get('novel') || '';\n" +
+    '    var work = catalogWork(queryId, label);\n' +
+    '    var id = work ? String(work.id) : queryId;\n' +
+    '    if (queryId && !work && catalogCache.idExists) return null;\n' +
+    '    if (!id) return null;\n' +
+    "    var metadataText = Array.prototype.slice.call(content.children, 0, 6).map(function (item) { return item.textContent; }).join(' ');\n" +
+    '    var verifiedSource = metadata && metadata.sourceFor(id);\n' +
+    '    var record = global.LorefyChapterData && global.LorefyChapterData[id];\n' +
+    "    var savedCount = core.total(work, metadataText) || core.total(record, '') || verifiedSource && verifiedSource.count || 0;\n" +
+    '    var catalog = metadata && metadata.catalogFor(id);\n' +
+    '    var count = Math.max(savedCount, catalog && catalog.total || 0);\n' +
+    "    var type = content.children[0] && content.children[0].textContent || '';\n" +
+    '    if (!count && !/مانجا|مانهوا|كوميكس|ويب نوفل|لايت نوفل|manga|manhwa|comic|web novel|light novel/i.test(type)) return null;\n' +
+    "    var heroImage = content.closest('.lf-detail-page').querySelector('.lf-detail-hero > img');\n" +
+    '    return { content: content, id: id, title: label, total: count,\n' +
+    "      cover: heroImage && heroImage.getAttribute('src') || '', chapterDetails: {},\n" +
+    '      numbers: catalog && catalog.total >= savedCount ? catalog.numbers : null,\n' +
+    "      catalogState: catalog ? 'ready' : 'idle' };\n" +
+    '  }\n' +
+    '  function reviewFor(id, chapter) { return (read()[id] || {})[String(chapter)] || null; }\n' +
+    "  function announce(section, text) { var status = section.querySelector('.lf-chapter-status'); if (status) status.textContent = text; }\n" +
+    '\n' +
+    "  function english() { return doc.documentElement.lang === 'en'; }\n" +
+    '  function text(ar, en) { return english() ? en : ar; }\n' +
+    '  function chapterDiscussion(info, chapter) {\n' +
+    "    var host = el('section', 'lf-chapter-discussion');\n" +
+    "    host.setAttribute('aria-label', text('تقييمات القراء للفصل', 'Reader chapter reviews'));\n" +
+    "    host.appendChild(el('h3', '', text('آراء القراء', 'Reader reviews')));\n" +
+    "    var list = el('div', 'lf-chapter-discussion-list'); host.appendChild(list);\n" +
+    '    var offset = 0, loading = false;\n' +
+    "    var more = button(text('عرض المزيد', 'Load more'), 'lf-chapter-discussion-more', null, function () { load(true); });\n" +
+    "    more.textContent = text('عرض المزيد', 'Load more'); more.hidden = true; host.appendChild(more);\n" +
+    '    async function load(append) {\n' +
+    '      if (loading) return;\n' +
+    '      loading = true; more.disabled = true;\n' +
+    "      if (!append) { offset = 0; list.textContent = ''; }\n" +
+    "      var status = el('p', 'lf-chapter-discussion-status', text('جارٍ تحميل التقييمات…', 'Loading reviews…')); list.appendChild(status);\n" +
+    '      try {\n' +
+    '        var backend = global.LorefyBackend;\n' +
+    "        var rows = backend && backend.mode === 'live' ? await backend.listChapterReviews(info.id, chapter, offset) : [];\n" +
+    '        if (!host.isConnected) return;\n' +
+    '        status.remove();\n' +
+    "        if (!rows.length && !offset) list.appendChild(el('p', '', text('لا توجد تقييمات بعد. كن أول من يقيّم الفصل.', 'No reviews yet. Be the first to rate this chapter.')));\n" +
+    '        rows.forEach(function (review) {\n' +
+    "          var row = el('article', 'lf-chapter-reader-review');\n" +
+    '          var author = review.profile || {};\n' +
+    "          var head = el('header');\n" +
+    "          if (/^https?:\\/\\//i.test(author.avatar || '')) {\n" +
+    "            var avatar = el('img'); avatar.src = author.avatar; avatar.alt = ''; avatar.loading = 'lazy'; avatar.onerror = function () { this.remove(); }; head.appendChild(avatar);\n" +
+    '          }\n' +
+    "          var name = button(text('فتح حساب القارئ', 'Open reader profile'), 'lf-chapter-reader-name', null, function () {\n" +
+    "            global.dispatchEvent(new global.CustomEvent('lorefy:open-reader-profile', { detail:author }));\n" +
+    "          }); name.textContent = author.name || author.username || text('قارئ', 'Reader'); head.appendChild(name);\n" +
+    "          if (review.rating) { var rating = el('span', 'lf-chapter-reader-rating'); rating.appendChild(icon('feather', 16)); rating.appendChild(el('span', '', review.rating + '/5')); head.appendChild(rating); }\n" +
+    '          row.appendChild(head);\n' +
+    '          var date = new Date(review.updated_at);\n' +
+    "          if (!isNaN(date.getTime())) { var time = el('time', '', date.toLocaleDateString(english() ? 'en' : 'ar')); time.dateTime = date.toISOString(); row.appendChild(time); }\n" +
+    '          if (review.body) {\n' +
+    "            var comment = el('p', 'lf-chapter-reader-comment', review.body); comment.dir = 'auto';\n" +
+    "            if (review.spoiler) { var reveal = el('details', 'lf-chapter-reader-spoiler'); reveal.appendChild(el('summary', '', text('تعليق يحتوي على حرق · إظهار', 'Spoiler comment · Reveal'))); reveal.appendChild(comment); row.appendChild(reveal); }\n" +
+    '            else row.appendChild(comment);\n' +
+    '          }\n' +
+    '          list.appendChild(row);\n' +
+    '        });\n' +
+    '        offset += rows.length; more.hidden = rows.length < 20; refreshIcons(list);\n' +
+    '      } catch (_) {\n' +
+    '        if (!host.isConnected) return;\n' +
+    "        status.textContent = text('تعذر تحميل تقييمات الفصل.', 'Unable to load chapter reviews.');\n" +
+    "        var retry = button(text('إعادة المحاولة', 'Retry'), '', null, function () { status.remove(); load(append); });\n" +
+    "        retry.textContent = text('إعادة المحاولة', 'Retry'); status.appendChild(retry); more.hidden = true;\n" +
+    '      } finally { loading = false; more.disabled = false; }\n' +
+    '    }\n' +
+    '    // Wait until the host is mounted; discarded chapter views never receive results.\n' +
+    '    global.setTimeout(function () { if (host.isConnected) load(false); }, 0);\n' +
+    '    host.reload = function () { return load(false); };\n' +
+    '    return host;\n' +
+    '  }\n' +
+    '\n' +
+    '  function editor(section, info, chapter) {\n' +
+    '    var previous = reviewFor(info.id, chapter) || {};\n' +
+    '    var score = Number(previous.rating) || 0;\n' +
+    "    var form = el('form', 'lf-chapter-editor');\n" +
+    "    var heading = el('div', 'lf-chapter-editor-heading');\n" +
+    '    var detail = info.chapterDetails[chapter];\n' +
+    "    heading.appendChild(el('strong', '', detail && detail.title || 'الفصل ' + chapter));\n" +
+    "    heading.appendChild(el('span', '', 'تقييمك وتعليقك')); form.appendChild(heading);\n" +
+    "    var stars = el('div', 'lf-chapter-stars'); stars.setAttribute('role', 'group'); stars.setAttribute('aria-label', 'تقييم الفصل من 5');\n" +
+    "    var scoreText = el('span', 'lf-chapter-score-text', score ? score + ' من 5' : 'اختر تقييمك');\n" +
+    '    for (var value = 1; value <= 5; value++) {\n' +
+    '      (function (rating) {\n' +
+    "        var star = button('تقييم الفصل ' + rating + ' من 5', 'lf-chapter-star', 'feather', function () {\n" +
+    '          score = rating;\n' +
+    "          stars.querySelectorAll('button').forEach(function (control, index) {\n" +
+    "            control.classList.toggle('is-filled', index < score);\n" +
+    "            control.setAttribute('aria-pressed', index + 1 === score ? 'true' : 'false');\n" +
+    '          });\n' +
+    "          scoreText.textContent = score + ' من 5';\n" +
+    '        });\n' +
+    "        star.classList.toggle('is-filled', rating <= score);\n" +
+    "        star.setAttribute('aria-pressed', rating === score ? 'true' : 'false'); stars.appendChild(star);\n" +
+    '      })(value);\n' +
+    '    }\n' +
+    "    var ratingLine = el('div', 'lf-chapter-rating-line'); ratingLine.appendChild(stars); ratingLine.appendChild(scoreText); form.appendChild(ratingLine);\n" +
+    "    var noteLabel = el('label', 'lf-chapter-note-label', 'تعليقك');\n" +
+    "    var textarea = el('textarea', 'lf-chapter-note'); textarea.maxLength = 1000;\n" +
+    "    textarea.setAttribute('aria-label', 'تعليقك على الفصل');\n" +
+    ' '... 19416 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\social-artwork-chapters.test.js:59:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "(function (global) {\n  'use strict';\n  var doc = global.document;\n  var core = global.LorefyChapterDetailCore;\n  var metadata = global.LorefyChapterMetadata;\n  if (!doc || !core) return;\n\n  var KEY = 'lorefy.user.chapterReviews.v1';\n  var scheduled = false;\n  var selected = 1;\n  var expanded = 0;\n  var activeWork = '';\n  var catalogCache = { source: null, length: 0, id: '', title: '', work: null, idExists: false };\n\n  function el(tag, className, text) {\n    var item = doc.createElement(tag);\n    if (className) item.className = className;\n    if (text !== undefined) item.textContent = text;\n    return item;\n  }\n  function icon(name, size) {\n    var item = el('i'); item.setAttribute('data-lucide', name);\n    item.setAttribute('width', String(size || 18)); item.setAttribute('height', String(size || 18));\n    item.setAttribute('aria-hidden', 'true'); return item;\n  }\n  function button(label, className, name, action) {\n    var item = el('button', className); item.type = 'button'; item.setAttribute('aria-label', label);\n    if (name) item.appendChild(icon(name)); item.addEventListener('click', action); return item;\n  }\n  function refreshIcons(root) {\n    try { if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ nodes: [root] }); } catch (error) {}\n  }\n  function read() {\n    try {\n      var value = JSON.parse(global.localStorage.getItem(KEY) || '{}');\n      return value && typeof value === 'object' && !Array.isArray(value) ? value : {};\n    } catch (error) { return {}; }\n  }\n  function write(value) {\n    try { global.localStorage.setItem(KEY, JSON.stringify(value)); return true; }\n    catch (error) { return false; }\n  }\n  function catalogWork(id, title) {\n    var catalog = global.LorefyMangaData;\n    if (!Array.isArray(catalog)) return null;\n    if (catalogCache.source === catalog && catalogCache.length === catalog.length && catalogCache.id === id && catalogCache.title === title) return catalogCache.work;\n    var byId = catalog.find(function (work) { return work && String(work.id) === id; });\n    var sameTitle = function (work) { return work && [work.title, work.ar, work.en, work.titleEnglish].some(function (value) { return String(value || '').trim() === title; }); };\n    var match = sameTitle(byId) ? byId : catalog.find(sameTitle) || null;\n    catalogCache = { source: catalog, length: catalog.length, id: id, title: title, work: match, idExists: !!byId };\n    return match;\n  }\n  function context() {\n    var content = doc.querySelector('.lf-detail-page .lf-detail-content');\n    var title = content && content.querySelector('h1');\n    if (!content || !title) return null;\n    var label = title.textContent.trim();\n    var queryId = new URLSearchParams(global.location.search).get('novel') || '';\n    var work = catalogWork(queryId, label);\n    var id = work ? String(work.id) : queryId;\n    if (queryId && !work && catalogCache.idExists) return null;\n    if (!id) return null;\n    var metadataText = Array.prototype.slice.call(content.children, 0, 6).map(function (item) { return item.textContent; }).join(' ');\n    var verifiedSource = metadata && metadata.sourceFor(id);\n    var record = global.LorefyChapterData && global.LorefyChapterData[id];\n    var savedCount = core.total(work, metadataText) || core.total(record, '') || verifiedSource && verifiedSource.count || 0;\n    var catalog = metadata && metadata.catalogFor(id);\n    var count = Math.max(savedCount, catalog && catalog.total || 0);\n    var type = content.children[0] && content.children[0].textContent || '';\n    if (!count && !/مانجا|مانهوا|كوميكس|ويب نوفل|لايت نوفل|manga|manhwa|comic|web novel|light novel/i.test(type)) return null;\n    var heroImage = content.closest('.lf-detail-page').querySelector('.lf-detail-hero > img');\n    return { content: content, id: id, title: label, total: count,\n      cover: heroImage && heroImage.getAttribute('src') || '', chapterDetails: {},\n      numbers: catalog && catalog.total >= savedCount ? catalog.numbers : null,\n      catalogState: catalog ? 'ready' : 'idle' };\n  }\n  function reviewFor(id, chapter) { return (read()[id] || {})[String(chapter)] || null; }\n  function announce(section, text) { var status = section.querySelector('.lf-chapter-status'); if (status) status.textContent = text; }\n\n  function english() { return doc.documentElement.lang === 'en'; }\n  function text(ar, en) { return english() ? en : ar; }\n  function chapterDiscussion(info, chapter) {\n    var host = el('section', 'lf-chapter-discussion');\n    host.setAttribute('aria-label', text('تقييمات القراء للفصل', 'Reader chapter reviews'));\n    host.appendChild(el('h3', '', text('آراء القراء', 'Reader reviews')));\n    var list = el('div', 'lf-chapter-discussion-list'); host.appendChild(list);\n    var offset = 0, loading = false;\n    var more = button(text('عرض المزيد', 'Load more'), 'lf-chapter-discussion-more', null, function () { load(true); });\n    more.textContent = text('عرض المزيد', 'Load more'); more.hidden = true; host.appendChild(more);\n    async function load(append) {\n      if (loading) return;\n      loading = true; more.disabled = true;\n      if (!append) { offset = 0; list.textContent = ''; }\n      var status = el('p', 'lf-chapter-discussion-status', text('جارٍ تحميل التقييمات…', 'Loading reviews…')); list.appendChild(status);\n      try {\n        var backend = global.LorefyBackend;\n        var rows = backend && backend.mode === 'live' ? await backend.listChapterReviews(info.id, chapter, offset) : [];\n        if (!host.isConnected) return;\n        status.remove();\n        if (!rows.length && !offset) list.appendChild(el('p', '', text('لا توجد تقييمات بعد. كن أول من يقيّم الفصل.', 'No reviews yet. Be the first to rate this chapter.')));\n        rows.forEach(function (review) {\n          var row = el('article', 'lf-chapter-reader-review');\n          var author = review.profile || {};\n          var head = el('header');\n          if (/^https?:\\/\\//i.test(author.avatar || '')) {\n            var avatar = el('img'); avatar.src = author.avatar; avatar.alt = ''; avatar.loading = 'lazy'; avatar.onerror = function () { this.remove(); }; head.appendChild(avatar);\n          }\n          var name = button(text('فتح حساب القارئ', 'Open reader profile'), 'lf-chapter-reader-name', null, function () {\n            global.dispatchEvent(new global.CustomEvent('lorefy:open-reader-profile', { detail:author }));\n          }); name.textContent = author.name || author.username || text('قارئ', 'Reader'); head.appendChild(name);\n          if (review.rating) { var rating = el('span', 'lf-chapter-reader-rating'); rating.appendChild(icon('feather', 16)); rating.appendChild(el('span', '', review.rating + '/5')); head.appendChild(rating); }\n          row.appendChild(head);\n          var date = new Date(review.updated_at);\n          if (!isNaN(date.getTime())) { var time = el('time', '', date.toLocaleDateString(english() ? 'en' : 'ar')); time.dateTime = date.toISOString(); row.appendChild(time); }\n          if (review.body) {\n            var comment = el('p', 'lf-chapter-reader-comment', review.body); comment.dir = 'auto';\n            if (review.spoiler) { var reveal = el('details', 'lf-chapter-reader-spoiler'); reveal.appendChild(el('summary', '', text('تعليق يحتوي على حرق · إظهار', 'Spoiler comment · Reveal'))); reveal.appendChild(comment); row.appendChild(reveal); }\n            else row.appendChild(comment);\n          }\n          list.appendChild(row);\n        });\n        offset += rows.length; more.hidden = rows.length < 20; refreshIcons(list);\n      } catch (_) {\n        if (!host.isConnected) return;\n        status.textContent = text('تعذر تحميل تقييمات الفصل.', 'Unable to load chapter reviews.');\n        var retry = button(text('إعادة المحاولة', 'Retry'), '', null, function () { status.remove(); load(append); });\n        retry.textContent = text('إعادة المحاولة', 'Retry'); status.appendChild(retry); more.hidden = true;\n      } finally { loading = false; more.disabled = false; }\n    }\n    // Wait until the host is mounted; discarded chapter views never receive results.\n    global.setTimeout(function () { if (host.isConnected) load(false); }, 0);\n    host.reload = function () { return load(false); };\n    return host;\n  }\n\n  function editor(section, info, chapter) {\n    var previous = reviewFor(info.id, chapter) || {};\n    var score = Number(previous.rating) || 0;\n    var form = el('form', 'lf-chapter-editor');\n    var heading = el('div', 'lf-chapter-editor-heading');\n    var detail = info.chapterDetails[chapter];\n    heading.appendChild(el('strong', '', detail && detail.title || 'الفصل ' + chapter));\n    heading.appendChild(el('span', '', 'تقييمك وتعليقك')); form.appendChild(heading);\n    var stars = el('div', 'lf-chapter-stars'); stars.setAttribute('role', 'group'); stars.setAttribute('aria-label', 'تقييم الفصل من 5');\n    var scoreText = el('span', 'lf-chapter-score-text', score ? score + ' من 5' : 'اختر تقييمك');\n    for (var value = 1; value <= 5; value++) {\n      (function (rating) {\n        var star = button('تقييم الفصل ' + rating + ' من 5', 'lf-chapter-star', 'feather', function () {\n          score = rating;\n          stars.querySelectorAll('button').forEach(function (control, index) {\n            control.classList.toggle('is-filled', index < score);\n            control.setAttribute('aria-pressed', index + 1 === score ? 'true' : 'false');\n          });\n          scoreText.textContent = score + ' من 5';\n        });\n        star.classList.toggle('is-filled', rating <= score);\n        star.setAttribute('aria-pressed', rating === score ? 'true' : 'false'); stars.appendChild(star);\n      })(value);\n    }\n    var ratingLine = el('div', 'lf-chapter-rating-line'); ratingLine.appendChild(stars); ratingLine.appendChild(scoreText); form.appendChild(ratingLine);\n    var noteLabel = el('label', 'lf-chapter-note-label', 'تعليقك');\n    var textarea = el('textarea', 'lf-chapter-note'); textarea.maxLength = 1000;\n    textarea.setAttribute('aria-label', 'تعليقك على الفصل');\n "... 19416 more characters,
+    expected: /deleteChapterReview/,
+    operator: 'match',
+    diff: 'simple'
+  }

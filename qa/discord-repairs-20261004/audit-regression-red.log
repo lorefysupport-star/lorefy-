@@ -1,0 +1,293 @@
+✖ library search and sorting are independent of catalog search (4.3398ms)
+✖ own reviews do not get a moderation menu (1.1947ms)
+✖ Togashi manga volumes are not western comics (4.4953ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 86.4169
+
+✖ failing tests:
+
+test at tests\audit-library-safety.test.js:7:1
+✖ library search and sorting are independent of catalog search (4.3398ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(start>0)
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\audit-library-safety.test.js:9:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.start (node:internal/test_runner/test:1177:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\audit-library-safety.test.js:14:1
+✖ own reviews do not get a moderation menu (1.1947ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /if\s*\(context\.own\)\s*return/. Input:
+  
+  '(function (global) {\n' +
+    '  "use strict";\n' +
+    '\n' +
+    '  var doc = global.document;\n' +
+    '  var factory = global.LorefyProductCore;\n' +
+    '  if (!doc || !factory) return;\n' +
+    '  var core = factory.createProductCore(global.localStorage);\n' +
+    '  var pendingEnhance = false;\n' +
+    '\n' +
+    '  var ICONS = {\n' +
+    '    data: "database",\n' +
+    '    correction: "badge-alert",\n' +
+    '    safety: "shield-check",\n' +
+    '    chevron: "chevron-left",\n' +
+    '    close: "x",\n' +
+    '    more: "ellipsis",\n' +
+    '    download: "download",\n' +
+    '    file: "file-json-2",\n' +
+    '    table: "table-2"\n' +
+    '  };\n' +
+    '\n' +
+    '  var REPORT_LABELS = {\n' +
+    '    spam: "محتوى مزعج أو دعائي",\n' +
+    '    abuse: "إساءة أو خطاب كراهية",\n' +
+    '    harassment: "تحرش أو استهداف شخصي",\n' +
+    '    spoiler: "حرق غير معلّم",\n' +
+    '    misinformation: "معلومة مضللة",\n' +
+    '    copyright: "حقوق نشر"\n' +
+    '  };\n' +
+    '  var ISSUE_LABELS = {\n' +
+    '    cover: "الغلاف غير صحيح",\n' +
+    '    characters: "الشخصيات ناقصة أو خاطئة",\n' +
+    '    metadata: "بيانات العمل غير دقيقة",\n' +
+    '    duplicate: "العمل مكرر أو النسخة مرتبطة خطأ",\n' +
+    '    translation: "الترجمة أو الاسم غير دقيق"\n' +
+    '  };\n' +
+    '  var VISIBILITY_LABELS = {\n' +
+    '    private: "خاصة",\n' +
+    '    unlisted: "برابط فقط",\n' +
+    '    public: "عامة"\n' +
+    '  };\n' +
+    '\n' +
+    '  function el(tag, attrs, children) {\n' +
+    '    var node = doc.createElement(tag);\n' +
+    '    Object.keys(attrs || {}).forEach(function (key) {\n' +
+    '      var value = attrs[key];\n' +
+    '      if (key === "class") node.className = value;\n' +
+    '      else if (key === "text") node.textContent = value;\n' +
+    '      else if (key === "html") node.innerHTML = value;\n' +
+    '      else if (key.slice(0, 2) === "on" && typeof value === "function") node.addEventListener(key.slice(2).toLowerCase(), value);\n' +
+    '      else if (value != null) node.setAttribute(key, value);\n' +
+    '    });\n' +
+    '    (Array.isArray(children) ? children : children ? [children] : []).forEach(function (child) {\n' +
+    '      node.appendChild(typeof child === "string" ? doc.createTextNode(child) : child);\n' +
+    '    });\n' +
+    '    return node;\n' +
+    '  }\n' +
+    '\n' +
+    '  function icon(name, size) {\n' +
+    '    return el("i", { "data-lucide": name, width: String(size || 17), height: String(size || 17), "aria-hidden": "true" });\n' +
+    '  }\n' +
+    '\n' +
+    '  function refreshIcons(root) {\n' +
+    '    try { if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ nodes: [root] }); } catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function safeRead(key, fallback) {\n' +
+    '    try { return JSON.parse(global.localStorage.getItem(key) || "null") || fallback; } catch (error) { return fallback; }\n' +
+    '  }\n' +
+    '\n' +
+    '  function host() {\n' +
+    '    return doc.getElementById("screen") || doc.body;\n' +
+    '  }\n' +
+    '\n' +
+    '  function toast(message) {\n' +
+    '    var old = host().querySelector(".lf-product-toast");\n' +
+    '    if (old) old.remove();\n' +
+    '    var node = el("div", { class: "lf-product-toast", role: "status", text: message });\n' +
+    '    host().appendChild(node);\n' +
+    '    global.setTimeout(function () { node.remove(); }, 2600);\n' +
+    '  }\n' +
+    '\n' +
+    '  function closeSheet(overlay) {\n' +
+    '    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);\n' +
+    '    if (overlay && overlay.__returnFocus && overlay.__returnFocus.isConnected) overlay.__returnFocus.focus({ preventScroll: true });\n' +
+    '  }\n' +
+    '\n' +
+    '  function openSheet(title, subtitle, build) {\n' +
+    '    var existing = host().querySelector(".lf-product-overlay");\n' +
+    '    if (existing) existing.remove();\n' +
+    '    var overlay = el("div", { class: "lf-product-overlay", role: "presentation" });\n' +
+    '    overlay.__returnFocus = doc.activeElement;\n' +
+    '    var sheet = el("section", { class: "lf-product-sheet", role: "dialog", "aria-modal": "true", "aria-label": title });\n' +
+    `    var close = el("button", { class: "lf-product-icon-button", type: "button", "aria-label": doc.documentElement.lang === 'en' ? 'Close' : 'إغلاق', onclick: function () { closeSheet(overlay); } }, icon(ICONS.close, 18));\n` +
+    '    var heading = el("div", {}, [el("h2", { text: title }), subtitle ? el("p", { text: subtitle }) : null].filter(Boolean));\n' +
+    '    var head = el("header", { class: "lf-product-sheet-head" }, [close, heading, el("span")]);\n' +
+    '    var body = el("div", { class: "lf-product-sheet-body" });\n' +
+    '    sheet.appendChild(el("div", { class: "lf-product-grabber" }));\n' +
+    '    sheet.appendChild(head);\n' +
+    '    sheet.appendChild(body);\n' +
+    '    overlay.appendChild(sheet);\n' +
+    '    overlay.addEventListener("keydown", function (event) {\n' +
+    '      if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); closeSheet(overlay); return; }\n' +
+    '      if (event.key !== "Tab") return;\n' +
+    `      var controls = Array.from(sheet.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],[tabindex="0"]'))\n` +
+    '        .filter(function (control) { return control.getClientRects().length && !control.hidden; });\n' +
+    '      var first = controls[0], last = controls[controls.length - 1];\n' +
+    '      if (!first) { event.preventDefault(); return; }\n' +
+    '      if (event.shiftKey && doc.activeElement === first) { event.preventDefault(); last.focus(); }\n' +
+    '      else if (!event.shiftKey && doc.activeElement === last) { event.preventDefault(); first.focus(); }\n' +
+    '    });\n' +
+    '    overlay.addEventListener("click", function (event) { if (event.target === overlay) closeSheet(overlay); });\n' +
+    '    build(body, function () { closeSheet(overlay); });\n' +
+    '    host().appendChild(overlay);\n' +
+    '    refreshIcons(overlay);\n' +
+    '    var focusable = overlay.querySelector("button,select,input,textarea,a");\n' +
+    '    if (focusable) focusable.focus({ preventScroll: true });\n' +
+    '    return overlay;\n' +
+    '  }\n' +
+    '\n' +
+    '  function section(title, description) {\n' +
+    '    return el("section", { class: "lf-product-section" }, [\n' +
+    '      el("h3", { text: title }),\n' +
+    '      description ? el("p", { text: description }) : null\n' +
+    '    ].filter(Boolean));\n' +
+    '  }\n' +
+    '\n' +
+    '  function button(label, className, handler, iconName) {\n' +
+    '    var children = [];\n' +
+    '    if (iconName) children.push(icon(iconName, 16));\n' +
+    '    children.push(el("span", { text: label }));\n' +
+    '    return el("button", { type: "button", class: className, onclick: handler }, children);\n' +
+    '  }\n' +
+    '\n' +
+    '  function downloadFile(name, text, type) {\n' +
+    '    var blob = new Blob([text], { type: type || "application/octet-stream" });\n' +
+    '    var url = URL.createObjectURL(blob);\n' +
+    '    var link = el("a", { href: url, download: name });\n' +
+    '    doc.body.appendChild(link);\n' +
+    '    link.click();\n' +
+    '    link.remove();\n' +
+    '    global.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);\n' +
+    '  }\n' +
+    '\n' +
+    '  function csvCell(value) {\n' +
+    '    var text = String(value == null ? "" : value);\n' +
+    '    var formulaPrefix = /^\\s*[=+@-]/.test(text);\n' +
+    `    if (formulaPrefix) text = "'" + text;\n` +
+    `    return '"' + text.replace(/"/g, '""') + '"';\n` +
+    '  }\n' +
+    '\n' +
+    '  function exportLibraryCsv() {\n' +
+    '    var library = safeRead("lorefy.user.library.v2", {});\n' +
+    '    var progress = safeRead("lorefy.user.progress.v2", {});\n' +
+    '    var works = Array.isArray(global.LorefyMangaData) ? global.LorefyMangaData : [];\n' +
+    '    var byId = new Map(works.map(function (work) { return [String(work.id), work]; }));\n' +
+    '    var rows = [["id", "title", "type", "status", "chapter", "volume"]];\n' +
+    '    Object.keys(library).forEach(function (id) {\n' +
+    '      var work = byId.get(String(id)) || {};\n' +
+    '      var itemProgress = progress[id] || {};\n' +
+    '      rows.push([id, work.title || work.ar || "", work.type || "", library[id], itemProgress.ch || 0, itemProgress.vol || 0]);\n' +
+    '    });\n' +
+    '    var csv = "\\ufeff" + rows.map(function (row) { return row.map(csvCell).join(","); }).join("\\r\\n");\n' +
+    '    downloadFile("lorefy-library.csv", csv, "text/csv;charset=utf-8");\n' +
+    '    toast("تم تجهيز ملف المكتبة");\n' +
+    '  }\n' +
+    '\n' +
+    '  function allLists() {\n' +
+    '    var workLists = safeRead("lorefy.customLists.v1", []);\n' +
+    '    var characterLists = safeRead("lorefy.charTopLists.v1", []);\n' +
+    '    return workLists.map(function (list) { return { id: list.id, name: list.name || "قائمة أعمال", kind: "أعمال" }; })\n' +
+    '      .concat(characterLists.map(function (list) { return { id: list.id, name: list.title || "قائمة شخصيات", kind: "شخصيات" }; }));\n' +
+    '  }\n' +
+    '\n' +
+    '  function renderVisibilityRows(container) {\n' +
+    '    var lists = allLists();\n' +
+    '    if (!lists.length) {\n' +
+    '      container.appendChild(el("div", { class: "lf-product-empty", text: "لا توجد قوائم مخصصة بعد. أي قائمة جديدة تبدأ كقائمة خاصة." }));\n' +
+    '      return;\n' +
+    '    }\n' +
+    '    lists.forEach(function (list) {\n' +
+    '      var select = el("select", { "aria-label": "خصوصية " + list.name });\n' +
+    '      ["private", "unlisted", "public"].forEach(function (value) {\n' +
+    '        var option = el("option", { value: value, text: VISIBILITY_LABELS[value] });\n' +
+    '        if (core.privacy.getListVisibility(list.id) === value) option.selected = true;\n' +
+    '        select.appendChild(option);\n' +
+    '      });\n' +
+    '      select.addEventListener("change", function () {\n' +
+    '        core.privacy.setListVisibility(list.id, select.value);\n' +
+    '        toast("تم تحديث خصوصية القائمة");\n' +
+    '      });\n' +
+    '      container.appendChild(el("div", { class: "lf-product-list-row" }, [\n' +
+    '        el("div", { class: "lf-product-list-copy" }, [el("strong", { text: list.name }), el("small", { text: list.kind })]),\n' +
+    '        select\n' +
+    '      ]));\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  function openDataCenter() {\n' +
+    '    openSheet("الخصوصية والبيانات", "تحكم واضح ببياناتك وقوائمك", function (body) {\n' +
+    '      var exports = section("نسخة من بياناتك", "صدّر مكتبتك وتقييماتك وقوائمك. لا يتضمن الملف بيانات الجلسة أو حالة Premium.");\n' +
+    '      var exportButtons = el("div", { class: "lf-product-inline-actions" });\n' +
+    '      exportButtons.appendChild(button("تصدير JSON", "lf-product-secondary", function () {\n' +
+    '        var data = core.exportPortable(new Date());\n' +
+    '        downloadFile("lorefy-data.json", JSON.stringify(data, null, 2), "application/json;charset=utf-8");\n' +
+    '        toast("تم تجهيز نسخة بياناتك");\n' +
+    '      }, ICONS.file));\n' +
+    '      exportButtons.appendChild(button("المكتبة CSV", "lf-product-secondary", exportLibraryCsv, ICONS.table));\n' +
+    '      exports.appendChild(exportButtons);\n' +
+    '      if (global.LorefyMonitoring && global.LorefyMonitoring.getDiagnostics) {\n' +
+    '        exports.appendChild(button("تصدير تقرير التشخيص", "lf-product-secondary", function () {\n' +
+    '          downloadFile("lorefy-diagnostics.json", JSON.stringify(global.LorefyMonitoring.getDiagnostics(), null, 2), "application/json;charset=utf-8");\n' +
+    '          toast("تم تجهيز تقرير التشخيص بدون بيانات الحساب");\n' +
+    '        }, "activity"));\n' +
+    '      }\n' +
+    '      body.appendChild(exports);\n' +
+    '\n' +
+    '      var privacy = section("خصوصية القوائم", "القوائم الجديدة خاصة تلقائياً. اختر عامة فقط عندما تريد ظهورها للآخرين.");\n' +
+    '      renderVisibilityRows(privacy);\n' +
+    '      b'... 17453 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\audit-library-safety.test.js:16:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `(function (global) {\n  "use strict";\n\n  var doc = global.document;\n  var factory = global.LorefyProductCore;\n  if (!doc || !factory) return;\n  var core = factory.createProductCore(global.localStorage);\n  var pendingEnhance = false;\n\n  var ICONS = {\n    data: "database",\n    correction: "badge-alert",\n    safety: "shield-check",\n    chevron: "chevron-left",\n    close: "x",\n    more: "ellipsis",\n    download: "download",\n    file: "file-json-2",\n    table: "table-2"\n  };\n\n  var REPORT_LABELS = {\n    spam: "محتوى مزعج أو دعائي",\n    abuse: "إساءة أو خطاب كراهية",\n    harassment: "تحرش أو استهداف شخصي",\n    spoiler: "حرق غير معلّم",\n    misinformation: "معلومة مضللة",\n    copyright: "حقوق نشر"\n  };\n  var ISSUE_LABELS = {\n    cover: "الغلاف غير صحيح",\n    characters: "الشخصيات ناقصة أو خاطئة",\n    metadata: "بيانات العمل غير دقيقة",\n    duplicate: "العمل مكرر أو النسخة مرتبطة خطأ",\n    translation: "الترجمة أو الاسم غير دقيق"\n  };\n  var VISIBILITY_LABELS = {\n    private: "خاصة",\n    unlisted: "برابط فقط",\n    public: "عامة"\n  };\n\n  function el(tag, attrs, children) {\n    var node = doc.createElement(tag);\n    Object.keys(attrs || {}).forEach(function (key) {\n      var value = attrs[key];\n      if (key === "class") node.className = value;\n      else if (key === "text") node.textContent = value;\n      else if (key === "html") node.innerHTML = value;\n      else if (key.slice(0, 2) === "on" && typeof value === "function") node.addEventListener(key.slice(2).toLowerCase(), value);\n      else if (value != null) node.setAttribute(key, value);\n    });\n    (Array.isArray(children) ? children : children ? [children] : []).forEach(function (child) {\n      node.appendChild(typeof child === "string" ? doc.createTextNode(child) : child);\n    });\n    return node;\n  }\n\n  function icon(name, size) {\n    return el("i", { "data-lucide": name, width: String(size || 17), height: String(size || 17), "aria-hidden": "true" });\n  }\n\n  function refreshIcons(root) {\n    try { if (global.lucide && global.lucide.createIcons) global.lucide.createIcons({ nodes: [root] }); } catch (error) {}\n  }\n\n  function safeRead(key, fallback) {\n    try { return JSON.parse(global.localStorage.getItem(key) || "null") || fallback; } catch (error) { return fallback; }\n  }\n\n  function host() {\n    return doc.getElementById("screen") || doc.body;\n  }\n\n  function toast(message) {\n    var old = host().querySelector(".lf-product-toast");\n    if (old) old.remove();\n    var node = el("div", { class: "lf-product-toast", role: "status", text: message });\n    host().appendChild(node);\n    global.setTimeout(function () { node.remove(); }, 2600);\n  }\n\n  function closeSheet(overlay) {\n    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);\n    if (overlay && overlay.__returnFocus && overlay.__returnFocus.isConnected) overlay.__returnFocus.focus({ preventScroll: true });\n  }\n\n  function openSheet(title, subtitle, build) {\n    var existing = host().querySelector(".lf-product-overlay");\n    if (existing) existing.remove();\n    var overlay = el("div", { class: "lf-product-overlay", role: "presentation" });\n    overlay.__returnFocus = doc.activeElement;\n    var sheet = el("section", { class: "lf-product-sheet", role: "dialog", "aria-modal": "true", "aria-label": title });\n    var close = el("button", { class: "lf-product-icon-button", type: "button", "aria-label": doc.documentElement.lang === 'en' ? 'Close' : 'إغلاق', onclick: function () { closeSheet(overlay); } }, icon(ICONS.close, 18));\n    var heading = el("div", {}, [el("h2", { text: title }), subtitle ? el("p", { text: subtitle }) : null].filter(Boolean));\n    var head = el("header", { class: "lf-product-sheet-head" }, [close, heading, el("span")]);\n    var body = el("div", { class: "lf-product-sheet-body" });\n    sheet.appendChild(el("div", { class: "lf-product-grabber" }));\n    sheet.appendChild(head);\n    sheet.appendChild(body);\n    overlay.appendChild(sheet);\n    overlay.addEventListener("keydown", function (event) {\n      if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); closeSheet(overlay); return; }\n      if (event.key !== "Tab") return;\n      var controls = Array.from(sheet.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],[tabindex="0"]'))\n        .filter(function (control) { return control.getClientRects().length && !control.hidden; });\n      var first = controls[0], last = controls[controls.length - 1];\n      if (!first) { event.preventDefault(); return; }\n      if (event.shiftKey && doc.activeElement === first) { event.preventDefault(); last.focus(); }\n      else if (!event.shiftKey && doc.activeElement === last) { event.preventDefault(); first.focus(); }\n    });\n    overlay.addEventListener("click", function (event) { if (event.target === overlay) closeSheet(overlay); });\n    build(body, function () { closeSheet(overlay); });\n    host().appendChild(overlay);\n    refreshIcons(overlay);\n    var focusable = overlay.querySelector("button,select,input,textarea,a");\n    if (focusable) focusable.focus({ preventScroll: true });\n    return overlay;\n  }\n\n  function section(title, description) {\n    return el("section", { class: "lf-product-section" }, [\n      el("h3", { text: title }),\n      description ? el("p", { text: description }) : null\n    ].filter(Boolean));\n  }\n\n  function button(label, className, handler, iconName) {\n    var children = [];\n    if (iconName) children.push(icon(iconName, 16));\n    children.push(el("span", { text: label }));\n    return el("button", { type: "button", class: className, onclick: handler }, children);\n  }\n\n  function downloadFile(name, text, type) {\n    var blob = new Blob([text], { type: type || "application/octet-stream" });\n    var url = URL.createObjectURL(blob);\n    var link = el("a", { href: url, download: name });\n    doc.body.appendChild(link);\n    link.click();\n    link.remove();\n    global.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);\n  }\n\n  function csvCell(value) {\n    var text = String(value == null ? "" : value);\n    var formulaPrefix = /^\\s*[=+@-]/.test(text);\n    if (formulaPrefix) text = "'" + text;\n    return '"' + text.replace(/"/g, '""') + '"';\n  }\n\n  function exportLibraryCsv() {\n    var library = safeRead("lorefy.user.library.v2", {});\n    var progress = safeRead("lorefy.user.progress.v2", {});\n    var works = Array.isArray(global.LorefyMangaData) ? global.LorefyMangaData : [];\n    var byId = new Map(works.map(function (work) { return [String(work.id), work]; }));\n    var rows = [["id", "title", "type", "status", "chapter", "volume"]];\n    Object.keys(library).forEach(function (id) {\n      var work = byId.get(String(id)) || {};\n      var itemProgress = progress[id] || {};\n      rows.push([id, work.title || work.ar || "", work.type || "", library[id], itemProgress.ch || 0, itemProgress.vol || 0]);\n    });\n    var csv = "\\ufeff" + rows.map(function (row) { return row.map(csvCell).join(","); }).join("\\r\\n");\n    downloadFile("lorefy-library.csv", csv, "text/csv;charset=utf-8");\n    toast("تم تجهيز ملف المكتبة");\n  }\n\n  function allLists() {\n    var workLists = safeRead("lorefy.customLists.v1", []);\n    var characterLists = safeRead("lorefy.charTopLists.v1", []);\n    return workLists.map(function (list) { return { id: list.id, name: list.name || "قائمة أعمال", kind: "أعمال" }; })\n      .concat(characterLists.map(function (list) { return { id: list.id, name: list.title || "قائمة شخصيات", kind: "شخصيات" }; }));\n  }\n\n  function renderVisibilityRows(container) {\n    var lists = allLists();\n    if (!lists.length) {\n      container.appendChild(el("div", { class: "lf-product-empty", text: "لا توجد قوائم مخصصة بعد. أي قائمة جديدة تبدأ كقائمة خاصة." }));\n      return;\n    }\n    lists.forEach(function (list) {\n      var select = el("select", { "aria-label": "خصوصية " + list.name });\n      ["private", "unlisted", "public"].forEach(function (value) {\n        var option = el("option", { value: value, text: VISIBILITY_LABELS[value] });\n        if (core.privacy.getListVisibility(list.id) === value) option.selected = true;\n        select.appendChild(option);\n      });\n      select.addEventListener("change", function () {\n        core.privacy.setListVisibility(list.id, select.value);\n        toast("تم تحديث خصوصية القائمة");\n      });\n      container.appendChild(el("div", { class: "lf-product-list-row" }, [\n        el("div", { class: "lf-product-list-copy" }, [el("strong", { text: list.name }), el("small", { text: list.kind })]),\n        select\n      ]));\n    });\n  }\n\n  function openDataCenter() {\n    openSheet("الخصوصية والبيانات", "تحكم واضح ببياناتك وقوائمك", function (body) {\n      var exports = section("نسخة من بياناتك", "صدّر مكتبتك وتقييماتك وقوائمك. لا يتضمن الملف بيانات الجلسة أو حالة Premium.");\n      var exportButtons = el("div", { class: "lf-product-inline-actions" });\n      exportButtons.appendChild(button("تصدير JSON", "lf-product-secondary", function () {\n        var data = core.exportPortable(new Date());\n        downloadFile("lorefy-data.json", JSON.stringify(data, null, 2), "application/json;charset=utf-8");\n        toast("تم تجهيز نسخة بياناتك");\n      }, ICONS.file));\n      exportButtons.appendChild(button("المكتبة CSV", "lf-product-secondary", exportLibraryCsv, ICONS.table));\n      exports.appendChild(exportButtons);\n      if (global.LorefyMonitoring && global.LorefyMonitoring.getDiagnostics) {\n        exports.appendChild(button("تصدير تقرير التشخيص", "lf-product-secondary", function () {\n          downloadFile("lorefy-diagnostics.json", JSON.stringify(global.LorefyMonitoring.getDiagnostics(), null, 2), "application/json;charset=utf-8");\n          toast("تم تجهيز تقرير التشخيص بدون بيانات الحساب");\n        }, "activity"));\n      }\n      body.appendChild(exports);\n\n      var privacy = section("خصوصية القوائم", "القوائم الجديدة خاصة تلقائياً. اختر عامة فقط عندما تريد ظهورها للآخرين.");\n      renderVisibilityRows(privacy);\n      b`... 17453 more characters,
+    expected: /if\s*\(context\.own\)\s*return/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\audit-library-safety.test.js:19:1
+✖ Togashi manga volumes are not western comics (4.4953ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'Comics' !== 'مانجا'
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\audit-library-safety.test.js:26:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Comics',
+    expected: 'مانجا',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,14 @@
+{
+  "verifiedDate": "2026-10-10",
+  "timezone": "Asia/Riyadh",
+  "cliVersion": "24.12.1",
+  "cliAuthenticated": true,
+  "username": "lorefy-owner",
+  "projectFullName": "@lorefy/lorefy",
+  "projectId": "8438f5d2-3734-4ef7-8925-c8ffeb5a0cd5",
+  "projectAccountRole": "Owner",
+  "checks": ["eas whoami", "eas project:info"],
+  "applicationConfigChanged": false,
+  "newBuildStarted": false,
+  "newSubmissionStarted": false
+}

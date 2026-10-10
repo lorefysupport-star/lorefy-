@@ -1,0 +1,108 @@
+:root {
+  color-scheme: light dark;
+  --page-bg: #f5f5f7;
+  --page-surface: #ffffff;
+  --page-text: #1d1d1f;
+  --page-muted: #6e6e73;
+  --page-line: #dedee3;
+  --page-accent: #6d28d9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #0c0b10;
+    --page-surface: #18161d;
+    --page-text: #f5f5f7;
+    --page-muted: #a7a4ad;
+    --page-line: #333039;
+    --page-accent: #b77af4;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--page-text);
+  font-family: "Readex Pro", "Cairo", system-ui, sans-serif;
+  direction: rtl;
+}
+
+.legal-shell {
+  width: min(100%, 720px);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--page-surface);
+}
+
+.legal-nav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 18px;
+  border-bottom: 1px solid var(--page-line);
+  background: color-mix(in srgb, var(--page-surface) 90%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.legal-back {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--page-line);
+  border-radius: 50%;
+  color: var(--page-text);
+  text-decoration: none;
+  font-size: 23px;
+}
+
+.legal-nav strong { font-size: 15px; }
+
+.legal-content { padding: 28px 22px 64px; }
+
+.legal-content h1 {
+  margin: 0 0 8px;
+  font-size: clamp(25px, 7vw, 36px);
+  letter-spacing: 0;
+}
+
+.legal-updated {
+  margin: 0 0 28px;
+  color: var(--page-muted);
+  font-size: 12px;
+}
+
+.legal-content section {
+  padding: 20px 0;
+  border-top: 1px solid var(--page-line);
+}
+
+.legal-content h2 {
+  margin: 0 0 9px;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.legal-content p,
+.legal-content li {
+  color: var(--page-muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.legal-content p { margin: 0; }
+.legal-content ul { margin: 10px 0 0; padding-right: 21px; }
+.legal-content a { color: var(--page-accent); font-weight: 700; }
+
+.legal-note {
+  padding: 14px;
+  border-right: 3px solid var(--page-accent);
+  background: color-mix(in srgb, var(--page-accent) 7%, var(--page-surface));
+}

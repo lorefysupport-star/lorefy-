@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "version": "2026-W28-local",
+  "generatedAt": "2026-07-06T03:00:00+03:00",
+  "baseCatalogVersion": "20260703-dataclean-v1",
+  "deltaUrl": "catalog-deltas/latest.json",
+  "notes": "Local weekly catalog update manifest. Point LOREFY_CATALOG_UPDATES.manifestUrl to the production Supabase URL after deployment."
+}

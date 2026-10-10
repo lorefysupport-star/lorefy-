@@ -1,0 +1,48 @@
+- banner:
+  - button "حسابك"
+  - strong: Lorefy
+  - button "الإشعارات":
+- tablist "تصفية منشورات المجتمع":
+  - tab "For You"
+  - tab "Following" [selected]
+- region "منشورات المجتمع":
+  - strong: لا توجد منشورات من الحسابات التي تتابعها
+  - paragraph: تابع قرّاء جدد لتظهر منشوراتهم هنا.
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "بحث":
+    - generic: بحث
+  - button "الرئيسية":
+    - generic: الرئيسية
+- button "إنشاء منشور":
+- dialog "إنشاء منشور":
+  - button "إلغاء النشر":
+  - strong: منشور جديد
+  - button "نشر"
+  - generic: ق
+  - strong: قارئ Lorefy
+  - generic: "@lorefy_demo"
+  - generic: عام
+  - textbox "اكتب منشورًا":
+    - /placeholder: اكتب منشورك
+    - text: اختبار فحص شامل — مسودة فقط
+  - group "نوع المرفق":
+    - button "إرفاق قائمة":
+      - generic: قائمة
+    - button "إرفاق ترتيب الشخصيات" [active]:
+      - generic: ترتيب الشخصيات
+    - button "إرفاق اقتباس":
+      - generic: اقتباس
+  - progressbar "طول المنشور"
+  - generic: 27 / 500
+- dialog "اختر ما تريد مشاركته":
+  - strong: إرفاق بالمشاركة
+  - paragraph: اختر عنصرًا محفوظًا
+  - button "إغلاق":
+  - strong: لا توجد عناصر جاهزة
+  - paragraph: أضف عنصرًا إلى سجلك أو قوائمك أولًا.

@@ -1,0 +1,40 @@
+- banner:
+  - button "حسابك"
+  - strong: Lorefy
+  - button "الإشعارات":
+- tablist "تصفية منشورات المجتمع":
+  - tab "For You" [selected]
+  - tab "Following"
+- region "منشورات المجتمع":
+  - strong: ابدأ أول محادثة
+  - paragraph: اكتب فكرة أو شارك قائمة من حسابك.
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية
+- button "إنشاء منشور":
+- dialog "إنشاء منشور":
+  - button "إلغاء النشر":
+  - strong: منشور جديد
+  - button "نشر"
+  - generic: ق
+  - strong: قارئ Lorefy
+  - generic: "@lorefy_demo"
+  - generic: عام
+  - textbox "اكتب منشورًا" [active]:
+    - /placeholder: اكتب منشورك
+    - text: "فحص تفاعلات محلي 5 أكتوبر: نص عربي وEnglish 123."
+  - group "نوع المرفق":
+    - button "إرفاق قائمة":
+      - generic: قائمة
+    - button "إرفاق ترتيب الشخصيات":
+      - generic: ترتيب الشخصيات
+    - button "إرفاق اقتباس":
+      - generic: اقتباس
+  - progressbar "طول المنشور"
+  - generic: 48 / 500

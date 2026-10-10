@@ -1,0 +1,92 @@
+- button "Settings":
+- button "Toggle appearance":
+- button "Notifications":
+- paragraph: قارئ Lorefy
+- paragraph: "@lorefy_demo"
+- paragraph: حساب العرض المحلي
+- button "Following accounts":
+  - generic: "0"
+- button "Followers":
+  - generic: "0"
+- paragraph: "1"
+- paragraph: Review
+- button "عرض منشوراتي":
+  - strong: "2"
+  - generic: Post
+- paragraph: "1"
+- paragraph: Completed
+- paragraph: "420"
+- paragraph: chapters
+- paragraph: "84"
+- paragraph: reading hours
+- paragraph: Novel
+- paragraph: Favorite type
+- generic: Favorites
+- button "Edit favorite work 1"
+- button "Edit favorite work 2"
+- button "Edit favorite work 3"
+- button "Edit favorite work 4"
+- region "Favorite characters":
+  - button "Edit favorite characters":
+    - strong: Favorite characters
+  - button "Choose character for slot 1":
+    - text: اختر شخصياتك المفضلة
+- generic: Recent activity
+- generic: Last saved activity
+- paragraph: Manga
+- paragraph: Novel
+- paragraph: Novel
+- paragraph: Novel
+- paragraph: Novel
+- region "Community activity":
+  - strong: Community activity
+  - button "Replies 0":
+    - strong: Replies
+    - generic: "0"
+  - button "Saved posts 0":
+    - strong: Saved posts
+    - generic: "0"
+  - button "Characters 0":
+    - strong: Characters
+    - generic: "0"
+- button "Open reading diary":
+  - strong: Reading diary
+  - generic: Sessions, notes and quotes
+- region "Preference lists":
+  - button "Preference lists 8 categories · 0 / 80 slots":
+    - strong: Preference lists
+    - emphasis: 8 categories · 0 / 80 slots
+- button "My lists 1 List":
+  - strong: My lists
+  - generic: 1 List
+- button "2026 recap Your year in reading":
+  - strong: 2026 recap
+  - generic: Your year in reading
+- button "Import library AniList · Kitsu · MAL · Goodreads · StoryGraph · other sources":
+  - strong: Import library
+  - generic: AniList · Kitsu · MAL · Goodreads · StoryGraph · other sources
+- button "Saved reviews Save reviews to revisit later":
+  - strong: Saved reviews
+  - generic: Save reviews to revisit later
+- button "Reading"
+- button "Read"
+- button "Want to read"
+- button "Paused"
+- button "Dropped"
+- paragraph: Your reading list is empty
+- paragraph: Your most-read formats
+- generic: 1 عمل
+- generic: Manga
+- paragraph: Premium coming soon
+- paragraph: Unavailable during beta
+- navigation "Main navigation":
+  - button "Profile" [active]:
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Search":
+    - generic: Search
+  - button "Home":
+    - generic: Home

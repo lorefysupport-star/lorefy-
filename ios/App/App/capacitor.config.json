@@ -1,0 +1,33 @@
+{
+	"appId": "com.lorefy.app",
+	"appName": "Lorefy",
+	"webDir": "ios-web",
+	"bundledWebRuntime": false,
+	"server": {
+		"iosScheme": "capacitor",
+		"androidScheme": "https"
+	},
+	"plugins": {
+		"SignInWithApple": {
+			"clientId": "com.lorefy.app"
+		},
+		"PushNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"banner",
+				"list"
+			]
+		}
+	},
+	"packageClassList": [
+		"SecureStorage",
+		"SignInWithApple",
+		"AppPlugin",
+		"CAPBrowserPlugin",
+		"CAPCameraPlugin",
+		"FilesystemPlugin",
+		"PushNotificationsPlugin",
+		"SharePlugin"
+	]
+}

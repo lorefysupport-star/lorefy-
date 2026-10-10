@@ -1,22 +1,16 @@
 {
   "cli": {
-    "version": ">= 16.0.0",
-    "appVersionSource": "remote"
+    "version": ">= 21.0.0",
+    "appVersionSource": "local"
   },
   "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal",
-      "ios": {
-        "resourceClass": "m-medium"
-      }
-    },
     "production": {
-      "autoIncrement": true,
+      "distribution": "store",
+      "node": "22.14.0",
       "ios": {
+        "image": "latest",
+        "scheme": "App",
+        "buildConfiguration": "Release",
         "resourceClass": "m-medium"
       }
     }
@@ -24,7 +18,9 @@
   "submit": {
     "production": {
       "ios": {
-        "ascAppId": "6799704077"
+        "ascAppId": "6799704077",
+        "appleId": "alanaziibasel@gmail.com",
+        "appleTeamId": "U4C4W59HMG"
       }
     }
   }

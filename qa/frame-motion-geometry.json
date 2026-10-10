@@ -1,0 +1,1010 @@
+[
+  {
+    "pack": "pfpvibes-maple-drift",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-maple-drift",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-maple-drift",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-robins-perch",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-robins-perch",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-robins-perch",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-mushroom-grove",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-mushroom-grove",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-mushroom-grove",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-grasping-hands",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-grasping-hands",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-grasping-hands",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-ghost-orbit",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-ghost-orbit",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-ghost-orbit",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-watching-eyes",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-watching-eyes",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-watching-eyes",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-prism-spin",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-prism-spin",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-prism-spin",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-ripple-pulse",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-ripple-pulse",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-ripple-pulse",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-neon-orbit",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-neon-orbit",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-neon-orbit",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-pearl-bubbles",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-pearl-bubbles",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-pearl-bubbles",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-scale-shimmer",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-scale-shimmer",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-scale-shimmer",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-coral-crown",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-coral-crown",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-coral-crown",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-block-party",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-block-party",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-block-party",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-rocket-ride",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-rocket-ride",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-rocket-ride",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-gumball-ring",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-gumball-ring",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-gumball-ring",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-goal-rush",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-goal-rush",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-goal-rush",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-stadium-lights",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-stadium-lights",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-stadium-lights",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-champion-laurel",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-champion-laurel",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-champion-laurel",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-peekaboo-pal",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-peekaboo-pal",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-peekaboo-pal",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-bunny-hug",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-bunny-hug",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-bunny-hug",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-kitty-crew",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-kitty-crew",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-kitty-crew",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-moth-lantern",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-moth-lantern",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-moth-lantern",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-rune-circle",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-rune-circle",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-rune-circle",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  },
+  {
+    "pack": "pfpvibes-thorn-rose",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 740,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 320
+  },
+  {
+    "pack": "pfpvibes-thorn-rose",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 812,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 375
+  },
+  {
+    "pack": "pfpvibes-thorn-rose",
+    "viewport": {
+      "width": 440,
+      "height": 956
+    },
+    "avatarInside": true,
+    "edgeFlush": true,
+    "height": 956,
+    "nameOverlap": false,
+    "overflow": false,
+    "pointerEvents": "none",
+    "width": 440
+  }
+]

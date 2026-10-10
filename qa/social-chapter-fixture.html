@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter Discussion QA Fixture</title>
+<link rel="stylesheet" href="../styles/lorefy-chapter-detail.css">
+<style>
+  :root { --chapter-ink:#1e2023; --chapter-muted:#62666d; --chapter-accent:#076a68; --chapter-line:#dde1e5; --chapter-surface:#fff; --chapter-selected:#edf3f3; }
+  * { box-sizing:border-box; } body { margin:0; font-family:Arial,sans-serif; background:#fff; color:#1e2023; } main { max-width:640px; padding:16px; margin:auto; } button,input,textarea,select { font:inherit; } #qa-status { display:block; padding:8px; font-size:12px; } h1 { font-size:20px; }
+</style>
+<main id="screen" class="lf-app">
+  <output id="qa-status">Local fixture · no production requests</output>
+  <div class="lf-detail-page"><div class="lf-detail-content"><p>Manga</p><h1>Chapter QA</h1><p>2 فصل</p><div class="lf-detail-actions"><button type="button">إضافة للقائمة</button></div></div></div>
+</main>
+<script src="../vendor/lucide.js"></script>
+<script src="../modules/lorefy-chapter-detail-core.js"></script>
+<script>
+  if(new URLSearchParams(location.search).get('lang')==='en') {document.documentElement.lang='en';document.documentElement.dir='ltr';}
+  window.LorefyMangaData=[{id:'qa-work',title:'Chapter QA',ch:2,type:'Manga'}];
+  var loadFailed=false, publishFailed=false, published=0;
+  var rows=Array.from({length:21},function(_,i){return {id:'qa-review-'+i,user_id:i===2?'owner':'reader-'+i,rating:i%5+1,body:i===1?'QA spoiler text kept behind disclosure':i===2?'Existing own chapter review':'QA reader comment '+i+' '+ 'LongWord'.repeat(14),spoiler:i===1,updated_at:'2026-10-03T12:00:00Z',profile:{id:'reader-'+i,name:'Reader '+i,username:'reader'+i}};});
+  window.LorefyBackend={mode:'live',user:{id:'owner'},
+    listChapterReviews:async function(work,chapter,offset){await new Promise(resolve=>setTimeout(resolve,60)); if(!loadFailed){loadFailed=true;throw new Error('QA read failure');} return chapter===1?rows.slice(offset,offset+20):[];},
+    publishChapterReview:async function(work,chapter,rating,body,spoiler){if(!publishFailed){publishFailed=true;throw new Error('QA publish failure');} published++;rows.unshift({id:'qa-new',user_id:'owner',rating:rating,body:body,spoiler:spoiler,updated_at:new Date().toISOString(),profile:{id:'owner',name:'QA owner'}});document.getElementById('qa-status').textContent='Local fixture · published '+published+' · community posts 0';return rows[0];},
+    deleteChapterReview:async function(id){rows=rows.filter(row=>row.id!==id);},
+    submitReport:async function(){document.getElementById('qa-status').textContent='Local fixture · report submitted';},
+    setProfileBlock:async function(id){rows=rows.filter(row=>row.user_id!==id);}
+  };
+</script>
+<script src="../modules/lorefy-chapter-detail.js"></script>
+</html>

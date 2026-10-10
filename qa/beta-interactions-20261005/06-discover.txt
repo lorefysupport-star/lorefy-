@@ -1,0 +1,302 @@
+- banner:
+  - heading "استكشف" [level=1]
+  - button "ابحث عن الأعمال":
+    - generic: ابحث عن عمل أو مؤلف
+- paragraph: تصفّح حسب النوع
+- button "مانجا 11872 عمل":
+  - strong: مانجا
+  - generic: 11872 عمل
+- button "مانهوا 9241 عمل":
+  - strong: مانهوا
+  - generic: 9241 عمل
+- button "مانهوا صيني 977 عمل":
+  - strong: مانهوا صيني
+  - generic: 977 عمل
+- button "كوميكس 15186 عمل":
+  - strong: كوميكس
+  - generic: 15186 عمل
+- button "رواية 23902 عمل":
+  - strong: رواية
+  - generic: 23902 عمل
+- button "كتاب 28333 عمل":
+  - strong: كتاب
+  - generic: 28333 عمل
+- button "لايت نوفل 13702 عمل":
+  - strong: لايت نوفل
+  - generic: 13702 عمل
+- button "ويب نوفل 3785 عمل":
+  - strong: ويب نوفل
+  - generic: 3785 عمل
+- heading "اختيار المحرّر" [level=2]
+- generic: مانجا
+- text: "4.6"
+- heading "One Piece" [level=3]
+- paragraph: Gol D. Roger, a man referred to as the King of the Pirates, is set to be executed by the World Government. But just before his demise, he confirms the existence of a great treasure, One Piece, located somewhere within the vast ocean known as the Grand Line. Announcing that One Piece can be claimed by anyone worthy enough to reach it, the King of the Pirates is executed and the Great Age of Pirates
+- button "الكل" [pressed]
+- button "مانجا"
+- button "مانهوا"
+- button "مانهوا صيني"
+- button "كوميكس"
+- button "رواية"
+- button "كتاب"
+- button "لايت نوفل"
+- button "ويب نوفل"
+- heading "الأكثر رواجاً" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: مانجا
+  - paragraph: One Piece
+  - img "4.6 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: "Demon Slayer: Kimetsu no Yaiba"
+  - img "4.1 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Naruto
+  - img "4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Hunter x Hunter
+  - img "4.4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Berserk
+  - img "4.7 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Bleach
+  - img "4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Monster
+  - img "4.6 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Death Note
+  - img "4.3 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: A Silent Voice
+  - img "4.4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: One-Punch Man
+  - img "4.3 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Attack on Titan
+  - img "4.3 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: 20th Century Boys
+  - img "4.5 من 5":
+- heading "مختارة لك" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: مانجا
+  - paragraph: One Piece
+  - img "4.6 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: "Demon Slayer: Kimetsu no Yaiba"
+  - img "4.1 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Naruto
+  - img "4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Hunter x Hunter
+  - img "4.4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Berserk
+  - img "4.7 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Bleach
+  - img "4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Monster
+  - img "4.6 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Death Note
+  - img "4.3 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: A Silent Voice
+  - img "4.4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: One-Punch Man
+  - img "4.3 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Attack on Titan
+  - img "4.3 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: 20th Century Boys
+  - img "4.5 من 5":
+- heading "الأعلى تقييماً" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: مانجا
+  - paragraph: One Piece
+  - img "4.6 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Hunter x Hunter
+  - img "4.4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Berserk
+  - img "4.7 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Monster
+  - img "4.6 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: A Silent Voice
+  - img "4.4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: 20th Century Boys
+  - img "4.5 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Goodnight Punpun
+  - img "4.5 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Vagabond
+  - img "4.6 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Vinland Saga
+  - img "4.5 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: "JoJo's Bizarre Adventure Part 7: Steel Ball Run"
+  - img "4.7 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: "Kaguya-sama: Love Is War"
+  - img "4.4 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Haikyu!!
+  - img "4.4 من 5":
+- heading "إصدارات جديدة" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: مانهوا
+  - paragraph: There's No Such Thing as a Bad Lady
+  - img "3.6 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: The Shepherd Wizard
+  - img "3.8 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: "I Became the First Prince: Legend of Sword's Song"
+  - img "3.5 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: I Only See You
+  - img "3.6 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: The Secretly Capable Child Is Looking for Her Dad
+  - img "3.8 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: Only I Have an EX-Grade Summon
+  - img "3.5 من 5":
+- article:
+  - generic: مانهوا
+  - paragraph: Daytime in the Bunker
+  - img "3.5 من 5":
+- article:
+  - generic: مانجا
+  - paragraph: Shujinkou no Osananajimi ga, Wakiyaku no Ore ni Guigui Kuru
+- article:
+  - generic: مانجا
+  - paragraph: Nakama wo Mamotte Shindara 20-nengo no Onaji Sekai ni Umarekawatta Ken...... demo Ore, Tensei 2-kaime Nanda kedo?
+- article:
+  - generic: مانجا
+  - paragraph: Shujinkou-sama no Imouto ni Aisareteiru kedo, Shikkari Yandere.
+- article:
+  - generic: مانجا
+  - paragraph: Tatakai shika Shiranai Onna Kishi wo Amayakashi Tsuzuketa
+- article:
+  - generic: مانجا
+  - paragraph: Dungeon de Tatakaitsuzukete 20-nen no Doutei Yuusha, Chijou ni Modottara Danjoubi 1:1000 no Sekai datta
+- heading "كتب مختارة" [level=2]
+- button "عرض الكل":
+  - text: عرض الكل
+- article:
+  - generic: كتاب
+  - paragraph: الداء والدواء
+  - img "4.4 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Invitation to world religions
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Anatomy of the Sacred
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: The perennial philosophy
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: The anthropology of religion, magic, and witchcraft
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Ifa Divination
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Witch Crafting
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: A concise introduction to world religions
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Karma
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Divine horsemen
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Where God Came Down
+  - img "5 من 5":
+- article:
+  - generic: كتاب
+  - paragraph: Fundamentals of the Yorùbá religion (Òrìṣà worship)
+  - img "5 من 5":
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف" [active]:
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية

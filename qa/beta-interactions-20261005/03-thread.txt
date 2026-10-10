@@ -1,0 +1,64 @@
+- banner:
+  - button "حسابك"
+  - strong: Lorefy
+  - button "الإشعارات":
+- tablist "تصفية منشورات المجتمع":
+  - tab "For You" [selected]
+  - tab "Following"
+- region "منشورات المجتمع":
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · الآن":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · الآن"
+    - paragraph: "فحص تفاعلات محلي 5 أكتوبر: نص عربي وEnglish 123."
+    - button "فتح الردود":
+      - generic: "1"
+    - button "إعجاب":
+      - generic: "0"
+    - button "عدم إعجاب" [pressed]:
+      - generic: "1"
+    - button "مشاركة":
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية
+- button "إنشاء منشور":
+- dialog "محادثة المنشور":
+  - button "إغلاق":
+  - strong: المنشور
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · الآن":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · الآن"
+    - paragraph: "فحص تفاعلات محلي 5 أكتوبر: نص عربي وEnglish 123."
+    - button "الرد على الرد":
+      - generic: "0"
+    - button "إعجاب":
+      - generic: "0"
+    - button "عدم إعجاب" [pressed]:
+      - generic: "1"
+    - button "مشاركة":
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · الآن":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · الآن"
+    - paragraph: رد محلي للاختبار، دون نشر خارجي.
+    - button "الرد على الرد":
+      - generic: "0"
+    - button "إعجاب":
+      - generic: "0"
+    - button "عدم إعجاب":
+      - generic: "0"
+    - button "مشاركة":
+  - generic: ق
+  - textbox "اكتب رداً":
+    - /placeholder: اكتب رداً...
+  - button "إرسال الرد" [disabled]:

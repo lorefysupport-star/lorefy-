@@ -1,0 +1,220 @@
+✔ library search and sorting are independent of catalog search (9.6894ms)
+✔ own reviews do not get a moderation menu (0.5985ms)
+✔ Togashi manga volumes are not western comics (7.6395ms)
+✔ onboarding inherits the selected appearance (0.5169ms)
+✔ followers dialog supports Escape and traps focus (0.3936ms)
+✔ growth dialogs share keyboard dismissal and return focus (1.7098ms)
+✖ Following empty state has a reader discovery action (2.184ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 101.0002
+
+✖ failing tests:
+
+test at tests\audit-library-safety.test.js:47:1
+✖ Following empty state has a reader discovery action (2.184ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /function openReaderSearch\(/. Input:
+  
+  '(function (root, factory) {\n' +
+    '  var api = factory(root);\n' +
+    '  if (typeof module === "object" && module.exports) module.exports = api;\n' +
+    '  if (root) {\n' +
+    '    root.LorefyUserDiscovery = api;\n' +
+    '    if (root.document) api.install();\n' +
+    '  }\n' +
+    '})(typeof window !== "undefined" ? window : globalThis, function (root) {\n' +
+    '  "use strict";\n' +
+    '\n' +
+    '  var FOLLOWING_KEY = "lorefy.user.following.v1";\n' +
+    '  var MAX_RESULTS = 20;\n' +
+    '  var demoReaders = [];\n' +
+    '\n' +
+    '  function normalizeQuery(value) {\n' +
+    '    return String(value || "")\n' +
+    '      .replace(/^\\s*@\\s*/, "")\n' +
+    '      .trim()\n' +
+    '      .toLowerCase()\n' +
+    '      .replace(/\\s+/g, " ")\n' +
+    '      .slice(0, 64);\n' +
+    '  }\n' +
+    '\n' +
+    '  function safeText(value, max) {\n' +
+    '    return String(value || "").replace(/\\s+/g, " ").trim().slice(0, max || 160);\n' +
+    '  }\n' +
+    '\n' +
+    '  function normalizeReader(reader) {\n' +
+    '    reader = reader || {};\n' +
+    '    return {\n' +
+    '      id: safeText(reader.id, 120),\n' +
+    '      username: normalizeQuery(reader.username),\n' +
+    '      name: safeText(reader.name, 80),\n' +
+    '      bio: safeText(reader.bio, 220),\n' +
+    '      avatar: safeText(reader.avatar || reader.av, 12000),\n' +
+    '      av: safeText(reader.avatar || reader.av, 12000),\n' +
+    '      banner: safeText(reader.banner, 24000),\n' +
+    '      banner_position: Math.max(0, Math.min(100, Number(reader.banner_position) || 50)),\n' +
+    '      genres: Array.isArray(reader.genres) ? reader.genres.map(function (genre) { return safeText(genre, 30); }).filter(Boolean).slice(0, 4) : [],\n' +
+    '      followers: Math.max(0, Number(reader.follower_count != null ? reader.follower_count : reader.followers) || 0),\n' +
+    '      follower_count: Math.max(0, Number(reader.follower_count != null ? reader.follower_count : reader.followers) || 0),\n' +
+    '      following_count: Math.max(0, Number(reader.following_count) || 0),\n' +
+    '      review_count: Math.max(0, Number(reader.review_count) || 0),\n' +
+    '      completed_count: Math.max(0, Number(reader.completed_count) || 0),\n' +
+    '      total_chapters: Math.max(0, Number(reader.total_chapters) || 0),\n' +
+    '      read_hours: Math.max(0, Number(reader.read_hours) || 0),\n' +
+    '      favorite_work_ids: Array.isArray(reader.favorite_work_ids) ? reader.favorite_work_ids.map(String).filter(Boolean).slice(0, 12) : [],\n' +
+    '      favorite_character_ids: Array.isArray(reader.favorite_character_ids) ? reader.favorite_character_ids.slice(0, 12) : [],\n' +
+    '      library_entries: reader.library_entries && typeof reader.library_entries === "object" ? Object.assign({}, reader.library_entries) : {},\n' +
+    '      social_links: reader.social_links && typeof reader.social_links === "object" ? Object.assign({}, reader.social_links) : {},\n' +
+    '      is_following: reader.is_following === true\n' +
+    '    };\n' +
+    '  }\n' +
+    '\n' +
+    '  function readFollowing(storage) {\n' +
+    '    try {\n' +
+    '      var value = JSON.parse(storage.getItem(FOLLOWING_KEY) || "[]");\n' +
+    '      return new Set(Array.isArray(value) ? value.map(String) : []);\n' +
+    '    } catch (error) {\n' +
+    '      return new Set();\n' +
+    '    }\n' +
+    '  }\n' +
+    '\n' +
+    '  function persistFollowing(storage, following) {\n' +
+    '    try { storage.setItem(FOLLOWING_KEY, JSON.stringify(Array.from(following).slice(0, 500))); } catch (error) {}\n' +
+    '  }\n' +
+    '\n' +
+    '  function rankReaders(readers, query, currentUserId, blockedIds) {\n' +
+    '    var blocked = new Set((blockedIds || []).map(String));\n' +
+    '    return (readers || [])\n' +
+    '      .map(normalizeReader)\n' +
+    '      .filter(function (reader) {\n' +
+    '        return reader.id && reader.username && reader.id !== String(currentUserId || "") && !blocked.has(reader.id);\n' +
+    '      })\n' +
+    '      .map(function (reader) {\n' +
+    '        var username = reader.username.toLowerCase();\n' +
+    '        var name = reader.name.toLowerCase();\n' +
+    '        var score = username === query ? 0 : username.indexOf(query) === 0 ? 1 : name.indexOf(query) === 0 ? 2 : username.indexOf(query) >= 0 ? 3 : name.indexOf(query) >= 0 ? 4 : 9;\n' +
+    '        return { reader: reader, score: score };\n' +
+    '      })\n' +
+    '      .filter(function (item) { return item.score < 9; })\n' +
+    '      .sort(function (left, right) { return left.score - right.score || right.reader.followers - left.reader.followers || left.reader.username.localeCompare(right.reader.username); })\n' +
+    '      .slice(0, MAX_RESULTS)\n' +
+    '      .map(function (item) { return item.reader; });\n' +
+    '  }\n' +
+    '\n' +
+    '  function createUserDirectory(options) {\n' +
+    '    options = options || {};\n' +
+    '    var storage = options.storage || (typeof localStorage !== "undefined" ? localStorage : { getItem: function () { return null; }, setItem: function () {} });\n' +
+    '    var readers = Array.isArray(options.readers) ? options.readers : demoReaders;\n' +
+    '    var adapter = options.adapter || null;\n' +
+    '    var currentUserId = options.currentUserId || "";\n' +
+    '    var blockedIds = options.blockedIds || [];\n' +
+    '    var following = readFollowing(storage);\n' +
+    '    var hydrated = false;\n' +
+    '\n' +
+    '    async function hydrateFollowing() {\n' +
+    '      if (hydrated || !adapter || typeof adapter.getFollowedProfileIds !== "function") return;\n' +
+    '      hydrated = true;\n' +
+    '      try {\n' +
+    '        var ids = await adapter.getFollowedProfileIds();\n' +
+    '        if (Array.isArray(ids)) {\n' +
+    '          following = new Set(ids.map(String));\n' +
+    '          persistFollowing(storage, following);\n' +
+    '        }\n' +
+    '      } catch (error) {}\n' +
+    '    }\n' +
+    '\n' +
+    '    function applyFollowing(profileId, value) {\n' +
+    '      var id = safeText(profileId, 120);\n' +
+    '      if (!id) return false;\n' +
+    '      if (value === true) following.add(id); else following.delete(id);\n' +
+    '      persistFollowing(storage, following);\n' +
+    '      return following.has(id);\n' +
+    '    }\n' +
+    '\n' +
+    '    return {\n' +
+    '      search: async function (value) {\n' +
+    '        var query = normalizeQuery(value);\n' +
+    '        if (query.length < 2) return [];\n' +
+    '        await hydrateFollowing();\n' +
+    '        if (adapter && typeof adapter.searchPublicProfiles === "function") {\n' +
+    '          try {\n' +
+    '            var remote = await adapter.searchPublicProfiles(query, MAX_RESULTS);\n' +
+    '            if (Array.isArray(remote)) return rankReaders(remote, query, currentUserId, blockedIds);\n' +
+    '          } catch (error) {}\n' +
+    '        }\n' +
+    '        return rankReaders(readers, query, currentUserId, blockedIds);\n' +
+    '      },\n' +
+    '      isFollowing: function (profileId) { return following.has(String(profileId)); },\n' +
+    '      setFollowing: async function (profileId, value) {\n' +
+    '        var id = safeText(profileId, 120);\n' +
+    '        if (!id || id === String(currentUserId || "")) return false;\n' +
+    '        var next = value === true;\n' +
+    '        if (adapter && typeof adapter.toggleProfileFollow === "function") next = await adapter.toggleProfileFollow(id, next);\n' +
+    '        applyFollowing(id, next);\n' +
+    '        if (root && typeof root.dispatchEvent === "function" && typeof root.CustomEvent === "function") {\n' +
+    '          root.dispatchEvent(new root.CustomEvent("lorefy:profile-follow-changed", {\n' +
+    '            detail: { profileId: id, following: next }\n' +
+    '          }));\n' +
+    '        }\n' +
+    '        return next;\n' +
+    '      },\n' +
+    '      applyFollowing: applyFollowing\n' +
+    '    };\n' +
+    '  }\n' +
+    '\n' +
+    '  function escapeHtml(value) {\n' +
+    `    return String(value || "").replace(/[&<>"']/g, function (char) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]; });\n` +
+    '  }\n' +
+    '\n' +
+    '  function initials(name) {\n' +
+    '    return safeText(name || "L", 2).slice(0, 1).toUpperCase() || "L";\n' +
+    '  }\n' +
+    '\n' +
+    '  function safeAvatar(value) {\n' +
+    '    value = String(value || "");\n' +
+    '    return /^(?:https?:|data:image\\/)/i.test(value) ? value : "";\n' +
+    '  }\n' +
+    '\n' +
+    '  function currentIdentity() {\n' +
+    '    try { return JSON.parse(root.localStorage.getItem("lorefy.identity.v1") || "{}"); } catch (error) { return {}; }\n' +
+    '  }\n' +
+    '\n' +
+    '  function buildDirectory() {\n' +
+    '    var identity = currentIdentity();\n' +
+    '    var backend = root.LorefyBackend;\n' +
+    '    var safety = root.LorefyProductCore && root.LorefyProductCore.createProductCore ? root.LorefyProductCore.createProductCore() : null;\n' +
+    '    var params = new URLSearchParams(root.location.search || "");\n' +
+    '    var isLocalDemo = /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(root.location.hostname) && params.get("preview") === "demo";\n' +
+    '    return createUserDirectory({\n' +
+    '      readers: isLocalDemo ? demoReaders : [],\n' +
+    '      currentUserId: (backend && backend.user && backend.user.id) || identity.id || "",\n' +
+    '      blockedIds: safety && safety.safety ? safety.safety.getBlockedUsers() : [],\n' +
+    '      adapter: !isLocalDemo && backend && backend.isConfigured && backend.isConfigured() ? backend : null\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  function injectStyles() {\n' +
+    '    if (document.getElementById("lf-reader-discovery-styles")) return;\n' +
+    '    var style = document.createElement("style");\n' +
+    '    style.id = "lf-reader-discovery-styles";\n' +
+    '    style.textContent = ".lf-reader-inline-results{margin:0 16px 12px;padding:13px 14px 5px;border:1px solid var(--lf-reader-border,#e5e0ed);border-radius:15px;background:var(--lf-reader-fill,#fff);box-shadow:0 6px 16px rgba(35,25,52,.05);direction:rtl}.lf-reader-inline-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 4px}.lf-reader-inline-heading strong{font-size:14px;color:var(--lf-reader-text,#171521)}.lf-reader-inline-heading span{font-size:11px;color:var(--lf-reader-sub,#817b8f)}.lf-reader-inline-row{width:100%;display:flex;align-items:center;gap:10px;padding:10px 0;border:0;border-top:1px solid var(--lf-reader-border,#eeeaf3);background:transparent;color:var(--lf-reader-text,#171521);cursor:pointer;font-family:inherit;text-align:right}.lf-reader-avatar{display:grid;place-items:center;overflow:hidden;width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:linear-gradient(145deg,#9a52f0,#56219c);color:#fff;font-weight:900}.lf-reader-avatar img{width:100%;height:100%;object-fit:cover}.lf-reader-result-copy{min-width:0;flex:1}.lf-reader-result-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:900}.lf-reader-result-handle{display:block;color:var(--lf-reader-sub,#817b8f);font-size:11px;direction:ltr;text-align:right}.lf-reader-inline-state{border-radius:999px;padding:5px 8px;background:rgba(138,43,226,.1);color:#7132c5;font-size:10px;font-weight:800;flex-shrink:0}.lf-reader-profile-backdrop{position:absolute;inset:0;z-index:460;background:rgba(10,8,17,.48);display:flex;align-items:flex-end}.lf-reader-profile-sheet{width:100%;background:var(--lf-reader-bg,#fff);color:var(--lf-reader-text,#171521);border-radius:24px 24px 0 0;padding:14px 18px calc(24px + env(safe-area-inset-bottom));direction:rtl;text-align:center;box-shadow:0 -18px 42px rgb'... 5647 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\audit-library-safety.test.js:51:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `(function (root, factory) {\n  var api = factory(root);\n  if (typeof module === "object" && module.exports) module.exports = api;\n  if (root) {\n    root.LorefyUserDiscovery = api;\n    if (root.document) api.install();\n  }\n})(typeof window !== "undefined" ? window : globalThis, function (root) {\n  "use strict";\n\n  var FOLLOWING_KEY = "lorefy.user.following.v1";\n  var MAX_RESULTS = 20;\n  var demoReaders = [];\n\n  function normalizeQuery(value) {\n    return String(value || "")\n      .replace(/^\\s*@\\s*/, "")\n      .trim()\n      .toLowerCase()\n      .replace(/\\s+/g, " ")\n      .slice(0, 64);\n  }\n\n  function safeText(value, max) {\n    return String(value || "").replace(/\\s+/g, " ").trim().slice(0, max || 160);\n  }\n\n  function normalizeReader(reader) {\n    reader = reader || {};\n    return {\n      id: safeText(reader.id, 120),\n      username: normalizeQuery(reader.username),\n      name: safeText(reader.name, 80),\n      bio: safeText(reader.bio, 220),\n      avatar: safeText(reader.avatar || reader.av, 12000),\n      av: safeText(reader.avatar || reader.av, 12000),\n      banner: safeText(reader.banner, 24000),\n      banner_position: Math.max(0, Math.min(100, Number(reader.banner_position) || 50)),\n      genres: Array.isArray(reader.genres) ? reader.genres.map(function (genre) { return safeText(genre, 30); }).filter(Boolean).slice(0, 4) : [],\n      followers: Math.max(0, Number(reader.follower_count != null ? reader.follower_count : reader.followers) || 0),\n      follower_count: Math.max(0, Number(reader.follower_count != null ? reader.follower_count : reader.followers) || 0),\n      following_count: Math.max(0, Number(reader.following_count) || 0),\n      review_count: Math.max(0, Number(reader.review_count) || 0),\n      completed_count: Math.max(0, Number(reader.completed_count) || 0),\n      total_chapters: Math.max(0, Number(reader.total_chapters) || 0),\n      read_hours: Math.max(0, Number(reader.read_hours) || 0),\n      favorite_work_ids: Array.isArray(reader.favorite_work_ids) ? reader.favorite_work_ids.map(String).filter(Boolean).slice(0, 12) : [],\n      favorite_character_ids: Array.isArray(reader.favorite_character_ids) ? reader.favorite_character_ids.slice(0, 12) : [],\n      library_entries: reader.library_entries && typeof reader.library_entries === "object" ? Object.assign({}, reader.library_entries) : {},\n      social_links: reader.social_links && typeof reader.social_links === "object" ? Object.assign({}, reader.social_links) : {},\n      is_following: reader.is_following === true\n    };\n  }\n\n  function readFollowing(storage) {\n    try {\n      var value = JSON.parse(storage.getItem(FOLLOWING_KEY) || "[]");\n      return new Set(Array.isArray(value) ? value.map(String) : []);\n    } catch (error) {\n      return new Set();\n    }\n  }\n\n  function persistFollowing(storage, following) {\n    try { storage.setItem(FOLLOWING_KEY, JSON.stringify(Array.from(following).slice(0, 500))); } catch (error) {}\n  }\n\n  function rankReaders(readers, query, currentUserId, blockedIds) {\n    var blocked = new Set((blockedIds || []).map(String));\n    return (readers || [])\n      .map(normalizeReader)\n      .filter(function (reader) {\n        return reader.id && reader.username && reader.id !== String(currentUserId || "") && !blocked.has(reader.id);\n      })\n      .map(function (reader) {\n        var username = reader.username.toLowerCase();\n        var name = reader.name.toLowerCase();\n        var score = username === query ? 0 : username.indexOf(query) === 0 ? 1 : name.indexOf(query) === 0 ? 2 : username.indexOf(query) >= 0 ? 3 : name.indexOf(query) >= 0 ? 4 : 9;\n        return { reader: reader, score: score };\n      })\n      .filter(function (item) { return item.score < 9; })\n      .sort(function (left, right) { return left.score - right.score || right.reader.followers - left.reader.followers || left.reader.username.localeCompare(right.reader.username); })\n      .slice(0, MAX_RESULTS)\n      .map(function (item) { return item.reader; });\n  }\n\n  function createUserDirectory(options) {\n    options = options || {};\n    var storage = options.storage || (typeof localStorage !== "undefined" ? localStorage : { getItem: function () { return null; }, setItem: function () {} });\n    var readers = Array.isArray(options.readers) ? options.readers : demoReaders;\n    var adapter = options.adapter || null;\n    var currentUserId = options.currentUserId || "";\n    var blockedIds = options.blockedIds || [];\n    var following = readFollowing(storage);\n    var hydrated = false;\n\n    async function hydrateFollowing() {\n      if (hydrated || !adapter || typeof adapter.getFollowedProfileIds !== "function") return;\n      hydrated = true;\n      try {\n        var ids = await adapter.getFollowedProfileIds();\n        if (Array.isArray(ids)) {\n          following = new Set(ids.map(String));\n          persistFollowing(storage, following);\n        }\n      } catch (error) {}\n    }\n\n    function applyFollowing(profileId, value) {\n      var id = safeText(profileId, 120);\n      if (!id) return false;\n      if (value === true) following.add(id); else following.delete(id);\n      persistFollowing(storage, following);\n      return following.has(id);\n    }\n\n    return {\n      search: async function (value) {\n        var query = normalizeQuery(value);\n        if (query.length < 2) return [];\n        await hydrateFollowing();\n        if (adapter && typeof adapter.searchPublicProfiles === "function") {\n          try {\n            var remote = await adapter.searchPublicProfiles(query, MAX_RESULTS);\n            if (Array.isArray(remote)) return rankReaders(remote, query, currentUserId, blockedIds);\n          } catch (error) {}\n        }\n        return rankReaders(readers, query, currentUserId, blockedIds);\n      },\n      isFollowing: function (profileId) { return following.has(String(profileId)); },\n      setFollowing: async function (profileId, value) {\n        var id = safeText(profileId, 120);\n        if (!id || id === String(currentUserId || "")) return false;\n        var next = value === true;\n        if (adapter && typeof adapter.toggleProfileFollow === "function") next = await adapter.toggleProfileFollow(id, next);\n        applyFollowing(id, next);\n        if (root && typeof root.dispatchEvent === "function" && typeof root.CustomEvent === "function") {\n          root.dispatchEvent(new root.CustomEvent("lorefy:profile-follow-changed", {\n            detail: { profileId: id, following: next }\n          }));\n        }\n        return next;\n      },\n      applyFollowing: applyFollowing\n    };\n  }\n\n  function escapeHtml(value) {\n    return String(value || "").replace(/[&<>"']/g, function (char) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]; });\n  }\n\n  function initials(name) {\n    return safeText(name || "L", 2).slice(0, 1).toUpperCase() || "L";\n  }\n\n  function safeAvatar(value) {\n    value = String(value || "");\n    return /^(?:https?:|data:image\\/)/i.test(value) ? value : "";\n  }\n\n  function currentIdentity() {\n    try { return JSON.parse(root.localStorage.getItem("lorefy.identity.v1") || "{}"); } catch (error) { return {}; }\n  }\n\n  function buildDirectory() {\n    var identity = currentIdentity();\n    var backend = root.LorefyBackend;\n    var safety = root.LorefyProductCore && root.LorefyProductCore.createProductCore ? root.LorefyProductCore.createProductCore() : null;\n    var params = new URLSearchParams(root.location.search || "");\n    var isLocalDemo = /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(root.location.hostname) && params.get("preview") === "demo";\n    return createUserDirectory({\n      readers: isLocalDemo ? demoReaders : [],\n      currentUserId: (backend && backend.user && backend.user.id) || identity.id || "",\n      blockedIds: safety && safety.safety ? safety.safety.getBlockedUsers() : [],\n      adapter: !isLocalDemo && backend && backend.isConfigured && backend.isConfigured() ? backend : null\n    });\n  }\n\n  function injectStyles() {\n    if (document.getElementById("lf-reader-discovery-styles")) return;\n    var style = document.createElement("style");\n    style.id = "lf-reader-discovery-styles";\n    style.textContent = ".lf-reader-inline-results{margin:0 16px 12px;padding:13px 14px 5px;border:1px solid var(--lf-reader-border,#e5e0ed);border-radius:15px;background:var(--lf-reader-fill,#fff);box-shadow:0 6px 16px rgba(35,25,52,.05);direction:rtl}.lf-reader-inline-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 4px}.lf-reader-inline-heading strong{font-size:14px;color:var(--lf-reader-text,#171521)}.lf-reader-inline-heading span{font-size:11px;color:var(--lf-reader-sub,#817b8f)}.lf-reader-inline-row{width:100%;display:flex;align-items:center;gap:10px;padding:10px 0;border:0;border-top:1px solid var(--lf-reader-border,#eeeaf3);background:transparent;color:var(--lf-reader-text,#171521);cursor:pointer;font-family:inherit;text-align:right}.lf-reader-avatar{display:grid;place-items:center;overflow:hidden;width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:linear-gradient(145deg,#9a52f0,#56219c);color:#fff;font-weight:900}.lf-reader-avatar img{width:100%;height:100%;object-fit:cover}.lf-reader-result-copy{min-width:0;flex:1}.lf-reader-result-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:900}.lf-reader-result-handle{display:block;color:var(--lf-reader-sub,#817b8f);font-size:11px;direction:ltr;text-align:right}.lf-reader-inline-state{border-radius:999px;padding:5px 8px;background:rgba(138,43,226,.1);color:#7132c5;font-size:10px;font-weight:800;flex-shrink:0}.lf-reader-profile-backdrop{position:absolute;inset:0;z-index:460;background:rgba(10,8,17,.48);display:flex;align-items:flex-end}.lf-reader-profile-sheet{width:100%;background:var(--lf-reader-bg,#fff);color:var(--lf-reader-text,#171521);border-radius:24px 24px 0 0;padding:14px 18px calc(24px + env(safe-area-inset-bottom));direction:rtl;text-align:center;box-shadow:0 -18px 42px rgb`... 5647 more characters,
+    expected: /function openReaderSearch\(/,
+    operator: 'match',
+    diff: 'simple'
+  }

@@ -1,0 +1,179 @@
+- button "Settings":
+- button "Toggle appearance":
+- button "Notifications":
+- paragraph: قارئ Lorefy
+- paragraph: "@lorefy_demo"
+- paragraph: حساب العرض المحلي
+- button "Following accounts":
+  - generic: "0"
+- button "Followers":
+  - generic: "0"
+- paragraph: "1"
+- paragraph: Review
+- button "عرض منشوراتي":
+  - strong: "2"
+  - generic: Post
+- paragraph: "1"
+- paragraph: Completed
+- paragraph: "420"
+- paragraph: chapters
+- paragraph: "84"
+- paragraph: reading hours
+- paragraph: Novel
+- paragraph: Favorite type
+- generic: Favorites
+- button "Edit favorite work 1"
+- button "Edit favorite work 2"
+- button "Edit favorite work 3"
+- button "Edit favorite work 4"
+- region "Favorite characters":
+  - button "Edit favorite characters":
+    - strong: Favorite characters
+  - button "Choose character for slot 1":
+    - text: اختر شخصياتك المفضلة
+- generic: Recent activity
+- generic: Last saved activity
+- paragraph: Manga
+- paragraph: Novel
+- paragraph: Novel
+- paragraph: Novel
+- paragraph: Novel
+- region "Community activity":
+  - strong: Community activity
+  - button "Replies 0":
+    - strong: Replies
+    - generic: "0"
+  - button "Saved posts 0":
+    - strong: Saved posts
+    - generic: "0"
+  - button "Characters 0":
+    - strong: Characters
+    - generic: "0"
+- button "Open reading diary":
+  - strong: Reading diary
+  - generic: Sessions, notes and quotes
+- region "Preference lists":
+  - button "Preference lists 8 categories · 0 / 80 slots":
+    - strong: Preference lists
+    - emphasis: 8 categories · 0 / 80 slots
+- button "My lists 1 List":
+  - strong: My lists
+  - generic: 1 List
+- button "2026 recap Your year in reading":
+  - strong: 2026 recap
+  - generic: Your year in reading
+- button "Import library AniList · Kitsu · MAL · Goodreads · StoryGraph · other sources":
+  - strong: Import library
+  - generic: AniList · Kitsu · MAL · Goodreads · StoryGraph · other sources
+- button "Saved reviews Save reviews to revisit later":
+  - strong: Saved reviews
+  - generic: Save reviews to revisit later
+- button "Reading"
+- button "Read"
+- button "Want to read"
+- button "Paused"
+- button "Dropped"
+- paragraph: Your reading list is empty
+- paragraph: Your most-read formats
+- generic: 1 عمل
+- generic: Manga
+- paragraph: Premium coming soon
+- paragraph: Unavailable during beta
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Search":
+    - generic: Search
+  - button "Home":
+    - generic: Home
+- banner:
+  - button "رجوع": ‹
+  - strong: المفضلة
+- strong: اختيارك أنت، وليس ترتيبًا تلقائيًا
+- paragraph: اختر الخانة أولاً، ثم اضغط شخصية لاستبدالها مباشرة. ترتيب الخانات هو ترتيب ظهورها في ملفك.
+- button "اختيار الخانة الفارغة 1" [pressed]:
+  - generic: +
+  - generic: الخانة 1
+- button "اختيار الخانة الفارغة 2":
+  - generic: +
+  - generic: الخانة 2
+- button "اختيار الخانة الفارغة 3":
+  - generic: +
+  - generic: الخانة 3
+- button "اختيار الخانة الفارغة 4":
+  - generic: +
+  - generic: الخانة 4
+- strong: استبدال الخانة 1
+- generic: اختر شخصية من القائمة لإضافتها هنا
+- generic: ⌕
+- searchbox "ابحث عن عمل أو شخصية" [active]: Hunter
+- button "مسح البحث": ×
+- button "Hunter Hunter رواية · Michael Owen Carroll عرض":
+  - img "Hunter"
+  - strong: Hunter
+  - generic: رواية · Michael Owen Carroll
+  - generic: عرض
+- button "Hunter X Hunter, Vol. 15 Hunter X Hunter, Vol. 15 كوميكس · Yoshihiro Togashi عرض":
+  - img "Hunter X Hunter, Vol. 15"
+  - strong: Hunter X Hunter, Vol. 15
+  - generic: كوميكس · Yoshihiro Togashi
+  - generic: عرض
+- button "Hunter x Hunter, Vol. 25 Hunter x Hunter, Vol. 25 كوميكس · Yoshihiro Togashi عرض":
+  - img "Hunter x Hunter, Vol. 25"
+  - strong: Hunter x Hunter, Vol. 25
+  - generic: كوميكس · Yoshihiro Togashi
+  - generic: عرض
+- button "Hunter x Hunter Hunter x Hunter مانجا · Togashi, Yoshihiro عرض":
+  - img "Hunter x Hunter"
+  - strong: Hunter x Hunter
+  - generic: مانجا · Togashi, Yoshihiro
+  - generic: عرض
+- button "Hunter's Moon Hunter's Moon رواية · Margaret Way عرض":
+  - img "Hunter's Moon"
+  - strong: Hunter's Moon
+  - generic: رواية · Margaret Way
+  - generic: عرض
+- button "Hunter Of The East Hunter Of The East رواية · Anne Hampson عرض":
+  - img "Hunter Of The East"
+  - strong: Hunter Of The East
+  - generic: رواية · Anne Hampson
+  - generic: عرض
+- button "Hunter Age Hunter Age مانهوا صيني · Huoli Xiongmao عرض":
+  - img "Hunter Age"
+  - strong: Hunter Age
+  - generic: مانهوا صيني · Huoli Xiongmao
+  - generic: عرض
+- button "Hunters all Hunters all كتاب · David Brian Plummer عرض":
+  - img "Hunters all"
+  - strong: Hunters all
+  - generic: كتاب · David Brian Plummer
+  - generic: عرض
+- button "Hunters blaze the trails Hunters blaze the trails كتاب · Edith S. McCall عرض":
+  - img "Hunters blaze the trails"
+  - strong: Hunters blaze the trails
+  - generic: كتاب · Edith S. McCall
+  - generic: عرض
+- button "Hunters in a narrow street Hunters in a narrow street رواية · Jabrā Ibrāhīm Jabrā, Jabrā Ibrāhīm Jabrā عرض":
+  - img "Hunters in a narrow street"
+  - strong: Hunters in a narrow street
+  - generic: رواية · Jabrā Ibrāhīm Jabrā, Jabrā Ibrāhīm Jabrā
+  - generic: عرض
+- button "Hunter Quatermain's Story Hunter Quatermain's Story رواية · H. Rider Haggard, H. Rider Haggard عرض":
+  - img "Hunter Quatermain's Story"
+  - strong: Hunter Quatermain's Story
+  - generic: رواية · H. Rider Haggard, H. Rider Haggard
+  - generic: عرض
+- button "Hunter x Hunter (Official Colored) Hunter x Hunter (Official Colored) مانجا · Togashi Yoshihiro عرض":
+  - img "Hunter x Hunter (Official Colored)"
+  - strong: Hunter x Hunter (Official Colored)
+  - generic: مانجا · Togashi Yoshihiro
+  - generic: عرض
+- banner:
+  - strong: الشخصيات المطابقة
+  - generic: يمكنك أيضاً اختيار عمل من نتائج البحث
+- paragraph: اختر عملاً من نتائج البحث لعرض شخصياته.
+- button "حفظ المفضلة"

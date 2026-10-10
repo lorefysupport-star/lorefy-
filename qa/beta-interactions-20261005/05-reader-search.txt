@@ -1,0 +1,27 @@
+- banner:
+  - button "حسابك"
+  - strong: Lorefy
+  - button "الإشعارات":
+- tablist "تصفية منشورات المجتمع":
+  - tab "For You"
+  - tab "Following" [selected]
+- region "منشورات المجتمع":
+  - strong: لا توجد منشورات من الحسابات التي تتابعها
+  - paragraph: تابع قرّاء جدد لتظهر منشوراتهم هنا.
+  - button "اكتشف قرّاء"
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية
+- button "إنشاء منشور":
+- dialog "اكتشف قرّاء":
+  - banner:
+    - button "إغلاق": ×
+    - heading "اكتشف قرّاء" [level=2]
+  - searchbox "اسم القارئ أو المستخدم" [active]: zzzzaudit
+  - generic: جارٍ البحث…

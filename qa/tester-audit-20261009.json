@@ -1,0 +1,390 @@
+{
+  "personas": [
+    {
+      "id": "qa-tester-01",
+      "lang": "ar",
+      "routes": [
+        {
+          "route": "مكتبتي",
+          "nonblank": true,
+          "length": 1875
+        },
+        {
+          "route": "استكشف",
+          "nonblank": true,
+          "length": 4756
+        },
+        {
+          "route": "الرئيسية",
+          "nonblank": true,
+          "length": 4255
+        },
+        {
+          "route": "حسابي",
+          "nonblank": true,
+          "length": 1682
+        }
+      ],
+      "dialog": [
+        "",
+        "المتابعون (3)",
+        "أتابعهم (3)",
+        "يوسف@test_yousefمتابعة",
+        "متابعة",
+        "مها@test_mahaمتابعة",
+        "متابعة",
+        "زياد@test_ziyadمتابعة",
+        "متابعة"
+      ]
+    },
+    {
+      "id": "qa-tester-02",
+      "lang": "en",
+      "routes": [
+        {
+          "route": "Library",
+          "nonblank": true,
+          "length": 2030
+        },
+        {
+          "route": "Explore",
+          "nonblank": true,
+          "length": 4123
+        },
+        {
+          "route": "Home",
+          "nonblank": true,
+          "length": 3880
+        },
+        {
+          "route": "Profile",
+          "nonblank": true,
+          "length": 1741
+        }
+      ],
+      "dialog": [
+        "",
+        "Followers (3)",
+        "Following (3)",
+        "نورة@test_nouraFollow",
+        "Follow",
+        "مها@test_mahaFollow",
+        "Follow",
+        "زياد@test_ziyadFollow",
+        "Follow"
+      ]
+    },
+    {
+      "id": "qa-tester-03",
+      "lang": "ar",
+      "routes": [
+        {
+          "route": "مكتبتي",
+          "nonblank": true,
+          "length": 1947
+        },
+        {
+          "route": "استكشف",
+          "nonblank": true,
+          "length": 3992
+        },
+        {
+          "route": "الرئيسية",
+          "nonblank": true,
+          "length": 3872
+        },
+        {
+          "route": "حسابي",
+          "nonblank": true,
+          "length": 1667
+        }
+      ],
+      "dialog": [
+        "",
+        "المتابعون (3)",
+        "أتابعهم (3)",
+        "نورة@test_nouraمتابعة",
+        "متابعة",
+        "فهد@test_fahadمتابعة",
+        "متابعة",
+        "زياد@test_ziyadمتابعة",
+        "متابعة"
+      ]
+    },
+    {
+      "id": "qa-tester-04",
+      "lang": "en",
+      "routes": [
+        {
+          "route": "Library",
+          "nonblank": true,
+          "length": 2061
+        },
+        {
+          "route": "Explore",
+          "nonblank": true,
+          "length": 4353
+        },
+        {
+          "route": "Home",
+          "nonblank": true,
+          "length": 3880
+        },
+        {
+          "route": "Profile",
+          "nonblank": true,
+          "length": 1778
+        }
+      ],
+      "dialog": [
+        "",
+        "Followers (3)",
+        "Following (3)",
+        "نورة@test_nouraFollow",
+        "Follow",
+        "فهد@test_fahadFollow",
+        "Follow",
+        "ريم@test_reemFollow",
+        "Follow"
+      ]
+    },
+    {
+      "id": "qa-tester-05",
+      "lang": "ar",
+      "routes": [
+        {
+          "route": "مكتبتي",
+          "nonblank": true,
+          "length": 1884
+        },
+        {
+          "route": "استكشف",
+          "nonblank": true,
+          "length": 4275
+        },
+        {
+          "route": "الرئيسية",
+          "nonblank": true,
+          "length": 4255
+        },
+        {
+          "route": "حسابي",
+          "nonblank": true,
+          "length": 1685
+        }
+      ],
+      "dialog": [
+        "",
+        "المتابعون (3)",
+        "أتابعهم (3)",
+        "فهد@test_fahadمتابعة",
+        "متابعة",
+        "ريم@test_reemمتابعة",
+        "متابعة",
+        "عمر@test_omarمتابعة",
+        "متابعة"
+      ]
+    },
+    {
+      "id": "qa-tester-06",
+      "lang": "en",
+      "routes": [
+        {
+          "route": "Library",
+          "nonblank": true,
+          "length": 2060
+        },
+        {
+          "route": "Explore",
+          "nonblank": true,
+          "length": 4812
+        },
+        {
+          "route": "Home",
+          "nonblank": true,
+          "length": 4263
+        },
+        {
+          "route": "Profile",
+          "nonblank": true,
+          "length": 1699
+        }
+      ],
+      "dialog": [
+        "",
+        "Followers (3)",
+        "Following (3)",
+        "ريم@test_reemFollow",
+        "Follow",
+        "عمر@test_omarFollow",
+        "Follow",
+        "سارة@test_saraFollow",
+        "Follow"
+      ]
+    },
+    {
+      "id": "qa-tester-07",
+      "lang": "ar",
+      "routes": [
+        {
+          "route": "مكتبتي",
+          "nonblank": true,
+          "length": 2206
+        },
+        {
+          "route": "استكشف",
+          "nonblank": true,
+          "length": 4288
+        },
+        {
+          "route": "الرئيسية",
+          "nonblank": true,
+          "length": 3872
+        },
+        {
+          "route": "حسابي",
+          "nonblank": true,
+          "length": 1841
+        }
+      ],
+      "dialog": [
+        "",
+        "المتابعون (3)",
+        "أتابعهم (3)",
+        "عمر@test_omarمتابعة",
+        "متابعة",
+        "سارة@test_saraمتابعة",
+        "متابعة",
+        "خالد@test_khalidمتابعة",
+        "متابعة"
+      ]
+    },
+    {
+      "id": "qa-tester-08",
+      "lang": "en",
+      "routes": [
+        {
+          "route": "Library",
+          "nonblank": true,
+          "length": 1990
+        },
+        {
+          "route": "Explore",
+          "nonblank": true,
+          "length": 4420
+        },
+        {
+          "route": "Home",
+          "nonblank": true,
+          "length": 3968
+        },
+        {
+          "route": "Profile",
+          "nonblank": true,
+          "length": 1881
+        }
+      ],
+      "dialog": [
+        "",
+        "Followers (3)",
+        "Following (3)",
+        "سارة@test_saraFollow",
+        "Follow",
+        "خالد@test_khalidFollow",
+        "Follow",
+        "ليان@test_layanFollow",
+        "Follow"
+      ]
+    },
+    {
+      "id": "qa-tester-09",
+      "lang": "ar",
+      "routes": [
+        {
+          "route": "مكتبتي",
+          "nonblank": true,
+          "length": 2001
+        },
+        {
+          "route": "استكشف",
+          "nonblank": true,
+          "length": 4263
+        },
+        {
+          "route": "الرئيسية",
+          "nonblank": true,
+          "length": 4255
+        },
+        {
+          "route": "حسابي",
+          "nonblank": true,
+          "length": 1706
+        }
+      ],
+      "dialog": [
+        "",
+        "المتابعون (3)",
+        "أتابعهم (3)",
+        "خالد@test_khalidمتابعة",
+        "متابعة",
+        "ليان@test_layanمتابعة",
+        "متابعة",
+        "يوسف@test_yousefمتابعة",
+        "متابعة"
+      ]
+    },
+    {
+      "id": "qa-tester-10",
+      "lang": "en",
+      "routes": [
+        {
+          "route": "Library",
+          "nonblank": true,
+          "length": 2106
+        },
+        {
+          "route": "Explore",
+          "nonblank": true,
+          "length": 4404
+        },
+        {
+          "route": "Home",
+          "nonblank": true,
+          "length": 3880
+        },
+        {
+          "route": "Profile",
+          "nonblank": true,
+          "length": 1816
+        }
+      ],
+      "dialog": [
+        "",
+        "Followers (3)",
+        "Following (3)",
+        "ليان@test_layanFollow",
+        "Follow",
+        "يوسف@test_yousefFollow",
+        "Follow",
+        "مها@test_mahaFollow",
+        "Follow"
+      ]
+    }
+  ],
+  "extraChecks": {
+    "nativeArabicDialog": true,
+    "nativeEnglishDialog": true,
+    "languageSwitchBothWays": true,
+    "profileNameSurvivesReload": true,
+    "followChangeSurvivesReload": true,
+    "visitorFavorites": 4,
+    "visitorLibrary": 10,
+    "communityReviews": 10,
+    "artworkImagesLoaded": 20
+  },
+  "limitations": [
+    "Local fictional personas only",
+    "No real authentication or cloud synchronization tested",
+    "No physical iOS device run"
+  ]
+}

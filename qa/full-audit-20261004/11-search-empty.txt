@@ -1,0 +1,29 @@
+- banner:
+  - heading "بحث" [level=1]
+  - textbox "ابحث بالعنوان أو المؤلف..." [active]: zzzz_no_work_audit_364837
+  - button "إغلاق":
+  - button "الكل" [pressed]
+  - button "مانجا"
+  - button "مانهوا"
+  - button "مانهوا صيني"
+  - button "كوميكس"
+  - button "رواية"
+  - button "كتاب"
+  - button "لايت نوفل"
+  - button "ويب نوفل"
+  - button "الأعلى تقييماً"
+  - button "الأشهر"
+  - button "الأحدث"
+- status: 0 نتيجة
+- paragraph: لا توجد نتائج
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "بحث":
+    - generic: بحث
+  - button "الرئيسية":
+    - generic: الرئيسية

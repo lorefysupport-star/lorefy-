@@ -1,0 +1,448 @@
+- banner:
+  - heading "بحث" [level=1]
+  - textbox "ابحث بالعنوان أو المؤلف..."
+  - button "الكل"
+  - button "مانجا"
+  - button "مانهوا"
+  - button "مانهوا صيني"
+  - button "كوميكس" [pressed]
+  - button "رواية"
+  - button "كتاب"
+  - button "لايت نوفل"
+  - button "ويب نوفل"
+  - button "الأعلى تقييماً"
+  - button "الأشهر"
+  - button "الأحدث" [active] [pressed]
+- status: 15,383 نتيجة
+- article:
+  - paragraph: It's Jeff
+  - generic: كوميكس
+  - paragraph: Kelly Thompson ·2025
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة It's Jeff إلى المكتبة":
+- article:
+  - paragraph: Caraway
+  - generic: كوميكس
+  - paragraph: Angeline Meyer ·2024
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Caraway إلى المكتبة":
+- article:
+  - paragraph: The War of the Worlds
+  - generic: كوميكس
+  - paragraph: H. G. Wells ·2024
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة The War of the Worlds إلى المكتبة":
+- article:
+  - paragraph: Blue Sky Through the Window of a Moving Car
+  - generic: كوميكس
+  - paragraph: Jordan Bolton ·2024
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Blue Sky Through the Window of a Moving Car إلى المكتبة":
+- article:
+  - paragraph: I Shall Never Fall in Love
+  - generic: كوميكس
+  - paragraph: Hari Conner ·2024
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة I Shall Never Fall in Love إلى المكتبة":
+- article:
+  - paragraph: Monsters We Make
+  - generic: كوميكس
+  - paragraph: Cory Williams ·2024
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Monsters We Make إلى المكتبة":
+- article:
+  - paragraph: En coup de vent
+  - generic: كوميكس
+  - paragraph: Sophie Labelle ·2023
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة En coup de vent إلى المكتبة":
+- article:
+  - paragraph: ONIMAI
+  - generic: كوميكس
+  - paragraph: Nekotofu ·2023
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة ONIMAI إلى المكتبة":
+- article:
+  - paragraph: Hockey Girl Loves Drama Boy
+  - generic: كوميكس
+  - paragraph: Faith Erin Hicks ·2023
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Hockey Girl Loves Drama Boy إلى المكتبة":
+- article:
+  - paragraph: Huda F Cares?
+  - generic: كوميكس
+  - paragraph: Huda Fahmy ·2023
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Huda F Cares? إلى المكتبة":
+- article:
+  - paragraph: The Maze of Bones Graphic Novel
+  - generic: كوميكس
+  - paragraph: Rick Riordan ·2023
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة The Maze of Bones Graphic Novel إلى المكتبة":
+- article:
+  - paragraph: Curlfriends
+  - generic: كوميكس
+  - paragraph: Sharee Miller ·2023
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Curlfriends إلى المكتبة":
+- article:
+  - paragraph: More Tall Tales
+  - generic: كوميكس
+  - paragraph: Jeff Smith, Tom Sniegoski ·2023
+  - img "3.8 من 5":
+  - generic: "3.8"
+  - button "إضافة More Tall Tales إلى المكتبة":
+- article:
+  - paragraph: The Trans Agenda
+  - generic: كوميكس
+  - paragraph: Sophie Labelle ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة The Trans Agenda إلى المكتبة":
+- article:
+  - paragraph: Assignée garçon
+  - generic: كوميكس
+  - paragraph: Sophie Labelle ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Assignée garçon إلى المكتبة":
+- article:
+  - paragraph: Something is Killing the Children, Vol. 4
+  - generic: كوميكس
+  - paragraph: James Tynion IV ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Something is Killing the Children, Vol. 4 إلى المكتبة":
+- article:
+  - paragraph: Jewish Comics and Graphic Narratives
+  - generic: كوميكس
+  - paragraph: Matt Reingold ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Jewish Comics and Graphic Narratives إلى المكتبة":
+- article:
+  - paragraph: The Many Deaths of Laila Starr
+  - generic: كوميكس
+  - paragraph: Ram V ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة The Many Deaths of Laila Starr إلى المكتبة":
+- article:
+  - paragraph: The Nice House on the Lake, Vol. 1
+  - generic: كوميكس
+  - paragraph: James Tynion IV ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة The Nice House on the Lake, Vol. 1 إلى المكتبة":
+- article:
+  - paragraph: "1860"
+  - generic: كوميكس
+  - paragraph: Javier Diéguez ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة 1860 إلى المكتبة":
+- article:
+  - paragraph: DC Dark Knights of Steel Vol. 1
+  - generic: كوميكس
+  - paragraph: Tom Taylor ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة DC Dark Knights of Steel Vol. 1 إلى المكتبة":
+- article:
+  - paragraph: Lightfall
+  - generic: كوميكس
+  - paragraph: Tim Probert ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Lightfall إلى المكتبة":
+- article:
+  - paragraph: Button Pusher
+  - generic: كوميكس
+  - paragraph: Tyler Page ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Button Pusher إلى المكتبة":
+- article:
+  - paragraph: Shubeik Lubeik
+  - generic: كوميكس
+  - paragraph: Deena Mohamed ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Shubeik Lubeik إلى المكتبة":
+- article:
+  - paragraph: Hilo Book 8
+  - generic: كوميكس
+  - paragraph: Judd Winick ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Hilo Book 8 إلى المكتبة":
+- article:
+  - paragraph: Joseph Smith and the Mormons
+  - generic: كوميكس
+  - paragraph: Noah Van Sciver ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Joseph Smith and the Mormons إلى المكتبة":
+- article:
+  - paragraph: Wash Day Diaries
+  - generic: كوميكس
+  - paragraph: Jamila Rowser ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Wash Day Diaries إلى المكتبة":
+- article:
+  - paragraph: Night Eaters
+  - generic: كوميكس
+  - paragraph: Marjorie M. Liu ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Night Eaters إلى المكتبة":
+- article:
+  - paragraph: Academy of Blood
+  - generic: كوميكس
+  - paragraph: Bradley Martin ·2022
+  - img "3.5 من 5":
+  - generic: "3.5"
+  - button "إضافة Academy of Blood إلى المكتبة":
+- article:
+  - paragraph: It's Lonely at the Centre of the Earth
+  - generic: كوميكس
+  - paragraph: Zoe Thorogood ·2022
+  - img "4.7 من 5":
+  - generic: "4.7"
+  - button "إضافة It's Lonely at the Centre of the Earth إلى المكتبة":
+- article:
+  - paragraph: SANTERA
+  - generic: كوميكس
+  - paragraph: Jose Varese ·2022
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة SANTERA إلى المكتبة":
+- article:
+  - paragraph: Gritty and Gorgeous
+  - generic: كوميكس
+  - paragraph: Jose Varese, Andy Rivera ·2022
+  - img "3.8 من 5":
+  - generic: "3.8"
+  - button "إضافة Gritty and Gorgeous إلى المكتبة":
+- article:
+  - paragraph: Something is Killing the Children, Book One
+  - generic: كوميكس
+  - paragraph: James Tynion IV ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Something is Killing the Children, Book One إلى المكتبة":
+- article:
+  - paragraph: Doctor Who
+  - generic: كوميكس
+  - paragraph: Jody Houser ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Doctor Who إلى المكتبة":
+- article:
+  - paragraph: Gender Euphoria Galore
+  - generic: كوميكس
+  - paragraph: Sophie Labelle ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Gender Euphoria Galore إلى المكتبة":
+- article:
+  - paragraph: Dating Tips for Trans and Queer Weirdos
+  - generic: كوميكس
+  - paragraph: Sophie Labelle ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Dating Tips for Trans and Queer Weirdos إلى المكتبة":
+- article:
+  - paragraph: Candycore 1
+  - generic: كوميكس
+  - paragraph: Sophie Labelle ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Candycore 1 إلى المكتبة":
+- article:
+  - paragraph: Kugel Western
+  - generic: كوميكس
+  - paragraph: Mira Schlosberg ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Kugel Western إلى المكتبة":
+- article:
+  - paragraph: Miguel Hernández
+  - generic: كوميكس
+  - paragraph: Román López-Cabrera ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Miguel Hernández إلى المكتبة":
+- article:
+  - paragraph: "1941"
+  - generic: كوميكس
+  - paragraph: Daniel Ortega ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة 1941 إلى المكتبة":
+- article:
+  - paragraph: Clara Campoamor
+  - generic: كوميكس
+  - paragraph: Rafael Jiménez ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Clara Campoamor إلى المكتبة":
+- article:
+  - paragraph: Sylvie
+  - generic: كوميكس
+  - paragraph: Sylvie Kantorovitz ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Sylvie إلى المكتبة":
+- article:
+  - paragraph: Piece by Piece
+  - generic: كوميكس
+  - paragraph: Priya Huq ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Piece by Piece إلى المكتبة":
+- article:
+  - paragraph: Tiny Dancer
+  - generic: كوميكس
+  - paragraph: Siena Cherson Siegel ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Tiny Dancer إلى المكتبة":
+- article:
+  - paragraph: Ex Libris
+  - generic: كوميكس
+  - paragraph: Matt Madden ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Ex Libris إلى المكتبة":
+- article:
+  - paragraph: Artie and the Wolf Moon
+  - generic: كوميكس
+  - paragraph: Olivia Stephens ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Artie and the Wolf Moon إلى المكتبة":
+- article:
+  - paragraph: American Comics
+  - generic: كوميكس
+  - paragraph: Jeremy Dauber ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة American Comics إلى المكتبة":
+- article:
+  - paragraph: Anthrax
+  - generic: كوميكس
+  - paragraph: Rob Zombie ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Anthrax إلى المكتبة":
+- article:
+  - paragraph: Huda F Are You?
+  - generic: كوميكس
+  - paragraph: Huda Fahmy ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Huda F Are You? إلى المكتبة":
+- article:
+  - paragraph: Lucine et Enzo
+  - generic: كوميكس
+  - paragraph: Emma Gutierrez ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Lucine et Enzo إلى المكتبة":
+- article:
+  - paragraph: Stringer
+  - generic: كوميكس
+  - paragraph: Ted Rall ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Stringer إلى المكتبة":
+- article:
+  - paragraph: Thirsty Mermaids
+  - generic: كوميكس
+  - paragraph: Kat Leyh ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Thirsty Mermaids إلى المكتبة":
+- article:
+  - paragraph: Natan Sharansky
+  - generic: كوميكس
+  - paragraph: Blake A. Hoena ·2021
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Natan Sharansky إلى المكتبة":
+- article:
+  - paragraph: Allergic
+  - generic: كوميكس
+  - paragraph: Megan Wagner Lloyd ·2021
+  - img "4.6 من 5":
+  - generic: "4.6"
+  - button "إضافة Allergic إلى المكتبة":
+- article:
+  - paragraph: Katie the Catsitter
+  - generic: كوميكس
+  - paragraph: Stephanie Yue ·2021
+  - img "5 من 5":
+  - generic: "5"
+  - button "إضافة Katie the Catsitter إلى المكتبة":
+- article:
+  - paragraph: Did You Hear What Eddie Gein Done?
+  - generic: كوميكس
+  - paragraph: Eric Powell, Harold Schechter ·2021
+  - img "4 من 5":
+  - generic: "4"
+  - button "إضافة Did You Hear What Eddie Gein Done? إلى المكتبة":
+- article:
+  - paragraph: Playsuper Cosplay Edition
+  - generic: كوميكس
+  - paragraph: Jose Varese ·2021
+  - img "3.8 من 5":
+  - generic: "3.8"
+  - button "إضافة Playsuper Cosplay Edition إلى المكتبة":
+- article:
+  - paragraph: Black Widow
+  - generic: كوميكس
+  - paragraph: Richard K. Morgan ·2020
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Black Widow إلى المكتبة":
+- article:
+  - paragraph: The Scarf
+  - generic: كوميكس
+  - paragraph: Sophie Labelle ·2020
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة The Scarf إلى المكتبة":
+- article:
+  - paragraph: Man Time
+  - generic: كوميكس
+  - paragraph: Sam Owen ·2020
+  - img "0 من 5":
+  - generic: "0"
+  - button "إضافة Man Time إلى المكتبة":
+- button "عرض المزيد — بقي 15,323"
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "بحث":
+    - generic: بحث
+  - button "الرئيسية":
+    - generic: الرئيسية

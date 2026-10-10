@@ -1,0 +1,20 @@
+- banner:
+  - button "حسابك"
+  - strong: Lorefy
+  - button "الإشعارات":
+- tablist "تصفية منشورات المجتمع":
+  - tab "For You" [selected]
+  - tab "Following"
+- region "منشورات المجتمع":
+  - strong: ابدأ أول محادثة
+  - paragraph: اكتب فكرة أو شارك قائمة من حسابك.
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية
+- button "إنشاء منشور":

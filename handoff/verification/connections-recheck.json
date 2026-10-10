@@ -1,0 +1,65 @@
+{
+  "verifiedDate": "2026-10-10",
+  "readOnly": true,
+  "github": {
+    "account": "fahadaturki1-sudo",
+    "repository": "lorefysupport-star/lorefy-",
+    "permissions": {
+      "admin": false,
+      "maintain": false,
+      "push": true,
+      "triage": true,
+      "pull": true
+    }
+  },
+  "expo": {
+    "username": "lorefy-owner",
+    "project": "@lorefy/lorefy",
+    "projectId": "8438f5d2-3734-4ef7-8925-c8ffeb5a0cd5",
+    "accountRole": "Owner",
+    "latestBuildId": "29797ce0-a6f0-488b-afb8-7cb66c5b1f6d",
+    "latestBuildStatus": "finished",
+    "latestBuildMessage": "Build 34: full profile decorations, public appearance, community and library fixes"
+  },
+  "supabase": {
+    "projectId": "qsroxmltioxqozmykens",
+    "organizationId": "tzkqptyscqmolpkldrev",
+    "organizationName": "lorefy",
+    "projectStatus": "ACTIVE_HEALTHY",
+    "migrationCount": 42,
+    "activeFunctions": 5,
+    "sqlProbe": {
+      "query": "select 1 as connection_ok, current_database() as database_name;",
+      "connection_ok": 1,
+      "database_name": "postgres"
+    },
+    "discoveryDiscrepancy": {
+      "listProjectsReturnedOnly": "mimutlitayvysrucrqnx",
+      "listOrganizationsReturnedOnly": "opyvzipgrxjhtmqwbgku",
+      "directProjectOrganizationFunctionsMigrationsAndSqlSucceeded": true,
+      "resolved": false
+    }
+  },
+  "apple": {
+    "appStoreConnectAuthenticated": true,
+    "appId": "6799704077",
+    "build34Status": "Testing",
+    "easCredentials": {
+      "bundleId": "com.lorefy.app",
+      "appleTeam": "U4C4W59HMG",
+      "distributionCertificateExpires": "2027-08-11T20:56:54Z",
+      "provisioningProfileStatus": "active",
+      "provisioningProfileExpires": "2027-08-11T20:56:54Z",
+      "appStoreConnectApiKeyPresent": true,
+      "apiKeyRole": "APP_MANAGER",
+      "source": "eas credentials --platform ios; optional Apple login declined; read-only overview"
+    },
+    "developerBrowserAccess": "Access Unavailable",
+    "developerBrowserAccount": "lorefysupport@gmail.com",
+    "liveCertificateRevocationValidation": false
+  },
+  "newBuildStarted": false,
+  "newSubmissionStarted": false,
+  "credentialsChanged": false,
+  "databaseChanged": false
+}

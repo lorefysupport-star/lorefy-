@@ -1,0 +1,468 @@
+✔ library search and sorting are independent of catalog search (9.448ms)
+✔ own reviews do not get a moderation menu (0.6041ms)
+✔ Togashi manga volumes are not western comics (5.8704ms)
+✖ onboarding inherits the selected appearance (1.5922ms)
+✖ followers dialog supports Escape and traps focus (0.5309ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 99.931
+
+✖ failing tests:
+
+test at tests\audit-library-safety.test.js:31:1
+✖ onboarding inherits the selected appearance (1.5922ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /--auth-paper:\s*var\(--ui-bg\)/. Input:
+  
+  '/* The account and first-library journey is deliberately separate from app chrome. */\n' +
+    '.lf-auth {\n' +
+    '  --auth-paper: #f4f8f7;\n' +
+    '  --auth-ink: #193638;\n' +
+    '  --auth-muted: #657a7a;\n' +
+    '  --auth-line: #d7e4e1;\n' +
+    '  --auth-action: #167b77;\n' +
+    '  --auth-action-pressed: #0c6561;\n' +
+    '  --auth-selected: #e4f3ef;\n' +
+    '  --auth-coral: #d56e56;\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  background: var(--auth-paper) !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-page {\n' +
+    '  width: min(100%, 560px) !important;\n' +
+    '  padding: calc(var(--nc-top) + 16px) 20px calc(var(--nc-bottom) + 18px) !important;\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  background: var(--auth-paper) !important;\n' +
+    '  overflow: hidden;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth :where(.lf-title, h1, h2, h3, strong) {\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  letter-spacing: 0 !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-title {\n' +
+    '  margin-block: 0 9px !important;\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  font-size: 26px !important;\n' +
+    '  line-height: 1.35 !important;\n' +
+    '  font-weight: 800 !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-sub {\n' +
+    '  max-width: 36ch;\n' +
+    '  color: var(--auth-muted) !important;\n' +
+    '  font-size: 13px !important;\n' +
+    '  line-height: 1.75 !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-head {\n' +
+    '  min-height: 46px;\n' +
+    '  margin-bottom: 18px !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-head small {\n' +
+    '  color: var(--auth-muted) !important;\n' +
+    '  font-size: 12px;\n' +
+    '  font-weight: 700;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-back,\n' +
+    '.lf-auth .lf-lang {\n' +
+    '  min-width: 44px !important;\n' +
+    '  min-height: 44px !important;\n' +
+    '  border: 1px solid var(--auth-line) !important;\n' +
+    '  border-radius: 50% !important;\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  background: #fff !important;\n' +
+    '  box-shadow: none !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-progress {\n' +
+    '  gap: 5px;\n' +
+    '  margin: 0 0 26px;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-progress span {\n' +
+    '  height: 3px;\n' +
+    '  background: var(--auth-line) !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-progress span.on {\n' +
+    '  background: var(--auth-action) !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-btn {\n' +
+    '  min-height: 54px !important;\n' +
+    '  border-radius: 8px !important;\n' +
+    '  font-size: 14px !important;\n' +
+    '  font-weight: 800 !important;\n' +
+    '  box-shadow: none !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-primary {\n' +
+    '  color: #fff !important;\n' +
+    '  background: var(--auth-action) !important;\n' +
+    '  border: 1px solid var(--auth-action) !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-primary:active {\n' +
+    '  background: var(--auth-action-pressed) !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-white {\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  background: #fff !important;\n' +
+    '  border: 1px solid var(--auth-line) !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-label {\n' +
+    '  margin: 0 0 8px !important;\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  font-size: 12px !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-field {\n' +
+    '  min-height: 52px !important;\n' +
+    '  padding-inline: 14px !important;\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  background: #fff !important;\n' +
+    '  border: 1px solid var(--auth-line) !important;\n' +
+    '  border-radius: 8px !important;\n' +
+    '  font-size: 16px !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-field:focus,\n' +
+    '.lf-auth .lf-work-search:focus-within {\n' +
+    '  border-color: var(--auth-action) !important;\n' +
+    '  box-shadow: 0 0 0 3px #167b7722 !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-tabs {\n' +
+    '  gap: 0;\n' +
+    '  margin: 24px 0 18px;\n' +
+    '  padding: 0;\n' +
+    '  border-bottom: 1px solid var(--auth-line);\n' +
+    '  border-radius: 0;\n' +
+    '  background: transparent !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-tab,\n' +
+    '.lf-auth .lf-tab.on {\n' +
+    '  min-height: 46px !important;\n' +
+    '  border: 0 !important;\n' +
+    '  border-bottom: 2px solid transparent !important;\n' +
+    '  border-radius: 0 !important;\n' +
+    '  color: var(--auth-muted) !important;\n' +
+    '  background: transparent !important;\n' +
+    '  box-shadow: none !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-tab.on {\n' +
+    '  color: var(--auth-action) !important;\n' +
+    '  border-bottom-color: var(--auth-action) !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-sticky {\n' +
+    '  inset-inline: 20px;\n' +
+    '  bottom: calc(var(--nc-bottom) + 14px);\n' +
+    '  padding-bottom: 0 !important;\n' +
+    '  background: var(--auth-paper) !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-error {\n' +
+    '  color: #ab3d3d !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-selection-status {\n' +
+    '  margin: 0 0 8px;\n' +
+    '  color: var(--auth-ink);\n' +
+    '  font-size: 12px;\n' +
+    '  line-height: 1.5;\n' +
+    '  text-align: center;\n' +
+    '}\n' +
+    '\n' +
+    '/* An editorial opening with real reading imagery, then a quiet sign-in area. */\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"],\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page {\n' +
+    '  background: #142e30 !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page::before {\n' +
+    '  content: "";\n' +
+    '  position: absolute;\n' +
+    '  inset: 0 0 auto;\n' +
+    '  height: 50%;\n' +
+    '  background: url("../launch/brand/lorefy-reading-scene.jpg") center 38% / cover no-repeat;\n' +
+    '  border-bottom: 3px solid var(--auth-coral);\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-lang {\n' +
+    '  z-index: 2;\n' +
+    '  color: #fff !important;\n' +
+    '  background: #142e30d9 !important;\n' +
+    '  border-color: #ffffff4d !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) {\n' +
+    '  min-height: 0;\n' +
+    '  justify-content: flex-end !important;\n' +
+    '  align-items: flex-start !important;\n' +
+    '  padding: 0 0 20px !important;\n' +
+    '  text-align: start !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child {\n' +
+    '  flex-direction: row !important;\n' +
+    '  align-items: center !important;\n' +
+    '  gap: 10px !important;\n' +
+    '  margin-bottom: 14px;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child > div {\n' +
+    '  width: 33px;\n' +
+    '  height: 33px;\n' +
+    '  background: url("../launch/brand/lorefy-feather.png") center / contain no-repeat;\n' +
+    '  mix-blend-mode: screen;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child svg {\n' +
+    '  display: none;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) strong {\n' +
+    '  color: #fff !important;\n' +
+    '  font-size: 26px !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] h1 {\n' +
+    '  max-width: 15ch;\n' +
+    '  margin: 0 0 9px !important;\n' +
+    '  color: #fff !important;\n' +
+    '  font-size: 23px !important;\n' +
+    '  line-height: 1.38 !important;\n' +
+    '  text-align: start !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-sub {\n' +
+    '  max-width: 34ch !important;\n' +
+    '  margin: 0 !important;\n' +
+    '  color: #c9d9d6 !important;\n' +
+    '  text-align: start !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) {\n' +
+    '  flex: none;\n' +
+    '  gap: 8px !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-white {\n' +
+    '  border-color: #fff !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) > .lf-btn:not(.lf-white) {\n' +
+    '  color: #fff !important;\n' +
+    '  background: transparent !important;\n' +
+    '  border: 1px solid #708886 !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) > p:last-child {\n' +
+    '  margin: 10px 4px 0 !important;\n' +
+    '  color: #b9cbc8 !important;\n' +
+    '  font-size: 10px !important;\n' +
+    '  line-height: 1.6;\n' +
+    '}\n' +
+    '\n' +
+    '/* Reading formats have clear, stable hit areas instead of floating pills. */\n' +
+    '.lf-auth .lf-chip-wrap {\n' +
+    '  display: grid;\n' +
+    '  grid-template-columns: repeat(2, minmax(0, 1fr));\n' +
+    '  gap: 9px;\n' +
+    '  align-content: start;\n' +
+    '  margin-top: 25px;\n' +
+    '  padding-bottom: 86px;\n' +
+    '  overflow-y: auto;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-chip {\n' +
+    '  min-height: 56px !important;\n' +
+    '  padding: 10px 13px !important;\n' +
+    '  border: 1px solid var(--auth-line) !important;\n' +
+    '  border-radius: 8px !important;\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  background: #fff !important;\n' +
+    '  text-align: start;\n' +
+    '  line-height: 1.35;\n' +
+    '  white-space: normal;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-chip.on {\n' +
+    '  color: var(--auth-action-pressed) !important;\n' +
+    '  background: var(--auth-selected) !important;\n' +
+    '  border-color: var(--auth-action) !important;\n' +
+    '}\n' +
+    '\n' +
+    '/* Genre swatches are restrained but give each mood an identifiable signal. */\n' +
+    '.lf-auth .lf-genre-grid {\n' +
+    '  grid-template-columns: repeat(2, minmax(0, 1fr));\n' +
+    '  grid-auto-rows: 74px;\n' +
+    '  gap: 9px;\n' +
+    '  align-content: start;\n' +
+    '  flex: 1;\n' +
+    '  min-height: 0;\n' +
+    '  margin-top: 25px;\n' +
+    '  padding: 2px 0 86px;\n' +
+    '  overflow-y: auto;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-genre {\n' +
+    '  height: 74px !important;\n' +
+    '  min-height: 74px !important;\n' +
+    '  padding: 15px !important;\n' +
+    '  border: 1px solid var(--auth-line) !important;\n' +
+    '  border-radius: 8px !important;\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  background: #fff !important;\n' +
+    '  box-shadow: none !important;\n' +
+    '  outline: 0 !important;\n' +
+    '  font-size: 14px;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-genre::before {\n' +
+    '  content: "";\n' +
+    '  position: absolute;\n' +
+    '  inset: 0 0 auto;\n' +
+    '  height: 4px;\n' +
+    '  background: var(--mood, var(--auth-action));\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-genre:nth-child(1) { --mood: #cb79a0; }\n' +
+    '.lf-auth .lf-genre:nth-child(2) { --mood: #dc8066; }\n' +
+    '.lf-auth .lf-genre:nth-child(3) { --mood: #6a9bab; }\n' +
+    '.lf-auth .lf-genre:nth-child(4) { --mood: #719179; }\n' +
+    '.lf-auth .lf-genre:nth-child(5) { --mood: #6694b3; }\n' +
+    '.lf-auth .lf-genre:nth-child(6) { --mood: #c69659; }\n' +
+    '.lf-auth .lf-genre:nth-child(7) { --mood: #d0a967; }\n' +
+    '.lf-auth .lf-genre:nth-child(8) { --mood: #817596; }\n' +
+    '\n' +
+    '.lf-auth .lf-genre.on {\n' +
+    '  color: var(--auth-action-pressed) !important;\n' +
+    '  background: var(--auth-selected) !important;\n' +
+    '  border-color: var(--auth-action) !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-mark {\n' +
+    '  width: 24px;\n' +
+    '  height: 24px;\n' +
+    '  top: 8px;\n' +
+    '  border-radius: 50%;\n' +
+    '  color: #fff;\n' +
+    '  background: var(--auth-action) !important;\n' +
+    '}\n' +
+    '\n' +
+    '/* Browsable work rows keep every title readable beside its actual cover. */\n' +
+    '.lf-auth .lf-work-search {\n' +
+    '  flex: none;\n' +
+    '  min-height: 48px;\n' +
+    '  margin: 24px 0 11px;\n' +
+    '  color: var(--auth-muted) !important;\n' +
+    '  background: #fff !important;\n' +
+    '  border: 1px solid var(--auth-line) !important;\n' +
+    '  border-radius: 8px !important;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-work-search input {\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  font-size: 16px;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-work-grid {\n' +
+    '  display: flex;\n' +
+    '  flex: 1;\n' +
+    '  flex-direction: column;\n' +
+    '  min-height: 0;\n' +
+    '  gap: 0;\n' +
+    '  padding: 0 0 92px;\n' +
+    '  overflow-y: auto;\n' +
+    '  scrollbar-width: none;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-work-grid::-webkit-scrollbar {\n' +
+    '  display: none;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-work {\n' +
+    '  display: flex;\n' +
+    '  align-items: center;\n' +
+    '  flex: none;\n' +
+    '  width: 100%;\n' +
+    '  min-height: 90px;\n' +
+    '  aspect-ratio: auto;\n' +
+    '  gap: 14px;\n' +
+    '  padding: 8px 10px !important;\n' +
+    '  border: 0 !important;\n' +
+    '  border-bottom: 1px solid var(--auth-line) !important;\n' +
+    '  border-radius: 0 !important;\n' +
+    '  color: var(--auth-ink) !important;\n' +
+    '  background: transparent !important;\n' +
+    '  box-shadow: none !important;\n' +
+    '  text-align: start;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-work img {\n' +
+    '  flex: none;\n' +
+    '  width: 52px;\n' +
+    '  height: 72px;\n' +
+    '  border-radius: 3px;\n' +
+    '  object-fit: cover;\n' +
+    '  background: #dfe8e5;\n' +
+    '}\n' +
+    '\n' +
+    '.lf-auth .lf-work-title {\n' +
+    '  position: static;\n' +
+    '  display: -webkit-box;\n' +
+    '  flex: 1;\n' +
+    '  min-width: 0;\n' +
+    '  padding: 0;\n' +
+    '  overflow: hidden;\n' +
+    '  color: va'... 1788 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\audit-library-safety.test.js:33:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/* The account and first-library journey is deliberately separate from app chrome. */\n.lf-auth {\n  --auth-paper: #f4f8f7;\n  --auth-ink: #193638;\n  --auth-muted: #657a7a;\n  --auth-line: #d7e4e1;\n  --auth-action: #167b77;\n  --auth-action-pressed: #0c6561;\n  --auth-selected: #e4f3ef;\n  --auth-coral: #d56e56;\n  color: var(--auth-ink) !important;\n  background: var(--auth-paper) !important;\n}\n\n.lf-auth .lf-page {\n  width: min(100%, 560px) !important;\n  padding: calc(var(--nc-top) + 16px) 20px calc(var(--nc-bottom) + 18px) !important;\n  color: var(--auth-ink) !important;\n  background: var(--auth-paper) !important;\n  overflow: hidden;\n}\n\n.lf-auth :where(.lf-title, h1, h2, h3, strong) {\n  color: var(--auth-ink) !important;\n  letter-spacing: 0 !important;\n}\n\n.lf-auth .lf-title {\n  margin-block: 0 9px !important;\n  color: var(--auth-ink) !important;\n  font-size: 26px !important;\n  line-height: 1.35 !important;\n  font-weight: 800 !important;\n}\n\n.lf-auth .lf-sub {\n  max-width: 36ch;\n  color: var(--auth-muted) !important;\n  font-size: 13px !important;\n  line-height: 1.75 !important;\n}\n\n.lf-auth .lf-head {\n  min-height: 46px;\n  margin-bottom: 18px !important;\n}\n\n.lf-auth .lf-head small {\n  color: var(--auth-muted) !important;\n  font-size: 12px;\n  font-weight: 700;\n}\n\n.lf-auth .lf-back,\n.lf-auth .lf-lang {\n  min-width: 44px !important;\n  min-height: 44px !important;\n  border: 1px solid var(--auth-line) !important;\n  border-radius: 50% !important;\n  color: var(--auth-ink) !important;\n  background: #fff !important;\n  box-shadow: none !important;\n}\n\n.lf-auth .lf-progress {\n  gap: 5px;\n  margin: 0 0 26px;\n}\n\n.lf-auth .lf-progress span {\n  height: 3px;\n  background: var(--auth-line) !important;\n}\n\n.lf-auth .lf-progress span.on {\n  background: var(--auth-action) !important;\n}\n\n.lf-auth .lf-btn {\n  min-height: 54px !important;\n  border-radius: 8px !important;\n  font-size: 14px !important;\n  font-weight: 800 !important;\n  box-shadow: none !important;\n}\n\n.lf-auth .lf-primary {\n  color: #fff !important;\n  background: var(--auth-action) !important;\n  border: 1px solid var(--auth-action) !important;\n}\n\n.lf-auth .lf-primary:active {\n  background: var(--auth-action-pressed) !important;\n}\n\n.lf-auth .lf-white {\n  color: var(--auth-ink) !important;\n  background: #fff !important;\n  border: 1px solid var(--auth-line) !important;\n}\n\n.lf-auth .lf-label {\n  margin: 0 0 8px !important;\n  color: var(--auth-ink) !important;\n  font-size: 12px !important;\n}\n\n.lf-auth .lf-field {\n  min-height: 52px !important;\n  padding-inline: 14px !important;\n  color: var(--auth-ink) !important;\n  background: #fff !important;\n  border: 1px solid var(--auth-line) !important;\n  border-radius: 8px !important;\n  font-size: 16px !important;\n}\n\n.lf-auth .lf-field:focus,\n.lf-auth .lf-work-search:focus-within {\n  border-color: var(--auth-action) !important;\n  box-shadow: 0 0 0 3px #167b7722 !important;\n}\n\n.lf-auth .lf-tabs {\n  gap: 0;\n  margin: 24px 0 18px;\n  padding: 0;\n  border-bottom: 1px solid var(--auth-line);\n  border-radius: 0;\n  background: transparent !important;\n}\n\n.lf-auth .lf-tab,\n.lf-auth .lf-tab.on {\n  min-height: 46px !important;\n  border: 0 !important;\n  border-bottom: 2px solid transparent !important;\n  border-radius: 0 !important;\n  color: var(--auth-muted) !important;\n  background: transparent !important;\n  box-shadow: none !important;\n}\n\n.lf-auth .lf-tab.on {\n  color: var(--auth-action) !important;\n  border-bottom-color: var(--auth-action) !important;\n}\n\n.lf-auth .lf-sticky {\n  inset-inline: 20px;\n  bottom: calc(var(--nc-bottom) + 14px);\n  padding-bottom: 0 !important;\n  background: var(--auth-paper) !important;\n}\n\n.lf-auth .lf-error {\n  color: #ab3d3d !important;\n}\n\n.lf-auth .lf-selection-status {\n  margin: 0 0 8px;\n  color: var(--auth-ink);\n  font-size: 12px;\n  line-height: 1.5;\n  text-align: center;\n}\n\n/* An editorial opening with real reading imagery, then a quiet sign-in area. */\n.lf-auth[data-lf-auth-stage="welcome"],\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page {\n  background: #142e30 !important;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page::before {\n  content: "";\n  position: absolute;\n  inset: 0 0 auto;\n  height: 50%;\n  background: url("../launch/brand/lorefy-reading-scene.jpg") center 38% / cover no-repeat;\n  border-bottom: 3px solid var(--auth-coral);\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-lang {\n  z-index: 2;\n  color: #fff !important;\n  background: #142e30d9 !important;\n  border-color: #ffffff4d !important;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) {\n  min-height: 0;\n  justify-content: flex-end !important;\n  align-items: flex-start !important;\n  padding: 0 0 20px !important;\n  text-align: start !important;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child {\n  flex-direction: row !important;\n  align-items: center !important;\n  gap: 10px !important;\n  margin-bottom: 14px;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child > div {\n  width: 33px;\n  height: 33px;\n  background: url("../launch/brand/lorefy-feather.png") center / contain no-repeat;\n  mix-blend-mode: screen;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child svg {\n  display: none;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) strong {\n  color: #fff !important;\n  font-size: 26px !important;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] h1 {\n  max-width: 15ch;\n  margin: 0 0 9px !important;\n  color: #fff !important;\n  font-size: 23px !important;\n  line-height: 1.38 !important;\n  text-align: start !important;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-sub {\n  max-width: 34ch !important;\n  margin: 0 !important;\n  color: #c9d9d6 !important;\n  text-align: start !important;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) {\n  flex: none;\n  gap: 8px !important;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-white {\n  border-color: #fff !important;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) > .lf-btn:not(.lf-white) {\n  color: #fff !important;\n  background: transparent !important;\n  border: 1px solid #708886 !important;\n}\n\n.lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) > p:last-child {\n  margin: 10px 4px 0 !important;\n  color: #b9cbc8 !important;\n  font-size: 10px !important;\n  line-height: 1.6;\n}\n\n/* Reading formats have clear, stable hit areas instead of floating pills. */\n.lf-auth .lf-chip-wrap {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 9px;\n  align-content: start;\n  margin-top: 25px;\n  padding-bottom: 86px;\n  overflow-y: auto;\n}\n\n.lf-auth .lf-chip {\n  min-height: 56px !important;\n  padding: 10px 13px !important;\n  border: 1px solid var(--auth-line) !important;\n  border-radius: 8px !important;\n  color: var(--auth-ink) !important;\n  background: #fff !important;\n  text-align: start;\n  line-height: 1.35;\n  white-space: normal;\n}\n\n.lf-auth .lf-chip.on {\n  color: var(--auth-action-pressed) !important;\n  background: var(--auth-selected) !important;\n  border-color: var(--auth-action) !important;\n}\n\n/* Genre swatches are restrained but give each mood an identifiable signal. */\n.lf-auth .lf-genre-grid {\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  grid-auto-rows: 74px;\n  gap: 9px;\n  align-content: start;\n  flex: 1;\n  min-height: 0;\n  margin-top: 25px;\n  padding: 2px 0 86px;\n  overflow-y: auto;\n}\n\n.lf-auth .lf-genre {\n  height: 74px !important;\n  min-height: 74px !important;\n  padding: 15px !important;\n  border: 1px solid var(--auth-line) !important;\n  border-radius: 8px !important;\n  color: var(--auth-ink) !important;\n  background: #fff !important;\n  box-shadow: none !important;\n  outline: 0 !important;\n  font-size: 14px;\n}\n\n.lf-auth .lf-genre::before {\n  content: "";\n  position: absolute;\n  inset: 0 0 auto;\n  height: 4px;\n  background: var(--mood, var(--auth-action));\n}\n\n.lf-auth .lf-genre:nth-child(1) { --mood: #cb79a0; }\n.lf-auth .lf-genre:nth-child(2) { --mood: #dc8066; }\n.lf-auth .lf-genre:nth-child(3) { --mood: #6a9bab; }\n.lf-auth .lf-genre:nth-child(4) { --mood: #719179; }\n.lf-auth .lf-genre:nth-child(5) { --mood: #6694b3; }\n.lf-auth .lf-genre:nth-child(6) { --mood: #c69659; }\n.lf-auth .lf-genre:nth-child(7) { --mood: #d0a967; }\n.lf-auth .lf-genre:nth-child(8) { --mood: #817596; }\n\n.lf-auth .lf-genre.on {\n  color: var(--auth-action-pressed) !important;\n  background: var(--auth-selected) !important;\n  border-color: var(--auth-action) !important;\n}\n\n.lf-auth .lf-mark {\n  width: 24px;\n  height: 24px;\n  top: 8px;\n  border-radius: 50%;\n  color: #fff;\n  background: var(--auth-action) !important;\n}\n\n/* Browsable work rows keep every title readable beside its actual cover. */\n.lf-auth .lf-work-search {\n  flex: none;\n  min-height: 48px;\n  margin: 24px 0 11px;\n  color: var(--auth-muted) !important;\n  background: #fff !important;\n  border: 1px solid var(--auth-line) !important;\n  border-radius: 8px !important;\n}\n\n.lf-auth .lf-work-search input {\n  color: var(--auth-ink) !important;\n  font-size: 16px;\n}\n\n.lf-auth .lf-work-grid {\n  display: flex;\n  flex: 1;\n  flex-direction: column;\n  min-height: 0;\n  gap: 0;\n  padding: 0 0 92px;\n  overflow-y: auto;\n  scrollbar-width: none;\n}\n\n.lf-auth .lf-work-grid::-webkit-scrollbar {\n  display: none;\n}\n\n.lf-auth .lf-work {\n  display: flex;\n  align-items: center;\n  flex: none;\n  width: 100%;\n  min-height: 90px;\n  aspect-ratio: auto;\n  gap: 14px;\n  padding: 8px 10px !important;\n  border: 0 !important;\n  border-bottom: 1px solid var(--auth-line) !important;\n  border-radius: 0 !important;\n  color: var(--auth-ink) !important;\n  background: transparent !important;\n  box-shadow: none !important;\n  text-align: start;\n}\n\n.lf-auth .lf-work img {\n  flex: none;\n  width: 52px;\n  height: 72px;\n  border-radius: 3px;\n  object-fit: cover;\n  background: #dfe8e5;\n}\n\n.lf-auth .lf-work-title {\n  position: static;\n  display: -webkit-box;\n  flex: 1;\n  min-width: 0;\n  padding: 0;\n  overflow: hidden;\n  color: va'... 1788 more characters,
+    expected: /--auth-paper:\s*var\(--ui-bg\)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\audit-library-safety.test.js:36:1
+✖ followers dialog supports Escape and traps focus (0.5309ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /lf-followers-dialog/. Input:
+  
+  `const{useState,useEffect}=React,{Home,Search,BookOpen,User,Compass,Heart,ThumbsUp,MessageCircle,ChevronRight,ChevronLeft,X,Check,Trash2,Plus,Bell,Settings,TrendingUp,Pencil,Star,Feather,Users,Link,BookMarked,Clock,UserCheck,Sun,Moon,Share2,Send,LogOut,Globe,Lock,Shield,ChevronDown,Award,Sparkles,Library,BarChart2,Image:ImageIcon}=window.NenIcons,NEN_ACCENTS={"#9D4EDD":{d:"#A66BEC",l:"#7B2FD6",t:"#CDA4FF"},"#0A84FF":{d:"#5AA2FF",l:"#0A6CDF",t:"#8FC0FF"},"#FF375F":{d:"#FF6B8A",l:"#D92D55",t:"#FF9DB2"},"#30D158":{d:"#4ADE80",l:"#1F9E5B",t:"#86EFAC"}},V2=window.LorefyV2||{},makeC=e=>window.LorefyDesignSystem.palette(e);let C=makeC(!0);const TC_MAKE=e=>e?{\\u0645\\u0627\\u0646\\u062C\\u0627:{bg:"rgba(10,132,255,0.18)",t:"#64B5F6",bd:"rgba(10,132,255,0.35)"},\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627:{bg:"rgba(255,159,10,0.18)",t:"#FFB54D",bd:"rgba(255,159,10,0.35)"},"\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627 \\u0635\\u064A\\u0646\\u064A":{bg:"rgba(255,69,58,0.18)",t:"#FF8077",bd:"rgba(255,69,58,0.35)"},\\u0643\\u0648\\u0645\\u064A\\u0643\\u0633:{bg:"rgba(255,214,10,0.18)",t:"#FFE066",bd:"rgba(255,214,10,0.35)"},\\u0631\\u0648\\u0627\\u064A\\u0629:{bg:"rgba(48,209,88,0.18)",t:"#5CE07A",bd:"rgba(48,209,88,0.35)"},"\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644":{bg:"rgba(157,78,221,0.18)",t:"#C99BFF",bd:"rgba(157,78,221,0.35)"},"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644":{bg:"rgba(255,55,95,0.18)",t:"#FF8FA8",bd:"rgba(255,55,95,0.35)"},\\u0643\\u062A\\u0627\\u0628:{bg:"rgba(191,144,86,0.18)",t:"#DCA96E",bd:"rgba(191,144,86,0.35)"}}:{\\u0645\\u0627\\u0646\\u062C\\u0627:{bg:"rgba(0,122,255,0.10)",t:"#0066CC",bd:"rgba(0,122,255,0.22)"},\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627:{bg:"rgba(255,149,0,0.12)",t:"#C2710A",bd:"rgba(255,149,0,0.25)"},"\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627 \\u0635\\u064A\\u0646\\u064A":{bg:"rgba(255,59,48,0.10)",t:"#CC2E25",bd:"rgba(255,59,48,0.22)"},\\u0643\\u0648\\u0645\\u064A\\u0643\\u0633:{bg:"rgba(255,149,0,0.14)",t:"#A8730A",bd:"rgba(255,149,0,0.28)"},\\u0631\\u0648\\u0627\\u064A\\u0629:{bg:"rgba(52,199,89,0.12)",t:"#1E9E43",bd:"rgba(52,199,89,0.25)"},"\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644":{bg:"rgba(142,59,214,0.10)",t:"#7B30BD",bd:"rgba(142,59,214,0.24)"},"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644":{bg:"rgba(255,45,85,0.10)",t:"#D11F4A",bd:"rgba(255,45,85,0.24)"},\\u0643\\u062A\\u0627\\u0628:{bg:"rgba(162,110,52,0.10)",t:"#8A5A1E",bd:"rgba(162,110,52,0.24)"}},SC_MAKE=e=>e?{"\\u0623\\u0642\\u0631\\u0623 \\u062D\\u0627\\u0644\\u064A\\u0627\\u064B":"#0A84FF","\\u062A\\u0645 \\u0627\\u0644\\u0642\\u0631\\u0627\\u0621\\u0629":"#30D158","\\u0642\\u0627\\u0626\\u0645\\u0629 \\u0627\\u0644\\u0623\\u0645\\u0646\\u064A\\u0627\\u062A":"#FF9F0A",\\u062A\\u0648\\u0642\\u0641:"#98989F"}:{"\\u0623\\u0642\\u0631\\u0623 \\u062D\\u0627\\u0644\\u064A\\u0627\\u064B":"#007AFF","\\u062A\\u0645 \\u0627\\u0644\\u0642\\u0631\\u0627\\u0621\\u0629":"#34C759","\\u0642\\u0627\\u0626\\u0645\\u0629 \\u0627\\u0644\\u0623\\u0645\\u0646\\u064A\\u0627\\u062A":"#FF9500",\\u062A\\u0648\\u0642\\u0641:"#8A8A8E"};let TC=TC_MAKE(!0),SC=SC_MAKE(!0);const TYPES=["\\u0627\\u0644\\u0643\\u0644","\\u0645\\u0627\\u0646\\u062C\\u0627","\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627","\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627 \\u0635\\u064A\\u0646\\u064A","\\u0643\\u0648\\u0645\\u064A\\u0643\\u0633","\\u0631\\u0648\\u0627\\u064A\\u0629","\\u0643\\u062A\\u0627\\u0628","\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644","\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644"],TEXT_TYPES=["\\u0631\\u0648\\u0627\\u064A\\u0629","\\u0643\\u062A\\u0627\\u0628","\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644","\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644"],TYPE_EN={\\u0627\\u0644\\u0643\\u0644:"All",\\u0645\\u0627\\u0646\\u062C\\u0627:"Manga",\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627:"Manhwa","\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627 \\u0635\\u064A\\u0646\\u064A":"Manhua",\\u0643\\u0648\\u0645\\u064A\\u0643\\u0633:"Comics",\\u0631\\u0648\\u0627\\u064A\\u0629:"Novel",\\u0643\\u062A\\u0627\\u0628:"Book","\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644":"Light Novel","\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644":"Web Novel"},currentUILang=()=>{try{return document.documentElement.lang==="en"?"en":"ar"}catch{return"ar"}},uiText=(e,i,l)=>e==="en"?l:i,typeLabel=(e,i=currentUILang())=>i==="en"&&TYPE_EN[e]||e,PSEUDO_AUTHOR_AR={"Chinese Novel":"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644 \\u0635\\u064A\\u0646\\u064A","Korean Novel":"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644 \\u0643\\u0648\\u0631\\u064A","Japanese Novel":"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644 \\u064A\\u0627\\u0628\\u0627\\u0646\\u064A","English Novel":"\\u0631\\u0648\\u0627\\u064A\\u0629 \\u0625\\u0646\\u062C\\u0644\\u064A\\u0632\\u064A\\u0629","Web Novel":"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644"},pseudoAuthorLabel=(e,i=currentUILang())=>{const l=String(e||"").trim();return PSEUDO_AUTHOR_AR[l]?i==="en"?l:PSEUDO_AUTHOR_AR[l]:""},creatorLine=(e,i=currentUILang())=>e?[pseudoAuthorLabel(e.auth,i)||e.auth||"",e.yr].filter(Boolean).join(" \\xB7 "):"",STATUS_READING="\\u0623\\u0642\\u0631\\u0623 \\u062D\\u0627\\u0644\\u064A\\u0627\\u064B",STATUS_DONE="\\u062A\\u0645 \\u0627\\u0644\\u0642\\u0631\\u0627\\u0621\\u0629",STATUS_WISHLIST="\\u0642\\u0627\\u0626\\u0645\\u0629 \\u0627\\u0644\\u0623\\u0645\\u0646\\u064A\\u0627\\u062A",STATUS_PAUSED="\\u062A\\u0648\\u0642\\u0641",STATUS_DROPPED="توقف نهائي",STATUS_OPTIONS=[STATUS_READING,STATUS_DONE,STATUS_WISHLIST,STATUS_PAUSED,STATUS_DROPPED],hasAnyText=e=>typeof e=="string"&&e.trim().length>0,isTextWork=e=>!!e&&TEXT_TYPES.includes(e.type),isOngoingWork=e=>{const i=String(e&&e.st||"").toLowerCase();return/ongoing|publishing|مستمرة|مستمر/.test(i)},workYear=e=>Number(e&&e.yr)||0,workWeight=e=>(Number(e&&e.baseRatings)||0)+(Number(e&&e.pop)||0)+(Number(e&&e.weeklyReads)||0),sourceRating=e=>Number(e&&e.r)||0,ratingConfidenceScore=e=>{const i=Math.max(0,Math.min(5,sourceRating(e))),l=Math.max(0,Number(e&&e.baseRatings)||0),a=3.7,c=80,p=(l*i+c*a)/(l+c);return p*1e6+Math.log1p(Math.max(0,Number(e&&e.pop)||0))},ratingSourceLabel=e=>{const i=e&&e.rSrc;return i?currentUILang()==="en"?i==="AniList"?"via AniList":i==="Open Library"?"via Open Library":i==="Goodreads"?"via Goodreads":i==="\\u0627\\u0644\\u0645\\u0635\\u062F\\u0631"?"via source":i==="\\u062A\\u0642\\u062F\\u064A\\u0631"?"Lorefy estimate":"":i==="AniList"?"\\u062D\\u0633\\u0628 AniList":i==="Open Library"?"\\u062D\\u0633\\u0628 Open Library":i==="Goodreads"?"\\u062D\\u0633\\u0628 Goodreads":i==="\\u0627\\u0644\\u0645\\u0635\\u062F\\u0631"?"\\u062D\\u0633\\u0628 \\u0627\\u0644\\u0645\\u0635\\u062F\\u0631":i==="\\u062A\\u0642\\u062F\\u064A\\u0631"?"\\u062A\\u0642\\u062F\\u064A\\u0631 Lorefy":"":""},GENRE_AR={Action:"\\u0623\\u0643\\u0634\\u0646",Adventure:"\\u0645\\u063A\\u0627\\u0645\\u0631\\u0629",Comedy:"\\u0643\\u0648\\u0645\\u064A\\u062F\\u064A\\u0627",Drama:"\\u062F\\u0631\\u0627\\u0645\\u0627",Fantasy:"\\u062E\\u064A\\u0627\\u0644","Sci-Fi":"\\u062E\\u064A\\u0627\\u0644 \\u0639\\u0644\\u0645\\u064A","Science Fiction":"\\u062E\\u064A\\u0627\\u0644 \\u0639\\u0644\\u0645\\u064A",Mystery:"\\u063A\\u0645\\u0648\\u0636",Horror:"\\u0631\\u0639\\u0628",Romance:"\\u0631\\u0648\\u0645\\u0627\\u0646\\u0633\\u064A","Slice of Life":"\\u0634\\u0631\\u064A\\u062D\\u0629 \\u0645\\u0646 \\u0627\\u0644\\u062D\\u064A\\u0627\\u0629",Sports:"\\u0631\\u064A\\u0627\\u0636\\u064A",Supernatural:"\\u062E\\u0648\\u0627\\u0631\\u0642",Thriller:"\\u0625\\u062B\\u0627\\u0631\\u0629",Psychological:"\\u0646\\u0641\\u0633\\u064A",Historical:"\\u062A\\u0627\\u0631\\u064A\\u062E\\u064A",History:"\\u062A\\u0627\\u0631\\u064A\\u062E",Shounen:"\\u0634\\u0648\\u0646\\u064A\\u0646",Shoujo:"\\u0634\\u0648\\u062C\\u0648",Seinen:"\\u0633\\u064A\\u0646\\u064A\\u0646",Josei:"\\u062C\\u0648\\u0633\\u064A",Isekai:"\\u0625\\u064A\\u0633\\u064A\\u0643\\u0627\\u064A",Mecha:"\\u0645\\u064A\\u0643\\u0627","Award Winning":"\\u062D\\u0627\\u0626\\u0632 \\u0639\\u0644\\u0649 \\u062C\\u0648\\u0627\\u0626\\u0632",Reincarnation:"\\u062A\\u0646\\u0627\\u0633\\u062E",Villainess:"\\u0634\\u0631\\u064A\\u0631\\u0629",Harem:"\\u062D\\u0631\\u064A\\u0645",Suspense:"\\u062A\\u0634\\u0648\\u064A\\u0642",Erotica:"\\u0644\\u0644\\u0628\\u0627\\u0644\\u063A\\u064A\\u0646","Adult Cast":"\\u0634\\u062E\\u0635\\u064A\\u0627\\u062A \\u0628\\u0627\\u0644\\u063A\\u0629",Medical:"\\u0637\\u0628\\u064A",Childcare:"\\u0631\\u0639\\u0627\\u064A\\u0629 \\u0623\\u0637\\u0641\\u0627\\u0644",Delinquents:"\\u062C\\u0627\\u0646\\u062D\\u0648\\u0646",Crossdressing:"\\u062A\\u0646\\u0643\\u0631","Coming of Age":"\\u0646\\u0636\\u0648\\u062C",Military:"\\u0639\\u0633\\u0643\\u0631\\u064A","Magical Girl":"\\u0628\\u0646\\u062A \\u0633\\u062D\\u0631\\u064A\\u0629","Martial Arts":"\\u0641\\u0646\\u0648\\u0646 \\u0642\\u062A\\u0627\\u0644\\u064A\\u0629",School:"\\u0645\\u062F\\u0631\\u0633\\u064A",Music:"\\u0645\\u0648\\u0633\\u064A\\u0642\\u064A",Tragedy:"\\u0645\\u0623\\u0633\\u0627\\u0629",Demons:"\\u0634\\u064A\\u0627\\u0637\\u064A\\u0646",Vampire:"\\u0645\\u0635\\u0627\\u0635\\u064A \\u062F\\u0645\\u0627\\u0621",Game:"\\u0644\\u0639\\u0628\\u0629","Video Games":"\\u0623\\u0644\\u0639\\u0627\\u0628 \\u0641\\u064A\\u062F\\u064A\\u0648",Fiction:"\\u062E\\u064A\\u0627\\u0644 \\u0623\\u062F\\u0628\\u064A",Nonfiction:"\\u063A\\u064A\\u0631 \\u062E\\u064A\\u0627\\u0644\\u064A",Biography:"\\u0633\\u064A\\u0631\\u0629 \\u0630\\u0627\\u062A\\u064A\\u0629",Philosophy:"\\u0641\\u0644\\u0633\\u0641\\u0629",Religion:"\\u062F\\u064A\\u0646",Children:"\\u0623\\u0637\\u0641\\u0627\\u0644","Children's":"\\u0623\\u0637\\u0641\\u0627\\u0644","Young Adult":"\\u064A\\u0627\\u0641\\u0639\\u064A\\u0646",Education:"\\u062A\\u0639\\u0644\\u064A\\u0645",Reference:"\\u0645\\u0631\\u062C\\u0639\\u064A",Cooking:"\\u0637\\u0628\\u062E",Travel:"\\u0633\\u0641\\u0631",Crime:"\\u062C\\u0631\\u064A\\u0645\\u0629",Mature:"\\u0628\\u0627\\u0644\\u063A\\u064A\\u0646",Ecchi:"\\u0625\\u064A\\u062A\\u0634\\u064A",Yaoi:"\\u0628\\u0648\\u064A \\u0644\\u0627\\u0641",Yuri:"\\u063A\\u064A\\u0631\\u0644 \\u0644\\u0627\\u0641","Boys Love":"\\u0628\\u0648\\u064A \\u0644\\u0627\\u0641","Girls Love":"\\u063A\\u064A\\u0631\\u0644 \\u0644\\u0627\\u0641","Boys' Love":"\\u0628\\u0648\\u064A \\u0644\\u0627\\u0641","Girls' Love":"\\u063A\\u064A\\u0631\\u0644 \\u0644\\u0627\\u0641",Self_Help:"\\u062A\\u0637\\u0648\\u064A\\u0631 \\u0627\\u0644\\u0630\\u0627\\u062A","Self-Help":"\\u062A\\u0637\\u0648\\u064A\\u0631 \\u0627\\u0644\\u0630\\u0627\\u062A",Business:"\\u0623\\u0639\\u0645\\u0627\\u0644",Health:"\\u0635\\u062D\\u0629",Poetry:"\\u0634\\u0639\\u0631",Politics:"\\u0633\\u064A\\u0627\\u0633\\u0629",Science:"\\u0639\\u0644\\u0648\\u0645",Economics:"\\u0627\\u0642\\u06`... 304882 more characters
+  
+      at TestContext.<anonymous> (C:\Users\PCD\Documents\Codex\2026-07-05\new-chat\outputs\Lorefy-clean-app\tests\audit-library-safety.test.js:37:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `const{useState,useEffect}=React,{Home,Search,BookOpen,User,Compass,Heart,ThumbsUp,MessageCircle,ChevronRight,ChevronLeft,X,Check,Trash2,Plus,Bell,Settings,TrendingUp,Pencil,Star,Feather,Users,Link,BookMarked,Clock,UserCheck,Sun,Moon,Share2,Send,LogOut,Globe,Lock,Shield,ChevronDown,Award,Sparkles,Library,BarChart2,Image:ImageIcon}=window.NenIcons,NEN_ACCENTS={"#9D4EDD":{d:"#A66BEC",l:"#7B2FD6",t:"#CDA4FF"},"#0A84FF":{d:"#5AA2FF",l:"#0A6CDF",t:"#8FC0FF"},"#FF375F":{d:"#FF6B8A",l:"#D92D55",t:"#FF9DB2"},"#30D158":{d:"#4ADE80",l:"#1F9E5B",t:"#86EFAC"}},V2=window.LorefyV2||{},makeC=e=>window.LorefyDesignSystem.palette(e);let C=makeC(!0);const TC_MAKE=e=>e?{\\u0645\\u0627\\u0646\\u062C\\u0627:{bg:"rgba(10,132,255,0.18)",t:"#64B5F6",bd:"rgba(10,132,255,0.35)"},\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627:{bg:"rgba(255,159,10,0.18)",t:"#FFB54D",bd:"rgba(255,159,10,0.35)"},"\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627 \\u0635\\u064A\\u0646\\u064A":{bg:"rgba(255,69,58,0.18)",t:"#FF8077",bd:"rgba(255,69,58,0.35)"},\\u0643\\u0648\\u0645\\u064A\\u0643\\u0633:{bg:"rgba(255,214,10,0.18)",t:"#FFE066",bd:"rgba(255,214,10,0.35)"},\\u0631\\u0648\\u0627\\u064A\\u0629:{bg:"rgba(48,209,88,0.18)",t:"#5CE07A",bd:"rgba(48,209,88,0.35)"},"\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644":{bg:"rgba(157,78,221,0.18)",t:"#C99BFF",bd:"rgba(157,78,221,0.35)"},"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644":{bg:"rgba(255,55,95,0.18)",t:"#FF8FA8",bd:"rgba(255,55,95,0.35)"},\\u0643\\u062A\\u0627\\u0628:{bg:"rgba(191,144,86,0.18)",t:"#DCA96E",bd:"rgba(191,144,86,0.35)"}}:{\\u0645\\u0627\\u0646\\u062C\\u0627:{bg:"rgba(0,122,255,0.10)",t:"#0066CC",bd:"rgba(0,122,255,0.22)"},\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627:{bg:"rgba(255,149,0,0.12)",t:"#C2710A",bd:"rgba(255,149,0,0.25)"},"\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627 \\u0635\\u064A\\u0646\\u064A":{bg:"rgba(255,59,48,0.10)",t:"#CC2E25",bd:"rgba(255,59,48,0.22)"},\\u0643\\u0648\\u0645\\u064A\\u0643\\u0633:{bg:"rgba(255,149,0,0.14)",t:"#A8730A",bd:"rgba(255,149,0,0.28)"},\\u0631\\u0648\\u0627\\u064A\\u0629:{bg:"rgba(52,199,89,0.12)",t:"#1E9E43",bd:"rgba(52,199,89,0.25)"},"\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644":{bg:"rgba(142,59,214,0.10)",t:"#7B30BD",bd:"rgba(142,59,214,0.24)"},"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644":{bg:"rgba(255,45,85,0.10)",t:"#D11F4A",bd:"rgba(255,45,85,0.24)"},\\u0643\\u062A\\u0627\\u0628:{bg:"rgba(162,110,52,0.10)",t:"#8A5A1E",bd:"rgba(162,110,52,0.24)"}},SC_MAKE=e=>e?{"\\u0623\\u0642\\u0631\\u0623 \\u062D\\u0627\\u0644\\u064A\\u0627\\u064B":"#0A84FF","\\u062A\\u0645 \\u0627\\u0644\\u0642\\u0631\\u0627\\u0621\\u0629":"#30D158","\\u0642\\u0627\\u0626\\u0645\\u0629 \\u0627\\u0644\\u0623\\u0645\\u0646\\u064A\\u0627\\u062A":"#FF9F0A",\\u062A\\u0648\\u0642\\u0641:"#98989F"}:{"\\u0623\\u0642\\u0631\\u0623 \\u062D\\u0627\\u0644\\u064A\\u0627\\u064B":"#007AFF","\\u062A\\u0645 \\u0627\\u0644\\u0642\\u0631\\u0627\\u0621\\u0629":"#34C759","\\u0642\\u0627\\u0626\\u0645\\u0629 \\u0627\\u0644\\u0623\\u0645\\u0646\\u064A\\u0627\\u062A":"#FF9500",\\u062A\\u0648\\u0642\\u0641:"#8A8A8E"};let TC=TC_MAKE(!0),SC=SC_MAKE(!0);const TYPES=["\\u0627\\u0644\\u0643\\u0644","\\u0645\\u0627\\u0646\\u062C\\u0627","\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627","\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627 \\u0635\\u064A\\u0646\\u064A","\\u0643\\u0648\\u0645\\u064A\\u0643\\u0633","\\u0631\\u0648\\u0627\\u064A\\u0629","\\u0643\\u062A\\u0627\\u0628","\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644","\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644"],TEXT_TYPES=["\\u0631\\u0648\\u0627\\u064A\\u0629","\\u0643\\u062A\\u0627\\u0628","\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644","\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644"],TYPE_EN={\\u0627\\u0644\\u0643\\u0644:"All",\\u0645\\u0627\\u0646\\u062C\\u0627:"Manga",\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627:"Manhwa","\\u0645\\u0627\\u0646\\u0647\\u0648\\u0627 \\u0635\\u064A\\u0646\\u064A":"Manhua",\\u0643\\u0648\\u0645\\u064A\\u0643\\u0633:"Comics",\\u0631\\u0648\\u0627\\u064A\\u0629:"Novel",\\u0643\\u062A\\u0627\\u0628:"Book","\\u0644\\u0627\\u064A\\u062A \\u0646\\u0648\\u0641\\u0644":"Light Novel","\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644":"Web Novel"},currentUILang=()=>{try{return document.documentElement.lang==="en"?"en":"ar"}catch{return"ar"}},uiText=(e,i,l)=>e==="en"?l:i,typeLabel=(e,i=currentUILang())=>i==="en"&&TYPE_EN[e]||e,PSEUDO_AUTHOR_AR={"Chinese Novel":"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644 \\u0635\\u064A\\u0646\\u064A","Korean Novel":"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644 \\u0643\\u0648\\u0631\\u064A","Japanese Novel":"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644 \\u064A\\u0627\\u0628\\u0627\\u0646\\u064A","English Novel":"\\u0631\\u0648\\u0627\\u064A\\u0629 \\u0625\\u0646\\u062C\\u0644\\u064A\\u0632\\u064A\\u0629","Web Novel":"\\u0648\\u064A\\u0628 \\u0646\\u0648\\u0641\\u0644"},pseudoAuthorLabel=(e,i=currentUILang())=>{const l=String(e||"").trim();return PSEUDO_AUTHOR_AR[l]?i==="en"?l:PSEUDO_AUTHOR_AR[l]:""},creatorLine=(e,i=currentUILang())=>e?[pseudoAuthorLabel(e.auth,i)||e.auth||"",e.yr].filter(Boolean).join(" \\xB7 "):"",STATUS_READING="\\u0623\\u0642\\u0631\\u0623 \\u062D\\u0627\\u0644\\u064A\\u0627\\u064B",STATUS_DONE="\\u062A\\u0645 \\u0627\\u0644\\u0642\\u0631\\u0627\\u0621\\u0629",STATUS_WISHLIST="\\u0642\\u0627\\u0626\\u0645\\u0629 \\u0627\\u0644\\u0623\\u0645\\u0646\\u064A\\u0627\\u062A",STATUS_PAUSED="\\u062A\\u0648\\u0642\\u0641",STATUS_DROPPED="توقف نهائي",STATUS_OPTIONS=[STATUS_READING,STATUS_DONE,STATUS_WISHLIST,STATUS_PAUSED,STATUS_DROPPED],hasAnyText=e=>typeof e=="string"&&e.trim().length>0,isTextWork=e=>!!e&&TEXT_TYPES.includes(e.type),isOngoingWork=e=>{const i=String(e&&e.st||"").toLowerCase();return/ongoing|publishing|مستمرة|مستمر/.test(i)},workYear=e=>Number(e&&e.yr)||0,workWeight=e=>(Number(e&&e.baseRatings)||0)+(Number(e&&e.pop)||0)+(Number(e&&e.weeklyReads)||0),sourceRating=e=>Number(e&&e.r)||0,ratingConfidenceScore=e=>{const i=Math.max(0,Math.min(5,sourceRating(e))),l=Math.max(0,Number(e&&e.baseRatings)||0),a=3.7,c=80,p=(l*i+c*a)/(l+c);return p*1e6+Math.log1p(Math.max(0,Number(e&&e.pop)||0))},ratingSourceLabel=e=>{const i=e&&e.rSrc;return i?currentUILang()==="en"?i==="AniList"?"via AniList":i==="Open Library"?"via Open Library":i==="Goodreads"?"via Goodreads":i==="\\u0627\\u0644\\u0645\\u0635\\u062F\\u0631"?"via source":i==="\\u062A\\u0642\\u062F\\u064A\\u0631"?"Lorefy estimate":"":i==="AniList"?"\\u062D\\u0633\\u0628 AniList":i==="Open Library"?"\\u062D\\u0633\\u0628 Open Library":i==="Goodreads"?"\\u062D\\u0633\\u0628 Goodreads":i==="\\u0627\\u0644\\u0645\\u0635\\u062F\\u0631"?"\\u062D\\u0633\\u0628 \\u0627\\u0644\\u0645\\u0635\\u062F\\u0631":i==="\\u062A\\u0642\\u062F\\u064A\\u0631"?"\\u062A\\u0642\\u062F\\u064A\\u0631 Lorefy":"":""},GENRE_AR={Action:"\\u0623\\u0643\\u0634\\u0646",Adventure:"\\u0645\\u063A\\u0627\\u0645\\u0631\\u0629",Comedy:"\\u0643\\u0648\\u0645\\u064A\\u062F\\u064A\\u0627",Drama:"\\u062F\\u0631\\u0627\\u0645\\u0627",Fantasy:"\\u062E\\u064A\\u0627\\u0644","Sci-Fi":"\\u062E\\u064A\\u0627\\u0644 \\u0639\\u0644\\u0645\\u064A","Science Fiction":"\\u062E\\u064A\\u0627\\u0644 \\u0639\\u0644\\u0645\\u064A",Mystery:"\\u063A\\u0645\\u0648\\u0636",Horror:"\\u0631\\u0639\\u0628",Romance:"\\u0631\\u0648\\u0645\\u0627\\u0646\\u0633\\u064A","Slice of Life":"\\u0634\\u0631\\u064A\\u062D\\u0629 \\u0645\\u0646 \\u0627\\u0644\\u062D\\u064A\\u0627\\u0629",Sports:"\\u0631\\u064A\\u0627\\u0636\\u064A",Supernatural:"\\u062E\\u0648\\u0627\\u0631\\u0642",Thriller:"\\u0625\\u062B\\u0627\\u0631\\u0629",Psychological:"\\u0646\\u0641\\u0633\\u064A",Historical:"\\u062A\\u0627\\u0631\\u064A\\u062E\\u064A",History:"\\u062A\\u0627\\u0631\\u064A\\u062E",Shounen:"\\u0634\\u0648\\u0646\\u064A\\u0646",Shoujo:"\\u0634\\u0648\\u062C\\u0648",Seinen:"\\u0633\\u064A\\u0646\\u064A\\u0646",Josei:"\\u062C\\u0648\\u0633\\u064A",Isekai:"\\u0625\\u064A\\u0633\\u064A\\u0643\\u0627\\u064A",Mecha:"\\u0645\\u064A\\u0643\\u0627","Award Winning":"\\u062D\\u0627\\u0626\\u0632 \\u0639\\u0644\\u0649 \\u062C\\u0648\\u0627\\u0626\\u0632",Reincarnation:"\\u062A\\u0646\\u0627\\u0633\\u062E",Villainess:"\\u0634\\u0631\\u064A\\u0631\\u0629",Harem:"\\u062D\\u0631\\u064A\\u0645",Suspense:"\\u062A\\u0634\\u0648\\u064A\\u0642",Erotica:"\\u0644\\u0644\\u0628\\u0627\\u0644\\u063A\\u064A\\u0646","Adult Cast":"\\u0634\\u062E\\u0635\\u064A\\u0627\\u062A \\u0628\\u0627\\u0644\\u063A\\u0629",Medical:"\\u0637\\u0628\\u064A",Childcare:"\\u0631\\u0639\\u0627\\u064A\\u0629 \\u0623\\u0637\\u0641\\u0627\\u0644",Delinquents:"\\u062C\\u0627\\u0646\\u062D\\u0648\\u0646",Crossdressing:"\\u062A\\u0646\\u0643\\u0631","Coming of Age":"\\u0646\\u0636\\u0648\\u062C",Military:"\\u0639\\u0633\\u0643\\u0631\\u064A","Magical Girl":"\\u0628\\u0646\\u062A \\u0633\\u062D\\u0631\\u064A\\u0629","Martial Arts":"\\u0641\\u0646\\u0648\\u0646 \\u0642\\u062A\\u0627\\u0644\\u064A\\u0629",School:"\\u0645\\u062F\\u0631\\u0633\\u064A",Music:"\\u0645\\u0648\\u0633\\u064A\\u0642\\u064A",Tragedy:"\\u0645\\u0623\\u0633\\u0627\\u0629",Demons:"\\u0634\\u064A\\u0627\\u0637\\u064A\\u0646",Vampire:"\\u0645\\u0635\\u0627\\u0635\\u064A \\u062F\\u0645\\u0627\\u0621",Game:"\\u0644\\u0639\\u0628\\u0629","Video Games":"\\u0623\\u0644\\u0639\\u0627\\u0628 \\u0641\\u064A\\u062F\\u064A\\u0648",Fiction:"\\u062E\\u064A\\u0627\\u0644 \\u0623\\u062F\\u0628\\u064A",Nonfiction:"\\u063A\\u064A\\u0631 \\u062E\\u064A\\u0627\\u0644\\u064A",Biography:"\\u0633\\u064A\\u0631\\u0629 \\u0630\\u0627\\u062A\\u064A\\u0629",Philosophy:"\\u0641\\u0644\\u0633\\u0641\\u0629",Religion:"\\u062F\\u064A\\u0646",Children:"\\u0623\\u0637\\u0641\\u0627\\u0644","Children's":"\\u0623\\u0637\\u0641\\u0627\\u0644","Young Adult":"\\u064A\\u0627\\u0641\\u0639\\u064A\\u0646",Education:"\\u062A\\u0639\\u0644\\u064A\\u0645",Reference:"\\u0645\\u0631\\u062C\\u0639\\u064A",Cooking:"\\u0637\\u0628\\u062E",Travel:"\\u0633\\u0641\\u0631",Crime:"\\u062C\\u0631\\u064A\\u0645\\u0629",Mature:"\\u0628\\u0627\\u0644\\u063A\\u064A\\u0646",Ecchi:"\\u0625\\u064A\\u062A\\u0634\\u064A",Yaoi:"\\u0628\\u0648\\u064A \\u0644\\u0627\\u0641",Yuri:"\\u063A\\u064A\\u0631\\u0644 \\u0644\\u0627\\u0641","Boys Love":"\\u0628\\u0648\\u064A \\u0644\\u0627\\u0641","Girls Love":"\\u063A\\u064A\\u0631\\u0644 \\u0644\\u0627\\u0641","Boys' Love":"\\u0628\\u0648\\u064A \\u0644\\u0627\\u0641","Girls' Love":"\\u063A\\u064A\\u0631\\u0644 \\u0644\\u0627\\u0641",Self_Help:"\\u062A\\u0637\\u0648\\u064A\\u0631 \\u0627\\u0644\\u0630\\u0627\\u062A","Self-Help":"\\u062A\\u0637\\u0648\\u064A\\u0631 \\u0627\\u0644\\u0630\\u0627\\u062A",Business:"\\u0623\\u0639\\u0645\\u0627\\u0644",Health:"\\u0635\\u062D\\u0629",Poetry:"\\u0634\\u0639\\u0631",Politics:"\\u0633\\u064A\\u0627\\u0633\\u0629",Science:"\\u0639\\u0644\\u0648\\u0645",Economics:"\\u0627\\u0642\\u06`... 304882 more characters,
+    expected: /lf-followers-dialog/,
+    operator: 'match',
+    diff: 'simple'
+  }

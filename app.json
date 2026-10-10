@@ -2,40 +2,36 @@
   "expo": {
     "name": "Lorefy",
     "slug": "lorefy",
-    "scheme": "lorefy",
+    "owner": "lorefy",
     "version": "1.0.0",
+    "scheme": "com.lorefy.app",
     "orientation": "portrait",
-    "icon": "./assets/lorefy-icon.png",
-    "userInterfaceStyle": "dark",
     "ios": {
-      "supportsTablet": false,
       "bundleIdentifier": "com.lorefy.app",
-      "buildNumber": "1",
+      "buildNumber": "34",
+      "supportsTablet": true,
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "UISupportedInterfaceOrientations~ipad": [
+          "UIInterfaceOrientationPortrait",
+          "UIInterfaceOrientationPortraitUpsideDown",
+          "UIInterfaceOrientationLandscapeLeft",
+          "UIInterfaceOrientationLandscapeRight"
+        ]
       }
     },
-    "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#09080d",
-        "foregroundImage": "./assets/lorefy-icon.png"
-      },
-      "package": "com.lorefy.app",
-      "versionCode": 1,
-      "predictiveBackGestureEnabled": false
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-secure-store",
-      "expo-font"
-    ],
     "extra": {
       "eas": {
         "projectId": "8438f5d2-3734-4ef7-8925-c8ffeb5a0cd5"
+      },
+      "lorefy": {
+        "releaseMode": "beta",
+        "guestMode": false,
+        "premiumUnlocked": true,
+        "profileDecorations": true,
+        "appleSignInEnabled": true,
+        "rightsSafeMedia": false
       }
-    },
-    "owner": "lorefy"
+    }
   }
 }

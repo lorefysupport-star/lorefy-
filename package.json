@@ -1,32 +1,32 @@
 {
-  "name": "lorefy-expo",
+  "name": "lorefy",
   "version": "1.0.0",
-  "main": "index.ts",
+  "private": true,
+  "description": "Lorefy mobile release shell and App Store preflight tooling.",
+  "scripts": {
+    "test": "node --test --test-concurrency=1 tests/*.test.js",
+    "community:patch": "node tools/patch-community-cloud.js && node tools/patch-community-social.js && node tools/patch-product-report-cloud.js && node tools/patch-community-followups.js",
+    "ios:prepare": "node tools/prepare-ios-web.mjs",
+    "ios:add": "npm run ios:prepare && npx cap add ios",
+    "ios:sync": "node tools/patch-apple-sign-in.mjs && npm run ios:prepare && npx cap sync ios && node tools/fix-capacitor-spm-paths.mjs",
+    "eas-build-post-install": "npm run ios:sync",
+    "apple:audit": "node tools/apple-release-audit.mjs",
+    "apple:audit:strict": "node tools/apple-release-audit.mjs --strict"
+  },
   "dependencies": {
-    "@expo/vector-icons": "^15.0.2",
-    "@react-native-async-storage/async-storage": "2.2.0",
-    "expo": "~57.0.12",
-    "expo-font": "~57.0.1",
-    "expo-haptics": "~57.0.1",
-    "expo-secure-store": "~57.0.1",
-    "expo-status-bar": "~57.0.1",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-native": "0.86.2",
-    "react-native-web": "^0.21.2"
+    "@aparajita/capacitor-secure-storage": "8.0.0",
+    "@capacitor-community/apple-sign-in": "7.1.0",
+    "@capacitor/app": "8.1.1",
+    "@capacitor/browser": "8.0.4",
+    "@capacitor/camera": "8.2.4",
+    "@capacitor/core": "8.4.2",
+    "@capacitor/filesystem": "8.1.3",
+    "@capacitor/push-notifications": "8.1.2",
+    "@capacitor/share": "8.0.1"
   },
   "devDependencies": {
-    "@types/node": "^26.2.0",
-    "@types/react": "~19.2.2",
-    "tsx": "^4.20.6",
-    "typescript": "~6.0.3"
-  },
-  "scripts": {
-    "test": "tsx --test tests/**/*.test.ts",
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
-  },
-  "private": true
+    "@capacitor/cli": "8.4.2",
+    "@capacitor/ios": "8.4.2",
+    "csv-parse": "7.0.3"
+  }
 }

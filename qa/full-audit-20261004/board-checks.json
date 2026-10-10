@@ -1,0 +1,30 @@
+[
+  {
+    "category": "Manhwa",
+    "slots": 20
+  },
+  {
+    "category": "Manhua",
+    "slots": 20
+  },
+  {
+    "category": "Comics",
+    "slots": 20
+  },
+  {
+    "category": "Novel",
+    "slots": 20
+  },
+  {
+    "category": "Book",
+    "slots": 20
+  },
+  {
+    "category": "Light Novel",
+    "slots": 20
+  },
+  {
+    "category": "Web Novel",
+    "slots": 20
+  }
+]

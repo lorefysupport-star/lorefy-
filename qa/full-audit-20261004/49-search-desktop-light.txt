@@ -1,0 +1,448 @@
+- banner:
+  - heading "Search" [level=1]
+  - textbox "Search by title or author..."
+  - button "All" [pressed]
+  - button "Manga"
+  - button "Manhwa"
+  - button "Manhua"
+  - button "Comics"
+  - button "Novel"
+  - button "Book"
+  - button "Light Novel"
+  - button "Web Novel"
+  - button "Top rated" [pressed]
+  - button "Popular"
+  - button "Latest"
+- status: 113,130 results
+- article:
+  - paragraph: My Divine Pet Enables Me To Become The Biggest Winner
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 2037 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add My Divine Pet Enables Me To Become The Biggest Winner to library":
+- article:
+  - paragraph: No Substitutes for the Bigshots' Dream Girl Anymore!
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 1958 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add No Substitutes for the Bigshots' Dream Girl Anymore! to library":
+- article:
+  - paragraph: Starting from a Fake University
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 1940 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Starting from a Fake University to library":
+- article:
+  - paragraph: Yarra's Adventure Notes
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 1583 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Yarra's Adventure Notes to library":
+- article:
+  - paragraph: Adopting A Stray Cat By The Road
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 1451 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Adopting A Stray Cat By The Road to library":
+- article:
+  - paragraph: The Master's Mask Unveiled Again
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 1291 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The Master's Mask Unveiled Again to library":
+- article:
+  - paragraph: "Indian Mythology: the Heavenly Emperor is not working today"
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 1098 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Indian Mythology: the Heavenly Emperor is not working today to library"':
+- article:
+  - paragraph: On Our Wedding Night, I Discovered the Crown Prince's Hidden Illness
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 1046 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add On Our Wedding Night, I Discovered the Crown Prince's Hidden Illness to library":
+- article:
+  - paragraph: Dear Mr. Shi
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 997 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Dear Mr. Shi to library":
+- article:
+  - paragraph: Mommy Alert! The CEO Daddy Won't Stop Courting
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 918 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Mommy Alert! The CEO Daddy Won't Stop Courting to library":
+- article:
+  - paragraph: The CEO's Unkown Wife
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 866 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The CEO's Unkown Wife to library":
+- article:
+  - paragraph: Embers of the Deep
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 856 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Embers of the Deep to library":
+- article:
+  - paragraph: "Transmigration: Lady Chi Woos The Ice cold Professor Jun"
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 689 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Transmigration: Lady Chi Woos The Ice cold Professor Jun to library"':
+- article:
+  - paragraph: Domineering Love
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 687 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Domineering Love to library":
+- article:
+  - paragraph: Secretly Married to the Ice-Cold CEO
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 682 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Secretly Married to the Ice-Cold CEO to library":
+- article:
+  - paragraph: After Rebirth, She Becomes the Revenge Queen
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 677 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add After Rebirth, She Becomes the Revenge Queen to library":
+- article:
+  - paragraph: America 1982
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 673 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add America 1982 to library":
+- article:
+  - paragraph: Reborn As Divine Doctor to Rule the World
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 661 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Reborn As Divine Doctor to Rule the World to library":
+- article:
+  - paragraph: "Rebirth: I Am Not the Movie Queen This Time"
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 656 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Rebirth: I Am Not the Movie Queen This Time to library"':
+- article:
+  - paragraph: The Wicked Female Is Wild and Scheming, Living in a Love Battlefield Every Day
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 544 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The Wicked Female Is Wild and Scheming, Living in a Love Battlefield Every Day to library":
+- article:
+  - paragraph: Medical Examiner Can Revive the Dead
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 503 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Medical Examiner Can Revive the Dead to library":
+- article:
+  - paragraph: Tale of the Red Dragon Without Dragon's Might
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 500 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Tale of the Red Dragon Without Dragon's Might to library":
+- article:
+  - paragraph: "Mr. Tycoon's Beloved Wife: The Madam No One Dares to Offend"
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 495 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Mr. Tycoon''s Beloved Wife: The Madam No One Dares to Offend to library"':
+- article:
+  - paragraph: The Reborn King
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 487 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The Reborn King to library":
+- article:
+  - paragraph: Elven Encounter With A Blood Seeker
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 483 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Elven Encounter With A Blood Seeker to library":
+- article:
+  - paragraph: "Magical Academy: Rise of the Supreme Magic Craftsman"
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 482 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Magical Academy: Rise of the Supreme Magic Craftsman to library"':
+- article:
+  - paragraph: What Bad Intentions can the Yandere Crown Prince have?
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 478 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add What Bad Intentions can the Yandere Crown Prince have? to library":
+- article:
+  - paragraph: OMG! I Transmigrated into Four Books at the Same Time!
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 474 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add OMG! I Transmigrated into Four Books at the Same Time! to library":
+- article:
+  - paragraph: "Dominant Marriage: The CEO's Overbearing Love"
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 469 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Dominant Marriage: The CEO''s Overbearing Love to library"':
+- article:
+  - paragraph: Strange Life of a Cat
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 452 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Strange Life of a Cat to library":
+- article:
+  - paragraph: "Contract Marriage: Let's Make It Real, Mrs. Sterling!"
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 450 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Contract Marriage: Let''s Make It Real, Mrs. Sterling! to library"':
+- article:
+  - paragraph: "Rustic Charm: The Doctor Immortal"
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 434 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Rustic Charm: The Doctor Immortal to library"':
+- article:
+  - paragraph: The Female General Dominates All After Transmigration
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 411 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The Female General Dominates All After Transmigration to library":
+- article:
+  - paragraph: The Vampire King's Pet
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 400 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The Vampire King's Pet to library":
+- article:
+  - paragraph: Walker Of The Blue Sky
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 397 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Walker Of The Blue Sky to library":
+- article:
+  - paragraph: MY PRINCE HUSBAND HAS SEVEN WIVES AND I AM HIS FAVOURITE!
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 395 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add MY PRINCE HUSBAND HAS SEVEN WIVES AND I AM HIS FAVOURITE! to library":
+- article:
+  - paragraph: Doomsday Pillars
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 382 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Doomsday Pillars to library":
+- article:
+  - paragraph: The General Who Hates Me
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 371 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The General Who Hates Me to library":
+- article:
+  - paragraph: "The Untamed: Game of Hearts"
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 370 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add The Untamed: Game of Hearts to library"':
+- article:
+  - paragraph: I'm a spinosaurus with a System to raise a dinosaur army
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 365 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add I'm a spinosaurus with a System to raise a dinosaur army to library":
+- article:
+  - paragraph: The Debt Of Fate
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 354 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The Debt Of Fate to library":
+- article:
+  - paragraph: "Seventies Sweetheart: From Breakup to Billionaire"
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 350 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Seventies Sweetheart: From Breakup to Billionaire to library"':
+- article:
+  - paragraph: The Bride Of Immortal Crown Prince
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 342 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The Bride Of Immortal Crown Prince to library":
+- article:
+  - paragraph: Wife of The Demon Prince
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 341 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Wife of The Demon Prince to library":
+- article:
+  - paragraph: Heart Over Sword
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 332 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Heart Over Sword to library":
+- article:
+  - paragraph: I'm a Walking Disaster With My Unwanted Virginity
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 331 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add I'm a Walking Disaster With My Unwanted Virginity to library":
+- article:
+  - paragraph: Married To The Dragon Prince Against My Will
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 322 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Married To The Dragon Prince Against My Will to library":
+- article:
+  - paragraph: The CEO Of My Dreams Returned To Me
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 316 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The CEO Of My Dreams Returned To Me to library":
+- article:
+  - paragraph: Crashing into an Old Flame
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 316 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Crashing into an Old Flame to library":
+- article:
+  - paragraph: "Healing a Fallen S-Rank Beastman: Everyone Fights Over the Little Female"
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 306 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Healing a Fallen S-Rank Beastman: Everyone Fights Over the Little Female to library"':
+- article:
+  - paragraph: Marked By The Mad King Alpha
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 302 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Marked By The Mad King Alpha to library":
+- article:
+  - paragraph: The Mafia King's Hacker Bride
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 300 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The Mafia King's Hacker Bride to library":
+- article:
+  - paragraph: A Crazy Love Proposal
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 295 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add A Crazy Love Proposal to library":
+- article:
+  - paragraph: "Reborn: The Duke's Obsession"
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 291 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Reborn: The Duke''s Obsession to library"':
+- article:
+  - paragraph: Awakening the Divine Spark
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 290 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Awakening the Divine Spark to library":
+- article:
+  - paragraph: Lord Theodore's Favorite Ritual
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 290 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Lord Theodore's Favorite Ritual to library":
+- article:
+  - paragraph: The Masked prince
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 289 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add The Masked prince to library":
+- article:
+  - paragraph: Carlotta's Daily Report
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 280 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Carlotta's Daily Report to library":
+- article:
+  - paragraph: Supreme Elixir God
+  - generic: Web Novel
+  - paragraph: Chinese Novel · 2024 · 279 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - button "Add Supreme Elixir God to library":
+- article:
+  - paragraph: "Bastard Homunculus: Reborn in the Corpse Pit"
+  - generic: Web Novel
+  - paragraph: English Novel · 2024 · 265 chapters
+  - img "5 out of 5":
+  - generic: "5"
+  - 'button "Add Bastard Homunculus: Reborn in the Corpse Pit to library"':
+- button "See more — بقي 113,070"
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library":
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Search" [active]:
+    - generic: Search
+  - button "Home":
+    - generic: Home

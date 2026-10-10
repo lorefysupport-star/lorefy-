@@ -1,0 +1,39 @@
+- banner:
+  - heading "Library" [level=1]
+  - group "طريقة عرض المكتبة":
+    - button "عرض شبكة":
+      - generic: شبكة
+    - button "عرض رف" [pressed]:
+      - generic: رف
+  - button "All 1" [pressed]:
+    - generic: All
+    - generic: "1"
+  - button "Reading 0":
+    - generic: Reading
+    - generic: "0"
+  - button "Completed 1":
+    - generic: Completed
+    - generic: "1"
+  - button "Wishlist 0":
+    - generic: Wishlist
+    - generic: "0"
+  - button "Paused 0":
+    - generic: Paused
+    - generic: "0"
+  - button "Dropped 0":
+    - generic: Dropped
+    - generic: "0"
+- button "Open Hunter x Hunter":
+  - strong: Hunter x Hunter
+  - generic: مكتمل
+- navigation "Main navigation":
+  - button "Profile":
+    - generic: Profile
+  - button "Library" [active]:
+    - generic: Library
+  - button "Explore":
+    - generic: Explore
+  - button "Search":
+    - generic: Search
+  - button "Home":
+    - generic: Home

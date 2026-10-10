@@ -1,0 +1,50 @@
+- banner:
+  - button "حسابك"
+  - strong: Lorefy
+  - button "الإشعارات":
+    - generic: "1"
+- tablist "تصفية منشورات المجتمع":
+  - tab "For You" [active] [selected]
+  - tab "Following"
+- region "منشورات المجتمع":
+  - article:
+    - button "ق قارئ Lorefy @lorefy_demo · 3د":
+      - generic: ق
+      - strong: قارئ Lorefy
+      - generic: "@lorefy_demo · 3د"
+    - paragraph: "فحص تفاعلات محلي 5 أكتوبر: نص عربي وEnglish 123."
+    - button "فتح الردود":
+      - generic: "0"
+    - button "إعجاب":
+      - generic: "0"
+    - button "عدم إعجاب" [pressed]:
+      - generic: "1"
+    - button "مشاركة":
+- article:
+  - button "حذف المراجعة":
+  - generic: قارئ Lorefy
+  - generic: "@lorefy_demo"
+  - generic: · 1د
+  - img "5 من 5":
+  - paragraph: مراجعة اختبار محلية للتأكد من التقييم والحفظ.
+  - paragraph: Hunter x Hunter
+  - generic: مانجا
+  - generic: Togashi, Yoshihiro
+  - button "تعليق":
+    - generic: "0"
+  - button "إعجاب، 0":
+    - generic: "0"
+  - button "عدم إعجاب، 0":
+    - generic: "0"
+  - button "حفظ":
+  - button "مشاركة":
+- navigation "التنقل الرئيسي":
+  - button "حسابي":
+    - generic: حسابي
+  - button "مكتبتي":
+    - generic: مكتبتي
+  - button "استكشف":
+    - generic: استكشف
+  - button "الرئيسية":
+    - generic: الرئيسية
+- button "إنشاء منشور":
