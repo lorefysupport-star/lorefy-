@@ -6,6 +6,7 @@ const {
   initialCatalogPlan,
   remainingCatalogPlan,
   allCatalogParts,
+  searchIndexParts,
   shouldWaitForInteraction,
   pickFeaturedWork
 } = require('../modules/lorefy-catalog-plan.js');
@@ -50,7 +51,20 @@ test('remaining plan excludes parts already loaded and preserves order', () => {
   );
 });
 
-test('full catalog plan restores every bundled part after the first useful paint', () => {
+test('search index finds Arabic and English work titles without loading full records', () => {
+  const searchApi = require('../modules/lorefy-catalog-data');
+  const entries = [
+    {part: 2, work: {id:'one-piece',title:'One Piece',ar:'ون بيس',auth:'Eiichiro Oda',type:'مانجا'}},
+    {part: 3, work: {id:'other',title:'The Long Novel',ar:'',auth:'Jane Doe',type:'رواية'}},
+    {part: 4, work: {id:'alias',title:'Pirate Story',ar:'',auth:'Someone',type:'مانجا',altTitles:['One Piece']}}
+  ];
+  assert.deepEqual(searchIndexParts(entries, 'ون بيس', 'Manga', searchApi).map(row => row.part), [2]);
+  assert.deepEqual(searchIndexParts(entries, 'One Piece', 'Manga', searchApi).map(row => row.part), [2,4]);
+  assert.deepEqual(searchIndexParts(entries, 'Jane Doe', 'Novel', searchApi).map(row => row.part), [3]);
+  assert.deepEqual(searchIndexParts(entries, 'Jane Doe', 'Manga', searchApi), []);
+});
+
+test('explicit full-catalog plan still lists every bundled part', () => {
   assert.deepEqual(
     allCatalogParts({ partCount: 17, featuredParts: [5, 1, 5] }),
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
@@ -63,7 +77,7 @@ test('interaction-window helper preserves its standalone timing contract', () =>
   assert.equal(shouldWaitForInteraction(0, 10_000, 1_800), false);
 });
 
-test('the full catalog is imported as one paced background batch', () => {
+test('explicit full-catalog import remains available for maintenance', () => {
   const fs = require('node:fs');
   const path = require('node:path');
   const source = fs.readFileSync(path.join(__dirname, '..', 'modules', 'lorefy-catalog-loader.js'), 'utf8');
@@ -79,12 +93,12 @@ test('the full catalog is imported as one paced background batch', () => {
   assert.match(source, /global\.setTimeout\(function \(\) \{\s*try \{ worker\.postMessage\(\{ type: "ack" \}\); \} catch/, 'worker batches yield before acknowledgement');
 });
 
-test('route updates only hydrate an explicitly requested work part', () => {
+test('route updates request only the first useful type or detail part', () => {
   const fs = require('node:fs');
   const path = require('node:path');
   const source = fs.readFileSync(path.join(__dirname, '..', 'modules', 'lorefy-catalog-loader.js'), 'utf8');
-  assert.match(source, /return enqueue\(first\);/);
-  assert.doesNotMatch(source, /return enqueue\(first\.concat\(planner\.remainingCatalogPlan/);
+  assert.match(source, /return enqueue\(planner\.initialCatalogPlan\(manifest, route\)/);
+  assert.doesNotMatch(source, /global\.setTimeout\(scheduleFullCatalog/);
 });
 
 test('worker-safe catalog extraction reads only the bundled records payload', () => {
@@ -130,7 +144,7 @@ test('the catalog worker canonicalizes records before returning them to the UI t
   assert.match(loader, /if \(!workerCatalogReady && global\.LorefyCatalogIdentity/);
 });
 
-test('background canonicalization reloads every part so it cannot discard the route bootstrap part', () => {
+test('explicit full-catalog canonicalization preserves the route bootstrap part', () => {
   const fs = require('node:fs');
   const path = require('node:path');
   const loader = fs.readFileSync(path.join(__dirname, '..', 'modules', 'lorefy-catalog-loader.js'), 'utf8');

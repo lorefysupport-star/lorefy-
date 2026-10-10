@@ -74,6 +74,30 @@
     return uniqueParts(configured.concat(manifest.featuredParts || [])).sort(function (a, b) { return a - b; });
   }
 
+  function searchIndexParts(entries, query, type, searchApi) {
+    var normalized = searchApi.normalizeQuery(query);
+    if (!normalized) return [];
+    var selectedType = type && type !== "All" ? normalizeRouteType(type) : "";
+    var found = new Map();
+    (entries || []).forEach(function (entry) {
+      var work = entry.work;
+      if (selectedType && normalizeRouteType(work.type) !== selectedType) return;
+      if (!searchApi.matchesCatalogQuery(work, query)) return;
+      var title = searchApi.normalizeQuery(work.title);
+      var arabic = searchApi.normalizeQuery(work.ar);
+      var score = title === normalized || arabic === normalized ? 100
+        : title.startsWith(normalized) || arabic.startsWith(normalized) ? 70
+        : title.includes(normalized) || arabic.includes(normalized) ? 40 : 10;
+      var current = found.get(entry.part) || { part: entry.part, count: 0, score: 0 };
+      current.count += 1;
+      current.score = Math.max(current.score, score);
+      found.set(entry.part, current);
+    });
+    return Array.from(found.values()).sort(function (a, b) {
+      return b.score - a.score || b.count - a.count || a.part - b.part;
+    });
+  }
+
   function shouldWaitForInteraction(lastInteractionAt, now, quietWindowMs) {
     var last = Number(lastInteractionAt) || 0;
     var current = Number(now) || 0;
@@ -119,6 +143,7 @@
     initialCatalogPlan: initialCatalogPlan,
     remainingCatalogPlan: remainingCatalogPlan,
     allCatalogParts: allCatalogParts,
+    searchIndexParts: searchIndexParts,
     shouldWaitForInteraction: shouldWaitForInteraction,
     pickFeaturedWork: pickFeaturedWork,
     typeParts: typeParts,

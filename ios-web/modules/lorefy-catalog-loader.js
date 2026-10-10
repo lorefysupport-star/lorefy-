@@ -9,28 +9,40 @@
   var loaded = new Set((global.LOREFY_INITIAL_CATALOG_PARTS || []).map(Number));
   var loading = new Map();
   var activeQueue = Promise.resolve();
-  var version = "20261008-explore-studio-v1";
+  var version = "20261010-catalog-demand-v1";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
-  var FULL_CATALOG_START_DELAY_MS = 850;
   var PART_LOAD_GAP_MS = 1600;
   var WORKER_BATCH_ACK_DELAY_MS = 12;
-  var fullCatalogTimer = 0;
-  var fullCatalogRequested = false;
   var backgroundLoadInFlight = false;
   var deferredRefresh = false;
   var catalogWorker = null;
   var workerCatalogReady = false;
   var workerStagedRecords = [];
   var hydration = new Map();
-  function ensureSearchFields() {
-    (global.LorefyMangaData || []).forEach(function (work) {
-      if (!work || typeof work !== "object") return;
+  var searchWorker = null;
+  var searchRequests = new Map();
+  var searchRequestId = 0;
+  var searchGeneration = 0;
+  var searchTimer = 0;
+  var searchMatches = [];
+  var searchCursor = 0;
+  var searchQuery = "";
+  var searchType = "";
+  var searchBusy = false;
+  var searchError = false;
+  var browseParts = [];
+  var browseCursor = 0;
+  function ensureSearchFields(start) {
+    var records = global.LorefyMangaData || [];
+    for (var index = start || 0; index < records.length; index += 1) {
+      var work = records[index];
+      if (!work || typeof work !== "object") continue;
       if (typeof work._tl !== "string") work._tl = String(work.title || "").toLowerCase();
       if (typeof work._al !== "string") work._al = String(work.auth || work.author || "").toLowerCase();
       if (typeof work.ar !== "string") work.ar = String(work.ar || "");
-    });
+    }
   }
   ensureSearchFields();
   Array.prototype.forEach.call(doc.scripts || [], function (script) {
@@ -42,7 +54,9 @@
     var params = new URLSearchParams(global.location.search || "");
     return {
       type: planner.normalizeRouteType(params.get("type")),
-      workId: params.get("novel") || params.get("work") || ""
+      rawType: params.get("type") || "All",
+      workId: params.get("novel") || params.get("work") || "",
+      query: params.get("search") || ""
     };
   }
 
@@ -89,12 +103,13 @@
     if (loaded.has(part)) return Promise.resolve(true);
     if (loading.has(part)) return loading.get(part);
     var promise = new Promise(function (resolve) {
+      var previousLength = (global.LorefyMangaData || []).length;
       var script = doc.createElement("script");
       script.src = "uploads/lorefy-data-part" + String(part).padStart(2, "0") + ".js?v=" + version;
       script.async = true;
       script.dataset.lorefyCatalogPart = String(part);
       script.onload = function () {
-        ensureSearchFields();
+        ensureSearchFields(previousLength);
         loaded.add(part);
         loading.delete(part);
         // Coalesce re-indexing work so loading all catalog parts does not freeze the UI.
@@ -259,10 +274,12 @@
   function enqueue(parts, options) {
     options = options || {};
     var gapMs = Number(options.gapMs) || 180;
+    var shouldContinue = options.shouldContinue || function () { return true; };
     var queue = planner.uniqueParts(parts).filter(function (part) { return !loaded.has(part); });
     activeQueue = activeQueue.then(function () {
       return new Promise(function (resolve) {
         function next() {
+          if (!shouldContinue()) { resolve(); return; }
           var part = queue.shift();
           if (!part) { resolve(); return; }
           idle(function () { loadPart(part).finally(function () { global.setTimeout(next, gapMs); }); });
@@ -273,12 +290,122 @@
     return activeQueue;
   }
 
+  function searchIndexFallback(query, type) {
+    return global.fetch("uploads/catalog-search-index.json?v=" + version).then(function (response) {
+      if (!response.ok) throw new Error("Search index returned " + response.status);
+      return response.json();
+    }).then(function (index) {
+      if (!index || index.schema !== 1 || !Array.isArray(index.records)) throw new Error("Invalid catalog search index");
+      var entries = index.records.map(function (row) {
+        return { part: Number(row[0]), work: {
+          id: row[1], title: row[2], ar: row[3], auth: row[4], type: row[5],
+          altTitles: row[6], aliases: row[7], authorAliases: row[8]
+        } };
+      });
+      return planner.searchIndexParts(entries, query, type, global.LorefyCatalogData);
+    });
+  }
+
+  function requestSearchParts(query, type) {
+    if (typeof global.Worker !== "function") return searchIndexFallback(query, type);
+    if (!searchWorker) {
+      try { searchWorker = new global.Worker("modules/lorefy-catalog-search-worker.js?v=" + version); }
+      catch (error) { return searchIndexFallback(query, type); }
+      searchWorker.addEventListener("message", function (event) {
+        var message = event.data || {};
+        var pending = searchRequests.get(message.requestId);
+        if (!pending) return;
+        searchRequests.delete(message.requestId);
+        if (message.type === "result") pending.resolve(message.matches || []);
+        else pending.reject(new Error(message.message || "Catalog search failed"));
+      });
+      searchWorker.addEventListener("error", function (error) {
+        searchRequests.forEach(function (pending) { pending.reject(error); });
+        searchRequests.clear();
+        try { searchWorker.terminate(); } catch (ignore) {}
+        searchWorker = null;
+      });
+    }
+    return new Promise(function (resolve, reject) {
+      var requestId = ++searchRequestId;
+      searchRequests.set(requestId, { resolve: resolve, reject: reject });
+      try { searchWorker.postMessage({type: "search", requestId: requestId, query: query, catalogType: type}); }
+      catch (error) { searchRequests.delete(requestId); reject(error); }
+    }).catch(function () { return searchIndexFallback(query, type); });
+  }
+
+  function refreshSearchStatus() {
+    try { if (typeof global.__lorefyRefresh === "function") global.__lorefyRefresh(); } catch (error) {}
+  }
+
+  function loadSearchBatch(generation, first) {
+    var parts = [], expected = 0;
+    var target = first ? 160 : 120;
+    var limit = first ? 12 : 8;
+    while (searchCursor < searchMatches.length && parts.length < limit && expected < target) {
+      var match = searchMatches[searchCursor++];
+      if (loaded.has(match.part)) continue;
+      parts.push(match.part);
+      expected += match.count;
+    }
+    if (!parts.length) { searchBusy = false; refreshSearchStatus(); return Promise.resolve(); }
+    searchBusy = true;
+    refreshSearchStatus();
+    return enqueue(parts, {
+      gapMs: 80,
+      shouldContinue: function () { return generation === searchGeneration; }
+    }).finally(function () {
+      if (generation === searchGeneration) { searchBusy = false; refreshSearchStatus(); }
+    });
+  }
+
+  function scheduleSearch(query, type) {
+    query = String(query || "").trim();
+    type = String(type || "All");
+    if (query === searchQuery && type === searchType) return;
+    searchQuery = query;
+    searchType = type;
+    searchGeneration += 1;
+    var generation = searchGeneration;
+    global.clearTimeout(searchTimer);
+    searchMatches = [];
+    searchCursor = 0;
+    searchBusy = !!query;
+    searchError = false;
+    refreshSearchStatus();
+    if (!query) return;
+    searchTimer = global.setTimeout(function () {
+      requestSearchParts(query, type).then(function (matches) {
+        if (generation !== searchGeneration) return;
+        searchMatches = matches;
+        return loadSearchBatch(generation, true);
+      }).catch(function (error) {
+        if (generation !== searchGeneration) return;
+        searchBusy = false;
+        searchError = true;
+        console.warn("[Lorefy] local catalog search:", error);
+        refreshSearchStatus();
+      });
+    }, 450);
+  }
+
+  function loadMore() {
+    if (searchBusy) return Promise.resolve();
+    if (searchQuery) return loadSearchBatch(searchGeneration, false);
+    var next = 0;
+    while (browseCursor < browseParts.length && (!next || loaded.has(next))) {
+      next = browseParts[browseCursor++];
+    }
+    return next && !loaded.has(next) ? enqueue([next], {gapMs: 40}) : Promise.resolve();
+  }
+
   function loadRoute() {
     var route = routeState();
     if (route.workId) hydrateWork(route.workId);
-    var directPart = manifest.workParts && manifest.workParts[String(route.workId || "")];
-    var first = directPart && !loaded.has(Number(directPart)) ? [Number(directPart)] : [];
-    return enqueue(first);
+    browseParts = route.rawType === "All" ? planner.allCatalogParts(manifest) : planner.typeParts(manifest, route.type);
+    browseCursor = 0;
+    scheduleSearch(route.query, route.rawType);
+    return enqueue(planner.initialCatalogPlan(manifest, route), { gapMs: 40 });
   }
 
   function hydrateWork(workId) {
@@ -353,16 +480,6 @@
     });
   }
 
-  function scheduleFullCatalog() {
-    if (fullCatalogRequested || fullCatalogTimer) return;
-    function startInBackground() {
-      fullCatalogTimer = 0;
-      fullCatalogRequested = true;
-      loadAll();
-    }
-    fullCatalogTimer = global.setTimeout(startInBackground, FULL_CATALOG_START_DELAY_MS);
-  }
-
   function emitRouteChange() {
     try { global.dispatchEvent(new CustomEvent("lorefy:routechange")); } catch (error) {}
   }
@@ -382,15 +499,30 @@
 
   global.addEventListener("popstate", emitRouteChange);
   global.addEventListener("lorefy:routechange", function () { global.setTimeout(loadRoute, 80); });
+  doc.addEventListener("input", function (event) {
+    var target = event && event.target;
+    if (!target || target.tagName !== "INPUT" || !target.closest || !target.closest(".lf-search-box")) return;
+    scheduleSearch(target.value, routeState().rawType);
+  }, true);
   (doc.readyState === "loading" ? doc.addEventListener.bind(doc, "DOMContentLoaded") : function (fn) { fn(); })(function () {
-    // index.html inserts the first route part. The rest is parsed in a worker
-    // immediately after first paint, even while the reader scrolls.
-    global.setTimeout(scheduleFullCatalog, 300);
+    // index.html has already inserted the first route part. Announce that the
+    // initial catalog is usable without downloading every other part.
+    loadRoute();
+    global.setTimeout(function () {
+      if (global.__lorefyCatalogReady) return;
+      global.__lorefyCatalogReady = true;
+      try {
+        global.dispatchEvent(new CustomEvent("lorefy:catalog-ready", {
+          detail: { total: (global.LorefyMangaData || []).length, partial: true }
+        }));
+      } catch (error) {}
+    }, 0);
   });
 
   global.LorefyCatalogLoader = {
     loadPart: loadPart,
     loadWorks: loadWorks,
+    loadMore: loadMore,
     loadType: function (type) { return enqueue(planner.remainingCatalogPlan(manifest, type, loaded)); },
     loadAll: loadAll,
     refreshRoute: loadRoute,
@@ -400,9 +532,13 @@
         loaded: Array.from(loaded),
         loading: Array.from(loading.keys()),
         total: Number(manifest.partCount || 0),
-        backgroundQueued: fullCatalogRequested,
+        backgroundQueued: false,
         backgroundLoading: backgroundLoadInFlight,
-        ready: workerCatalogReady
+        ready: workerCatalogReady || !!global.__lorefyCatalogReady,
+        partial: loaded.size < Number(manifest.partCount || 0),
+        searching: searchBusy,
+        searchError: searchError,
+        hasMore: searchQuery ? searchCursor < searchMatches.length : browseParts.slice(browseCursor).some(function (part) { return !loaded.has(part); })
       };
     }
   };

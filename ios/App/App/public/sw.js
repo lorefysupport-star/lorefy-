@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v422-beta-decorations';
+const CACHE = 'lorefy-v424-community-live';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -38,8 +38,9 @@ const CORE = [
   './modules/lorefy-data-proxy.js?v=20260909-full-catalog-v1',
   './modules/lorefy-cover-api.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4',
-  './modules/lorefy-catalog-plan.js?v=20261008-explore-studio-v1',
-  './modules/lorefy-catalog-loader.js?v=20261008-explore-studio-v1',
+  './modules/lorefy-catalog-plan.js?v=20261010-catalog-demand-v1',
+  './modules/lorefy-catalog-loader.js?v=20261010-catalog-demand-v1',
+  './modules/lorefy-catalog-search-worker.js?v=20261010-catalog-demand-v1',
   './modules/lorefy-catalog-identity.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
   './modules/lorefy-catalog-worker.js?v=20261008-explore-studio-v1',
@@ -72,7 +73,7 @@ const CORE = [
   './config/lorefy-runtime.js?v=20260930-character-share-v1',
   './config/lorefy-config.js?v=20260924-catalog-v1',
   './backend/lorefy-secure-storage.js?v=20260824-keychain-v2',
-  './backend/lorefy-backend.js?v=20261009-public-appearance-v4',
+  './backend/lorefy-backend.js?v=20261010-community-live-v1',
   './backend/lorefy-custom-artwork.js?v=20261008-durable-artwork-v1',
   './backend/lorefy-native-crypto.js?v=20261001-auth-recovery-v1',
   './modules/lorefy-subscriptions.js?v=20260722-billing-guard-v1',
@@ -103,14 +104,14 @@ const CORE = [
   './styles/lorefy-character-atlas.css?v=20261007-character-atlas-v1',
   './modules/lorefy-work-relations.js?v=20261007-work-relations-v3',
   './styles/lorefy-work-relations.css?v=20261007-work-relations-v3',
-  './modules/lorefy-explore-studio.js?v=20261008-explore-studio-v1',
+  './modules/lorefy-explore-studio.js?v=20261010-catalog-demand-v1',
   './styles/lorefy-explore-studio.css?v=20261008-explore-studio-v1',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1',
-  './uploads/files/lorefy-app.js?v=20261009-in-app-readers-v1',
+  './uploads/files/lorefy-app.js?v=20261010-catalog-demand-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4',
-  './uploads/lorefy-data-part05.js?v=20261008-explore-studio-v1',
+  './uploads/lorefy-data-part05.js?v=20261010-catalog-demand-v1',
   './modules/lorefy-growth-features.js?v=20261009-public-appearance-v4',
   './modules/lorefy-share-studio.js?v=20261007-quarter-ratings-v1',
   './uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1',
@@ -134,23 +135,23 @@ const CATALOG = [
   './uploads/lorefy-character-catalog.js?v=20260722-character-images-v2',
   './uploads/lorefy-literary-character-catalog.js?v=20260722-character-images-v2',
   './uploads/lorefy-comics-character-catalog.js?v=20260831-comic-images-v2',
-  './uploads/lorefy-data-part01.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part02.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part03.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part04.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part05.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part06.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part07.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part08.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part09.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part10.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part11.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part12.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part13.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part14.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part15.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part16.js?v=20260703-dataclean-v1',
-  './uploads/lorefy-data-part17.js?v=20260703-dataclean-v1'
+  './uploads/lorefy-data-part01.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part02.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part03.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part04.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part05.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part06.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part07.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part08.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part09.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part10.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part11.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part12.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part13.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part14.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part15.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part16.js?v=20261010-catalog-demand-v1',
+  './uploads/lorefy-data-part17.js?v=20261010-catalog-demand-v1'
 ];
 
 self.addEventListener('install', (e) => {
@@ -202,6 +203,7 @@ self.addEventListener('fetch', (e) => {
 
   if (
     url.pathname.endsWith('/uploads/lorefy-catalog-manifest.json') ||
+    url.pathname.endsWith('/uploads/catalog-search-index.json') ||
     url.pathname.includes('/uploads/catalog-runtime/') ||
     url.pathname.includes('/uploads/catalog-deltas/') ||
     url.pathname.includes('/output/api-catalog/')

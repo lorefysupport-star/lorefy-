@@ -242,8 +242,8 @@
   })();
   </script>
 
-  <!-- ════ Full catalog data (12,699+ works) — must load BEFORE enrich + app ════ -->
-  <script src="modules/lorefy-catalog-plan.js?v=20261008-explore-studio-v1"></script>
+  <!-- Load one useful catalog part before the app; remaining parts load on demand. -->
+  <script src="modules/lorefy-catalog-plan.js?v=20261010-catalog-demand-v1"></script>
   <script src="uploads/lorefy-catalog-map.js?v=20261008-arabic-breadth-v4"></script>
   <script>
     window.LorefyMangaData = window.LorefyMangaData || [];
@@ -255,7 +255,7 @@
       window.LOREFY_INITIAL_CATALOG_PARTS = plan.slice();
       plan.forEach(function(part){
         var id = String(part).padStart(2, '0');
-        document.write('<script src="uploads/lorefy-data-part' + id + '.js?v=20261008-explore-studio-v1"><\/script>');
+        document.write('<script src="uploads/lorefy-data-part' + id + '.js?v=20261010-catalog-demand-v1"><\/script>');
       });
     })();
   </script>
@@ -274,7 +274,7 @@
       } catch (error) {}
     })();
   </script>
-  <script defer src="modules/lorefy-catalog-loader.js?v=20261008-explore-studio-v1"></script>
+  <script defer src="modules/lorefy-catalog-loader.js?v=20261010-catalog-demand-v1"></script>
   <script defer src="uploads/lorefy-chapter-overrides.js?v=20260616-v23"></script>
   <script defer src="uploads/lorefy-catalog-aliases.js?v=20260622-audit1"></script>
 
@@ -290,7 +290,7 @@
   <script defer src="monitoring/lorefy-sentry.js"></script>
     <script defer src="backend/lorefy-secure-storage.js?v=20260824-keychain-v2"></script>
     <script defer src="backend/lorefy-native-crypto.js?v=20261001-auth-recovery-v1"></script>
-    <script defer src="backend/lorefy-backend.js?v=20261009-public-appearance-v4"></script>
+    <script defer src="backend/lorefy-backend.js?v=20261010-community-live-v1"></script>
     <script defer src="backend/lorefy-custom-artwork.js?v=20261008-durable-artwork-v1"></script>
     <script defer src="modules/lorefy-subscriptions.js?v=20260722-billing-guard-v1"></script>
     <script defer src="backend/lorefy-ios-bridge.js?v=20261001-auth-recovery-v1"></script>
@@ -365,9 +365,9 @@
   <script defer src="modules/lorefy-work-relations.js?v=20261007-work-relations-v3"></script>
   <script defer src="modules/lorefy-library-view.js?v=20261007-profile-shelf-heights-v1"></script>
   <script defer src="modules/lorefy-interface-settings.js?v=20261009-custom-appearance-v1"></script>
-  <script defer src="modules/lorefy-explore-studio.js?v=20261008-explore-studio-v1"></script>
+  <script defer src="modules/lorefy-explore-studio.js?v=20261010-catalog-demand-v1"></script>
   <script defer src="modules/lorefy-preview-readers.js?v=20261009-public-appearance-v4"></script>
-  <script defer src="uploads/files/lorefy-app.js?v=20261009-in-app-readers-v1"></script>
+  <script defer src="uploads/files/lorefy-app.js?v=20261010-catalog-demand-v1"></script>
   <script defer src="modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1"></script>
   <script defer src="modules/lorefy-growth-features.js?v=20261009-public-appearance-v4"></script>
   <script defer src="modules/lorefy-community.js?v=20261009-public-appearance-v4"></script>
@@ -679,7 +679,7 @@
       });
     } else if ('serviceWorker' in navigator && window.top === window.self) {
       window.addEventListener('load', function(){
-        navigator.serviceWorker.register('sw.js?v=20260930-ui-finish-v2')
+        navigator.serviceWorker.register('sw.js?v=20261010-community-live-v1')
           .catch(function(){});
       });
     }

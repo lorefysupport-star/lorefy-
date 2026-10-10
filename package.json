@@ -5,6 +5,7 @@
   "description": "Lorefy mobile release shell and App Store preflight tooling.",
   "scripts": {
     "test": "node --test --test-concurrency=1 tests/*.test.js",
+    "catalog:search-index": "node tools/build-catalog-search-index.mjs",
     "community:patch": "node tools/patch-community-cloud.js && node tools/patch-community-social.js && node tools/patch-product-report-cloud.js && node tools/patch-community-followups.js",
     "ios:prepare": "node tools/prepare-ios-web.mjs",
     "ios:add": "npm run ios:prepare && npx cap add ios",

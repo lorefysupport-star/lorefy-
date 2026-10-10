@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 execFileSync(process.execPath, [path.join(root, "tools", "build-runtime-catalog.js")], { stdio: "inherit" });
+execFileSync(process.execPath, [path.join(root, "tools", "build-catalog-search-index.mjs")], { stdio: "inherit" });
 const output = path.join(root, "ios-web");
 const releaseConfigPath = path.join(root, "config", "lorefy-release.json");
 const publicBuildConfigPath = path.join(root, "config", "lorefy-build-public.json");

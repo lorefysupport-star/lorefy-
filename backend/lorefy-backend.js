@@ -242,6 +242,9 @@
     _origSetItem: null,
     _beforeUnload: null,
     _notificationChannel: null,
+    _communitySubscription: null,
+    _communityClosing: null,
+    _communityEpoch: 0,
     _stateVersion: 0,
     _stateBase: {},
     initError: null,
@@ -330,6 +333,8 @@
       if (this._sessionCleared) return;
       this._sessionCleared = true;
       this.stopSync();
+      this._communityEpoch += 1;
+      await this._stopCommunitySubscription();
       if (this.client){
         try{ await this.client.auth.signOut({ scope:"local" }); }catch(e){}
       }
@@ -642,6 +647,8 @@
     /* ── خروج ── */
     signOut: async function(){
       this.stopSync();
+      this._communityEpoch += 1;
+      await this._stopCommunitySubscription();
       var installationId = readLS("lorefy.native.installation.v1");
       if (this.mode === "live" && isUuid(installationId)){
         try{ await this.unregisterPushDevice(installationId); }catch(e){}
@@ -1396,27 +1403,61 @@
       if (result.error) throw result.error;
       return active !== false;
     },
+    _stopCommunitySubscription: function(){
+      var subscription = this._communitySubscription;
+      this._communitySubscription = null;
+      if (!subscription) return this._communityClosing || Promise.resolve();
+      subscription.listeners.clear();
+      var closing;
+      try {
+        closing = Promise.resolve(subscription.client.removeChannel(subscription.channel)).catch(function(){});
+      } catch(e) { closing = Promise.resolve(); }
+      this._communityClosing = closing;
+      var self = this;
+      closing.then(function(){ if (self._communityClosing === closing) self._communityClosing = null; });
+      return closing;
+    },
     subscribeCommunity: async function(callback){
       if (this.mode !== "live" || typeof callback !== "function") return function(){};
+      var epoch = this._communityEpoch;
       var session = await this.getSession();
-      if (!session) return function(){};
-      if (this._communityChannel){
-        try{ await this.client.removeChannel(this._communityChannel); }catch(e){}
+      if (epoch !== this._communityEpoch) return function(){};
+      if (!session){
+        await this._stopCommunitySubscription();
+        return function(){};
+      }
+      if (this._communityClosing) await this._communityClosing;
+      if (epoch !== this._communityEpoch) return function(){};
+      var subscription = this._communitySubscription;
+      if (subscription && (subscription.userId !== session.userId || subscription.client !== this.client)){
+        await this._stopCommunitySubscription();
+        if (epoch !== this._communityEpoch) return function(){};
+        subscription = this._communitySubscription;
       }
       var self = this;
-      var notify = function(payload){ callback(payload || null); };
-      var channel = this.client.channel("community:" + session.userId)
-        .on("postgres_changes", { event:"*", schema:"public", table:"reviews" }, notify)
-        .on("postgres_changes", { event:"*", schema:"public", table:"review_comments" }, notify)
-        .on("postgres_changes", { event:"*", schema:"public", table:"review_reactions" }, notify)
-        .on("postgres_changes", { event:"*", schema:"public", table:"community_posts" }, notify)
-        .on("postgres_changes", { event:"*", schema:"public", table:"community_post_reactions" }, notify)
-        .on("postgres_changes", { event:"*", schema:"public", table:"profile_follows" }, notify)
-        .subscribe();
-      this._communityChannel = channel;
+      if (!subscription){
+        subscription = { userId:session.userId, client:this.client, channel:null, listeners:new Set() };
+        var notify = function(payload){
+          if (self._communitySubscription !== subscription) return;
+          subscription.listeners.forEach(function(listener){
+            try{ listener.callback(payload || null); }catch(e){ console.warn("[Lorefy] community listener:", e); }
+          });
+        };
+        subscription.channel = this.client.channel("community:" + session.userId)
+          .on("postgres_changes", { event:"*", schema:"public", table:"reviews" }, notify)
+          .on("postgres_changes", { event:"*", schema:"public", table:"review_comments" }, notify)
+          .on("postgres_changes", { event:"*", schema:"public", table:"review_reactions" }, notify)
+          .on("postgres_changes", { event:"*", schema:"public", table:"community_posts" }, notify)
+          .on("postgres_changes", { event:"*", schema:"public", table:"community_post_reactions" }, notify)
+          .on("postgres_changes", { event:"*", schema:"public", table:"profile_follows" }, notify)
+          .subscribe();
+        this._communitySubscription = subscription;
+      }
+      var listener = { callback:callback };
+      subscription.listeners.add(listener);
       return function(){
-        if (self._communityChannel === channel) self._communityChannel = null;
-        try{ self.client.removeChannel(channel); }catch(e){}
+        subscription.listeners.delete(listener);
+        if (!subscription.listeners.size && self._communitySubscription === subscription) self._stopCommunitySubscription();
       };
     },
     deleteReview: async function(reviewId){

@@ -92,7 +92,9 @@
     var draftState = React.useState(null), draft = draftState[0], setDraft = draftState[1];
     var revisionState = React.useState(0), revision = revisionState[0], setRevision = revisionState[1];
     var opener = React.useRef(null), panel = React.useRef(null);
-    var catalogReady = !root.LorefyCatalogLoader || root.LorefyCatalogLoader.state().ready;
+    var catalogState = root.LorefyCatalogLoader && root.LorefyCatalogLoader.state();
+    var catalogReady = !catalogState || catalogState.ready;
+    var catalogPartial = !!(catalogState && catalogState.partial);
     var ranked = React.useMemo(function () { return props.getRanked(); }, [props.getRanked, revision]);
     var seeds = (props.favorites || []).concat(props.preferences.seedWorkIds || [], Object.keys(props.library).filter(function (id) {
       return !/متوقف|متروك|paused|dropped/i.test(props.library[id]);
@@ -211,7 +213,7 @@
           h('div', {className: 'lf-explore-category-grid'}, props.types.filter(function (type) { return type !== props.allType; }).map(function (type) {
             var category = props.categories.find(function (entry) { return entry.type === type; }) || {type: type, count: 0};
             return h('button', {key: category.type, className: 'lf-explore-category', onClick: function () { props.onBrowse(category.type); }}, category.rep ? cover(category.rep) : h('span', {className: 'lf-explore-category-placeholder'}, Icon('BookOpen', 25)),
-              h('span', null, h('strong', null, props.typeLabel(category.type)), h('small', null, catalogReady ? category.count.toLocaleString(props.language) + t(' عمل', ' works') : t('تصفح الأعمال', 'Browse works'))), Icon('ChevronLeft', 16));
+              h('span', null, h('strong', null, props.typeLabel(category.type)), h('small', null, catalogReady && (!catalogPartial || category.count) ? category.count.toLocaleString(props.language) + (catalogPartial ? '+ ' : ' ') + t('عمل', 'works') : t('تصفح الأعمال', 'Browse works'))), Icon('ChevronLeft', 16));
           })))),
       dialog && h('div', {className: 'lf-explore-overlay', onClick: function (event) { if (event.target === event.currentTarget) close(); }, onKeyDown: trap},
         h('section', {className: 'lf-explore-dialog', ref: panel, role: 'dialog', 'aria-modal': true, 'aria-label': dialog.title},
