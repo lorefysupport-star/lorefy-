@@ -1,0 +1,10 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lorefy responsive verification</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#101312}body{display:grid;place-items:center}iframe{border:0;border-radius:24px;transform-origin:center}</style></head><body><iframe title="Lorefy mobile verification"></iframe><script>
+(function(){
+  if(!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) throw Error('Local QA only');
+  var p=new URLSearchParams(location.search),w=Number(p.get('width'));if(![320,390,440].includes(w))w=390;
+  p.delete('width');p.set('adaptive','1');p.set('preview','demo');p.set('demo','ready');
+  var f=document.querySelector('iframe');f.style.width=w+'px';f.style.height='844px';
+  f.src=(p.has('qaTester')?'tester-app.html':'../index.html')+'?'+p.toString();
+  function fit(){f.style.transform='scale('+Math.min(1,(innerWidth-24)/w,(innerHeight-24)/844)+')';}addEventListener('resize',fit);fit();
+})();</script></body></html>

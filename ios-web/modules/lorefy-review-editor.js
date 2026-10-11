@@ -30,7 +30,9 @@
         h('p',{className:'lf-work-format'},[formatLabel(w.type,p.language),w.yr].filter(Boolean).join(' · ')),
         h('h1',null,w.title),
         p.subtitle && h('p',{className:'lf-work-subtitle'},p.subtitle),
-        p.creator && h('p',{className:'lf-work-creator'},p.creator),
+        p.creator && (root.LorefyProductCore && root.LorefyProductCore.authorWorks([w],p.creator).length
+          ? h('button',{type:'button',className:'lf-work-creator lf-work-author-button',onClick:function(){ root.LorefyProductTools.openAuthor(p.creator); },'aria-label':(english?'Works by ':'أعمال ')+p.creator},p.creator,root.NenIcons && h(root.NenIcons.ChevronLeft,{size:14,'aria-hidden':true}))
+          : h('p',{className:'lf-work-creator'},p.creator)),
         h('div',{className:'lf-work-rating'},feather && h(feather,{size:22,'aria-hidden':true}),h('strong',{className:'lf-work-rating-value'},Number(p.rating)>0?Number(p.rating).toFixed(1):'—'),h('span',null,english?'out of 5':'من 5'),p.ratingSource && h('small',null,p.ratingSource))),
       h('div',{className:'lf-work-facts'},w.st && h('span',null,w.st),p.metadata && h('span',null,p.metadata),w.pl && h('span',null,w.pl)),
       h('nav',{className:'lf-work-section-nav','aria-label':english?'Work sections':'أقسام العمل'},

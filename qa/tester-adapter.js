@@ -15,7 +15,7 @@
   B.listProfileFollowers=async id=>data.profiles.filter(x=>following(x.id).includes(id)).map(x=>profile(x.id));
   B.listProfileFollowing=async id=>following(id).map(profile).filter(Boolean);B.getFollowedProfileIds=async()=>following(p.id);
   B.toggleProfileFollow=async(id,value)=>{if(!data.profiles.some(x=>x.id===id)||id===p.id)return false;var ids=following(p.id);lab.storage.setItem('lorefy.user.following.v1',JSON.stringify(value?Array.from(new Set(ids.concat(id))):ids.filter(x=>x!==id)));return value;};
-  function reviews(options){options=options||{};return data.reviews.filter(r=>(!options.userId||r.userId===options.userId)&&(!options.workId||r.mid===options.workId)).map(r=>({id:r.id,user_id:r.userId,work_id:r.mid,rating:r.r,recommend:r.rec,body:r.txt,images:[],created_at:new Date(r.ts).toISOString(),profile:profile(r.userId),comments:[],reactions:{heart:r.likes,like:0,mine:{}}}));}
+  function reviews(options){options=options||{};return data.reviews.filter(r=>(!options.userId||r.userId===options.userId)&&(!options.workId||r.mid===options.workId)).map(r=>({id:r.id,user_id:r.userId,work_id:r.mid,rating:r.r,recommend:r.rec,body:r.txt,spoiler:!!r.spoiler,images:r.imgs || [],created_at:new Date(r.ts).toISOString(),profile:profile(r.userId),comments:[],reactions:{heart:r.likes,like:0,mine:{}}}));}
   B.listReviews=async options=>reviews(options);B.listReviewCollection=async options=>reviews(options);
   B.setReviewReaction=async()=>({local:true});B.listReviewComments=async()=>[];
   root.addEventListener('DOMContentLoaded',()=>{

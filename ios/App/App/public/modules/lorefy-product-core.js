@@ -272,15 +272,27 @@
       .replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/[^\p{L}\p{N}]+/gu,' ')
       .trim().split(/\s+/).sort().join(' ');
   }
-  function authorWorks(works, author) {
+  function authorWorks(works, author, identity, aliases) {
     if (!author || /unknown|غير معروف|رواية|نوفل|novel/i.test(String(author))) return [];
     var key = authorKey(author), seen = new Set();
-    return (works || []).filter(function (work) {
+    var attributed = (works || []).filter(function (work) {
       if (!work || !work.id || seen.has(String(work.id))) return false;
       var names = Array.isArray(work.authors) ? work.authors : [work.auth || work.au || work.author];
       if (!names.some(function (name) { return authorKey(typeof name === 'object' && name ? name.name : name) === key; })) return false;
       seen.add(String(work.id)); return true;
-    }).sort(function (a,b) { return (Number(a.yr || a.year) || 9999) - (Number(b.yr || b.year) || 9999); });
+    });
+    if (identity) {
+      var editions=new Map();
+      attributed.forEach(function(work){
+        var volume=/(?:\bvol(?:ume)?\.?|\bbook|\bpart|المجلد|الجزء)\s*(\d+)/i.exec(String(work.title || ''));
+        var group=String(work.type || '')+'|'+(volume ? volume[1] : 'series');
+        if (!editions.has(group)) editions.set(group,[]);
+        editions.get(group).push(Object.assign({},work));
+      });
+      attributed=[];
+      editions.forEach(function(group){ attributed=attributed.concat(identity.uniqueWorks(group,{aliases:Object.assign({},aliases || {})})); });
+    }
+    return attributed.sort(function (a,b) { return (Number(a.yr || a.year) || 9999) - (Number(b.yr || b.year) || 9999); });
   }
   return {
     authorWorks: authorWorks,

@@ -1,0 +1,41 @@
+/* Editable controls stay readable on iOS without disabling pinch zoom. */
+.lf-app.lf-app.lf-app.lf-app :is(input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=button]):not([type=submit]), textarea, select),
+.lf-auth-root :is(input,textarea,select) { font-size: 16px !important; }
+.lf-social-timeline > .lf-friend-activity { order: -1; }
+.lf-friend-activity { padding: 20px 16px 24px; border-bottom: 1px solid var(--lf-border); color: var(--lf-text); }
+.lf-friend-section + .lf-friend-section { margin-top: 24px; }
+.lf-friend-section > header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.lf-friend-section h2 { margin:0; font-size:17px; line-height:1.5; font-weight:800; }
+.lf-friend-section > header button { border:0; background:none; color:var(--lf-accent); font:inherit; font-size:12px; min-height:44px; padding:0 4px; cursor:pointer; }
+.lf-friend-rail { display:flex; gap:12px; overflow-x:auto; padding:2px 0 8px; scroll-snap-type:x proximity; scrollbar-width:none; }
+.lf-friend-rail::-webkit-scrollbar { display:none; }
+.lf-friend-rail.is-expanded { display:grid; grid-template-columns:repeat(auto-fill,minmax(98px,1fr)); }
+.lf-friend-item { flex:0 0 108px; width:108px; min-width:0; scroll-snap-align:start; }
+.lf-friend-cover { display:block; width:100%; aspect-ratio:2/3; padding:0; overflow:hidden; border:1px solid var(--lf-border); border-radius:7px; background:var(--lf-fill); cursor:pointer; }
+.lf-friend-cover img { display:block; width:100%; height:100%; object-fit:cover; }
+.lf-friend-reader { display:flex; align-items:center; gap:5px; width:100%; padding:7px 0 3px; border:0; color:var(--lf-text); background:none; font:inherit; font-size:11px; text-align:start; cursor:pointer; min-height:32px; }
+.lf-friend-reader > img,.lf-friend-avatar { width:23px; height:23px; border-radius:50%; flex-shrink:0; object-fit:cover; background:var(--lf-fill); display:grid; place-items:center; }
+.lf-friend-reader > span:last-child,.lf-friend-title { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; min-width:0; }
+.lf-friend-title { font-size:11px; margin:9px 0 5px; }
+.lf-friend-score { display:flex; align-items:center; gap:5px; color:var(--lf-accent); font-size:11px; direction:ltr; justify-content:flex-start; }
+.lf-friend-item > small { display:block; font-size:10px; color:var(--lf-sub); margin-top:4px; }
+.lf-friend-empty { padding:18px 14px; margin:0; border:1px dashed var(--lf-border); border-radius:8px; color:var(--lf-sub); font-size:13px; line-height:1.7; }
+.lf-friend-empty button { font:inherit; color:var(--lf-accent); background:none; border:0; min-height:44px; cursor:pointer; }
+.lf-friend-sample { display:block; margin-top:14px; color:var(--lf-sub); font-size:11px; }
+.lf-spoiler-gate { margin:10px 0 14px; border:1px solid var(--lf-border); border-radius:12px; overflow:hidden; background:var(--lf-card2,var(--lf-fill)); }
+.lf-spoiler-notice { display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:16px 14px; }
+.lf-spoiler-icon { display:grid; place-items:center; width:26px; height:26px; border-radius:50%; border:2px solid var(--lf-red,#dc5555); color:var(--lf-red,#dc5555); font-weight:900; flex-shrink:0; }
+.lf-spoiler-notice > div { flex:1; min-width:120px; }
+.lf-spoiler-notice strong { display:block; color:var(--lf-text); font-size:14px; line-height:1.5; }
+.lf-spoiler-notice small { display:block; color:var(--lf-sub); font-size:11px; margin-top:4px; }
+.lf-app.lf-app .lf-spoiler-notice > button { min-height:44px; padding:9px 14px; border:1px solid var(--lf-border); border-radius:22px; background:var(--lf-text); color:var(--lf-bg); font:inherit; font-size:12px; font-weight:800; cursor:pointer; }
+.lf-spoiler-content { padding:0 14px 6px; }
+.lf-app.lf-app.lf-app .lf-work-author-button { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0; background:none; border:0; color:var(--lf-accent); font:inherit; font-size:13px; text-align:start; cursor:pointer; text-decoration:underline; text-underline-offset:4px; }
+.lf-work-suggestions { margin:20px 0; color:var(--lf-text); }
+.lf-work-suggestions h2 { font-size:16px; margin:0 0 4px; }
+.lf-work-suggestions > p { margin:0 0 12px; color:var(--lf-sub); font-size:12px; }
+.lf-suggestion-rail { display:flex; gap:10px; overflow-x:auto; padding-bottom:6px; scrollbar-width:none; }
+.lf-suggestion-rail > button { flex:0 0 88px; width:88px; background:none; border:0; padding:0; text-align:start; color:inherit; cursor:pointer; }
+.lf-suggestion-rail img { width:88px; height:132px; object-fit:cover; border-radius:6px; background:var(--lf-fill); }
+.lf-suggestion-rail strong { display:block; margin-top:6px; font:inherit; font-size:11px; font-weight:600; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.lf-friend-activity button:focus-visible,.lf-spoiler-gate button:focus-visible,.lf-work-suggestions button:focus-visible,.lf-work-author-button:focus-visible { outline:2px solid var(--lf-accent); outline-offset:3px; }

@@ -9,7 +9,7 @@
   var loaded = new Set((global.LOREFY_INITIAL_CATALOG_PARTS || []).map(Number));
   var loading = new Map();
   var activeQueue = Promise.resolve();
-  var version = "20261010-catalog-demand-v1";
+  var version = "20261011-friends-fixes-v1";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
@@ -522,6 +522,13 @@
   global.LorefyCatalogLoader = {
     loadPart: loadPart,
     loadWorks: loadWorks,
+    loadAuthor: function (author, active) {
+      var query=String(author || '').replace(/[,،]/g,' ').trim();
+      if (!query) return Promise.resolve();
+      return requestSearchParts(query,'').then(function (matches) {
+        return enqueue(matches.map(function (match) { return match.part; }),{gapMs:40,shouldContinue:active});
+      });
+    },
     loadMore: loadMore,
     loadType: function (type) { return enqueue(planner.remainingCatalogPlan(manifest, type, loaded)); },
     loadAll: loadAll,

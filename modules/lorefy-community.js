@@ -1191,10 +1191,12 @@
     if (!fab) fab = createComposerFab();
     else if (fab.parentElement !== host) host.appendChild(fab);
     var feed = page.querySelector(":scope > .lf-community-post-feed");
+    var activity = page.querySelector(":scope > .lf-friend-activity");
+    var feedAnchor = activity || tabs;
     if (!feed) {
       feed = createPostFeed();
       feed.id = "lf-community-post-feed";
-      if (tabs && tabs.nextSibling) page.insertBefore(feed, tabs.nextSibling); else page.insertBefore(feed, page.firstChild);
+      if (feedAnchor && feedAnchor.nextSibling) page.insertBefore(feed, feedAnchor.nextSibling); else if (feedAnchor) page.appendChild(feed); else page.insertBefore(feed, page.firstChild);
     } else if (!feed.id) feed.id = "lf-community-post-feed";
     markLegacyCommunitySections(page);
     orderCommunityFeed();
@@ -1202,7 +1204,7 @@
       state.legacySeedAttempted = true;
       state.loaded = false;
     }
-    if (tabs && feed.previousElementSibling !== tabs) tabs.insertAdjacentElement('afterend', feed);
+    if (feedAnchor && feed.previousElementSibling !== feedAnchor) feedAnchor.insertAdjacentElement('afterend', feed);
     loadPosts(false);
     return true;
   }

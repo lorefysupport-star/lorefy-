@@ -114,7 +114,20 @@
     return { progressById: cleaned, removedIds: removedIds, pendingIds: pendingIds };
   }
 
+  // A review can fill a missing legacy library entry, but must never overwrite a reader's choice.
+  function seedReviewedWorks(library, reviewIds, removed, completedStatus) {
+    var next = library, owns = Object.prototype.hasOwnProperty;
+    (reviewIds || []).forEach(function (id) {
+      id=String(id || '');
+      if (!id || removed && removed[id] || owns.call(next,id)) return;
+      if (next===library) next=Object.assign({},library);
+      next[id]=completedStatus;
+    });
+    return next;
+  }
+
   return {
+    seedReviewedWorks: seedReviewedWorks,
     normalizeProgress: normalizeProgress,
     checkpointChapterDelta: checkpointChapterDelta,
     effectiveProgress: effectiveProgress,

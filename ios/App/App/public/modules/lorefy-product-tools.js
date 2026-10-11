@@ -344,6 +344,7 @@
     doc.querySelectorAll(".lf-review-card,.lf-review-detail").forEach(function (card) {
       if (reviewContext(card).userId === userId) card.style.display = "none";
     });
+    global.dispatchEvent(new global.CustomEvent('lorefy:reader-safety-changed'));
   }
 
   function openReviewSafety(context) {
@@ -455,7 +456,7 @@
   function openAuthor(author) {
     var en = doc.documentElement.lang === 'en';
     openSheet(String(author),en ? 'Works in the catalog' : 'الأعمال المتاحة في المكتبة',function (body) {
-      var works = factory.authorWorks(global.LorefyMangaData || [],author);
+      var works = factory.authorWorks(global.LorefyMangaData || [],author,global.LorefyCatalogIdentity,global.LorefyCatalogAliases);
       var count = el('p',{class:'lf-author-count',text:works.length + (en ? ' works' : ' عمل')}); body.appendChild(count);
       var grid = el('div',{class:'lf-author-grid'}); body.appendChild(grid);
       var shown = 0;
@@ -478,12 +479,19 @@
       append();
       authorRefresh = function () {
         if (!body.isConnected) { authorRefresh = null; return; }
-        var updated = factory.authorWorks(global.LorefyMangaData || [],author);
+        var updated = factory.authorWorks(global.LorefyMangaData || [],author,global.LorefyCatalogIdentity,global.LorefyCatalogAliases);
         if (updated.length === works.length && updated.every(function (work,index) { return work.id === works[index].id; })) return;
         works = updated; shown = 0; grid.replaceChildren();
         count.textContent = works.length + (en ? ' works' : ' عمل'); append();
       };
-      if (!works.length) body.appendChild(el('p',{text:en ? 'No attributed works available yet.' : 'لا توجد أعمال موثقة لهذا المؤلف بعد.'}));
+      var status = el('p',{class:'lf-author-status',role:'status',text:en ? 'Finding this author’s works…' : 'جارٍ البحث عن أعمال الكاتب…'}); body.appendChild(status);
+      var loader=global.LorefyCatalogLoader;
+      var request=loader && loader.loadAuthor ? loader.loadAuthor(author,function(){ return body.isConnected; }) : Promise.resolve();
+      request.then(function(){
+        if (!body.isConnected) return;
+        if (authorRefresh) authorRefresh();
+        status.textContent=works.length ? '' : en ? 'No attributed works available yet.' : 'لا توجد أعمال موثقة لهذا المؤلف بعد.';
+      }).catch(function(){ if (body.isConnected) status.textContent=en ? 'Some works could not be loaded. Reopen to retry.' : 'تعذر تحميل بعض الأعمال. أعد فتح الكاتب للمحاولة.'; });
     });
   }
 
@@ -535,6 +543,7 @@
 
   global.LorefyProductTools = {
     core: core,
+    openAuthor: openAuthor,
     openDataCenter: openDataCenter,
     openCorrectionsCenter: openCorrectionsCenter,
     openSafetyCenter: openSafetyCenter,

@@ -1173,6 +1173,41 @@
       copy.images = copy.images.filter(Boolean);
       return copy;
     },
+    // Rating shelves use public metadata only; review bodies and media load in the normal review view.
+    listFriendRatings: async function(){
+      if (this.mode !== "live") return {followingIds:[],ratings:[],limited:false};
+      var owner = this.user && this.user.id;
+      if (!owner) throw invalidSessionError();
+      var followingIds = Array.from(new Set(await this.getFollowedProfileIds())).filter(function(id){ return isUuid(id) && id !== owner; });
+      if (owner !== (this.user && this.user.id)) throw invalidSessionError();
+      if (!followingIds.length) return {followingIds:[],ratings:[],limited:false};
+      var batches = [], client = this.client, rows = [], limited = false, profiles = {};
+      for (var i=0; i<followingIds.length; i+=50) batches.push(followingIds.slice(i,i+50));
+      // Bound both URL size and concurrency for readers following many accounts.
+      for (var offset=0; offset<batches.length; offset+=3) {
+        var results = await Promise.all(batches.slice(offset,offset+3).map(async function(ids){
+          var result = await client.from("reviews").select("id,user_id,work_id,rating,is_public,created_at")
+            .in("user_id",ids).eq("is_public",true).order("created_at",{ascending:false}).order("id",{ascending:false}).limit(500);
+          if (result.error) throw result.error;
+          var readers = await client.from("profiles").select("id,name,username,avatar").in("id",ids);
+          if (readers.error) throw readers.error;
+          return {rows:result.data || [],profiles:readers.data || []};
+        }));
+        if (owner !== (this.user && this.user.id)) throw invalidSessionError();
+        results.forEach(function(result){
+          if (result.rows.length===500) limited=true;
+          rows = rows.concat(result.rows);
+          result.profiles.forEach(function(profile){ profiles[profile.id]=profile; });
+        });
+      }
+      await Promise.all(Object.keys(profiles).map(async function(id){
+        var profile=profiles[id];
+        try { profile.avatar=await B._storageMediaUrl(PROFILE_MEDIA_BUCKET,profile.avatar,PROFILE_MEDIA_TTL); } catch(e) { profile.avatar=""; }
+      }));
+      if (owner !== (this.user && this.user.id)) throw invalidSessionError();
+      var allowed = new Set(followingIds);
+      return {followingIds:followingIds,limited:limited,ratings:rows.filter(function(row){ return allowed.has(row.user_id) && profiles[row.user_id] && row.is_public===true; }).map(function(row){ return Object.assign({},row,{profile:profiles[row.user_id]}); })};
+    },
     listReviews: async function(options){
       if (this.mode !== "live") return [];
       options = options || {};
