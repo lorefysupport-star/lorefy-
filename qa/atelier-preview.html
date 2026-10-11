@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <base href="../">
   <title>Lorefy Atelier — isolated UI QA</title>
-  <link rel="stylesheet" href="../styles/lorefy-profile-shop.css?v=20261010-atelier-v1">
+  <link rel="stylesheet" href="../styles/lorefy-profile-shop.css?v=20261011-shop-v1">
   <style>
     :root { --ui-bg:#faf8f3;--ui-surface:#fff;--ui-fill:#eeeae2;--ui-ink:#213536;--ui-muted:#667574;--ui-action:#486d63;--ui-line:#dddcd2;--ui-danger:#b43d35;--nc-top:0px;--nc-bottom:0px; }
     :root[data-qa-theme="dark"] { --ui-bg:#121d20;--ui-surface:#1c2a2e;--ui-fill:#25383e;--ui-ink:#eef2ea;--ui-muted:#abbfbd;--ui-action:#cae0c0;--ui-line:#35494e; }
@@ -24,7 +24,12 @@
     window.LorefyBackend={mode:'demo',user:{id:'atelier-layout-fixture'}};
   </script>
   <script defer src="../modules/lorefy-frame-motion.js"></script>
-  <script defer src="../modules/lorefy-profile-shop.js?v=20261010-atelier-v1"></script>
+  <link rel="stylesheet" href="../styles/lorefy-frame-motion.css">
+  <script defer src="../modules/lorefy-original-illustrated.js"></script>
+  <script defer src="../modules/lorefy-original-autumn.js"></script>
+  <script defer src="../modules/lorefy-original-original.js"></script>
+  <script defer src="../modules/lorefy-decoration-billing.js"></script>
+  <script defer src="../modules/lorefy-profile-shop.js?v=20261011-shop-v1"></script>
 </head>
 <body>
   <main class="lf-app" id="root">

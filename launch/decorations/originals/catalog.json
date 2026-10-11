@@ -1,0 +1,468 @@
+{
+  "version": 1,
+  "freeIds": [
+    "pfpvibes-bunny-hug",
+    "pfpvibes-kitty-crew",
+    "pfpvibes-moth-lantern",
+    "pfpvibes-rune-circle",
+    "pfpvibes-thorn-rose"
+  ],
+  "paid": [
+    {
+      "id": "original-night-gaze",
+      "artId": "night-gaze",
+      "renderer": "illustrated",
+      "names": {
+        "ar": "نظرة الليل",
+        "en": "Night Gaze"
+      },
+      "accent": "#eef1f6",
+      "second": "#86939f",
+      "overlay": "launch/decorations/originals/night-gaze/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/night-gaze/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.59062
+      },
+      "collection": {
+        "ar": "ظلال وحكايات",
+        "en": "Shadows & Stories"
+      },
+      "motion": {
+        "motif": "ghost",
+        "color": "#eef1f6",
+        "second": "#86939f",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.night_gaze"
+    },
+    {
+      "id": "original-signal-drift",
+      "artId": "signal-drift",
+      "renderer": "illustrated",
+      "names": {
+        "ar": "موجة الإشارة",
+        "en": "Signal Drift"
+      },
+      "accent": "#54e6dc",
+      "second": "#ff7b83",
+      "overlay": "launch/decorations/originals/signal-drift/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/signal-drift/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.67188
+      },
+      "collection": {
+        "ar": "ظلال وحكايات",
+        "en": "Shadows & Stories"
+      },
+      "motion": {
+        "motif": "rune",
+        "color": "#54e6dc",
+        "second": "#ff7b83",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.signal_drift"
+    },
+    {
+      "id": "original-midnight-bloom",
+      "artId": "midnight-bloom",
+      "renderer": "illustrated",
+      "names": {
+        "ar": "زهرة منتصف الليل",
+        "en": "Midnight Bloom"
+      },
+      "accent": "#df465e",
+      "second": "#a62743",
+      "overlay": "launch/decorations/originals/midnight-bloom/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/midnight-bloom/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.575
+      },
+      "collection": {
+        "ar": "ظلال وحكايات",
+        "en": "Shadows & Stories"
+      },
+      "motion": {
+        "motif": "flower",
+        "color": "#df465e",
+        "second": "#a62743",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.midnight_bloom"
+    },
+    {
+      "id": "original-crimson-current",
+      "artId": "crimson-current",
+      "renderer": "illustrated",
+      "names": {
+        "ar": "التيار القرمزي",
+        "en": "Crimson Current"
+      },
+      "accent": "#ff6056",
+      "second": "#fff4dc",
+      "overlay": "launch/decorations/originals/crimson-current/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/crimson-current/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.59375
+      },
+      "collection": {
+        "ar": "ظلال وحكايات",
+        "en": "Shadows & Stories"
+      },
+      "motion": {
+        "motif": "spark",
+        "color": "#ff6056",
+        "second": "#fff4dc",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.crimson_current"
+    },
+    {
+      "id": "original-maple-scout",
+      "artId": "maple-scout",
+      "renderer": "autumn",
+      "names": {
+        "ar": "كشاف القيقب",
+        "en": "Maple Scout"
+      },
+      "accent": "#f5ae56",
+      "second": "#d7523d",
+      "overlay": "launch/decorations/originals/maple-scout/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/maple-scout/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.6
+      },
+      "collection": {
+        "ar": "حكايات الخريف",
+        "en": "Autumn Stories"
+      },
+      "motion": {
+        "motif": "leaf",
+        "color": "#f5ae56",
+        "second": "#d7523d",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.maple_scout"
+    },
+    {
+      "id": "original-twilight-den",
+      "artId": "twilight-den",
+      "renderer": "autumn",
+      "names": {
+        "ar": "ملاذ الغسق",
+        "en": "Twilight Den"
+      },
+      "accent": "#f0c779",
+      "second": "#c47988",
+      "overlay": "launch/decorations/originals/twilight-den/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/twilight-den/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.5875
+      },
+      "collection": {
+        "ar": "حكايات الخريف",
+        "en": "Autumn Stories"
+      },
+      "motion": {
+        "motif": "leaf",
+        "color": "#f0c779",
+        "second": "#c47988",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.twilight_den"
+    },
+    {
+      "id": "original-amber-drift",
+      "artId": "amber-drift",
+      "renderer": "autumn",
+      "names": {
+        "ar": "نسيم العنبر",
+        "en": "Amber Drift"
+      },
+      "accent": "#edaa40",
+      "second": "#cb593b",
+      "overlay": "launch/decorations/originals/amber-drift/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/amber-drift/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.64062
+      },
+      "collection": {
+        "ar": "حكايات الخريف",
+        "en": "Autumn Stories"
+      },
+      "motion": {
+        "motif": "leaf",
+        "color": "#edaa40",
+        "second": "#cb593b",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.amber_drift"
+    },
+    {
+      "id": "original-woodland-lantern",
+      "artId": "woodland-lantern",
+      "renderer": "autumn",
+      "names": {
+        "ar": "فانوس الغابة",
+        "en": "Woodland Lantern"
+      },
+      "accent": "#e9ba66",
+      "second": "#78977b",
+      "overlay": "launch/decorations/originals/woodland-lantern/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/woodland-lantern/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.65938
+      },
+      "collection": {
+        "ar": "حكايات الخريف",
+        "en": "Autumn Stories"
+      },
+      "motion": {
+        "motif": "leaf",
+        "color": "#e9ba66",
+        "second": "#78977b",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.woodland_lantern"
+    },
+    {
+      "id": "original-moon-fox",
+      "artId": "moon-fox",
+      "renderer": "original",
+      "names": {
+        "ar": "ثعلب القمر",
+        "en": "Moon Fox"
+      },
+      "accent": "#91e5f5",
+      "second": "#ead08b",
+      "overlay": "launch/decorations/originals/moon-fox/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/moon-fox/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.5
+      },
+      "collection": {
+        "ar": "رفاق الحكاية",
+        "en": "Story Companions"
+      },
+      "motion": {
+        "motif": "spark",
+        "color": "#91e5f5",
+        "second": "#ead08b",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.moon_fox"
+    },
+    {
+      "id": "original-ribbon-bunny",
+      "artId": "ribbon-bunny",
+      "renderer": "original",
+      "names": {
+        "ar": "أرنب الشرائط",
+        "en": "Ribbon Bunny"
+      },
+      "accent": "#ed91b5",
+      "second": "#f5d5cb",
+      "overlay": "launch/decorations/originals/ribbon-bunny/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/ribbon-bunny/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.44375
+      },
+      "collection": {
+        "ar": "رفاق الحكاية",
+        "en": "Story Companions"
+      },
+      "motion": {
+        "motif": "heart",
+        "color": "#ed91b5",
+        "second": "#f5d5cb",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.ribbon_bunny"
+    },
+    {
+      "id": "original-ember-tiger",
+      "artId": "ember-tiger",
+      "renderer": "original",
+      "names": {
+        "ar": "نمر الجمر",
+        "en": "Ember Tiger"
+      },
+      "accent": "#edaa51",
+      "second": "#f17342",
+      "overlay": "launch/decorations/originals/ember-tiger/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/ember-tiger/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.50313
+      },
+      "collection": {
+        "ar": "رفاق الحكاية",
+        "en": "Story Companions"
+      },
+      "motion": {
+        "motif": "spark",
+        "color": "#edaa51",
+        "second": "#f17342",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.ember_tiger"
+    },
+    {
+      "id": "original-mint-raccoon",
+      "artId": "mint-raccoon",
+      "renderer": "original",
+      "names": {
+        "ar": "راكون النعناع",
+        "en": "Mint Raccoon"
+      },
+      "accent": "#9cd7bf",
+      "second": "#d6e4df",
+      "overlay": "launch/decorations/originals/mint-raccoon/avatar-still.png",
+      "pageOverlay": "launch/decorations/originals/mint-raccoon/page-still.png",
+      "geometry": {
+        "cx": 0.5,
+        "cy": 0.54,
+        "size": 0.49375
+      },
+      "collection": {
+        "ar": "رفاق الحكاية",
+        "en": "Story Companions"
+      },
+      "motion": {
+        "motif": "leaf",
+        "color": "#9cd7bf",
+        "second": "#d6e4df",
+        "speed": 0.5,
+        "count": 6
+      },
+      "parts": [
+        "frame",
+        "page"
+      ],
+      "price": {
+        "amount": 1300,
+        "currency": "SAR"
+      },
+      "productId": "com.lorefy.app.decorations.mint_raccoon"
+    }
+  ]
+}

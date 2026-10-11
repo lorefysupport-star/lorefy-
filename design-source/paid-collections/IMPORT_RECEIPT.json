@@ -1,0 +1,30 @@
+{
+  "archives": [
+    {
+      "archive": "Lorefy-discord-inspired-animated-v2.zip",
+      "sha256": "19a884cf8e49a2585fc881b02deca30a3dba4f1a24dbdb951c0a0f7c6edc4018",
+      "bytes": 144670284,
+      "sourceClaim": "Original native generated raster art plus editable procedural animation; no downloaded commercial cosmetic assets"
+    },
+    {
+      "archive": "Lorefy-autumn-animated-bundles.zip",
+      "sha256": "62acc507ed692817394933ad95954368b6a1bb006234fa22cc1475ccd82256b0",
+      "bytes": 228573138,
+      "sourceClaim": "Original native generated raster art plus editable procedural animation; no downloaded commercial cosmetic assets"
+    },
+    {
+      "archive": "Lorefy-original-animated-bundles.zip",
+      "sha256": "20229f4b3f787126dc75806dc3118cfe6062e2dcf0620c89c137e94321fc9d1a",
+      "bytes": 353396844,
+      "sourceClaim": "Original AI generated raster art; no downloaded commercial cosmetic assets"
+    }
+  ],
+  "paid": 12,
+  "free": [
+    "pfpvibes-bunny-hug",
+    "pfpvibes-kitty-crew",
+    "pfpvibes-moth-lantern",
+    "pfpvibes-rune-circle",
+    "pfpvibes-thorn-rose"
+  ]
+}

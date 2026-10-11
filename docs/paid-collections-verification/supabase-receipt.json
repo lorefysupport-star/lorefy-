@@ -1,0 +1,17 @@
+{
+  "project": "qsroxmltioxqozmykens",
+  "date": "2026-10-11",
+  "paid_products": 12,
+  "price_minor": 1300,
+  "currency": "SAR",
+  "purchase_records": 0,
+  "rls_enabled": true,
+  "authenticated_can_insert_purchase": false,
+  "authenticated_can_execute_record_rpc": false,
+  "edge_function": {"name":"decoration-purchases","version":1,"status":"ACTIVE","verify_jwt":false,"custom_auth":"Auth getUser for clients; Apple signed JWS for notifications","checksum":"654b5836d538cc6e4bd4cf6824fbd62e4ecb923e9b178358d5290a7eddf02e75"},
+  "smoke_checks": {"unauthenticated_status_http":401,"forged_signed_notification_http":400,"forged_paid_state":"Rejected before a row was written"},
+  "actual_purchase_verified": false,
+  "apple_keys_readiness_verified": false,
+  "native_swift_compiled": false,
+  "production_sales_enabled": false
+}

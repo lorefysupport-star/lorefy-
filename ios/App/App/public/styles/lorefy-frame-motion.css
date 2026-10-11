@@ -2,3 +2,6 @@
 .lf-frame-overlay { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none; background:transparent; }
 .lf-decoration-page-border[data-motion-page] { border-image:none; border:0; }
 .lf-decoration-page-border[data-motion-page]::before { content:''; position:absolute; inset:1px; border:1px solid var(--shop-accent); border-radius:18px; pointer-events:none; }
+.has-original-motion { background-image:none !important; border-image:none; }
+.has-original-motion > .lf-frame-overlay { opacity:0; }
+.lf-decoration-page-border.has-original-motion::before { display:none; }

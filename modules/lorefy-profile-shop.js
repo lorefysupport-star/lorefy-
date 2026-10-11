@@ -1,4 +1,4 @@
-/* Free owner-selected decorations. Previews never replace profile media. */
+/* Owner-selected decorations. Previews never replace profile media. */
 (function (root, factory) {
   const api = factory(root);
   if (typeof module === 'object' && module.exports) module.exports = api;
@@ -36,13 +36,29 @@
       motion:Object.freeze({...item.motion,color:item.accent,second:item.second}),parts:Object.freeze(['frame','page','effect']),free:true,price:null}));
     bundles=Object.freeze([...bundles.filter(pack=>!pack.overlay),...extra]);return true;
   }
+  let offerIds=null;
+  const offeredBundles=()=>offerIds ? offerIds.map(findBundle).filter(Boolean) : bundles;
+  function installShopCatalog(catalog) {
+    if(!catalog || catalog.version!==1 || !Array.isArray(catalog.freeIds) || catalog.freeIds.length!==5 || !Array.isArray(catalog.paid) || catalog.paid.length!==12)return false;
+    const ids=new Set(),products=new Set();
+    if(catalog.freeIds.some(id=>!findBundle(id)||!findBundle(id).free))return false;
+    if(catalog.paid.some(p=>!p || !/^original-[a-z-]+$/.test(p.id) || ids.has(p.id) || !ids.add(p.id) ||
+      p.productId!=='com.lorefy.app.decorations.'+p.artId.replaceAll('-','_') || products.has(p.productId) || !products.add(p.productId) ||
+      !/^[a-z-]+$/.test(p.artId) || !['original','autumn','illustrated'].includes(p.renderer) ||
+      p.overlay!=='launch/decorations/originals/'+p.artId+'/avatar-still.png' || p.pageOverlay!=='launch/decorations/originals/'+p.artId+'/page-still.png' ||
+      !p.names || typeof p.names.ar!=='string' || typeof p.names.en!=='string' || !p.geometry || !['cx','cy','size'].every(k=>Number.isFinite(p.geometry[k])) ||
+      p.geometry.size<.4 || p.geometry.size>.85 || !p.price || p.price.amount!==1300 || p.price.currency!=='SAR' || !/^#[\da-f]{6}$/i.test(p.accent) || !/^#[\da-f]{6}$/i.test(p.second)))return false;
+    const extra=catalog.paid.map(p=>Object.freeze({...p,free:false,price:Object.freeze({...p.price}),names:Object.freeze({...p.names}),parts:Object.freeze(['frame','page']),geometry:Object.freeze({...p.geometry}),motion:Object.freeze({...p.motion}),row:'0%',icon:'Sparkles'}));
+    bundles=Object.freeze([...bundles.filter(p=>!p.productId),...extra]);
+    offerIds=Object.freeze([...extra.map(p=>p.id),...catalog.freeIds]);return true;
+  }
   const findBundle = id => bundles.find(pack => pack.id === id) || null;
   const isAvailable = backend => !!backend && ['demo','live'].includes(backend.mode);
   const DECORATION_KEY = isLocalLab() ? 'lorefy.user.localDecorationLab.v1' : 'lorefy.user.profileDecoration.v1';
   const normalizeDecoration = value => Object.fromEntries(['frame','page','effect'].map(key => [key,findBundle(value && value[key]) ? value[key] : null]));
   function previewParts(id, part) {
     const pack = findBundle(id);
-    return Object.fromEntries(['frame','page','effect'].map(key => [key, pack && (part === 'all' || part === key) ? id : null]));
+    return Object.fromEntries(['frame','page','effect'].map(key => [key, pack && pack.parts.includes(key) && (part === 'all' || part === key) ? id : null]));
   }
   function readDecoration(storage, owner) {
     try {const record = JSON.parse(storage.getItem(DECORATION_KEY) || 'null'); return normalizeDecoration(owner && record && record.ownerId === owner ? record : null);}
@@ -51,7 +67,10 @@
   async function applyDecoration(id, part, owner) {
     if (!owner || owner !== ownerId() || !isAvailable(root.LorefyBackend)) throw new Error('LOREFY_DECORATION_ACCOUNT_CHANGED');
     if (id !== null && !findBundle(id) || !['all','frame','page','effect'].includes(part)) throw new Error('LOREFY_DECORATION_INVALID');
+    if(id && ((offerIds&&!offerIds.includes(id)) || (part!=='all'&&!findBundle(id).parts.includes(part))))throw new Error('LOREFY_DECORATION_INVALID');
     if(id && findBundle(id).releaseAllowed===false && !isLocalLab() && !(betaCollectionsEnabled() && findBundle(id).betaCollection))throw new Error('LOREFY_DECORATION_LOCAL_ONLY');
+    if(id && !findBundle(id).free && (!root.LorefyDecorationBilling || !await root.LorefyDecorationBilling.has(findBundle(id),owner)))throw new Error('LOREFY_DECORATION_PURCHASE_REQUIRED');
+    if(owner!==ownerId())throw new Error('LOREFY_DECORATION_ACCOUNT_CHANGED');
     const next = id === null ? normalizeDecoration(null) : part === 'all' ? previewParts(id,'all') : {...readDecoration(root.localStorage,owner),[part]:id};
     root.localStorage.setItem(DECORATION_KEY,JSON.stringify({ownerId:owner,...next}));
     root.dispatchEvent(new root.CustomEvent('lorefy:decoration-change',{detail:{owner}}));
@@ -127,7 +146,7 @@
   }
   function FrameArt({pack,kind,className}) {
     const ref=root.React.useRef(null);
-    root.React.useEffect(()=>root.LorefyFrameMotion ? root.LorefyFrameMotion.mount(ref.current,kind==='avatar'?avatarMotion(pack):pack.motion,kind) : undefined,[pack.id,kind]);
+    root.React.useEffect(()=>root.LorefyFrameMotion ? root.LorefyFrameMotion.mount(ref.current,{...(kind==='avatar'?avatarMotion(pack):pack.motion),...(pack.renderer?{original:{id:pack.artId,renderer:pack.renderer}}:{})},kind) : undefined,[pack.id,kind]);
     return h(kind==='avatar'?'span':'div',{ref,className,style:{...packStyle(pack),...(kind==='avatar'&&pack.overlay?{backgroundImage:'none'}:{})},
       'data-motion-page':kind==='page'&&pack.overlay?'true':undefined,'aria-hidden':true},
       kind==='avatar'&&pack.overlay&&h('img',{className:'lf-frame-overlay',src:pack.overlay,alt:'',loading:'lazy',decoding:'async'}));
@@ -151,11 +170,12 @@
     const [mood, setMood] = root.React.useState('all');
     const moods = [['all','كل الأجواء','All moods'],['dream','حالم','Dreamy'],['bloom','طبيعة','Nature'],['mystery','غامض','Mystic']];
     const moodOf = pack => ['flower','leaf','heart','bubble'].includes(pack.motion.motif) ? 'bloom' : ['ghost','rune'].includes(pack.motion.motif) ? 'mystery' : 'dream';
-    const saved = onlyWishlist ? bundles.filter(pack => wishlist.includes(pack.id)) : bundles;
+    const offers=offeredBundles();
+    const saved = onlyWishlist ? offers.filter(pack => wishlist.includes(pack.id)) : offers;
     const shown = saved.filter(pack => mood === 'all' || moodOf(pack) === mood);
-    const featured = bundles[0];
+    const featured = offers[0] || bundles[0];
     return h('div', {className:'lf-shop-catalog'},
-      !onlyWishlist && h('section', {className:'lf-shop-editorial'},
+      !onlyWishlist && offers.length>0 && h('section', {className:'lf-shop-editorial'},
         h('div', {className:'lf-shop-intro'}, h('h2',null,text(lang,'لبروفايلك، حكاية أخرى.','Give your profile a new story.')),
           h('p',null,text(lang,'اختر ما يشبهك. ودع التفاصيل تحكي عنك.','Find your mood. Let the details tell your story.'))),
         h('button',{type:'button',className:'lf-shop-featured',style:packStyle(featured),onClick:()=>onSelect(featured.id),
@@ -175,20 +195,21 @@
       h('div', {className:'lf-shop-products'}, shown.map(pack => h('article', {className:'lf-shop-product', key:pack.id, style:packStyle(pack)},
         h('button', {type:'button', className:'lf-shop-product-preview', 'aria-label':text(lang,'معاينة ','Preview ') + pack.names[lang], onClick:() => onSelect(pack.id)},
           h('span',{className:'lf-shop-product-orbit','aria-hidden':true}),
-          h(Avatar, {profile, pack}),h('span',{className:'lf-shop-piece-count'},text(lang,'٣ قطع','3 pieces'))),
+          h(Avatar, {profile, pack}),h('span',{className:'lf-shop-piece-count'},pack.parts.length===2?text(lang,'إطاران متحركان','2 animated frames'):text(lang,'٣ قطع','3 pieces'))),
         h('button', {type:'button', className:'lf-shop-wishlist', 'aria-pressed':wishlist.includes(pack.id),
           'aria-label':text(lang,'حفظ في المفضلة: ','Wishlist: ') + pack.names[lang], title:text(lang,'المفضلة','Wishlist'), onClick:() => onWishlist(pack.id)}, icon('Heart', 18)),
         h('div', {className:'lf-shop-product-copy'}, h('span',{className:'lf-shop-product-label'},text(lang,pack.overlay?'مجموعة خاصة':'لورفاي الأصلية',pack.overlay?'SIGNATURE COLLECTION':'LOREFY ORIGINALS')),
-          h('h3', null, pack.names[lang]),h('div',{className:'lf-shop-product-bottom'},h('span',{className:'lf-shop-price'},text(lang,'مجانية','Free')),
+          h('h3', null, pack.names[lang]),h('div',{className:'lf-shop-product-bottom'},h('span',{className:'lf-shop-price'},priceLabel(pack,lang)),
           h('button', {type:'button', className:'lf-shop-view', 'aria-label':text(lang,'عرض الحزمة: ','View collection: ')+pack.names[lang],onClick:() => onSelect(pack.id)},icon(lang === 'en' ? 'ArrowUpRight' : 'ArrowUpLeft', 18))))))),
       !shown.length && h('div', {className:'lf-shop-empty', role:'status'}, icon(onlyWishlist?'Heart':'Sparkles', 28),
         h('p', null, text(lang,onlyWishlist?'لم تحفظ حزمة بهذه الأجواء بعد':'لا توجد حزم بهذه الأجواء',onlyWishlist?'No saved picks in this mood yet':'No collections in this mood'))),
-      h('p',{className:'lf-shop-catalog-note'},icon('Gift',15),text(lang,'تشكيلة البيتا متاحة مجانًا الآن','The beta collection is currently free')));
+      h('p',{className:'lf-shop-catalog-note'},icon('Gift',15),text(lang,'٥ حزم مجانية · الحزم الجديدة شراء مرة واحدة','5 free collections · New collections are a one-time purchase')));
   }
+  function priceLabel(pack,lang){return pack.free?text(lang,'مجانية','Free'):text(lang,'13 ر.س','SAR 13');}
   function Entry({language}) {
     if (!isAvailable(root.LorefyBackend)) return null;
     return h('button', {className:'lf-interface-entry lf-shop-settings-entry', type:'button', onClick:open, 'aria-haspopup':'dialog'},
-      icon('Sparkles',20), h('span',null,h('strong',null,text(language,'زينة البروفايل','Profile decorations')),h('small',null,text(language,'حزم مجانية','Free collections'))),
+      icon('Sparkles',20), h('span',null,h('strong',null,text(language,'زينة البروفايل','Profile decorations')),h('small',null,text(language,'حزم مجانية وحصرية','Free & exclusive collections'))),
       icon(language === 'en' ? 'ChevronRight' : 'ChevronLeft',18));
   }
   function Shop() {
@@ -203,6 +224,7 @@
     const [saving,setSaving] = R.useState(false);
     const [status,setStatus] = R.useState('');
     const [equipped,setEquipped] = R.useState(normalizeDecoration(null));
+    const [owned,setOwned]=R.useState([]),[storePrices,setStorePrices]=R.useState({});
     const host = R.useRef(null), closeButton = R.useRef(null), previous = R.useRef(null), body = R.useRef(null);
     const lang = root.document.documentElement.lang === 'en' ? 'en' : 'ar';
     R.useEffect(() => {
@@ -213,6 +235,11 @@
         setRequest(event.detail); setSelection(null); setPart('all'); setTab('collections'); setError('');
         setWishlist(readWishlist(root.sessionStorage, event.detail.owner));
         setEquipped(readDecoration(root.localStorage,event.detail.owner));setSaving(false);setStatus('');
+        setOwned([]);setStorePrices({});
+        if(root.LorefyDecorationBilling && root.LorefyBackend.mode==='live'){
+          root.LorefyDecorationBilling.owned(event.detail.owner).then(rows=>{if(active&&ownerId()===event.detail.owner)setOwned(rows);}).catch(()=>{});
+          root.LorefyDecorationBilling.availability(event.detail.owner).then(rows=>{if(active&&ownerId()===event.detail.owner)setStorePrices(Object.fromEntries(rows.map(r=>[r.id,r.displayPrice])));}).catch(()=>{});
+        }
       };
       root.addEventListener('lorefy:profile-shop-open', show);
       if (root.LorefyBackend && root.LorefyBackend.onAuth) root.LorefyBackend.onAuth(() => {
@@ -248,8 +275,25 @@
     R.useEffect(() => {
       if (body.current) body.current.scrollTop = 0;
     }, [request, selection, tab]);
+    R.useEffect(() => {
+      if (!request || !root.LorefyDecorationBilling || !root.LorefyDecorationBilling.watch || root.LorefyBackend.mode!=='live') return;
+      return root.LorefyDecorationBilling.watch(request.owner, rows => {if(ownerId()===request.owner)setOwned(rows);});
+    }, [request]);
     if (!request) return null;
     const pack = findBundle(selection), selected = id => {setSelection(id); setPart('all'); setReplay(value => value + 1); setError('');setStatus('');};
+    const purchased=pack && (pack.free || owned.includes(pack.productId));
+    async function purchase(restore=false){
+      if(saving)return;setSaving(true);setError('');setStatus('');
+      try{
+        if(!root.LorefyDecorationBilling || root.LorefyBackend.mode!=='live')throw Object.assign(new Error('demo'),{code:'LOREFY_PURCHASE_IOS_REQUIRED'});
+        const rows=await (restore?root.LorefyDecorationBilling.restore(request.owner):root.LorefyDecorationBilling.buy(pack,request.owner));
+        if(ownerId()!==request.owner){setRequest(null);return;}setOwned(rows);
+        setStatus(text(lang,restore?'تم التحقق من مشترياتك':'تم الشراء. يمكنك الآن تطبيق الإطارين.',restore?'Purchases checked':'Purchased. You can now apply both frames.'));
+      }catch(e){
+        const messages={LOREFY_PURCHASE_CANCELLED:['أُلغيت عملية الشراء','Purchase cancelled'],LOREFY_PURCHASE_PENDING:['الشراء ينتظر الموافقة. تظهر الحزمة بعد اكتمال التحقق.','Purchase awaiting approval. Restore after approval.'],LOREFY_PURCHASE_IOS_REQUIRED:['الشراء متاح داخل تطبيق iOS؛ يمكنك معاينة الحزمة هنا.','Purchase in the iOS app. Preview this collection here.'],LOREFY_PURCHASE_SETUP_REQUIRED:['الشراء غير متاح بعد. حاول لاحقًا.','Purchases are not available yet. Please try later.'],LOREFY_PURCHASE_PRODUCT_UNAVAILABLE:['هذه الحزمة غير متاحة للشراء حاليًا.','This collection is not available for purchase yet.']};
+        const m=messages[e.code]||['تعذر تأكيد الشراء. جرّب استعادة المشتريات أو حاول لاحقًا.','Could not verify purchase. Try restoring purchases or try later.'];setError(text(lang,...m));
+      }finally{setSaving(false);}
+    }
     async function apply(id, component) {
       if (saving) return;
       setSaving(true);setError('');setStatus('');
@@ -262,7 +306,7 @@
       } catch (_) {setError(text(lang,'تعذر حفظ الزينة. تأكد من حسابك وحاول مجددًا.','Could not save decorations. Check your account and try again.'));}
       finally {setSaving(false);}
     }
-    const isEquipped = pack && (part === 'all' ? ['frame','page','effect'].every(key => equipped[key] === pack.id) : equipped[part] === pack.id);
+    const isEquipped = pack && (part === 'all' ? pack.parts.every(key => equipped[key] === pack.id) : equipped[part] === pack.id);
     function toggleWishlist(id) {
       const next = wishlist.includes(id) ? wishlist.filter(value => value !== id) : wishlist.concat(id);
       if (!writeWishlist(root.sessionStorage, request.owner, next)) return setError(text(lang,'تعذر حفظ المفضلة في هذه الجلسة.','Could not save the wishlist in this session.'));
@@ -285,20 +329,21 @@
               h('button',{className:'lf-shop-icon-button',type:'button',onClick:() => toggleWishlist(pack.id),'aria-pressed':wishlist.includes(pack.id),
                 'aria-label':text(lang,'حفظ في المفضلة: ','Wishlist: ') + pack.names[lang]},icon('Heart',20))),
             h('div', {className:'lf-shop-parts',role:'group','aria-label':text(lang,'أجزاء الحزمة','Bundle components')},
-              [['all','Layers','الحزمة','Bundle'],['frame','CircleUserRound','إطار الصورة','Avatar frame'],['page','PanelTop','إطار الصفحة','Profile frame'],['effect','Sparkles','التأثير','Effect']].map(([value,symbol,ar,en]) =>
+              [['all','Layers','الحزمة','Bundle'],['frame','CircleUserRound','إطار الصورة','Avatar frame'],['page','PanelTop','إطار الصفحة','Profile frame'],['effect','Sparkles','التأثير','Effect']].filter(([value])=>value==='all'||pack.parts.includes(value)).map(([value,symbol,ar,en]) =>
                 h('button',{key:value,type:'button','aria-pressed':part === value,onClick:() => {setPart(value); setReplay(count => count + 1);setStatus('');setError('');}},icon(symbol,20),h('span',null,text(lang,ar,en))))),
-            h('div', {className:'lf-shop-includes'}, icon('Package',18), h('span',null,text(lang,'ثلاث قطع. حكاية واحدة.','Three pieces. One story.'))),
+            h('div', {className:'lf-shop-includes'}, icon('Package',18), h('span',null,pack.free?text(lang,'ثلاث قطع. حكاية واحدة.','Three pieces. One story.'):text(lang,'إطار صورة وإطار صفحة متحركان · شراء مرة واحدة','Animated avatar + profile frames · One-time purchase'))),
             h('button',{className:'lf-shop-replay',type:'button',onClick:() => setReplay(value => value + 1)},icon('RotateCcw',17),text(lang,'إعادة المعاينة','Replay preview')))) :
           h(R.Fragment,null,
             h('div', {className:'lf-shop-tabs',role:'group','aria-label':text(lang,'عرض المتجر','Shop view')},
               [['collections','اكتشف','Discover'],['wishlist','محفوظاتك','Saved']].map(([value,ar,en]) => h('button',{key:value,type:'button','aria-pressed':tab === value,onClick:() => setTab(value)},icon(value==='collections'?'Grid2X2':'Heart',15),text(lang,ar,en),value === 'wishlist' && h('span',null,wishlist.length)))),
             h(Catalog, {lang, profile:request.profile, wishlist, onSelect:selected, onWishlist:toggleWishlist, onlyWishlist:tab === 'wishlist'})),
+          h('button',{type:'button',className:'lf-shop-replay',disabled:saving,onClick:()=>purchase(true)},icon('RotateCcw',17),text(lang,'استعادة المشتريات','Restore purchases')),
           error && h('p',{className:'lf-shop-error',role:'alert'},error),status && h('p',{className:'lf-shop-status',role:'status'},status)),
         pack && h('footer', {className:'lf-shop-footer'},h('div',{className:'lf-shop-order-summary'},
           h('div',null,h('strong',null,text(lang,part==='all'?'الحزمة الكاملة':'القطعة المختارة',part==='all'?'Complete collection':'Selected component')),
-            h('small',null,text(lang,'متاحة مجانًا في البيتا','Free during beta'))),h('span',null,text(lang,'مجانية','Free'))),
-          pack && h('button',{type:'button',className:'lf-shop-apply',disabled:saving || isEquipped,onClick:() => apply(pack.id,part)},
-          icon(isEquipped ? 'Check' : 'CheckCheck',17),saving ? text(lang,'جارٍ الحفظ','Saving') : isEquipped ? text(lang,'مطبّقة','Applied') : text(lang,part === 'all' ? 'تطبيق الحزمة مجانًا' : 'تطبيق هذا الجزء','Apply ' + (part === 'all' ? 'bundle for free' : 'this component'))),
+            h('small',null,pack.free?text(lang,'مجانية دائمًا','Always free'):text(lang,'شراء مرة واحدة · الإطاران معًا','One-time purchase · Both frames'))),h('span',null,storePrices[pack.productId]||priceLabel(pack,lang))),
+          pack && h('button',{type:'button',className:'lf-shop-apply',disabled:saving || (purchased&&isEquipped),onClick:() => purchased?apply(pack.id,part):purchase()},
+          icon(isEquipped&&purchased ? 'Check' : purchased?'CheckCheck':'ShoppingBag',17),saving ? text(lang,'جارٍ التأكيد','Confirming') : !purchased ? text(lang,'شراء الحزمة · ','Buy collection · ')+(storePrices[pack.productId]||priceLabel(pack,lang)) : isEquipped ? text(lang,'مطبّقة','Applied') : text(lang,part === 'all' ? (pack.free?'تطبيق الحزمة مجانًا':'تطبيق الحزمة') : 'تطبيق هذا الجزء','Apply ' + (part === 'all' ? (pack.free?'bundle for free':'collection') : 'this component'))),
           Object.values(equipped).some(Boolean) && h('button',{type:'button',className:'lf-shop-remove',disabled:saving,onClick:() => apply(null,'all')},icon('Eraser',17),text(lang,'إزالة الزينة','Remove decorations')),
           !pack && !Object.values(equipped).some(Boolean) && h('span',null,icon('Sparkles',16),text(lang,'مجانية للجميع','Free for everyone')))));
     return root.ReactDOM.createPortal(content, root.document.querySelector('.lf-app'));
@@ -312,6 +357,8 @@
           if(response.ok)(beta ? installBetaCollections : installLocalCollections)(await response.json());
         } catch (_) { /* Original collections remain available if the manifest is missing. */ }
       }
+      offerIds=Object.freeze([]);
+      if(root.fetch){try{const r=await root.fetch('launch/decorations/originals/catalog.json');if(r.ok)installShopCatalog(await r.json());}catch(_) { /* Purchase catalog fails closed; existing appearance remains. */ }}
       const host = root.document.createElement('div'); host.className = 'lf-shop-controller'; root.document.body.appendChild(host);
       root.ReactDOM.createRoot(host).render(h(Shop));
       let scheduled = false;
@@ -325,7 +372,7 @@
           if (pack) {
             if (!ring) {ring = root.document.createElement('span');ring.className = 'lf-decoration-avatar-frame lf-shop-frame-art';ring.setAttribute('aria-hidden','true');avatar.appendChild(ring);}
             styleNode(ring,pack);avatar.classList.add('has-decoration');
-            if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(ring,avatarMotion(pack),'avatar');
+            if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(ring,{...avatarMotion(pack),...(pack.renderer?{original:{id:pack.artId,renderer:pack.renderer}}:{})},'avatar');
           } else {if (ring) ring.remove();avatar.classList.remove('has-decoration');}
         }
         let pin = page.querySelector(':scope > .lf-decoration-page-pin');
@@ -339,7 +386,7 @@
           styleNode(pin.firstElementChild,pagePack);
           pin.firstElementChild.style.setProperty('--decoration-height',page.clientHeight + 'px');
           if(pagePack.overlay)pin.firstElementChild.setAttribute('data-motion-page','true');else pin.firstElementChild.removeAttribute('data-motion-page');
-          if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(pin.firstElementChild,pagePack.motion,'page');
+          if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(pin.firstElementChild,{...pagePack.motion,...(pagePack.renderer?{original:{id:pagePack.artId,renderer:pagePack.renderer}}:{})},'page');
         } else if (pin) pin.remove();
         const banner = page.querySelector('.lf-profile-banner,.lf-reader-banner');
         if (banner) {
@@ -393,5 +440,5 @@
     };
     if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
   }
-  return Object.freeze({get bundles(){return bundles;},installLocalCollections,installBetaCollections,isLocalLab,findBundle,isAvailable,DECORATION_KEY,normalizeDecoration,readDecoration,applyDecoration,frameGeometry,previewParts,readWishlist,writeWishlist,Catalog,ProfilePreview,Entry,Shop,open,start});
+  return Object.freeze({get bundles(){return bundles;},get offered(){return offeredBundles();},installShopCatalog,installLocalCollections,installBetaCollections,isLocalLab,findBundle,isAvailable,DECORATION_KEY,normalizeDecoration,readDecoration,applyDecoration,frameGeometry,previewParts,readWishlist,writeWishlist,Catalog,ProfilePreview,Entry,Shop,open,start});
 });

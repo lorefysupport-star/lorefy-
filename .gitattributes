@@ -2,3 +2,5 @@ archives/*.zip filter=lfs diff=lfs merge=lfs -text
 uploads/catalog-search-index.json linguist-generated=true
 ios-web/** linguist-generated=true
 ios/App/App/public/** linguist-generated=true
+
+design-source/paid-collections/*.zip filter=lfs diff=lfs merge=lfs -text

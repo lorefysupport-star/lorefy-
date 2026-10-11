@@ -23,5 +23,6 @@ class LorefyAuthCrypto: CAPPlugin, CAPBridgedPlugin {
 class LorefyBridgeViewController: CAPBridgeViewController {
     override func capacitorDidLoad() {
         bridge?.registerPluginInstance(LorefyAuthCrypto())
+        bridge?.registerPluginInstance(LorefyPurchases())
     }
 }

@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v426-profile-atelier';
+const CACHE = 'lorefy-v427-paid-collections';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -10,11 +10,16 @@ const freshAssetPaths = [
   '/monitoring/'
 ];
 const CORE = [
+  './modules/lorefy-original-illustrated.js?v=20261011-shop',
+  './modules/lorefy-original-autumn.js?v=20261011-shop',
+  './modules/lorefy-original-original.js?v=20261011-shop',
+  './modules/lorefy-decoration-billing.js?v=20261011-shop',
   './modules/lorefy-preview-readers.js?v=20261009-public-appearance-v4',
   './modules/lorefy-i18n.js?v=20261009-public-appearance-v4',
   './',
   './index.html',
   './manifest.webmanifest',
+  './launch/decorations/originals/catalog.json',
   './privacy-policy.html',
   './terms.html',
   './support.html',
@@ -92,10 +97,10 @@ const CORE = [
   './modules/lorefy-community.js?v=20261009-public-appearance-v4',
   './modules/lorefy-library-view.js?v=20261007-profile-shelf-heights-v1',
   './modules/lorefy-interface-settings.js?v=20261009-custom-appearance-v1',
-  './modules/lorefy-profile-shop.js?v=20261010-atelier-v1',
-  './styles/lorefy-profile-shop.css?v=20261010-atelier-v1',
-  './modules/lorefy-frame-motion.js?v=20261009-frame-fit-v2',
-  './styles/lorefy-frame-motion.css?v=20261009-motion-v1',
+  './modules/lorefy-profile-shop.js?v=20261011-shop-v1',
+  './styles/lorefy-profile-shop.css?v=20261011-shop-v1',
+  './modules/lorefy-frame-motion.js?v=20261011-original-motion-v1',
+  './styles/lorefy-frame-motion.css?v=20261011-original-motion-v1',
   './styles/lorefy-interface-settings.css?v=20261009-custom-appearance-v1',
   './modules/lorefy-scroll-memory.js?v=20261003-home-social-v2',
   './modules/lorefy-review-editor.js?v=20261007-personalization-v1',

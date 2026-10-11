@@ -83,7 +83,8 @@
   let scheduler;const mounted=new Map();
   function mount(element,value,kind='avatar') {
     if(!element || !root.document)return ()=>{};
-    const descriptor=normalize(value),signature=JSON.stringify([descriptor,kind]);
+    const descriptor=normalize(value),original=value.original && /^[a-z-]+$/.test(value.original.id) && ['illustrated','autumn','original'].includes(value.original.renderer)?value.original:null;
+    const signature=JSON.stringify([descriptor,kind,original]);
     const old=mounted.get(element);if(old && old.signature===signature)return old.dispose;
     if(old)old.dispose();
     if(!scheduler){scheduler=createScheduler(root);root.document.addEventListener('visibilitychange',scheduler.refresh);}
@@ -97,9 +98,13 @@
       canvas.style.width=width+'px';canvas.style.height=height+'px';
       canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);}
     let io,ro,disposed=false;
-    const handle=scheduler.register(time=>{if(!element.isConnected){dispose();return;}if(width&&height){paint(ctx,width,height,time,descriptor,kind);canvas.dataset.motionFrame=String(++frames);}});
-    function dispose(){if(disposed)return;disposed=true;handle.dispose();if(io)io.disconnect();if(ro)ro.disconnect();canvas.remove();mounted.delete(element);}
-    resize();if(width&&height)paint(ctx,width,height,0,descriptor,kind);
+    const renderer=original && root.LorefyOriginalRenderers && root.LorefyOriginalRenderers[original.renderer];
+    let ready=false;
+    function draw(time){if(!width||!height)return;if(renderer){if(!ready)return;ctx.clearRect(0,0,width,height);renderer.paint(ctx,original.id,kind,time,width,height);}else paint(ctx,width,height,time,descriptor,kind);canvas.dataset.motionFrame=String(++frames);}
+    const reduced=()=>root.document.documentElement.getAttribute('data-lorefy-motion')==='reduced'||root.matchMedia&&root.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const handle=scheduler.register(time=>{if(!element.isConnected){dispose();return;}draw(reduced()?0:time);});
+    function dispose(){if(disposed)return;disposed=true;handle.dispose();if(io)io.disconnect();if(ro)ro.disconnect();canvas.remove();element.classList.remove('has-original-motion');mounted.delete(element);}
+    resize();if(renderer)renderer.load(original.id).then(()=>{if(!disposed){ready=true;element.classList.add('has-original-motion');draw(0);}}).catch(()=>{});else draw(0);
     if(root.IntersectionObserver){io=new root.IntersectionObserver(entries=>handle.setVisible(entries.some(e=>e.isIntersecting)),{threshold:0});io.observe(element);}else handle.setVisible(true);
     if(root.ResizeObserver){ro=new root.ResizeObserver(resize);ro.observe(element);}
     mounted.set(element,{signature,dispose});return dispose;
