@@ -1,0 +1,1406 @@
+[
+  {
+    "type": "مانجا",
+    "active": "مانجا",
+    "empty": false,
+    "shelves": [
+      {
+        "count": 6,
+        "title": "مغامرات بين الصفحات",
+        "works": [
+          {
+            "author": "Miura, Kentarou",
+            "title": "Berserk"
+          },
+          {
+            "author": "Oda, Eiichiro",
+            "title": "One Piece"
+          },
+          {
+            "author": "Togashi, Yoshihiro",
+            "title": "Hunter x Hunter"
+          },
+          {
+            "author": "Gotouge, Koyoharu",
+            "title": "Demon Slayer: Kimetsu no Yaiba"
+          },
+          {
+            "author": "Kishimoto, Masashi",
+            "title": "Naruto"
+          },
+          {
+            "author": "Baba Okina",
+            "title": "Kumo desu ga, Nani ka?"
+          }
+        ]
+      },
+      {
+        "count": 4,
+        "title": "ألغاز تبقيك مستيقظًا",
+        "works": [
+          {
+            "author": "Isayama, Hajime",
+            "title": "Attack on Titan"
+          },
+          {
+            "author": "Urasawa, Naoki",
+            "title": "Monster"
+          },
+          {
+            "author": "Obata, Takeshi",
+            "title": "Death Note"
+          },
+          {
+            "author": "Hyuuga Natsu",
+            "title": "Kusuriya no Hitorigoto"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "حياة وعلاقات وأحلام",
+        "works": [
+          {
+            "author": "Kinojo Miya",
+            "title": "Lv2 kara Cheat datta Moto Yuusha Kouho no Mattari Isekai Life"
+          },
+          {
+            "author": "Rifujin na Magonote",
+            "title": "Mushoku Tensei: Isekai Ittara Honki Dasu"
+          },
+          {
+            "author": "Azumi Kei",
+            "title": "Tsuki ga Michibiku Isekai Douchuu"
+          },
+          {
+            "author": "Nishi Osamu",
+            "title": "Mairimashita! Iruma-kun"
+          },
+          {
+            "author": "Sakano Anri",
+            "title": "Kage no Jitsuryokusha ni Naritakute!"
+          },
+          {
+            "author": "Yamada Kanehito",
+            "title": "Sousou no Frieren"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "مختارة لك",
+        "works": [
+          {
+            "author": "Tanabata Satori",
+            "title": "Akuyaku Reijou Level 99 ~Watashi wa Ura Boss desuga Maou de wa Arimasen~"
+          },
+          {
+            "author": "Fuse",
+            "title": "Tensei Shitara Slime datta Ken"
+          },
+          {
+            "author": "Teshima Fuminori",
+            "title": "Maou no Ore ga Dorei Elf o Yome ni Shitanda ga, Dou Medereba ii?"
+          },
+          {
+            "author": "Endou Tatsuya",
+            "title": "SPY×FAMILY"
+          },
+          {
+            "author": "Mishima Yomu",
+            "title": "Otome Game Sekai wa Mob ni Kibishii Sekai desu"
+          },
+          {
+            "author": "Kubo, Tite",
+            "title": "Bleach"
+          }
+        ]
+      },
+      {
+        "count": 3,
+        "title": "أكشن",
+        "works": [
+          {
+            "author": "Kitagawa Nikita",
+            "title": "Dungeon ni Hisomu Yandere na Kanojo ni Ore wa Nandomo Korosareru"
+          },
+          {
+            "author": "Ooima, Yoshitoki",
+            "title": "A Silent Voice"
+          },
+          {
+            "author": "Murata, Yusuke",
+            "title": "One-Punch Man"
+          }
+        ]
+      },
+      {
+        "count": 4,
+        "title": "حكايات مكتملة",
+        "works": [
+          {
+            "author": "Urasawa, Naoki",
+            "title": "20th Century Boys"
+          },
+          {
+            "author": "Oda Tomohito",
+            "title": "Komi-san wa Komyushou Desu."
+          },
+          {
+            "author": "Fukuda Shinichi",
+            "title": "Sono Bisque Doll wa Koi o Suru"
+          },
+          {
+            "author": "774 (Nanashi)",
+            "title": "Ijiranaide, Nagatoro-san"
+          }
+        ]
+      },
+      {
+        "count": 5,
+        "title": "أسماء تستحق الاكتشاف",
+        "works": [
+          {
+            "author": "Nagaoka Taichi",
+            "title": "Kaette Kudasai! Akutsu-san"
+          },
+          {
+            "author": "Mikami Saka",
+            "title": "Kaoru Hana wa Rin to Saku"
+          },
+          {
+            "author": "Yuuji Yuuji",
+            "title": "Anta to Osananajimi tte dake demo Iya nanoni! ~Zekkou kara Hajimaru S-kyuu Bishoujo to no Gakuen Nariagari Seikatsu~"
+          },
+          {
+            "author": "Ise Maruno",
+            "title": "Osoraku Kanojo wa Ore no Aniki o Neratteru"
+          },
+          {
+            "author": "Arai Sumiko",
+            "title": "Ki ni Natteru Hito ga Otoko ja Nakatta"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "مانهوا",
+    "active": "مانهوا",
+    "empty": false,
+    "shelves": [
+      {
+        "count": 6,
+        "title": "أبواب إلى عوالم أخرى",
+        "works": [
+          {
+            "author": "Saenal (박새날)",
+            "title": "Item-ppal"
+          },
+          {
+            "author": "Sadoyeon (사도연)",
+            "title": "Second Life Ranker"
+          },
+          {
+            "author": "PING (별나래)",
+            "title": "Baekjakga ui Mangnani ga Doeeotda"
+          },
+          {
+            "author": "h-goon (현군)",
+            "title": "Na Honjaman Level-Up"
+          },
+          {
+            "author": "DAUL (다울)",
+            "title": "Na Honjaman Level Up: Ragnarok"
+          },
+          {
+            "author": "Usonan (유소난)",
+            "title": "A Returner's Magic Should Be Special"
+          }
+        ]
+      },
+      {
+        "count": 3,
+        "title": "كل صفحة تخفي سرًا",
+        "works": [
+          {
+            "author": "HÆON (주해온)",
+            "title": "Lady Baby"
+          },
+          {
+            "author": "Kin (킨)",
+            "title": "Yeojuingongui Oppareul Jikineun Bangbeop"
+          },
+          {
+            "author": "Neida (네이다)",
+            "title": "SSS-geup Jugeoya Saneun Hunter"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "بين الضحك والدراما",
+        "works": [
+          {
+            "author": "Berry (열매)",
+            "title": "Geu Angnyeo reul Josimhaseyo!"
+          },
+          {
+            "author": "SAHA (사하)",
+            "title": "The Beloved Little Princess"
+          },
+          {
+            "author": "Peachberry (피치베리)",
+            "title": "The Villainess Lives Again"
+          },
+          {
+            "author": "Yuin",
+            "title": "A Capable Maid"
+          },
+          {
+            "author": "Gabi Nam (가비남)",
+            "title": "My Secretly Hot Husband"
+          },
+          {
+            "author": "Liaran (리아란)",
+            "title": "The Monstrous Duke's Adopted Daughter"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "مختارة لك",
+        "works": [
+          {
+            "author": "Yudo (유도)",
+            "title": "The Max Level Hero Strikes Back"
+          },
+          {
+            "author": "Sosori (소소리)",
+            "title": "The Skeleton Soldier Failed to Defend the Dungeon"
+          },
+          {
+            "author": "Nakhasan (낙하산)",
+            "title": "The Archmage Returns After 4000 Years"
+          },
+          {
+            "author": "Han Jinseo",
+            "title": "The Soulless Duchess"
+          },
+          {
+            "author": "Sansobee (산소비)",
+            "title": "The Villainess Turns the Hourglass"
+          },
+          {
+            "author": "YC",
+            "title": "Iphak Yongbyeong"
+          }
+        ]
+      },
+      {
+        "count": 3,
+        "title": "أكشن",
+        "works": [
+          {
+            "author": "YKB (임경배)",
+            "title": "Latna Saga: Survival of a Sword King"
+          },
+          {
+            "author": "sing N song (싱숑)",
+            "title": "Jeonjijeok Dokja Sijeom"
+          },
+          {
+            "author": "Chungcho (청초)",
+            "title": "Na Hollo Buglo Kkulppaneun Player"
+          }
+        ]
+      },
+      {
+        "count": 12,
+        "title": "خيال",
+        "works": [
+          {
+            "author": "Kitty&Spice",
+            "title": "Eotteon Gyemo-nim ui Märchen"
+          },
+          {
+            "author": "Yulji (율지)",
+            "title": "Akdang ui Eomma ga Doeeo Beoryeotda"
+          },
+          {
+            "author": "Dalseul (달슬)",
+            "title": "Agdangui Appaleul Kkosyeola"
+          },
+          {
+            "author": "Gwon Gyeoeul (권겨을)",
+            "title": "Agyeogui Ending Jugeumppun"
+          },
+          {
+            "author": "Gyammi",
+            "title": "I Married the Male Lead's Dad"
+          },
+          {
+            "author": "Ant Studio (앤트스튜디오)",
+            "title": "Ibeon Saengeun Gajuga Doegetseumnida"
+          },
+          {
+            "author": "Hong Hee Su",
+            "title": "Appa, Na I Gyeolhon An Hallaeyo!"
+          },
+          {
+            "author": "hanirim",
+            "title": "Angnyeo neun Marionette"
+          },
+          {
+            "author": "Kiarne (키아르네)",
+            "title": "A Wicked Tale of Cinderella's Stepmom"
+          },
+          {
+            "author": "Maginot Line (마지노선)",
+            "title": "The Lady and the Beast"
+          },
+          {
+            "author": "Siya",
+            "title": "Nogeumui Gwan"
+          },
+          {
+            "author": "Sam Woel (삼월)",
+            "title": "I Am the Real One"
+          }
+        ]
+      },
+      {
+        "count": 4,
+        "title": "حكايات مكتملة",
+        "works": [
+          {
+            "author": "Spoon (스푼)",
+            "title": "Who Made Me a Princess"
+          },
+          {
+            "author": "Lee Jiha (이지하)",
+            "title": "Gongjakbuin'eui 50-gaji Tea Recipe"
+          },
+          {
+            "author": "Milcha (밀차)",
+            "title": "Geunyeo ga Gongjagjeo lo Gaya Haessdeon Sajeong"
+          },
+          {
+            "author": "Seo Gwijo (서귀조)",
+            "title": "Agnyeo ga Saranghal Ttae"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "مانهوا صيني",
+    "active": "مانهوا صيني",
+    "empty": false,
+    "shelves": [
+      {
+        "count": 6,
+        "title": "رحلات القوة والخيال",
+        "works": [
+          {
+            "author": "黑夜弥天",
+            "title": "Don't Tell Me You Think Cultivating Immortality Is Difficult?"
+          },
+          {
+            "author": "Weibo Manhua",
+            "title": "Pandora"
+          },
+          {
+            "author": "Love_Black Cat",
+            "title": "Black Cat (LovE_Hei Mao)"
+          },
+          {
+            "author": "17K Anime (17K漫画)",
+            "title": "My Wife Is the Empress of the Imperial Dynasty"
+          },
+          {
+            "author": "Aurora Media (极光动漫)",
+            "title": "Don't Lick Me! Spirit!"
+          },
+          {
+            "author": "肖新宇",
+            "title": "Visitor To Earth"
+          }
+        ]
+      },
+      {
+        "count": 5,
+        "title": "وجوه وأسرار",
+        "works": [
+          {
+            "author": "Zhen Youchuan",
+            "title": "Xun Meng Hun"
+          },
+          {
+            "author": "咔嚓121381",
+            "title": "Thinking back"
+          },
+          {
+            "author": "SketchyLinez",
+            "title": "Angels Don't Live Long"
+          },
+          {
+            "author": "中漫同创-搞笑悬疑组",
+            "title": "Kongbu Mobile Game"
+          },
+          {
+            "author": "四夕文文武",
+            "title": "Closed Fourth Floor"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "حكايات من زوايا أخرى",
+        "works": [
+          {
+            "author": "欲言文化",
+            "title": "Love Is the Only Way to Stop You From Going Dark"
+          },
+          {
+            "author": "帅天森",
+            "title": "Daydream Illustration"
+          },
+          {
+            "author": "Shijian Jingzou",
+            "title": "Hello My Seven Uncle"
+          },
+          {
+            "author": "Jihuo Culture (籍火文化)",
+            "title": "Taming The Black Lotus Villain after Rebirth"
+          },
+          {
+            "author": "舒仔",
+            "title": "Catch a Dragon: Become My Wife"
+          },
+          {
+            "author": "Hello Tea 你好_茶茶",
+            "title": "The Wizard's Apprentice"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "مختارة لك",
+        "works": [
+          {
+            "author": "雪羊",
+            "title": "Don't Eat My Little Cookies"
+          },
+          {
+            "author": "Comic Films (漫美映画)",
+            "title": "Became Queen at the age of three"
+          },
+          {
+            "author": "触手动漫",
+            "title": "Return to the Ancient Times as an Emperor"
+          },
+          {
+            "author": "Jiman Wenhua (极漫文化)",
+            "title": "Brother is Not the Villain"
+          },
+          {
+            "author": "Nanpai Sanshu",
+            "title": "The Secret of Metok"
+          },
+          {
+            "author": "星灵动漫",
+            "title": "I Cultivate God and Demon to Rule All"
+          }
+        ]
+      },
+      {
+        "count": 9,
+        "title": "حكايات مكتملة",
+        "works": [
+          {
+            "author": "KalSept",
+            "title": "Bang Dream - Have You Ever Seen an Angry Unicorn? (Doujinshi)"
+          },
+          {
+            "author": "tanren",
+            "title": "Shoujo Kageki Revue Starlight - If We Continue To Stay So In Love (Doujinshi)"
+          },
+          {
+            "author": "MIUJIII",
+            "title": "Absurd Theory"
+          },
+          {
+            "author": "Bao Qing Manhua (暴青漫画)",
+            "title": "Spoil a Wife Unlimited"
+          },
+          {
+            "author": "Huang Erye (黄二爷)",
+            "title": "Bad Idol"
+          },
+          {
+            "author": "爱涂星际动漫工作室",
+            "title": "Waiting for You at the Spring"
+          },
+          {
+            "author": "Xiao Chu Chu",
+            "title": "My Roommate Is a Narcissistic Manhua Character"
+          },
+          {
+            "author": "Fanciyuan Culture (泛次元文化)",
+            "title": "My Notoriously Naughty Lover"
+          },
+          {
+            "author": "喬克",
+            "title": "Youth Under Rebound"
+          }
+        ]
+      },
+      {
+        "count": 10,
+        "title": "أسماء تستحق الاكتشاف",
+        "works": [
+          {
+            "author": "极乐鸟",
+            "title": "Crazy neighbors"
+          },
+          {
+            "author": "Ning Meng",
+            "title": "Raising a Human cat"
+          },
+          {
+            "author": "Wuxian",
+            "title": "The Raven's Taming Game"
+          },
+          {
+            "author": "Bread",
+            "title": "Bread's Collection of One-shots"
+          },
+          {
+            "author": "BAMBOOMATES",
+            "title": "Ramboo and Panboo"
+          },
+          {
+            "author": "七英俊",
+            "title": "What a Disgrace"
+          },
+          {
+            "author": "Tang Shi Wan",
+            "title": "There's a Beast in my House"
+          },
+          {
+            "author": "Yi Ting (一亭)",
+            "title": "Oh No! An Evil God is Using Me for Emergency Food!"
+          },
+          {
+            "author": "Kylin",
+            "title": "Sì láng fǎzé"
+          },
+          {
+            "author": "Chi Zongzha (池总渣)",
+            "title": "Far Away From Cold"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "كوميكس",
+    "active": "كوميكس",
+    "empty": false,
+    "shelves": [
+      {
+        "count": 6,
+        "title": "عوالم مرسومة بلا حدود",
+        "works": [
+          {
+            "author": "David Petersen",
+            "title": "Mouse Guard Fall 1152"
+          },
+          {
+            "author": "Faith Erin Hicks",
+            "title": "The nameless city"
+          },
+          {
+            "author": "Kazu Kibuishi",
+            "title": "Amulet"
+          },
+          {
+            "author": "Jeff Smith",
+            "title": "Out From Boneville"
+          },
+          {
+            "author": "Chad Sell",
+            "title": "The cardboard kingdom"
+          },
+          {
+            "author": "N.D. Stevenson",
+            "title": "Nimona"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "حياة تُروى بالرسوم",
+        "works": [
+          {
+            "author": "Megan Wagner Lloyd",
+            "title": "Allergic"
+          },
+          {
+            "author": "Victoria Jamieson",
+            "title": "Roller Girl"
+          },
+          {
+            "author": "Raina Telgemeier",
+            "title": "Smile"
+          },
+          {
+            "author": "Varian Johnson",
+            "title": "Twins"
+          },
+          {
+            "author": "Cece Bell",
+            "title": "El Deafo"
+          },
+          {
+            "author": "Jerry Craft",
+            "title": "New Kid"
+          }
+        ]
+      },
+      {
+        "count": 3,
+        "title": "ابتسامة في كل صفحة",
+        "works": [
+          {
+            "author": "Dav Pilkey",
+            "title": "Dog Man"
+          },
+          {
+            "author": "Charles M. Schulz",
+            "title": "Peanuts Treasury"
+          },
+          {
+            "author": "Bill Watterson",
+            "title": "Calvin and Hobbes"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "خلف أقنعة الأبطال",
+        "works": [
+          {
+            "author": "Mark Waid",
+            "title": "Kingdom come"
+          },
+          {
+            "author": "Kelly Thompson",
+            "title": "Hawkeye: Kate Bishop"
+          },
+          {
+            "author": "Grant Morrison",
+            "title": "All Star Superman VOL 02"
+          },
+          {
+            "author": "Frank Miller, David Mazzucchelli, Richmond Lewis, Todd Klein",
+            "title": "Year One"
+          },
+          {
+            "author": "G. Willow Wilson",
+            "title": "Ms. Marvel"
+          },
+          {
+            "author": "Kurt Busiek",
+            "title": "Marvels"
+          }
+        ]
+      },
+      {
+        "count": 3,
+        "title": "مختارة لك",
+        "works": [
+          {
+            "author": "Judd Winick",
+            "title": "Hilo"
+          },
+          {
+            "author": "Mike Maihack",
+            "title": "Cleopatra in space"
+          },
+          {
+            "author": "برنار فيسك",
+            "title": "الثورة المغدورة: قصة كومونة باريس في شرائط مصورة"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "رواية",
+    "active": "رواية",
+    "empty": false,
+    "shelves": [
+      {
+        "count": 6,
+        "title": "روايات تعبر الحدود",
+        "works": [
+          {
+            "author": "إيتالو كالفينو",
+            "title": "فارس بلا وجود"
+          },
+          {
+            "author": "دنيس جيدج",
+            "title": "نظرية الببغاء"
+          },
+          {
+            "author": "ماريا أنطونيتا نانيا",
+            "title": "موعد بين الشمس والقمر: حكاية المياه والصحراء"
+          },
+          {
+            "author": "سوزانا تامارو",
+            "title": "لويزيتو: قصة حب"
+          },
+          {
+            "author": "بول أوستر",
+            "title": "كتاب الأوهام"
+          },
+          {
+            "author": "أحمد المديني",
+            "title": "وردة للوقت المغربي"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "كلاسيكيات تستحق العودة",
+        "works": [
+          {
+            "author": "Lewis Carroll",
+            "title": "Alice's Adventures in Wonderland"
+          },
+          {
+            "author": "L. Frank Baum",
+            "title": "The Wonderful Wizard of Oz"
+          },
+          {
+            "author": "Herman Melville",
+            "title": "Moby-Dick"
+          },
+          {
+            "author": "F. Scott Fitzgerald",
+            "title": "The Great Gatsby"
+          },
+          {
+            "author": "Alexandre Dumas",
+            "title": "The Count of Monte Cristo"
+          },
+          {
+            "author": "Miguel de Cervantes",
+            "title": "Don Quixote"
+          }
+        ]
+      },
+      {
+        "count": 2,
+        "title": "حين يتجاوز الخيال الواقع",
+        "works": [
+          {
+            "author": "Bram Stoker",
+            "title": "Dracula"
+          },
+          {
+            "author": "Mary Shelley",
+            "title": "Frankenstein"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "مختارة لك",
+        "works": [
+          {
+            "author": "Leo Tolstoy",
+            "title": "War and Peace"
+          },
+          {
+            "author": "Alexandre Dumas",
+            "title": "The Three Musketeers"
+          },
+          {
+            "author": "Fyodor Dostoevsky",
+            "title": "Crime and Punishment"
+          },
+          {
+            "author": "Jane Austen",
+            "title": "Pride and Prejudice"
+          },
+          {
+            "author": "Louisa May Alcott",
+            "title": "Little Women"
+          },
+          {
+            "author": "Charlotte Bronte",
+            "title": "Jane Eyre"
+          }
+        ]
+      },
+      {
+        "count": 4,
+        "title": "أسماء تستحق الاكتشاف",
+        "works": [
+          {
+            "author": "نجيب محفوظ",
+            "title": "القاهرة الجديدة"
+          },
+          {
+            "author": "Emily Bronte",
+            "title": "Wuthering Heights"
+          },
+          {
+            "author": "أليساندرو باريكو",
+            "title": "الحرير"
+          },
+          {
+            "author": "محمد جبريل",
+            "title": "الصَّهبة"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "كتاب",
+    "active": "كتاب",
+    "empty": false,
+    "shelves": [
+      {
+        "count": 6,
+        "title": "أسئلة يجيب عنها العلم",
+        "works": [
+          {
+            "author": "براندون كايم",
+            "title": "تعرَّف على جيرانك: عقول الحيوانات والحياة في عالمٍ يتجاوز البشر"
+          },
+          {
+            "author": "أ. شتيرنفلد",
+            "title": "السفر بين الكواكب"
+          },
+          {
+            "author": "أحمد مستجير",
+            "title": "بيولوجيا الخوف: مقالات علمية"
+          },
+          {
+            "author": "سوزان غرينفيلد",
+            "title": "تغيُّر العقل: كيف تترك التقنيات الرقمية بصماتها على أدمغتنا"
+          },
+          {
+            "author": "فرانسيس فوكوياما",
+            "title": "نهاية الإنسان: عواقب الثورة البيوتكنولوجية"
+          },
+          {
+            "author": "جيمس بيني",
+            "title": "الفيزياء الفلكية: مقدمة قصيرة جدًّا"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "أفكار تغيّر زاوية النظر",
+        "works": [
+          {
+            "author": "إمام عبد الفتاح إمام",
+            "title": "كانط والمرأة"
+          },
+          {
+            "author": "فتحي المسكيني وأم الزين بنشيخة المسكيني",
+            "title": "الثورات العربية … سيرة غير ذاتية"
+          },
+          {
+            "author": "أ. تيتارينكو",
+            "title": "الأخلاق والسياسة"
+          },
+          {
+            "author": "أحمد حسان",
+            "title": "ألف باء دولوز"
+          },
+          {
+            "author": "سليمان بشير دْيانْي",
+            "title": "برغسون ما بعد الكولونيالي: الفلسفة الحيوية لدى ليوبولد سيدار سانغور ومحمد إقبال"
+          },
+          {
+            "author": "سوزان مولر أوكين",
+            "title": "النساء في الفكر السياسي الغربي"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "أماكن وتجارب إنسانية",
+        "works": [
+          {
+            "author": "محمود السعدني",
+            "title": "أمريكا يا ويكا"
+          },
+          {
+            "author": "وول سوينكا",
+            "title": "آكية … سنوات الطفولة"
+          },
+          {
+            "author": "ديفيد هربرت لورانس",
+            "title": "البحر وسردينيا"
+          },
+          {
+            "author": "تشارلي ماي سيمون",
+            "title": "كلنا إخوة: صورة قلمية لألبرت شفيتزر"
+          },
+          {
+            "author": "ميشائيل كَليبرغ",
+            "title": "الحيوان الباكي: يوميات الرحلة اللبنانية"
+          },
+          {
+            "author": "أحمد المديني",
+            "title": "أيام برازيلية وأخرى من يباب"
+          }
+        ]
+      },
+      {
+        "count": 3,
+        "title": "ذاكرة العالم والمجتمع",
+        "works": [
+          {
+            "author": "رءوف عباس",
+            "title": "التنوير بين مصر واليابان: دراسة مقارنة في فكر رفاعة الطهطاوي وفوكوزاوا يوكيتشي"
+          },
+          {
+            "author": "محمد فؤاد شكري",
+            "title": "الحكم المصري في السودان ١٨٢٠–١٨٨٥"
+          },
+          {
+            "author": "عبد المنعم المحجوب",
+            "title": "أصوات بابل: مقاربات جينالوجية في اللغة والحراك السوسيوثقافي الأفروآسيوي"
+          }
+        ]
+      },
+      {
+        "count": 4,
+        "title": "مختارة لك",
+        "works": [
+          {
+            "author": "نجيب محفوظ",
+            "title": "أمام العرش: حوار مع رجال مصر من مينا حتى أنور السادات"
+          },
+          {
+            "author": "فولفجانج بورشرت",
+            "title": "سن الأسد: مجموعة قصصية"
+          },
+          {
+            "author": "فيرنر هايزنبرج",
+            "title": "الفيزياء والفلسفة"
+          },
+          {
+            "author": "مارك ماسلين",
+            "title": "تغيُّر المناخ: مقدمة قصيرة جدًّا"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "لايت نوفل",
+    "active": "لايت نوفل",
+    "empty": false,
+    "shelves": [
+      {
+        "count": 6,
+        "title": "عوالم سحرية ومغامرات",
+        "works": [
+          {
+            "author": "Kugane Maruyama",
+            "title": "Overlord"
+          },
+          {
+            "author": "Reki Kawahara",
+            "title": "Sword Art Online: Progressive"
+          },
+          {
+            "author": "Ao Juumonji",
+            "title": "Grimgar of Fantasy and Ash"
+          },
+          {
+            "author": "Ryougo Narita",
+            "title": "Fate/strange Fake"
+          },
+          {
+            "author": "Matsuri Isora",
+            "title": "Secrets of the Silent Witch"
+          },
+          {
+            "author": "Nagatsuki, Tappei",
+            "title": "Re:ZERO -Starting Life in Another World-"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "ألغاز وشخصيات معقدة",
+        "works": [
+          {
+            "author": "Keiichi Shigusawa",
+            "title": "Kino no Tabi: The Beautiful World"
+          },
+          {
+            "author": "Ryukishi07",
+            "title": "Umineko no Naku Koro ni Chiru"
+          },
+          {
+            "author": "Makoto Inoue",
+            "title": "Fullmetal Alchemist"
+          },
+          {
+            "author": "Ryougo Narita",
+            "title": "Baccano!"
+          },
+          {
+            "author": "Shougo Kinugasa",
+            "title": "Classroom of the Elite: Year 3"
+          },
+          {
+            "author": "Nagaru Tanigawa",
+            "title": "Suzumiya Haruhi Series"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "المستقبل كما تتخيله القصص",
+        "works": [
+          {
+            "author": "Kazuma Kamachi",
+            "title": "A Certain Magical Index NT"
+          },
+          {
+            "author": "Asato Asato",
+            "title": "86: Eighty-Six"
+          },
+          {
+            "author": "Tomohito Oosaki",
+            "title": "Gekijouban Gintama: Kanketsu-hen - Yorozuya yo Eien Nare"
+          },
+          {
+            "author": "Kiyomune Miwa",
+            "title": "Steins;Gate"
+          },
+          {
+            "author": "Koushi Tachibana, Yuuichirou Higashide",
+            "title": "Date A Live Fragment: Date A Bullet"
+          },
+          {
+            "author": "Koushi Tachibana",
+            "title": "Date A Live"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "قربٌ من الحياة اليومية",
+        "works": [
+          {
+            "author": "Fujino Oomori",
+            "title": "Is It Wrong to Try to Pick Up Girls in a Dungeon?"
+          },
+          {
+            "author": "Akira Kareno",
+            "title": "WorldEnd: What Do You Do at the End of the World? Are You Busy? Will You Save Us?"
+          },
+          {
+            "author": "Natsume Akatsuki",
+            "title": "Konosuba: God's Blessing on This Wonderful World!"
+          },
+          {
+            "author": "Isuna Hasekura",
+            "title": "Spice & Wolf"
+          },
+          {
+            "author": "Fuse",
+            "title": "That Time I Got Reincarnated as a Slime"
+          },
+          {
+            "author": "Kamiya, Yuu",
+            "title": "No Game No Life"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "مختارة لك",
+        "works": [
+          {
+            "author": "Fuyumi Ono",
+            "title": "The Twelve Kingdoms"
+          },
+          {
+            "author": "Ryougo Narita",
+            "title": "Bleach: Can't Fear Your Own World"
+          },
+          {
+            "author": "Rifujin na Magonote",
+            "title": "Mushoku Tensei: Jobless Reincarnation"
+          },
+          {
+            "author": "Kinoko Nasu, Nitro Plus, Gen Urobuchi",
+            "title": "Fate/Zero"
+          },
+          {
+            "author": "Carlo Zen",
+            "title": "The Saga of Tanya the Evil"
+          },
+          {
+            "author": "Okina Baba",
+            "title": "So I'm a Spider, So What?"
+          }
+        ]
+      },
+      {
+        "count": 11,
+        "title": "أكشن",
+        "works": [
+          {
+            "author": "Daisuke Aizawa",
+            "title": "The Eminence in Shadow"
+          },
+          {
+            "author": "Tappei Nagatsuki",
+            "title": "Re:ZERO -Starting Life in Another World- Ex"
+          },
+          {
+            "author": "Kazuma Kamachi",
+            "title": "Souyaku Toaru Majutsu no Index"
+          },
+          {
+            "author": "Rifujin na Magonote",
+            "title": "Mushoku Tensei: Redundant Reincarnation"
+          },
+          {
+            "author": "Gen Urobuchi",
+            "title": "Black Lagoon"
+          },
+          {
+            "author": "NISIOISIN",
+            "title": "Katanagatari: Sword Tale"
+          },
+          {
+            "author": "Takashi Yano, Shin Towada",
+            "title": "Naruto: Itachi's Story"
+          },
+          {
+            "author": "Saeki-san",
+            "title": "The Angel Next Door Spoils Me Rotten"
+          },
+          {
+            "author": "Shin Towada",
+            "title": "Tokyo Ghoul"
+          },
+          {
+            "author": "Eiji Mikage",
+            "title": "The Empty Box and Zeroth Maria"
+          },
+          {
+            "author": "Ryougo Narita",
+            "title": "Durarara!!"
+          }
+        ]
+      },
+      {
+        "count": 6,
+        "title": "خيال",
+        "works": [
+          {
+            "author": "Jougi Shiraishi",
+            "title": "Wandering Witch: The Journey of Elaina"
+          },
+          {
+            "author": "Kazuma Kamachi",
+            "title": "A Certain Magical Index"
+          },
+          {
+            "author": "Miya Kazuki",
+            "title": "Ascendance of a Bookworm: I'll Do Anything to Become a Librarian!"
+          },
+          {
+            "author": "Inori.",
+            "title": "I'm in Love with the Villainess"
+          },
+          {
+            "author": "Kana Akatsuki",
+            "title": "Violet Evergarden"
+          },
+          {
+            "author": "Ryukishi07",
+            "title": "Umineko no Naku Koro ni"
+          }
+        ]
+      },
+      {
+        "count": 3,
+        "title": "مغامرة",
+        "works": [
+          {
+            "author": "Natsu Hyuuga",
+            "title": "The Apothecary Diaries"
+          },
+          {
+            "author": "Keika Hanada",
+            "title": "The House in Fata Morgana"
+          },
+          {
+            "author": "Touko Fujitani",
+            "title": "Shousetsu Akatsuki no Yona: Onaji Tsuki no Shita de"
+          }
+        ]
+      },
+      {
+        "count": 12,
+        "title": "حكايات مكتملة",
+        "works": [
+          {
+            "author": "Kana Akatsuki",
+            "title": "Violet Evergarden Gaiden"
+          },
+          {
+            "author": "NISIOISIN",
+            "title": "Monogatari Series: First Season"
+          },
+          {
+            "author": "Kafka Asagiri",
+            "title": "Bungo Stray Dogs"
+          },
+          {
+            "author": "Hitoma Iruma",
+            "title": "Adachi and Shimamura"
+          },
+          {
+            "author": "Kouhei Kadono",
+            "title": "Boogiepop Series"
+          },
+          {
+            "author": "Wataru Watari",
+            "title": "My Youth Romantic Comedy Is Wrong, As I Expected"
+          },
+          {
+            "author": "Yuyuko Takemiya",
+            "title": "Toradora!"
+          },
+          {
+            "author": "Mei Hachimoku ",
+            "title": "The Tunnel to Summer, the Exit of Goodbyes"
+          },
+          {
+            "author": "Takibi Amamori",
+            "title": "Too Many Losing Heroines!"
+          },
+          {
+            "author": "Yui Tokiumi",
+            "title": "Orange"
+          },
+          {
+            "author": "Ghost Mikawa",
+            "title": "Days with My Stepsister"
+          },
+          {
+            "author": "Miyako Fujisaki",
+            "title": "Sekaiichi Hatsukoi: Yokozawa Takafumi no Baai"
+          }
+        ]
+      },
+      {
+        "count": 4,
+        "title": "أسماء تستحق الاكتشاف",
+        "works": [
+          {
+            "author": "NISIOISIN",
+            "title": "Zaregoto"
+          },
+          {
+            "author": "Shougo Kinugasa",
+            "title": "Classroom of the Elite: Year 2"
+          },
+          {
+            "author": "Hitoma Iruma",
+            "title": "Bloom into You: Regarding Saeki Sayaka"
+          },
+          {
+            "author": "Mei Hachimoku ",
+            "title": "Wait for Me Yesterday in Spring"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "ويب نوفل",
+    "active": "ويب نوفل",
+    "empty": false,
+    "shelves": [
+      {
+        "count": 4,
+        "title": "مغامرات تتطور معك",
+        "works": [
+          {
+            "author": "Warby Picus",
+            "title": "Sky Pride"
+          },
+          {
+            "author": "TheFirstDefier",
+            "title": "Defiance of the Fall"
+          },
+          {
+            "author": "ClearMadness",
+            "title": "The Iron Teeth: A Goblin's Tale"
+          },
+          {
+            "author": "nobody103",
+            "title": "Mother of Learning"
+          }
+        ]
+      },
+      {
+        "count": 4,
+        "title": "هروب إلى حكاية جديدة",
+        "works": [
+          {
+            "author": "Andrew Seiple",
+            "title": "Threadbare"
+          },
+          {
+            "author": "Casualfarmer",
+            "title": "Beware Of Chicken"
+          },
+          {
+            "author": "stewart92",
+            "title": "There is no Epic Loot here, Only Puns."
+          },
+          {
+            "author": "Khenal",
+            "title": "Dungeon Life"
+          }
+        ]
+      },
+      {
+        "count": 2,
+        "title": "قوى وتقنيات غير مألوفة",
+        "works": [
+          {
+            "author": "Gogglesbear",
+            "title": "Super Minion"
+          },
+          {
+            "author": "Maxime J. Durand (Void Herald)",
+            "title": "The Perfect Run"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -40,7 +40,7 @@
 .lf-explore-format-row button { min-height:44px; padding:8px 15px; background:var(--ui-fill); border:1px solid var(--ui-line); border-radius:8px; white-space:nowrap; font-size:12px; }
 .lf-explore-format-row button[aria-pressed='true'] { background:var(--ui-action); color:var(--ui-on-action); border-color:var(--ui-action); }
 .lf-explore-shelf { padding-block:6px 20px; border-bottom:1px solid var(--ui-line); margin-bottom:16px; }
-.lf-explore-rail { display:grid; grid-auto-flow:column; grid-auto-columns:126px; gap:14px; overflow-x:auto; scrollbar-width:none; padding:0 18px 4px; scroll-snap-type:x proximity; }
+.lf-explore-rail { display:grid; grid-auto-flow:column; grid-auto-columns:126px; gap:14px; overflow-x:auto; scrollbar-width:none; padding:0 18px 4px; scroll-padding-inline:18px; scroll-snap-type:x proximity; box-sizing:border-box; }
 .lf-explore-work { min-width:0; scroll-snap-align:start; }
 .lf-explore-work-open strong { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; margin-top:10px; min-height:38px; font-size:12px; font-weight:800; line-height:1.6; }
 .lf-explore-work-open small { display:block; font-size:10px; color:var(--ui-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:4px; }
@@ -77,3 +77,6 @@
   .lf-explore-category-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
   .lf-explore-dialog-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
+.lf-explore-intro { margin:4px 16px 20px; padding:18px 16px; border:1px solid var(--ui-line); border-radius:18px; background:var(--ui-fill); }
+.lf-explore-intro strong { display:block; font-size:18px; font-weight:800; line-height:1.55; }
+.lf-explore-intro p { margin:7px 0 0; font-size:12px; line-height:1.7; color:var(--ui-muted); }

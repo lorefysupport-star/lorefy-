@@ -17,7 +17,14 @@
 .lf-friend-reader > img,.lf-friend-avatar { width:23px; height:23px; border-radius:50%; flex-shrink:0; object-fit:cover; background:var(--lf-fill); display:grid; place-items:center; }
 .lf-friend-reader > span:last-child,.lf-friend-title { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; min-width:0; }
 .lf-friend-title { font-size:11px; margin:9px 0 5px; }
-.lf-friend-score { display:flex; align-items:center; gap:5px; color:var(--lf-accent); font-size:11px; direction:ltr; justify-content:flex-start; }
+.lf-friend-score { display:grid; grid-template-columns:minmax(0,1fr) 32px; align-items:center; gap:4px; width:100%; min-height:26px; color:var(--lf-accent); font-size:11px; direction:ltr; }
+.lf-friend-feathers { display:flex; min-width:0; overflow:hidden; }
+.lf-friend-feathers > * { display:flex !important; gap:1px !important; max-width:100%; }
+.lf-friend-feathers svg { width:12px !important; height:12px !important; flex-shrink:0; }
+.lf-app.lf-app.lf-app .lf-friend-feathers .lf-rating-display { gap:1px !important; width:64px !important; min-width:64px !important; }
+.lf-app.lf-app.lf-app .lf-friend-feathers .lf-rating-star { width:12px !important; height:12px !important; min-width:12px !important; min-height:12px !important; }
+.lf-app.lf-app.lf-app .lf-friend-feathers .lf-rating-star-glyph { width:12px !important; height:12px !important; min-width:12px !important; min-height:12px !important; }
+.lf-friend-score-value { display:grid; place-items:center; min-width:0; height:23px; border:1px solid var(--lf-border); border-radius:6px; background:var(--lf-fill); font-size:11px; line-height:1; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .lf-friend-item > small { display:block; font-size:10px; color:var(--lf-sub); margin-top:4px; }
 .lf-friend-empty { padding:18px 14px; margin:0; border:1px dashed var(--lf-border); border-radius:8px; color:var(--lf-sub); font-size:13px; line-height:1.7; }
 .lf-friend-empty button { font:inherit; color:var(--lf-accent); background:none; border:0; min-height:44px; cursor:pointer; }

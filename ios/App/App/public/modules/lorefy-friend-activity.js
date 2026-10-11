@@ -77,7 +77,7 @@
             h('button',{type:'button',className:'lf-friend-cover','aria-label':(en?'Open ':'فتح ')+w.title,onClick:function () { p.onWork(w); }},h('img',{src:p.cover(w),alt:'',loading:'lazy',decoding:'async',onError:p.onCoverError,'data-fallback':p.fallback(w)})),
             kind==='recent' ? h('button',{type:'button',className:'lf-friend-reader','aria-label':(en?'Open profile: ':'فتح حساب: ')+name,onClick:function () { p.onReader({id:row.userId,name:name,un:row.un || profile.username,av:avatar}); }},avatar ? h('img',{src:avatar,alt:'',loading:'lazy',onError:function (e) { e.currentTarget.style.visibility='hidden'; }}) : h('span',{className:'lf-friend-avatar','aria-hidden':true},name.slice(0,1)),h('span',{'data-no-translate':'1',dir:'auto'},name))
             : h('strong',{className:'lf-friend-title','data-no-translate':'1',dir:'auto'},w.title),
-            h('div',{className:'lf-friend-score','aria-label':(en?'Rating ':'التقييم ')+row.r.toFixed(2)},h(p.Stars,{n:row.r,size:11}),h('span',{'data-no-translate':'1'},Number(row.r.toFixed(2)))),
+            h('div',{className:'lf-friend-score','aria-label':(en?'Rating ':'التقييم ')+row.r.toFixed(2)},h('span',{className:'lf-friend-feathers','aria-hidden':true},h(p.Stars,{n:row.r,size:10})),h('b',{className:'lf-friend-score-value','data-no-translate':'1',dir:'ltr'},Number(row.r.toFixed(2)))),
             kind==='popular' && h('small',null,en?row.count+' friend'+(row.count===1?'':'s'):row.count+' من الأصدقاء'));
         })));
     }

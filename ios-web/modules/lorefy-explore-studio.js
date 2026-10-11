@@ -31,6 +31,40 @@
     }).filter(Boolean);
   }
   function normalized(value) { return String(value || '').trim().toLowerCase(); }
+  function formatKey(value) {
+    var key=normalized(value), types={manga:'مانجا',manhwa:'مانهوا',manhua:'مانهوا صيني',comics:'كوميكس',novel:'رواية',book:'كتاب','light novel':'لايت نوفل','web novel':'ويب نوفل','مانهوا صينية':'مانهوا صيني'};
+    return types[key] || key;
+  }
+  var COLLECTIONS = [
+    ['manga-worlds','مانجا','مغامرات بين الصفحات','Adventures between pages','خيال وأكشن وعوالم مختلفة','Fantasy, action and different worlds'],
+    ['manga-mystery','مانجا','ألغاز تبقيك مستيقظًا','Mysteries to keep you reading','غموض وحكايات نفسية','Mystery and psychological stories'],
+    ['manga-life','مانجا','حياة وعلاقات وأحلام','Life, relationships and dreams','دراما وكوميديا وقصص إنسانية','Drama, comedy and human stories'],
+    ['manhwa-worlds','مانهوا','أبواب إلى عوالم أخرى','Doors to other worlds','مغامرات وخيال من سلاسل مختلفة','Adventure and fantasy across different series'],
+    ['manhwa-mystery','مانهوا','كل صفحة تخفي سرًا','Every page hides a secret','ألغاز وصراعات نفسية','Mysteries and psychological conflicts'],
+    ['manhwa-life','مانهوا','بين الضحك والدراما','Between comedy and drama','علاقات وحكايات قريبة من الحياة','Relationships and stories close to life'],
+    ['manhua-worlds','مانهوا صيني','رحلات القوة والخيال','Journeys of power and imagination','عوالم صينية ومغامرات متنوعة','Chinese worlds and varied adventures'],
+    ['manhua-mystery','مانهوا صيني','وجوه وأسرار','Faces and secrets','غموض وتشويق وشخصيات مختلفة','Mystery, suspense and different characters'],
+    ['manhua-life','مانهوا صيني','حكايات من زوايا أخرى','Stories from other perspectives','كوميديا ودراما وعلاقات','Comedy, drama and relationships'],
+    ['comic-worlds','كوميكس','عوالم مرسومة بلا حدود','Worlds beyond the panel','مغامرات وخيال من رسامين وكتّاب مختلفين','Adventure and imagination from different creators'],
+    ['comic-life','كوميكس','حياة تُروى بالرسوم','Life in pictures','المدرسة والعائلة والصداقة من زوايا مختلفة','School, family and friendship through different eyes'],
+    ['comic-laugh','كوميكس','ابتسامة في كل صفحة','A smile on every page','شخصيات وحكايات بروح خفيفة','Characters and stories with a lighter touch'],
+    ['comic-heroes','كوميكس','خلف أقنعة الأبطال','Behind the heroes’ masks','حكايات الأبطال وخياراتهم الصعبة','Heroes and the choices they face'],
+    ['novel-world','رواية','روايات تعبر الحدود','Stories across borders','أصوات عربية وعالمية وحكايات مختلفة','Arabic and international voices, different stories'],
+    ['novel-classics','رواية','كلاسيكيات تستحق العودة','Classics worth returning to','من العائلة والمجتمع إلى المغامرة والخيال','From family and society to adventure and imagination'],
+    ['novel-adventure','رواية','رحلات ومغامرات بعيدة','Journeys and adventures','بحار وأسفار ومواجهات غير متوقعة','Voyages, journeys and unexpected encounters'],
+    ['novel-imagination','رواية','حين يتجاوز الخيال الواقع','When imagination goes further','حكايات عجيبة وعوالم غير مألوفة','Strange tales and unfamiliar worlds'],
+    ['book-science','كتاب','أسئلة يجيب عنها العلم','Questions for science','الكون والطبيعة والعقل والتقنيات','Space, nature, the mind and technology'],
+    ['book-ideas','كتاب','أفكار تغيّر زاوية النظر','Ideas that change your perspective','فلسفة وأخلاق وسياسة من مدارس مختلفة','Philosophy, ethics and politics from different traditions'],
+    ['book-journeys','كتاب','أماكن وتجارب إنسانية','Places and human experiences','رحلات وسِيَر وأصوات من بلدان متعددة','Travel, memoir and voices from different countries'],
+    ['book-history','كتاب','ذاكرة العالم والمجتمع','The world’s memory','تاريخ وثقافة وتحولات اجتماعية','History, culture and social change'],
+    ['light-worlds','لايت نوفل','عوالم سحرية ومغامرات','Magic and adventure','سلاسل مختلفة تستحق بداية جديدة','Different series to begin exploring'],
+    ['light-mystery','لايت نوفل','ألغاز وشخصيات معقدة','Mystery and complex characters','غموض وقرارات تغيّر مصير الحكاية','Mysteries and decisions that shape the story'],
+    ['light-future','لايت نوفل','المستقبل كما تتخيله القصص','Imagined futures','خيال علمي وعوالم تتجاوز المألوف','Science fiction and worlds beyond the familiar'],
+    ['light-life','لايت نوفل','قربٌ من الحياة اليومية','Closer to everyday life','علاقات وكوميديا ولحظات صغيرة','Relationships, comedy and small moments'],
+    ['web-magic','ويب نوفل','مغامرات تتطور معك','Adventures that grow','سحر وعوالم ومسارات مختلفة','Magic, worlds and different paths'],
+    ['web-escape','ويب نوفل','هروب إلى حكاية جديدة','Escape into a new story','خيال وكوميديا وحياة بين المغامرات','Fantasy, comedy and life between adventures'],
+    ['web-future','ويب نوفل','قوى وتقنيات غير مألوفة','Unfamiliar powers and technologies','خيال علمي وأبطال خارج القواعد','Science fiction and unconventional heroes']
+  ];
   var GENRES = [['أكشن','Action'],['مغامرة','Adventure'],['خيال','Fantasy'],['رومانسي','Romance'],['إثارة','Thriller'],
     ['خيال علمي','Science Fiction'],['غموض','Mystery'],['كوميدي','Comedy'],['دراما','Drama'],['رعب','Horror'],
     ['إيسيكاي','Isekai'],['شونين','Shounen'],['شوجو','Shoujo'],['سينين','Seinen'],['نفسي','Psychological'],
@@ -43,35 +77,44 @@
     var key = normalized(genreLabel(genre, 'en'));
     return (work.genres || []).concat(work._tasteGenreKeys || []).some(function (value) { return normalized(genreLabel(value, 'en')) === key; });
   }
-  function buildShelves(ranked, preferences, library, seeds, lang) {
+  function buildShelves(ranked, preferences, library, seeds, lang, activeType) {
     preferences = preferences || {}; library = library || {};
     var en = lang === 'en', seen = new Set(), shelves = [];
+    var identity=root.LorefyCatalogIdentity, aliases=root.LorefyCatalogAliases || {};
+    function idOf(work) { var key=String(work.id), checked=new Set();while(aliases[key]&&!checked.has(key)){checked.add(key);key=String(aliases[key]);}return key; }
+    var owned=new Set(Object.keys(library).map(function(id){return idOf({id:id});}));
     var candidates = (ranked || []).filter(function (work) {
       return work && work.id && work._discoveryEligible !== false &&
-        (work._discoveryEligible === true || work._recommendationEligible !== false) && !library[work.id];
+        (work._discoveryEligible === true || work._recommendationEligible !== false) && !owned.has(idOf(work));
     });
-    function add(key, title, items, subtitle, limit) {
+    function add(key, title, items, subtitle, limit, minimum) {
       var selected = [], authors = new Map(), localIds = new Set();
       items.forEach(function (work) {
-        var author = normalized(work.auth), id = String(work.id);
+        var author = normalized(work._tasteAuthor || work.auth), id = idOf(work);
         if (selected.length >= (limit || 12) || seen.has(id) || localIds.has(id)) return;
-        if (key.indexOf('author-') !== 0 && author && (authors.get(author) || 0) >= 2) return;
+        if (author && authors.has(author)) return;
+        if (identity && selected.some(function(previous){return identity.sameWork(previous,work,aliases);})) return;
         selected.push(work); localIds.add(id);
         if (author) authors.set(author, (authors.get(author) || 0) + 1);
       });
-      if (!selected.length) return;
-      selected.forEach(function (w) { seen.add(String(w.id)); });
+      if (selected.length < (minimum || 3)) return;
+      selected.forEach(function (w) { seen.add(idOf(w)); });
       shelves.push({key: key, title: title, subtitle: subtitle || '', items: selected});
     }
-    add('for-you', en ? 'Picked for you' : 'مختارة لك', candidates, '', 6);
+    var editorial=root.LorefyEditorialCatalog;
+    if(editorial) {
+      var topics=new Map();
+      editorial.picks.forEach(function(pick){(pick.editorialTopics || []).forEach(function(topic){var ids=topics.get(topic)||new Set();ids.add(idOf(pick));topics.set(topic,ids);});});
+      COLLECTIONS.filter(function(entry){return !activeType || /^(?:all|الكل)$/i.test(activeType) || formatKey(entry[1])===formatKey(activeType);}).forEach(function(entry){
+        var ids=topics.get(entry[0]);
+        add('collection-'+entry[0],entry[en?3:2],candidates.filter(function(w){return ids&&ids.has(idOf(w));}),entry[en?5:4],6,2);
+      });
+    }
+    add('for-you', en ? 'Picked for you' : 'مختارة لك', candidates, '', 6, shelves.length ? 2 : 1);
     (preferences.genres || []).slice(0, 3).forEach(function (genre, index) {
       add('genre-' + index, genre, candidates.filter(function (w) { return genreMatches(w, genre); }), en ? 'From your favorite genres' : 'من أنواعك المفضلة');
     });
-    (seeds || []).slice(0, 2).forEach(function (seed, index) {
-      if (!seed || !seed.auth) return;
-      add('author-' + index, (en ? 'More by ' : 'المزيد من ') + seed.auth,
-        candidates.filter(function (w) { return normalized(w.auth) === normalized(seed.auth); }));
-    });
+    // Author bibliographies remain on author pages; general discovery mixes writers.
     add('short', en ? 'A shorter next read' : 'قراءات لوقت أقصر', candidates.filter(function (w) {
       var pages = first(w, ['pages', 'pageCount']), chapters = first(w, ['ch', 'chapters']);
       return pages > 0 && pages <= 250 || chapters > 0 && chapters <= 40;
@@ -92,6 +135,10 @@
     var draftState = React.useState(null), draft = draftState[0], setDraft = draftState[1];
     var revisionState = React.useState(0), revision = revisionState[0], setRevision = revisionState[1];
     var opener = React.useRef(null), panel = React.useRef(null);
+    React.useEffect(function(){
+      var loader=root.LorefyCatalogLoader;
+      if(loader&&loader.loadExplore)loader.loadExplore(props.activeType).catch(function(){});
+    },[props.activeType]);
     var catalogState = root.LorefyCatalogLoader && root.LorefyCatalogLoader.state();
     var catalogReady = !catalogState || catalogState.ready;
     var catalogPartial = !!(catalogState && catalogState.partial);
@@ -105,7 +152,7 @@
       seeds.forEach(function (work) { (work.genres || []).forEach(function (genre) { genreCounts.set(genre, (genreCounts.get(genre) || 0) + 1); }); });
       shelfPreferences = Object.assign({}, props.preferences, {genres: Array.from(genreCounts).sort(function (a, b) { return b[1] - a[1]; }).slice(0, 3).map(function (entry) { return entry[0]; })});
     }
-    var shelves = buildShelves(ranked, shelfPreferences, props.library, seeds, props.language);
+    var shelves = buildShelves(ranked, shelfPreferences, props.library, seeds, props.language, props.activeType);
     var reading = readingItems(props.library, props.progress, props.getWork, props.getTotals);
     var t = function (ar, english) { return en ? english : ar; };
     var Icon = function (name, size) {
@@ -207,6 +254,7 @@
         h('div', {className: 'lf-explore-format-row', role: 'group', 'aria-label': t('نوع العمل', 'Work format')}, props.types.map(function (type) {
           return h('button', {key: type, 'aria-pressed': props.activeType === type, onClick: function () { props.onType(type); }}, props.typeLabel(type));
         })),
+        shelves.length > 0 && h('div',{className:'lf-explore-intro'},h('strong',null,t('حكايات وأفكار تستحق وقتك','Stories and ideas worth your time')),h('p',null,t('رفوف متنوعة · عمل واحد لكل كاتب داخل الرف','Varied shelves · one work per author in each shelf'))),
         shelves.length ? shelves.map(section) : h('div', {className: 'lf-explore-empty'}, h('h2', null, t('لا توجد اقتراحات لهذا الاختيار', 'No suggestions for this selection')),
           h('button', {onClick: function () { props.onType(props.allType); }}, t('كل الأنواع', 'All formats')))) :
         h('section', {className: 'lf-explore-browse'}, h('h2', null, t('اختر رفّك', 'Choose a shelf')),
@@ -224,5 +272,5 @@
               return h('button', {key: action[0], onClick: function () { props.onFeedback(dialog.work.id, action[0]); setRevision(function (n) { return n + 1; }); close(); }}, Icon(action[2]), action[1]);
             })) : h('div', {className: 'lf-explore-dialog-grid'}, dialog.items.map(item)))));
   }
-  return {genreLabel: genreLabel, readingSnapshot: readingSnapshot, readingItems: readingItems, buildShelves: buildShelves, Explore: Explore};
+  return {genreLabel: genreLabel, formatKey: formatKey, collections: COLLECTIONS, readingSnapshot: readingSnapshot, readingItems: readingItems, buildShelves: buildShelves, Explore: Explore};
 });

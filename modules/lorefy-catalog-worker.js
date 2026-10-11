@@ -7,7 +7,8 @@ importScripts(
   "lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4",
   "lorefy-comics-taxonomy.js?v=20261008-arabic-library-v2",
   "lorefy-bibliographic-overrides.js?v=20261008-arabic-breadth-v4",
-  "../uploads/lorefy-catalog-quality.js?v=20261008-arabic-breadth-v4"
+  "../uploads/lorefy-editorial-picks.js?v=20261011-explore-v2",
+  "../uploads/lorefy-catalog-quality.js?v=20261011-explore-v2"
 );
 
 // Larger, acknowledged batches reduce message overhead without doing catalog
@@ -47,6 +48,7 @@ async function loadCatalog(parts, version) {
       Array.prototype.push.apply(records, partRecords);
     }
     if (stopped) return;
+    self.LorefyEditorialCatalog.apply(records, true);
     self.LorefyCatalogQuality.apply(records);
     self.LorefyCatalogIdentity.organizeCatalog(records, { aliases: aliases });
     records = self.LorefyCatalogData.prepareCatalogRecords(records);

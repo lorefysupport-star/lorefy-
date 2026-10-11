@@ -9,7 +9,7 @@
   var loaded = new Set((global.LOREFY_INITIAL_CATALOG_PARTS || []).map(Number));
   var loading = new Map();
   var activeQueue = Promise.resolve();
-  var version = "20261011-friends-fixes-v1";
+  var version = "20261011-explore-v2";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
@@ -522,6 +522,7 @@
   global.LorefyCatalogLoader = {
     loadPart: loadPart,
     loadWorks: loadWorks,
+    loadExplore: function (type) { return enqueue(planner.initialCatalogPlan(manifest,{type:type}), {gapMs:40}); },
     loadAuthor: function (author, active) {
       var query=String(author || '').replace(/[,،]/g,' ').trim();
       if (!query) return Promise.resolve();

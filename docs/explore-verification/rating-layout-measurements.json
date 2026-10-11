@@ -1,0 +1,96 @@
+[
+  {
+    "width": 320,
+    "ratings": [
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "2.5"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "2.75"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "3"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "3"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "2.75"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "2.5"
+      }
+    ]
+  },
+  {
+    "width": 440,
+    "ratings": [
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "2.5"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "2.75"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "3"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "3"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "2.75"
+      },
+      {
+        "allFive": true,
+        "feathersFit": true,
+        "numberFits": true,
+        "overflow": false,
+        "value": "2.5"
+      }
+    ]
+  }
+]

@@ -1,0 +1,38 @@
+✔ configures a native iOS release shell (3.8644ms)
+✔ builds TestFlight from the complete Capacitor app instead of the Expo demo (4.3846ms)
+✔ native iPad orientations support multitasking while iPhone stays portrait (5.1688ms)
+✔ Expo iPad configuration matches the native device support (2.1316ms)
+✔ keeps every shipped web asset synchronized with the Xcode bundle (889.6057ms)
+✔ prepares a native runtime config without exposing server secrets (14684.319ms)
+✔ EAS receives the browser-safe auth configuration without the editable release file (0.5781ms)
+✔ uses the configured public API instead of a localhost-relative catalog path in native release (0.3398ms)
+✔ includes Apple privacy, deletion, and review artifacts (0.763ms)
+✔ wires Apple privacy and mandatory Sign in with Apple (0.5915ms)
+✔ handles native Google OAuth through an app callback instead of localhost (0.2542ms)
+✔ routes the Apple button through the native Apple credential bridge (0.3018ms)
+✔ native auth bridges replace provider internals with user-safe Arabic errors (0.3685ms)
+✔ reports only the remaining App Store release blockers (61.3004ms)
+✔ reviewed launch selections cover previously empty formats without invented ratings (23.5861ms)
+✔ screening remains limited to exact reviewed records and never bypasses explicit or AI flags (0.677ms)
+✔ late compact ingestion and full worker replacement preserve curated picks and account library exclusions (19.1929ms)
+✔ shelves canonicalize aliases and preserve genre personalization across languages (0.5386ms)
+✔ reading snapshots prefer pages for books and chapters for sequential works (2.6544ms)
+✔ unknown totals never imply a fabricated percentage; available chapters are not completion (0.3436ms)
+✔ chapter publisher totals override stale work totals and status (0.1536ms)
+✔ shelves adapt to ranked account taste, keep bounded cards, and do not duplicate works (2.4365ms)
+✔ empty catalog and absent preferences are valid; fake lists and unsafe works are never invented (0.3892ms)
+✔ discovery-approved unrated works remain available after the full compact catalog loads (0.2385ms)
+✔ general shelves limit repeated authors and separate genuine genre exploration (1.3031ms)
+✔ active reading excludes finished and paused works but includes zero checkpoints (0.4262ms)
+✔ explore uses the shared React state, durable preference setter and progress editor (2.9431ms)
+✔ new surfaces use theme tokens, stable covers and logical mobile dimensions (1.0065ms)
+✔ Explore genre labels localize both stored Arabic tastes and imported English metadata (0.2387ms)
+✔ Arabic genre preferences match English provider genres in personalized shelves (0.4593ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15794.2494

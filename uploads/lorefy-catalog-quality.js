@@ -3,10 +3,11 @@
 
   function apply(records) {
     records = Array.isArray(records) ? records : [];
-    if (global.LorefyCatalogPolicy) global.LorefyCatalogPolicy.filterInPlace(records);
     var corrected = 0;
     var comics = global.LorefyComicsTaxonomy;
     if (comics && typeof comics.apply === 'function') comics.apply(records);
+    if (global.LorefyEditorialCatalog) global.LorefyEditorialCatalog.apply(records);
+    if (global.LorefyCatalogPolicy) global.LorefyCatalogPolicy.filterInPlace(records);
     records.forEach(function (work) {
       if (!work || typeof work !== 'object') return;
       if (work.type === 'مانهوا صينية' || /^manhua$/i.test(String(work.type || ''))) {

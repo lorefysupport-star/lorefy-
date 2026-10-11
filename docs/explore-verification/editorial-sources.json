@@ -1,0 +1,3542 @@
+[
+  {
+    "id": "n-pride-and-prejudice",
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-lives"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-jane-eyre",
+    "title": "Jane Eyre",
+    "author": "Charlotte Bronte",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-lives"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-wuthering-heights",
+    "title": "Wuthering Heights",
+    "author": "Emily Bronte",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-lives"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-little-women",
+    "title": "Little Women",
+    "author": "Louisa May Alcott",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-lives"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2022/06/PuffinStocklist2021.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-great-gatsby",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-lives"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-war-and-peace",
+    "title": "War and Peace",
+    "author": "Leo Tolstoy",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-lives"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-crime-and-punishment",
+    "title": "Crime and Punishment",
+    "author": "Fyodor Dostoevsky",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-lives"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-moby-dick",
+    "title": "Moby-Dick",
+    "author": "Herman Melville",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-adventure"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-frankenstein",
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-imagination"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-dracula",
+    "title": "Dracula",
+    "author": "Bram Stoker",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-imagination"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-count-of-monte-cristo",
+    "title": "The Count of Monte Cristo",
+    "author": "Alexandre Dumas",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-adventure"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-three-musketeers",
+    "title": "The Three Musketeers",
+    "author": "Alexandre Dumas",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-adventure"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-don-quixote",
+    "title": "Don Quixote",
+    "author": "Miguel de Cervantes",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-adventure"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2026/02/Vintage-Classics-Catalogue-2026.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-alice-wonderland",
+    "title": "Alice's Adventures in Wonderland",
+    "author": "Lewis Carroll",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-imagination"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2022/06/PuffinStocklist2021.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "n-wizard-of-oz",
+    "title": "The Wonderful Wizard of Oz",
+    "author": "L. Frank Baum",
+    "type": "رواية",
+    "topics": [
+      "novel-classics",
+      "novel-imagination"
+    ],
+    "source": "https://wp.penguin.co.uk/wp-content/uploads/2022/06/PuffinStocklist2021.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-70959593",
+    "title": "فارس بلا وجود",
+    "author": "إيتالو كالفينو",
+    "type": "رواية",
+    "topics": [
+      "novel-imagination",
+      "novel-world"
+    ],
+    "source": "https://www.safahat.org/books/70959593/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-52627375",
+    "title": "لويزيتو: قصة حب",
+    "author": "سوزانا تامارو",
+    "type": "رواية",
+    "topics": [
+      "novel-lives",
+      "novel-world"
+    ],
+    "source": "https://www.safahat.org/books/52627375/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-63631953",
+    "title": "وردة للوقت المغربي",
+    "author": "أحمد المديني",
+    "type": "رواية",
+    "topics": [
+      "novel-arabic",
+      "novel-world"
+    ],
+    "source": "https://www.safahat.org/books/63631953/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-25868315",
+    "title": "الحرير",
+    "author": "أليساندرو باريكو",
+    "type": "رواية",
+    "topics": [
+      "novel-lives",
+      "novel-world"
+    ],
+    "source": "https://www.safahat.org/books/25868315/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-49140393",
+    "title": "كتاب الأوهام",
+    "author": "بول أوستر",
+    "type": "رواية",
+    "topics": [
+      "novel-mystery",
+      "novel-world"
+    ],
+    "source": "https://www.safahat.org/books/49140393/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-61715937",
+    "title": "الصَّهبة",
+    "author": "محمد جبريل",
+    "type": "رواية",
+    "topics": [
+      "novel-arabic",
+      "novel-world"
+    ],
+    "source": "https://www.safahat.org/books/61715937/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-96841847",
+    "title": "نظرية الببغاء",
+    "author": "دنيس جيدج",
+    "type": "رواية",
+    "topics": [
+      "novel-mystery",
+      "novel-world"
+    ],
+    "source": "https://www.safahat.org/books/96841847/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-61803142",
+    "title": "موعد بين الشمس والقمر: حكاية المياه والصحراء",
+    "author": "ماريا أنطونيتا نانيا",
+    "type": "رواية",
+    "topics": [
+      "novel-lives",
+      "novel-world"
+    ],
+    "source": "https://www.safahat.org/books/61803142/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-96094025",
+    "title": "تغيُّر العقل: كيف تترك التقنيات الرقمية بصماتها على أدمغتنا",
+    "author": "سوزان غرينفيلد",
+    "type": "كتاب",
+    "topics": [
+      "book-science"
+    ],
+    "source": "https://www.safahat.org/books/96094025/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-72680850",
+    "title": "نهاية الإنسان: عواقب الثورة البيوتكنولوجية",
+    "author": "فرانسيس فوكوياما",
+    "type": "كتاب",
+    "topics": [
+      "book-science"
+    ],
+    "source": "https://www.safahat.org/books/72680850/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-46191474",
+    "title": "الفيزياء والفلسفة",
+    "author": "فيرنر هايزنبرج",
+    "type": "كتاب",
+    "topics": [
+      "book-science"
+    ],
+    "source": "https://www.safahat.org/books/46191474/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-70949528",
+    "title": "بيولوجيا الخوف: مقالات علمية",
+    "author": "أحمد مستجير",
+    "type": "كتاب",
+    "topics": [
+      "book-science"
+    ],
+    "source": "https://www.safahat.org/books/70949528/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-49160836",
+    "title": "السفر بين الكواكب",
+    "author": "أ. شتيرنفلد",
+    "type": "كتاب",
+    "topics": [
+      "book-science"
+    ],
+    "source": "https://www.safahat.org/books/49160836/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-58169180",
+    "title": "الفيزياء الفلكية: مقدمة قصيرة جدًّا",
+    "author": "جيمس بيني",
+    "type": "كتاب",
+    "topics": [
+      "book-science"
+    ],
+    "source": "https://www.safahat.org/books/58169180/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-91702848",
+    "title": "تعرَّف على جيرانك: عقول الحيوانات والحياة في عالمٍ يتجاوز البشر",
+    "author": "براندون كايم",
+    "type": "كتاب",
+    "topics": [
+      "book-science"
+    ],
+    "source": "https://www.safahat.org/books/91702848/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-50802935",
+    "title": "تغيُّر المناخ: مقدمة قصيرة جدًّا",
+    "author": "مارك ماسلين",
+    "type": "كتاب",
+    "topics": [
+      "book-science"
+    ],
+    "source": "https://www.safahat.org/books/50802935/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-13692027",
+    "title": "كانط والمرأة",
+    "author": "إمام عبد الفتاح إمام",
+    "type": "كتاب",
+    "topics": [
+      "book-ideas"
+    ],
+    "source": "https://www.safahat.org/books/13692027/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-42937527",
+    "title": "ألف باء دولوز",
+    "author": "أحمد حسان",
+    "type": "كتاب",
+    "topics": [
+      "book-ideas"
+    ],
+    "source": "https://www.safahat.org/books/42937527/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-24060925",
+    "title": "برغسون ما بعد الكولونيالي: الفلسفة الحيوية لدى ليوبولد سيدار سانغور ومحمد إقبال",
+    "author": "سليمان بشير دْيانْي",
+    "type": "كتاب",
+    "topics": [
+      "book-ideas"
+    ],
+    "source": "https://www.safahat.org/books/24060925/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-16869631",
+    "title": "الثورات العربية … سيرة غير ذاتية",
+    "author": "فتحي المسكيني وأم الزين بنشيخة المسكيني",
+    "type": "كتاب",
+    "topics": [
+      "book-ideas"
+    ],
+    "source": "https://www.safahat.org/books/16869631/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-27197141",
+    "title": "الأخلاق والسياسة",
+    "author": "أ. تيتارينكو",
+    "type": "كتاب",
+    "topics": [
+      "book-ideas"
+    ],
+    "source": "https://www.safahat.org/books/27197141/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-71964748",
+    "title": "النساء في الفكر السياسي الغربي",
+    "author": "سوزان مولر أوكين",
+    "type": "كتاب",
+    "topics": [
+      "book-ideas"
+    ],
+    "source": "https://www.safahat.org/books/71964748/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-14057418",
+    "title": "الحكم المصري في السودان ١٨٢٠–١٨٨٥",
+    "author": "محمد فؤاد شكري",
+    "type": "كتاب",
+    "topics": [
+      "book-history"
+    ],
+    "source": "https://www.safahat.org/books/14057418/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-28639404",
+    "title": "التنوير بين مصر واليابان: دراسة مقارنة في فكر رفاعة الطهطاوي وفوكوزاوا يوكيتشي",
+    "author": "رءوف عباس",
+    "type": "كتاب",
+    "topics": [
+      "book-history"
+    ],
+    "source": "https://www.safahat.org/books/28639404/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-69290757",
+    "title": "أصوات بابل: مقاربات جينالوجية في اللغة والحراك السوسيوثقافي الأفروآسيوي",
+    "author": "عبد المنعم المحجوب",
+    "type": "كتاب",
+    "topics": [
+      "book-history"
+    ],
+    "source": "https://www.safahat.org/books/69290757/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-52748271",
+    "title": "كلنا إخوة: صورة قلمية لألبرت شفيتزر",
+    "author": "تشارلي ماي سيمون",
+    "type": "كتاب",
+    "topics": [
+      "book-journeys"
+    ],
+    "source": "https://www.safahat.org/books/52748271/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-59728170",
+    "title": "البحر وسردينيا",
+    "author": "ديفيد هربرت لورانس",
+    "type": "كتاب",
+    "topics": [
+      "book-journeys"
+    ],
+    "source": "https://www.safahat.org/books/59728170/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-96942429",
+    "title": "أمريكا يا ويكا",
+    "author": "محمود السعدني",
+    "type": "كتاب",
+    "topics": [
+      "book-journeys"
+    ],
+    "source": "https://www.safahat.org/books/96942429/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-37282530",
+    "title": "الحيوان الباكي: يوميات الرحلة اللبنانية",
+    "author": "ميشائيل كَليبرغ",
+    "type": "كتاب",
+    "topics": [
+      "book-journeys"
+    ],
+    "source": "https://www.safahat.org/books/37282530/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-42902931",
+    "title": "أيام برازيلية وأخرى من يباب",
+    "author": "أحمد المديني",
+    "type": "كتاب",
+    "topics": [
+      "book-journeys"
+    ],
+    "source": "https://www.safahat.org/books/42902931/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-85837484",
+    "title": "آكية … سنوات الطفولة",
+    "author": "وول سوينكا",
+    "type": "كتاب",
+    "topics": [
+      "book-journeys"
+    ],
+    "source": "https://www.safahat.org/books/85837484/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-79469294",
+    "title": "سن الأسد: مجموعة قصصية",
+    "author": "فولفجانج بورشرت",
+    "type": "كتاب",
+    "topics": [
+      "book-stories"
+    ],
+    "source": "https://www.safahat.org/books/79469294/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-hindawi-91719359",
+    "title": "الثورة المغدورة: قصة كومونة باريس في شرائط مصورة",
+    "author": "برنار فيسك",
+    "type": "كوميكس",
+    "topics": [
+      "comic-real"
+    ],
+    "source": "https://www.safahat.org/books/91719359/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol265609w",
+    "title": "Out From Boneville",
+    "author": "Jeff Smith",
+    "type": "كوميكس",
+    "topics": [
+      "comic-worlds"
+    ],
+    "source": "https://www.scholastic.com/content/dam/scholastic/educators/discussion-guides/guide-to-using-graphic-novels.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol8842598w",
+    "title": "Amulet",
+    "author": "Kazu Kibuishi",
+    "type": "كوميكس",
+    "topics": [
+      "comic-worlds"
+    ],
+    "source": "https://www.scholastic.com/content/dam/scholastic/educators/discussion-guides/guide-to-using-graphic-novels.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol1800611w",
+    "title": "Mouse Guard Fall 1152",
+    "author": "David Petersen",
+    "type": "كوميكس",
+    "topics": [
+      "comic-worlds"
+    ],
+    "source": "https://www.mouseguard.net/book/fall-1152/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol17274040w",
+    "title": "Nimona",
+    "author": "N.D. Stevenson",
+    "type": "كوميكس",
+    "topics": [
+      "comic-worlds"
+    ],
+    "source": "https://www.harpercollins.com/products/nimona-nd-stevenson",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-OL19670795W",
+    "title": "Cleopatra in space",
+    "author": "Mike Maihack",
+    "type": "كوميكس",
+    "topics": [
+      "comic-worlds"
+    ],
+    "source": "https://kids.scholastic.com/content/kids64/en/books/cleopatra-in-space.html",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol20024169w",
+    "title": "The nameless city",
+    "author": "Faith Erin Hicks",
+    "type": "كوميكس",
+    "topics": [
+      "comic-worlds"
+    ],
+    "source": "https://www.scholastic.com/content/dam/scholastic/educators/discussion-guides/guide-to-using-graphic-novels.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-OL24244816W",
+    "title": "Allergic",
+    "author": "Megan Wagner Lloyd",
+    "type": "كوميكس",
+    "topics": [
+      "comic-life"
+    ],
+    "source": "https://www.scholastic.com/content/dam/scholastic/educators/discussion-guides/guide-to-using-graphic-novels.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-OL20919671W",
+    "title": "Twins",
+    "author": "Varian Johnson",
+    "type": "كوميكس",
+    "topics": [
+      "comic-life"
+    ],
+    "source": "https://www.scholastic.com/content/dam/scholastic/educators/discussion-guides/guide-to-using-graphic-novels.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol8756330w",
+    "title": "Smile",
+    "author": "Raina Telgemeier",
+    "type": "كوميكس",
+    "topics": [
+      "comic-life"
+    ],
+    "source": "https://www.scholastic.com/content/dam/scholastic/educators/discussion-guides/guide-to-using-graphic-novels.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol17095216w",
+    "title": "El Deafo",
+    "author": "Cece Bell",
+    "type": "كوميكس",
+    "topics": [
+      "comic-life"
+    ],
+    "source": "https://www.abramsbooks.com/product/el-deafo_9781419712173/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol20152649w",
+    "title": "New Kid",
+    "author": "Jerry Craft",
+    "type": "كوميكس",
+    "topics": [
+      "comic-life"
+    ],
+    "source": "https://jerrycraft.com/books/new-kid/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol17342469w",
+    "title": "Roller Girl",
+    "author": "Victoria Jamieson",
+    "type": "كوميكس",
+    "topics": [
+      "comic-life"
+    ],
+    "source": "https://www.penguinrandomhouse.com/books/313058/roller-girl-by-victoria-jamieson/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol19743879w",
+    "title": "The cardboard kingdom",
+    "author": "Chad Sell",
+    "type": "كوميكس",
+    "topics": [
+      "comic-worlds"
+    ],
+    "source": "https://www.penguinrandomhouse.com/books/549484/the-cardboard-kingdom-by-chad-sell/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol19671690w",
+    "title": "Hilo",
+    "author": "Judd Winick",
+    "type": "كوميكس",
+    "topics": [
+      "comic-worlds"
+    ],
+    "source": "https://www.penguinrandomhouse.com/series/HLO/hilo/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-OL16050250W",
+    "title": "Calvin and Hobbes",
+    "author": "Bill Watterson",
+    "type": "كوميكس",
+    "topics": [
+      "comic-laugh"
+    ],
+    "source": "https://www.simonandschuster.com/books/The-Complete-Calvin-and-Hobbes/Bill-Watterson/Calvin-and-Hobbes/9781449433253",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol25897w",
+    "title": "Peanuts Treasury",
+    "author": "Charles M. Schulz",
+    "type": "كوميكس",
+    "topics": [
+      "comic-laugh"
+    ],
+    "source": "https://www.peanuts.com/",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol17610986w",
+    "title": "Dog Man",
+    "author": "Dav Pilkey",
+    "type": "كوميكس",
+    "topics": [
+      "comic-laugh"
+    ],
+    "source": "https://www.scholastic.com/content/dam/scholastic/educators/discussion-guides/guide-to-using-graphic-novels.pdf",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-comics-works-ol15528w",
+    "title": "Marvels",
+    "author": "Kurt Busiek",
+    "type": "كوميكس",
+    "topics": [
+      "comic-heroes"
+    ],
+    "source": "https://www.marvel.com/comics/series/1904/marvels_1994",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-OL24444057W",
+    "title": "Kingdom come",
+    "author": "Mark Waid",
+    "type": "كوميكس",
+    "topics": [
+      "comic-heroes"
+    ],
+    "source": "https://www.dc.com/graphic-novels/kingdom-come-1996/kingdom-come-new-edition",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-399-kino-no-tabi-the-beautiful-world",
+    "title": "Kino no Tabi: The Beautiful World",
+    "author": "Keiichi Shigusawa",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds",
+      "light-mystery",
+      "light-mystery",
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/30399",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-1342-baccano",
+    "title": "Baccano!",
+    "author": "Ryougo Narita",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/31342",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-3083-suzumiya-haruhi-series",
+    "title": "Suzumiya Haruhi Series",
+    "author": "Nagaru Tanigawa",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-mystery",
+      "light-future",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/33083",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-3649-fate-zero",
+    "title": "Fate/Zero",
+    "author": "Kinoko Nasu, Nitro Plus, Gen Urobuchi",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/33649",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-4658-fullmetal-alchemist",
+    "title": "Fullmetal Alchemist",
+    "author": "Makoto Inoue",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/34658",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-9115-ookami-to-koushinryou",
+    "title": "Spice & Wolf",
+    "author": "Isuna Hasekura",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/39115",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-9726-zaregoto-series",
+    "title": "Zaregoto",
+    "author": "NISIOISIN",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-mystery",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/39726",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-14893-monogatari-series-first-season",
+    "title": "Monogatari Series: First Season",
+    "author": "NISIOISIN",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/44893",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-23751-monogatari-series-second-season",
+    "title": "Monogatari Series: Second Season",
+    "author": "NISIOISIN",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-mystery",
+      "light-mystery",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/53751",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-24875-shinyaku-toaru-majutsu-no-index",
+    "title": "A Certain Magical Index NT",
+    "author": "Kazuma Kamachi",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-worlds",
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/54875",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-39859-steins-gate",
+    "title": "Steins;Gate",
+    "author": "Kiyomune Miwa",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/69859",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-40171-yahari-ore-no-seishun-love-comedy-wa-machigatteiru",
+    "title": "My Youth Romantic Comedy Is Wrong, As I Expected",
+    "author": "Wataru Watari",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-life",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/70171",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-44227-monogatari-series-final-season",
+    "title": "Monogatari Series: Final Season",
+    "author": "NISIOISIN",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-mystery",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/74227",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-55215-utsuro-no-hako-to-zero-no-maria",
+    "title": "The Empty Box and Zeroth Maria",
+    "author": "Eiji Mikage",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery",
+      "light-mystery",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/85134",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-70261-mushoku-tensei-isekai-ittara-honki-dasu",
+    "title": "Mushoku Tensei: Jobless Reincarnation",
+    "author": "Rifujin na Magonote",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/85470",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-74697-re-zero-kara-hajimeru-isekai-seikatsu",
+    "title": "Re:ZERO -Starting Life in Another World-",
+    "author": "Nagatsuki, Tappei",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds",
+      "light-mystery",
+      "light-mystery",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/85737",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-81669-overlord",
+    "title": "Overlord",
+    "author": "Kugane Maruyama",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/85976",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-60553-kono-subarashii-sekai-ni-shukufuku-wo",
+    "title": "Konosuba: God's Blessing on This Wonderful World!",
+    "author": "Natsume Akatsuki",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/86238",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-74847-tokyo-ghoul",
+    "title": "Tokyo Ghoul",
+    "author": "Shin Towada",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/87233",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-81211-shuumatsu-nani-shitemasu-ka-isogashii-desu-ka-sukutte-moratte-ii-desu-ka",
+    "title": "WorldEnd: What Do You Do at the End of the World? Are You Busy? Will You Save Us?",
+    "author": "Akira Kareno",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/87284",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-86119-honzuki-no-gekokujou-shisho-ni-naru-tame-ni-wa-shudan-wo-erandeiraremase",
+    "title": "Ascendance of a Bookworm: I'll Do Anything to Become a Librarian!",
+    "author": "Miya Kazuki",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/87383",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-79993-umineko-no-naku-koro-ni-chiru",
+    "title": "Umineko no Naku Koro ni Chiru",
+    "author": "Ryukishi07",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/92936",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-89357-youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e",
+    "title": "Classroom of the Elite",
+    "author": "Shougo Kinugasa",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/94970",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-93097-monogatari-series-off-season",
+    "title": "Monogatari Series: Off Season",
+    "author": "NISIOISIN",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/96019",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-98930-violet-evergarden",
+    "title": "Violet Evergarden",
+    "author": "Kana Akatsuki",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/97298",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-104039-86",
+    "title": "86: Eighty-Six",
+    "author": "Asato Asato",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/98610",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-86769-kusuriya-no-hitorigoto",
+    "title": "The Apothecary Diaries",
+    "author": "Natsu Hyuuga",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/99026",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-66517-umineko-no-naku-koro-ni",
+    "title": "Umineko no Naku Koro ni",
+    "author": "Ryukishi07",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-mystery",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/102540",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-102875-fata-morgana-no-yakata-anata-no-genten-ni-itaru-monogatari",
+    "title": "The House in Fata Morgana",
+    "author": "Keika Hanada",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/110992",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-123992-youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e-2-nensei-hen",
+    "title": "Classroom of the Elite: Year 2",
+    "author": "Shougo Kinugasa",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/115166",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-180207-youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e-3-nensei-hen",
+    "title": "Classroom of the Elite: Year 3",
+    "author": "Shougo Kinugasa",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/186990",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-1315-boogiepop-series",
+    "title": "Boogiepop Series",
+    "author": "Kouhei Kadono",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/31315",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-3807-juuni-kokuki",
+    "title": "The Twelve Kingdoms",
+    "author": "Fuyumi Ono",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/33807",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-12854-toaru-majutsu-no-index",
+    "title": "A Certain Magical Index",
+    "author": "Kazuma Kamachi",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-worlds",
+      "light-life",
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/42854",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-16816-durarara",
+    "title": "Durarara!!",
+    "author": "Ryougo Narita",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/46816",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-18161-katanagatari",
+    "title": "Katanagatari: Sword Tale",
+    "author": "NISIOISIN",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/48161",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-83903-fate-strange-fake",
+    "title": "Fate/strange Fake",
+    "author": "Ryougo Narita",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds",
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/50006",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-22699-black-lagoon",
+    "title": "Black Lagoon",
+    "author": "Gen Urobuchi",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/52699",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-31105-sekaiichi-hatsukoi-yokozawa-takafumi-no-baai",
+    "title": "Sekaiichi Hatsukoi: Yokozawa Takafumi no Baai",
+    "author": "Miyako Fujisaki",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/61105",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-43921-sword-art-online-progressive",
+    "title": "Sword Art Online: Progressive",
+    "author": "Reki Kawahara",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds",
+      "light-life",
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/73921",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-48399-no-game-no-life",
+    "title": "No Game No Life",
+    "author": "Kamiya, Yuu",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/78399",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-87610-tensei-shitara-slime-datta-ken",
+    "title": "That Time I Got Reincarnated as a Slime",
+    "author": "Fuse",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/86355",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-95012-kumo-desu-ga-nani-ka",
+    "title": "So I'm a Spider, So What?",
+    "author": "Okina Baba",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/86406",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-87953-shousetsu-akatsuki-no-yona-onaji-tsuki-no-shita-de",
+    "title": "Shousetsu Akatsuki no Yona: Onaji Tsuki no Shita de",
+    "author": "Touko Fujitani",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/87035",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-90531-naruto-shinden-series",
+    "title": "Naruto: Itachi's Story",
+    "author": "Takashi Yano, Shin Towada",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/87232",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-95243-re-zero-kara-hajimeru-isekai-seikatsu-ex",
+    "title": "Re:ZERO -Starting Life in Another World- Ex",
+    "author": "Tappei Nagatsuki",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/87262",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-77597-adachi-to-shimamura",
+    "title": "Adachi and Shimamura",
+    "author": "Hitoma Iruma",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/92550",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-88930-youjo-senki",
+    "title": "The Saga of Tanya the Evil",
+    "author": "Carlo Zen",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/94846",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-91209-gekijouban-gintama-kanketsu-hen-yorozuya-yo-eien-nare",
+    "title": "Gekijouban Gintama: Kanketsu-hen - Yorozuya yo Eien Nare",
+    "author": "Tomohito Oosaki",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/95458",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-95211-orange",
+    "title": "Orange",
+    "author": "Yui Tokiumi",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/96581",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-98380-bungou-stray-dogs",
+    "title": "Bungo Stray Dogs",
+    "author": "Kafka Asagiri",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery"
+    ],
+    "source": "https://anilist.co/manga/97204",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-102330-majo-no-tabitabi",
+    "title": "Wandering Witch: The Journey of Elaina",
+    "author": "Jougi Shiraishi",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/98741",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-115506-yagate-kimi-ni-naru-saeki-sayaka-ni-tsuite",
+    "title": "Bloom into You: Regarding Saeki Sayaka",
+    "author": "Hitoma Iruma",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/105388",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-115922-kage-no-jitsuryokusha-ni-naritakute",
+    "title": "The Eminence in Shadow",
+    "author": "Daisuke Aizawa",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/108428",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-113819-violet-evergarden-gaiden",
+    "title": "Violet Evergarden Gaiden",
+    "author": "Kana Akatsuki",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/109121",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-138424-watashi-no-oshi-wa-akuyaku-reijou-revolution",
+    "title": "I'm in Love with the Villainess",
+    "author": "Inori.",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/109206",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-105347-date-a-live-fragment-date-a-bullet",
+    "title": "Date A Live Fragment: Date A Bullet",
+    "author": "Koushi Tachibana, Yuuichirou Higashide",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/109712",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-106602-bleach-can-t-fear-your-own-world",
+    "title": "Bleach: Can't Fear Your Own World",
+    "author": "Ryougo Narita",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/112709",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-123649-otonari-no-tenshi-sama-ni-itsunomanika-dame-ningen-ni-sareteita-ken",
+    "title": "The Angel Next Door Spoils Me Rotten",
+    "author": "Saeki-san",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-life",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/113533",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-124374-souyaku-toaru-majutsu-no-index",
+    "title": "Souyaku Toaru Majutsu no Index",
+    "author": "Kazuma Kamachi",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-worlds",
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/113891",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-138406-natsu-e-no-tunnel-sayonara-no-deguchi",
+    "title": "The Tunnel to Summer, the Exit of Goodbyes",
+    "author": "Mei Hachimoku ",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/117853",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-138481-make-heroine-ga-oosugiru",
+    "title": "Too Many Losing Heroines!",
+    "author": "Takibi Amamori",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/135276",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-142171-silent-witch-chinmoku-no-majo-no-kakushigoto",
+    "title": "Secrets of the Silent Witch",
+    "author": "Matsuri Isora",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/136833",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-141043-kinou-no-haru-de-kimi-wo-matsu",
+    "title": "Wait for Me Yesterday in Spring",
+    "author": "Mei Hachimoku ",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-mystery",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/140287",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-159387-mushoku-tensei-dasoku-hen",
+    "title": "Mushoku Tensei: Redundant Reincarnation",
+    "author": "Rifujin na Magonote",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/165131",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-7149-toradora",
+    "title": "Toradora!",
+    "author": "Yuyuko Takemiya",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/37149",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-37523-date-a-live",
+    "title": "Date A Live",
+    "author": "Koushi Tachibana",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-life",
+      "light-future"
+    ],
+    "source": "https://anilist.co/manga/67523",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-56743-dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka",
+    "title": "Is It Wrong to Try to Pick Up Girls in a Dungeon?",
+    "author": "Fujino Oomori",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-life",
+      "light-worlds",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/85162",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-56755-hai-to-gensou-no-grimgar",
+    "title": "Grimgar of Fantasy and Ash",
+    "author": "Ao Juumonji",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-worlds",
+      "light-worlds"
+    ],
+    "source": "https://anilist.co/manga/86365",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-lightnovel-133352-gimai-seikatsu",
+    "title": "Days with My Stepsister",
+    "author": "Ghost Mikawa",
+    "type": "لايت نوفل",
+    "topics": [
+      "light-life",
+      "light-mystery",
+      "light-life",
+      "light-life"
+    ],
+    "source": "https://anilist.co/manga/126268",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "fwn-featured-novel-mother-of-learning",
+    "title": "Mother of Learning",
+    "author": "nobody103",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-magic",
+      "web-mystery"
+    ],
+    "source": "https://www.royalroad.com/fiction/21220/mother-of-learning",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "editorial-rr-36735",
+    "title": "The Perfect Run",
+    "author": "Maxime J. Durand (Void Herald)",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-future",
+      "web-mystery"
+    ],
+    "source": "https://www.royalroad.com/fiction/36735/the-perfect-run",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "editorial-rr-21410",
+    "title": "Super Minion",
+    "author": "Gogglesbear",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-future"
+    ],
+    "source": "https://www.royalroad.com/fiction/21410/super-minion",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "editorial-rr-15130",
+    "title": "Threadbare",
+    "author": "Andrew Seiple",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-escape"
+    ],
+    "source": "https://www.royalroad.com/fiction/15130/threadbare",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "editorial-rr-15935",
+    "title": "There is no Epic Loot here, Only Puns.",
+    "author": "stewart92",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-escape"
+    ],
+    "source": "https://www.royalroad.com/fiction/15935/there-is-no-epic-loot-here-only-puns",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "editorial-rr-39408",
+    "title": "Beware Of Chicken",
+    "author": "Casualfarmer",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-escape"
+    ],
+    "source": "https://www.royalroad.com/fiction/39408/beware-of-chicken",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "editorial-rr-107917",
+    "title": "Sky Pride",
+    "author": "Warby Picus",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-magic"
+    ],
+    "source": "https://www.royalroad.com/fiction/107917/sky-pride",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "editorial-rr-65629",
+    "title": "The Game at Carousel: A Horror Movie LitRPG",
+    "author": "lost_rambler",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-mystery"
+    ],
+    "source": "https://www.royalroad.com/fiction/65629/the-game-at-carousel-a-horror-movie-litrpg",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "editorial-rr-54476",
+    "title": "Dungeon Life",
+    "author": "Khenal",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-escape"
+    ],
+    "source": "https://www.royalroad.com/fiction/54476/dungeon-life",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "editorial-rr-4293",
+    "title": "The Iron Teeth: A Goblin's Tale",
+    "author": "ClearMadness",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-magic"
+    ],
+    "source": "https://www.royalroad.com/fiction/4293/the-iron-teeth-a-goblins-tale",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "editorial-rr-24709",
+    "title": "Defiance of the Fall",
+    "author": "TheFirstDefier",
+    "type": "ويب نوفل",
+    "topics": [
+      "web-magic",
+      "web-future"
+    ],
+    "source": "https://www.royalroad.com/fiction/24709/defiance-of-the-fall",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-author-metadata; no sexual-content or AI-generation warning observed"
+  },
+  {
+    "id": "ol-OL6670904W",
+    "title": "All Star Superman VOL 02",
+    "author": "Grant Morrison",
+    "type": "كوميكس",
+    "topics": [
+      "comic-heroes"
+    ],
+    "source": "https://www.dc.com/graphic-novels/all-star-superman-2005/all-star-superman",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-OL19670109W",
+    "title": "Ms. Marvel",
+    "author": "G. Willow Wilson",
+    "type": "كوميكس",
+    "topics": [
+      "comic-heroes"
+    ],
+    "source": "https://www.marvel.com/comics/series/18454/ms_marvel_2014_2015",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-OL19730671W",
+    "title": "Hawkeye: Kate Bishop",
+    "author": "Kelly Thompson",
+    "type": "كوميكس",
+    "topics": [
+      "comic-heroes"
+    ],
+    "source": "https://www.marvel.com/comics/series/22845/hawkeye_2016_2018",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "ol-OL25641243W",
+    "title": "Year One",
+    "author": "Frank Miller, David Mazzucchelli, Richmond Lewis, Todd Klein",
+    "type": "كوميكس",
+    "topics": [
+      "comic-heroes"
+    ],
+    "source": "https://www.dc.com/graphic-novels/batman-year-one-1987/batman-year-one",
+    "reviewed": "2026-10-11",
+    "screening": "editorial-publisher-metadata"
+  },
+  {
+    "id": "mal-manga-2-berserk",
+    "title": "Berserk",
+    "author": "Miura, Kentarou",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://myanimelist.net/manga/2",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-13-one-piece",
+    "title": "One Piece",
+    "author": "Oda, Eiichiro",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds"
+    ],
+    "source": "https://myanimelist.net/manga/13",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-1-monster",
+    "title": "Monster",
+    "author": "Urasawa, Naoki",
+    "type": "مانجا",
+    "topics": [
+      "manga-mystery",
+      "manga-life"
+    ],
+    "source": "https://myanimelist.net/manga/1",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "anilist-30002",
+    "title": "Berserk",
+    "author": "Kentarou Miura",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://anilist.co/manga/30002",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "anilist-30013",
+    "title": "One Piece",
+    "author": "Eiichirou Oda",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://anilist.co/manga/30013",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-26-hunter-x-hunter",
+    "title": "Hunter x Hunter",
+    "author": "Togashi, Yoshihiro",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds"
+    ],
+    "source": "https://myanimelist.net/manga/26",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-56805-koe-no-katachi",
+    "title": "A Silent Voice",
+    "author": "Ooima, Yoshitoki",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://myanimelist.net/manga/56805",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "anilist-30026",
+    "title": "Hunter x Hunter",
+    "author": "Yoshihiro Togashi",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://anilist.co/manga/30026",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "anilist-30003",
+    "title": "20th Century Boys",
+    "author": "Naoki Urasawa",
+    "type": "مانجا",
+    "topics": [
+      "manga-mystery",
+      "manga-life"
+    ],
+    "source": "https://anilist.co/manga/30003",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "anilist-85135",
+    "title": "A Silent Voice",
+    "author": "Yoshitoki Ooima",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://anilist.co/manga/85135",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-23390-shingeki-no-kyojin",
+    "title": "Attack on Titan",
+    "author": "Isayama, Hajime",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://myanimelist.net/manga/23390",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-44347-one-punch-man",
+    "title": "One-Punch Man",
+    "author": "Murata, Yusuke",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://myanimelist.net/manga/44347",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-21-death-note",
+    "title": "Death Note",
+    "author": "Obata, Takeshi",
+    "type": "مانجا",
+    "topics": [
+      "manga-mystery"
+    ],
+    "source": "https://myanimelist.net/manga/21",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "anilist-74347",
+    "title": "One-Punch Man",
+    "author": "Yuusuke Murata",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://anilist.co/manga/74347",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "anilist-53390",
+    "title": "Attack on Titan",
+    "author": "Tatsuya Endou",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-mystery",
+      "manga-life"
+    ],
+    "source": "https://anilist.co/manga/53390",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "anilist-30021",
+    "title": "Death Note",
+    "author": "Takeshi Obata",
+    "type": "مانجا",
+    "topics": [
+      "manga-mystery",
+      "manga-life"
+    ],
+    "source": "https://anilist.co/manga/30021",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-96792-kimetsu-no-yaiba",
+    "title": "Demon Slayer: Kimetsu no Yaiba",
+    "author": "Gotouge, Koyoharu",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds"
+    ],
+    "source": "https://myanimelist.net/manga/96792",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-11-naruto",
+    "title": "Naruto",
+    "author": "Kishimoto, Masashi",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds"
+    ],
+    "source": "https://myanimelist.net/manga/11",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "mal-manga-12-bleach",
+    "title": "Bleach",
+    "author": "Kubo, Tite",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds"
+    ],
+    "source": "https://myanimelist.net/manga/12",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "anilist-87216",
+    "title": "Demon Slayer: Kimetsu no Yaiba",
+    "author": "Koyoharu Gotouge",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://anilist.co/manga/87216",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-aa6c76f7-5f5f-46b6-a800-911145f81b9b",
+    "title": "Sono Bisque Doll wa Koi o Suru",
+    "author": "Fukuda Shinichi",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/aa6c76f7-5f5f-46b6-a800-911145f81b9b",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-77bee52c-d2d6-44ad-a33a-1734c1fe696a",
+    "title": "Kage no Jitsuryokusha ni Naritakute!",
+    "author": "Sakano Anri",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/77bee52c-d2d6-44ad-a33a-1734c1fe696a",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-e78a489b-6632-4d61-b00b-5206f5b8b22b",
+    "title": "Tensei Shitara Slime datta Ken",
+    "author": "Fuse",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/e78a489b-6632-4d61-b00b-5206f5b8b22b",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-b0b721ff-c388-4486-aa0f-c2b0bb321512",
+    "title": "Sousou no Frieren",
+    "author": "Yamada Kanehito",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/b0b721ff-c388-4486-aa0f-c2b0bb321512",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-28c77530-dfa1-4b05-8ec3-998960ba24d4",
+    "title": "Otome Game Sekai wa Mob ni Kibishii Sekai desu",
+    "author": "Mishima Yomu",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/28c77530-dfa1-4b05-8ec3-998960ba24d4",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-bd6d0982-0091-4945-ad70-c028ed3c0917",
+    "title": "Mushoku Tensei: Isekai Ittara Honki Dasu",
+    "author": "Rifujin na Magonote",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/bd6d0982-0091-4945-ad70-c028ed3c0917",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-a96676e5-8ae2-425e-b549-7f15dd34a6d8",
+    "title": "Komi-san wa Komyushou Desu.",
+    "author": "Oda Tomohito",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/a96676e5-8ae2-425e-b549-7f15dd34a6d8",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-58bc83a0-1808-484e-88b9-17e167469e23",
+    "title": "Lv2 kara Cheat datta Moto Yuusha Kouho no Mattari Isekai Life",
+    "author": "Kinojo Miya",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/58bc83a0-1808-484e-88b9-17e167469e23",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-d86cf65b-5f6c-437d-a0af-19a31f94ec55",
+    "title": "Ijiranaide, Nagatoro-san",
+    "author": "774 (Nanashi)",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/d86cf65b-5f6c-437d-a0af-19a31f94ec55",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-7643e9f6-8455-4a58-b7e8-bf6cd00f5251",
+    "title": "Tsuki ga Michibiku Isekai Douchuu",
+    "author": "Azumi Kei",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/7643e9f6-8455-4a58-b7e8-bf6cd00f5251",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-eb2d1a45-d4e7-4e32-a171-b5b029c5b0cb",
+    "title": "Kumo desu ga, Nani ka?",
+    "author": "Baba Okina",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/eb2d1a45-d4e7-4e32-a171-b5b029c5b0cb",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-9d3d3403-1a87-4737-9803-bc3d99db1424",
+    "title": "Ki ni Natteru Hito ga Otoko ja Nakatta",
+    "author": "Arai Sumiko",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/9d3d3403-1a87-4737-9803-bc3d99db1424",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-d7037b2a-874a-4360-8a7b-07f2899152fd",
+    "title": "Mairimashita! Iruma-kun",
+    "author": "Nishi Osamu",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/d7037b2a-874a-4360-8a7b-07f2899152fd",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-202718c6-525e-4cec-a469-c945548cacc3",
+    "title": "Anta to Osananajimi tte dake demo Iya nanoni! ~Zekkou kara Hajimaru S-kyuu Bishoujo to no Gakuen Nariagari Seikatsu~",
+    "author": "Yuuji Yuuji",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/202718c6-525e-4cec-a469-c945548cacc3",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-878634d2-ea39-4001-a4bf-31458020d16a",
+    "title": "Akuyaku Reijou Level 99 ~Watashi wa Ura Boss desuga Maou de wa Arimasen~",
+    "author": "Tanabata Satori",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/878634d2-ea39-4001-a4bf-31458020d16a",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-e18fe8c6-f6dc-4f05-8462-7b2083ff9a6c",
+    "title": "Kusuriya no Hitorigoto",
+    "author": "Hyuuga Natsu",
+    "type": "مانجا",
+    "topics": [
+      "manga-mystery",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/e18fe8c6-f6dc-4f05-8462-7b2083ff9a6c",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-418791c0-35cf-4f87-936b-acd9cddf0989",
+    "title": "Kaoru Hana wa Rin to Saku",
+    "author": "Mikami Saka",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/418791c0-35cf-4f87-936b-acd9cddf0989",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-55ace2fb-e157-4d76-9e72-67c6bd762a39",
+    "title": "Maou no Ore ga Dorei Elf o Yome ni Shitanda ga, Dou Medereba ii?",
+    "author": "Teshima Fuminori",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/55ace2fb-e157-4d76-9e72-67c6bd762a39",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-ea0e7020-2b2f-4f17-9251-fee3632dc135",
+    "title": "Dungeon ni Hisomu Yandere na Kanojo ni Ore wa Nandomo Korosareru",
+    "author": "Kitagawa Nikita",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/ea0e7020-2b2f-4f17-9251-fee3632dc135",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-737a846b-2e67-4d63-9f7e-f54b3beebac4",
+    "title": "Kaette Kudasai! Akutsu-san",
+    "author": "Nagaoka Taichi",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/737a846b-2e67-4d63-9f7e-f54b3beebac4",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-6b958848-c885-4735-9201-12ee77abcb3c",
+    "title": "SPY×FAMILY",
+    "author": "Endou Tatsuya",
+    "type": "مانجا",
+    "topics": [
+      "manga-worlds",
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/6b958848-c885-4735-9201-12ee77abcb3c",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-1fc3d326-c037-43fa-8953-ed52a56caa18",
+    "title": "Osoraku Kanojo wa Ore no Aniki o Neratteru",
+    "author": "Ise Maruno",
+    "type": "مانجا",
+    "topics": [
+      "manga-life"
+    ],
+    "source": "https://mangadex.org/title/1fc3d326-c037-43fa-8953-ed52a56caa18",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-32d76d19-8a05-4db0-9fc2-e0b0648fe9d0",
+    "title": "Na Honjaman Level-Up",
+    "author": "h-goon (현군)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/32d76d19-8a05-4db0-9fc2-e0b0648fe9d0",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-9a414441-bbad-43f1-a3a7-dc262ca790a3",
+    "title": "Jeonjijeok Dokja Sijeom",
+    "author": "sing N song (싱숑)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds"
+    ],
+    "source": "https://mangadex.org/title/9a414441-bbad-43f1-a3a7-dc262ca790a3",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-6a468761-5bd6-4de0-a0cb-47cb456ac2e0",
+    "title": "A Returner's Magic Should Be Special",
+    "author": "Usonan (유소난)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/6a468761-5bd6-4de0-a0cb-47cb456ac2e0",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-85b51b37-0ce6-4144-a19b-6b064bc2c2ae",
+    "title": "Geu Angnyeo reul Josimhaseyo!",
+    "author": "Berry (열매)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/85b51b37-0ce6-4144-a19b-6b064bc2c2ae",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-14569f2f-f66a-4c67-ac7f-a37823a0fa23",
+    "title": "Agyeogui Ending Jugeumppun",
+    "author": "Gwon Gyeoeul (권겨을)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/14569f2f-f66a-4c67-ac7f-a37823a0fa23",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-4a973243-952e-44d7-a50f-883b4b7c9cc2",
+    "title": "SSS-geup Jugeoya Saneun Hunter",
+    "author": "Neida (네이다)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-mystery",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/4a973243-952e-44d7-a50f-883b4b7c9cc2",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-d993f789-e7e5-4832-92fd-37614220b427",
+    "title": "The Skeleton Soldier Failed to Defend the Dungeon",
+    "author": "Sosori (소소리)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds"
+    ],
+    "source": "https://mangadex.org/title/d993f789-e7e5-4832-92fd-37614220b427",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-73bc69fa-9ba9-4533-a243-ebc11651339f",
+    "title": "The Villainess Turns the Hourglass",
+    "author": "Sansobee (산소비)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/73bc69fa-9ba9-4533-a243-ebc11651339f",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-1ffca916-3ad7-46d2-9591-a9b39e639971",
+    "title": "Second Life Ranker",
+    "author": "Sadoyeon (사도연)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds"
+    ],
+    "source": "https://mangadex.org/title/1ffca916-3ad7-46d2-9591-a9b39e639971",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-50fc2f0f-aeac-4152-82ba-164b3bb3b5b3",
+    "title": "The Monstrous Duke's Adopted Daughter",
+    "author": "Liaran (리아란)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/50fc2f0f-aeac-4152-82ba-164b3bb3b5b3",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-722a45c0-5e55-40f2-929b-ff69b0989edb",
+    "title": "Who Made Me a Princess",
+    "author": "Spoon (스푼)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/722a45c0-5e55-40f2-929b-ff69b0989edb",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-b407de00-75a5-415a-a001-585fb41b9cf2",
+    "title": "The Max Level Hero Strikes Back",
+    "author": "Yudo (유도)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds"
+    ],
+    "source": "https://mangadex.org/title/b407de00-75a5-415a-a001-585fb41b9cf2",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-73886188-f459-4b80-8781-66a60520b420",
+    "title": "Eotteon Gyemo-nim ui Märchen",
+    "author": "Kitty&Spice",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/73886188-f459-4b80-8781-66a60520b420",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-f89ed57a-e4c0-48f5-b664-8ef88aa87fd9",
+    "title": "Ibeon Saengeun Gajuga Doegetseumnida",
+    "author": "Ant Studio (앤트스튜디오)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/f89ed57a-e4c0-48f5-b664-8ef88aa87fd9",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-478e6926-b8bc-465c-9694-2bae1dbaf32b",
+    "title": "Latna Saga: Survival of a Sword King",
+    "author": "YKB (임경배)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/478e6926-b8bc-465c-9694-2bae1dbaf32b",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-efebd0bc-eb88-477c-bcc3-90413395a2a3",
+    "title": "Yeojuingongui Oppareul Jikineun Bangbeop",
+    "author": "Kin (킨)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-mystery",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/efebd0bc-eb88-477c-bcc3-90413395a2a3",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-39e55355-dfb4-44e9-bd0b-df1fc3a0e33e",
+    "title": "Geunyeo ga Gongjagjeo lo Gaya Haessdeon Sajeong",
+    "author": "Milcha (밀차)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/39e55355-dfb4-44e9-bd0b-df1fc3a0e33e",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-e959ee87-cae7-4903-82b3-fa8800bb8ce6",
+    "title": "The Lady and the Beast",
+    "author": "Maginot Line (마지노선)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/e959ee87-cae7-4903-82b3-fa8800bb8ce6",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-4106c8cb-7917-41c5-bd55-072f6687076d",
+    "title": "Agnyeo ga Saranghal Ttae",
+    "author": "Seo Gwijo (서귀조)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/4106c8cb-7917-41c5-bd55-072f6687076d",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-3fc308c9-4b00-4dc3-943e-1f39242bc708",
+    "title": "Item-ppal",
+    "author": "Saenal (박새날)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds"
+    ],
+    "source": "https://mangadex.org/title/3fc308c9-4b00-4dc3-943e-1f39242bc708",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-ec96fc62-975a-4abf-83e3-d2426ca8fbe6",
+    "title": "The Villainess Lives Again",
+    "author": "Peachberry (피치베리)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/ec96fc62-975a-4abf-83e3-d2426ca8fbe6",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-48d231af-d0cd-4f1e-a1e2-9d1a7aa91a6a",
+    "title": "I Am the Real One",
+    "author": "Sam Woel (삼월)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/48d231af-d0cd-4f1e-a1e2-9d1a7aa91a6a",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-d5cdc845-fd5d-4497-a993-131d65e00e97",
+    "title": "Agdangui Appaleul Kkosyeola",
+    "author": "Dalseul (달슬)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/d5cdc845-fd5d-4497-a993-131d65e00e97",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-a82fe527-9e74-48d0-9c5f-a5e788c0bd4a",
+    "title": "Angnyeo neun Marionette",
+    "author": "hanirim",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/a82fe527-9e74-48d0-9c5f-a5e788c0bd4a",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-1dc3ebf9-c86c-431c-bcca-5e35ac124f28",
+    "title": "Baekjakga ui Mangnani ga Doeeotda",
+    "author": "PING (별나래)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/1dc3ebf9-c86c-431c-bcca-5e35ac124f28",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-3ecdc4ed-aabf-4abc-8504-9eabe5afd2ac",
+    "title": "Lady Baby",
+    "author": "HÆON (주해온)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-mystery",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/3ecdc4ed-aabf-4abc-8504-9eabe5afd2ac",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-ff14c29a-3456-4047-828d-10c9671cac4c",
+    "title": "The Archmage Returns After 4000 Years",
+    "author": "Nakhasan (낙하산)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds"
+    ],
+    "source": "https://mangadex.org/title/ff14c29a-3456-4047-828d-10c9671cac4c",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-38171909-df1d-42eb-b029-f4d59b6dfa59",
+    "title": "A Capable Maid",
+    "author": "Yuin",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/38171909-df1d-42eb-b029-f4d59b6dfa59",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-9ecd208c-c592-4462-9f57-4d7d4a9f956f",
+    "title": "Iphak Yongbyeong",
+    "author": "YC",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/9ecd208c-c592-4462-9f57-4d7d4a9f956f",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-161e8bde-914f-4464-a009-071ad6d981ac",
+    "title": "Nogeumui Gwan",
+    "author": "Siya",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/161e8bde-914f-4464-a009-071ad6d981ac",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-737af1eb-a79c-48fa-8a00-70968e20de32",
+    "title": "Na Hollo Buglo Kkulppaneun Player",
+    "author": "Chungcho (청초)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/737af1eb-a79c-48fa-8a00-70968e20de32",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-adaa939c-c164-4aec-9b10-5cbccfae681d",
+    "title": "Geulimja Hwangbi",
+    "author": "Hayul (하율)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/adaa939c-c164-4aec-9b10-5cbccfae681d",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-d46d9573-2ad9-45b2-9b6d-45f95452d1c0",
+    "title": "Gongjakbuin'eui 50-gaji Tea Recipe",
+    "author": "Lee Jiha (이지하)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/d46d9573-2ad9-45b2-9b6d-45f95452d1c0",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-bb5f1b24-58a6-49e4-847b-a322c2addbd5",
+    "title": "Neo man Boindan Mariya",
+    "author": "ChaeGun",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/bb5f1b24-58a6-49e4-847b-a322c2addbd5",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-7b7ea081-437c-4b8d-9274-84b12457dea5",
+    "title": "I Married the Male Lead's Dad",
+    "author": "Gyammi",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/7b7ea081-437c-4b8d-9274-84b12457dea5",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-4e8f9100-1a9d-493d-b6ef-9cfaed991594",
+    "title": "The Soulless Duchess",
+    "author": "Han Jinseo",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/4e8f9100-1a9d-493d-b6ef-9cfaed991594",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-ade0306c-f4b6-4890-9edb-1ddf04df2039",
+    "title": "Na Honjaman Level Up: Ragnarok",
+    "author": "DAUL (다울)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds"
+    ],
+    "source": "https://mangadex.org/title/ade0306c-f4b6-4890-9edb-1ddf04df2039",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-e1847df1-db22-4279-95e2-9dbbbd1bbfbc",
+    "title": "Appa, Na I Gyeolhon An Hallaeyo!",
+    "author": "Hong Hee Su",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/e1847df1-db22-4279-95e2-9dbbbd1bbfbc",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-412ab8fe-eca9-47c9-8f5c-f6deb75622e9",
+    "title": "The Beloved Little Princess",
+    "author": "SAHA (사하)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/412ab8fe-eca9-47c9-8f5c-f6deb75622e9",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-f6ade1c3-a117-4b93-b70d-9fab0ea59647",
+    "title": "My Secretly Hot Husband",
+    "author": "Gabi Nam (가비남)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/f6ade1c3-a117-4b93-b70d-9fab0ea59647",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-46d26d3b-4165-485c-bd6a-a47366810255",
+    "title": "Akdang ui Eomma ga Doeeo Beoryeotda",
+    "author": "Yulji (율지)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/46d26d3b-4165-485c-bd6a-a47366810255",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-fdaa7d42-29bb-4cf2-b635-96d57732f1be",
+    "title": "A Wicked Tale of Cinderella's Stepmom",
+    "author": "Kiarne (키아르네)",
+    "type": "مانهوا",
+    "topics": [
+      "manhwa-worlds",
+      "manhwa-life"
+    ],
+    "source": "https://mangadex.org/title/fdaa7d42-29bb-4cf2-b635-96d57732f1be",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-36fbefe3-89bb-4dd7-8277-cbb719d9d3a0",
+    "title": "Thinking back",
+    "author": "咔嚓121381",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-mystery",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/36fbefe3-89bb-4dd7-8277-cbb719d9d3a0",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-e83d374b-369b-4905-9fe0-64c3ca90a679",
+    "title": "Return to the Ancient Times as an Emperor",
+    "author": "触手动漫",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/e83d374b-369b-4905-9fe0-64c3ca90a679",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-8c2a65c9-91b9-4109-bcb6-d2a6c3d6c737",
+    "title": "Far Away From Cold",
+    "author": "Chi Zongzha (池总渣)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/8c2a65c9-91b9-4109-bcb6-d2a6c3d6c737",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-a318655c-10cc-4f75-85a8-e3277c019e71",
+    "title": "Spoil a Wife Unlimited",
+    "author": "Bao Qing Manhua (暴青漫画)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/a318655c-10cc-4f75-85a8-e3277c019e71",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-a9e992a8-442a-45ec-a27d-6f73a32925bb",
+    "title": "Oh No! An Evil God is Using Me for Emergency Food!",
+    "author": "Yi Ting (一亭)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/a9e992a8-442a-45ec-a27d-6f73a32925bb",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-45eb04ab-68ca-4f04-b448-955b07bc97be",
+    "title": "Bad Idol",
+    "author": "Huang Erye (黄二爷)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/45eb04ab-68ca-4f04-b448-955b07bc97be",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-ad7e6879-d262-42fd-8800-b0e3280b657b",
+    "title": "The Secret of Metok",
+    "author": "Nanpai Sanshu",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/ad7e6879-d262-42fd-8800-b0e3280b657b",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-ca6e9aae-d11e-477e-ac94-7aab4e7d24aa",
+    "title": "Youth Under Rebound",
+    "author": "喬克",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/ca6e9aae-d11e-477e-ac94-7aab4e7d24aa",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-a9da0170-4f64-432f-94f4-e9e30f7a0eed",
+    "title": "Taming The Black Lotus Villain after Rebirth",
+    "author": "Jihuo Culture (籍火文化)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/a9da0170-4f64-432f-94f4-e9e30f7a0eed",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-6f2a2474-6b38-4e85-9efe-4a4a8ac50103",
+    "title": "Ramboo and Panboo",
+    "author": "BAMBOOMATES",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/6f2a2474-6b38-4e85-9efe-4a4a8ac50103",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-59f4c867-478a-4b81-9a68-7917ce7bfc3f",
+    "title": "Crazy neighbors",
+    "author": "极乐鸟",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/59f4c867-478a-4b81-9a68-7917ce7bfc3f",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-68111b7d-54ad-45c1-8c6b-4c347c5ea327",
+    "title": "Became Queen at the age of three",
+    "author": "Comic Films (漫美映画)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/68111b7d-54ad-45c1-8c6b-4c347c5ea327",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-e0fe1a2f-7e37-485b-bacb-feac7949499a",
+    "title": "Kongbu Mobile Game",
+    "author": "中漫同创-搞笑悬疑组",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-mystery",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/e0fe1a2f-7e37-485b-bacb-feac7949499a",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-eec73453-1711-4320-8bed-dce88a1a3b1d",
+    "title": "Brother is Not the Villain",
+    "author": "Jiman Wenhua (极漫文化)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/eec73453-1711-4320-8bed-dce88a1a3b1d",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-ac4e493b-e4de-4685-a202-0747eab5aeee",
+    "title": "Bang Dream - Have You Ever Seen an Angry Unicorn? (Doujinshi)",
+    "author": "KalSept",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/ac4e493b-e4de-4685-a202-0747eab5aeee",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-ed17897b-12e6-4bdb-bbfe-908b632bd39a",
+    "title": "My Roommate Is a Narcissistic Manhua Character",
+    "author": "Xiao Chu Chu",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/ed17897b-12e6-4bdb-bbfe-908b632bd39a",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-ff8fd46c-92db-439f-9d6f-bd62c9fa080d",
+    "title": "Closed Fourth Floor",
+    "author": "四夕文文武",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-mystery",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/ff8fd46c-92db-439f-9d6f-bd62c9fa080d",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-f158d15e-157b-4c08-bfe3-3d6298fb1bd1",
+    "title": "Daydream Illustration",
+    "author": "帅天森",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/f158d15e-157b-4c08-bfe3-3d6298fb1bd1",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-399743c5-d805-4b0e-8553-af9b2d794e2f",
+    "title": "Black Cat (LovE_Hei Mao)",
+    "author": "Love_Black Cat",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/399743c5-d805-4b0e-8553-af9b2d794e2f",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-592e7487-8005-4b78-8169-16faefcfa72f",
+    "title": "Xun Meng Hun",
+    "author": "Zhen Youchuan",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-mystery",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/592e7487-8005-4b78-8169-16faefcfa72f",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-e7579f8d-de5e-4f1f-87b2-a4c9cf4824f6",
+    "title": "My Notoriously Naughty Lover",
+    "author": "Fanciyuan Culture (泛次元文化)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/e7579f8d-de5e-4f1f-87b2-a4c9cf4824f6",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-527e716f-9954-4a0f-98b0-95a839dcb404",
+    "title": "Don't Eat My Little Cookies",
+    "author": "雪羊",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/527e716f-9954-4a0f-98b0-95a839dcb404",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-9303865f-b00b-4df9-b370-91a93058c33e",
+    "title": "Don't Tell Me You Think Cultivating Immortality Is Difficult?",
+    "author": "黑夜弥天",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds"
+    ],
+    "source": "https://mangadex.org/title/9303865f-b00b-4df9-b370-91a93058c33e",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-95ce2136-9d34-4084-b4a0-3d63d6110cf8",
+    "title": "Hello My Seven Uncle",
+    "author": "Shijian Jingzou",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/95ce2136-9d34-4084-b4a0-3d63d6110cf8",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-c7fe36e3-84ba-4830-b60f-804ef40dc464",
+    "title": "Catch a Dragon: Become My Wife",
+    "author": "舒仔",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/c7fe36e3-84ba-4830-b60f-804ef40dc464",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-e3dc3f13-bc91-4abb-974e-deb2286e4aae",
+    "title": "Sì láng fǎzé",
+    "author": "Kylin",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/e3dc3f13-bc91-4abb-974e-deb2286e4aae",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-439b0e23-304a-4246-b645-ba81523db703",
+    "title": "Angels Don't Live Long",
+    "author": "SketchyLinez",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-mystery",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/439b0e23-304a-4246-b645-ba81523db703",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-8bf3c6b2-e79b-4435-b131-625ce913c79c",
+    "title": "Bread's Collection of One-shots",
+    "author": "Bread",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/8bf3c6b2-e79b-4435-b131-625ce913c79c",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-9f51967a-8ca8-4382-88ac-1eadadf3642c",
+    "title": "Raising a Human cat",
+    "author": "Ning Meng",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/9f51967a-8ca8-4382-88ac-1eadadf3642c",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-7b890fa5-f0d9-4668-b955-639a76eb9fc2",
+    "title": "My Wife Is the Empress of the Imperial Dynasty",
+    "author": "17K Anime (17K漫画)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/7b890fa5-f0d9-4668-b955-639a76eb9fc2",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-13f2ecd2-eead-4fe2-8ad2-387ad374f2ad",
+    "title": "The Raven's Taming Game",
+    "author": "Wuxian",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/13f2ecd2-eead-4fe2-8ad2-387ad374f2ad",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-12d75a20-e5c8-419e-8996-9e03dfedab2f",
+    "title": "Don't Lick Me! Spirit!",
+    "author": "Aurora Media (极光动漫)",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/12d75a20-e5c8-419e-8996-9e03dfedab2f",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-89b1facd-4ef7-4e15-b1c6-cd02d1889b66",
+    "title": "Absurd Theory",
+    "author": "MIUJIII",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/89b1facd-4ef7-4e15-b1c6-cd02d1889b66",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-769da492-7675-497b-a63c-d57aec94a2ce",
+    "title": "I Cultivate God and Demon to Rule All",
+    "author": "星灵动漫",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds"
+    ],
+    "source": "https://mangadex.org/title/769da492-7675-497b-a63c-d57aec94a2ce",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-aed18fc5-7fe9-452f-96fd-f7e9e2a01dfe",
+    "title": "Waiting for You at the Spring",
+    "author": "爱涂星际动漫工作室",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/aed18fc5-7fe9-452f-96fd-f7e9e2a01dfe",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-2d6f4b64-bbde-4b73-9637-399f3a0b2e05",
+    "title": "What a Disgrace",
+    "author": "七英俊",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/2d6f4b64-bbde-4b73-9637-399f3a0b2e05",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-7c509193-d8b6-4a83-8e6f-81157b697855",
+    "title": "Shoujo Kageki Revue Starlight - If We Continue To Stay So In Love (Doujinshi)",
+    "author": "tanren",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/7c509193-d8b6-4a83-8e6f-81157b697855",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-75855265-c718-428f-849f-2e7137a48695",
+    "title": "Visitor To Earth",
+    "author": "肖新宇",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/75855265-c718-428f-849f-2e7137a48695",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-7043e902-fbad-4d51-8789-db194700707c",
+    "title": "Pandora",
+    "author": "Weibo Manhua",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/7043e902-fbad-4d51-8789-db194700707c",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-9f5f402a-aa42-4e69-8ba4-26c0b91f33ba",
+    "title": "The Wizard's Apprentice",
+    "author": "Hello Tea 你好_茶茶",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/9f5f402a-aa42-4e69-8ba4-26c0b91f33ba",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-96104b32-ea48-407d-88ae-355504f5363e",
+    "title": "Love Is the Only Way to Stop You From Going Dark",
+    "author": "欲言文化",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-worlds",
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/96104b32-ea48-407d-88ae-355504f5363e",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  },
+  {
+    "id": "md-1589d65f-32b6-4fae-b357-5a2d99fcda37",
+    "title": "There's a Beast in my House",
+    "author": "Tang Shi Wan",
+    "type": "مانهوا صيني",
+    "topics": [
+      "manhua-life"
+    ],
+    "source": "https://mangadex.org/title/1589d65f-32b6-4fae-b357-5a2d99fcda37",
+    "reviewed": "2026-10-11",
+    "screening": "existing-provider-classification; preserved without broad reclassification"
+  }
+]

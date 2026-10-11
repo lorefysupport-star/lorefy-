@@ -5,6 +5,7 @@ const vm = require('node:vm');
 const crypto = require('node:crypto');
 const data = require('../modules/lorefy-catalog-data');
 const policy = require('../modules/lorefy-catalog-policy');
+const editorial = require('../uploads/lorefy-editorial-picks');
 const root = path.resolve(__dirname, '..');
 
 function featuresRuntime() {
@@ -45,6 +46,7 @@ function main() {
   for (const name of fs.readdirSync(path.join(root,'uploads')).filter(x=>/^lorefy-data-part\d+\.js$/.test(x))) {
     const source = fs.readFileSync(path.join(root,'uploads',name),'utf8');
     const rows = data.extractCatalogRecords(source);
+    editorial.apply(rows);
     policy.filterInPlace(rows);
     const payload = JSON.stringify(rows.map(row=>compactRecord(row,features)));
     contentHash.update(name).update(payload);
