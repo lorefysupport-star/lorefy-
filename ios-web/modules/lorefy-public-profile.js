@@ -22,6 +22,13 @@
     const [attempt, setAttempt] = React.useState(0);
     const profile = snapshot.id === initial.id ? snapshot : initial;
     const backend = root.LorefyBackend;
+    React.useEffect(() => {
+      if (!root.document) return;
+      const page = root.document.querySelector('.lf-reader-full');
+      if (!page) return;
+      page.__lorefyProfileSnapshot = profile;
+      root.dispatchEvent(new root.CustomEvent('lorefy:profile-snapshot', {detail:{profile}}));
+    }, [profile]);
 
     React.useEffect(() => {
       let active = true;
@@ -109,8 +116,9 @@
       return safeImage(root.LorefyCoverAPI && root.LorefyCoverAPI.displayUrl ? root.LorefyCoverAPI.displayUrl(source) : source);
     };
     const spineHeight = work => root.LorefyLibraryView ? root.LorefyLibraryView.spineHeight(work.title) : 188;
+    const profileSpineHeight = work => root.LorefyLibraryView && root.LorefyLibraryView.profileSpineHeight ? root.LorefyLibraryView.profileSpineHeight(work.title) : 188;
     const spineCover = work => h('span', {className:'lf-library-cover'}, image(ownerCover(work),work.title), h('span',{className:'lf-library-spine-title','data-no-translate':true,dir:'auto'},work.title));
-    const workCard = (work, extra, asSpine=spine) => h('button', { key:work.id, type:'button', className:asSpine ? 'lf-reader-cover is-work lf-library-card' : 'lf-reader-cover is-work', style:asSpine ? {'--spine-height':spineHeight(work)+'px'} : undefined, onClick:() => props.onWork(work), 'aria-label':'فتح ' + work.title, ...(extra || {}) }, asSpine ? spineCover(work) : image(ownerCover(work), work.title));
+    const workCard = (work, extra, asSpine=spine) => h('button', { key:work.id, type:'button', className:'lf-reader-cover is-work', style:asSpine ? {'--spine-height':profileSpineHeight(work)+'px'} : undefined, onClick:() => props.onWork(work), 'aria-label':'فتح ' + work.title, ...(extra || {}) }, asSpine ? spineCover(work) : image(ownerCover(work), work.title));
     const characterWork = ref => {
       const character = ref && (ref.character || ref) || {};
       const workId = ref && (ref.workId || ref.work_id) || character.workId || character.work_id || character.mediaId || character.media_id;
@@ -137,7 +145,7 @@
     function shelf(kind, items) {
       return h('section', { className:'lf-reader-shelf', 'data-profile-shelf':kind, 'aria-label':kind === 'works' ? 'الأعمال المفضلة' : 'الشخصيات المفضلة' },
         h('header', { className:'lf-reader-shelf-head' }, h('h2', null, kind === 'works' ? 'الأعمال المفضلة' : 'الشخصيات المفضلة')),
-        h('div', { className:'lf-reader-shelf-rail' + (kind==='works' && spine ? ' lf-library-grid is-spine-view' : '') }, ...items, ...Array.from({ length:Math.max(0, 4 - items.length) }, (_, i) => h('div', {
+        h('div', { className:'lf-reader-shelf-rail' + (kind==='works' && spine ? ' is-spine-view' : '') }, ...items, ...Array.from({ length:Math.max(0, 4 - items.length) }, (_, i) => h('div', {
           key:'empty-' + i, className:'lf-reader-cover is-empty', 'data-empty-slot':true, 'aria-label':'خانة فارغة'
         })))
       );
@@ -165,7 +173,6 @@
           h('div', { className:'lf-reader-avatar' }, image(avatar, profile.name || username)),
           h('h1', null, profile.name || username), h('p', { className:'lf-reader-handle', dir:'ltr' }, '@' + username),
           profile.bio && h('p', { className:'lf-reader-bio', dir:'auto' }, profile.bio),
-          h('span', { className:'lf-reader-type-chip', 'data-favorite-type':true }, icon('Heart', 15), h('span', null, favoriteTypeLabel), h('small', null, 'النوع المفضل')),
           h('div', { className:'lf-reader-social-summary', 'aria-label':'إحصاءات التواصل' },
             h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'following', onClick:() => openConnections('following'), 'aria-label':'عرض الحسابات التي يتابعها' }, h('strong', null, Number(profile.following_count) || 0), h('span', null, 'يتابع')),
             h('span', { className:'lf-reader-social-divider', 'aria-hidden':true }),
@@ -184,16 +191,19 @@
             ['MessagesSquare', Number(profile.post_count) || 0, 'منشور'],
             ['BookMarked', Number(profile.completed_count) || 0, 'مكتملة'],
             ['BookOpen', Number(profile.total_chapters) || 0, 'فصل'],
-            ['Clock', Number(profile.read_hours) || 0, 'ساعة قراءة']
+            ['Clock', Number(profile.read_hours) || 0, 'ساعة قراءة'],
+            ['Heart', favoriteTypeLabel, 'النوع المفضل']
           ].map(([symbol, value, label]) => {
             const isPosts = symbol === 'MessagesSquare';
             return h(isPosts ? 'button' : 'div', {
               key:symbol,
               type:isPosts ? 'button' : undefined,
               'data-profile-stat':symbol,
+              'data-favorite-type':symbol === 'Heart' ? true : undefined,
               'aria-label':isPosts ? 'عرض منشورات القارئ' : undefined,
               onClick:isPosts ? () => {
                 if (props.onPosts) props.onPosts(profile);
+                else if (root.LorefyProfileSections) root.dispatchEvent(new root.CustomEvent('lorefy:open-profile-section', {detail:{tab:'posts'}}));
                 else root.dispatchEvent(new root.CustomEvent('lorefy:open-reader-posts', { detail:profile }));
               } : undefined
             }, icon(symbol), h('strong', null, value), h('span', null, label));

@@ -299,8 +299,53 @@
 .is-owner-list .lf-reader-library-card { grid-template-columns: 48px minmax(0,1fr); align-items: center; gap: 12px; }
 .is-owner-list .lf-reader-library-copy strong { font-size: 13px; }
 .is-owner-list .lf-reader-library-copy small { font-size: 11px; }
-html:root:root:root:root:root:root .lf-reader-full .lf-reader-shelf-rail.is-spine-view,
 html:root:root:root:root:root:root .lf-reader-full .lf-reader-library-preview .is-spine-view { grid-template-columns: repeat(4,minmax(0,1fr)) !important; }
+.lf-reader-full { --reader-inline: var(--profile-frame-safe-inline,var(--ui-inline,20px)); }
+html:root:root:root:root:root:root:root .lf-reader-full [data-profile-shelf='works'] { padding-inline: var(--reader-inline) !important; }
+html:root:root:root:root:root:root:root .lf-reader-full [data-profile-shelf='works'] .lf-reader-shelf-rail {
+  grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px !important;
+  max-width: 428px; margin-inline: auto; align-items: start;
+}
+html:root:root:root:root:root:root:root .lf-reader-full .lf-reader-shelf-rail.is-spine-view {
+  grid-template-columns: repeat(4,minmax(0,74px)) !important; grid-auto-rows: auto;
+  justify-content: center; align-items: end; gap: 8px !important;
+  width: 100%; max-width: 336px; padding: 0 8px 18px; box-sizing: border-box;
+  position: relative; overflow: visible; background: none;
+}
+.lf-reader-shelf-rail.is-spine-view::after {
+  content: ''; position: absolute; inset-inline: 0; bottom: 10px; height: 8px;
+  border-top: 2px solid var(--ui-separator); background: var(--ui-muted);
+  box-shadow: inset 0 1px rgba(255,255,255,.18),0 3px 4px rgba(0,0,0,.16); pointer-events: none;
+}
+.lf-reader-shelf-rail.is-spine-view > .lf-reader-cover {
+  display: flex; align-items: end; height: var(--spine-height,196px); aspect-ratio: auto;
+  border: 0; border-radius: 0; background: transparent; overflow: visible;
+}
+.lf-reader-shelf-rail.is-spine-view > .lf-reader-cover.is-empty {
+  height: 180px; border: 1px dashed var(--ui-separator); border-radius: 50% 50% 4px 4px / 9px 9px 4px 4px;
+}
+.lf-reader-shelf-rail.is-spine-view > .lf-reader-cover.is-empty:nth-child(even) { height: 196px; }
+.lf-reader-shelf-rail.is-spine-view .lf-library-cover {
+  position: relative; display: block; width: 100%; height: var(--spine-height,196px);
+  aspect-ratio: auto; overflow: hidden; border-radius: 50% 50% 4px 4px / 9px 9px 4px 4px;
+  box-shadow: 0 2px 3px rgba(0,0,0,.24);
+}
+.lf-reader-shelf-rail.is-spine-view .lf-library-cover::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg,rgba(0,0,0,.44),rgba(255,255,255,.08) 16%,rgba(0,0,0,.18) 48%,rgba(0,0,0,.4));
+  box-shadow: inset 1px 0 2px rgba(255,255,255,.3),inset -1px 0 2px rgba(0,0,0,.36),inset 0 1px 1px rgba(255,255,255,.22);
+}
+.lf-reader-shelf-rail.is-spine-view .lf-library-spine-title {
+  display: block; position: absolute; z-index: 2; inset: 14px 0; margin: auto;
+  width: max-content; max-width: calc(100% - 14px); max-height: calc(100% - 28px);
+  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  font-size: 14px; line-height: 1.3; font-weight: 700; color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.95),0 0 6px rgba(0,0,0,.65);
+}
+html:root:root:root:root:root:root:root .lf-reader-full [data-profile-shelf='works'] .lf-reader-shelf-rail:not(.is-spine-view) > .lf-reader-cover {
+  border-radius: 3px 6px 6px 3px; box-shadow: 2px 2px 0 var(--ui-separator),3px 3px 0 var(--ui-line),0 7px 10px -5px rgba(0,0,0,.42);
+}
 .lf-reader-full .lf-library-grid.is-spine-view .lf-reader-cover { aspect-ratio: auto; background: transparent; }
 .lf-reader-library-copy { display: grid; min-width: 0; gap: 2px; }
 .lf-reader-library-copy strong,

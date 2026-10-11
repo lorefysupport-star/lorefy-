@@ -30,14 +30,31 @@ test('visitor favorite format uses an Arabic source label that the English local
   const chip=nodes(render({id:'reader-a',favorite_type:'Manga'})).find(n=>n.props['data-favorite-type']);
   assert.ok(JSON.stringify(chip).includes('مانجا'));
   assert.equal(require('../modules/lorefy-i18n.js').translate('مانجا','en'),'Manga');
+  assert.equal(chip.props['data-profile-stat'],'Heart');
+  const metrics=nodes(render({id:'reader-a',favorite_type:'Novel'})).find(n=>n.props.className==='lf-reader-metrics');
+  assert.ok(metrics.children.some(n=>n.props['data-favorite-type'] && JSON.stringify(n).includes('رواية')));
+  assert.ok(!nodes(render({id:'reader-a'})).some(n=>n.props.className==='lf-reader-type-chip'));
 });
 test('visitor keeps its own theme and shelf without inheriting viewer preferences',()=>{
   const tree=render({id:'blue-owner',theme:'custom-light-367faa',library_view:'spines',favorite_work_ids:['book-a']});
   assert.equal(tree.props['data-owner-theme'],'custom-light-367faa');
   assert.equal(tree.props['data-owner-library-view'],'spines');
   assert.equal(tree.props.style['--ui-bg'],require('../modules/lorefy-design-system.js').tokens('custom-light-367faa')['--ui-bg']);
-  assert.ok(nodes(tree).some(n=>n.props.className==='lf-reader-shelf-rail lf-library-grid is-spine-view'));
+  const rail=nodes(tree).find(n=>n.props.className==='lf-reader-shelf-rail is-spine-view');
+  assert.ok(rail);
+  const card=rail.children.find(n=>n.props.className==='lf-reader-cover is-work');
+  assert.equal(card.props.style['--spine-height'],require('../modules/lorefy-library-view.js').profileSpineHeight('book-a')+'px');
   assert.ok(!nodes(render({id:'plain-owner',library_view:'grid',favorite_work_ids:['book-b']})).some(n=>String(n.props.className).includes('is-spine-view')));
+});
+
+test('all four public favorites remain independently clickable after separating shelf geometry',()=>{
+  const opened=[];
+  const shelf=nodes(render({id:'reader-a',library_view:'spines',favorite_work_ids:['a','b','c','d']},{onWork:work=>opened.push(work.id)}))
+    .find(n=>n.props['data-profile-shelf']==='works');
+  const cards=nodes(shelf).filter(n=>n.type==='button');
+  assert.equal(cards.length,4);
+  cards.forEach(card=>card.props.onClick());
+  assert.deepEqual(opened,['a','b','c','d']);
 });
 
 test('visitor header follows the owner layout with a safe normal fallback', () => {
@@ -69,7 +86,7 @@ test('visitor profile renders the full identity, reading metrics, and both favor
     favorite_character_ids:[{ workId:'work-a', character:{ name:'Character A', image:'https://example.com/a.jpg' } }],
     social_links:{ instagram:'cara' } });
   const all = nodes(tree);
-  assert.equal(all.filter(n => n.props['data-profile-stat']).length, 5);
+  assert.equal(all.filter(n => n.props['data-profile-stat']).length, 6);
   assert.equal(all.filter(n => n.props['data-profile-shelf']).length, 2);
   assert.equal(all.filter(n => n.props['data-connection']).length, 2);
   assert.equal(all.filter(n => n.props['data-favorite-type']).length, 1);
@@ -118,7 +135,7 @@ test('visitor profile puts posts between reviews and completed and opens the pos
   }));
   const metrics = all.filter(node => node.props['data-profile-stat']);
 
-  assert.deepEqual(metrics.map(node => node.props['data-profile-stat']), ['MessageCircle', 'MessagesSquare', 'BookMarked', 'BookOpen', 'Clock']);
+  assert.deepEqual(metrics.map(node => node.props['data-profile-stat']), ['MessageCircle', 'MessagesSquare', 'BookMarked', 'BookOpen', 'Clock', 'Heart']);
   const posts = metrics[1];
   assert.equal(posts.type, 'button');
   posts.props.onClick();

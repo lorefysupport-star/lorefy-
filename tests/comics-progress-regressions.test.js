@@ -91,7 +91,7 @@ test('Open Library edition count is metadata, not a comic volume count', () => {
   assert.equal(mapped.editionCount, 37);
 });
 
-test('reading totals infer completed works and preserve explicit partial progress', () => {
+test('reading totals use initialized completed checkpoints and explicit partial progress', () => {
   const modulePath = path.join(root, 'modules', 'lorefy-reading-metrics.js');
   assert.ok(fs.existsSync(modulePath), 'missing explicit reading metrics module');
   const metrics = require(modulePath);
@@ -108,7 +108,7 @@ test('reading totals infer completed works and preserve explicit partial progres
 
   assert.deepEqual(metrics.calculateReadingMetrics({
     library,
-    progressById: {},
+    progressById: metrics.initializeCompletedProgress({library,progressById:{},getWork:id=>works[id]}).progressById,
     getWork: (id) => works[id]
   }), {
     chapters: 220,
@@ -134,7 +134,7 @@ test('reading totals infer completed works and preserve explicit partial progres
   });
 });
 
-test('legacy auto-completed progress is removed without touching real partial progress', () => {
+test('legacy completed and partial progress are preserved without destructive guessing', () => {
   const metrics = require('../modules/lorefy-reading-metrics.js');
   const works = {
     batman: { id: 'batman', ch: 220, vol: 30 },
@@ -156,10 +156,10 @@ test('legacy auto-completed progress is removed without touching real partial pr
     completedStatus: 'تمت القراءة'
   });
 
-  assert.deepEqual(result.removedIds, ['batman']);
+  assert.deepEqual(result.removedIds, []);
   assert.deepEqual(result.progressById.berserk, { chapter: 25, volume: 2 });
   assert.equal(result.progressById.hunter.note, 'أنهيته فعلاً');
-  assert.equal(result.progressById.batman, undefined);
+  assert.deepEqual(result.progressById.batman, {chapter:220,volume:30});
 });
 
 test('legacy progress migration waits for unloaded completed works', () => {
@@ -170,7 +170,7 @@ test('legacy progress migration waits for unloaded completed works', () => {
     getWork: (id) => id === 'berserk' ? { ch: 200 } : null,
     completedStatus: 'تم القراءة'
   });
-  assert.deepEqual(result.pendingIds, ['batman']);
+  assert.deepEqual(result.pendingIds, []);
   assert.deepEqual(result.progressById.batman, { chapter: 50 });
   assert.deepEqual(result.progressById.berserk, { chapter: 12 });
   const unknownTotal = metrics.sanitizeLegacyProgress({
@@ -179,11 +179,11 @@ test('legacy progress migration waits for unloaded completed works', () => {
     getWork: () => ({ ch: 0, vol: 0 }),
     completedStatus: 'تم القراءة'
   });
-  assert.deepEqual(unknownTotal.pendingIds, ['bleach']);
+  assert.deepEqual(unknownTotal.pendingIds, []);
   const app = fs.readFileSync(path.join(root, 'uploads', 'files', 'lorefy-app.js'), 'utf8');
-  assert.match(app, /sanitizeLegacyProgress.*lorefy:catalog-ingested/);
-  assert.match(app, /lorefy\.progress\.explicit-v6/);
-  assert.match(app, /sanitizeLegacyProgress\(\{library:b,progressById:r,getWork:.*workChapterCount/);
+  assert.match(app, /initializeCompletedProgress.*lorefy:catalog-ingested/);
+  assert.doesNotMatch(app, /lorefy\.progress\.explicit-v6/);
+  assert.match(app, /initializeCompletedProgress\(\{library:b,progressById:r,getWork:.*workChapterCount/);
 });
 
 test('the app does not synthesize completed progress from catalog totals', () => {
@@ -192,7 +192,7 @@ test('the app does not synthesize completed progress from catalog totals', () =>
 
   assert.match(index, /modules\/lorefy-reading-metrics\.js/);
   assert.match(app, /LorefyReadingMetrics\.calculateReadingMetrics/);
-  assert.match(app, /LorefyReadingMetrics\.sanitizeLegacyProgress/);
+  assert.match(app, /LorefyReadingMetrics\.initializeCompletedProgress/);
   assert.doesNotMatch(app, /completedProgressFor\(t,r\[t\.id\]\)/);
   assert.doesNotMatch(app, /Math\.max\(s\.chapter,completedFallbackChapterCount\(n\)\)/);
 });

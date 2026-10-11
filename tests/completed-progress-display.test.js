@@ -4,8 +4,9 @@ const metrics = require('../modules/lorefy-reading-metrics.js');
 
 test('completed progress shown in detail agrees with calculated totals', () => {
   const work = { ch: 420, vol: 38 };
-  assert.deepEqual(metrics.effectiveProgress(work, {}, 'تمت القراءة'), { chapter: 420, volume: 38, page: 0, note: '' });
-  assert.equal(metrics.effectiveProgress(work, { chapter: 23 }, 'completed').chapter, 420);
+  const saved = metrics.completionCheckpoint(work, {});
+  assert.deepEqual(metrics.effectiveProgress(work, saved, 'تمت القراءة'), { chapter: 420, volume: 38, page: 0, note: '' });
+  assert.equal(metrics.effectiveProgress(work, { chapter: 23 }, 'completed').chapter, 23);
 });
 
 test('in-progress work keeps the actual stopping point and notes', () => {

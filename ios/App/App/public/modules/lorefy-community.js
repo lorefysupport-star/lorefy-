@@ -648,6 +648,7 @@
         state.posts.unshift(post);
         renderPostFeed();
         closeComposerSheet(true);
+        global.dispatchEvent(new global.CustomEvent('lorefy:community-post-changed'));
         toast("تم نشر المنشور");
       } catch (error) {
         console.warn("[Lorefy] publish post:", error);
@@ -1061,9 +1062,26 @@
     hydrateIcons(overlay);
   }
 
+  async function readProfilePosts(profile, before) {
+    var backend = global.LorefyBackend;
+    if (!profile || !profile.id) return [];
+    if (!isDemo() && backend && backend.mode === 'live') {
+      return (await backend.listCommunityPosts({ userId:profile.id, limit:50, before:before || null })).map(normalizePost);
+    }
+    if (!isDemo()) throw new Error(uiText('تعذر الاتصال بالمجتمع', 'Community is unavailable'));
+    var rows = demoPosts().filter(function(post) {
+      return String(post.user_id) === String(profile.id) && !post.parent_id && !post.is_deleted;
+    });
+    if (before) rows = rows.filter(function(post) {
+      return post.created_at < before.created_at || post.created_at === before.created_at && post.id < before.id;
+    });
+    return rows.slice(0,50);
+  }
+
   function metricLeaf(page, label) {
+    var labels = Array.isArray(label) ? label : [label];
     var nodes = page.querySelectorAll("span,p,small,strong");
-    for (var i=0; i<nodes.length; i++) if (String(nodes[i].textContent || "").trim() === label) return nodes[i];
+    for (var i=0; i<nodes.length; i++) if (labels.indexOf(String(nodes[i].textContent || "").trim()) >= 0) return nodes[i];
     return null;
   }
 
@@ -1086,16 +1104,19 @@
       if (existingCount && existingCount.textContent !== String(count)) existingCount.textContent = String(count);
       return true;
     }
-    var reviewLeaf = metricLeaf(page, "مراجعة");
-    var completedLeaf = metricLeaf(page, "مكتملة") || metricLeaf(page, "مكتمل");
+    var reviewLeaf = metricLeaf(page, ["مراجعة", "Review"]);
+    var completedLeaf = metricLeaf(page, ["مكتملة", "مكتمل", "Completed"]);
     if (!reviewLeaf || !completedLeaf) return false;
     var reviewItem = metricItem(reviewLeaf);
     var completedItem = metricItem(completedLeaf);
     if (!reviewItem || !completedItem || reviewItem.parentElement !== completedItem.parentElement) return false;
-    var button = el("button", { type:"button", class:"lf-owner-post-metric", "data-profile-stat":"MessagesSquare", "aria-label":"عرض منشوراتي" }, [
-      icon("messages-square", 21), el("strong", { text:String(count) }), el("span", { text:"منشور" })
+    var button = el("button", { type:"button", class:"lf-owner-post-metric", "data-profile-stat":"MessagesSquare", "aria-label":uiText("عرض منشوراتي", "View my posts") }, [
+      icon("messages-square", 21), el("strong", { text:String(count) }), el("span", { text:uiText("منشور", "Post") })
     ]);
-    button.addEventListener("click", function () { openReaderPosts(me); });
+    button.addEventListener("click", function () {
+      if (global.LorefyProfileSections) global.dispatchEvent(new global.CustomEvent('lorefy:open-profile-section', {detail:{tab:'posts'}}));
+      else openReaderPosts(me);
+    });
     reviewItem.parentElement.insertBefore(button, completedItem);
     reviewItem.parentElement.classList.add("lf-owner-metrics-with-posts");
     hydrateIcons(button);
@@ -1258,5 +1279,5 @@
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", boot); else boot();
   global.LorefyCommunity = { enhance:enhance, openThread:openThread, openThreadById:openThreadById, replyActivity:replyActivity,
     refreshReplyActivity:refreshReplyActivity, savedPosts:savedPosts, toggleSavedPost:toggleSavedPost, postCard:postCard,
-    openComposer:openComposerSheet, openReaderPosts:openReaderPosts, refresh:function () { state.loaded = false; return loadPosts(true); } };
+    openComposer:openComposerSheet, openReaderPosts:openReaderPosts, readProfilePosts:readProfilePosts, refresh:function () { state.loaded = false; return loadPosts(true); } };
 })(typeof window !== "undefined" ? window : this);

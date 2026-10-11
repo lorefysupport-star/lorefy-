@@ -20,5 +20,6 @@ test('rendering metrics and removing a library item never rewrite historical rea
   assert.ok(!source.includes('const t=ce-Qe.current'));
   assert.ok(!source.includes('Mo(d=>subtractReadLogChapters(d,s))'));
   assert.ok(source.includes('getTotals:work=>({ch:workChapterCount(work)'));
-  assert.ok(source.includes('checkpointChapterDelta(le[E.id],to)'));
+  assert.ok(source.includes('checkpointChapterDelta(le[E.id],saved)'));
+  assert.ok(source.includes('[E.id]:saved'));
 });

@@ -38,6 +38,7 @@
   }
   let offerIds=null;
   const offeredBundles=()=>offerIds ? offerIds.map(findBundle).filter(Boolean) : bundles;
+  const hasPaidOffers=()=>offeredBundles().some(pack=>!pack.free);
   function installShopCatalog(catalog) {
     if(!catalog || catalog.version!==1 || !Array.isArray(catalog.freeIds) || catalog.freeIds.length!==5 || !Array.isArray(catalog.paid) || catalog.paid.length!==12)return false;
     const ids=new Set(),products=new Set();
@@ -48,7 +49,8 @@
       p.overlay!=='launch/decorations/originals/'+p.artId+'/avatar-still.png' || p.pageOverlay!=='launch/decorations/originals/'+p.artId+'/page-still.png' ||
       !p.names || typeof p.names.ar!=='string' || typeof p.names.en!=='string' || !p.geometry || !['cx','cy','size'].every(k=>Number.isFinite(p.geometry[k])) ||
       p.geometry.size<.4 || p.geometry.size>.85 || !p.price || p.price.amount!==1300 || p.price.currency!=='SAR' || !/^#[\da-f]{6}$/i.test(p.accent) || !/^#[\da-f]{6}$/i.test(p.second)))return false;
-    const extra=catalog.paid.map(p=>Object.freeze({...p,free:false,price:Object.freeze({...p.price}),names:Object.freeze({...p.names}),parts:Object.freeze(['frame','page']),geometry:Object.freeze({...p.geometry}),motion:Object.freeze({...p.motion}),row:'0%',icon:'Sparkles'}));
+    const freeForNow=catalog.freeForNow===true;
+    const extra=catalog.paid.map(p=>Object.freeze({...p,free:freeForNow,price:freeForNow?null:Object.freeze({...p.price}),names:Object.freeze({...p.names}),parts:Object.freeze(['frame','page']),geometry:Object.freeze({...p.geometry}),motion:Object.freeze({...p.motion}),row:'0%',icon:'Sparkles'}));
     bundles=Object.freeze([...bundles.filter(p=>!p.productId),...extra]);
     offerIds=Object.freeze([...extra.map(p=>p.id),...catalog.freeIds]);return true;
   }
@@ -203,7 +205,7 @@
           h('button', {type:'button', className:'lf-shop-view', 'aria-label':text(lang,'عرض الحزمة: ','View collection: ')+pack.names[lang],onClick:() => onSelect(pack.id)},icon(lang === 'en' ? 'ArrowUpRight' : 'ArrowUpLeft', 18))))))),
       !shown.length && h('div', {className:'lf-shop-empty', role:'status'}, icon(onlyWishlist?'Heart':'Sparkles', 28),
         h('p', null, text(lang,onlyWishlist?'لم تحفظ حزمة بهذه الأجواء بعد':'لا توجد حزم بهذه الأجواء',onlyWishlist?'No saved picks in this mood yet':'No collections in this mood'))),
-      h('p',{className:'lf-shop-catalog-note'},icon('Gift',15),text(lang,'٥ حزم مجانية · الحزم الجديدة شراء مرة واحدة','5 free collections · New collections are a one-time purchase')));
+      h('p',{className:'lf-shop-catalog-note'},icon('Gift',15),hasPaidOffers()?text(lang,'٥ حزم مجانية · الحزم الجديدة شراء مرة واحدة','5 free collections · New collections are a one-time purchase'):text(lang,'جميع الحزم مجانية حاليًا','All collections are free for now')));
   }
   function priceLabel(pack,lang){return pack.free?text(lang,'مجانية','Free'):text(lang,'13 ر.س','SAR 13');}
   function Entry({language}) {
@@ -236,7 +238,7 @@
         setWishlist(readWishlist(root.sessionStorage, event.detail.owner));
         setEquipped(readDecoration(root.localStorage,event.detail.owner));setSaving(false);setStatus('');
         setOwned([]);setStorePrices({});
-        if(root.LorefyDecorationBilling && root.LorefyBackend.mode==='live'){
+        if(hasPaidOffers() && root.LorefyDecorationBilling && root.LorefyBackend.mode==='live'){
           root.LorefyDecorationBilling.owned(event.detail.owner).then(rows=>{if(active&&ownerId()===event.detail.owner)setOwned(rows);}).catch(()=>{});
           root.LorefyDecorationBilling.availability(event.detail.owner).then(rows=>{if(active&&ownerId()===event.detail.owner)setStorePrices(Object.fromEntries(rows.map(r=>[r.id,r.displayPrice])));}).catch(()=>{});
         }
@@ -276,7 +278,7 @@
       if (body.current) body.current.scrollTop = 0;
     }, [request, selection, tab]);
     R.useEffect(() => {
-      if (!request || !root.LorefyDecorationBilling || !root.LorefyDecorationBilling.watch || root.LorefyBackend.mode!=='live') return;
+      if (!request || !hasPaidOffers() || !root.LorefyDecorationBilling || !root.LorefyDecorationBilling.watch || root.LorefyBackend.mode!=='live') return;
       return root.LorefyDecorationBilling.watch(request.owner, rows => {if(ownerId()===request.owner)setOwned(rows);});
     }, [request]);
     if (!request) return null;
@@ -331,17 +333,17 @@
             h('div', {className:'lf-shop-parts',role:'group','aria-label':text(lang,'أجزاء الحزمة','Bundle components')},
               [['all','Layers','الحزمة','Bundle'],['frame','CircleUserRound','إطار الصورة','Avatar frame'],['page','PanelTop','إطار الصفحة','Profile frame'],['effect','Sparkles','التأثير','Effect']].filter(([value])=>value==='all'||pack.parts.includes(value)).map(([value,symbol,ar,en]) =>
                 h('button',{key:value,type:'button','aria-pressed':part === value,onClick:() => {setPart(value); setReplay(count => count + 1);setStatus('');setError('');}},icon(symbol,20),h('span',null,text(lang,ar,en))))),
-            h('div', {className:'lf-shop-includes'}, icon('Package',18), h('span',null,pack.free?text(lang,'ثلاث قطع. حكاية واحدة.','Three pieces. One story.'):text(lang,'إطار صورة وإطار صفحة متحركان · شراء مرة واحدة','Animated avatar + profile frames · One-time purchase'))),
+            h('div', {className:'lf-shop-includes'}, icon('Package',18), h('span',null,pack.parts.length===3?text(lang,'ثلاث قطع. حكاية واحدة.','Three pieces. One story.'):text(lang,'إطار صورة وإطار صفحة متحركان','Animated avatar + profile frames'))),
             h('button',{className:'lf-shop-replay',type:'button',onClick:() => setReplay(value => value + 1)},icon('RotateCcw',17),text(lang,'إعادة المعاينة','Replay preview')))) :
           h(R.Fragment,null,
             h('div', {className:'lf-shop-tabs',role:'group','aria-label':text(lang,'عرض المتجر','Shop view')},
               [['collections','اكتشف','Discover'],['wishlist','محفوظاتك','Saved']].map(([value,ar,en]) => h('button',{key:value,type:'button','aria-pressed':tab === value,onClick:() => setTab(value)},icon(value==='collections'?'Grid2X2':'Heart',15),text(lang,ar,en),value === 'wishlist' && h('span',null,wishlist.length)))),
             h(Catalog, {lang, profile:request.profile, wishlist, onSelect:selected, onWishlist:toggleWishlist, onlyWishlist:tab === 'wishlist'})),
-          h('button',{type:'button',className:'lf-shop-replay',disabled:saving,onClick:()=>purchase(true)},icon('RotateCcw',17),text(lang,'استعادة المشتريات','Restore purchases')),
+          hasPaidOffers() && h('button',{type:'button',className:'lf-shop-replay',disabled:saving,onClick:()=>purchase(true)},icon('RotateCcw',17),text(lang,'استعادة المشتريات','Restore purchases')),
           error && h('p',{className:'lf-shop-error',role:'alert'},error),status && h('p',{className:'lf-shop-status',role:'status'},status)),
         pack && h('footer', {className:'lf-shop-footer'},h('div',{className:'lf-shop-order-summary'},
           h('div',null,h('strong',null,text(lang,part==='all'?'الحزمة الكاملة':'القطعة المختارة',part==='all'?'Complete collection':'Selected component')),
-            h('small',null,pack.free?text(lang,'مجانية دائمًا','Always free'):text(lang,'شراء مرة واحدة · الإطاران معًا','One-time purchase · Both frames'))),h('span',null,storePrices[pack.productId]||priceLabel(pack,lang))),
+            h('small',null,pack.free?text(lang,'مجانية حاليًا','Free for now'):text(lang,'شراء مرة واحدة · الإطاران معًا','One-time purchase · Both frames'))),h('span',null,pack.free?priceLabel(pack,lang):storePrices[pack.productId]||priceLabel(pack,lang))),
           pack && h('button',{type:'button',className:'lf-shop-apply',disabled:saving || (purchased&&isEquipped),onClick:() => purchased?apply(pack.id,part):purchase()},
           icon(isEquipped&&purchased ? 'Check' : purchased?'CheckCheck':'ShoppingBag',17),saving ? text(lang,'جارٍ التأكيد','Confirming') : !purchased ? text(lang,'شراء الحزمة · ','Buy collection · ')+(storePrices[pack.productId]||priceLabel(pack,lang)) : isEquipped ? text(lang,'مطبّقة','Applied') : text(lang,part === 'all' ? (pack.free?'تطبيق الحزمة مجانًا':'تطبيق الحزمة') : 'تطبيق هذا الجزء','Apply ' + (part === 'all' ? (pack.free?'bundle for free':'collection') : 'this component'))),
           Object.values(equipped).some(Boolean) && h('button',{type:'button',className:'lf-shop-remove',disabled:saving,onClick:() => apply(null,'all')},icon('Eraser',17),text(lang,'إزالة الزينة','Remove decorations')),

@@ -16,6 +16,9 @@ test('main preview exposes ten searchable profiles with owner-specific artwork, 
   assert.equal(profile.name,'ريم');assert.equal(profile.favorite_work_ids.length,4);
   assert.equal(Object.keys(profile.library_entries).length,10);assert.equal(profile.top_work_ids.length,10);
   assert.notEqual(profile.banner,readers[0].banner);
+  assert.ok(profile.profile_lists.length >= 1);
+  assert.equal(profile.profile_lists[0].isPublic,true);
+  assert.equal(profile.profile_lists[0].items[0].id,String(profile.works[0].id));
   const reviews=await community.listReviewCollection({userId:profile.id});assert.equal(reviews.length,1);
   assert.equal(reviews[0].profile.id,profile.id);assert.equal((await community.listReviews()).length,10);
 });

@@ -4,13 +4,16 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const metrics = require('../modules/lorefy-reading-metrics');
 
-test('completed works contribute catalog totals without recording fictional progress', () => {
+test('completed works contribute a persisted one-time checkpoint without mutating the legacy input', () => {
   const progress = {};
-  const result = metrics.calculateReadingMetrics({library:{a:'تم القراءة'}, progressById:progress,
-    getWork:()=>({ch:100,vol:10})});
+  const options={library:{a:'تم القراءة'},progressById:progress,getWork:()=>({ch:100,vol:10})};
+  const saved=metrics.initializeCompletedProgress(options).progressById;
+  const result = metrics.calculateReadingMetrics({...options,progressById:saved});
   assert.equal(result.chapters,100);
   assert.equal(result.hours,20);
   assert.deepEqual(progress,{});
+  assert.equal(saved.a.chapter,100);
+  assert.deepEqual(metrics.calculateReadingMetrics({...options,progressById:saved,getWork:()=>({ch:999})}),result);
 });
 
 test('multiple representations of the same reading do not triple its time', () => {
@@ -21,8 +24,9 @@ test('multiple representations of the same reading do not triple its time', () =
 
 test('completed books use pages; unknown totals preserve explicit progress', () => {
   const works={a:{type:'Book',pages:240},b:{ch:0},c:{ch:500}};
-  const result=metrics.calculateReadingMetrics({library:{a:'تمت القراءة',b:'تم القراءة',c:'قائمة الأمنيات'},
-    progressById:{b:{chapter:8}},getWork:id=>works[id]});
+  const options={library:{a:'تمت القراءة',b:'تم القراءة',c:'قائمة الأمنيات'},
+    progressById:{b:{chapter:8}},getWork:id=>works[id]};
+  const result=metrics.calculateReadingMetrics({...options,progressById:metrics.initializeCompletedProgress(options).progressById});
   assert.equal(result.pages,240);
   assert.equal(result.chapters,8);
   assert.equal(result.minutes,456);

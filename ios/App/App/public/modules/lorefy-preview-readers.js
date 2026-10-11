@@ -29,7 +29,11 @@
           follower_count:viewerFollowers.length,following_count:following(viewerId).length,is_following:false};
       }
       const base=data.profiles.find(p=>p.id===id);if(!base)return null;
-      return Object.assign(clone(base),{is_following:following(viewerId).includes(id),
+      const profileLists=[{id:'preview-'+id+'-works',name:base.name+' · أفضل الأعمال',
+        description:'',kind:'works',isPublic:true,items:base.works.slice(0,10).map(work=>({
+          id:String(work.id),workId:String(work.id),name:work.title,image:work.cover || work.sourceCoverUrl || ''
+        }))}];
+      return Object.assign(clone(base),{profile_lists:clone(base.profile_lists || profileLists),is_following:following(viewerId).includes(id),
         follower_count:data.profiles.filter(p=>following(p.id).includes(id)).length+(following(viewerId).includes(id)?1:0),
         following_count:following(id).length});
     }

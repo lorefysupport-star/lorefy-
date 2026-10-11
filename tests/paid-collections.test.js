@@ -2,14 +2,35 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const app=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(app,p),'utf8');
 const catalog=JSON.parse(read('launch/decorations/originals/catalog.json'));
 const owner='11111111-1111-4111-8111-111111111111';
-function shopRoot(mode='demo'){
+function shopRoot(mode='demo',freeForNow=catalog.freeForNow){
  const values={},window={LOREFY_RELEASE:{betaProfileDecorations:true},LorefyBackend:{mode,user:{id:owner},push:async()=>true},localStorage:{getItem:k=>values[k]||null,setItem:(k,v)=>values[k]=v},dispatchEvent:()=>{},CustomEvent:class{}};
  vm.runInNewContext(read('modules/lorefy-profile-shop.js'),{window,URLSearchParams});
  assert.equal(window.LorefyProfileShop.installBetaCollections(JSON.parse(read('launch/decorations/pfpvibes/collections.json'))),true);
- assert.equal(window.LorefyProfileShop.installShopCatalog(catalog),true);return {window,values,shop:window.LorefyProfileShop};
+ assert.equal(window.LorefyProfileShop.installShopCatalog({...catalog,freeForNow}),true);return {window,values,shop:window.LorefyProfileShop};
 }
+
+test('all seventeen current bundles are free for now and apply without billing',async()=>{
+ assert.equal(catalog.freeForNow,true);
+ for(const mode of ['demo','live']){
+  const {shop,window}=shopRoot(mode);let calls=0;
+  window.LorefyDecorationBilling={has:async()=>{calls++;throw Error('Unexpected billing');}};
+  assert.equal(shop.offered.length,17);
+  for(const pack of shop.offered){assert.equal(pack.free,true);assert.equal(pack.price,null);await shop.applyDecoration(pack.id,'all',owner);}
+  assert.equal(calls,0);
+  await assert.rejects(shop.applyDecoration(catalog.paid[0].id,'all','other'),/ACCOUNT_CHANGED/);
+ }
+});
+
+test('temporary free database policy matches exactly the current originals and keeps receipt checks',()=>{
+ const sql=read('supabase/migrations/20261011181942_free_current_profile_bundles.sql');
+ assert.deepEqual([...sql.matchAll(/'original-[a-z-]+'/g)].map(m=>m[0].slice(1,-1)).sort(),catalog.paid.map(p=>p.id).sort());
+ assert.match(sql,/p\.user_id=profile_ref/);
+ assert.match(sql,/p\.environment='Production' and p\.status='active'/);
+ assert.match(sql,/revoke all.*from public,anon,authenticated/);
+ assert.doesNotMatch(sql,/update public\.|insert into public\.|drop |get_public_profile_lists/i);
+});
 test('the storefront has exactly twelve SAR13 paid pairs and the last five free collections',()=>{
- const {shop}=shopRoot();assert.equal(shop.offered.length,17);
+ const {shop}=shopRoot('demo',false);assert.equal(shop.offered.length,17);
  assert.deepEqual(Array.from(shop.offered.filter(p=>p.free),p=>p.id),catalog.freeIds);
  for(const pack of shop.offered.filter(p=>!p.free)){
   assert.equal(pack.price.amount,1300);assert.equal(pack.price.currency,'SAR');assert.deepEqual(Array.from(pack.parts),['frame','page']);
@@ -24,7 +45,7 @@ test('paid previews have two frames and never synthesize a third paid effect',()
  assert.deepEqual(JSON.parse(JSON.stringify(shop.previewParts(id,'all'))),{frame:id,page:id,effect:null});
 });
 test('a paid collection cannot be applied in demo, offline or without verified ownership',async()=>{
- const {shop,values,window}=shopRoot();
+ const {shop,values,window}=shopRoot('demo',false);
  await assert.rejects(shop.applyDecoration(catalog.paid[0].id,'all',owner),/PURCHASE_REQUIRED/);assert.deepEqual(values,{});
  window.LorefyDecorationBilling={has:async()=>false};
  await assert.rejects(shop.applyDecoration(catalog.paid[0].id,'frame',owner),/PURCHASE_REQUIRED/);assert.deepEqual(values,{});
@@ -32,7 +53,7 @@ test('a paid collection cannot be applied in demo, offline or without verified o
  await assert.rejects(shop.applyDecoration('observatory','all',owner),/INVALID/);
 });
 test('ownership is checked before persistence and an account switch cancels application',async()=>{
- const {shop,values,window}=shopRoot('live');
+ const {shop,values,window}=shopRoot('live',false);
  window.LorefyDecorationBilling={has:async()=>{window.LorefyBackend.user.id='other';return true;}};
  await assert.rejects(shop.applyDecoration(catalog.paid[0].id,'all',owner),/ACCOUNT_CHANGED/);assert.deepEqual(values,{});
 });

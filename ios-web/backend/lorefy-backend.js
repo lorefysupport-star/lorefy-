@@ -19,6 +19,7 @@
     "lorefy.user.preferences.v1",
     "lorefy.user.preferences.v2",
     "lorefy.user.profileLayout.v1",
+    "lorefy.user.profileLists.v1",
     "lorefy.user.profileDecoration.v1",
     "lorefy.ui.theme.v1",
     "lorefy.library.view.v1",
@@ -546,6 +547,15 @@
       var appearance = await this.client.rpc("get_public_profile_appearance", { profile_ref:profileId });
       if (appearance.error) throw appearance.error;
       Object.assign(copy, appearance.data || {});
+      // Lists are a narrow public projection, never a read of another user's state.
+      try {
+        var lists = await this.client.rpc("get_public_profile_lists", { profile_ref:profileId });
+        if (lists.error) throw lists.error;
+        copy.profile_lists = Array.isArray(lists.data) ? lists.data : [];
+      } catch (error) {
+        copy.profile_lists = [];
+        copy.profile_lists_error = true;
+      }
       // Resolve only this owner's projected artwork, never the viewer's choices.
       for (var artworkKey of ["custom_work_covers", "custom_character_images"]){
         var images = copy[artworkKey] || {};

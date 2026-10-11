@@ -27,6 +27,10 @@
     return 172 + hash % 4 * 8;
   }
 
+  function profileSpineHeight(title) {
+    return [176, 208, 188, 220][(spineHeight(title) - 172) / 8];
+  }
+
   function setMode(value, storage) {
     var mode = normalizeMode(value);
     try { (storage || root.localStorage).setItem(KEY, mode); } catch (error) { return false; }
@@ -73,7 +77,7 @@
         }
         if (label.textContent !== title) {
           label.textContent = title;
-          slot.style.setProperty('--spine-height', [176, 208, 188, 220][(spineHeight(title) - 172) / 8] + 'px');
+          slot.style.setProperty('--spine-height', profileSpineHeight(title) + 'px');
           slot.title = title;
         }
       });
@@ -174,5 +178,5 @@
     else start();
   }
 
-  return Object.freeze({ normalizeMode: normalizeMode, applyMode: applyMode, progressLabel: progressLabel, mount: mount, savedMode:savedMode, setMode:setMode, options:options, spineHeight:spineHeight, syncProfileFavorites:syncProfileFavorites });
+  return Object.freeze({ normalizeMode: normalizeMode, applyMode: applyMode, progressLabel: progressLabel, mount: mount, savedMode:savedMode, setMode:setMode, options:options, spineHeight:spineHeight, profileSpineHeight:profileSpineHeight, syncProfileFavorites:syncProfileFavorites });
 });

@@ -54,3 +54,9 @@ test('completed works do not claim the reader still needs to save a stopping poi
   assert.equal(libraryView.progressLabel(true, 'الفصل 42'), 'الفصل 42');
   assert.equal(libraryView.progressLabel(false, 'لم تحفظ مكان توقفك بعد'), 'لم تحفظ مكان توقفك بعد');
 });
+
+test('owner and visitor profile spines share stable heights without changing library rows', () => {
+  for (const title of ['Pride and Prejudice','Nineteen Eighty-Four','Berserk','One Piece','']) {
+    assert.equal(libraryView.profileSpineHeight(title),[176,208,188,220][(libraryView.spineHeight(title)-172)/8]);
+  }
+});
