@@ -41,7 +41,7 @@ function nativeWindow(plugins, backend, location = {}) {
   return window;
 }
 
-function runGoogleBridge({ onOpen, onExchange, onAfterLogin = async () => {}, location = {}, launchUrl = null, listenerReady }) {
+function runGoogleBridge({ onOpen, onExchange, onAfterLogin = async () => {}, location = {}, launchUrl = null, listenerReady, synchronousBrowserListener = false }) {
   let appUrlOpen;
   let browserFinished;
   let closed = false;
@@ -67,7 +67,7 @@ function runGoogleBridge({ onOpen, onExchange, onAfterLogin = async () => {}, lo
     Browser: {
       addListener: (name, callback) => {
         if (name === 'browserFinished') browserFinished = callback;
-        return Promise.resolve({ remove: () => {} });
+        return synchronousBrowserListener ? { remove: () => {} } : Promise.resolve({ remove: () => {} });
       },
       open: async (options) => onOpen(options, (url) => appUrlOpen({ url })),
       close: async () => { closed = true; }
@@ -421,3 +421,9 @@ test('the native hash plugin is registered in the active iOS controller and uses
   assert.match(project, /LorefyAuthCrypto\.swift in Sources/);
   assert.equal(JSON.parse(fs.readFileSync(path.join(root, 'capacitor.config.json'))).server.iosScheme, 'capacitor');
 });
+
+ test('Google installs its handler when the injected native listener returns a synchronous handle', () => {
+  const bridge = runGoogleBridge({ synchronousBrowserListener: true, onOpen: async () => {}, onExchange: async () => ({}) });
+  assert.match(bridge.backend.signInWithOAuth.toString(), /skipBrowserRedirect/);
+  bridge.dismissBrowser();
+ });

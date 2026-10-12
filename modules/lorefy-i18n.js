@@ -5,6 +5,13 @@
 })(typeof window !== 'undefined' ? window : this, function() {
   'use strict';
   var messages = {
+    'تعذر اختيار الصورة. حاول مرة أخرى من مكتبة الصور.':'Could not select the image. Try again from your photo library.',
+    'تم إلغاء تسجيل الدخول بواسطة Google.':'Google sign-in was cancelled.',
+    'تم إلغاء تسجيل الدخول بواسطة Apple.':'Apple sign-in was cancelled.',
+    'تعذر تسجيل الدخول بواسطة Google حالياً. تحقق من اتصالك وحاول مجدداً.':'Google sign-in is unavailable right now. Check your connection and try again.',
+    'تعذر تسجيل الدخول بواسطة Apple حالياً. تحقق من اتصالك وحاول مجدداً.':'Apple sign-in is unavailable right now. Check your connection and try again.',
+    'تسجيل الدخول غير جاهز. أعد فتح التطبيق وحاول مجدداً.':'Sign-in is not ready. Reopen the app and try again.',
+    'انتهت مهلة تسجيل الدخول. حاول مجدداً.':'Sign-in timed out. Try again.',
     'المراجعة':'Review', 'أضف رداً...':'Add a reply...', 'رد':'Reply',
     'أقرأ حالياً':'Reading', 'تم القراءة':'Completed', 'قائمة الأمنيات':'Wishlist', 'توقف':'Paused',
     'تم حفظ الملف الشخصي':'Profile saved', 'نبذة قصيرة عنك...':'A little about you...',
@@ -129,7 +136,7 @@
     'جلسة قراءة جارية':'Reading session in progress', 'جلسة متوقفة مؤقتًا':'Paused reading session',
     'مراجعة العمل':'Review work', 'كتابة مراجعة للعمل':'Write a review',
     'اكتب مراجعة':'Write a review', 'أضف مراجعتك':'Add your review',
-    'إضافة العمل للقائمة':'Add to library', 'إضافة للقائمة':'Add to library',
+    'إزالة من كل خانات القراءة':'Remove from all reading lists', 'ملاحظة قصيرة: نهاية الآرك الثاني...':'Short note: end of the second arc...', 'إضافة العمل للقائمة':'Add to library', 'إضافة للقائمة':'Add to library',
     'المزيد من خيارات العمل':'More work options', 'تغيير الغلاف':'Change cover',
     'تقييم الشخصيات':'Rate characters', 'ترتيب الشخصيات':'Character ranking',
     'الفصول':'Chapters', 'عرض الفصول':'Chapter range', 'نطاق الفصول':'Chapter range',
@@ -233,7 +240,7 @@
     'لا توجد حسابات بعد':'No accounts yet', 'لك':'For You',
     'الأعمال المفضلة':'Favorite works', 'إحصاءات التواصل':'Social statistics',
     'عرض الحسابات التي يتابعها':'View following accounts', 'عرض المتابعين':'View followers',
-    'متابَع':'Following', 'المراجعات':'Reviews', 'خانة فارغة':'Empty slot',
+    'متابعة':'Follow', 'إلغاء المتابعة':'Unfollow', 'متابَع':'Following', 'المراجعات':'Reviews', 'خانة فارغة':'Empty slot',
     'عرض منشورات القارئ':'View reader posts', 'مكتبة القارئ':'Reader library',
     'المكتبة':'Library', 'روابط التواصل':'Social links', 'أفضل 10 أعمال':'Top 10 works'
   };
@@ -262,6 +269,8 @@
       .replace(/^العودة إلى آخر فصل قيّمته، الفصل (\d+)$/, 'Return to your last rated chapter, chapter $1')
       .replace(/^تم الاستيراد من (.+) ✓$/, function(_,name){ return 'Imported from ' + (messages[name] || name) + ' ✓'; })
       .replace(/^(\d+) عمل أُضيف إلى مكتبتك$/, '$1 works added to your library')
+      .replace(/^أُضيف إلى\s*"([^"]+)"$/, function(_,status){ return messages[status] ? 'Added to '+messages[status] : _; })
+      .replace(/^مثال: (\d+)$/, 'Example: $1')
       .replace(/^قرأت حتى الفصل (\d+)$/, 'Read through chapter $1')
       .replace(/^تم حفظ القراءة حتى الفصل (\d+)$/, 'Reading saved through chapter $1')
       .replace(/^(\d+)\s+(?:عمل|أعمال)\s*$/, function (_,n) { return n + (Number(n) === 1 ? ' work' : ' works'); })

@@ -301,7 +301,7 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
 /* Search and library share filters, metadata and cover geometry. */
 .lf-app.lf-app.lf-app .lf-search-box { min-height: 48px !important; padding: 0 14px !important; gap: 10px !important; margin-bottom: 12px !important; border: 1px solid transparent !important; border-radius: 12px !important; background: var(--ui-fill) !important; box-shadow: none !important; }
 .lf-app.lf-app.lf-app .lf-search-box:focus-within { border-color: var(--ui-action) !important; }
-.lf-app.lf-app.lf-app .lf-search-box input { width: 100%; min-width: 0; min-height: 46px !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent !important; font-size: 14px !important; }
+.lf-app.lf-app.lf-app .lf-search-box input { width: 100%; min-width: 0; min-height: 46px !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent !important; font-size: 16px !important; }
 .lf-app.lf-app.lf-app .lf-search-box svg { color: var(--ui-muted) !important; stroke: currentColor !important; width: 18px; height: 18px; }
 .lf-app.lf-app.lf-app :is(.lf-type-filters, .lf-filter-row, .lf-library-tabs) { display: flex !important; gap: 4px !important; overflow-x: auto !important; scrollbar-width: none; padding-block: 2px 6px !important; border: 0 !important; background: transparent !important; }
 .lf-app.lf-app.lf-app .lf-pill,
@@ -333,6 +333,7 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
 .lf-app.lf-app.lf-app .lf-library-grid { display: grid !important; grid-template-columns: repeat(3,minmax(0,1fr)) !important; gap: 22px 12px !important; padding: 20px var(--ui-inline) 28px !important; }
 .lf-app.lf-app.lf-app .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):has(> .lf-library-card:nth-child(2):last-child) { grid-template-columns: repeat(2,minmax(0,150px)) !important; justify-content: center; gap: 18px !important; }
 .lf-app.lf-app.lf-app .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):has(> .lf-library-card:first-child:last-child) { grid-template-columns: minmax(0,176px) !important; justify-content: center; }
+.lf-app.lf-app.lf-app .lf-library-grid:has(> .lf-empty-state) { grid-template-columns: minmax(0,1fr) !important; justify-content: stretch; }
 .lf-app.lf-app.lf-app .lf-library-card { min-width: 0; background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
 .lf-app.lf-app.lf-app .lf-library-cover { aspect-ratio: 2 / 3; border-radius: var(--ui-radius) !important; box-shadow: none !important; }
 .lf-app.lf-app.lf-app .lf-library-copy { padding-top: 8px !important; }
@@ -751,3 +752,8 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
   .lf-app.lf-app.lf-app .lf-community-composer-main { padding-block: 12px !important; }
   .lf-app.lf-app.lf-app .lf-community-compose-tools button { min-height: 44px !important; flex-direction: row; }
 }
+
+/* Keep the search exit reachable when the keyboard covers bottom navigation. */
+.lf-search-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.lf-search-heading h1 { min-width:0; margin:0; }
+.lf-search-back { flex:none; min-width:44px; min-height:44px; border:0; border-radius:12px; background:var(--ui-fill); color:var(--ui-action); font:inherit; cursor:pointer; }
