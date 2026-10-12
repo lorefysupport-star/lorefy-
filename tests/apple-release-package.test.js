@@ -44,14 +44,15 @@ test("configures a native iOS release shell", () => {
   const capacitor = JSON.parse(read("capacitor.config.json"));
   assert.equal(pkg.scripts["ios:prepare"], "node tools/prepare-ios-web.mjs");
   assert.equal(pkg.scripts["ios:sync"], "node tools/patch-apple-sign-in.mjs && npm run ios:prepare && npx cap sync ios && node tools/fix-capacitor-spm-paths.mjs");
-  assert.equal(pkg.dependencies["@capacitor/core"], "8.4.2");
+  assert.equal(pkg.dependencies["@capacitor/core"], "8.4.3");
   assert.equal(pkg.dependencies["@capacitor/app"], "8.1.1");
   assert.equal(pkg.dependencies["@capacitor/browser"], "8.0.4");
   assert.equal(pkg.dependencies["@capacitor-community/apple-sign-in"], "7.1.0");
-  assert.equal(pkg.devDependencies["@capacitor/ios"], "8.4.2");
+  assert.equal(pkg.devDependencies["@capacitor/ios"], "8.4.3");
   assert.equal(capacitor.appId, "com.lorefy.app");
   assert.equal(capacitor.webDir, "ios-web");
   const nativePackages = read("ios/App/CapApp-SPM/Package.swift");
+  assert.ok(nativePackages.includes('exact: "' + pkg.devDependencies["@capacitor/ios"] + '"'));
   assert.match(nativePackages, /CapacitorApp/);
   assert.match(nativePackages, /CapacitorBrowser/);
   assert.match(nativePackages, /AppleSignIn/);

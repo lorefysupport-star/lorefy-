@@ -13,3 +13,12 @@ test('Apple native credential patch removes forced unwraps and is repeatable', a
   assert.equal(patchAppleSource(patched), patched);
   assert.throws(() => patchAppleSource('changed upstream'), /source changed/);
 });
+
+test('Apple SPM compatibility patch survives clean installation and rejects unknown manifests', async () => {
+  const { patchApplePackage } = await import('../tools/patch-apple-sign-in.mjs');
+  const dependency = '.package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", from: "7.0.0")';
+  const patched = patchApplePackage(dependency);
+  assert.match(patched, /from: "8.0.0"/);
+  assert.equal(patchApplePackage(patched), patched);
+  assert.throws(() => patchApplePackage('changed upstream'), /package changed/);
+});

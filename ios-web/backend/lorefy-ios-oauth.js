@@ -114,12 +114,12 @@
       if (event && event.url) completeNativeSession(event.url);
     })).catch(function(error){ callbackListenerError = error; });
     if (Browser.addListener) {
-      Browser.addListener("browserFinished", function () {
+      Promise.resolve(Browser.addListener("browserFinished", function () {
         // iOS can dismiss the provider before delivering appUrlOpen.
         // Keep the verifier and pending promise alive during that handoff.
         global.clearTimeout(dismissalTimer);
         dismissalTimer = global.setTimeout(cancelNativeFlow, 1000);
-      }).catch(function () {});
+      })).catch(function () {});
     }
     if (App.getLaunchUrl) {
       App.getLaunchUrl().then(function (event) {
