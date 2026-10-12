@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v436-reading-stable-free';
+const CACHE = 'lorefy-v445-all-profile-frames';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -14,12 +14,12 @@ const CORE = [
   './styles/lorefy-user-experience.css?v=20261011-explore-v2',
   './modules/lorefy-user-experience.js?v=20261011-explore-v2',
   './modules/lorefy-friend-activity.js?v=20261011-explore-v2',
-  './modules/lorefy-original-illustrated.js?v=20261011-shop',
-  './modules/lorefy-original-autumn.js?v=20261011-shop',
-  './modules/lorefy-original-original.js?v=20261011-shop',
+  './modules/lorefy-original-illustrated.js?v=20261013-all-profile-frames-v6',
+  './modules/lorefy-original-autumn.js?v=20261013-all-profile-frames-v6',
+  './modules/lorefy-original-original.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-decoration-billing.js?v=20261011-shop',
   './modules/lorefy-preview-readers.js?v=20261011-profile-sections-v1',
-  './styles/lorefy-profile-sections.css?v=20261011-folder-tiles-v2',
+  './styles/lorefy-profile-sections.css?v=20261013-all-profile-frames-v6',
   './modules/lorefy-profile-sections.js?v=20261011-folder-tiles-v2',
   './modules/lorefy-i18n.js?v=20261009-public-appearance-v4',
   './',
@@ -103,10 +103,10 @@ const CORE = [
   './modules/lorefy-community.js?v=20261011-profile-sections-v1',
   './modules/lorefy-library-view.js?v=20261011-public-profile-layout-v4',
   './modules/lorefy-interface-settings.js?v=20261009-custom-appearance-v1',
-  './modules/lorefy-profile-shop.js?v=20261011-free-audit-v1',
-  './styles/lorefy-profile-shop.css?v=20261011-shop-v1',
-  './modules/lorefy-frame-motion.js?v=20261011-original-motion-v1',
-  './styles/lorefy-frame-motion.css?v=20261011-original-motion-v1',
+  './modules/lorefy-profile-shop.js?v=20261013-all-profile-frames-v6',
+  './styles/lorefy-profile-shop.css?v=20261013-all-profile-frames-v6',
+  './modules/lorefy-frame-motion.js?v=20261013-all-profile-frames-v6',
+  './styles/lorefy-frame-motion.css?v=20261013-all-profile-frames-v6',
   './styles/lorefy-interface-settings.css?v=20261009-custom-appearance-v1',
   './modules/lorefy-scroll-memory.js?v=20261003-home-social-v2',
   './modules/lorefy-review-editor.js?v=20261011-explore-v2',

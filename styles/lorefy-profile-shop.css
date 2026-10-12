@@ -107,8 +107,8 @@ html:root:root:root:root:root:root .lf-profile-page.has-page-decoration :is(.lf-
   pointer-events: none; z-index: 4;
 }
 .lf-reader-full .lf-reader-avatar.has-decoration { position: relative; margin-bottom: 30px; }
-html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-avatar.has-decoration { right: 40px !important; }
-html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-identity > .lf-reader-avatar.has-decoration { right: 40px !important; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-avatar.has-decoration { right: var(--profile-avatar-frame-inset,40px) !important; }
+html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-reader-identity > .lf-reader-avatar.has-decoration { right: var(--profile-avatar-frame-inset,40px) !important; }
 html:root:root:root:root:root:root .lf-profile-page:not([data-profile-layout='immersive']):has(.lf-profile-avatar.has-decoration) .lf-profile-identity { padding-top: 72px !important; }
 html:root:root:root:root:root:root .lf-profile-page[data-profile-layout='immersive']:has(.lf-profile-avatar.has-decoration) .lf-profile-name { margin-top: 0 !important; }
 html:root:root:root:root:root:root .lf-profile-page[data-profile-layout='immersive']:has(.lf-reader-avatar.has-decoration) .lf-reader-identity h1 { margin-top: 0 !important; }

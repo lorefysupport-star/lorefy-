@@ -5,3 +5,88 @@
 .has-original-motion { background-image:none !important; border-image:none; }
 .has-original-motion > .lf-frame-overlay { opacity:0; }
 .lf-decoration-page-border.has-original-motion::before { display:none; }
+.has-page-decoration .lf-profile-banner > :has(> button),
+.has-page-decoration .lf-profile-banner > button:not(.lf-profile-avatar),
+.has-page-decoration .lf-reader-back { z-index:9 !important; }
+html:root:root:root:root:root:root:root:root [data-profile-layout='immersive'] :is(.lf-profile-avatar,.lf-reader-avatar).has-decoration {
+  width:var(--profile-decoration-avatar-size,104px) !important;
+  height:var(--profile-decoration-avatar-size,104px) !important;
+}
+html:root:root:root:root:root:root:root:root [data-profile-layout='immersive']:has(.has-decoration) :is(.lf-profile-bio,.lf-reader-bio) {
+  margin-top:var(--profile-frame-bio-gap,24px) !important;
+}
+
+/* Profile controls have their own clear header region above the artwork. */
+html:root:root:root:root:root:root:root:root .has-page-decoration {
+  --profile-frame-safe-top:env(safe-area-inset-top,0px);
+  --profile-frame-banner-top:calc(var(--profile-frame-safe-top) + 66px);
+  --profile-frame-controls-top:calc(var(--profile-frame-safe-top) + 16px);
+  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(190px,calc(100svh - 754px),250px));
+  padding-bottom:calc(var(--nc-bottom,0px) + 112px) !important;
+  scroll-padding-top:calc(var(--profile-frame-controls-top) + 52px);
+  scroll-padding-bottom:calc(var(--nc-bottom,0px) + 88px);
+}
+html:root:root:root:root:root:root:root:root[data-lorefy-native-shell='true'] .has-page-decoration {
+  --profile-frame-safe-top:var(--nc-top,0px);
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration :is(.lf-profile-banner,.lf-reader-banner) {
+  height:var(--profile-cover-height) !important;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration :is(.lf-profile-banner,.lf-reader-banner) > img {
+  position:absolute; top:var(--profile-frame-banner-top); left:0;
+  height:calc(var(--profile-cover-height) - var(--profile-frame-banner-top)) !important; width:100%; object-fit:cover;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration .lf-profile-banner:has(> img[src^='data:image/svg+xml'])::before {
+  content:''; position:absolute; top:var(--profile-frame-banner-top); inset-inline:0;
+  height:calc(var(--profile-cover-height) - var(--profile-frame-banner-top)); pointer-events:none;
+  background:url('../launch/brand/lorefy-reading-scene.jpg') center 36% / cover no-repeat !important;
+  mask-image:linear-gradient(to bottom,#000 0%,#000 50%,transparent 100%);
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration .lf-profile-banner > div:not(:has(button)) {
+  display:none;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration[data-profile-layout='immersive'] .lf-profile-connections {
+  gap:4px 16px !important; align-items:center !important;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration[data-profile-layout='immersive'] .lf-profile-networks {
+  grid-column:3; grid-row:1; justify-content:flex-end;
+}
+@media(max-width:360px) {
+  html:root:root:root:root:root:root:root:root .has-page-decoration[data-profile-layout='immersive'] .lf-profile-connections { gap:4px 8px !important; }
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration .lf-profile-banner > div:has(> button) {
+  position:absolute !important; top:var(--profile-frame-controls-top) !important;
+  left:26px !important; gap:8px !important; z-index:11 !important;
+  width:calc(100% - 52px); display:flex; direction:ltr; pointer-events:none;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration .lf-profile-banner > div > button {
+  pointer-events:auto;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration .lf-shop-shortcut {
+  position:absolute !important; right:52px !important; top:0 !important;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration :is(.lf-profile-banner > button:not(.lf-profile-avatar),.lf-reader-back) {
+  position:absolute !important; top:var(--profile-frame-controls-top) !important;
+  right:26px !important; z-index:11 !important;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration :is(.lf-profile-banner > div > button,.lf-profile-banner > button:not(.lf-profile-avatar),.lf-reader-back) {
+  width:44px !important; height:44px !important; min-width:44px; min-height:44px;
+  background:var(--ui-bg) !important; color:var(--ui-action) !important;
+  border:1px solid var(--ui-line) !important; box-shadow:none !important; backdrop-filter:none;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration :is(.lf-profile-banner > div > button,.lf-profile-banner > button:not(.lf-profile-avatar),.lf-reader-back) svg {
+  color:var(--ui-action) !important; stroke:currentColor !important;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration .lf-decoration-page-border {
+  padding-top:var(--profile-frame-safe-top,0px); padding-bottom:0;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration .lf-decoration-page-pin { z-index:10; }
+html:root:root:root:root:root:root:root:root .has-page-decoration .lf-decoration-page-border {
+  background-image:linear-gradient(to bottom,
+    var(--ui-bg) 0,var(--ui-bg) calc(var(--profile-frame-banner-top) - 2px),
+    transparent calc(var(--profile-frame-banner-top) - 2px),transparent calc(100% - var(--nc-bottom,0px) - 12px),
+    var(--ui-bg) calc(100% - var(--nc-bottom,0px) - 12px),var(--ui-bg) 100%) !important;
+}
+html:root:root:root:root:root:root:root:root .has-page-decoration .lf-decoration-page-border.has-original-motion::before {
+  display:none;
+}

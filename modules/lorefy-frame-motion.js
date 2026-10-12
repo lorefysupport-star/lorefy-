@@ -6,6 +6,88 @@
   'use strict';
   const motifs=new Set(['spark','leaf','heart','ghost','flower','bubble','rune']);
   const clamp=(value,low,high,fallback)=>Number.isFinite(Number(value))?Math.max(low,Math.min(high,Number(value))):fallback;
+  function measurePageArt(image,wideCrest=false) {
+    const canvas=root.document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;
+    const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0);
+    const pixels=ctx.getImageData(0,0,image.width,image.height).data;
+    let left=image.width,top=image.height,right=-1,bottom=-1;
+    for(let y=0;y<image.height;y++)for(let x=0;x<image.width;x++)if(pixels[(y*image.width+x)*4+3]>8){
+      left=Math.min(left,x);right=Math.max(right,x);top=Math.min(top,y);bottom=Math.max(bottom,y);
+    }
+    if(right<left)return {x:0,y:0,w:image.width,h:image.height};
+    // Retain a small source-space margin for the ornament's animated sway.
+    left=Math.max(0,left-12);top=Math.max(0,top-12);
+    right=Math.min(image.width-1,right+12);bottom=Math.min(image.height-1,bottom+12);
+    const w=right-left+1,h=bottom-top+1,centre=(left+right)/2;
+    let leftEnd=left,rightStart=right;
+    for(let y=Math.round(top+h*.30);y<top+h*.72;y++)for(let x=left;x<=right;x++)if(pixels[(y*image.width+x)*4+3]>24){
+      if(x<centre)leftEnd=Math.max(leftEnd,x);else rightStart=Math.min(rightStart,x);
+    }
+    let ropeY=Math.round(top+h*.17),best=0;
+    for(let y=Math.round(top+h*.10);y<top+h*.23;y++){
+      let score=0;
+      for(let x=Math.round(left+w*.19);x<left+w*.24;x++)score+=pixels[(y*image.width+x)*4+3];
+      for(let x=Math.round(left+w*.76);x<left+w*.81;x++)score+=pixels[(y*image.width+x)*4+3];
+      if(score>best){best=score;ropeY=y;}
+    }
+    return {x:left,y:top,w,h,crest:wideCrest?.90:.52,join:(ropeY-top)/(h*.24),
+      left:Math.min(w*.28,Math.max(1,leftEnd-left+5)),right:Math.min(w*.28,Math.max(1,right-rightStart+5))};
+  }
+  function pageLayout(bounds,width,height) {
+    const sourceTop=bounds.h*.24,sourceBottom=bounds.h*.18;
+    const crest=clamp(bounds.crest,.52,.9,.52),centreRoom=Math.max(36,width-252);
+    const topScale=Math.min((width-4)/bounds.w,64/sourceTop,height*.22/sourceTop,centreRoom/(bounds.w*crest));
+    const bottomScale=Math.min((width-4)/bounds.w,24/sourceBottom,height*.10/sourceBottom);
+    return {top:sourceTop*topScale,bottom:sourceBottom*bottomScale,
+      topWidth:width-4,bottomWidth:width-4,
+      rail:Math.min(18,Math.max(8,width*.035)),sourceTop,sourceBottom,
+      line:64,controls:16,topY:64-sourceTop*topScale*clamp(bounds.join,.35,.92,.72)};
+  }
+  function paintPageArt(ctx,image,bounds,seconds,width,height,color='#8b9999') {
+    if(width<=4||height<=4)return;
+    const {x,y,w,h}=bounds,sourceLeft=bounds.left||w*.24,sourceRight=bounds.right||w*.24;
+    const {top,bottom,rail,sourceTop,sourceBottom,topY}=pageLayout(bounds,width,height);
+    const middle=height-4-topY-top-bottom;
+    // Preserve the crest and corners; stretch only their ribbon connectors.
+    function band(sourceY,sourceHeight,destY,destHeight){
+      const scale=destHeight/sourceHeight;
+      const crest=clamp(bounds.crest,.52,.9,.52),centreLeft=w*(1-crest)/2,centreWidth=w*crest;
+      const edgeLimit=centreLeft*.8;
+      const edgeLeft=Math.min(edgeLimit,Math.min(w*.16,Math.max(w*.08,sourceLeft))),edgeRight=Math.min(edgeLimit,Math.min(w*.16,Math.max(w*.08,sourceRight)));
+      const destLeft=edgeLeft*scale,destRight=edgeRight*scale,destCentre=centreWidth*scale;
+      const centreX=(width-destCentre)/2;
+      const sources=[0,edgeLeft,centreLeft,centreLeft+centreWidth,w-edgeRight,w];
+      const targets=[2,2+destLeft,centreX,centreX+destCentre,width-2-destRight,width-2];
+      for(let i=0;i<5;i++){
+        if(crest>.8&&(i===1||i===3)){
+          const ropeHeight=h*.012,ropeY=y+sourceTop*clamp(bounds.join,.35,.92,.72)-ropeHeight/2;
+          ctx.drawImage(image,x+w*.19,ropeY,w*.05,ropeHeight,targets[i],destY+destHeight*clamp(bounds.join,.35,.92,.72)-2,targets[i+1]-targets[i],4);
+        }else ctx.drawImage(image,x+sources[i],sourceY,sources[i+1]-sources[i],sourceHeight,targets[i],destY,targets[i+1]-targets[i],destHeight);
+      }
+    }
+    band(y,sourceTop,2+topY,top);
+    // Stretch only the side ornaments vertically, never the transparent centre.
+    ctx.drawImage(image,x,y+sourceTop,sourceLeft,h-sourceTop-sourceBottom,2,2+topY+top,rail,middle);
+    ctx.drawImage(image,x+w-sourceRight,y+sourceTop,sourceRight,h-sourceTop-sourceBottom,width-2-rail,2+topY+top,rail,middle);
+    // Keep real corner artwork; no stretched raster crosses the home indicator.
+    const edge=Math.min(w*.16,sourceBottom*rail/bottom),scale=bottom/sourceBottom,cornerWidth=edge*scale;
+    ctx.drawImage(image,x,y+h-sourceBottom,edge,sourceBottom,2,height-2-bottom,cornerWidth,bottom);
+    ctx.drawImage(image,x+w-edge,y+h-sourceBottom,edge,sourceBottom,width-2-cornerWidth,height-2-bottom,cornerWidth,bottom);
+    // Rotate intact rail artwork into the bottom edge, preserving its proportions.
+    const thickness=Math.min(10,rail),sourceHeight=h-sourceTop-sourceBottom;
+    const tileWidth=sourceHeight*thickness/sourceLeft,start=2+cornerWidth,end=width-2-cornerWidth;
+    ctx.save();ctx.beginPath();ctx.rect(start,height-2-thickness,end-start,thickness);ctx.clip();
+    for(let dx=start;dx<end;dx+=Math.max(1,tileWidth-1)){
+      ctx.save();ctx.translate(dx,height-2);ctx.rotate(-Math.PI/2);
+      ctx.drawImage(image,x,y+sourceTop,sourceLeft,sourceHeight,0,0,thickness,tileWidth);ctx.restore();
+    }
+    ctx.restore();
+  }
+  function clipPageEffects(ctx,width,height){
+    ctx.beginPath();ctx.rect(0,64,width,Math.max(0,height-104));
+    ctx.rect(124,0,Math.max(0,width-248),64);
+    ctx.rect(0,0,20,height);ctx.rect(width-20,0,20,height);ctx.clip();
+  }
   function normalize(value={}) {
     const g=value.portrait;
     const portrait=g && ['cx','cy','size'].every(k=>Number.isFinite(g[k])) && g.size>=.5 && g.size<=.85
@@ -23,7 +105,7 @@
       const phase=((i/d.count + time*d.speed*.035)%1+1)%1;
       let x,y,angle;
       if(kind==='avatar') {
-        angle=phase*Math.PI*2;const radius=Math.min(width,height)*.45;
+        angle=phase*Math.PI*2;const radius=Math.min(width,height)*.44;
         x=width/2+Math.cos(angle)*radius;y=height/2+Math.sin(angle)*radius;
       } else {
         const inset=Math.max(size+2,8),w=Math.max(0,width-2*inset),h=Math.max(0,height-2*inset),length=2*(w+h);
@@ -90,25 +172,44 @@
     if(!scheduler){scheduler=createScheduler(root);root.document.addEventListener('visibilitychange',scheduler.refresh);}
     const canvas=root.document.createElement('canvas');canvas.className='lf-frame-motion';canvas.setAttribute('aria-hidden','true');
     const ctx=canvas.getContext('2d');if(!ctx)return ()=>{};
-    element.appendChild(canvas);let width=0,height=0,frames=0;
+    const layoutPage=kind==='page'&&element.closest('.lf-profile-page');
+    element.appendChild(canvas);let width=0,height=0,frames=0,paddingTop=0,paddingBottom=0;
     const ratio=Math.min(2,root.devicePixelRatio||1);
     function resize(){width=element.offsetWidth;height=element.offsetHeight;if(!width||!height)return;
       const style=root.getComputedStyle(element);
+      paddingTop=kind==='page'?parseFloat(style.paddingTop)||0:0;
+      paddingBottom=kind==='page'?parseFloat(style.paddingBottom)||0:0;
       canvas.style.left=-parseFloat(style.borderLeftWidth||0)+'px';canvas.style.top=-parseFloat(style.borderTopWidth||0)+'px';
       canvas.style.width=width+'px';canvas.style.height=height+'px';
-      canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);}
+      canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);
+      const page=kind==='page'&&original&&element.closest('.lf-profile-page');
+      if(page&&renderer&&ready&&renderer.layout){
+        const layout=renderer.layout(original.id,width,height-paddingTop-paddingBottom),rect=page.getBoundingClientRect();
+        page.style.setProperty('--profile-frame-top',layout.top+'px');
+        page.style.setProperty('--profile-frame-bottom',layout.bottom+'px');
+        page.style.setProperty('--profile-frame-banner-top',(paddingTop+layout.line+2)+'px');
+        page.style.setProperty('--profile-frame-controls-top',(paddingTop+layout.controls)+'px');
+        page.style.setProperty('--profile-controls-left',Math.round(rect.left+26)+'px');
+        page.style.setProperty('--profile-controls-right',Math.round(root.innerWidth-rect.right+26)+'px');
+      }
+    }
     let io,ro,disposed=false;
     const renderer=original && root.LorefyOriginalRenderers && root.LorefyOriginalRenderers[original.renderer];
     let ready=false;
-    function draw(time){if(!width||!height)return;if(renderer){if(!ready)return;ctx.clearRect(0,0,width,height);renderer.paint(ctx,original.id,kind,time,width,height);}else paint(ctx,width,height,time,descriptor,kind);canvas.dataset.motionFrame=String(++frames);}
+    function draw(time){if(!width||!height)return;if(renderer){if(!ready)return;ctx.clearRect(0,0,width,height);ctx.save();ctx.translate(0,paddingTop);renderer.paint(ctx,original.id,kind,time,width,height-paddingTop-paddingBottom);ctx.restore();}else paint(ctx,width,height,time,descriptor,kind);canvas.dataset.motionFrame=String(++frames);}
     const reduced=()=>root.document.documentElement.getAttribute('data-lorefy-motion')==='reduced'||root.matchMedia&&root.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const handle=scheduler.register(time=>{if(!element.isConnected){dispose();return;}draw(reduced()?0:time);});
-    function dispose(){if(disposed)return;disposed=true;handle.dispose();if(io)io.disconnect();if(ro)ro.disconnect();canvas.remove();element.classList.remove('has-original-motion');mounted.delete(element);}
-    resize();if(renderer)renderer.load(original.id).then(()=>{if(!disposed){ready=true;element.classList.add('has-original-motion');draw(0);}}).catch(()=>{});else draw(0);
+    function dispose(){
+      if(disposed)return;disposed=true;handle.dispose();if(io)io.disconnect();if(ro)ro.disconnect();
+      const page=layoutPage;
+      if(page)['--profile-frame-top','--profile-frame-bottom','--profile-frame-banner-top','--profile-frame-controls-top','--profile-controls-left','--profile-controls-right'].forEach(key=>page.style.removeProperty(key));
+      canvas.remove();element.classList.remove('has-original-motion');mounted.delete(element);
+    }
+    resize();if(renderer)renderer.load(original.id).then(()=>{if(!disposed){ready=true;element.classList.add('has-original-motion');resize();draw(0);}}).catch(()=>{});else draw(0);
     if(root.IntersectionObserver){io=new root.IntersectionObserver(entries=>handle.setVisible(entries.some(e=>e.isIntersecting)),{threshold:0});io.observe(element);}else handle.setVisible(true);
     if(root.ResizeObserver){ro=new root.ResizeObserver(resize);ro.observe(element);}
     mounted.set(element,{signature,dispose});return dispose;
   }
   function sweep(){for(const [element,item]of mounted)if(!element.isConnected)item.dispose();}
-  return Object.freeze({normalize,sample,paint,createScheduler,mount,sweep});
+  return Object.freeze({normalize,sample,paint,measurePageArt,pageLayout,paintPageArt,clipPageEffects,createScheduler,mount,sweep});
 });

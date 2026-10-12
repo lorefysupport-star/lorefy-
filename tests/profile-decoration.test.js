@@ -88,10 +88,10 @@ test('page artwork resolves relative to the stylesheet and effects cannot match 
 });
 test('immersive avatars leave room for decoration overhang and apply buttons have inverse contrast',()=>{
   const css=read('styles/lorefy-profile-shop.css');
-  assert.match(css,/\[data-profile-layout='immersive'\] \.lf-profile-avatar\.has-decoration\s*\{\s*right:\s*40px\s*!important/);
+  assert.match(css,/\[data-profile-layout='immersive'\] \.lf-profile-avatar\.has-decoration\s*\{\s*right:\s*var\(--profile-avatar-frame-inset,40px\)\s*!important/);
   assert.match(css,/\.lf-shop-apply\s*\{[^}]*color:\s*var\(--ui-bg\)/);
   assert.match(css,/\.lf-reader-avatar\.has-decoration\s*\{[^}]*margin-bottom:\s*30px/);
-  assert.match(css,/\.lf-reader-identity > \.lf-reader-avatar\.has-decoration\s*\{\s*right:\s*40px\s*!important/);
+  assert.match(css,/\.lf-reader-identity > \.lf-reader-avatar\.has-decoration\s*\{\s*right:\s*var\(--profile-avatar-frame-inset,40px\)\s*!important/);
   assert.match(css,/:not\(\[data-profile-layout='immersive'\]\):has\(\.lf-profile-avatar\.has-decoration\) \.lf-profile-identity\s*\{\s*padding-top:\s*72px\s*!important/);
   assert.doesNotMatch(read('modules/lorefy-profile-shop.js'),/Sync will resume when connected/);
 });
