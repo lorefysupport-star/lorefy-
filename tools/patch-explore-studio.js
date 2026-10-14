@@ -17,12 +17,14 @@ replace('&&!F.has(String(b.id))).map(b=>',
 const anchor = 'const P=DISCOVER_CACHE.statics.typeReps;return React.createElement';
 const integration = `const P=DISCOVER_CACHE.statics.typeReps;
 if(window.LorefyExploreStudio)return React.createElement(window.LorefyExploreStudio.Explore,{
-  language:W,preferences:Be,library:b,progress:le,favorites:Ie,activeType:ye,allType:TYPES[0],types:TYPES,
+  key:window.LorefyBackend?.user?.id||Y||J,language:W,preferences:Be,library:b,progress:le,favorites:Ie,activeType:ye,allType:TYPES[0],types:TYPES,
   genres:Object.keys(GENRE_TERMS),categories:P,getWork:workById,cover:I,fallback:legalCoverOf,onCoverError:R,
   typeLabel:type=>window.LorefyReviewEditor?.formatLabel?.(type,W)||window.LorefyI18n?.translate(type,W)||type,
   genreLabel:genre=>window.LorefyI18n?.translate(genre,W)||genre,
   getTotals:work=>({chapter:workChapterCount(work),page:workPageCount(work),ongoing:isOngoingWork(work)}),
-  getRanked:()=>personalizedWorks(ye,Be,b,{language:W,favorites:Ie,reviews:M.filter(review=>review.userId==="me"||!!window.LorefyBackend?.user?.id&&review.userId===window.LorefyBackend.user.id),myProgress:le,chapterFollowing:Ke,userKey:window.LorefyBackend?.user?.id||Y||J,feedback:window.LorefyProductTools?.core.recommendations.getFeedback()||{}}),
+  getRanked:(type=ye)=>personalizedWorks(type,Be,b,{language:W,favorites:Ie,reviews:M.filter(review=>review.userId==="me"||!!window.LorefyBackend?.user?.id&&review.userId===window.LorefyBackend.user.id),myProgress:le,chapterFollowing:Ke,userKey:window.LorefyBackend?.user?.id||Y||J,feedback:window.LorefyProductTools?.core.recommendations.getFeedback()||{}}),
+  getCatalog:()=>MANGA,ratingScore:ratingConfidenceScore,userKey:window.LorefyBackend?.user?.id||Y||J,
+  friendProps:{language:W,reviews:tt,following:[...new Set(cloudFollowing.map(p=>p.id).concat(Ae))],getWork:workById,onWork:T,onReader:Me,cover:I,fallback:legalCoverOf,onCoverError:R,Stars:Stars},
   onWork:T,onSearch:()=>nt("search"),onLibrary:()=>nt("library"),onType:Qt,onPreferences:cn,
   onBrowse:type=>{en(type),Qo(""),Pe(60),S("search"),v("search")},
   onEditProgress:work=>{be(work),eo(b[work.id]||STATUS_READING),oo(normalizeProgress(le[work.id]))},

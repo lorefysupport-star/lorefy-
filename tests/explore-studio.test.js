@@ -75,7 +75,8 @@ test('new surfaces use theme tokens, stable covers and logical mobile dimensions
   assert.match(css,/var\(--ui-action\)/);
   assert.match(css,/aspect-ratio:\s*2\s*\/\s*3/);
   assert.match(css,/minmax\(0,\s*1fr\)/);
-  assert.match(read('modules/lorefy-explore-studio.js'),/role: 'progressbar'/);
+  // Progress stays in the library/detail flows; Explore is only discovery.
+  assert.doesNotMatch(read('modules/lorefy-explore-studio.js'),/role: 'progressbar'/);
 });
 test('Explore genre labels localize both stored Arabic tastes and imported English metadata', () => {
   const studio = require('../modules/lorefy-explore-studio');

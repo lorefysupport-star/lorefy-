@@ -150,7 +150,7 @@ test('profile character sections preserve the requested order and responsive gri
   assert.match(source, /textContent = "المفضلة"/);
   assert.match(source, /page\.insertBefore\(topCharacters, favorites\.nextSibling\)/);
   assert.match(source, /page\.insertBefore\(recent, rated\)/);
-  assert.match(source, /var anchor = rated \|\| recent \|\| topCharacters \|\| favorites/);
+  assert.match(source, /var anchor = doc\.querySelector\("\.lf-profile-reading-results"\) \|\| rated \|\| recent \|\| topCharacters \|\| favorites/);
   assert.match(styles, /\.lf-profile-top-characters-grid\s*\{[^}]*grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/s);
   assert.match(source, /class: "lf-rated-character-shelf"/);
   assert.match(source, /class: "lf-rated-character-shelf-rail"/);

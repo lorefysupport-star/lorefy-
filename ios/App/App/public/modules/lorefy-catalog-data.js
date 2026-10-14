@@ -88,10 +88,14 @@
       prepared.aliasCount === (record.altTitles || []).length + (record.aliases || []).length + (record.authorAliases || []).length) {
       cached = prepared;
     } else {
-      var next = buildQueryIndex(record);
       cached = searchIndex.get(record);
-      if (!cached || cached.signature !== next.signature) {
-        cached = next;
+      // Check raw field content first; normalization is needed only after a change.
+      var signature = [record.title,record.ar,record.auth,record.author].concat(record.altTitles || [],record.aliases || [],record.authorAliases || []).map(function(value){
+        if(value && typeof value === 'object')value=Object.values(value).join(' ');
+        return String(value == null ? '' : value);
+      }).join('\u0000');
+      if (!cached || cached.signature !== signature) {
+        cached = buildQueryIndex(record);
         searchIndex.set(record,cached);
       }
     }
@@ -142,6 +146,14 @@
         delete record._queryIndex.signature;
       }
       return record;
+    });
+  }
+
+  function prepareSearchIndexes(records) {
+    (records || []).forEach(function(record){
+      if(!record || !record.id)return;
+      if(record._catalogCompact && !record._queryIndex){record._queryIndex=buildQueryIndex(record);delete record._queryIndex.signature;}
+      else if(!record._catalogCompact && !searchIndex.has(record))searchIndex.set(record,buildQueryIndex(record));
     });
   }
 
@@ -208,6 +220,7 @@
   return {
     extractCatalogRecords: extractCatalogRecords,
     prepareCatalogRecords: prepareCatalogRecords,
+    prepareSearchIndexes:prepareSearchIndexes,
     topRanked: topRanked,
     sortRanked: sortRanked,
     matchesCatalogQuery: matchesCatalogQuery,

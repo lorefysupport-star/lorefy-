@@ -33,6 +33,7 @@
     return !!work && !(policy && (policy.isExcludedWork(work) || policy.isExplicitWork(work) || policy.isAiGeneratedWork(work)));
   }
   function Rails(p) {
+    p=Object.assign({},p,{compact:true});
     var R=root.React, h=R.createElement, en=p.language==='en', backend=root.LorefyBackend;
     var owner=String(backend && backend.user && backend.user.id || ''), live=backend && backend.mode==='live';
     var followingKey=(p.following || []).map(String).sort().join('|');
@@ -76,12 +77,14 @@
           return h('article',{key:kind==='recent'?row.userId+'|'+row.mid:row.mid,className:'lf-friend-item',role:'listitem'},
             h('button',{type:'button',className:'lf-friend-cover','aria-label':(en?'Open ':'فتح ')+w.title,onClick:function () { p.onWork(w); }},h('img',{src:p.cover(w),alt:'',loading:'lazy',decoding:'async',onError:p.onCoverError,'data-fallback':p.fallback(w)})),
             kind==='recent' ? h('button',{type:'button',className:'lf-friend-reader','aria-label':(en?'Open profile: ':'فتح حساب: ')+name,onClick:function () { p.onReader({id:row.userId,name:name,un:row.un || profile.username,av:avatar}); }},avatar ? h('img',{src:avatar,alt:'',loading:'lazy',onError:function (e) { e.currentTarget.style.visibility='hidden'; }}) : h('span',{className:'lf-friend-avatar','aria-hidden':true},name.slice(0,1)),h('span',{'data-no-translate':'1',dir:'auto'},name))
-            : h('strong',{className:'lf-friend-title','data-no-translate':'1',dir:'auto'},w.title),
-            h('div',{className:'lf-friend-score','aria-label':(en?'Rating ':'التقييم ')+row.r.toFixed(2)},h('span',{className:'lf-friend-feathers','aria-hidden':true},h(p.Stars,{n:row.r,size:10})),h('b',{className:'lf-friend-score-value','data-no-translate':'1',dir:'ltr'},Number(row.r.toFixed(2)))),
-            kind==='popular' && h('small',null,en?row.count+' friend'+(row.count===1?'':'s'):row.count+' من الأصدقاء'));
+            : !p.compact && h('strong',{className:'lf-friend-title','data-no-translate':'1',dir:'auto'},w.title),
+            (!p.compact || kind==='recent') && h('div',{className:'lf-friend-score','aria-label':(en?'Rating out of five: ':'التقييم من خمسة: ')+row.r.toFixed(2)},
+              p.compact && root.NenIcons && root.NenIcons.Feather ? h(root.NenIcons.Feather,{size:10,'aria-hidden':true}) : h('span',{className:'lf-friend-feathers','aria-hidden':true},h(p.Stars,{n:row.r,size:10})),
+              h('b',{className:'lf-friend-score-value','data-no-translate':'1',dir:'ltr'},Number(row.r.toFixed(2)))),
+            kind==='popular' && !p.compact && h('small',null,en?row.count+' friend'+(row.count===1?'':'s'):row.count+' من الأصدقاء'));
         })));
     }
-    return h('div',{className:'lf-friend-activity',dir:en?'ltr':'rtl'},section('recent',en?'New from friends':'جديد تقييمات الأصدقاء',data.recent),section('popular',en?'Popular with friends':'شائع بين أصدقائك',data.popular),live && result.limited && h('small',{className:'lf-friend-sample'},en?'Based on recent ratings from accounts you follow.':'حسب أحدث تقييمات الحسابات التي تتابعها.'));
+    return h('div',{className:'lf-friend-activity'+(p.compact?' is-compact':''),dir:en?'ltr':'rtl'},section('recent',en?'New from friends':'جديد تقييمات الأصدقاء',data.recent),section('popular',en?'Popular with friends':'شائع بين أصدقائك',data.popular),live && result.limited && h('small',{className:'lf-friend-sample'},en?'Based on recent ratings from accounts you follow.':'حسب أحدث تقييمات الحسابات التي تتابعها.'));
   }
   var api={canonical:canonical,derive:derive,eligible:eligible,Rails:Rails};
   root.LorefyFriendActivity=api;

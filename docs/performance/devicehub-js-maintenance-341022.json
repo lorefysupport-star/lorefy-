@@ -1,0 +1,264 @@
+{
+  "before": {
+    "elapsedMs": 1050857,
+    "rows": [
+      {
+        "name": "timer:translateTree",
+        "calls": 146,
+        "totalMs": 1053,
+        "maxMs": 10,
+        "over16": 0
+      },
+      {
+        "name": "timer:growthMaintenanceTick",
+        "calls": 74,
+        "totalMs": 860,
+        "maxMs": 103,
+        "over16": 2
+      },
+      {
+        "name": "raf:flush",
+        "calls": 110,
+        "totalMs": 641,
+        "maxMs": 247,
+        "over16": 3
+      },
+      {
+        "name": "growth.enhanceInteractionAccessibility",
+        "calls": 74,
+        "totalMs": 381,
+        "maxMs": 92,
+        "over16": 2
+      },
+      {
+        "name": "growth.enhanceCommunityPage",
+        "calls": 74,
+        "totalMs": 357,
+        "maxMs": 12,
+        "over16": 0
+      },
+      {
+        "name": "timer:anonymous",
+        "calls": 339,
+        "totalMs": 121,
+        "maxMs": 48,
+        "over16": 1
+      },
+      {
+        "name": "raf:ensureOwnerPostMetric",
+        "calls": 78,
+        "totalMs": 116,
+        "maxMs": 8,
+        "over16": 0
+      },
+      {
+        "name": "raf:enhanceDetail",
+        "calls": 158,
+        "totalMs": 99,
+        "maxMs": 4,
+        "over16": 0
+      },
+      {
+        "name": "raf:sync",
+        "calls": 225,
+        "totalMs": 96,
+        "maxMs": 58,
+        "over16": 1
+      },
+      {
+        "name": "raf:scan",
+        "calls": 75,
+        "totalMs": 45,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "raf:anonymous",
+        "calls": 148,
+        "totalMs": 38,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "observer:anonymous",
+        "calls": 396,
+        "totalMs": 37,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "growth.cleanupStrayCharButtons",
+        "calls": 74,
+        "totalMs": 18,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "growth.injectCharacterLauncher",
+        "calls": 74,
+        "totalMs": 13,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "growth.enhanceDetail",
+        "calls": 74,
+        "totalMs": 13,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "timer:enhanceDetail",
+        "calls": 73,
+        "totalMs": 12,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "growth.enhanceReviewDetailPage",
+        "calls": 74,
+        "totalMs": 11,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "growth.enhanceReviewSheet",
+        "calls": 74,
+        "totalMs": 9,
+        "maxMs": 1,
+        "over16": 0
+      }
+    ]
+  },
+  "after": {
+    "elapsedMs": 1251009,
+    "rows": [
+      {
+        "name": "timer:anonymous",
+        "calls": 415,
+        "totalMs": 357,
+        "maxMs": 114,
+        "over16": 4
+      },
+      {
+        "name": "raf:flush",
+        "calls": 15,
+        "totalMs": 140,
+        "maxMs": 42,
+        "over16": 4
+      },
+      {
+        "name": "explore.ranking",
+        "calls": 95,
+        "totalMs": 130,
+        "maxMs": 87,
+        "over16": 2
+      },
+      {
+        "name": "input.nextFrame",
+        "calls": 6,
+        "totalMs": 96,
+        "maxMs": 26,
+        "over16": 0
+      },
+      {
+        "name": "timer:translateTree",
+        "calls": 23,
+        "totalMs": 89,
+        "maxMs": 10,
+        "over16": 0
+      },
+      {
+        "name": "raf:sync",
+        "calls": 54,
+        "totalMs": 62,
+        "maxMs": 56,
+        "over16": 1
+      },
+      {
+        "name": "timer:growthMaintenanceTick",
+        "calls": 13,
+        "totalMs": 60,
+        "maxMs": 13,
+        "over16": 0
+      },
+      {
+        "name": "growth.enhanceCommunityPage",
+        "calls": 13,
+        "totalMs": 39,
+        "maxMs": 10,
+        "over16": 0
+      },
+      {
+        "name": "raf:ensureOwnerPostMetric",
+        "calls": 24,
+        "totalMs": 21,
+        "maxMs": 7,
+        "over16": 0
+      },
+      {
+        "name": "explore.shelves",
+        "calls": 2,
+        "totalMs": 20,
+        "maxMs": 10,
+        "over16": 0
+      },
+      {
+        "name": "raf:enhanceDetail",
+        "calls": 41,
+        "totalMs": 17,
+        "maxMs": 4,
+        "over16": 0
+      },
+      {
+        "name": "growth.enhanceInteractionAccessibility",
+        "calls": 13,
+        "totalMs": 14,
+        "maxMs": 2,
+        "over16": 0
+      },
+      {
+        "name": "timer:step",
+        "calls": 83,
+        "totalMs": 7,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "timer:enhanceDetail",
+        "calls": 12,
+        "totalMs": 4,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "observer:anonymous",
+        "calls": 96,
+        "totalMs": 3,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "raf:scan",
+        "calls": 14,
+        "totalMs": 3,
+        "maxMs": 1,
+        "over16": 0
+      },
+      {
+        "name": "observer:queueScan",
+        "calls": 35,
+        "totalMs": 3,
+        "maxMs": 3,
+        "over16": 0
+      },
+      {
+        "name": "growth.enhanceReviewDetailPage",
+        "calls": 13,
+        "totalMs": 2,
+        "maxMs": 1,
+        "over16": 0
+      }
+    ]
+  }
+}

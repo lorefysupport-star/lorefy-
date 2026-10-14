@@ -572,7 +572,8 @@
     var back = page.querySelector('.lf-diary-header button');
     if (back) back.focus();
   }
-  function enhanceProfile() {
+  function enhanceProfile() { return; // Profile shortcut removed; diary data and other entry points remain.
+
     var recent = doc.querySelector('.lf-profile-page > .lf-profile-recent');
     if (!recent) return;
     var page = recent.parentNode;

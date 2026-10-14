@@ -45,7 +45,7 @@ test("home continuation requires active reading status and a real saved stop poi
 test("followers and following rows open the full public reader profile", () => {
   const app = read("uploads", "files", "lorefy-app.js");
   const modalStart = app.indexOf("mr=()=>");
-  const modalEnd = app.indexOf(",vr=()=>", modalStart);
+  const modalEnd = app.indexOf(",vr=", modalStart);
 
   assert.notEqual(modalStart, -1);
   assert.notEqual(modalEnd, -1);

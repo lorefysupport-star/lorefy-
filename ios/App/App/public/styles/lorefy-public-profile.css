@@ -18,7 +18,7 @@
 .lf-reader-back {
   position: absolute;
   z-index: 2;
-  right: 16px;
+  inset-inline-start: 16px;
   top: calc(var(--nc-top) + 10px);
   width: 42px;
   height: 42px;

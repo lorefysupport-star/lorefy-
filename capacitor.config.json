@@ -12,7 +12,10 @@
       "clientId": "com.lorefy.app"
     },
     "PushNotifications": {
-      "presentationOptions": ["badge", "sound", "banner", "list"]
+      "presentationOptions": [
+        "badge",
+        "sound"
+      ]
     }
   }
 }

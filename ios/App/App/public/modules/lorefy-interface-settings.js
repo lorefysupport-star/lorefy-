@@ -34,7 +34,7 @@
     var R = root.React, h = R.createElement, english = p.language === 'en';
     var text = function (ar, en) { return english ? en : ar; };
     var views = root.LorefyLibraryView;
-    var openState = R.useState(false), open = openState[0], setOpen = openState[1];
+    var openState = R.useState(!!p.embedded), open = openState[0], setOpen = openState[1];
     var layoutState = R.useState(views.savedMode(root.localStorage)), layout = layoutState[0], setLayout = layoutState[1];
     var motionState = R.useState(getMotion()), motion = motionState[0], updateMotion = motionState[1];
     var errorState = R.useState(''), error = errorState[0], setError = errorState[1];
@@ -87,7 +87,7 @@
       };
     }, []);
     R.useEffect(function () {
-      if (!open || !host.current) return;
+      if (p.embedded || !open || !host.current) return;
       var previous = root.document.activeElement, overlay = host.current.parentElement;
       var background = Array.from(overlay.parentElement.children).filter(function (node) { return node !== overlay; }).map(function (node) {
         var saved = {node:node,inert:node.inert}; node.inert = true; return saved;
@@ -110,7 +110,7 @@
     }, [open]);
 
     var selected = options.find(function (option) { return option.mode === layout; });
-    var entry = h('button', {className:'lf-interface-entry',type:'button',onClick:function () { setOpen(true); },'aria-haspopup':'dialog'},
+    var entry = h('button', {className:'lf-interface-entry',type:'button',onClick:function () { if(p.onCustomize)p.onCustomize();else setOpen(true); },'aria-haspopup':'dialog'},
       icon('SlidersHorizontal',20), h('span',null,h('strong',null,title),h('small',null,(themeLabels[p.appearance] || text('مخصص','Custom')) + ' · ' + selected.label)),icon(english ? 'ChevronRight' : 'ChevronLeft',18));
     var entries = h(R.Fragment,null,entry,root.LorefyProfileShop && h(root.LorefyProfileShop.Entry,{language:p.language}));
     if (!open) return entries;
@@ -125,13 +125,12 @@
             event.currentTarget.src = book.fallback;
           }}),h('span',{dir:'auto'},book.title));
       })));
-    var panel = h('div',{className:'lf-interface-overlay','data-no-translate':'1',dir:english ? 'ltr' : 'rtl'},
-      h('section',{className:'lf-interface-panel',role:'dialog','aria-modal':true,'aria-labelledby':'lf-interface-title',ref:host},
-        h('header',{className:'lf-interface-header'},
-          h('button',{type:'button',ref:close,'aria-label':text('رجوع إلى الإعدادات','Back to settings'),title:text('رجوع إلى الإعدادات','Back to settings'),onClick:function () { setOpen(false); }},icon(english ? 'ChevronLeft' : 'ChevronRight',22)),
-          h('h2',{id:'lf-interface-title'},title),
-          h('button',{type:'button','aria-label':text('استعادة المظهر الافتراضي','Reset appearance'),title:text('استعادة المظهر الافتراضي','Reset appearance'),onClick:reset},icon('RotateCcw',19))),
-        h('div',{className:'lf-interface-body'},scene,
+    var content = h('div',{className:'lf-interface-body'},scene,h('section',{className:'lf-interface-section','aria-labelledby':'lf-interface-layout-title'},
+            h('h3',{id:'lf-interface-layout-title'},text('عرض المكتبة','Library layout')),
+            h('div',{className:'lf-interface-layouts',role:'group','aria-label':text('عرض المكتبة','Library layout')},options.map(function (option) {
+              return h('button',{key:option.mode,type:'button','data-layout':option.mode,'aria-pressed':layout===option.mode,onClick:function () { chooseLayout(option.mode); }},
+                icon({grid:'LayoutGrid',spines:'LibraryBig',shelf:'List'}[option.mode],20),option.label);
+            }))),
           h('section',{className:'lf-interface-section','aria-labelledby':'lf-interface-theme-title'},
             h('h3',{id:'lf-interface-theme-title'},text('ألوان التطبيق','Appearance')),
             h('div',{className:'lf-interface-themes lf-appearance-options',role:'group','aria-label':text('ألوان التطبيق','Appearance')},['light','dark','pink'].map(function (mode) {
@@ -156,17 +155,22 @@
                   'aria-pressed':base===value,onClick:function(){setBase(value);}},icon(value==='dark'?'Moon':'Sun',17),themeLabels[value]);})),
               h('button',{type:'button',className:'lf-interface-color-apply','data-custom-apply':true,disabled:!draftMode || p.appearance===draftMode,
                 onClick:applyColor},icon('Check',18),text(p.appearance===draftMode?'مطبّق':'تطبيق اللون',p.appearance===draftMode?'Applied':'Apply color')))),
-          h('section',{className:'lf-interface-section','aria-labelledby':'lf-interface-layout-title'},
-            h('h3',{id:'lf-interface-layout-title'},text('عرض المكتبة','Library layout')),
-            h('div',{className:'lf-interface-layouts',role:'group','aria-label':text('عرض المكتبة','Library layout')},options.map(function (option) {
-              return h('button',{key:option.mode,type:'button','data-layout':option.mode,'aria-pressed':layout===option.mode,onClick:function () { chooseLayout(option.mode); }},
-                icon({grid:'LayoutGrid',spines:'LibraryBig',shelf:'List'}[option.mode],20),option.label);
-            }))),
-          h('section',{className:'lf-interface-section lf-interface-motion'},
+
+          p.extra || null,h('section',{className:'lf-interface-section lf-interface-motion'},
             h('span',null,text('تقليل الحركة','Reduce motion')),
             h('button',{type:'button',role:'switch','aria-label':text('تقليل الحركة','Reduce motion'),'aria-checked':motion==='reduced',onClick:function () { chooseMotion(motion==='reduced' ? 'system' : 'reduced'); }},h('span',{'aria-hidden':true}))),
-          error && h('p',{className:'lf-interface-error',role:'alert'},error))));
+          error && h('p',{className:'lf-interface-error',role:'alert'},error));
+    if(p.embedded)return content;
+    var panel = h('div',{className:'lf-interface-overlay','data-no-translate':'1',dir:english ? 'ltr' : 'rtl'},
+      h('section',{className:'lf-interface-panel',role:'dialog','aria-modal':true,'aria-labelledby':'lf-interface-title',ref:host},
+        h('header',{className:'lf-interface-header'},
+          h('button',{type:'button',ref:close,'aria-label':text('رجوع إلى الإعدادات','Back to settings'),title:text('رجوع إلى الإعدادات','Back to settings'),onClick:function () { setOpen(false); }},icon(english ? 'ChevronLeft' : 'ChevronRight',22)),
+          h('h2',{id:'lf-interface-title'},title),
+          h('button',{type:'button','aria-label':text('استعادة المظهر الافتراضي','Reset appearance'),title:text('استعادة المظهر الافتراضي','Reset appearance'),onClick:reset},icon('RotateCcw',19))),
+        content));
     return h(R.Fragment,null,entries,root.ReactDOM.createPortal(panel,root.document.querySelector('.lf-app')));
   };
   return Object.freeze({getMotion:getMotion,setMotion:setMotion,reduceMotion:reduceMotion,scrollBehavior:scrollBehavior});
 });
+
+if(typeof window!=='undefined')window.LorefyCustomizeCamera=function(){var h=React.createElement,paths=window.lucide.icons.Camera[2];return h('span',{className:'lf-customize-camera-glyph'},h('svg',{width:18,height:18,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.8,strokeLinecap:'round',strokeLinejoin:'round','aria-hidden':true},paths.map(function(p,i){return h(p[0],Object.assign({key:i},p[1]));})),window.NenIcons&&window.NenIcons.Plus&&h(window.NenIcons.Plus,{size:10,'aria-hidden':true}));};

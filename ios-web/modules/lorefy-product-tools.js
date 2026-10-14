@@ -57,6 +57,7 @@
   }
 
   function icon(name, size) {
+    if (name === ICONS.chevron && doc.documentElement.lang === "en") name = "chevron-right";
     return el("i", { "data-lucide": name, width: String(size || 17), height: String(size || 17), "aria-hidden": "true" });
   }
 
@@ -388,7 +389,7 @@
     return el("button", { class: "lf-product-action", type: "button", onclick: handler }, [
       el("span", { class: "lf-product-action-icon" }, icon(iconName, 17)),
       el("span", { class: "lf-product-action-copy" }, [el("strong", { text: title }), el("small", { text: subtitle })]),
-      el("span", { class: "lf-product-chevron", "aria-hidden": "true", text: "‹" })
+      el("span", { class: "lf-product-chevron", "aria-hidden": "true", text: doc.documentElement.lang === "en" ? "›" : "‹" })
     ]);
   }
 

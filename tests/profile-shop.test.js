@@ -6,6 +6,20 @@ const vm = require('node:vm');
 const read = file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
 const api = () => require('../modules/lorefy-profile-shop.js');
 
+test('decorations controller mounts even when a catalog request never settles', () => {
+  let mounted = 0, requests = 0;
+  const window = {
+    React: {createElement: () => ({})},
+    ReactDOM: {createRoot: () => ({render: () => mounted++})},
+    document: {readyState:'complete', createElement:() => ({}), body:{appendChild:() => {}}},
+    LOREFY_RELEASE:{betaProfileDecorations:true},
+    fetch:() => {requests++; return new Promise(() => {});}
+  };
+  vm.runInNewContext(read('modules/lorefy-profile-shop.js'), {window});
+  assert.equal(requests, 1);
+  assert.equal(mounted, 1);
+});
+
 test('free decorations are available in demo and live accounts, including native', () => {
   const shop = api();
   assert.equal(shop.isAvailable({mode:'demo'}), true);

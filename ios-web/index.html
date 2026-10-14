@@ -117,6 +117,8 @@
   html[data-lorefy-adaptive-shell="true"] #statusbar,
   html[data-lorefy-adaptive-shell="true"] .hint{display:none;}
 </style>
+<link rel="stylesheet" href="styles/lorefy-customize.css?v=20261013-final">
+<link rel="stylesheet" href="styles/lorefy-work-layout.css?v=20261013-final">
 </head>
 <body>
   <div id="stage">
@@ -255,7 +257,7 @@
       window.LOREFY_INITIAL_CATALOG_PARTS = plan.slice();
       plan.forEach(function(part){
         var id = String(part).padStart(2, '0');
-        document.write('<script src="uploads/lorefy-data-part' + id + '.js?v=20261011-explore-v2"><\/script>');
+        document.write('<script src="uploads/lorefy-data-part' + id + '.js?v=20261013-discover-reviewed-v2"><\/script>');
       });
     })();
   </script>
@@ -274,7 +276,7 @@
       } catch (error) {}
     })();
   </script>
-  <script defer src="modules/lorefy-catalog-loader.js?v=20261011-explore-v2"></script>
+  <script defer src="modules/lorefy-catalog-loader.js?v=20261013-discover-reviewed-v2"></script>
   <script defer src="uploads/lorefy-chapter-overrides.js?v=20260616-v23"></script>
   <script defer src="uploads/lorefy-catalog-aliases.js?v=20260622-audit1"></script>
 
@@ -295,7 +297,7 @@
     <script defer src="modules/lorefy-subscriptions.js?v=20260722-billing-guard-v1"></script>
     <script defer src="backend/lorefy-ios-bridge.js?v=20261001-auth-recovery-v1"></script>
     <script defer src="backend/lorefy-ios-oauth.js?v=20261003-beta-final-v1"></script>
-    <script defer src="backend/lorefy-native-runtime.js?v=20261001-build33"></script>
+    <script defer src="backend/lorefy-native-runtime.js?v=20261013-notifications"></script>
     <script defer src="backend/lorefy-native-photos.js?v=20261001-build33"></script>
 <script defer src="auth/lorefy-auth.js?v=20261007-review-identity-v1"></script>
 
@@ -346,7 +348,7 @@
   <link rel="stylesheet" href="styles/lorefy-character-atlas.css?v=20261007-character-atlas-v1">
   <link rel="stylesheet" href="styles/lorefy-work-relations.css?v=20261007-work-relations-v3">
   <link rel="stylesheet" href="styles/lorefy-interface-settings.css?v=20261009-custom-appearance-v1">
-  <link rel="stylesheet" href="styles/lorefy-explore-studio.css?v=20261011-explore-v2">
+  <link rel="stylesheet" href="styles/lorefy-explore-studio.css?v=20261013-discover-reviewed-v2">
   <link rel="stylesheet" href="styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3">
   <script defer src="modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-profile-shop.css?v=20261011-shop-v1">
@@ -356,7 +358,7 @@
     <script defer src="modules/lorefy-original-autumn.js?v=20261011-shop"></script>
     <script defer src="modules/lorefy-original-original.js?v=20261011-shop"></script>
     <script defer src="modules/lorefy-decoration-billing.js?v=20261011-shop"></script>
-    <script defer src="modules/lorefy-profile-shop.js?v=20261011-free-audit-v1"></script>
+    <script defer src="modules/lorefy-profile-shop.js?v=20261013-controller-ready-v1"></script>
   <script defer src="modules/lorefy-preview-cleanup.js?v=20261001-prebuild-v1"></script>
   <script defer src="modules/lorefy-public-appearance.js?v=20261009-public-appearance-v4"></script>
 <script defer src="modules/lorefy-public-profile.js?v=20261011-public-profile-layout-v4"></script>
@@ -370,24 +372,24 @@
   <script defer src="modules/lorefy-work-relations.js?v=20261007-work-relations-v3"></script>
   <script defer src="modules/lorefy-library-view.js?v=20261011-public-profile-layout-v4"></script>
   <script defer src="modules/lorefy-interface-settings.js?v=20261009-custom-appearance-v1"></script>
-  <script defer src="modules/lorefy-explore-studio.js?v=20261011-explore-v2"></script>
+  <script defer src="modules/lorefy-explore-studio.js?v=20261013-discover-reviewed-v2"></script>
   <script defer src="modules/lorefy-preview-readers.js?v=20261011-profile-sections-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-user-experience.css?v=20261011-explore-v2">
   <script defer src="modules/lorefy-user-experience.js?v=20261011-explore-v2"></script>
-  <script defer src="modules/lorefy-friend-activity.js?v=20261011-explore-v2"></script>
+  <script defer src="modules/lorefy-friend-activity.js?v=20261013-discover-reviewed-v2"></script>
   <script defer src="uploads/files/lorefy-app.js?v=20261011-reading-stable-v1"></script>
   <script defer src="modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1"></script>
   <script defer src="modules/lorefy-growth-features.js?v=20261009-public-appearance-v4"></script>
   <script defer src="modules/lorefy-community.js?v=20261011-profile-sections-v1"></script>
-  <link rel="stylesheet" href="styles/lorefy-profile-sections.css?v=20261011-folder-tiles-v2">
-  <script defer src="modules/lorefy-profile-sections.js?v=20261011-folder-tiles-v2"></script>
+  <link rel="stylesheet" href="styles/lorefy-profile-sections.css?v=20261013-reviews-posts">
+  <script defer src="modules/lorefy-profile-sections.js?v=20261013-reviews-posts"></script>
   <script defer src="modules/lorefy-scroll-memory.js?v=20261003-home-social-v2"></script>
   <script defer src="modules/lorefy-share-studio.js?v=20261007-quarter-ratings-v1"></script>
   <script defer src="modules/lorefy-product-core.js?v=20261011-explore-v2"></script>
   <script defer src="modules/lorefy-product-tools.js?v=20261011-explore-v2"></script>
   <script defer src="modules/lorefy-reading-diary.js?v=20261007-diary-language-v1"></script>
   <script defer src="modules/lorefy-chapter-detail.js?v=20261008-feature-dialogs-v1"></script>
-  <script defer src="modules/lorefy-user-discovery.js?v=20261009-public-appearance-v4"></script>
+  <script defer src="modules/lorefy-user-discovery.js?v=20261013-discover-reviewed-v2"></script>
   <script>
   window.LOREFY_DEFERRED_ASSETS = [
       "uploads/lorefy-ar-enrichment.js?v=20260707-lazy-v1",
@@ -458,9 +460,9 @@
         };
         var armTimeout = function(img, fallback){
           if (img.dataset.lorefyImageTimer || img.dataset.lorefyFallbackApplied === "1") return;
-          if (img.loading === "lazy" && !nearViewport(img)){
-            if (observer) observer.observe(img);
-            return;
+          if (img.loading === "lazy" && !img.dataset.lorefyImageInViewport){
+            if (observer) { observer.observe(img); return; }
+            if (!nearViewport(img)) return;
           }
           img.dataset.lorefyImageTimer = "1";
           window.setTimeout(function(){
@@ -498,18 +500,35 @@
           armTimeout(img, fallback);
         };
         observer = "IntersectionObserver" in window ? new IntersectionObserver(function(entries){
-          entries.forEach(function(entry){ if (entry.isIntersecting) armTimeout(entry.target, fallbackFor(entry.target)); });
+          entries.forEach(function(entry){
+            if (!entry.isIntersecting) return;
+            entry.target.dataset.lorefyImageInViewport = "1";
+            observer.unobserve(entry.target);
+            armTimeout(entry.target, fallbackFor(entry.target));
+          });
         }, { rootMargin: "240px" }) : null;
-        var scan = function(){ document.querySelectorAll("img").forEach(guard); };
+        var pendingImages = new Set();
         var scanQueued = false;
-        var queueScan = function(){
-          if (scanQueued) return;
+        var queueScan = function(records){
+          records.forEach(function(record){
+            if (record.type === "attributes") pendingImages.add(record.target);
+            else record.addedNodes.forEach(function(node){
+              if (node.nodeType !== 1) return;
+              if (node.tagName === "IMG") pendingImages.add(node);
+              node.querySelectorAll("img").forEach(function(img){ pendingImages.add(img); });
+            });
+          });
+          if (scanQueued || !pendingImages.size) return;
           scanQueued = true;
-          var flush = function(){ scanQueued = false; scan(); };
+          var flush = function(){
+            scanQueued = false;
+            pendingImages.forEach(function(img){ if (img.isConnected) guard(img); });
+            pendingImages.clear();
+          };
           if (window.requestAnimationFrame) window.requestAnimationFrame(flush);
           else window.setTimeout(flush, 0);
         };
-        scan();
+        document.querySelectorAll("img").forEach(guard);
         new MutationObserver(queueScan).observe(document.documentElement, {
           childList: true,
           subtree: true,

@@ -17,6 +17,8 @@
   var started = false;
   var pushRegistration = null;
   var pendingToken = '';
+  var connectionEpoch = 0, refreshEpoch = 0, activeAccount = '';
+  var shownNotifications = new Set(), bannerTimer = null;
 
   function parseAppLink(rawUrl) {
     var raw = String(rawUrl || "").trim();
@@ -49,7 +51,10 @@
       return query ? { route:"explore", search:query } : { route:"explore" };
     }
     if (path === "/notifications") return { route:"profile", notifications:"1" };
-    if (path === "/community") return { route:"community" };
+    if (path === "/community") {
+      var post = parsed.searchParams.get("post");
+      return validId(post) ? {route:"community",post:post} : {route:"community"};
+    }
     if (path === "/library") return { route:"library" };
     if (path === "/profile") return { route:"profile" };
     if (path === "/home" || path === "/") return { route:"home" };
@@ -60,7 +65,7 @@
     var route = typeof target === "string" ? parseAppLink(target) : target;
     if (!route || !root.location) return false;
     var url = new URL(root.location.href);
-    ["route", "novel", "id", "search", "review", "notifications"].forEach(function (key) {
+    ["route", "novel", "id", "search", "review", "post", "notifications"].forEach(function (key) {
       url.searchParams.delete(key);
     });
     Object.keys(route).forEach(function (key) {
@@ -120,8 +125,9 @@
       try { root.localStorage.setItem(PUSH_ENABLED_KEY, "false"); } catch (error) {}
       return false;
     }
-    await push.register();
     try { root.localStorage.setItem(PUSH_ENABLED_KEY, 'true'); } catch (error) {}
+    try { await push.register(); }
+    catch(error) { root.localStorage.setItem(PUSH_ENABLED_KEY,'false'); throw error; }
     return true;
   }
 
@@ -130,10 +136,24 @@
     if (enabled) return requestPermissionAndRegister();
     try { root.localStorage.setItem(PUSH_ENABLED_KEY, 'false'); } catch (error) {}
     var backend = root.LorefyBackend;
-    if (backend && typeof backend.unregisterPushDevice === "function") {
-      try { await backend.unregisterPushDevice(installationId()); } catch (error) {}
+    try {
+      if (backend && typeof backend.unregisterPushDevice === "function") await backend.unregisterPushDevice(installationId());
+    } finally {
+      var push = pushPlugin();
+      if (isNative() && push && push.unregister) await push.unregister();
     }
     return false;
+  }
+
+  function validId(value) { return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(value || '')); }
+
+  function notificationRoute(notification) {
+    var outer = notification && notification.data || {};
+    var data = outer.data || outer;
+    var path = notification && notification.target_path || outer.targetPath || outer.target_path || outer.url || outer.link || '';
+    var route = parseAppLink(path);
+    if (route && route.route === 'community' && validId(data.postId)) route.post = data.postId;
+    return route;
   }
 
   function notificationTarget(notification) {
@@ -159,7 +179,8 @@
     if (!Push) return;
     Push.addListener("registration", function (token) {
       pendingToken = String(token && token.value || '');
-      registerToken(pendingToken).then(function (saved) { if (saved !== false) pendingToken = ''; }).catch(function () {
+      if (root.localStorage.getItem(PUSH_ENABLED_KEY) === 'false') return;
+      registerToken(pendingToken).then(function (saved) { /* Retain the token for rebinding after an account change. */ }).catch(function () {
         root.dispatchEvent(new CustomEvent("lorefy:native-notification-error", { detail:{ code:"registration_failed" } }));
       });
     });
@@ -167,12 +188,12 @@
       root.dispatchEvent(new CustomEvent("lorefy:native-notification-error", { detail:{ code:"native_registration_failed" } }));
     });
     Push.addListener("pushNotificationReceived", function (notification) {
-      root.dispatchEvent(new CustomEvent("lorefy:notification", { detail:notification || {} }));
-      refreshCloudNotifications();
+      // Fetch the authenticated inbox rather than displaying an unscoped push payload.
+      refreshCloudNotifications(true);
     });
     Push.addListener("pushNotificationActionPerformed", function (action) {
-      var target = notificationTarget(action && action.notification);
-      if (target) openRoute(target);
+      var route = notificationRoute(action && action.notification);
+      if (route) openRoute(route);
     });
     try {
       if (root.localStorage.getItem(PUSH_ENABLED_KEY) === "true") requestPermissionAndRegister().catch(function () {});
@@ -182,24 +203,26 @@
   function formatNotificationTime(value) {
     var time = new Date(value).getTime();
     var minutes = Math.max(0, Math.floor((Date.now() - time) / 60000));
-    if (!Number.isFinite(time) || minutes < 1) return "الآن";
-    if (minutes < 60) return "منذ " + minutes + " د";
-    if (minutes < 1440) return "منذ " + Math.floor(minutes / 60) + " س";
-    return "منذ " + Math.floor(minutes / 1440) + " ي";
+    var en = root.document && root.document.documentElement.lang === 'en';
+    if (!Number.isFinite(time) || minutes < 1) return en ? 'Now' : 'الآن';
+    if (minutes < 60) return en ? minutes + 'm ago' : 'منذ ' + minutes + ' د';
+    if (minutes < 1440) return en ? Math.floor(minutes / 60) + 'h ago' : 'منذ ' + Math.floor(minutes / 60) + ' س';
+    return en ? Math.floor(minutes / 1440) + 'd ago' : 'منذ ' + Math.floor(minutes / 1440) + ' ي';
   }
 
   function injectStyles() {
     if (!root.document || root.document.getElementById("lf-native-runtime-styles")) return;
     var style = root.document.createElement("style");
     style.id = "lf-native-runtime-styles";
-    style.textContent = ".lf-cloud-notifications{direction:rtl}.lf-cloud-notification{position:relative;display:flex;width:100%;gap:10px;padding:13px 18px;border:0;border-bottom:1px solid rgba(128,128,128,.16);background:transparent;color:inherit;text-align:right;font-family:inherit;cursor:pointer}.lf-cloud-notification.is-unread{background:rgba(138,43,226,.09)}.lf-cloud-notification-dot{width:9px;height:9px;margin-top:6px;border-radius:50%;background:#8a2be2;flex:0 0 9px}.lf-cloud-notification-copy{min-width:0;flex:1}.lf-cloud-notification-copy strong,.lf-cloud-notification-copy span{display:block}.lf-cloud-notification-copy strong{font-size:13px}.lf-cloud-notification-copy span{font-size:12px;line-height:1.55;opacity:.72}.lf-cloud-notification-copy time{display:block;margin-top:3px;font-size:10px;opacity:.52}.lf-cloud-unread-badge{position:absolute!important;top:-3px!important;right:-3px!important;display:grid!important;place-items:center;width:17px!important;height:17px!important;border-radius:50%!important;background:#ef4056!important;color:#fff!important;font:800 9px/1 system-ui!important}.lf-notifications-page>p[data-lf-core-empty=hidden]{display:none!important}";
+    style.textContent = ".lf-cloud-notifications{direction:rtl}.lf-cloud-notification{position:relative;display:flex;width:100%;gap:10px;padding:13px 18px;border:0;border-bottom:1px solid rgba(128,128,128,.16);background:transparent;color:inherit;text-align:right;font-family:inherit;cursor:pointer}.lf-cloud-notifications[dir=ltr]{direction:ltr}.lf-cloud-notifications[dir=ltr] .lf-cloud-notification{text-align:left}.lf-cloud-notification.is-unread{background:rgba(138,43,226,.09)}.lf-cloud-notification-dot{width:9px;height:9px;margin-top:6px;border-radius:50%;background:#8a2be2;flex:0 0 9px}.lf-cloud-notification-copy{min-width:0;flex:1}.lf-cloud-notification-copy strong,.lf-cloud-notification-copy span{display:block}.lf-cloud-notification-copy strong{font-size:13px}.lf-cloud-notification-copy span{font-size:12px;line-height:1.55;opacity:.72}.lf-cloud-notification-copy time{display:block;margin-top:3px;font-size:10px;opacity:.52}.lf-cloud-unread-badge{position:absolute!important;top:-3px!important;right:-3px!important;display:grid!important;place-items:center;width:17px!important;height:17px!important;border-radius:50%!important;background:#ef4056!important;color:#fff!important;font:800 9px/1 system-ui!important}.lf-notifications-page>p[data-lf-core-empty=hidden]{display:none!important}";
+    style.textContent += '.lf-notification-banner{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px;right:12px;max-width:460px;margin:auto;z-index:2147483000;display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--ui-line,#dbe5e7);border-radius:16px;background:var(--ui-surface,#fff);color:var(--ui-ink,#172d30);box-shadow:0 6px 24px rgba(0,0,0,.16)}.lf-notification-banner button{font:inherit;color:inherit;border:0;background:transparent;cursor:pointer}.lf-notification-banner-open{flex:1;min-width:0;min-height:48px;padding:6px 10px;text-align:start}.lf-notification-banner-open strong,.lf-notification-banner-open span{display:block;overflow-wrap:anywhere}.lf-notification-banner-open strong{font-size:14px}.lf-notification-banner-open span{font-size:13px;line-height:1.5;margin-top:3px}.lf-notification-banner-close{width:44px;min-height:44px;font-size:24px!important}';
     root.document.head.appendChild(style);
   }
 
   function updateBellBadges() {
     if (!root.document) return;
     var unread = cloudNotifications.filter(function (item) { return !item.read_at; }).length;
-    Array.prototype.forEach.call(root.document.querySelectorAll('button[aria-label="الإشعارات"]'), function (button) {
+    Array.prototype.forEach.call(root.document.querySelectorAll('button[aria-label="الإشعارات"],button[aria-label="Notifications"]'), function (button) {
       var badge = button.querySelector(".lf-cloud-unread-badge");
       if (!unread) { if (badge) badge.remove(); return; }
       if (!badge) {
@@ -220,7 +243,7 @@
     var previous = page.querySelector(".lf-cloud-notifications");
     if (previous) previous.remove();
     Array.prototype.forEach.call(page.children, function (child) {
-      if (child.tagName === "P" && /لا إشعارات/.test(child.textContent || "")) {
+      if (child.tagName === "P" && /لا إشعارات|No notifications/i.test(child.textContent || "")) {
         if (cloudNotifications.length) child.setAttribute("data-lf-core-empty", "hidden");
         else child.removeAttribute("data-lf-core-empty");
       }
@@ -228,7 +251,8 @@
     if (!cloudNotifications.length) return;
     var section = root.document.createElement("section");
     section.className = "lf-cloud-notifications";
-    section.setAttribute("aria-label", "الإشعارات الجديدة");
+    section.setAttribute("aria-label", root.document.documentElement.lang === "en" ? "Notifications" : "الإشعارات الجديدة");
+    section.dir = root.document.documentElement.lang === "en" ? "ltr" : "rtl";
     cloudNotifications.forEach(function (item) {
       var button = root.document.createElement("button");
       button.type = "button";
@@ -251,7 +275,7 @@
         if (backend && backend.markNotificationsRead) backend.markNotificationsRead([item.id]).catch(function () {});
         item.read_at = new Date().toISOString();
         renderCloudNotifications();
-        if (item.target_path) openRoute(item.target_path);
+        var route = notificationRoute(item); if (route) openRoute(route);
       });
       section.appendChild(button);
     });
@@ -259,44 +283,86 @@
     if (header) header.insertAdjacentElement("afterend", section); else page.prepend(section);
   }
 
-  async function refreshCloudNotifications() {
-    var backend = root.LorefyBackend;
-    if (!backend || typeof backend.listNotifications !== "function") return [];
-    try { cloudNotifications = await backend.listNotifications(60); }
-    catch (error) { cloudNotifications = []; }
-    renderCloudNotifications();
+  function dismissBanner() {
+    if (bannerTimer) root.clearTimeout(bannerTimer);
+    var banner = root.document && root.document.querySelector('.lf-notification-banner');
+    if (banner) banner.remove();
+  }
+
+  function announceNotification(item) {
+    if (!item || !item.id || item.read_at || shownNotifications.has(item.id)) return;
+    shownNotifications.add(item.id);
+    if (shownNotifications.size > 200) shownNotifications.delete(shownNotifications.values().next().value);
+    if (!root.document || root.document.hidden) return;
+    dismissBanner();
+    var en = root.document.documentElement.lang === 'en';
+    var banner = root.document.createElement('section');
+    banner.className = 'lf-notification-banner'; banner.dir = en ? 'ltr' : 'rtl';
+    banner.setAttribute('role','status'); banner.setAttribute('aria-live','polite');
+    var open = root.document.createElement('button'); open.type = 'button'; open.className = 'lf-notification-banner-open';
+    var title = root.document.createElement('strong'); title.textContent = String(item.title || (en ? 'New notification' : 'إشعار جديد'));
+    var body = root.document.createElement('span'); body.textContent = String(item.body || '');
+    open.appendChild(title); open.appendChild(body);
+    open.addEventListener('click',function(){
+      var backend=root.LorefyBackend;
+      if (backend && backend.markNotificationsRead) backend.markNotificationsRead([item.id]).catch(function(){});
+      item.read_at=new Date().toISOString(); dismissBanner(); renderCloudNotifications();
+      var route=notificationRoute(item); if(route)openRoute(route);
+    });
+    var close=root.document.createElement('button'); close.type='button'; close.className='lf-notification-banner-close';
+    close.textContent='×'; close.setAttribute('aria-label',en?'Dismiss notification':'إغلاق الإشعار');
+    close.addEventListener('click',dismissBanner);
+    banner.appendChild(open);banner.appendChild(close);root.document.body.appendChild(banner);
+    bannerTimer=root.setTimeout(dismissBanner,7000);
+  }
+
+  async function refreshCloudNotifications(announce) {
+    var backend=root.LorefyBackend, epoch=connectionEpoch, request=++refreshEpoch;
+    if (!backend || typeof backend.listNotifications !== 'function' || !activeAccount) return [];
+    try {
+      var initialIds=new Set(cloudNotifications.map(function(item){return item.id;}));
+      var rows=await backend.listNotifications(60);
+      if(epoch!==connectionEpoch || request!==refreshEpoch)return [];
+      var existing=new Set(cloudNotifications.map(function(item){return item.id;}));
+      var fresh=cloudNotifications.filter(function(item){return !initialIds.has(item.id) && !rows.some(function(row){return row.id===item.id;});});
+      cloudNotifications=fresh.concat(rows).slice(0,60);
+      renderCloudNotifications();
+      if(announce) rows.filter(function(item){return !existing.has(item.id);}).reverse().forEach(announceNotification);
+    } catch(error) { /* Keep the current inbox during a temporary network failure. */ }
     return cloudNotifications;
   }
 
   async function connectCloudNotifications() {
-    var backend = root.LorefyBackend;
-    if (!backend) return;
-    if (isNative() && backend.getSession) {
+    var backend=root.LorefyBackend, epoch=++connectionEpoch;
+    refreshEpoch++;
+    if(cloudUnsubscribe){cloudUnsubscribe();cloudUnsubscribe=null;}
+    activeAccount='';cloudNotifications=[];shownNotifications.clear();dismissBanner();renderCloudNotifications();
+    if(!backend || !backend.getSession)return;
+    var session;
+    try{session=await backend.getSession();}catch(error){return;}
+    if(epoch!==connectionEpoch || !session || !session.userId)return;
+    activeAccount=session.userId;
+    // Subscribe before fetching so new inserts cannot fall into a startup gap.
+    if(typeof backend.subscribeNotifications==='function') {
       try {
-        var session = await backend.getSession();
-        var optedOut = root.localStorage.getItem(PUSH_ENABLED_KEY) === 'false';
-        if (session && session.userId && !optedOut) {
-          if (pendingToken) { await registerToken(pendingToken); pendingToken = ''; }
-          await requestPermissionAndRegister();
-        }
-      } catch (error) {
-        if (root.dispatchEvent && root.CustomEvent) root.dispatchEvent(new root.CustomEvent('lorefy:native-notification-error',
-          {detail:{code:'registration_failed'}}));
-      }
-    }
-    if (cloudUnsubscribe) { cloudUnsubscribe(); cloudUnsubscribe = null; }
-    await refreshCloudNotifications();
-    if (typeof backend.subscribeNotifications === "function") {
-      try {
-        cloudUnsubscribe = await backend.subscribeNotifications(function (item) {
-          if (!item) return;
-          cloudNotifications = [item].concat(cloudNotifications.filter(function (row) { return row.id !== item.id; })).slice(0, 60);
-          renderCloudNotifications();
-          if (item.kind === "follow" && typeof root.dispatchEvent === "function" && typeof root.CustomEvent === "function") {
-            root.dispatchEvent(new root.CustomEvent("lorefy:profile-follow-changed", { detail: item }));
-          }
+        var unsubscribe=await backend.subscribeNotifications(function(item){
+          if(epoch!==connectionEpoch || !item || item.actor_id===activeAccount || (item.user_id && item.user_id!==activeAccount))return;
+          cloudNotifications=[item].concat(cloudNotifications.filter(function(row){return row.id!==item.id;})).slice(0,60);
+          renderCloudNotifications();announceNotification(item);
+          if(item.kind==='follow' && root.dispatchEvent && root.CustomEvent)root.dispatchEvent(new root.CustomEvent('lorefy:profile-follow-changed',{detail:item}));
         });
-      } catch (error) {}
+        if(epoch!==connectionEpoch){unsubscribe();return;}cloudUnsubscribe=unsubscribe;
+      }catch(error){}
+    }
+    await refreshCloudNotifications();
+    if(epoch!==connectionEpoch)return;
+    if(isNative()) {
+      try {
+        if(root.localStorage.getItem(PUSH_ENABLED_KEY)!=='false') {
+          if(pendingToken)await registerToken(pendingToken);
+          if(epoch===connectionEpoch)await requestPermissionAndRegister();
+        }
+      }catch(error){if(root.dispatchEvent && root.CustomEvent)root.dispatchEvent(new root.CustomEvent('lorefy:native-notification-error',{detail:{code:'registration_failed'}}));}
     }
   }
 
@@ -306,10 +372,19 @@
     if (params.get("notifications") === "1") {
       var tries = 0;
       var notificationTimer = root.setInterval(function () {
-        var button = root.document.querySelector('button[aria-label="الإشعارات"]');
+        var button = root.document.querySelector('button[aria-label="الإشعارات"],button[aria-label="Notifications"]');
         if (button) { root.clearInterval(notificationTimer); button.click(); }
         else if (++tries > 40) root.clearInterval(notificationTimer);
       }, 100);
+    }
+    var postId = params.get("post");
+    if (validId(postId)) {
+      var postTries=0;
+      var postTimer=root.setInterval(function(){
+        if(root.LorefyCommunity && root.LorefyCommunity.openThreadById){
+          root.clearInterval(postTimer);root.LorefyCommunity.openThreadById(postId).catch(function(){});
+        }else if(++postTries>60)root.clearInterval(postTimer);
+      },100);
     }
     var reviewId = params.get("review");
     if (reviewId) {
@@ -325,9 +400,12 @@
   function installDocumentHooks() {
     injectStyles();
     openPendingScreen();
+    root.document.addEventListener('visibilitychange',function(){if(!root.document.hidden)refreshCloudNotifications(true);});
+    root.setInterval(function(){if(!root.document.hidden && activeAccount)refreshCloudNotifications(true);},30000);
     root.document.addEventListener("click", function (event) {
       var target = event.target && event.target.closest && event.target.closest("button");
       if (!target) return;
+      if (/^(الإشعارات|Notifications)$/.test(target.getAttribute('aria-label') || '')) refreshCloudNotifications();
       if (/قراءة الكل|Mark all as read/i.test(target.textContent || "") && target.closest(".lf-notifications-page")) {
         var backend = root.LorefyBackend;
         if (backend && backend.markNotificationsRead) backend.markNotificationsRead(null).catch(function () {});
@@ -368,6 +446,8 @@
     requestPermissionAndRegister:requestPermissionAndRegister,
     setPushEnabled:setPushEnabled,
     refreshCloudNotifications:refreshCloudNotifications,
+    connectCloudNotifications:connectCloudNotifications,
+    notificationRoute:notificationRoute,
     start:start
   };
 });

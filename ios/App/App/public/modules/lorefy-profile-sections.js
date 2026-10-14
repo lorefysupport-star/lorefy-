@@ -70,6 +70,15 @@
         clean(row.profile && row.profile.username).toLowerCase() === clean(profile.username).toLowerCase()))
       .sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
   }
+  function profileEntries(posts, reviews, profile, owner) {
+    const entries=postsFor(posts,profile).map(post=>({id:'post:'+post.id,ts:Date.parse(post.created_at)||0,post}));
+    const seen=new Set();
+    (reviews||[]).forEach(review=>{
+      if (!review || seen.has(String(review.id)) || !(review.userId===profile.id || owner && review.userId==='me'))return;
+      seen.add(String(review.id));entries.push({id:'review:'+review.id,ts:Number(review.ts)||0,review});
+    });
+    return entries.sort((a,b)=>b.ts-a.ts);
+  }
   function labels(lang) {
     const en = lang === 'en';
     return en ? {
@@ -98,9 +107,9 @@
       add:'إضافة', selected:'محدد', noResults:'لا توجد نتائج', count:'عنصر', newTitle:'قائمة مرتبة جديدة'
     };
   }
-  const api = {KEY, normalizeFolders, foldersFor, saveFolder, deleteFolder, moveItem, postsFor, labels};
+  const api = {KEY, normalizeFolders, foldersFor, saveFolder, deleteFolder, moveItem, postsFor, profileEntries, labels};
   if (!root || !root.document) return api;
-  const doc = root.document, states = new WeakMap();
+  const doc = root.document, states = new WeakMap(), liveStates = new Set();
   let scheduled = false, serial = 0;
   const text = () => labels(doc.documentElement.lang);
   function node(tag, attrs = {}, children = []) {
@@ -166,9 +175,19 @@
       ])
     ]);
   }
+  function chooseListKind(state) {
+    const t=text(), en=doc.documentElement.lang==='en';
+    state.panel.replaceChildren(contentHeader(t.create,button(t.back,doc.documentElement.lang==='en'?'arrow-left':'arrow-right',()=>renderFolders(state))),
+      node('p',{class:'lf-profile-list-kind-intro',text:en?'What would you like to collect?':'ما الذي تريد جمعه؟'}));
+    [['works','book-open',en?'Work list':'قائمة أعمال',en?'Collect, rank and share your reads':'اجمع أعمالك ورتّبها وشاركها'],
+     ['characters','users',en?'Character list':'قائمة شخصيات',en?'Your favourite characters, ranked':'شخصياتك المفضلة بالترتيب']].forEach(([kind,symbol,title,description])=>{
+      state.panel.appendChild(node('button',{type:'button',class:'lf-profile-list-kind',onclick:()=>editFolder(state,null,kind)},[
+        icon(symbol),node('span',{},[node('strong',{text:title}),node('small',{text:description})]),icon('chevron-right')]));
+    }); hydrate(state.panel);
+  }
   function renderFolders(state) {
-    const t = text(), rows = foldersFor(state.profile,state.owner,root.localStorage);
-    state.panel.replaceChildren(contentHeader(t.tabs[1],state.owner && button(t.create,'plus',() => editFolder(state))));
+    const t = text(), rows = foldersFor(state.profile,state.owner,root.localStorage).concat(state.owner && root.LorefyLegacyLists ? root.LorefyLegacyLists.rows() : []);
+    state.panel.replaceChildren(contentHeader(t.tabs[1],state.owner && button(t.create,'plus',() => chooseListKind(state),'is-profile-create')));
     if (!state.owner && state.profile.profile_lists_error) {
       state.panel.appendChild(node('p',{role:'status',class:'lf-profile-section-empty',text:t.unavailable}));
       return;
@@ -178,7 +197,7 @@
     rows.forEach(folder => {
       const card = node('button',{type:'button',class:'lf-profile-folder','data-profile-folder':folder.id,
         'aria-label':folder.name+' · '+folderMeta(folder,t)+' · '+(folder.isPublic?t.public:t.private),
-        onclick:() => showFolder(state,folder)},[
+        onclick:() => folder.legacyId ? root.LorefyLegacyLists.open(folder) : showFolder(state,folder)},[
         folderPreview(folder,t),
         node('span',{class:'lf-profile-folder-caption'},[
           node('span',{},[node('strong',{'data-no-translate':'true',dir:'auto',text:folder.name}),
@@ -197,7 +216,7 @@
       node('h2',{'data-no-translate':'true',dir:'auto',text:folder.name})
     ]);
     state.panel.replaceChildren(node('div',{class:'lf-profile-list-toolbar'},[
-      button(t.back,'arrow-right',() => {
+      button(t.back,doc.documentElement.lang==='en'?'arrow-left':'arrow-right',() => {
         renderFolders(state);
         const card = Array.from(state.panel.querySelectorAll('[data-profile-folder]')).find(el => el.dataset.profileFolder===folder.id);
         if (card) card.focus({preventScroll:true});
@@ -233,9 +252,9 @@
     return {id:String(work.id), workId:String(work.id), name:work.titleEnglish || work.title || work.ar,
       image:safeImage(cover && cover.primary ? cover.primary(work) : work.cover || work.sourceCoverUrl || work.coverImage)};
   }
-  function editFolder(state, source) {
+  function editFolder(state, source, initialKind) {
     const t = text(), draft = source ? JSON.parse(JSON.stringify(source)) :
-      {id:root.crypto.randomUUID(),name:'',description:'',kind:'characters',isPublic:true,items:[]};
+      {id:root.crypto.randomUUID(),name:'',description:'',kind:initialKind||'characters',isPublic:true,items:[]};
     const editOwner = state.profile.id;
     state.panel.replaceChildren(contentHeader(source?t.edit:t.newTitle,button(t.cancel,'x',() => renderFolders(state))));
     const form = node('form',{class:'lf-profile-list-editor'});
@@ -293,7 +312,7 @@
       try {
         if (system && system.loadCast) cast=await system.loadCast(work.sourceWork || work,{allowTitleSearch:true});
         if (!isEditing() || request!==generation) return;
-        castBusy=false; searchResults(); search.focus();
+        castBusy=false; searchResults();
       } catch (_) {
         if (!isEditing() || request!==generation) return;
         castBusy=false; status.textContent=t.failed; searchResults();
@@ -387,14 +406,25 @@
   function renderPosts(state) {
     if (state.tab!=='posts') return;
     const t=text(), community=root.LorefyCommunity;
-    state.panel.replaceChildren(contentHeader(t.tabs[2],state.owner && community && button(t.write,'feather',() => community.openComposer())));
+    state.panel.replaceChildren(contentHeader(t.tabs[2],state.owner && community && button(t.write,'feather',() => community.openComposer(),'is-profile-create')));
     const feed=node('div',{class:'lf-profile-post-feed'});
-    if (community) state.posts.forEach(post=>feed.appendChild(community.postCard(post,false)));
+    if(state.reviewRoots)state.reviewRoots.forEach(root=>root.unmount());state.reviewRoots=[];
+    const reviews=root.LorefyProfileReviews ? root.LorefyProfileReviews(state.profile,state.owner) : [];
+    const entries=profileEntries(state.posts,reviews,state.profile,state.owner);
+    state.reviewStamp=JSON.stringify(reviews);
+    entries.forEach(entry=>{
+      if(entry.post && community)feed.appendChild(community.postCard(entry.post,false));
+      else if(entry.review && root.LorefyProfileReviewCard && root.ReactDOM){
+        const host=node('div',{class:'lf-profile-review-entry'});feed.appendChild(host);
+        const renderer=root.ReactDOM.createRoot(host);state.reviewRoots.push(renderer);
+        renderer.render(root.React.createElement(root.LorefyProfileReviewCard,{rev:entry.review}));
+      }
+    });
     state.panel.appendChild(feed);
     if (state.postBusy) state.panel.appendChild(node('p',{role:'status',class:'lf-profile-section-empty',text:t.loading}));
     else if (state.postError) state.panel.appendChild(node('div',{class:'lf-profile-section-empty'},[
       node('p',{role:'alert',text:t.failed}),button(t.retry,'rotate-cw',() => loadPosts(state,!!state.posts.length))]));
-    else if (!state.posts.length) state.panel.appendChild(node('p',{class:'lf-profile-section-empty',text:t.emptyPosts}));
+    else if (!entries.length) state.panel.appendChild(node('p',{class:'lf-profile-section-empty',text:t.emptyPosts}));
     if (state.more && !state.postBusy && !state.postError)
       state.panel.appendChild(button(t.older,'chevron-down',() => loadPosts(state,true)));
     hydrate(state.panel);
@@ -429,6 +459,7 @@
     });
   }
   function sync() {
+    liveStates.forEach(state=>{if(!state.page.isConnected){if(state.reviewRoots)state.reviewRoots.forEach(renderer=>renderer.unmount());liveStates.delete(state);}});
     const lang=doc.documentElement.lang;
     doc.querySelectorAll('.lf-profile-page').forEach(page => {
       const owner=!page.classList.contains('lf-public-profile-page');
@@ -440,14 +471,15 @@
       compactMetrics(page);
       let state=states.get(page);
       if (state && state.profile.id!==profile.id) {
-        state.bar.remove(); state.panel.remove(); states.delete(page); state=null;
+        if(state.reviewRoots)state.reviewRoots.forEach(renderer=>renderer.unmount());
+        state.bar.remove(); state.panel.remove(); states.delete(page); liveStates.delete(state); state=null;
       }
       if (!state) {
         const id='lf-profile-sections-'+(++serial);
         const bar=node('nav',{class:'lf-profile-section-tabs',role:'tablist','aria-label':text().navigation});
         const panel=node('section',{class:'lf-profile-section-panel',role:'tabpanel',id:id+'-panel',tabindex:'0',hidden:'hidden'});
         state={page,profile,owner,bar,panel,tab:'overview',lang,posts:[],postRequest:0,postLoaded:false};
-        states.set(page,state);
+        states.set(page,state);liveStates.add(state);
         state.buttons=['overview','lists','posts'].map((tab,index) => {
           const b=node('button',{type:'button',role:'tab',id:id+'-'+tab,'aria-controls':tab==='overview'?id+'-overview':panel.id,
             onclick:() => selectTab(state,tab)},[icon(['layout-grid','folder-heart','feather'][index]),node('span',{text:text().tabs[index]})]);
@@ -467,6 +499,7 @@
         selectTab(state,'overview'); hydrate(bar);
       }
       state.profile=profile;
+      if(state.tab==='posts' && root.LorefyProfileReviews && state.reviewStamp!==JSON.stringify(root.LorefyProfileReviews(profile,owner)))renderPosts(state);
       const favoriteHead=owner && identityNode.querySelector('.lf-profile-top-works-head');
       if (favoriteHead && state.bar.nextSibling!==favoriteHead) identityNode.insertBefore(state.bar,favoriteHead);
       if (!state.bar.isConnected) {
@@ -489,7 +522,8 @@
       if (state.lang!==lang) {
         state.lang=lang; state.bar.setAttribute('aria-label',text().navigation);
         state.buttons.forEach((b,i) => b.querySelector('span').textContent=text().tabs[i]);
-        selectTab(state,state.tab);
+        // Keep the active draft and native input node intact during language refreshes.
+        if (!state.panel.querySelector(".lf-profile-list-editor")) selectTab(state,state.tab);
       }
     });
   }

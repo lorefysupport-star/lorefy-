@@ -109,7 +109,7 @@ test('rating uses a labelled native slider with visible quarter-step values', ()
 });
 
 test('work identity is a compact poster-and-title layout with one metadata line', () => {
-  const sandbox={React:{createElement:(type,attributes,...children)=>({type,attributes:attributes||{},children:children.flat(Infinity)})}};
+  const sandbox={React:{useState:value=>[value,()=>{}],useRef:()=>({current:null}),useEffect:()=>{},createElement:(type,attributes,...children)=>({type,attributes:attributes||{},children:children.flat(Infinity)})}};
   vm.runInNewContext(fs.readFileSync(path.join(root,'modules/lorefy-review-editor.js'),'utf8'),sandbox);
   assert.equal(typeof sandbox.LorefyWorkIdentity,'function');
   const tree=sandbox.LorefyWorkIdentity({work:{title:'A Story',type:'مانجا',yr:1998,st:'Completed'},language:'en',cover:'cover.jpg',creator:'Author',rating:4.5});
@@ -118,11 +118,14 @@ test('work identity is a compact poster-and-title layout with one metadata line'
   assert.equal(find(tree,n=>n.attributes.className==='lf-work-rating-value').children[0],'4.5');
 });
 
-test('work sections navigate to actual chapters and reader reviews rather than duplicating data',()=>{
+test('Story and Related tabs switch existing sections without duplicating data',()=>{
   const source=fs.readFileSync(path.join(root,'modules/lorefy-review-editor.js'),'utf8');
   assert.match(source,/lf-work-section-nav/);
-  assert.match(source,/scrollIntoView/);
-  assert.match(source,/lf-work-reader-tabs/);
+  assert.match(source,/dataset\.workTab=activeTab/);
+  assert.match(source,/role:'tab'/);
+  const css=fs.readFileSync(path.join(root,'styles/lorefy-work-layout.css'),'utf8');
+  assert.match(css,/data-work-tab='story'/);
+  assert.match(css,/data-work-tab='related'/);
 });
 
 test('optional character slots localize generated labels without changing character names', () => {

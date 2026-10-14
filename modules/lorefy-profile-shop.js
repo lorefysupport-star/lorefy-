@@ -217,6 +217,7 @@
   function Shop() {
     const R = root.React;
     const [request, setRequest] = R.useState(null);
+    const [,refreshCatalog] = R.useState(0);
     const [selection, setSelection] = R.useState(null);
     const [part, setPart] = R.useState('all');
     const [tab, setTab] = R.useState('collections');
@@ -244,12 +245,14 @@
         }
       };
       root.addEventListener('lorefy:profile-shop-open', show);
+      const catalogChanged = () => refreshCatalog(n => n + 1);
+      root.addEventListener('lorefy:profile-shop-catalog-ready', catalogChanged);
       if (root.LorefyBackend && root.LorefyBackend.onAuth) root.LorefyBackend.onAuth(() => {
         if (active) setRequest(current => current && (current.owner !== ownerId() || !isAvailable(root.LorefyBackend)) ? null : current);
       });
       controllerReady = true;
       if (pendingRequest) {const detail = pendingRequest; pendingRequest = null; show({detail});}
-      return () => {active = false; controllerReady = false; root.removeEventListener('lorefy:profile-shop-open', show);};
+      return () => {active = false; controllerReady = false; root.removeEventListener('lorefy:profile-shop-open', show); root.removeEventListener('lorefy:profile-shop-catalog-ready', catalogChanged);};
     }, []);
     R.useEffect(() => {
       if (!request || !host.current) return;
@@ -352,6 +355,10 @@
   }
   function start() {
     const boot = async () => {
+      offerIds=Object.freeze([]);
+      // Opening the page must not depend on either catalog request settling.
+      const host = root.document.createElement('div'); host.className = 'lf-shop-controller'; root.document.body.appendChild(host);
+      root.ReactDOM.createRoot(host).render(h(Shop));
       if((isLocalLab() || betaCollectionsEnabled()) && root.fetch) {
         try {
           const beta=betaCollectionsEnabled();
@@ -359,10 +366,8 @@
           if(response.ok)(beta ? installBetaCollections : installLocalCollections)(await response.json());
         } catch (_) { /* Original collections remain available if the manifest is missing. */ }
       }
-      offerIds=Object.freeze([]);
       if(root.fetch){try{const r=await root.fetch('launch/decorations/originals/catalog.json');if(r.ok)installShopCatalog(await r.json());}catch(_) { /* Purchase catalog fails closed; existing appearance remains. */ }}
-      const host = root.document.createElement('div'); host.className = 'lf-shop-controller'; root.document.body.appendChild(host);
-      root.ReactDOM.createRoot(host).render(h(Shop));
+      root.dispatchEvent(new root.CustomEvent('lorefy:profile-shop-catalog-ready'));
       let scheduled = false;
       function styleNode(node,pack) {Object.entries(packStyle(pack)).forEach(([key,value]) => node.style.setProperty(key,value));}
       function decorate(page,value) {

@@ -128,21 +128,101 @@
     return shelves;
   }
 
+  function catalogResults(catalog, type, query, sort, ratingScore) {
+    var policy = root.LorefyCatalogPolicy, data = root.LorefyCatalogData;
+    var seen = new Set(), aliases = root.LorefyCatalogAliases || {}, requestedFormat=formatKey(type), allFormats=!type||/^(all|الكل)$/i.test(type), normalizedQuery=normalized(query);
+    var rows = (catalog || []).filter(function (work) {
+      if (!work || !work.id || !allFormats && formatKey(work.type) !== requestedFormat) return false;
+      if (policy && (policy.isExcludedWork(work) || policy.isExplicitWork(work) || policy.isAiGeneratedWork(work))) return false;
+      if (query && !(data && data.matchesCatalogQuery ? data.matchesCatalogQuery(work, query) :
+        normalized([work.title, work.ar, work.auth].join(' ')).includes(normalizedQuery))) return false;
+      var id = String(work.id), visited = new Set();
+      while (aliases[id] && !visited.has(id)) { visited.add(id); id = String(aliases[id]); }
+      if (seen.has(id)) return false;
+      seen.add(id); return true;
+    });
+    function score(work) {
+      if (sort === 'rating') return ratingScore ? ratingScore(work) : work.rSrc ? count(work.r) : 0;
+      if (sort === 'newest') return count(work.yr);
+      // Catalog has no time-window trend metrics yet; use sourced popularity as a fallback.
+      if (sort === 'trending') return count(work.pop);
+      return count(work.pop);
+    }
+    var scores=sort==='rating'?new Map(rows.map(function(work){return [work,score(work)];})):null;
+    rows.sort(function (a, b) { return (scores?scores.get(b)-scores.get(a):score(b)-score(a)) || String(a.id).localeCompare(String(b.id)); });
+    return root.LorefyComicsSearch ? root.LorefyComicsSearch.groupResults(rows) : rows;
+  }
+  function featuredWorks(ranked) {
+    var seen = new Set();
+    return (ranked || []).filter(function (work) {
+      if (!work || !work.id || work._discoveryEligible === false ||
+        (work._discoveryEligible !== true && work._recommendationEligible === false)) return false;
+      var policy = root.LorefyCatalogPolicy;
+      if (policy && (policy.isExcludedWork(work) || policy.isExplicitWork(work) || policy.isAiGeneratedWork(work))) return false;
+      if (seen.has(String(work.id))) return false;
+      seen.add(String(work.id)); return true;
+    }).slice().sort(function (a, b) { return count(b.pop) - count(a.pop) || Number(!!b.rec) - Number(!!a.rec); }).slice(0, 3);
+  }
+  // Transient navigation only; preferences and library still use their existing owner storage.
+  var viewMemory = new Map();
   function Explore(props) {
     var React = root.React, h = React.createElement, en = props.language === 'en';
-    var modeState = React.useState('you'), mode = modeState[0], setMode = modeState[1];
+    var owner = String(props.userKey || 'local'), saved = viewMemory.get(owner) || {mode:'you', format:'', query:'', sort:'popular', limit:60, scroll:0};
+    var modeState = React.useState(saved.mode), mode = modeState[0], setMode = modeState[1];
+    var formatState = React.useState(saved.format), format = formatState[0], setFormat = formatState[1];
+    var queryState = React.useState(saved.query), query = queryState[0], setQuery = queryState[1];
+    var sortState = React.useState(saved.sort==='trending'?'newest':saved.sort), sort = sortState[0], setSort = sortState[1];
+    var limitState = React.useState(saved.limit), limit = limitState[0], setLimit = limitState[1];
     var dialogState = React.useState(null), dialog = dialogState[0], setDialog = dialogState[1];
     var draftState = React.useState(null), draft = draftState[0], setDraft = draftState[1];
     var revisionState = React.useState(0), revision = revisionState[0], setRevision = revisionState[1];
-    var opener = React.useRef(null), panel = React.useRef(null);
-    React.useEffect(function(){
-      var loader=root.LorefyCatalogLoader;
-      if(loader&&loader.loadExplore)loader.loadExplore(props.activeType).catch(function(){});
-    },[props.activeType]);
+    var slideState = React.useState(0), slide = slideState[0], setSlide = slideState[1];
+    var searchState=React.useState(!!saved.searchActive),searchActive=searchState[0],setSearchActive=searchState[1];
+    var searchQueryState=React.useState(saved.searchQuery||''),searchQuery=searchQueryState[0],setSearchQuery=searchQueryState[1];
+    var inputTimer=React.useRef(null), searchInput=React.useRef(null);
+    React.useEffect(function(){return function(){root.clearTimeout(inputTimer.current);};},[]);
+    var searchModeState=React.useState(saved.searchMode||'media'),searchMode=searchModeState[0],setSearchMode=searchModeState[1];
+    var readersState=React.useState([]),readers=readersState[0],setReaders=readersState[1];
+    var searchStatusState=React.useState(''),searchStatus=searchStatusState[0],setSearchStatus=searchStatusState[1];
+    var pauseState = React.useState(false), paused = pauseState[0], setPaused = pauseState[1];
+    var errorState = React.useState(false), loadError = errorState[0], setLoadError = errorState[1];
+    var opener = React.useRef(null), panel = React.useRef(null), screen = React.useRef(null), sentinel = React.useRef(null), hero = React.useRef(null), busy = React.useRef(false);
+    var t = function (ar, english) { return en ? english : ar; };
+    var Icon = function (name, size) {
+      if (en && name === 'ChevronLeft') name = 'ChevronRight';
+      var component = root.NenIcons && root.NenIcons[name];
+      return component ? h(component, {size:size || 19, 'aria-hidden':true}) : null;
+    };
+    function remember(scroll) {
+      viewMemory.set(owner, {mode:mode, format:format, query:query, sort:sort, limit:limit,searchActive:searchActive,searchQuery:searchQuery,searchMode:searchMode, scroll:scroll == null ? screen.current && screen.current.scrollTop || 0 : scroll});
+      if (viewMemory.size > 8) viewMemory.delete(viewMemory.keys().next().value);
+    }
+    React.useEffect(function () { remember(); }, [owner, mode, format, query, sort, limit,searchActive,searchQuery,searchMode]);
+    React.useLayoutEffect(function () { if (screen.current) screen.current.scrollTop = saved.scroll; }, []);
+    function top() { if (screen.current) screen.current.scrollTop = 0; }
+    React.useEffect(function () {
+      var loader = root.LorefyCatalogLoader, active = true;
+      setLoadError(false);
+      if (loader) {
+        var request = format && loader.loadFormat ? loader.loadFormat(format, query) : loader.loadExplore(props.allType);
+        Promise.resolve(request).catch(function () { if (active) setLoadError(true); });
+      }
+      return function () { active = false; };
+    }, [format, query]);
+    React.useEffect(function () {
+      function changed() { setRevision(function (n) { return n + 1; }); }
+      root.addEventListener('lorefy:catalog-ingested', changed);
+      root.addEventListener('lorefy:catalog-progress', changed);
+      root.addEventListener('lorefy:reader-safety-changed', changed);
+      return function () {
+        root.removeEventListener('lorefy:catalog-ingested', changed);
+        root.removeEventListener('lorefy:catalog-progress', changed);
+        root.removeEventListener('lorefy:reader-safety-changed', changed);
+      };
+    }, []);
     var catalogState = root.LorefyCatalogLoader && root.LorefyCatalogLoader.state();
-    var catalogReady = !catalogState || catalogState.ready;
-    var catalogPartial = !!(catalogState && catalogState.partial);
-    var ranked = React.useMemo(function () { return props.getRanked(); }, [props.getRanked, revision]);
+    var catalogReady = !catalogState || catalogState.ready, catalogPartial = !!(catalogState && catalogState.partial);
+    var ranked = React.useMemo(function () { return root.LorefyPerformanceProbe?root.LorefyPerformanceProbe.measure("explore.ranking",function(){return props.getRanked(props.allType);}):props.getRanked(props.allType); }, [props.getRanked, revision]);
     var seeds = (props.favorites || []).concat(props.preferences.seedWorkIds || [], Object.keys(props.library).filter(function (id) {
       return !/متوقف|متروك|paused|dropped/i.test(props.library[id]);
     })).slice(0, 24).map(props.getWork).filter(Boolean);
@@ -150,35 +230,80 @@
     if (!(shelfPreferences.genres || []).length) {
       var genreCounts = new Map();
       seeds.forEach(function (work) { (work.genres || []).forEach(function (genre) { genreCounts.set(genre, (genreCounts.get(genre) || 0) + 1); }); });
-      shelfPreferences = Object.assign({}, props.preferences, {genres: Array.from(genreCounts).sort(function (a, b) { return b[1] - a[1]; }).slice(0, 3).map(function (entry) { return entry[0]; })});
+      shelfPreferences = Object.assign({}, props.preferences, {genres:Array.from(genreCounts).sort(function (a,b) { return b[1]-a[1]; }).slice(0,3).map(function (entry) { return entry[0]; })});
     }
-    var shelves = buildShelves(ranked, shelfPreferences, props.library, seeds, props.language, props.activeType);
-    var reading = readingItems(props.library, props.progress, props.getWork, props.getTotals);
-    var t = function (ar, english) { return en ? english : ar; };
-    var Icon = function (name, size) {
-      if (en && name === 'ChevronLeft') name = 'ChevronRight';
-      var component = root.NenIcons && root.NenIcons[name];
-      return component ? h(component, {size: size || 19, 'aria-hidden': true}) : null;
-    };
-    function cover(work) { return h('img', {src: props.cover(work), alt: '', loading: 'lazy', decoding: 'async', onError: props.onCoverError, 'data-fallback': props.fallback(work)}); }
+    var shelves = React.useMemo(function(){return root.LorefyPerformanceProbe?root.LorefyPerformanceProbe.measure("explore.shelves",function(){return buildShelves(ranked, shelfPreferences, props.library, seeds, props.language, props.allType);}):buildShelves(ranked, shelfPreferences, props.library, seeds, props.language, props.allType);},[ranked,props.preferences,props.library,props.favorites,props.language]);
+    // Bring account recommendations forward, without changing their ranking or deduplication.
+    shelves.sort(function (a, b) { return Number(b.key === 'for-you') - Number(a.key === 'for-you'); });
+    var features = React.useMemo(function(){return featuredWorks(ranked);},[ranked]), selected = features[slide % (features.length || 1)];
+    var results = React.useMemo(function () {
+      return format ? catalogResults(props.getCatalog ? props.getCatalog() : ranked, format, query, sort, props.ratingScore) : [];
+    }, [format, query, sort, revision, props.getCatalog]);
+    function more() {
+      if (busy.current) return;
+      if (limit < results.length) { setLimit(function (n) { return n + 60; }); return; }
+      if (catalogState && catalogState.hasMore && root.LorefyCatalogLoader) {
+        busy.current = true; setLoadError(false);
+        root.LorefyCatalogLoader.loadMore().catch(function () { setLoadError(true); }).finally(function () {
+          busy.current = false; setLimit(function (n) { return n + 60; }); setRevision(function (n) { return n + 1; });
+        });
+      }
+    }
+    React.useEffect(function () {
+      if (!format || !sentinel.current || !root.IntersectionObserver) return;
+      var observer = new root.IntersectionObserver(function (entries) {
+        if (entries.some(function (entry) { return entry.isIntersecting; })) more();
+      }, {root:screen.current, rootMargin:'0px 0px 300px 0px'});
+      observer.observe(sentinel.current); return function () { observer.disconnect(); };
+    }, [format, limit, results.length, revision]);
+    React.useEffect(function () {
+      if (features.length < 2 || paused || format || mode !== 'you' || searchActive || root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var timer = root.setInterval(function () {
+        if (root.document.hidden || hero.current && hero.current.contains(root.document.activeElement)) return;
+        setSlide(function (n) { return n + 1; });
+      }, 7000);
+      return function () { root.clearInterval(timer); };
+    }, [features.length, paused, format, mode,searchActive]);
+    React.useEffect(function(){
+      if(!searchActive||searchMode!=='media')return;
+      var timer=root.setTimeout(function(){var loader=root.LorefyCatalogLoader;if(loader&&loader.loadFormat)loader.loadFormat(props.allType,searchQuery).catch(function(){setLoadError(true);});},180);
+      return function(){root.clearTimeout(timer);};
+    },[searchActive,searchQuery,searchMode]);
+    React.useEffect(function(){
+      setReaders([]);setSearchStatus('');
+      if(!searchActive||searchMode!=='people'||searchQuery.trim().length<2)return;
+      var active=true,timer=root.setTimeout(function(){
+        setSearchStatus('loading');var discovery=root.LorefyUserDiscovery;
+        Promise.resolve(discovery&&discovery.buildDirectory?discovery.buildDirectory().search(searchQuery):[]).then(function(rows){if(active){setReaders(rows);setSearchStatus('');}}).catch(function(){if(active)setSearchStatus('error');});
+      },180);
+      return function(){active=false;root.clearTimeout(timer);};
+    },[owner,searchActive,searchQuery,searchMode]);
+    var mediaResults=React.useMemo(function(){return searchActive&&searchMode==='media'&&searchQuery.trim()?catalogResults(props.getCatalog?props.getCatalog():ranked,props.allType,searchQuery,'popular',props.ratingScore):[];},[searchActive,searchMode,searchQuery,revision,ranked,props.getCatalog,props.allType,props.ratingScore]);
+    function cancelSearch(){root.clearTimeout(inputTimer.current);if(searchInput.current)searchInput.current.value='';setSearchActive(false);setSearchQuery('');setSearchMode('media');if(root.document.activeElement&&root.document.activeElement.blur)root.document.activeElement.blur();}
+    function searchBody(){
+      if(!searchQuery.trim())return h('section',{className:'lf-design-inline-results','aria-live':'polite'});
+      var rows=mediaResults;
+      if(searchMode==='media')return h('section',{className:'lf-design-inline-results','aria-live':'polite'},h('p',{className:'lf-design-search-status'},loadError?t('تعذر البحث، حاول مجدداً.','Search failed. Try again.'):catalogState&&catalogState.searching?t('جارٍ البحث…','Searching…'):rows.length+' '+t('نتيجة','results')),h('div',{className:'lf-design-search-grid'},rows.slice(0,120).map(function(w){return item(w,false);})));
+      if(searchMode==='people')return h('section',{className:'lf-design-inline-results','aria-live':'polite'},searchStatus?h('p',{className:'lf-design-search-status'},searchStatus==='loading'?t('جارٍ البحث…','Searching…'):t('تعذر البحث','Search failed')):readers.length?readers.map(function(reader){return h('button',{key:reader.id,className:'lf-design-person',onClick:function(){remember();root.LorefyUserDiscovery.openReaderProfile(reader,root.LorefyUserDiscovery.buildDirectory());}},reader.avatar&&h('img',{src:reader.avatar,alt:''}),h('span',{dir:'auto'},reader.name+' · @'+reader.username));}):h('p',{className:'lf-design-search-status'},t('لا توجد حسابات مطابقة','No matching people')));
+      var lists=[];try{lists=root.LorefyProfileSections?root.LorefyProfileSections.foldersFor({},true,root.localStorage):[];}catch(_){}
+      lists=lists.filter(function(list){return normalized(list.name+' '+list.description).includes(normalized(searchQuery));});
+      return h('section',{className:'lf-design-inline-results','aria-live':'polite'},lists.length?lists.map(function(list){return h('button',{key:list.id,className:'lf-design-person',onClick:function(){open({kind:'shelf',title:list.name,items:list.items.map(function(entry){return props.getWork(entry.workId||entry.id);}).filter(Boolean)});}},Icon('List',20),list.name);}):h('p',{className:'lf-design-search-status'},t('لا توجد قوائم مطابقة في حسابك','No matching lists in your account')));
+    }
+    function cover(work, eager) { return h('img', {src:props.cover(work), alt:'', loading:eager ? 'eager' : 'lazy', decoding:'async', onError:props.onCoverError, 'data-fallback':props.fallback(work)}); }
     function open(value) { opener.current = root.document.activeElement; setDialog(value); }
     function close() { setDialog(null); setDraft(null); }
+    function openWork(work) { remember(); if (root.document.activeElement && root.document.activeElement.blur) root.document.activeElement.blur(); props.onWork(work); }
     React.useEffect(function () {
       if (!dialog || !panel.current) return;
       panel.current.querySelector('button')?.focus();
       var changed = [], node = panel.current.parentElement;
-      // Isolate the dialog without hiding the overlay or its ancestors.
       while (node && node.parentElement && node !== root.document.body) {
         Array.from(node.parentElement.children).forEach(function (sibling) {
           if (sibling === node || sibling.tagName === 'SCRIPT' || sibling.tagName === 'STYLE') return;
           changed.push([sibling, sibling.inert]); sibling.inert = true;
-        });
-        node = node.parentElement;
+        }); node = node.parentElement;
       }
-      return function () {
-        changed.forEach(function (entry) { entry[0].inert = entry[1]; });
-        if (opener.current && opener.current.isConnected) opener.current.focus();
-      };
+      return function () { changed.forEach(function (entry) { entry[0].inert = entry[1]; }); if (opener.current && opener.current.isConnected) opener.current.focus(); };
     }, [dialog]);
     function trap(event) {
       if (event.key === 'Escape') { event.stopPropagation(); close(); }
@@ -188,89 +313,68 @@
       if (event.shiftKey && root.document.activeElement === firstNode) { event.preventDefault(); lastNode?.focus(); }
       if (!event.shiftKey && root.document.activeElement === lastNode) { event.preventDefault(); firstNode?.focus(); }
     }
-    function item(work) {
-      var value = Number(work.r), score = value > 0 && work.rSrc ? value.toFixed(1) : '';
-      return h('article', {key: work.id, className: 'lf-explore-work'},
-        h('button', {className: 'lf-explore-work-open', onClick: function () { props.onWork(work); }, 'aria-label': work.title}, cover(work),
-          h('strong', {dir: 'auto', 'data-no-translate': ''}, work.title),
-          h('small', {dir: 'auto', 'data-no-translate': ''}, work.auth || props.typeLabel(work.type))),
-        h('div', {className: 'lf-explore-work-meta'}, h('span', null, props.typeLabel(work.type)), score && h('span', {className: 'lf-explore-score'}, Icon('Feather', 13), score),
-          h('button', {className: 'lf-explore-icon', title: t('خيارات الاقتراح', 'Recommendation options'), 'aria-label': t('خيارات اقتراح ', 'Recommendation options for ') + work.title,
-            onClick: function () { open({kind: 'feedback', work: work, title: work.title}); }}, Icon('Ellipsis', 16))));
+    function item(work, feedback) {
+      return h('article', {key:work.id, className:'lf-explore-work'},
+        h('button', {type:'button', className:'lf-explore-work-open', onClick:function () { openWork(work); }, 'aria-label':work.title, title:work.title}, cover(work)),
+        feedback && h('button', {type:'button', className:'lf-explore-work-options', 'aria-label':t('خيارات اقتراح ', 'Recommendation options for ') + work.title,
+          onClick:function () { open({kind:'feedback', work:work, title:work.title}); }}, Icon('Ellipsis', 16)));
     }
     function section(shelf) {
-      return h('section', {key: shelf.key, className: 'lf-explore-shelf', 'data-shelf': shelf.key},
-        h('header', {className: 'lf-explore-section-head'}, h('div', null, h('h2', {dir: 'auto'}, shelf.key.indexOf('genre-') === 0 ? genreLabel(shelf.title, props.language) : shelf.title), shelf.subtitle && h('p', null, shelf.subtitle)),
-          h('button', {onClick: function () { open({kind: 'shelf', title: shelf.key.indexOf('genre-') === 0 ? genreLabel(shelf.title, props.language) : shelf.title, items: shelf.items}); }}, t('الكل', 'See all'), Icon('ChevronLeft', 16))),
-        h('div', {className: 'lf-explore-rail'}, shelf.items.map(item)));
+      var title = shelf.key.indexOf('genre-') === 0 ? genreLabel(shelf.title, props.language) : shelf.title;
+      return h('section', {key:shelf.key, className:'lf-explore-shelf', 'data-shelf':shelf.key},
+        h('header', {className:'lf-explore-section-head'}, h('div', null, h('h2', {dir:'auto'}, title)),
+          h('button', {onClick:function () { open({kind:'shelf', title:title, items:shelf.items}); }}, t('الكل', 'See all'), Icon('ChevronLeft', 16))),
+        h('div', {className:'lf-explore-rail'}, shelf.items.map(function (work) { return item(work, false); })));
     }
     function toggle(field, value) {
-      setDraft(function (current) {
-        var next = Object.assign({}, current), values = (current[field] || []).slice();
-        next[field] = values.includes(value) ? values.filter(function (x) { return x !== value; }) : values.concat(value);
-        return next;
-      });
+      setDraft(function (current) { var next=Object.assign({},current), values=(current[field] || []).slice(); next[field]=values.includes(value)?values.filter(function(x){return x!==value;}):values.concat(value); return next; });
     }
     function preferencesBody() {
-      return h(React.Fragment, null, h('fieldset', null, h('legend', null, t('ماذا تحب أن تقرأ؟', 'What do you like to read?')),
-        h('div', {className: 'lf-explore-preferences'}, props.types.filter(function (type) { return type !== props.allType; }).map(function (type) {
-          return h('label', {key: type}, h('input', {type: 'checkbox', checked: (draft.formats || []).includes(type), onChange: function () { toggle('formats', type); }}), props.typeLabel(type));
-        }))), h('fieldset', null, h('legend', null, t('أنواعك المفضلة', 'Favorite genres')),
-        h('div', {className: 'lf-explore-preferences'}, props.genres.map(function (genre) {
-          return h('label', {key: genre}, h('input', {type: 'checkbox', checked: (draft.genres || []).includes(genre), onChange: function () { toggle('genres', genre); }}), genreLabel(genre, props.language));
-        }))),
-        h('button', {className: 'lf-explore-save', onClick: function () { props.onPreferences(draft); close(); }}, Icon('Check'), t('حفظ ذوقي', 'Save preferences')));
+      return h(React.Fragment, null, h('fieldset', null, h('legend', null, t('ماذا تحب أن تقرأ؟','What do you like to read?')),
+        h('div', {className:'lf-explore-preferences'}, props.types.filter(function(type){return type!==props.allType;}).map(function(type){return h('label',{key:type},h('input',{type:'checkbox',checked:(draft.formats||[]).includes(type),onChange:function(){toggle('formats',type);}}),props.typeLabel(type));}))),
+        h('fieldset',null,h('legend',null,t('أنواعك المفضلة','Favorite genres')),h('div',{className:'lf-explore-preferences'},props.genres.map(function(genre){return h('label',{key:genre},h('input',{type:'checkbox',checked:(draft.genres||[]).includes(genre),onChange:function(){toggle('genres',genre);}}),genreLabel(genre,props.language));}))),
+        h('button',{className:'lf-explore-save',onClick:function(){props.onPreferences(draft);close();}},Icon('Check'),t('حفظ ذوقي','Save preferences')));
     }
-    return h('div', {className: 'lf-screen-scroll lf-discover-page lf-explore-studio', dir: en ? 'ltr' : 'rtl'},
-      h('header', {className: 'lf-explore-header'}, h('div', null, h('p', null, t('رفّك القادم', 'Your next shelf')), h('h1', null, t('استكشف', 'Explore'))),
-        h('button', {className: 'lf-explore-icon', title: t('تعديل ذوقي', 'Edit preferences'), 'aria-label': t('تعديل ذوقي', 'Edit preferences'), onClick: function () {
-          setDraft(Object.assign({}, props.preferences)); open({kind: 'preferences', title: t('ذوقك في القراءة', 'Your reading taste')});
-        }}, Icon('SlidersHorizontal', 22))),
-      h('button', {className: 'lf-explore-search', onClick: props.onSearch}, Icon('Search'), h('span', null, t('عمل، مؤلف، أو نوع جديد', 'A work, author, or new genre'))),
-      h('div', {className: 'lf-explore-tabs', role: 'tablist', 'aria-label': t('أقسام استكشف', 'Explore views')}, [['you', t('لك', 'For you')], ['browse', t('الأقسام', 'Browse')]].map(function (tab) {
-        return h('button', {key: tab[0], role: 'tab', id: 'explore-tab-' + tab[0], 'aria-controls': 'explore-panel', 'aria-selected': mode === tab[0], onClick: function () { setMode(tab[0]); }}, tab[1]);
-      })),
-      !catalogReady && h('p', {className: 'lf-explore-catalog-status', role: 'status'}, t('جارٍ تحديث المكتبة…', 'Updating the library…')),
-      h('div', {role: 'tabpanel', id: 'explore-panel', 'aria-labelledby': 'explore-tab-' + mode}, mode === 'you' ? h(React.Fragment, null,
-        reading.length > 0 ? h('section', {className: 'lf-explore-reading'},
-          h('header', {className: 'lf-explore-section-head'}, h('div', null, h('h2', null, t('تتابع قراءتها', 'Currently reading')), h('p', null, t('قيد القراءة · ', 'Reading · ') + reading.length)),
-            h('button', {onClick: props.onLibrary}, t('الكل', 'See all'), Icon('ChevronLeft', 16))),
-          h('div', {className: 'lf-explore-progress-grid'}, reading.slice(0, 3).map(function (row) {
-            var work = row.work, snapshot = row.snapshot, unit = snapshot.unit === 'page' ? t('صفحة', 'pages') : t('فصل', 'chapters');
-            return h('article', {key: work.id, className: 'lf-explore-progress-work'},
-              h('button', {className: 'lf-explore-progress-cover', 'aria-label': work.title, onClick: function () { props.onWork(work); }}, cover(work)),
-              h('strong', {dir: 'auto', 'data-no-translate': ''}, work.title),
-              h('div', {className: 'lf-explore-progress-line'},
-                h('b', null, snapshot.percent === null ? '—' : snapshot.percent + '%'),
-                h('button', {className: 'lf-explore-icon', title: t('تحديث التقدم', 'Update progress'), 'aria-label': t('تحديث تقدم ', 'Update progress for ') + work.title,
-                  onClick: function () { props.onEditProgress(work); }}, Icon('Pencil', 16))),
-              snapshot.percent !== null && h('div', {className: 'lf-explore-progress-track', role: 'progressbar', 'aria-label': work.title,
-                'aria-valuenow': snapshot.percent, 'aria-valuemin': 0, 'aria-valuemax': 100,
-                'aria-valuetext': snapshot.current + ' / ' + snapshot.total + ' ' + unit + (snapshot.ongoing ? t(' من المتاح', ' available') : '')}, h('i', {style: {width: snapshot.percent + '%'}})),
-              h('small', null, h('bdi', {dir: 'ltr'}, snapshot.current + (snapshot.total ? ' / ' + snapshot.total : '')), ' ', unit),
-              snapshot.ongoing && h('small', {className: 'lf-explore-available'}, t('من الفصول المتاحة', 'Of available chapters')));
-          }))) : h('section', {className: 'lf-explore-reading-empty'}, Icon('BookOpen', 22), h('strong', null, t('ماذا تقرأ الآن؟', 'What are you reading?')),
-            h('button', {onClick: props.onLibrary}, t('مكتبتي', 'My library'), Icon('ChevronLeft', 16))),
-        h('div', {className: 'lf-explore-format-row', role: 'group', 'aria-label': t('نوع العمل', 'Work format')}, props.types.map(function (type) {
-          return h('button', {key: type, 'aria-pressed': props.activeType === type, onClick: function () { props.onType(type); }}, props.typeLabel(type));
-        })),
-        shelves.length > 0 && h('div',{className:'lf-explore-intro'},h('strong',null,t('حكايات وأفكار تستحق وقتك','Stories and ideas worth your time')),h('p',null,t('رفوف متنوعة · عمل واحد لكل كاتب داخل الرف','Varied shelves · one work per author in each shelf'))),
-        shelves.length ? shelves.map(section) : h('div', {className: 'lf-explore-empty'}, h('h2', null, t('لا توجد اقتراحات لهذا الاختيار', 'No suggestions for this selection')),
-          h('button', {onClick: function () { props.onType(props.allType); }}, t('كل الأنواع', 'All formats')))) :
-        h('section', {className: 'lf-explore-browse'}, h('h2', null, t('اختر رفّك', 'Choose a shelf')),
-          h('div', {className: 'lf-explore-category-grid'}, props.types.filter(function (type) { return type !== props.allType; }).map(function (type) {
-            var category = props.categories.find(function (entry) { return entry.type === type; }) || {type: type, count: 0};
-            return h('button', {key: category.type, className: 'lf-explore-category', onClick: function () { props.onBrowse(category.type); }}, category.rep ? cover(category.rep) : h('span', {className: 'lf-explore-category-placeholder'}, Icon('BookOpen', 25)),
-              h('span', null, h('strong', null, props.typeLabel(category.type)), h('small', null, catalogReady && (!catalogPartial || category.count) ? category.count.toLocaleString(props.language) + (catalogPartial ? '+ ' : ' ') + t('عمل', 'works') : t('تصفح الأعمال', 'Browse works'))), Icon('ChevronLeft', 16));
+    function chooseFormat(type) { setFormat(type); setMode('browse'); setQuery(''); setSort('popular'); setLimit(60); top(); }
+    function back() { setFormat(''); setMode('browse'); setQuery(''); top(); }
+    function carousel() {
+      if (!selected) return null;
+      return h('section', {className:'lf-explore-feature', ref:hero, 'aria-label':t('أعمال معروفة','Well-known works')},
+        h('div',{className:'lf-explore-feature-card'},
+          h('button',{className:'lf-explore-feature-open',onClick:function(){openWork(selected);},'aria-label':selected.title},cover(selected,true),
+            h('span',{className:'lf-design-feature-copy'},h('span',{className:'lf-design-work-badges'},h('span',null,props.typeLabel(selected.type)),Number(selected.r)>0&&selected.rSrc&&h('span',null,'★ '+Number(selected.r).toFixed(1))),h('strong',{dir:'auto','data-no-translate':''},selected.title),h('p',{dir:'auto','data-no-translate':''},String(selected[en?'synopsisEn':'synopsisAr']||selected.synopsis||selected.auth||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim())))),
+        features.length>1 && h('div',{className:'lf-explore-feature-controls'},h('button',{'aria-label':t('العمل السابق','Previous work'),onClick:function(){setPaused(true);setSlide((slide+features.length-1)%features.length);}},Icon(en?'ChevronLeft':'ChevronRight',16)),
+          features.map(function(work,index){return h('button',{key:work.id,className:'lf-explore-feature-dot','aria-label':work.title,'aria-pressed':index===slide%features.length,onClick:function(){setPaused(true);setSlide(index);}},h('span',null));}),
+          h('button',{'aria-label':t('العمل التالي','Next work'),onClick:function(){setPaused(true);setSlide(slide+1);}},Icon('ChevronLeft',16))));
+    }
+    return h('div', {className:'lf-screen-scroll lf-discover-page lf-explore-studio'+(format?' is-format':''),dir:en?'ltr':'rtl',ref:screen,onScroll:function(){remember();}},
+      h('header',{className:'lf-explore-header'},
+        format && h('button',{className:'lf-explore-icon','aria-label':t('العودة إلى الأنواع','Back to types'),onClick:back},Icon(en?'ArrowLeft':'ArrowRight')),
+        h('div',null,!format&&h('p',null,t('رفّك القادم','Your next shelf')),h('h1',null,format?props.typeLabel(format):t('استكشف','Explore'))),
+        !format && h('button',{className:'lf-explore-icon','aria-label':t('تعديل ذوقي','Edit preferences'),onClick:function(){setDraft(Object.assign({},props.preferences));open({kind:'preferences',title:t('ذوقك في القراءة','Your reading taste')});}},Icon('SlidersHorizontal',22))),
+      format ? h('label',{className:'lf-explore-format-search'},Icon('Search'),h('input',{type:'search',value:query,'aria-label':t('بحث في ','Search ')+props.typeLabel(format),placeholder:t('ابحث في ','Search ')+props.typeLabel(format),onChange:function(event){setQuery(event.target.value);setLimit(60);},onKeyDown:function(event){if(event.key==='Escape'){event.target.blur();back();}}})) :
+        h('label',{className:'lf-design-inline-search lf-search-box'},Icon('Search'),h('input',{type:'search',ref:searchInput,defaultValue:searchQuery,autoComplete:'off','aria-label':t('بحث','Search'),placeholder:searchMode==='people'?t('ابحث عن شخص','Search people'):searchMode==='lists'?t('ابحث عن قائمة','Search lists'):t('ابحث عن عمل أو مؤلف','Search media'),onFocus:function(){setSearchActive(true);},onChange:function(event){var value=event.target.value;root.clearTimeout(inputTimer.current);inputTimer.current=root.setTimeout(function(){setSearchQuery(value);},180);},onKeyDown:function(event){if(event.key==='Escape')cancelSearch();}})),
+      !format&&searchActive&&h('div',{className:'lf-design-search-modes',role:'tablist','aria-label':t('نوع البحث','Search type')},[['media',t('الأعمال','Media')],['people',t('الأشخاص','People')],['lists',t('القوائم','Lists')]].map(function(entry){return h('button',{key:entry[0],role:'tab','aria-selected':searchMode===entry[0],onClick:function(){setSearchMode(entry[0]);}},entry[1]);}),h('button',{className:'lf-design-search-close',onClick:cancelSearch},t('إلغاء','Cancel'))),
+      format ? h('div',{className:'lf-explore-sorts',role:'group','aria-label':t('ترتيب الأعمال','Sort works')},[['popular',t('الشائع','Popular')],['rating',t('الأعلى تقييماً','Top rated')],['newest',t('الجديد','New')]].map(function(entry){return h('button',{key:entry[0],'aria-pressed':sort===entry[0],onClick:function(){setSort(entry[0]);setLimit(60);top();}},entry[1]);})) :
+        !searchActive&&h('div',{className:'lf-explore-tabs',role:'tablist','aria-label':t('أقسام استكشف','Explore views')},[['you',t('تصفّح','Browse')],['browse',t('النوع','Type')]].map(function(tab){return h('button',{key:tab[0],role:'tab',id:'explore-tab-'+tab[0],'aria-controls':'explore-panel','aria-selected':mode===tab[0],onClick:function(){setMode(tab[0]);top();}},tab[1]);})),
+      format ? h(React.Fragment,null,
+        h('p',{className:'lf-explore-catalog-status',role:'status'},loadError||catalogState&&catalogState.searchError?t('تعذر تحميل النتائج، حاول مجدداً.','Could not load results. Try again.'):catalogState&&catalogState.searching?t('جارٍ البحث…','Searching…'):!catalogReady?t('جارٍ تحميل الأعمال…','Loading works…'):t('الأعمال المتاحة · ','Available works · ')+results.length.toLocaleString(props.language)),
+        h('div',{className:'lf-explore-format-grid'},results.slice(0,limit).map(function(work){return item(work,false);})),
+        !results.length&&catalogReady&&!(catalogState&&catalogState.searching)&&h('p',{className:'lf-explore-empty'},t('لا توجد نتائج لهذا البحث','No results for this search')),
+        h('div',{ref:sentinel,className:'lf-explore-more'},(limit<results.length||catalogState&&catalogState.hasMore||loadError)&&h('button',{onClick:more},t('تحميل المزيد','Load more')))) :
+        searchActive?searchBody():h('div',{role:'tabpanel',id:'explore-panel','aria-labelledby':'explore-tab-'+mode},mode==='you'?h(React.Fragment,null,carousel(),
+          !catalogReady&&h('p',{className:'lf-explore-catalog-status',role:'status'},t('جارٍ تحديث المكتبة…','Updating the library…')),
+          shelves.length?shelves.slice(0,1).map(section):h('div',{className:'lf-explore-empty'},h('h2',null,t('لا توجد اقتراحات بعد','No suggestions yet'))),
+          root.LorefyFriendActivity&&props.friendProps&&h(root.LorefyFriendActivity.Rails,Object.assign({},props.friendProps,{compact:true})),shelves.slice(1).map(section)):
+          h('section',{className:'lf-explore-browse'},h('h2',null,t('اختر نوع العمل','Choose a type')),h('div',{className:'lf-explore-category-grid'},props.types.filter(function(type){return type!==props.allType;}).map(function(type){
+            var category=props.categories.find(function(entry){return entry.type===type;})||{type:type,count:0};
+            return h('button',{key:type,className:'lf-explore-category',onClick:function(){chooseFormat(type);}},category.rep?cover(category.rep):h('span',{className:'lf-explore-category-placeholder'},Icon('BookOpen',25)),
+              h('span',null,h('strong',null,props.typeLabel(type)),h('small',null,catalogReady&&(!catalogPartial||category.count)?category.count.toLocaleString(props.language)+(catalogPartial?'+ ':' ')+t('عمل','works'):t('تصفح الأعمال','Browse works'))));
           })))),
-      dialog && h('div', {className: 'lf-explore-overlay', onClick: function (event) { if (event.target === event.currentTarget) close(); }, onKeyDown: trap},
-        h('section', {className: 'lf-explore-dialog', ref: panel, role: 'dialog', 'aria-modal': true, 'aria-label': dialog.title},
-          h('header', null, h('h2', {dir: 'auto', 'data-no-translate': dialog.kind === 'feedback' ? '' : undefined}, dialog.title),
-            h('button', {className: 'lf-explore-icon', 'aria-label': t('إغلاق', 'Close'), onClick: close}, Icon('X'))),
-          dialog.kind === 'preferences' ? preferencesBody() : dialog.kind === 'feedback' ?
-            h('div', {className: 'lf-explore-feedback'}, [['more_like_this', t('المزيد مثل هذا', 'More like this'), 'Sparkles'], ['not_interested', t('غير مهتم', 'Not interested'), 'EyeOff']].map(function (action) {
-              return h('button', {key: action[0], onClick: function () { props.onFeedback(dialog.work.id, action[0]); setRevision(function (n) { return n + 1; }); close(); }}, Icon(action[2]), action[1]);
-            })) : h('div', {className: 'lf-explore-dialog-grid'}, dialog.items.map(item)))));
+      dialog&&h('div',{className:'lf-explore-overlay',onClick:function(event){if(event.target===event.currentTarget)close();},onKeyDown:trap},h('section',{className:'lf-explore-dialog',ref:panel,role:'dialog','aria-modal':true,'aria-label':dialog.title},
+        h('header',null,h('h2',{dir:'auto'},dialog.title),h('button',{className:'lf-explore-icon','aria-label':t('إغلاق','Close'),onClick:close},Icon('X'))),
+        dialog.kind==='preferences'?preferencesBody():dialog.kind==='feedback'?h('div',{className:'lf-explore-feedback'},[['more_like_this',t('المزيد مثل هذا','More like this'),'Sparkles'],['not_interested',t('غير مهتم','Not interested'),'EyeOff']].map(function(action){return h('button',{key:action[0],onClick:function(){props.onFeedback(dialog.work.id,action[0]);setRevision(function(n){return n+1;});close();}},Icon(action[2]),action[1]);})):
+          h('div',{className:'lf-explore-dialog-grid'},dialog.items.map(function(work){return item(work,false);})))));
   }
-  return {genreLabel: genreLabel, formatKey: formatKey, collections: COLLECTIONS, readingSnapshot: readingSnapshot, readingItems: readingItems, buildShelves: buildShelves, Explore: Explore};
+  return {catalogResults:catalogResults, featuredWorks:featuredWorks, genreLabel: genreLabel, formatKey: formatKey, collections: COLLECTIONS, readingSnapshot: readingSnapshot, readingItems: readingItems, buildShelves: buildShelves, Explore: Explore};
 });

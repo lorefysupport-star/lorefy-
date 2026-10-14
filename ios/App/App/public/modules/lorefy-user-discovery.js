@@ -344,5 +344,5 @@
     return {title:en?'Readers':'حسابات القراء',searching:en?'Searching...':'جارٍ البحث...',
       results:count+(en?' results':' نتائج'),open:en?'Open reader ':'فتح حساب ',following:en?'Following':'تتابعه',public:en?'Public account':'حساب عام'};
   }
-  return { normalizeQuery: normalizeQuery, createUserDirectory: createUserDirectory, demoReaders: demoReaders, rankReaders: rankReaders, readerSearchLabels:readerSearchLabels, install: install };
+  return { buildDirectory:buildDirectory, openReaderProfile:openReaderProfile, normalizeQuery: normalizeQuery, createUserDirectory: createUserDirectory, demoReaders: demoReaders, rankReaders: rankReaders, readerSearchLabels:readerSearchLabels, install: install };
 });

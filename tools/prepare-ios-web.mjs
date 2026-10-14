@@ -60,6 +60,8 @@ await mkdir(expansionTarget, { recursive: true });
 for (const file of expansionFiles) {
   await cp(path.join(root, "output", "api-catalog", file), path.join(expansionTarget, file));
 }
+// Local timing instrumentation is opt-in and never ships in normal builds.
+await rm(path.join(output, "monitoring", "lorefy-performance-local.js"), { force: true });
 // The editable release JSON may exist locally and must never ship verbatim.
 await rm(path.join(output, "config", "lorefy-release.json"), { force: true });
 

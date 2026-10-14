@@ -35,7 +35,7 @@ test('late compact ingestion and full worker replacement preserve curated picks 
  assert.match(source('modules/lorefy-catalog-worker.js'),/LorefyEditorialCatalog\.apply\(records, true\)/);
  assert.match(source('index.html'),/uploads\/lorefy-editorial-picks/);
  assert.match(source('sw.js'),/uploads\/lorefy-editorial-picks/);
-  assert.match(source('modules/lorefy-explore-studio.js'),/loader\.loadExplore\(props\.activeType\)/);
+  assert.match(source('modules/lorefy-explore-studio.js'),/loader\.loadExplore\(props\.allType\)/);
 });
 test('shelves canonicalize aliases and preserve genre personalization across languages',()=>{
  global.LorefyCatalogIdentity=identity;global.LorefyCatalogAliases={alias:'real'};

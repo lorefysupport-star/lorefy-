@@ -337,7 +337,7 @@
       meter.setAttribute('aria-label',text('الفصول المقروءة','Chapters read')); readingCopy.appendChild(meter); reading.appendChild(readingCopy);
       var readingActions = el('div','lf-chapter-reading-actions');
       if (next) {
-        var continueButton = button(text('الفصل التالي','Next chapter'),'','arrow-left',function () {
+        var continueButton = button(text('الفصل التالي','Next chapter'),'',doc.documentElement.lang === 'en' ? 'arrow-right' : 'arrow-left',function () {
           selected=next; expanded=next; render(section,info);
           var target=section.querySelector('.lf-chapter-item.is-expanded'); if(target) target.scrollIntoView({block:'start'});
         });
@@ -428,7 +428,7 @@
         if (!review || !review.rating) { summary.appendChild(icon('feather', 15)); summary.appendChild(el('span', '', review && review.comment ? 'علّقت' : 'قيّم الآن')); }
         copy.appendChild(summary);
         var trailing = el('span', 'lf-chapter-trailing');
-        trailing.appendChild(icon(expanded === number ? 'chevron-down' : 'chevron-left', 16));
+        trailing.appendChild(icon(expanded === number ? 'chevron-down' : doc.documentElement.lang === 'en' ? 'chevron-right' : 'chevron-left', 16));
         row.appendChild(trailing);
         item.appendChild(row);
         if (info.total) {
@@ -563,7 +563,7 @@
       if (menu) { dismissMenu(); return; }
       menu = el('div', 'lf-chapter-more-menu'); menu.setAttribute('role', 'menu');
       [['تقييم الشخصيات', '.lf-character-action-button:not(.lf-topchars-action-button)', 'users'],
-        ['تغيير الغلاف', 'button[title="تغيير الغلاف"]', 'image'],
+        ['تغيير الغلاف', 'button[title="تغيير الغلاف"],button[title="Change cover"]', 'image'],
         ['ترتيب الشخصيات', '.lf-topchars-action-button', 'list-ordered']].forEach(function (choice) {
         var target = actions.querySelector(choice[1]); if (!target) return;
         var item = button(choice[0], '', choice[2], function () { dismissMenu(); more.focus(); target.click(); });
@@ -575,7 +575,8 @@
     toolbar.appendChild(more);
     var synopsis = actions.parentNode.querySelector('.lf-detail-scores');
     var relations = actions.parentNode.querySelector('.lf-work-relations');
-    actions.parentNode.insertBefore(toolbar, relations || synopsis && synopsis.nextElementSibling || actions);
+    var slot=actions.parentNode.querySelector('.lf-work-action-slot');
+    if(slot)slot.appendChild(toolbar);else actions.parentNode.insertBefore(toolbar, relations || synopsis && synopsis.nextElementSibling || actions);
     refreshIcons(toolbar);
     toolbar.addEventListener('keydown', function (event) {
       if (event.key !== 'Escape') return;

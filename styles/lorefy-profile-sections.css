@@ -243,3 +243,20 @@ html[dir='ltr'] .lf-profile-section-button.is-back > svg { transform: rotate(180
   .lf-profile-list-toolbar .lf-profile-section-button { font-size: 11px; padding-inline: 6px; }
   .lf-profile-ranked-list:not(.is-editing) > li { gap: 10px; }
 }
+
+/* One prominent creation action for both owner tabs. */
+.lf-profile-section-head:has(.is-profile-create) { flex-direction:column;align-items:stretch;gap:14px; }
+.lf-profile-section-panel .is-profile-create { width:100%!important;min-height:52px!important;font-size:16px!important;border-radius:12px!important;background:var(--ui-action)!important;color:var(--ui-on-action)!important; }
+.lf-profile-list-kind-intro { color:var(--ui-muted);font-size:14px;line-height:1.5;margin:12px 0 20px; }
+.lf-profile-list-kind { display:flex;align-items:center;gap:14px;width:100%;padding:20px 16px;margin:12px 0;text-align:start;border:1px solid var(--ui-line);border-radius:14px;background:var(--ui-surface);color:var(--ui-ink);font:inherit;cursor:pointer; }
+.lf-profile-list-kind>svg { width:24px;height:24px;flex-shrink:0;color:var(--ui-action); }
+.lf-profile-list-kind>span { flex:1;display:flex;flex-direction:column;gap:5px;min-width:0; }
+.lf-profile-list-kind small { color:var(--ui-muted);font-size:13px; }
+html[dir='rtl'] .lf-profile-list-kind>svg:last-child { transform:rotate(180deg); }
+
+/* These shortcuts leave the overview; underlying preference/recap records stay intact. */
+.lf-profile-preference-boards,.lf-extra-wrap,.lf-public-profile-reviews { display:none!important; }
+.lf-profile-review-entry { min-width:0; }
+.lf-profile-review-entry .lf-review-card { margin:0; }
+
+.lf-app.lf-app.lf-app.lf-app .lf-profile-post-feed .lf-rating-star > span > svg{min-width:16px!important;max-width:none!important;width:16px!important;height:16px!important;}

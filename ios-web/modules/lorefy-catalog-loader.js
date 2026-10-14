@@ -9,7 +9,7 @@
   var loaded = new Set((global.LOREFY_INITIAL_CATALOG_PARTS || []).map(Number));
   var loading = new Map();
   var activeQueue = Promise.resolve();
-  var version = "20261011-explore-v2";
+  var version = "20261013-discover-reviewed-v2";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
@@ -34,6 +34,16 @@
   var searchError = false;
   var browseParts = [];
   var browseCursor = 0;
+  var queryWarmCursor=0,queryWarmPending=false;
+  function warmQueryIndexes(){
+    if(queryWarmPending || !global.LorefyCatalogData?.prepareSearchIndexes)return;
+    queryWarmPending=true;
+    idle(function step(){
+      var records=global.LorefyMangaData||[],end=Math.min(queryWarmCursor+100,records.length);
+      global.LorefyCatalogData.prepareSearchIndexes(records.slice(queryWarmCursor,end));queryWarmCursor=end;
+      if(queryWarmCursor<records.length)global.setTimeout(function(){idle(step);},0);else queryWarmPending=false;
+    });
+  }
   function ensureSearchFields(start) {
     var records = global.LorefyMangaData || [];
     for (var index = start || 0; index < records.length; index += 1) {
@@ -45,6 +55,7 @@
     }
   }
   ensureSearchFields();
+  warmQueryIndexes();
   Array.prototype.forEach.call(doc.scripts || [], function (script) {
     var match = String(script.src || "").match(/lorefy-data-part(\d+)\.js/i);
     if (match) loaded.add(Number(match[1]));
@@ -110,6 +121,7 @@
       script.dataset.lorefyCatalogPart = String(part);
       script.onload = function () {
         ensureSearchFields(previousLength);
+        warmQueryIndexes();
         loaded.add(part);
         loading.delete(part);
         // Coalesce re-indexing work so loading all catalog parts does not freeze the UI.
@@ -531,6 +543,15 @@
       });
     },
     loadMore: loadMore,
+    // Explore's format page uses the same shard/search pipeline without
+    // leaving Explore or adding redundant global format controls.
+    loadFormat: function (type, query) {
+      var normalizedType = planner.normalizeRouteType(type);
+      browseParts = planner.typeParts(manifest, normalizedType);
+      browseCursor = 0;
+      scheduleSearch(query, type);
+      return enqueue(planner.initialCatalogPlan(manifest, {type: normalizedType}), {gapMs: 40});
+    },
     loadType: function (type) { return enqueue(planner.remainingCatalogPlan(manifest, type, loaded)); },
     loadAll: loadAll,
     refreshRoute: loadRoute,

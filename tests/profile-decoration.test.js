@@ -129,7 +129,7 @@ function shopHarness(selection=null) {
   const request={owner:'a',profile:{name:'A'}};
   const root={document:{readyState:'loading',addEventListener:()=>{},documentElement:{lang:'en'},querySelector:()=>({}),activeElement:null},
     LorefyBackend:{mode:'demo',user:{id:'a'},onAuth:fn=>{auth=fn;}},localStorage:{getItem:()=>null},sessionStorage:{getItem:()=>null},
-    addEventListener:()=>{},removeEventListener:()=>{},React:{useState:initial=>{const index=state++;return [index===0?request:index===1?selection:initial,value=>changes.push({index,value})];},
+    addEventListener:()=>{},removeEventListener:()=>{},React:{useState:initial=>{const index=state++;return [index===0?request:index===2?selection:initial,value=>changes.push({index,value})];},
       useRef:()=>({current:null}),useEffect:fn=>effects.push(fn),createElement:(type,props,...children)=>{const node={type,props:props||{},children};nodes.push(node);return node;}},
     ReactDOM:{createPortal:content=>content}};
   vm.runInNewContext(read('modules/lorefy-profile-shop.js'),{window:root,URLSearchParams});
@@ -150,8 +150,8 @@ test('new bundle and part previews clear stale success messages',()=>{
   const catalog=shopHarness();
   const node=catalog.nodes.find(node=>node.type===catalog.root.LorefyProfileShop.Catalog);
   node.props.onSelect('blossom');
-  assert.ok(catalog.changes.some(change=>change.index===8&&change.value===''));
+  assert.ok(catalog.changes.some(change=>change.index===9&&change.value===''));
   const detail=shopHarness('observatory');
   detail.nodes.find(node=>node.type==='button'&&node.children.some(child=>child&&child.children&&child.children.includes('Avatar frame'))).props.onClick();
-  assert.ok(detail.changes.some(change=>change.index===8&&change.value===''));
+  assert.ok(detail.changes.some(change=>change.index===9&&change.value===''));
 });

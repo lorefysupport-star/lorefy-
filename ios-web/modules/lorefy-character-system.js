@@ -2276,8 +2276,48 @@
     return cast;
   }
 
+  var nameSearchCache = new Map();
+  function characterMatches(character, query) {
+    var normalize=global.LorefyCatalogData && global.LorefyCatalogData.normalizeQuery || function(v){return String(v||'').toLowerCase().trim();};
+    return normalize([character.name,character.latin].concat(character.aliases||[]).join(' ')).indexOf(normalize(query))!==-1;
+  }
+  function cachedCharacterMatches(query, works) {
+    var result=[],cache=readCache(),byId=new Map((works||[]).map(function(w){return [String(w.id),w];}));
+    Object.keys(cache).forEach(function(id){if(!byId.has(id))return;var entry=cache[id],cast=entry&&(!entry.ts||Date.now()-entry.ts<=CACHE_TTL)&&entry.cast;if(cast && cast.some(function(c){return characterMatches(c,query);}))result.push({workId:id,cast:cast});});
+    return result;
+  }
+  async function searchCharacters(query, works, options) {
+    options=options||{};
+    query=String(query||'').trim().slice(0,100);if(query.length<2)return [];
+    var cached=cachedCharacterMatches(query,works),key=query.toLowerCase(),remote=nameSearchCache.get(key);
+    if(!remote){
+      var request='query($search:String){Page(perPage:50){characters(search:$search,sort:FAVOURITES_DESC){id name{full native alternative} image{large medium} media(type:MANGA,perPage:10){nodes{id idMal title{romaji english native}}}}}}';
+      var response=await withTimeout(fetch(catalogEndpoint('anilist','https://graphql.anilist.co'),{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({query:request,variables:{search:query}})}),10000,'character search');
+      if(!response.ok)throw new Error('Character search unavailable');
+      var json=await response.json();if(json.errors)throw new Error('Character search unavailable');
+      remote=json.data && json.data.Page && json.data.Page.characters || [];nameSearchCache.set(key,remote);
+      if(nameSearchCache.size>40)nameSearchCache.delete(nameSearchCache.keys().next().value);
+    }
+    if(options.active && !options.active())return [];
+    var found=new Map(cached.map(function(row){return [row.workId,row];}));
+    var byMal=new Map(),byAni=new Map(),byTitle=new Map(),cache=readCache(),changed=false;
+    (works||[]).forEach(function(w){var keys=sourceKeysForWork(w);if(keys.malId)byMal.set(keys.malId,w);if(keys.anilistId)byAni.set(keys.anilistId,w);workTitleCandidates(w).forEach(function(t){byTitle.set(String(t).toLowerCase(),w);});});
+    remote.forEach(function(character){(character.media && character.media.nodes || []).forEach(function(media){
+      var title=media.title||{},work=byMal.get(String(media.idMal))||byAni.get(String(media.id))||byTitle.get(String(title.english||'').toLowerCase())||byTitle.get(String(title.romaji||'').toLowerCase());
+      if(!work)return;
+      var normalized=normalizeAniListEdges([{node:character}]);normalized.forEach(function(c){c.aliases=[character.name.native].concat(character.name.alternative||[]).filter(Boolean);});
+      var id=String(work.id),old=cache[id],cast=dedupeCast((old && old.cast || catalogCast(work)).concat(normalized));
+      cache[id]={cast:cast,source:'AniList',complete:!!(old&&old.complete),completionVersion:old&&old.complete?CACHE_COMPLETION_VERSION:0,ts:Date.now()};changed=true;
+      found.set(id,{workId:id,cast:cast});
+    });});
+    if(changed)writeCache(cache);
+    return Array.from(found.values());
+  }
   global.LorefyCharacterSystem = {
     sourceKeysForWork: sourceKeysForWork,
+    characterMatches:characterMatches,
+    cachedCharacterMatches:cachedCharacterMatches,
+    searchCharacters:searchCharacters,
     normalizeJikanRows: normalizeJikanRows,
     normalizeJikanPictureRows: normalizeJikanPictureRows,
     normalizeJikanCharacterImageRows: normalizeJikanCharacterImageRows,

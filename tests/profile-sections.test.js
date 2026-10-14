@@ -121,3 +121,11 @@ test('profile header uses an adaptive grid and a single active tab underline', (
   assert.match(css,/\.is-profile-social-stat\s*\{\s*display:\s*none !important/);
   assert.match(css,/button\[aria-selected='true'\]\s*\{[^}]*border-bottom-color:\s*var\(--ui-action\)/s);
 });
+
+test('profile Posts combines reviews and posts chronologically without borrowing another reader or duplicating a review',()=>{
+ const posts=[{id:'p',user_id:'a',created_at:'2026-10-13T10:00:00Z'},{id:'reply',user_id:'a',parent_id:'p'}];
+ const reviews=[{id:'r',userId:'me',ts:Date.parse('2026-10-13T11:00:00Z')},{id:'r',userId:'me',ts:Date.now()},{id:'other',userId:'b',ts:Date.now()}];
+ assert.deepEqual(api.profileEntries(posts,reviews,{id:'a'},true).map(e=>e.id),['review:r','post:p']);
+ assert.deepEqual(api.profileEntries(posts,reviews,{id:'b'},false).map(e=>e.id),['review:other']);
+ assert.deepEqual(api.profileEntries(posts,reviews,{id:'c'},false),[]);
+});

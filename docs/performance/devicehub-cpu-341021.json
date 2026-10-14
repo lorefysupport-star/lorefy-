@@ -1,0 +1,327 @@
+{
+  "durationSeconds": 30.620505,
+  "source": "Instruments Time Profiler,1ms weighted running samples; one-core estimate, not UI latency",
+  "processes": {
+    "18971": {
+      "process": "com.apple.WebKit.WebContent (18971)",
+      "samples": 1097,
+      "cpuMs": 1097.0,
+      "mainThreadCpuMs": 865.0,
+      "leafFunctions": [
+        [
+          "0x1d68f9205",
+          23.0
+        ],
+        [
+          "_platform_memmove",
+          22.0
+        ],
+        [
+          "0x1d68f9055",
+          21.0
+        ],
+        [
+          "0x1d77507f9",
+          14.0
+        ],
+        [
+          "0x1d76e2379",
+          13.0
+        ],
+        [
+          "0x1d6989da5",
+          13.0
+        ],
+        [
+          "mach_msg2_trap",
+          11.0
+        ],
+        [
+          "0x1dcb42dd9",
+          10.0
+        ],
+        [
+          "0x115d1b595",
+          8.0
+        ],
+        [
+          "madvise",
+          8.0
+        ],
+        [
+          "start_wqthread",
+          7.0
+        ],
+        [
+          "0x1d6992fe5",
+          6.0
+        ]
+      ],
+      "inclusiveFunctions": [
+        [
+          "_EXRunningLibXPCServiceExtension.resume()",
+          865.0
+        ],
+        [
+          "-[NSRunLoop(NSRunLoop) runMode:beforeDate:]",
+          865.0
+        ],
+        [
+          "ExtensionMain.start(with:)",
+          865.0
+        ],
+        [
+          "start_sim",
+          865.0
+        ],
+        [
+          "start",
+          865.0
+        ],
+        [
+          "-[NSRunLoop(NSRunLoop) run]",
+          865.0
+        ],
+        [
+          "_xpc_main",
+          865.0
+        ],
+        [
+          "_xpc_objc_main",
+          865.0
+        ],
+        [
+          "NSExtensionMain",
+          865.0
+        ],
+        [
+          "xpc_main",
+          865.0
+        ],
+        [
+          "EXExtensionMain(_:_:)",
+          865.0
+        ],
+        [
+          "_EXRunningExtension.start(with:)",
+          865.0
+        ],
+        [
+          "_CFRunLoopRunSpecificWithOptions",
+          864.0
+        ],
+        [
+          "__CFRunLoopRun",
+          860.0
+        ],
+        [
+          "__CFRunLoopDoTimers",
+          681.0
+        ],
+        [
+          "__CFRUNLOOP_IS_CALLING_OUT_TO_A_TIMER_CALLBACK_FUNCTION__",
+          680.0
+        ],
+        [
+          "__CFRunLoopDoTimer",
+          680.0
+        ],
+        [
+          "0x1dc8291e3",
+          655.0
+        ],
+        [
+          "0x1dcfbb4ff",
+          653.0
+        ],
+        [
+          "0x1d82f72b7",
+          602.0
+        ]
+      ],
+      "bySecondCpuMs": {
+        "0": 3.0,
+        "4": 2.0,
+        "7": 1.0,
+        "8": 1.0,
+        "9": 2.0,
+        "10": 1.0,
+        "11": 1.0,
+        "12": 2.0,
+        "20": 3.0,
+        "23": 2.0,
+        "24": 7.0,
+        "25": 83.0,
+        "26": 77.0,
+        "27": 9.0,
+        "28": 598.0,
+        "29": 261.0,
+        "30": 44.0
+      },
+      "approxAverageCorePercent": 3.58
+    },
+    "18963": {
+      "process": "App (18963)",
+      "samples": 230,
+      "cpuMs": 230.0,
+      "mainThreadCpuMs": 162.0,
+      "leafFunctions": [
+        [
+          "swift_conformsToProtocolMaybeInstantiateSuperclasses(swift::TargetMetadata<swift::InProcess> const*, swift::TargetProtocolDescriptor<swift::InProcess> const*, bool)",
+          20.0
+        ],
+        [
+          "mach_msg2_trap",
+          13.0
+        ],
+        [
+          "objc_msgSend",
+          11.0
+        ],
+        [
+          "__openat",
+          8.0
+        ],
+        [
+          "DYLD-STUB$$pthread_getspecific",
+          6.0
+        ],
+        [
+          "_platform_memmove",
+          5.0
+        ],
+        [
+          "mach_o::UnsafeHeader::forEachLoadCommand(void (load_command const*, bool&) block_pointer) const",
+          4.0
+        ],
+        [
+          "pthread_setspecific",
+          4.0
+        ],
+        [
+          "madvise",
+          4.0
+        ],
+        [
+          "invocation function for block in mach_o::UnsafeHeader::forEachSegment(void (mach_o::UnsafeHeader::SegmentInfo const&, bool&) block_pointer) const",
+          3.0
+        ],
+        [
+          "<deduplicated_symbol>",
+          3.0
+        ],
+        [
+          "start_wqthread",
+          3.0
+        ]
+      ],
+      "inclusiveFunctions": [
+        [
+          "_CFRunLoopRunSpecificWithOptions",
+          169.0
+        ],
+        [
+          "__CFRunLoopRun",
+          169.0
+        ],
+        [
+          "start_sim",
+          162.0
+        ],
+        [
+          "main",
+          162.0
+        ],
+        [
+          "start",
+          162.0
+        ],
+        [
+          "0x1c5535e2f",
+          162.0
+        ],
+        [
+          "GSEventRunModal",
+          162.0
+        ],
+        [
+          "__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__",
+          80.0
+        ],
+        [
+          "__CFRunLoopDoSource1",
+          80.0
+        ],
+        [
+          "_dispatch_client_callout",
+          61.0
+        ],
+        [
+          "0x25a82e363",
+          56.0
+        ],
+        [
+          "__CFMachPortPerform",
+          56.0
+        ],
+        [
+          "0x1c3d97847",
+          55.0
+        ],
+        [
+          "0x1c47ef28f",
+          55.0
+        ],
+        [
+          "__CFRunLoopDoSources0",
+          52.0
+        ],
+        [
+          "__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__",
+          51.0
+        ],
+        [
+          "__CFRunLoopDoSource0",
+          51.0
+        ],
+        [
+          "start_wqthread",
+          39.0
+        ],
+        [
+          "<deduplicated_symbol>",
+          38.0
+        ],
+        [
+          "0x1d68cd707",
+          37.0
+        ]
+      ],
+      "bySecondCpuMs": {
+        "1": 1.0,
+        "11": 8.0,
+        "24": 7.0,
+        "25": 13.0,
+        "26": 4.0,
+        "27": 13.0,
+        "28": 161.0,
+        "29": 10.0,
+        "30": 13.0
+      },
+      "approxAverageCorePercent": 0.75
+    }
+  },
+  "hangTable": "empty, instrument warning prevents treating this as proof of no hangs",
+  "build": "341021",
+  "webkitJavaScriptCoreInclusiveSampleMs": 902,
+  "limits": [
+    "Weighted running CPU samples, not frame latency or end-to-end interaction time",
+    "Sample window contains idle time; averages do not imply smoothness",
+    "Animation Hitches unsupported on simulator",
+    "Activity Monitor service unavailable on simulator",
+    "App Launch lifecycle export had zero rows, so no launch-duration metric",
+    "Automated Home swipes did not visibly move feed; scrolling was not validated",
+    "Device Hub window became unavailable during a follow-up interaction test",
+    "JIT/JavaScript function names not resolved; no specific function identified"
+  ]
+}

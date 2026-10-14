@@ -20975,7 +20975,7 @@
     ZoomOut: ZoomOut
   });
 
-  const createIcons = ({ icons = iconAndAliases, nameAttr = "data-lucide", attrs = {} } = {}) => {
+  const createIcons = ({ icons = iconAndAliases, nameAttr = "data-lucide", attrs = {}, root = document, nodes } = {}) => {
     if (!Object.values(icons).length) {
       throw new Error(
         "Please provide an icons object.\nIf you want to use all the icons you can import it like:\n `import { createIcons, icons } from 'lucide';\nlucide.createIcons({icons});`"
@@ -20984,12 +20984,19 @@
     if (typeof document === "undefined") {
       throw new Error("`createIcons()` only works in a browser environment.");
     }
-    const elementsToReplace = document.querySelectorAll(`[${nameAttr}]`);
+    // Lorefy: honor caller scope and hydrate placeholders once. Replacing every
+    // existing SVG triggers all DOM observers and reloads otherwise stable UI.
+    const roots = nodes || [root];
+    const elementsToReplace = new Set();
+    roots.forEach((host) => {
+      if (host.matches?.(`[${nameAttr}]`)) elementsToReplace.add(host);
+      host.querySelectorAll?.(`[${nameAttr}]`).forEach((element) => elementsToReplace.add(element));
+    });
     Array.from(elementsToReplace).forEach(
-      (element) => replaceElement(element, { nameAttr, icons, attrs })
+      (element) => { if (String(element.tagName).toLowerCase() !== "svg") replaceElement(element, { nameAttr, icons, attrs }); }
     );
     if (nameAttr === "data-lucide") {
-      const deprecatedElements = document.querySelectorAll("[icon-name]");
+      const deprecatedElements = roots.flatMap((host) => Array.from(host.querySelectorAll?.("[icon-name]") || []));
       if (deprecatedElements.length > 0) {
         console.warn(
           "[Lucide] Some icons were found with the now deprecated icon-name attribute. These will still be replaced for backwards compatibility, but will no longer be supported in v1.0 and you should switch to data-lucide"

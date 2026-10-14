@@ -52,7 +52,7 @@ test("iOS push registration and custom-scheme links are wired into the native sh
 
   assert.equal(pkg.dependencies["@capacitor/push-notifications"], "8.1.2");
   assert.match(pkg.scripts["ios:sync"], /fix-capacitor-spm-paths/);
-  assert.deepEqual(capacitor.plugins.PushNotifications.presentationOptions, ["badge", "sound", "banner", "list"]);
+  assert.deepEqual(capacitor.plugins.PushNotifications.presentationOptions, ["badge", "sound"]);
   assert.match(delegate, /didRegisterForRemoteNotificationsWithDeviceToken/);
   assert.match(delegate, /capacitorDidRegisterForRemoteNotifications/);
   assert.match(delegate, /didFailToRegisterForRemoteNotificationsWithError/);

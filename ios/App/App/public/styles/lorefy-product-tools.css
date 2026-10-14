@@ -60,8 +60,8 @@
 }
 
 .lf-product-action-icon {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -135,7 +135,8 @@
 .lf-product-review-menu {
   position: absolute;
   top: 12px;
-  left: 12px;
+  left: auto;
+  right: 12px;
   z-index: 4;
   width: 34px;
   height: 34px;
@@ -144,7 +145,7 @@
   justify-content: center;
   border: 0;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--lf-surface) 88%, transparent);
+  background: transparent;
   color: var(--lf-muted);
   cursor: pointer;
 }

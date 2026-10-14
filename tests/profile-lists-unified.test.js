@@ -1,0 +1,21 @@
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+test('existing work and character lists remain readable without migration and open their original editors',()=>{
+ const source=fs.readFileSync('modules/lorefy-growth-features.js','utf8');
+ const start=source.indexOf('global.LorefyLegacyLists = {');
+ const end=source.indexOf('  function openListsHub',start);
+ const calls=[],global={LorefyCoverAPI:{primary:()=> 'https://example.com/cover.jpg'}};
+ const works=[{id:'a',name:'My reads',works:['naruto']}],chars=[{id:'b',title:'Naruto characters',chars:[{id:'n',name:'Naruto',img:'https://example.com/n.jpg'}]}];
+ vm.runInNewContext(source.slice(start,end),{global,mlLists:()=>works,clLists:()=>chars,mlWorkBy:()=>({title:'Naruto'}),mlTitleOf:w=>w.title,openListsHub:opts=>calls.push(opts)});
+ const rows=global.LorefyLegacyLists.rows();
+ assert.deepEqual(Array.from(rows,r=>r.kind),['works','characters']);
+ assert.equal(rows[0].items[0].image,'https://example.com/cover.jpg');
+ assert.equal(rows[1].items[0].name,'Naruto');
+ assert.ok(rows.every(r=>!r.isPublic));
+ rows.forEach(r=>global.LorefyLegacyLists.open(r));
+ assert.equal(calls[0].listId,'a');assert.equal(calls[1].charListId,'b');
+ assert.deepEqual(works,[{id:'a',name:'My reads',works:['naruto']}]);
+ assert.equal(chars[0].chars.length,1);
+});
