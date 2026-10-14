@@ -9,7 +9,7 @@ html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile
   grid-template-areas: 'name' 'handle' 'bio' 'social' 'metrics' 'tabs' 'favorites';
   grid-template-rows: minmax(38px,auto) minmax(26px,auto) auto auto auto auto auto;
 }
-html:root:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-identity:has(.lf-profile-section-tabs) > .lf-profile-bio { margin: 8px 0 !important; }
+html:root:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-identity:has(.lf-profile-section-tabs) > .lf-profile-bio { margin: var(--profile-frame-bio-gap,8px) 0 8px !important; }
 html:root:root:root:root:root:root:root .lf-profile-identity:has(.lf-profile-section-tabs) > .lf-profile-top-works-head {
   min-height: 32px !important; margin-bottom: 2px !important;
 }
@@ -64,7 +64,7 @@ html:root:root:root:root:root:root:root .lf-reader-full[data-profile-layout='imm
   width: 116px !important; height: 116px !important; margin: 0 !important;
 }
 html:root:root:root:root:root:root:root .lf-reader-full[data-profile-layout='immersive'] .lf-reader-identity h1 { text-align: left; }
-html:root:root:root:root:root:root:root .lf-reader-full[data-profile-layout='immersive'] .lf-reader-bio { margin: 8px 0 6px !important; }
+html:root:root:root:root:root:root:root .lf-reader-full[data-profile-layout='immersive'] .lf-reader-bio { margin: var(--profile-frame-bio-gap,8px) 0 6px !important; }
 html:root:root:root:root:root:root:root .lf-reader-full .lf-profile-section-tabs {
   margin: 0 var(--reader-inline) 0;
 }
@@ -88,7 +88,7 @@ html:root:root:root:root:root:root:root .lf-reader-full > .lf-reader-banner {
   }
   html:root:root:root:root:root:root:root .lf-reader-full:not([data-profile-layout='immersive']):has(.has-decoration) .lf-reader-identity { --identity-avatar-space: 140px; }
   html:root:root:root:root:root:root:root .lf-reader-full:not([data-profile-layout='immersive']) .lf-reader-identity > .lf-reader-avatar {
-    position: absolute; top: -28px; right: var(--reader-inline); margin: 0 !important;
+    position: absolute; top: -28px; right: max(var(--reader-inline),var(--profile-avatar-frame-inset,0px)); margin: 0 !important;
   }
   html:root:root:root:root:root:root:root .lf-reader-full:not([data-profile-layout='immersive']) .lf-reader-identity h1 {
     grid-area: name; width: calc(100% - var(--identity-avatar-space)); align-self: end; justify-self: left; margin: 0; text-align: left;

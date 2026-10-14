@@ -8,7 +8,7 @@
     {id:'ember-tiger',name:'Ember Tiger',accent:'#edaa51',second:'#f17342',dark:'#30241e',type:'ember'},
     {id:'mint-raccoon',name:'Mint Raccoon',accent:'#9cd7bf',second:'#d6e4df',dark:'#20312c',type:'leaf'}
   ];
-  const art = {}, fields = {};
+  const art = {};
   function imageAt(path) {
     return new Promise((resolve,reject) => {
       const im = new Image(); im.onload = () => resolve(im);
@@ -41,30 +41,14 @@
     c.closePath();c.fill();c.stroke();c.restore();
   }
 
-  // Deform ornament regions only; the identity aperture remains geometrically stable.
-  function deform(im,kind,t) {
-    const key=im.src+kind;let f=fields[key];
-    if(!f){const canvas=document.createElement('canvas');canvas.width=im.width;canvas.height=im.height;f=fields[key]={canvas,ctx:canvas.getContext('2d')};}
-    if(f.time===t)return f.canvas;f.time=t;const c=f.ctx,w=im.width,h=im.height,p=t/LOOP*TAU;c.clearRect(0,0,w,h);
-    const top=Math.round(h*(kind==='avatar'?.25:.14)),bottom=Math.round(h*(kind==='avatar'?.18:.12));
-    c.drawImage(im,0,top,w,h-top-bottom,0,top,w,h-top-bottom);
-    c.drawImage(im,0,0,w,top,Math.sin(p*2)*w*.008,Math.sin(p*2+.4)*h*.003,w,top);
-    c.drawImage(im,0,h-bottom,w,bottom,Math.sin(p*2+1.4)*w*.009,h-bottom,w,bottom);return f.canvas;
-  }
-  function pageNineSlice(c,im,x,y,w,h) {
-    const sh=im.height,sw=im.width,top=sh*.23,bottom=sh*.15,scale=w/sw;
-    const dh1=top*scale,dh3=bottom*scale;
-    c.drawImage(im,0,0,sw,top,x,y,w,dh1);
-    c.drawImage(im,0,top,sw,sh-top-bottom,x,y+dh1,w,h-dh1-dh3);
-    c.drawImage(im,0,sh-bottom,sw,bottom,x,y+h-dh3,w,dh3);
-  }
   function overlay(c,th,kind,t,w,h) {
-    const im=art[th.id][kind],animated=deform(im,kind,t);
-    if(kind==='page') {const pad=w*.035;pageNineSlice(c,animated,pad,pad,w-pad*2,h-pad*2);}
+    const im=art[th.id][kind];
+    if(kind==='page') window.LorefyFrameMotion.paintPageArt(c,im,art[th.id].pageBounds,t,w,h,th.accent);
     else {
       const ap=art[th.id].aperture,s=.86;
-      c.drawImage(animated,w*(.5-ap.x*s),h*(.54-ap.y*s),w*s,h*s);
+      c.drawImage(im,w*(.5-ap.x*s),h*(.54-ap.y*s),w*s,h*s);
     }
+    c.save();if(kind==='page')window.LorefyFrameMotion.clipPageEffects(c,w,h);
     const phase=t/LOOP*TAU;
     for(let i=0;i<(kind==='page'?16:10);i++) {
       let x,y,r,ang;
@@ -73,20 +57,21 @@
         x=w*(.5+.375*Math.cos(a));y=h*(.54+.37*Math.sin(a));r=w*(.007+.002*(i%3));ang=a+phase;
       } else {
         const progress=(i/16+t/LOOP)%1;
-        x=(i%2?w*.965:w*.035)+Math.sin(phase+i)*w*.009;
+        x=(i%2?w-10:10)+Math.sin(phase+i)*2;
         y=h*(.07+progress*.86);r=w*(.009+.003*(i%3));ang=phase+i;
       }
       let alpha=.22+.66*(.5+.5*Math.sin(phase*2+i*1.9));
       if(kind==='page') {const p=(i/16+t/LOOP)%1;alpha*=smooth(0,.07,p)*(1-smooth(.93,1,p));}
       token(c,x,y,r,ang,alpha,th);
     }
+    c.restore();
   }
   const pending={};
   async function load(id){
     if(pending[id])return pending[id];const th=themes.find(a=>a.id===id);if(!th)throw Error('Unknown collection');
-    pending[id]=(async()=>{const prefix='launch/decorations/originals/'+id+'/';const avatar=await imageAt(prefix+'avatar.png');art[id]={avatar,page:await imageAt(prefix+'page.png'),aperture:aperture(avatar)};
+    pending[id]=(async()=>{const prefix='launch/decorations/originals/'+id+'/';const avatar=await imageAt(prefix+'avatar.png'),page=await imageAt(prefix+'page.png');art[id]={avatar,page,pageBounds:window.LorefyFrameMotion.measurePageArt(page,id==='ribbon-bunny'),aperture:aperture(avatar)};
       if(th.mode==='fox'||th.mode==='sleep'){const fox=await imageAt(prefix+'fox.png');art[id].fox=fox;art[id].foxBounds=measure(fox).bounds;}return true;})();return pending[id];
   }
   window.LorefyOriginalRenderers=window.LorefyOriginalRenderers||{};
-  window.LorefyOriginalRenderers["original"]={load,paint(c,id,kind,t,w,h){if(art[id])overlay(c,themes.find(a=>a.id===id),kind,t%LOOP,w,h);}};
+  window.LorefyOriginalRenderers["original"]={load,layout(id,w,h){return window.LorefyFrameMotion.pageLayout(art[id].pageBounds,w,h);},paint(c,id,kind,t,w,h){if(art[id])overlay(c,themes.find(a=>a.id===id),kind,t%LOOP,w,h);}};
 })();

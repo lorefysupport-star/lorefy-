@@ -379,12 +379,22 @@
           if (pack) {
             if (!ring) {ring = root.document.createElement('span');ring.className = 'lf-decoration-avatar-frame lf-shop-frame-art';ring.setAttribute('aria-hidden','true');avatar.appendChild(ring);}
             styleNode(ring,pack);avatar.classList.add('has-decoration');
+            const geometry=frameGeometry(pack.id);
+            avatar.style.setProperty('--profile-decoration-avatar-size',Math.min(104,Math.round(176*geometry.size))+'px');
+            const overhang=ring.offsetWidth*(1-geometry.cx)-avatar.clientWidth/2;
+            avatar.style.setProperty('--profile-avatar-frame-inset',Math.max(40,Math.ceil(overhang+14))+'px');
+            const bio=page.querySelector('.lf-profile-bio,.lf-reader-bio');
+            if(bio && page.dataset.profileLayout==='immersive'){
+              const baseline=bio.getBoundingClientRect().top-parseFloat(root.getComputedStyle(bio).marginTop||0);
+              page.style.setProperty('--profile-frame-bio-gap',Math.max(24,Math.ceil(ring.getBoundingClientRect().bottom-baseline+8))+'px');
+            } else page.style.removeProperty('--profile-frame-bio-gap');
             if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(ring,{...avatarMotion(pack),...(pack.renderer?{original:{id:pack.artId,renderer:pack.renderer}}:{})},'avatar');
-          } else {if (ring) ring.remove();avatar.classList.remove('has-decoration');}
+          } else {if (ring) ring.remove();avatar.classList.remove('has-decoration');avatar.style.removeProperty('--profile-avatar-frame-inset');avatar.style.removeProperty('--profile-decoration-avatar-size');page.style.removeProperty('--profile-frame-bio-gap');}
         }
         let pin = page.querySelector(':scope > .lf-decoration-page-pin');
         const pagePack = findBundle(choice.page);
         page.classList.toggle('has-page-decoration',!!pagePack);
+        page.classList.toggle('has-original-page-decoration',!!(pagePack&&pagePack.renderer));
         if (pagePack) {
           if (!pin) {
             pin = root.document.createElement('div');pin.className = 'lf-decoration-page-pin';pin.setAttribute('aria-hidden','true');
