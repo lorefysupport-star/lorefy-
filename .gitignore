@@ -26,5 +26,8 @@ tools/.cache/
 
 .DS_Store
 Thumbs.db
+project-memory/.obsidian/
+project-memory/attachments/
+project-memory/*.tmp
 *.ipa
 *.zip

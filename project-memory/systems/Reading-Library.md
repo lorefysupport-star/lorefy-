@@ -1,0 +1,41 @@
+---
+kind: system
+status: source-reviewed
+date: 2026-10-14
+aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراءة", "مكتبة", "progress", "hours"]
+---
+# المكتبة والتقدم ومقاييس القراءة
+
+## الحقائق التي لا تختلط
+
+حالة العمل في المكتبة، checkpoint الفصول/الصفحات/المجلدات، إجمالي العمل في
+الكتالوج، وجلسة القراءة: مفاهيم مختلفة. [reading-metrics](../../modules/lorefy-reading-metrics.js)
+يحسب الإجماليات من التقدم المحفوظ للأعمال الموجودة بالمكتبة.
+
+الوقت المعروض **تقدير**: الفصل × 12 دقيقة، أو الصفحة × 1.5 عند غياب الفصول،
+أو المجلد × 90 عند غياب الاثنين. هذه تمثيلات بديلة لنفس العمل وليست أوقاتًا
+إضافية تُجمع معًا. الساعات تُقرّب من الدقائق. لا تسمّه وقت قراءة مقاسًا فعليًا.
+
+## العقد
+
+- عند إكمال عمل، يلتقط `completionCheckpoint` إجماليًا متاحًا في تلك اللحظة.
+- rendering لا يرفع تقدم القارئ كلما تغيّر إجمالي provider.
+- تهيئة عمل مكتمل قديم تتم فقط عند غياب checkpoint، وبشكل محفوظ لا متكرر على كل render.
+- تقييم قديم قد يملأ entry مفقودًا، لكن لا يلغي اختيار قراءة/توقف/حذف صريح.
+- نسبة مجهولة ليست نسبة مختلقة، والصفحات غير الفصول.
+
+## حدود المصدر
+
+[التطبيق الرئيسي](../../uploads/files/lorefy-app.js)،
+[library view](../../modules/lorefy-library-view.js)،
+[diary core](../../modules/lorefy-reading-diary-core.js)،
+[diary UI](../../modules/lorefy-reading-diary.js)،
+[chapter detail core](../../modules/lorefy-chapter-detail-core.js).
+
+الفحص: [metrics stability](../../tests/reading-metrics-stability.test.js)،
+[status policy](../../tests/reading-status-policy.test.js)،
+[checkpoint history](../../tests/reading-checkpoint-history.test.js)،
+[library](../../tests/library-view.test.js)، [diary](../../tests/reading-diary.test.js).
+
+[[decisions/Saved-Reading-Metrics]] | [[playbooks/Reading-Metrics]] |
+[[09-Data-Contracts]] | [[systems/Profiles-Lists]]

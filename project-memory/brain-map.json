@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {"id":"router","file":"08-Feature-Router.md","x":440,"y":0},
+    {"id":"boot","file":"systems/App-Boot.md","x":440,"y":380},
+    {"id":"accounts","file":"systems/Accounts-Sync.md","x":0,"y":760},
+    {"id":"catalog","file":"systems/Catalog-Search.md","x":440,"y":760},
+    {"id":"native","file":"systems/Native-Release.md","x":880,"y":760},
+    {"id":"reading","file":"systems/Reading-Library.md","x":0,"y":1140},
+    {"id":"explore","file":"systems/Explore-Works.md","x":440,"y":1140},
+    {"id":"community","file":"systems/Community-Notifications.md","x":880,"y":1140},
+    {"id":"profiles","file":"systems/Profiles-Lists.md","x":0,"y":1520},
+    {"id":"appearance","file":"systems/Appearance-Bundles.md","x":440,"y":1520},
+    {"id":"media","file":"systems/Language-Media.md","x":880,"y":1520},
+    {"id":"questions","file":"10-Open-Questions.md","x":440,"y":1900}
+  ],
+  "edges": [
+    {"from":"router","to":"boot","label":"Start with the canonical entry point"},
+    {"from":"boot","to":"accounts","label":"Auth gate and account ownership"},
+    {"from":"boot","to":"catalog","label":"Demand-loaded source data"},
+    {"from":"boot","to":"native","label":"Packaged web runtime"},
+    {"from":"accounts","to":"reading","label":"Saved library and checkpoints"},
+    {"from":"catalog","to":"explore","label":"Work identity and eligibility"},
+    {"from":"native","to":"community","label":"Foreground and APNs boundaries"},
+    {"from":"reading","to":"profiles","label":"Saved summary and favorites"},
+    {"from":"explore","to":"appearance","label":"Shared presentation contracts"},
+    {"from":"community","to":"media","label":"Localized content and share media"},
+    {"from":"profiles","to":"appearance","label":"Owner and visitor geometry"},
+    {"from":"profiles","to":"questions","label":"Public projection needs live evidence"},
+    {"from":"appearance","to":"questions","label":"Rights and commerce gates"},
+    {"from":"media","to":"questions","label":"Physical-device verification"}
+  ]
+}

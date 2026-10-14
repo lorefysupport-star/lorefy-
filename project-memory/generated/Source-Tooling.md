@@ -1,0 +1,72 @@
+---
+kind: source-index
+status: generated
+---
+<!-- project-memory:generated -->
+Observed: 2026-10-14T15:00:27.155Z
+Source commit: 524203ccd0311fdccd7925b9977ea86ab136f13c
+
+# Tooling Source Inventory
+
+Paths and sizes only. Inclusion does not mean the file was semantically reviewed or the feature was tested.
+
+- [scripts/upload-asc-build.mjs](../../scripts/upload-asc-build.mjs) (9284 bytes)
+- [tools/apple-release-audit.mjs](../../tools/apple-release-audit.mjs) (5830 bytes)
+- [tools/arabic-open-catalog-core.js](../../tools/arabic-open-catalog-core.js) (9468 bytes)
+- [tools/audit-arabic-library.js](../../tools/audit-arabic-library.js) (3786 bytes)
+- [tools/audit-library-coverage.js](../../tools/audit-library-coverage.js) (3684 bytes)
+- [tools/benchmark-explore-performance.cjs](../../tools/benchmark-explore-performance.cjs) (1582 bytes)
+- [tools/build-api-catalog-expansion.js](../../tools/build-api-catalog-expansion.js) (21237 bytes)
+- [tools/build-arabic-library.js](../../tools/build-arabic-library.js) (25378 bytes)
+- [tools/build-booktok-library.js](../../tools/build-booktok-library.js) (8600 bytes)
+- [tools/build-catalog-map.js](../../tools/build-catalog-map.js) (2699 bytes)
+- [tools/build-catalog-search-index.mjs](../../tools/build-catalog-search-index.mjs) (1881 bytes)
+- [tools/build-ios-simulator-local.sh](../../tools/build-ios-simulator-local.sh) (1281 bytes)
+- [tools/build-runtime-catalog.js](../../tools/build-runtime-catalog.js) (3550 bytes)
+- [tools/build-tester-lab.mjs](../../tools/build-tester-lab.mjs) (6203 bytes)
+- [tools/bump-preview-readers-assets.mjs](../../tools/bump-preview-readers-assets.mjs) (951 bytes)
+- [tools/bump-public-appearance-assets.mjs](../../tools/bump-public-appearance-assets.mjs) (1432 bytes)
+- [tools/bundle-beta-decorations.mjs](../../tools/bundle-beta-decorations.mjs) (1051 bytes)
+- [tools/catalog-bulk-core.js](../../tools/catalog-bulk-core.js) (3812 bytes)
+- [tools/catalog-expansion-core.js](../../tools/catalog-expansion-core.js) (7546 bytes)
+- [tools/catalog-import-lock.js](../../tools/catalog-import-lock.js) (676 bytes)
+- [tools/catalog-metadata-audit.js](../../tools/catalog-metadata-audit.js) (2532 bytes)
+- [tools/check-frame-art.ps1](../../tools/check-frame-art.ps1) (927 bytes)
+- [tools/enrich-mangadex-links.js](../../tools/enrich-mangadex-links.js) (1521 bytes)
+- [tools/fix-capacitor-spm-paths.mjs](../../tools/fix-capacitor-spm-paths.mjs) (611 bytes)
+- [tools/import-arabic-open-catalog.js](../../tools/import-arabic-open-catalog.js) (7942 bytes)
+- [tools/import-mangadex-metadata.js](../../tools/import-mangadex-metadata.js) (5698 bytes)
+- [tools/import-openlibrary-dump.js](../../tools/import-openlibrary-dump.js) (7124 bytes)
+- [tools/import-ranobedb-dump.js](../../tools/import-ranobedb-dump.js) (7297 bytes)
+- [tools/inspect-ranobedb-dump.js](../../tools/inspect-ranobedb-dump.js) (652 bytes)
+- [tools/lorefy-api-server.js](../../tools/lorefy-api-server.js) (15795 bytes)
+- [tools/lorefy-performance-local.js](../../tools/lorefy-performance-local.js) (1991 bytes)
+- [tools/patch-account-boundaries.js](../../tools/patch-account-boundaries.js) (4738 bytes)
+- [tools/patch-apple-sign-in.mjs](../../tools/patch-apple-sign-in.mjs) (2777 bytes)
+- [tools/patch-artwork-picker.mjs](../../tools/patch-artwork-picker.mjs) (1995 bytes)
+- [tools/patch-beta-interactions.js](../../tools/patch-beta-interactions.js) (2051 bytes)
+- [tools/patch-community-cloud.js](../../tools/patch-community-cloud.js) (8106 bytes)
+- [tools/patch-community-followups.js](../../tools/patch-community-followups.js) (7452 bytes)
+- [tools/patch-community-social.js](../../tools/patch-community-social.js) (9793 bytes)
+- [tools/patch-cover-rendering.js](../../tools/patch-cover-rendering.js) (2216 bytes)
+- [tools/patch-custom-appearance.mjs](../../tools/patch-custom-appearance.mjs) (1447 bytes)
+- [tools/patch-explore-studio.js](../../tools/patch-explore-studio.js) (2951 bytes)
+- [tools/patch-followers-localization.mjs](../../tools/patch-followers-localization.mjs) (2284 bytes)
+- [tools/patch-lorefy-app-ingest.js](../../tools/patch-lorefy-app-ingest.js) (2741 bytes)
+- [tools/patch-native-notification-toggle.js](../../tools/patch-native-notification-toggle.js) (932 bytes)
+- [tools/patch-panoramic-identity.mjs](../../tools/patch-panoramic-identity.mjs) (1191 bytes)
+- [tools/patch-preview-readers.mjs](../../tools/patch-preview-readers.mjs) (1813 bytes)
+- [tools/patch-product-report-cloud.js](../../tools/patch-product-report-cloud.js) (998 bytes)
+- [tools/patch-profile-layout.js](../../tools/patch-profile-layout.js) (4145 bytes)
+- [tools/patch-public-profile-parity.js](../../tools/patch-public-profile-parity.js) (1509 bytes)
+- [tools/patch-reading-stability.cjs](../../tools/patch-reading-stability.cjs) (2687 bytes)
+- [tools/patch-reading-status-policy.mjs](../../tools/patch-reading-status-policy.mjs) (1846 bytes)
+- [tools/patch-ui-language-observer.mjs](../../tools/patch-ui-language-observer.mjs) (786 bytes)
+- [tools/prebuild-http-audit.mjs](../../tools/prebuild-http-audit.mjs) (4629 bytes)
+- [tools/prepare-ios-local-profile.mjs](../../tools/prepare-ios-local-profile.mjs) (655 bytes)
+- [tools/prepare-ios-web.mjs](../../tools/prepare-ios-web.mjs) (5541 bytes)
+- [tools/project-memory.mjs](../../tools/project-memory.mjs) (17935 bytes)
+- [tools/reclassify-bulk-library.js](../../tools/reclassify-bulk-library.js) (1167 bytes)
+- [tools/refresh-ranobedb-metadata.js](../../tools/refresh-ranobedb-metadata.js) (3489 bytes)
+
+[[07-Source-Atlas]] | [[00-Home]]

@@ -1,0 +1,227 @@
+{
+  "_projectMemoryGenerated": 1,
+  "nodes": [
+    {
+      "id": "router",
+      "type": "file",
+      "file": "08-Feature-Router.md",
+      "x": 440,
+      "y": 0,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "boot",
+      "type": "file",
+      "file": "systems/App-Boot.md",
+      "x": 440,
+      "y": 380,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "accounts",
+      "type": "file",
+      "file": "systems/Accounts-Sync.md",
+      "x": 0,
+      "y": 760,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "catalog",
+      "type": "file",
+      "file": "systems/Catalog-Search.md",
+      "x": 440,
+      "y": 760,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "native",
+      "type": "file",
+      "file": "systems/Native-Release.md",
+      "x": 880,
+      "y": 760,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "reading",
+      "type": "file",
+      "file": "systems/Reading-Library.md",
+      "x": 0,
+      "y": 1140,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "explore",
+      "type": "file",
+      "file": "systems/Explore-Works.md",
+      "x": 440,
+      "y": 1140,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "community",
+      "type": "file",
+      "file": "systems/Community-Notifications.md",
+      "x": 880,
+      "y": 1140,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "profiles",
+      "type": "file",
+      "file": "systems/Profiles-Lists.md",
+      "x": 0,
+      "y": 1520,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "appearance",
+      "type": "file",
+      "file": "systems/Appearance-Bundles.md",
+      "x": 440,
+      "y": 1520,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "media",
+      "type": "file",
+      "file": "systems/Language-Media.md",
+      "x": 880,
+      "y": 1520,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "questions",
+      "type": "file",
+      "file": "10-Open-Questions.md",
+      "x": 440,
+      "y": 1900,
+      "width": 360,
+      "height": 260
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0",
+      "fromNode": "router",
+      "toNode": "boot",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Start with the canonical entry point"
+    },
+    {
+      "id": "edge-1",
+      "fromNode": "boot",
+      "toNode": "accounts",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Auth gate and account ownership"
+    },
+    {
+      "id": "edge-2",
+      "fromNode": "boot",
+      "toNode": "catalog",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Demand-loaded source data"
+    },
+    {
+      "id": "edge-3",
+      "fromNode": "boot",
+      "toNode": "native",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Packaged web runtime"
+    },
+    {
+      "id": "edge-4",
+      "fromNode": "accounts",
+      "toNode": "reading",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Saved library and checkpoints"
+    },
+    {
+      "id": "edge-5",
+      "fromNode": "catalog",
+      "toNode": "explore",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Work identity and eligibility"
+    },
+    {
+      "id": "edge-6",
+      "fromNode": "native",
+      "toNode": "community",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Foreground and APNs boundaries"
+    },
+    {
+      "id": "edge-7",
+      "fromNode": "reading",
+      "toNode": "profiles",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Saved summary and favorites"
+    },
+    {
+      "id": "edge-8",
+      "fromNode": "explore",
+      "toNode": "appearance",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Shared presentation contracts"
+    },
+    {
+      "id": "edge-9",
+      "fromNode": "community",
+      "toNode": "media",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Localized content and share media"
+    },
+    {
+      "id": "edge-10",
+      "fromNode": "profiles",
+      "toNode": "appearance",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Owner and visitor geometry"
+    },
+    {
+      "id": "edge-11",
+      "fromNode": "profiles",
+      "toNode": "questions",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Public projection needs live evidence"
+    },
+    {
+      "id": "edge-12",
+      "fromNode": "appearance",
+      "toNode": "questions",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Rights and commerce gates"
+    },
+    {
+      "id": "edge-13",
+      "fromNode": "media",
+      "toNode": "questions",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Physical-device verification"
+    }
+  ]
+}

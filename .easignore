@@ -26,3 +26,4 @@ config/lorefy-release.json
 .env.*
 
 design-source/
+project-memory/
