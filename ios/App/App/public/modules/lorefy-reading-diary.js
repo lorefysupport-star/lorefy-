@@ -141,9 +141,10 @@
     global.location.assign(global.location.pathname + '?' + query.toString());
   }
   function sendShare(event, includeSpoiler) {
-    var text = core.shareText(event, workInfo(event.id).title, includeSpoiler, language());
-    if (global.navigator.share) global.navigator.share({ text: text }).catch(function () {});
-    else if (global.navigator.clipboard) global.navigator.clipboard.writeText(text).then(function () { announce(text('نُسخ النص للمشاركة', 'Copied for sharing')); });
+    var shareText = core.shareText(event, workInfo(event.id).title, includeSpoiler, language());
+    if (global.navigator.share) return global.navigator.share({ text: shareText }).catch(function () {});
+    else if (global.navigator.clipboard) return global.navigator.clipboard.writeText(shareText).then(function () { announce(text('نُسخ النص للمشاركة', 'Copied for sharing')); })
+      .catch(function () { announce(text('تعذر النسخ. حاول مجددًا.', 'Could not copy. Try again.')); });
     else announce(text('المشاركة غير متاحة على هذا الجهاز', 'Sharing is unavailable on this device'));
   }
   function discussQuote(event) {
@@ -284,15 +285,15 @@
   }
   function createEntry(workId, noteText, quoteText, anchorType, anchorValue, spoiler) {
     if (state.owner!==diaryOwner()) return false;
-    var text = String(noteText || '').trim();
+    var noteBody = String(noteText || '').trim();
     var position = Number(anchorValue);
     var isQuote = state.composeKind === 'quote';
-    if (!workId || (!isQuote && !text) || !['chapter', 'page', 'volume'].includes(anchorType) || !Number.isSafeInteger(position) || position < 1 || position > 1000000) return false;
+    if (!workId || (!isQuote && !noteBody) || !['chapter', 'page', 'volume'].includes(anchorType) || !Number.isSafeInteger(position) || position < 1 || position > 1000000) return false;
     var previous = entries();
     var identity = { at: state.editing ? state.editing.at : Date.now(), entryId: state.editing ? state.editing.entryId : global.crypto && global.crypto.randomUUID ? global.crypto.randomUUID() : String(Date.now()) + '-' + Math.random().toString(36).slice(2) };
     var event = isQuote
-      ? core.quoteEntry(Object.assign({ id: workId, quote: quoteText, note: text, anchorType: anchorType, anchorValue: position, spoiler: spoiler }, identity))
-      : Object.assign({ id: workId, type: 'note', chapter: anchorType === 'chapter' ? position : 0, anchorType: anchorType, anchorValue: position, spoiler: !!spoiler, note: text.slice(0, 600) }, identity);
+      ? core.quoteEntry(Object.assign({ id: workId, quote: quoteText, note: noteBody, anchorType: anchorType, anchorValue: position, spoiler: spoiler }, identity))
+      : Object.assign({ id: workId, type: 'note', chapter: anchorType === 'chapter' ? position : 0, anchorType: anchorType, anchorValue: position, spoiler: !!spoiler, note: noteBody.slice(0, 600) }, identity);
     if (!event) return false;
     if (state.editing) previous = previous.filter(function (item) { return !(item.id === state.editing.id && item.at === state.editing.at && item.entryId === state.editing.entryId); });
     if (!write(LOG_KEY, core.merge(previous, [event]))) return false;

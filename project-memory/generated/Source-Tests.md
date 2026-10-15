@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-15T14:00:55.390Z
-Source commit: 279a9dcaa663c3008d9f3d6a689188a4d8154f94
+Observed: 2026-10-15T14:06:48.899Z
+Source commit: c72764402d6fe1a9583fc925ee00978a0f3db6ca
 
 # Tests Source Inventory
 
@@ -164,6 +164,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/reading-checkpoint-history.test.js](../../tests/reading-checkpoint-history.test.js) (1320 bytes)
 - [tests/reading-diary-checkpoint.test.js](../../tests/reading-diary-checkpoint.test.js) (1735 bytes)
 - [tests/reading-diary-draft.test.js](../../tests/reading-diary-draft.test.js) (2536 bytes)
+- [tests/reading-diary-feedback.test.js](../../tests/reading-diary-feedback.test.js) (3101 bytes)
 - [tests/reading-diary-language.test.js](../../tests/reading-diary-language.test.js) (5896 bytes)
 - [tests/reading-diary.test.js](../../tests/reading-diary.test.js) (7331 bytes)
 - [tests/reading-metrics-stability.test.js](../../tests/reading-metrics-stability.test.js) (2595 bytes)
