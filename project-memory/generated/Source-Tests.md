@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-15T15:38:57.100Z
-Source commit: a76afff8b6c77597d9592bcde4ecc339c1c639e2
+Observed: 2026-10-15T15:51:58.407Z
+Source commit: 1950599b86e50d02dbac9fdef7a14a741102b4ba
 
 # Tests Source Inventory
 
@@ -155,7 +155,8 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/profile-lists-unified.test.js](../../tests/profile-lists-unified.test.js) (1410 bytes)
 - [tests/profile-sections.test.js](../../tests/profile-sections.test.js) (8697 bytes)
 - [tests/profile-shop.test.js](../../tests/profile-shop.test.js) (9634 bytes)
-- [tests/project-memory.test.js](../../tests/project-memory.test.js) (12059 bytes)
+- [tests/project-memory-workflow.test.js](../../tests/project-memory-workflow.test.js) (3399 bytes)
+- [tests/project-memory.test.js](../../tests/project-memory.test.js) (13430 bytes)
 - [tests/public-appearance.test.js](../../tests/public-appearance.test.js) (3984 bytes)
 - [tests/public-profile-loading.test.js](../../tests/public-profile-loading.test.js) (4418 bytes)
 - [tests/public-profile-view.test.js](../../tests/public-profile-view.test.js) (11668 bytes)

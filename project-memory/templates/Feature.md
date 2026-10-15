@@ -1,8 +1,10 @@
 ---
-kind: template
-status: reference
+{
+  "kind": "system", "status": "draft", "date": "{{date}}",
+  "reviewed_on": null, "source_commit": "", "related": [], "aliases": []
+}
 ---
-# Feature Knowledge Template
+# {{title}}
 
 Use a new dated system/feature note after reviewing its source. Replace every
 placeholder. Do not copy a previous success count or mark unknown live behavior

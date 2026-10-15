@@ -1,5 +1,7 @@
 {
   "nodes": [
+    {"id":"work","file":"15-Work-Control.md","x":0,"y":-380},
+    {"id":"workflow","file":"16-Obsidian-Workflow.md","x":880,"y":-380},
     {"id":"story","file":"13-Project-Story.md","x":440,"y":-380},
     {"id":"coverage","file":"14-Feature-Coverage.md","x":880,"y":0},
     {"id":"repairs","file":"12-Device-Repairs.md","x":0,"y":1900},
@@ -17,6 +19,9 @@
     {"id":"questions","file":"10-Open-Questions.md","x":440,"y":1900}
   ],
   "edges": [
+    {"from":"work","to":"story","label":"Context before action"},
+    {"from":"workflow","to":"work","label":"Properties, evidence and review"},
+    {"from":"work","to":"repairs","label":"Open follow-ups link to evidence"},
     {"from":"story","to":"router","label":"Narrative leads to system ownership"},
     {"from":"story","to":"coverage","label":"Evidence and limits for every feature"},
     {"from":"coverage","to":"questions","label":"Unverified behavior stays visible"},

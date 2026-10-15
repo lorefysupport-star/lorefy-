@@ -1,0 +1,46 @@
+---
+kind: dashboard
+status: maintained
+date: 2026-10-15
+aliases: ["لوحة التطوير", "العمل المتبقي", "control center"]
+---
+# لوحة تطوير Lorefy
+
+[[13-Project-Story|الرواية]] | [[14-Feature-Coverage|تغطية التطبيق]] |
+[[12-Device-Repairs|أدلة الإصلاح]] | [[16-Obsidian-Workflow|طريقة تشغيل الذاكرة]]
+
+## الخطوات المتبقية
+
+![[dashboards/Work.base]]
+
+هذه ثلاث فجوات متابعة محددة، وليست جردًا جديدًا لكل مشكلات التطبيق.
+السجل التاريخي يبقى في [[12-Device-Repairs]]، ولا ننسخه إلى كل بند.
+
+- [[bugs/LF-003-Frame-Device-QA]]
+- [[bugs/LF-009-Gallery-Hydration]]
+- [[bugs/APNS-001-Background-Delivery]]
+
+## جودة المعرفة
+
+![[dashboards/Knowledge.base]]
+
+المراجعة مستحقة بعد 14 يومًا، أو عند عدم وجود `reviewed_on`. هذه سياسة
+Lorefy المحلية للتذكير وليست معيار Obsidian أو دليل أن المحتوى خاطئ.
+تاريخ تعديل الملف أو تحديث بصمته لا يُعتبر مراجعة لمعناه.
+تغيير المصدر المرتبط يستدعي المراجعة فورًا، دون انتظار الموعد.
+
+## تسلسل الجلسات
+
+![[dashboards/Sessions.base]]
+
+الحقل الفارغ يعني غير مسجّل؛ لا ننسخ تاريخ اليوم إلى إيصال قديم.
+
+## وصول مباشر عند غياب عرض Bases
+
+[[10-Open-Questions]] و[[08-Feature-Router]] يعملان بملفات Markdown فقط.
+
+```query
+path:bugs [status:open OR needs-device OR needs-service]
+```
+
+[[00-Home]] | [[playbooks/Memory-Maintenance]]

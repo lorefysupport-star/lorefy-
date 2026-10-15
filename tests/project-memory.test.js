@@ -45,6 +45,30 @@ test('link validation reports unresolved, ambiguous and escaping links',async t=
  assert.ok(issues.some(i=>i.includes('ambiguous')));
  assert.ok(issues.some(i=>i.includes('outside the project')));
 });
+
+test('native Bases and Canvas wiki embeds resolve only inside the vault',async t=>{
+ const api=await load(),root=await fixture(t),vault=path.join(root,'project-memory');
+ await fs.mkdir(path.join(vault,'dashboards'));
+ await fs.writeFile(path.join(vault,'dashboards/Work.base'),'{}');
+ await fs.writeFile(path.join(vault,'dashboards/Map.canvas'),'{}');
+ const notes=[{path:'00-Home.md',text:'![[dashboards/Work.base]] [[dashboards/Map.canvas|Map]]'}];
+ assert.deepEqual(await api.validateLinks(root,notes),[]);
+ notes[0].text+=' [[dashboards/Missing.base]] [[../outside.base]]';
+ const issues=await api.validateLinks(root,notes);
+ assert.equal(issues.length,2);
+ assert.ok(issues.some(i=>i.includes('Missing.base')));
+ assert.ok(issues.some(i=>i.includes('outside the vault')));
+});
+
+test('native dashboard links reject symlinks outside the vault even when the target exists',async t=>{
+ const api=await load(),root=await fixture(t),vault=path.join(root,'project-memory');
+ await fs.mkdir(path.join(root,'outside'));
+ await fs.writeFile(path.join(root,'outside/Private.base'),'{}');
+ await fs.symlink(path.join(root,'outside'),path.join(vault,'linked'),'junction');
+ const issues=await api.validateLinks(root,[{path:'00-Home.md',text:'[[linked/Private.base]]'}]);
+ assert.equal(issues.length,1);
+ assert.match(issues[0],/outside the vault/);
+});
 test('bounded context preserves core guidance and includes relevant memory without changing files',async t=>{
  const api=await load(),root=await fixture(t),vault=path.join(root,'project-memory');
  for(const name of api.coreNotes)await fs.writeFile(path.join(vault,name),'# '+name+'\nRead current source before making claims.');

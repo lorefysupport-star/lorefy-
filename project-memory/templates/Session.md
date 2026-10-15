@@ -1,6 +1,8 @@
 ---
-kind: template
-status: template
+{
+  "kind": "session", "status": "in-progress", "date": "{{date}}",
+  "source_commit": "", "verified_on": null, "related": []
+}
 ---
 # {{title}}
 
@@ -11,6 +13,9 @@ User-requested scope:
 ## Work Completed
 
 ## Verified Results
+
+Record exact command, exit code, evidence path and scope. Set verified_on only
+after a fresh verification; a saved note or a green historical receipt is not proof.
 
 ## Open Issues and Next Action
 

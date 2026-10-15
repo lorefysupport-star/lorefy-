@@ -4,13 +4,20 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest local-memory workflow receipt: [[sessions/2026-10-15-Obsidian-Research]].
+On source base `1950599` plus that workflow change, `npm test` passed 1,204 tests
+with no failures, skips or cancellations; focused memory/workflow tests passed
+23 cases. Audit: 65 connected notes, 498 source files, fresh, no issues. Obsidian
+1.14.4 CLI queried all three native Bases successfully. This did not create a
+native build or verify production-service delivery.
+
 Current source sync: GitHub main `64e4e63`, followed by saved-character-count
 repair `628c701`, cache regression alignment `57db5ed`, and generated catalog
 metadata synchronization `a76afff`. [[sessions/2026-10-15-Source-Reorganization]] owns the current
 verification receipt. [[sessions/2026-10-15-GitHub-Sync]] describes an earlier
 integration, not the current test run. No new native build is authorized.
 
-## Current source verification, 2026-10-15
+## Earlier source integration verification, 2026-10-15
 
 On `a76afff` with the documentation reorganization and preserved local Build 35
 settings, `npm test` exited 0: 1,198 passed, 0 failed, skipped or cancelled.

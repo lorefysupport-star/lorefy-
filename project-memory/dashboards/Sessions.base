@@ -1,0 +1,13 @@
+{
+  "filters": {"and": ["file.ext == \"md\"", "file.inFolder(\"sessions\")", "note.kind == \"session\""]},
+  "properties": {
+    "note.date": {"displayName": "التاريخ"},
+    "note.status": {"displayName": "حالة الدليل"},
+    "note.source_commit": {"displayName": "المصدر"},
+    "note.verified_on": {"displayName": "تاريخ التحقق"}
+  },
+  "views": [
+    {"type": "table", "name": "سجل العمل", "order": ["file.name", "note.date", "note.status", "note.source_commit", "note.verified_on"]},
+    {"type": "table", "name": "جلسات لم تنته", "filters": "note.status == \"in-progress\"", "order": ["file.name", "note.date", "note.source_commit"]}
+  ]
+}

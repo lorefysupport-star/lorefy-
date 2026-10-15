@@ -27,7 +27,7 @@ Run `npm run memory:refresh` to regenerate the managed snapshot, source inventor
 indexes, responsibilities Canvas and fingerprint JSON. Manual notes are never
 overwritten; handwritten generated targets make refresh stop rather than replace
 them. Edit `brain-map.json` to maintain the Canvas specification, not the generated
-Canvas. Its 12 conceptual nodes link to curated notes, not automatic code calls.
+Canvas. Its conceptual nodes link to curated notes, not automatic code calls.
 Then run `npm run memory:audit` for freshness, missing core notes, broken/ambiguous
 links, unreachable notes and exact duplicates. No notes are merged or deleted.
 
@@ -39,6 +39,12 @@ Generated files include no source bodies or credential/configuration values.
 Only paths, sizes and hashes are captured from canonical allowlisted source.
 
 ## Knowledge quality
+
+Use [[15-Work-Control]] for remaining work, independent verification scopes and
+review reminders. [[16-Obsidian-Workflow]] records the official research and
+property conventions. Set reviewed_on only after reviewing the note against
+source or dated evidence, never on refresh, file modification or merely opening it.
+Templates start unverified; closed work requires the relevant evidence.
 
 Maintain date/status/source and verification boundaries for each meaningful note.
 Add the note to the relevant index so the audit can reach it from [[00-Home]].

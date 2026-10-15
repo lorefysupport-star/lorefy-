@@ -2,6 +2,24 @@
   "_projectMemoryGenerated": 1,
   "nodes": [
     {
+      "id": "work",
+      "type": "file",
+      "file": "15-Work-Control.md",
+      "x": 0,
+      "y": -380,
+      "width": 360,
+      "height": 260
+    },
+    {
+      "id": "workflow",
+      "type": "file",
+      "file": "16-Obsidian-Workflow.md",
+      "x": 880,
+      "y": -380,
+      "width": 360,
+      "height": 260
+    },
+    {
       "id": "story",
       "type": "file",
       "file": "13-Project-Story.md",
@@ -140,6 +158,30 @@
   "edges": [
     {
       "id": "edge-0",
+      "fromNode": "work",
+      "toNode": "story",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Context before action"
+    },
+    {
+      "id": "edge-1",
+      "fromNode": "workflow",
+      "toNode": "work",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Properties, evidence and review"
+    },
+    {
+      "id": "edge-2",
+      "fromNode": "work",
+      "toNode": "repairs",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Open follow-ups link to evidence"
+    },
+    {
+      "id": "edge-3",
       "fromNode": "story",
       "toNode": "router",
       "fromSide": "bottom",
@@ -147,7 +189,7 @@
       "label": "Narrative leads to system ownership"
     },
     {
-      "id": "edge-1",
+      "id": "edge-4",
       "fromNode": "story",
       "toNode": "coverage",
       "fromSide": "bottom",
@@ -155,7 +197,7 @@
       "label": "Evidence and limits for every feature"
     },
     {
-      "id": "edge-2",
+      "id": "edge-5",
       "fromNode": "coverage",
       "toNode": "questions",
       "fromSide": "bottom",
@@ -163,7 +205,7 @@
       "label": "Unverified behavior stays visible"
     },
     {
-      "id": "edge-3",
+      "id": "edge-6",
       "fromNode": "profiles",
       "toNode": "repairs",
       "fromSide": "bottom",
@@ -171,7 +213,7 @@
       "label": "Device findings and source repairs"
     },
     {
-      "id": "edge-4",
+      "id": "edge-7",
       "fromNode": "repairs",
       "toNode": "questions",
       "fromSide": "bottom",
@@ -179,7 +221,7 @@
       "label": "Source fixes do not certify a device"
     },
     {
-      "id": "edge-5",
+      "id": "edge-8",
       "fromNode": "router",
       "toNode": "boot",
       "fromSide": "bottom",
@@ -187,7 +229,7 @@
       "label": "Start with the canonical entry point"
     },
     {
-      "id": "edge-6",
+      "id": "edge-9",
       "fromNode": "boot",
       "toNode": "accounts",
       "fromSide": "bottom",
@@ -195,7 +237,7 @@
       "label": "Auth gate and account ownership"
     },
     {
-      "id": "edge-7",
+      "id": "edge-10",
       "fromNode": "boot",
       "toNode": "catalog",
       "fromSide": "bottom",
@@ -203,7 +245,7 @@
       "label": "Demand-loaded source data"
     },
     {
-      "id": "edge-8",
+      "id": "edge-11",
       "fromNode": "boot",
       "toNode": "native",
       "fromSide": "bottom",
@@ -211,7 +253,7 @@
       "label": "Packaged web runtime"
     },
     {
-      "id": "edge-9",
+      "id": "edge-12",
       "fromNode": "accounts",
       "toNode": "reading",
       "fromSide": "bottom",
@@ -219,7 +261,7 @@
       "label": "Saved library and checkpoints"
     },
     {
-      "id": "edge-10",
+      "id": "edge-13",
       "fromNode": "catalog",
       "toNode": "explore",
       "fromSide": "bottom",
@@ -227,7 +269,7 @@
       "label": "Work identity and eligibility"
     },
     {
-      "id": "edge-11",
+      "id": "edge-14",
       "fromNode": "native",
       "toNode": "community",
       "fromSide": "bottom",
@@ -235,7 +277,7 @@
       "label": "Foreground and APNs boundaries"
     },
     {
-      "id": "edge-12",
+      "id": "edge-15",
       "fromNode": "reading",
       "toNode": "profiles",
       "fromSide": "bottom",
@@ -243,7 +285,7 @@
       "label": "Saved summary and favorites"
     },
     {
-      "id": "edge-13",
+      "id": "edge-16",
       "fromNode": "explore",
       "toNode": "appearance",
       "fromSide": "bottom",
@@ -251,7 +293,7 @@
       "label": "Shared presentation contracts"
     },
     {
-      "id": "edge-14",
+      "id": "edge-17",
       "fromNode": "community",
       "toNode": "media",
       "fromSide": "bottom",
@@ -259,7 +301,7 @@
       "label": "Localized content and share media"
     },
     {
-      "id": "edge-15",
+      "id": "edge-18",
       "fromNode": "profiles",
       "toNode": "appearance",
       "fromSide": "bottom",
@@ -267,7 +309,7 @@
       "label": "Owner and visitor geometry"
     },
     {
-      "id": "edge-16",
+      "id": "edge-19",
       "fromNode": "profiles",
       "toNode": "questions",
       "fromSide": "bottom",
@@ -275,7 +317,7 @@
       "label": "Public projection needs live evidence"
     },
     {
-      "id": "edge-17",
+      "id": "edge-20",
       "fromNode": "appearance",
       "toNode": "questions",
       "fromSide": "bottom",
@@ -283,7 +325,7 @@
       "label": "Rights and commerce gates"
     },
     {
-      "id": "edge-18",
+      "id": "edge-21",
       "fromNode": "media",
       "toNode": "questions",
       "fromSide": "bottom",

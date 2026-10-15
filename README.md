@@ -2,6 +2,7 @@
 
 ابدأ من [خريطة ملف التطبيق](PROJECT_MAP.md)، ثم [رواية Lorefy](project-memory/13-Project-Story.md)
 و[مصفوفة الميزات والتحقق](project-memory/14-Feature-Coverage.md).
+[لوحة التطوير](project-memory/15-Work-Control.md) تربط العمل المتبقي بمراجعته وأدلته.
 آخر جولة جلب وتنظيم موثقة في [سجل الجولة](project-memory/sessions/2026-10-15-Source-Reorganization.md).
 النطاق الحالي تطوير المصدر فقط، دون بناء جديد أو رفع إلى Apple أو TestFlight.
 

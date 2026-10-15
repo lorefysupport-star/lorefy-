@@ -1,11 +1,13 @@
 ---
-kind: template
-status: template
+{
+  "kind": "decision", "status": "proposed", "date": "{{date}}",
+  "reviewed_on": null, "source_commit": "", "supersedes": [], "related": []
+}
 ---
 # {{title}}
 
 Date: {{date}}
-Status: proposed / accepted / superseded
+Lifecycle: proposed / accepted / superseded. Do not backdate acceptance or review.
 Source commit and working-tree changes:
 Related existing note path:
 

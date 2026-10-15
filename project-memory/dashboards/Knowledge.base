@@ -1,0 +1,23 @@
+{
+  "filters": {"and": ["file.ext == \"md\"", "!file.inFolder(\"templates\")", "note.kind == \"system\" || note.kind == \"decision\" || note.kind == \"bug\""]},
+  "formulas": {"review_due": "if(note.reviewed_on, date(note.reviewed_on) + \"14d\" < today(), true)"},
+  "properties": {
+    "note.kind": {"displayName": "النوع"},
+    "note.status": {"displayName": "الحالة"},
+    "note.reviewed_on": {"displayName": "مراجعة المحتوى"},
+    "note.source_commit": {"displayName": "مصدر المراجعة"},
+    "formula.review_due": {"displayName": "تحتاج مراجعة"}
+  },
+  "views": [
+    {
+      "type": "table", "name": "تحتاج مراجعة",
+      "filters": "formula.review_due == true",
+      "groupBy": {"property": "note.kind", "direction": "ASC"},
+      "order": ["file.name", "note.status", "note.reviewed_on", "note.source_commit", "formula.review_due"]
+    },
+    {
+      "type": "table", "name": "الأنظمة والقرارات",
+      "order": ["file.name", "note.kind", "note.status", "note.reviewed_on", "formula.review_due"]
+    }
+  ]
+}

@@ -169,6 +169,16 @@ export async function validateLinks(root,notes){
  for(const note of notes){
   for(const match of note.text.matchAll(/\[\[([^\]]+)\]\]/g)){
    const target=match[1].split(/[|#]/)[0].replace(/\.md$/,'');if(!target)continue;
+   if(/\.(base|canvas)$/.test(target)){
+    const file=path.resolve(vault,target),relative=path.relative(vault,file);
+    if(relative.startsWith('..')||path.isAbsolute(relative)){issues.push(`${note.path}: link outside the vault: ${target}`);continue;}
+    try{
+     const resolved=await realpath(file),inside=path.relative(await realpath(vault),resolved);
+     if(inside.startsWith('..')||path.isAbsolute(inside))issues.push(`${note.path}: symlink outside the vault: ${target}`);
+     else if(!(await lstat(resolved)).isFile())issues.push(`${note.path}: dashboard is not a file: ${target}`);
+    }catch(e){if(e.code==='ENOENT')issues.push(`${note.path}: missing dashboard ${target}`);else throw e;}
+    continue;
+   }
    const matches=notes.filter(n=>normalize(n.path.replace(/\.md$/,''))===normalize(target)||!target.includes('/')&&normalize(path.basename(n.path,'.md'))===normalize(target));
    if(matches.length!==1)issues.push(`${note.path}: ${matches.length?'ambiguous':'unresolved'} [[${target}]]`);
   }

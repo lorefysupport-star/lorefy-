@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-15T15:38:57.100Z
-Source commit: a76afff8b6c77597d9592bcde4ecc339c1c639e2
+Observed: 2026-10-15T15:51:58.407Z
+Source commit: 1950599b86e50d02dbac9fdef7a14a741102b4ba
 
 # Tooling Source Inventory
 
@@ -70,7 +70,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tools/prepare-ios-local-profile.mjs](../../tools/prepare-ios-local-profile.mjs) (655 bytes)
 - [tools/prepare-ios-web.mjs](../../tools/prepare-ios-web.mjs) (5541 bytes)
 - [tools/prepare-xtool.mjs](../../tools/prepare-xtool.mjs) (7678 bytes)
-- [tools/project-memory.mjs](../../tools/project-memory.mjs) (17935 bytes)
+- [tools/project-memory.mjs](../../tools/project-memory.mjs) (18664 bytes)
 - [tools/reclassify-bulk-library.js](../../tools/reclassify-bulk-library.js) (1167 bytes)
 - [tools/refresh-ranobedb-metadata.js](../../tools/refresh-ranobedb-metadata.js) (3489 bytes)
 

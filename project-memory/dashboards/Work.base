@@ -1,0 +1,31 @@
+{
+  "filters": {"and": ["file.ext == \"md\"", "file.inFolder(\"bugs\")", "note.kind == \"bug\""]},
+  "properties": {
+    "note.status": {"displayName": "الحالة"},
+    "note.priority": {"displayName": "الأولوية"},
+    "note.area": {"displayName": "النظام"},
+    "note.next_action": {"displayName": "الخطوة التالية"},
+    "note.source_verified": {"displayName": "تحقق المصدر"},
+    "note.device_verified": {"displayName": "تحقق الجهاز"},
+    "note.service_verified": {"displayName": "تحقق الخدمة"},
+    "note.reviewed_on": {"displayName": "آخر مراجعة"}
+  },
+  "views": [
+    {
+      "type": "table", "name": "العمل المتبقي",
+      "filters": "note.status != \"closed\"",
+      "groupBy": {"property": "note.priority", "direction": "ASC"},
+      "order": ["file.name", "note.status", "note.area", "note.next_action", "note.source_verified", "note.device_verified", "note.service_verified", "note.reviewed_on"]
+    },
+    {
+      "type": "table", "name": "تحقق الجوال",
+      "filters": "note.requires_device == true && note.device_verified != true",
+      "order": ["file.name", "note.priority", "note.status", "note.next_action", "note.source_commit"]
+    },
+    {
+      "type": "table", "name": "تحقق الخدمة",
+      "filters": "note.requires_service == true && note.service_verified != true",
+      "order": ["file.name", "note.priority", "note.status", "note.next_action", "note.source_commit"]
+    }
+  ]
+}
