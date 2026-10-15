@@ -29,7 +29,7 @@ aliases: ["تقرير الجوال", "إصلاحات الجهاز", "device audi
 | LF-002 | P2 | وُحّد تعريف التقدم بالمصدر؛ تنتظر نسخة جهاز | `modules/lorefy-chapter-detail-core.js`، `modules/lorefy-reading-metrics.js` | `tests/chapter-reading-progress.test.js`، اختبارات استقرار التقدم |
 | LF-003 | P2 | مفتوحة | `styles/lorefy-profile-shop.css`، إطار الصفحة والهيدر | `tests/frame-motion.test.js`، QA على الجهاز |
 | LF-004 | P2 | أُصلحت بالمصدر؛ تنتظر نسخة جهاز | `modules/lorefy-public-profile.js` | `tests/public-profile-loading.test.js`، 18 اختبارًا ناجحًا مع عرض الحساب |
-| LF-005 | P3 | مفتوحة | `uploads/files/lorefy-app.js`، صفحة الجرس | DOM/accessible name |
+| LF-005 | P3 | إصلاح موجود بالمصدر؛ تحقق regression | `uploads/files/lorefy-app.js`، صفحة الجرس | `tests/notification-navigation.test.js`، عربي وإنجليزي |
 | LF-006 | P3 | أُصلحت بالمصدر وعُوينت مؤقتًا بالجهاز | `styles/lorefy-user-experience.css` | 7 اختبارات؛ computed style ولقطة البث |
 
 ## ضوابط الأدلة
@@ -58,6 +58,13 @@ aliases: ["تقرير الجوال", "إصلاحات الجهاز", "device audi
 الإصلاح ونجح بعده. معاينة CSS مؤقتة على WebView الجهاز أثبتت 36 صفًا:
 المعرف ينتقل من rtl إلى ltr مع unicode-bidi:isolate، والصف يبقى rtl.
 الصورة في البث تؤكد أن @ تسبق المعرف. لا تغيير في المتابعة أو بيانات الحساب.
+
+### LF-005: زر الرجوع
+
+المصدر الحالي يملك aria-label واتجاه سهم محليين بالفعل، لكن نسخة الجهاز
+لا تحتويهما. أُضيف اختبار يستدعي renderer الحقيقي بالعربية والإنجليزية
+ويتحقق من الاسم والسهم وعمل الرجوع للبروفايل. لا ادعاء باختبار VoiceOver
+فعلي أو بتحديث النسخة المثبتة.
 
 - التقرير يخص التطبيق المثبت الذي فُحص؛ تطابقه بايتًا مع الـIPA المرفق غير مثبت.
 - صور الحساب والسجلات الشخصية تبقى خارج الخزنة وGit. نستخدم ملخصًا منزوع الهوية.
