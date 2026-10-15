@@ -4,6 +4,10 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest source/browser receipt: [[sessions/2026-10-15-Character-Editor-Hydration]],
+base `c2da5fd` plus its patch: 1,231 passing tests. Arabic 320px recovery and
+English 390px recovery/save used synthetic in-memory data, not a live account.
+
 Latest source receipt: [[sessions/2026-10-15-Character-Editor-Owner]], based on
 `fee2dc6` plus its patch: 1,225 passing tests and eight new owner/async regression
 cases. No native build, installation, Apple upload or service deployment.

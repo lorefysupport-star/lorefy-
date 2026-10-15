@@ -2,23 +2,28 @@
 <html lang="en" dir="ltr">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lorefy gallery hydration QA</title>
+<title>Lorefy character hydration QA</title>
 <script src="../vendor/lucide.js"></script>
 <style>
-  body { margin:0; padding:24px; display:flex; gap:24px; justify-content:center; align-items:flex-start; background:#202223; font:14px system-ui; color:#fff; }
+  html:root { height:auto!important; overflow:auto!important; background:#202223!important; }
+  body#character-qa { box-sizing:border-box; width:100%!important; max-width:none!important; height:auto!important; min-height:100vh; margin:0!important; padding:24px; display:flex; gap:24px; justify-content:center; align-items:flex-start; overflow:visible!important; direction:ltr; background:#202223!important; font:14px system-ui; color:#fff; }
   .qa-controls { width:220px; display:grid; gap:14px; }
   .qa-controls label { display:grid; gap:6px; }
   .qa-controls select,.qa-controls button { font:inherit; padding:10px; min-height:44px; }
   #screen { width:390px; height:844px; flex:none; position:relative; transform:translateZ(0); overflow:hidden; background:#fafafa; color:#111; border:1px solid #aaa; }
-  @media(max-width:700px) { body { padding:12px; flex-direction:column; align-items:center; } .qa-controls { width:min(100%,390px); } }
+  @media(max-width:700px) { body#character-qa { padding:12px; flex-direction:column; align-items:center; } .qa-controls { width:min(100%,390px); } }
 </style>
+<body id="character-qa">
 <aside class="qa-controls">
-  <h1>Gallery QA</h1>
+  <h1>Character QA</h1>
+  <label>View<select id="view"><option value="gallery">Rated gallery</option><option value="editor">Favorites editor</option></select></label>
   <label>Scenario<select id="scenario"><option value="delayed">Delayed cast</option><option value="partial">Partial cast</option><option value="offline">Failure then retry</option><option value="empty">No saved ratings</option><option value="missing">Empty verified cast</option><option value="account">Switch account while loading</option></select></label>
   <label>Language<select id="language"><option value="en">English</option><option value="ar">العربية</option></select></label>
   <label>Phone width<select id="width"><option>320</option><option selected>390</option><option>440</option></select></label>
   <button id="open" disabled>Open gallery</button>
+  <button id="switch">Switch fixture account</button>
   <output id="result" role="status">Loading source</output>
+  <output id="writes">Fixture saves: 0</output>
 </aside>
 <main id="screen"></main>
 <script>
@@ -31,15 +36,15 @@
     const link=document.createElement('link');link.rel='stylesheet';link.href=new URL(entry.getAttribute('href'),new URL('../index.html',location.href));document.head.append(link);
   }
   window.LorefyMangaData=[{id:'a',title:'Fixture work A'},{id:'b',title:'Fixture work B'}];
-  window.__galleryFixture={owner:'fixture-a',scores:{},request:()=>Promise.resolve([])};
+  window.__galleryFixture={owner:'fixture-a',scores:{},selection:[],writes:0,request:()=>Promise.resolve([])};
   const marker='global.LorefyGrowth = {';
   const instrument=`
-    read=function(key,fallback){return key===K_SCORES?global.__galleryFixture.scores:fallback;};
-    write=function(){throw Error('Fixture storage writes are forbidden');};
+    read=function(key,fallback){return key===K_SCORES?global.__galleryFixture.scores:key===K_PROFILE_TOP_CHARACTERS?global.__galleryFixture.selection:fallback;};
+    write=function(key,value){if(key!==K_PROFILE_TOP_CHARACTERS)throw Error('Fixture storage writes are forbidden');global.__galleryFixture.selection=value;doc.getElementById('writes').value='Fixture saves: '+(++global.__galleryFixture.writes);};
     profileRatedCharacterOwner=function(){return global.__galleryFixture.owner;};
     loadCast=function(work){return global.__galleryFixture.request(work);};
     paintProfileRatedCharacters=function(){};syncProfileTopCharacters=function(){};
-    global.__galleryFixture.api={open:openProfileRatedCharacters,sync:syncProfileRatedCharacterGallery,reset:function(){profileRatedCharacterCache={};profileRatedCharacterFailures={};profileRatedCharacterLoads={};}};
+    global.__galleryFixture.api={open:openProfileRatedCharacters,openEditor:openProfileTopCharactersEditor,sync:function(){syncProfileRatedCharacterGallery();syncProfileTopCharacterEditor();},reset:function(){doc.querySelectorAll('.lf-ov-page').forEach(function(page){page.remove();});profileRatedCharacterGallery=null;profileTopCharacterEditor=null;profileRatedCharacterCache={};profileRatedCharacterFailures={};profileRatedCharacterLoads={};}};
   `;
   const raw=await (await fetch('../modules/lorefy-growth-features.js')).text();
   const boot='if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", boot); else boot();';
@@ -47,10 +52,12 @@
   const script=document.createElement('script');script.textContent=raw.replace(boot,'').replace(marker,instrument+marker);document.head.append(script);
   const state=window.__galleryFixture,result=document.getElementById('result');
   document.getElementById('width').onchange=event=>{document.getElementById('screen').style.width=event.target.value+'px';};
+  document.getElementById('view').onchange=event=>{document.getElementById('open').textContent=event.target.value==='editor'?'Open editor':'Open gallery';};
+  document.getElementById('switch').onclick=()=>{state.owner='fixture-b';state.scores={};state.api.sync();result.value='Previous account view closed';};
   document.getElementById('open').onclick=()=>{
     const scenario=document.getElementById('scenario').value,lang=document.getElementById('language').value;
-    document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
-    state.api.reset();state.owner='fixture-a';state.scores=scenario==='empty'?{}:{a:{hero:4.75},b:{other:3.25}};
+    document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.getElementById('screen').dir=document.documentElement.dir;
+    state.api.reset();state.owner='fixture-a';state.selection=[];state.writes=0;document.getElementById('writes').value='Fixture saves: 0';state.scores=scenario==='empty'?{}:{a:{hero:4.75},b:{other:3.25}};
     let attempts=0;const generation=state.generation=(state.generation||0)+1;
     state.request=work=>new Promise((resolve,reject)=>{
       const attempt=++attempts;
@@ -61,7 +68,7 @@
         resolve(scenario==='missing'?[]:[{key:work.workId==='b'?'other':'hero',name:work.workId==='b'?'Other reader choice':'Hero reader choice',latin:'Fixture character',image:''}]);
       },scenario==='partial'&&work.workId==='a'?100:2500);
     });
-    result.value='Waiting for source';state.api.open();
+    result.value='Waiting for source';if(document.getElementById('view').value==='editor')state.api.openEditor();else state.api.open();
     if(scenario==='account')setTimeout(()=>{state.owner='fixture-b';state.scores={};state.api.sync();result.value='Old gallery closed after account change';},700);
   };
   document.getElementById('open').disabled=false;result.value='Ready';

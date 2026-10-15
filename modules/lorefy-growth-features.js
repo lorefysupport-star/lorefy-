@@ -3683,8 +3683,10 @@
     }
     state.refresh();
   }
-  function syncProfileTopCharacterEditor() {
-    if (profileTopCharacterEditor && !profileTopCharacterEditor.active()) profileTopCharacterEditor = null;
+  function syncProfileTopCharacterEditor(refresh) {
+    if (!profileTopCharacterEditor) return;
+    if (!profileTopCharacterEditor.active()) profileTopCharacterEditor = null;
+    else if (refresh) profileTopCharacterEditor.refresh();
   }
   function profileRatedCharacterStateChanged(event) {
     var key = event && (event.detail ? event.detail.key : event.key);
@@ -3976,7 +3978,7 @@
       }
       return false;
     }
-    profileTopCharacterEditor = { active: editorActive };
+    profileTopCharacterEditor = { active: editorActive, refresh: render };
     var intro = el("section", { class: "lf-top-characters-editor-intro" }, [
       el("strong", { text: "اختيارك أنت، وليس ترتيبًا تلقائيًا" }),
       el("p", { text: "اختر الخانة أولاً، ثم اضغط شخصية لاستبدالها مباشرة. ترتيب الخانات هو ترتيب ظهورها في ملفك." })
@@ -4093,6 +4095,10 @@
     function render() {
       if (!editorActive()) return;
       var data = dataNow(), selected = {}, query = profileTopCharacterSearchText(search.value);
+      var missingWorkIds = data.missing.slice();
+      if (activeWorkId && !profileRatedCharacterCache[activeWorkId] && missingWorkIds.indexOf(activeWorkId) < 0) missingWorkIds.push(activeWorkId);
+      var failedWorkIds = missingWorkIds.filter(function (id) { return !!profileRatedCharacterFailures[id]; });
+      var castLoading = missingWorkIds.some(function (id) { return !profileRatedCharacterFailures[id]; });
       draft.forEach(function (ref, index) { if (ref) selected[profileTopCharacterRefKey(ref)] = index + 1; });
       clearSearch.hidden = !search.value;
       slots.textContent = "";
@@ -4166,14 +4172,16 @@
       candidates.textContent = "";
       var rows = candidateRows(data, query);
       if (!rows.length) {
-        var emptyText = nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : nameSearchFailed ? uiText("تعذر البحث الآن. جرّب مرة أخرى أو ابحث باسم العمل.","Character search unavailable. Try again or search by work title.") : loadingWorkId === activeWorkId && activeWorkId
+        var emptyText = nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : nameSearchFailed ? uiText("تعذر البحث الآن. جرّب مرة أخرى أو ابحث باسم العمل.","Character search unavailable. Try again or search by work title.") : failedWorkIds.length
+          ? uiText("تعذر تحميل الشخصيات. يمكنك إعادة المحاولة.", "Could not load characters. You can retry.")
+          : castLoading ? uiText("جاري تحميل الشخصيات التي قيّمتها…", "Loading rated characters…") : loadingWorkId === activeWorkId && activeWorkId
           ? "جاري تحميل شخصيات العمل..."
           : activeWorkId
             ? "لم نجد شخصيات موثقة لهذا العمل. جرّب عملاً آخر."
             : query
               ? (profileTopCharacterSearchWorks(query).length ? "اختر عملاً من نتائج البحث لعرض شخصياته." : uiText("لا توجد شخصيات أو أعمال مطابقة. جرّب اسماً آخر.","No matching characters or works. Try another name."))
               : "ابحث باسم أي عمل، ثم اختر الشخصيات المفضلة لديك.";
-        candidates.appendChild(el("p", { class: "lf-profile-rated-characters-empty", text: emptyText }));
+        candidates.appendChild(el("p", { class: "lf-profile-rated-characters-empty", role: "status", text: emptyText }));
       } else {
         rows.forEach(function (item) {
           var ref = profileTopCharacterRef(item), key = profileTopCharacterRefKey(ref), rank = selected[key] || 0;
@@ -4202,7 +4210,17 @@
           candidates.appendChild(button);
         });
       }
-      data.missing.forEach(function (workId) { hydrateProfileRatedCharacters(workId); });
+      if (failedWorkIds.length) {
+        if (rows.length) candidates.appendChild(el("p", { class: "lf-profile-rated-characters-empty", text: uiText("تعذر تحميل بعض الشخصيات.", "Some characters could not be loaded.") }));
+        var retryCast = el("button", { type: "button", class: "lf-top-characters-editor-retry lf-character-atlas-more", text: uiText("إعادة المحاولة", "Retry") });
+        retryCast.addEventListener("click", function () {
+          if (!editorActive()) return;
+          failedWorkIds.forEach(function (id) { delete profileRatedCharacterFailures[id]; });
+          render();
+        });
+        candidates.appendChild(retryCast);
+      }
+      missingWorkIds.forEach(function (workId) { hydrateProfileRatedCharacters(workId); });
     }
     search.addEventListener("input",function(){
       if (!editorActive()) return;
@@ -4578,6 +4596,7 @@
         paintProfileRatedCharacters(doc.querySelector(".lf-profile-rated-characters"));
         syncProfileTopCharacters();
         syncProfileRatedCharacterGallery();
+        syncProfileTopCharacterEditor(true);
       });
     }
     if (onDone) pending.then(function (cast) { if (owner === profileRatedCharacterOwner()) onDone(cast); });
