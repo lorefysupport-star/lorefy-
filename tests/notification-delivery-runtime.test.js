@@ -2,22 +2,45 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const source=fs.readFileSync('backend/lorefy-native-runtime.js','utf8');
 const A='11111111-1111-4111-8111-111111111111',B='22222222-2222-4222-8222-222222222222',P='33333333-3333-4333-8333-333333333333';
 function harness(native=false){
- let window,callback,rows=[],user=A;
+ let window,callback,rows=[],user=A,page=null,mutated;
+ const listeners={};
  class Element {
   constructor(tag){this.tagName=tag.toUpperCase();this.children=[];this.attrs={};this.listeners={};this.textContent='';this.className='';}
   appendChild(e){this.children.push(e);e.parent=this;return e;}
+  prepend(e){this.children.unshift(e);e.parent=this;}
+  closest(selector){return selector==='button'&&this.tagName==='BUTTON'?this:null;}
   setAttribute(k,v){this.attrs[k]=v;}removeAttribute(k){delete this.attrs[k];}getAttribute(k){return this.attrs[k]||null;}
   addEventListener(k,fn){this.listeners[k]=fn;}remove(){if(this.parent)this.parent.children=this.parent.children.filter(e=>e!==this);}
   querySelector(selector){let cls=selector.slice(1);return this.children.find(e=>e.className.split(' ').includes(cls))||null;}
  }
  const body=new Element('body'),head=new Element('head'),bell=new Element('button');
- const doc={body,head,hidden:false,documentElement:{lang:'en'},readyState:'loading',createElement:tag=>new Element(tag),getElementById:()=>null,addEventListener:()=>{},querySelector:s=>s==='.lf-notification-banner'?body.querySelector(s):null,querySelectorAll:s=>s.includes('Notifications')?[bell]:[]};
+ const doc={body,head,hidden:false,documentElement:{lang:'en'},readyState:'loading',createElement:tag=>new Element(tag),getElementById:()=>null,addEventListener:(name,fn)=>listeners[name]=fn,querySelector:s=>s==='.lf-notification-banner'?body.querySelector(s):s==='.lf-notifications-page'?page:null,querySelectorAll:s=>s.includes('Notifications')?[bell]:[]};
  const values=new Map(),intervals=[],timers=[];
  window={document:null,localStorage:{getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,v)},crypto:{randomUUID:()=>P},location:{href:'http://localhost/index.html',search:'',assign:()=>{}},setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout:()=>{},setInterval:fn=>{intervals.push(fn);return intervals.length;},clearInterval:()=>{},CustomEvent:class{constructor(type,opts){this.type=type;this.detail=opts.detail;}},dispatchEvent:()=>{},Capacitor:{isNativePlatform:()=>native,Plugins:{}},LorefyBackend:{getSession:async()=>user?{userId:user}:null,listNotifications:async()=>rows,subscribeNotifications:async fn=>{callback=fn;return ()=>{};},registerPushDevice:async()=>true,unregisterPushDevice:async()=>true}};
- vm.runInNewContext(source,{window,URL,URLSearchParams,Set,Date,CustomEvent:window.CustomEvent,MutationObserver:class{observe(){}}});window.document=doc;
- return {window,doc,body,bell,values,intervals,api:window.LorefyNativeRuntime,setRows:r=>rows=r,setUser:u=>user=u,receive:item=>callback(item)};
+ vm.runInNewContext(source,{window,URL,URLSearchParams,Set,Date,CustomEvent:window.CustomEvent,MutationObserver:class{constructor(fn){mutated=fn;}observe(){}}});window.document=doc;
+ return {window,doc,body,bell,values,intervals,listeners,api:window.LorefyNativeRuntime,setRows:r=>rows=r,setUser:u=>user=u,receive:item=>callback(item),
+   mountInbox(){page=new Element('div');page.className='lf-notifications-page';const empty=new Element('p');empty.textContent='No notifications';page.appendChild(empty);mutated?.();return page;},
+   unmountInbox(){page=null;}
+ };
 }
 const notification=(id='n1')=>({id,user_id:A,actor_id:B,kind:'reaction',title:'إعجاب جديد',body:'نورة أعجبت بمنشورك',target_path:'/community',data:{postId:P},created_at:new Date().toISOString()});
+
+test('opening and reopening the bell fetches and mounts the remote inbox after React navigation',async()=>{
+ const h=harness();h.api.start();h.listeners.DOMContentLoaded();
+ await h.api.connectCloudNotifications();
+ h.bell.setAttribute('aria-label','Notifications');
+ h.setRows([notification()]);h.listeners.click({target:h.bell});
+ let page=h.mountInbox();await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(page.querySelector('.lf-cloud-notifications').children.length,1);
+ assert.equal(page.children.find(node=>node.tagName==='P').getAttribute('data-lf-core-empty'),'hidden');
+ h.unmountInbox();h.setRows([notification(),notification('n2')]);
+ h.listeners.click({target:h.bell});page=h.mountInbox();await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(page.querySelector('.lf-cloud-notifications').children.length,2);
+ h.unmountInbox();h.setRows([]);h.listeners.click({target:h.bell});page=h.mountInbox();
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(page.querySelector('.lf-cloud-notifications'),null);
+ assert.equal(page.children.find(node=>node.tagName==='P').getAttribute('data-lf-core-empty'),null);
+});
 test('in-app like/comment banners name the actor, deduplicate, and update the English bell',async()=>{
  const h=harness();await h.api.connectCloudNotifications();h.receive(notification());
  let banner=h.body.querySelector('.lf-notification-banner');assert.ok(banner);assert.equal(banner.children[0].children[1].textContent,'نورة أعجبت بمنشورك');
