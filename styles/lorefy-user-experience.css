@@ -9,7 +9,7 @@
   overflow: hidden;
   border-radius: 50%;
   background: var(--ui-surface, #eceef0);
-  color: var(--ui-text, #25272a);
+  color: var(--ui-ink, #25272a);
   font-size: 16px;
   font-weight: 700;
 }

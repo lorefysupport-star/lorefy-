@@ -4,9 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Connection Avatar QA</title>
 <link rel="stylesheet" href="../styles/lorefy-user-experience.css">
+<link rel="stylesheet" href="../styles/lorefy-design-system.css">
 <style>
-  body {margin:0;padding:24px;font:16px system-ui;background:var(--ui-bg);color:var(--ui-text);--ui-bg:#f7f8fa;--ui-text:#25272a;--ui-surface:#e5e9ee}
-  body.dark {--ui-bg:#171819;--ui-text:#fafafa;--ui-surface:#36393c}
+  body {margin:0;padding:24px;font:16px system-ui;background:var(--ui-bg);color:var(--ui-ink)}
   main {max-width:420px;margin:auto}
   h1 {font-size:20px;margin:20px 0}
   .row {display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid #89919a66}
@@ -35,7 +35,7 @@
         h('button',{onClick:()=>setSource('missing-avatar.png')},'صورة تالفة')));
   }
   ReactDOM.createRoot(document.getElementById('fixture')).render(h(Fixture));
-  document.getElementById('dark').addEventListener('change',event=>document.body.classList.toggle('dark',event.target.checked));
+  document.getElementById('dark').addEventListener('change',event=>document.documentElement.dataset.lorefyTheme=event.target.checked?'dark':'light');
 </script>
 </body>
 </html>

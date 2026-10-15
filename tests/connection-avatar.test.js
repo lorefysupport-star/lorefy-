@@ -19,6 +19,16 @@ function harness() {
 }
 function nodes(tree) {return !tree || typeof tree !== 'object' ? [] : [tree, ...tree.children.flatMap(nodes)];}
 
+test('fallback text uses a real semantic token in every supported appearance', () => {
+  const css = fs.readFileSync(path.join(__dirname, '../styles/lorefy-user-experience.css'), 'utf8');
+  const rule = css.match(/\.lf-connection-avatar\s*\{([^}]+)\}/)[1];
+  const token = rule.match(/\bcolor:\s*var\((--ui-[a-z-]+)/)[1];
+  const design = require('../modules/lorefy-design-system.js');
+  for (const mode of ['light','dark','pink','custom-light-367faa','custom-dark-367faa']) {
+    assert.ok(design.tokens(mode)[token], `${token} is not defined in ${mode}`);
+  }
+});
+
 test('missing connection avatars never request the document as an image', () => {
   const app = harness();
   for (const src of ['', '   ', null, undefined]) {
