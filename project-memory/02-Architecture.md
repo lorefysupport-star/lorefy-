@@ -4,6 +4,10 @@ status: maintained
 ---
 # Architecture and Ownership Map
 
+Read [[13-Project-Story]] for the end-to-end narrative and decision history,
+[[14-Feature-Coverage]] for the feature/evidence matrix, and
+[PROJECT_MAP](../PROJECT_MAP.md) for source versus generated/archive boundaries.
+
 | Area | Entry points | Contract |
 | --- | --- | --- |
 | Web shell | [index.html](../index.html), [sw.js](../sw.js) | Native/browser safe areas and cache versions are distinct. |

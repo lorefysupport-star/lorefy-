@@ -9,6 +9,9 @@ aliases: ["ذاكرة Lorefy", "ذاكرة المشروع"]
 
 ## ابدأ هنا
 
+- [[13-Project-Story|اقرأ رواية التطبيق كاملة]]
+- [[14-Feature-Coverage|كل الميزات ومصادرها وحدود فحصها]]
+- [[12-Device-Repairs|المشاكل والإصلاحات وأدلتها]]
 - [[01-Project|المشروع وحدوده]]
 - [[02-Architecture|خريطة الكود]]
 - [[03-Working-Agreement|طريقة العمل والتفضيلات]]
@@ -49,9 +52,17 @@ aliases: ["ذاكرة Lorefy", "ذاكرة المشروع"]
 
 ## سجل العمل والقوالب
 
+- [[sessions/2026-10-15-Source-Reorganization|آخر جلب وتنظيم وحالة التحقق الحالية]]
+- [[sessions/2026-10-15-GitHub-Sync|دمج إصلاحات التشغيل والقراءة]]
+- [[sessions/2026-10-15-Privacy-Safety-Repairs|خصوصية القوائم وإلغاء الحظر]]
+- [[sessions/2026-10-15-Reading-Ownership|الصفر الصريح وملكية التراجع]]
+- [[sessions/2026-10-15-Live-Reading-Spoilers|التقدم المباشر وحماية الحرق]]
+- [[sessions/2026-10-15-Diary-Drafts|بقاء المسودات وملكيتها]]
+- [[sessions/2026-10-15-Diary-Feedback|نتيجة الحفظ والنسخ دون نجاح كاذب]]
 - [[sessions/2026-10-13-Obsidian-Setup|إعداد Obsidian]]
 - [[sessions/2026-10-14-GitHub-Obsidian-Verification|تحديث GitHub وتفعيل الذاكرة والتحقق النهائي]]
 - [[sessions/2026-10-14-Project-Brain|توسيع خريطة المشروع والتحقق]]
+- [[sessions/2026-10-14-APNs-Server-Setup|إعداد أسرار APNs وحدود فحص التسليم]]
 - [[templates/Decision|قالب قرار]]
 - [[templates/Bug|قالب مشكلة]]
 - [[templates/Session|قالب جلسة عمل]]
@@ -71,3 +82,4 @@ aliases: ["ذاكرة Lorefy", "ذاكرة المشروع"]
 لا تضع هنا كلمات مرور، مفاتيح API، بيانات حسابات خاصة، أو صور مستخدمين. لا توجد إضافات ذكاء اصطناعي أو مزامنة سحابية مفعّلة لهذا الإعداد.
 
 [عقد عمل الوكيل](../AGENTS.md) | [المصدر](../README.md)
+[خريطة مجلدات التطبيق](../PROJECT_MAP.md)

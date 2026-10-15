@@ -4,9 +4,22 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
-Current integration: [[sessions/2026-10-15-GitHub-Sync]] records GitHub source
-`542b39c` plus preserved local runtime repairs. Use its new verification receipt;
-the earlier IPA and test counts do not establish this merged source was tested.
+Current source sync: GitHub main `64e4e63`, followed by saved-character-count
+repair `628c701`, cache regression alignment `57db5ed`, and generated catalog
+metadata synchronization `a76afff`. [[sessions/2026-10-15-Source-Reorganization]] owns the current
+verification receipt. [[sessions/2026-10-15-GitHub-Sync]] describes an earlier
+integration, not the current test run. No new native build is authorized.
+
+## Current source verification, 2026-10-15
+
+On `a76afff` with the documentation reorganization and preserved local Build 35
+settings, `npm test` exited 0: 1,198 passed, 0 failed, skipped or cancelled.
+This includes the shipped-web-asset synchronization contract, not a native build.
+The final receipt and earlier failures resolved in this run are recorded in
+[[sessions/2026-10-15-Source-Reorganization]]. Memory audit: 59 notes, 497 indexed
+source files, fresh snapshot, no broken links, orphan notes or duplicate groups.
+Physical-device delivery, permissions, performance and deployment remain separate
+checks; see [[10-Open-Questions]] and [[14-Feature-Coverage]].
 
 ## Core commands
 
@@ -38,7 +51,7 @@ layout cases. See [frame evidence](../docs/FRAME_GEOMETRY_20261012.md).
 These counts are a dated baseline. After a pull or change, run the relevant
 tests again; do not present this note or the generated snapshot as fresh proof.
 
-## Latest dated memory verification
+## Historical memory verification
 
 On 2026-10-14, source `524203c` plus preserved local Build 35 and memory changes
 passed 1,119 tests, including 17 focused memory tests. Memory audit reported

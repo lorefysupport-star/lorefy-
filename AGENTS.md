@@ -12,6 +12,10 @@ Build 34 is a frozen beta artifact, not a production-safety claim. Review the kn
 
 ## Project Memory
 
+Current owner direction (2026-10-15): develop and repair the application source only. Do not create a new native build, run EAS build/submit, upload to Apple/TestFlight, or prepare an xtool binary without a new explicit request. Source tests and selective synchronization of repaired web assets are not a new native build.
+
+`project-memory/13-Project-Story.md` is the curated end-to-end project narrative; `14-Feature-Coverage.md` maps all systems to source, tests and unresolved evidence. Keep both consistent with meaningful changes. `PROJECT_MAP.md` is the root ownership guide. An indexed file is not proof of semantic review, and a green source test is not device or production-service certification.
+
 Before substantial project work, run `npm run memory:context -- <task keywords>` and read the relevant notes in `project-memory/`. Use `npm run memory:search -- <keywords>` for more focused retrieval. This works directly with Markdown, even when Obsidian is closed.
 
 The physical-device repair queue is `project-memory/12-Device-Repairs.md`; consult it for notification, chapter-progress and profile fixes. Preserve the imported evidence, add the regression result and remaining device-validation limits, and update each issue deliberately. The user requested a separate verified commit and GitHub push for each repaired issue on 2026-10-15. Do not include unrelated pre-existing changes in those commits. Raw device screenshots, account data and the local mirroring service stay outside the repository and the vault.

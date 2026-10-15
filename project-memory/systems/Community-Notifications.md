@@ -28,6 +28,10 @@ responses مهمان. تنبيه foreground محلي مختلف عن وصول AP
 [تقرير 13 أكتوبر](../../docs/NOTIFICATIONS_VERIFICATION_2026-10-13.md) دليل
 تاريخي على نقص إعداد خادم؛ لا تفحصه أو تغيّر سرًا تلقائيًا.
 
+[[sessions/2026-10-14-APNs-Server-Setup]] يوثّق حفظ إعدادات APNs بتفويض المستخدم
+في 14 أكتوبر وفحصًا محميًا تجاوز نقص الإعدادات دون إرسال. قبول Apple والتسليم
+الفعلي على iPhone ما زالا غير مختبرين؛ لا تعتبر تهيئة الأسرار إثباتًا للتسليم.
+
 الفحص: [home-social](../../tests/home-social-discovery.test.js)،
 [community-cloud](../../tests/community-cloud.test.js)،
 [subscription](../../tests/community-live-subscription.test.js)،
