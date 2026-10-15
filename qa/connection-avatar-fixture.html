@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connection Avatar QA</title>
+<link rel="stylesheet" href="../styles/lorefy-user-experience.css">
+<style>
+  body {margin:0;padding:24px;font:16px system-ui;background:var(--ui-bg);color:var(--ui-text);--ui-bg:#f7f8fa;--ui-text:#25272a;--ui-surface:#e5e9ee}
+  body.dark {--ui-bg:#171819;--ui-text:#fafafa;--ui-surface:#36393c}
+  main {max-width:420px;margin:auto}
+  h1 {font-size:20px;margin:20px 0}
+  .row {display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid #89919a66}
+  .row p {margin:0;line-height:1.6}
+  button {min-height:44px;padding:8px 16px;font:inherit;cursor:pointer}
+  .actions {display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+</style>
+<body>
+<main>
+  <label><input id="dark" type="checkbox"> المظهر الداكن</label>
+  <h1>صور الحسابات</h1>
+  <div id="fixture"></div>
+</main>
+<script src="../vendor/react.production.min.js"></script>
+<script src="../vendor/react-dom.production.min.js"></script>
+<script src="../modules/lorefy-user-experience.js"></script>
+<script>
+  const h=React.createElement,Avatar=LorefyUserExperience.ReaderAvatar;
+  function Fixture() {
+    const [source,setSource]=React.useState('missing-avatar.png');
+    return h(React.Fragment,null,
+      [['missing','', 'قارئ'],['failed','missing-avatar.png','Reader'],['changed',source,'Lorefy']].map(([id,src,name])=>
+        h('div',{key:id,className:'row','data-case':id},h(Avatar,{src,name}),h('p',null,name))),
+      h('div',{className:'actions'},
+        h('button',{onClick:()=>setSource('../launch/icons/icon-192.png')},'صورة صالحة'),
+        h('button',{onClick:()=>setSource('missing-avatar.png')},'صورة تالفة')));
+  }
+  ReactDOM.createRoot(document.getElementById('fixture')).render(h(Fixture));
+  document.getElementById('dark').addEventListener('change',event=>document.body.classList.toggle('dark',event.target.checked));
+</script>
+</body>
+</html>

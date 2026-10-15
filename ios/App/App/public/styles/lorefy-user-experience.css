@@ -1,4 +1,20 @@
 /* Editable controls stay readable on iOS without disabling pinch zoom. */
+.lf-connection-avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--ui-surface, #eceef0);
+  color: var(--ui-text, #25272a);
+  font-size: 16px;
+  font-weight: 700;
+}
+.lf-connection-avatar > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
 /* Keep @ attached to the handle inside RTL connection rows. */
 .lf-followers-dialog [role="button"] > div > p + p {
   direction: ltr;

@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v449-device-repairs';
+const CACHE = 'lorefy-v450-connection-avatar';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -13,8 +13,8 @@ const CORE = [
  './styles/lorefy-customize.css?v=20261013-final',
  './styles/lorefy-work-layout.css?v=20261013-final',
   './uploads/lorefy-editorial-picks.js?v=20261011-explore-v2',
-  './styles/lorefy-user-experience.css?v=20261015-device-repairs-v1',
-  './modules/lorefy-user-experience.js?v=20261011-explore-v2',
+  './styles/lorefy-user-experience.css?v=20261015-connection-avatar-v1',
+  './modules/lorefy-user-experience.js?v=20261015-connection-avatar-v1',
   './modules/lorefy-friend-activity.js?v=20261013-discover-reviewed-v2',
   './modules/lorefy-original-illustrated.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-original-autumn.js?v=20261013-all-profile-frames-v6',
@@ -121,7 +121,7 @@ const CORE = [
   './styles/lorefy-explore-studio.css?v=20261013-discover-reviewed-v2',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1',
-  './uploads/files/lorefy-app.js?v=20261011-reading-stable-v1',
+  './uploads/files/lorefy-app.js?v=20261015-connection-avatar-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',

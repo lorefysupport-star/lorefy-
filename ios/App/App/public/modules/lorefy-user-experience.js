@@ -1,5 +1,12 @@
 (function (root) {
   'use strict';
+  function ReaderAvatar(p) {
+    var R=root.React,h=R.createElement,src=typeof p.src==='string'?p.src.trim():'';
+    var failed=R.useState(null),name=String(p.name || p.username || 'L').trim();
+    return h('span',{className:'lf-connection-avatar','aria-hidden':true},
+      h('span',{'data-no-translate':true,dir:'auto'},Array.from(name)[0] || 'L'),
+      src && failed[0]!==src ? h('img',{src:src,alt:'',loading:'lazy',decoding:'async',onError:function () { failed[1](src); }}) : null);
+  }
   function SpoilerGate(p) {
     var R=root.React,h=R.createElement,en=p.language==='en', state=R.useState(false), revealed=p.revealed == null ? state[0] : p.revealed;
     if (!p.spoiler) return h(R.Fragment,null,p.children);
@@ -39,7 +46,7 @@
   function reviewKey(review,surface) {
     return [surface,root.LorefyBackend && root.LorefyBackend.user && root.LorefyBackend.user.id || '',review.id,!!review.spoiler,review.txt].join('|');
   }
-  var api={reviewKey:reviewKey,SpoilerGate:SpoilerGate,suggestions:suggestions,Recommendations:Recommendations};
+  var api={ReaderAvatar:ReaderAvatar,reviewKey:reviewKey,SpoilerGate:SpoilerGate,suggestions:suggestions,Recommendations:Recommendations};
   root.LorefyUserExperience=api;
   if (typeof module==='object' && module.exports) module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);
