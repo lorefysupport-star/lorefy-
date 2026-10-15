@@ -76,9 +76,8 @@
   function isFinished(work, verifiedSource) {
     return /^(completed|finished|مكتملة|مكتمل)$/i.test(String(verifiedSource && verifiedSource.status || work && (work.st || work.status) || '').trim());
   }
-  function nextUnread(progress, count, completed) {
+  function nextUnread(progress, count) {
     if (!positive(count)) return 0;
-    if (!progress && completed) return 0;
     var read = positive(typeof progress === 'number' ? progress : progress && (progress.chapter || progress.ch)) || 0;
     return read >= count ? 0 : read + 1;
   }

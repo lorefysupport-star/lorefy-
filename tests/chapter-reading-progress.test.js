@@ -32,9 +32,23 @@ test('next chapter is bounded and completed progress has no next chapter',()=>{
   assert.equal(core.nextUnread({chapter:999},20),0);
   assert.equal(core.nextUnread(null,0),0);
 });
-test('completed legacy work with no checkpoint is shown as fully read',()=>{
-  assert.equal(core.nextUnread(null,20,true),0);
+test('completed status never invents a reading checkpoint',()=>{
+  assert.equal(core.nextUnread(null,20,true),1);
+  assert.equal(core.nextUnread({},20,true),1);
+  assert.equal(core.nextUnread({chapter:0,volume:0,page:0},20,true),1);
   assert.equal(core.nextUnread({chapter:8},20,true),9);
+  assert.equal(core.nextUnread({chapter:20},20,true),0);
+});
+
+test('chapter progress agrees with saved-only library progress without mutating storage',()=>{
+  const metrics=require('../modules/lorefy-reading-metrics.js');
+  for(const saved of [null,{}, {chapter:0}, {chapter:8}, {chapter:20}]) {
+    const before=JSON.stringify(saved);
+    const effective=metrics.effectiveProgress({id:'work'},saved,'تم القراءة',{ch:20});
+    const next=core.nextUnread(saved,20,true);
+    assert.equal(next ? next-1 : 20,effective.chapter);
+    assert.equal(JSON.stringify(saved),before);
+  }
 });
 test('failed library write restores the progress and keeps unrelated state',()=>{
   const values={'lorefy.user.progress.v2':'old-progress','lorefy.user.library.v2':'old-library'};

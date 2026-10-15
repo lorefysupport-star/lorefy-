@@ -327,7 +327,7 @@
     if (info.total) {
       var state;
       try { state = readingState(); } catch (_) { state = {library:{},progress:{}}; }
-      var next = core.nextUnread(state.progress[info.id],info.total,state.library[info.id]==='تم القراءة');
+      var next = core.nextUnread(state.progress[info.id],info.total);
       var readCount = next ? next - 1 : info.total;
       var reading = el('div','lf-chapter-reading');
       var readingCopy = el('div','lf-chapter-reading-copy');
