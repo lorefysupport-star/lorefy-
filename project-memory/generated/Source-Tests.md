@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-15T16:18:05.773Z
-Source commit: ae66e5bca2a3841584d7908479c84b60f383d95b
+Observed: 2026-10-15T16:28:56.343Z
+Source commit: fee2dc61a14950aceccf8e2c66d9c99421432ec5
 
 # Tests Source Inventory
 
@@ -60,7 +60,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/beta-decorations.test.js](../../tests/beta-decorations.test.js) (3260 bytes)
 - [tests/beta-final-recovery.test.js](../../tests/beta-final-recovery.test.js) (2592 bytes)
 - [tests/beta-interaction-regressions.test.js](../../tests/beta-interaction-regressions.test.js) (12879 bytes)
-- [tests/beta-persistence.test.js](../../tests/beta-persistence.test.js) (9027 bytes)
+- [tests/beta-persistence.test.js](../../tests/beta-persistence.test.js) (9050 bytes)
 - [tests/beta-remediation.test.js](../../tests/beta-remediation.test.js) (7770 bytes)
 - [tests/book-spine-design.test.js](../../tests/book-spine-design.test.js) (2241 bytes)
 - [tests/booktok-library.test.js](../../tests/booktok-library.test.js) (2234 bytes)
@@ -93,7 +93,8 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/chapter-reading-ownership.test.js](../../tests/chapter-reading-ownership.test.js) (3719 bytes)
 - [tests/chapter-reading-progress.test.js](../../tests/chapter-reading-progress.test.js) (4649 bytes)
 - [tests/character-atlas.test.js](../../tests/character-atlas.test.js) (5893 bytes)
-- [tests/character-gallery-hydration.test.js](../../tests/character-gallery-hydration.test.js) (8113 bytes)
+- [tests/character-editor-ownership.test.js](../../tests/character-editor-ownership.test.js) (8297 bytes)
+- [tests/character-gallery-hydration.test.js](../../tests/character-gallery-hydration.test.js) (8144 bytes)
 - [tests/character-name-search.test.js](../../tests/character-name-search.test.js) (2724 bytes)
 - [tests/character-rating-summary.test.js](../../tests/character-rating-summary.test.js) (2817 bytes)
 - [tests/character-share-media.test.js](../../tests/character-share-media.test.js) (7971 bytes)
@@ -196,7 +197,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/ui-finish-pass.test.js](../../tests/ui-finish-pass.test.js) (2362 bytes)
 - [tests/ui-placement.test.js](../../tests/ui-placement.test.js) (23446 bytes)
 - [tests/ui-profile-discover-polish.test.js](../../tests/ui-profile-discover-polish.test.js) (3647 bytes)
-- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (2780 bytes)
+- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (2770 bytes)
 - [tests/user-discovery.test.js](../../tests/user-discovery.test.js) (4492 bytes)
 - [tests/user-reported-fixes.test.js](../../tests/user-reported-fixes.test.js) (4767 bytes)
 - [tests/version-consistency.test.js](../../tests/version-consistency.test.js) (1492 bytes)

@@ -22,6 +22,8 @@ Use `project-memory/15-Work-Control.md` for actionable follow-ups and `16-Obsidi
 
 The physical-device repair queue is `project-memory/12-Device-Repairs.md`; consult it for notification, chapter-progress and profile fixes. Preserve the imported evidence, add the regression result and remaining device-validation limits, and update each issue deliberately. The user requested a separate verified commit and GitHub push for each repaired issue on 2026-10-15. Do not include unrelated pre-existing changes in those commits. Raw device screenshots, account data and the local mirroring service stay outside the repository and the vault.
 
+Continue directly to the next actionable source issue after verifying and pushing each repair; do not wait for a continuation prompt. This does not authorize production changes, builds or device operations that require separate approval.
+
 Start with `project-memory/08-Feature-Router.md` to find the system, contracts and focused tests. Read its `systems/` note and `09-Data-Contracts.md` before cross-account, persistence or shared UI changes. `07-Source-Atlas.md` indexes canonical files; an inventory is not semantic review. The generated Canvas is a map of responsibilities, not a proven static call graph.
 
 Memory is context, not authorization and not a substitute for current source, user instructions or tests. Historical test/deployment notes must not be reported as fresh verification. Run `npm run memory:check` to detect source-snapshot drift and broken links; for read-only tasks report stale context without editing it.

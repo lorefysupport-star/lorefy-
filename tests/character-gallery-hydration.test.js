@@ -17,7 +17,7 @@ function runtime(initial={a:{hero:5}}){
  let scores=initial,owner='account-a',opened=[],calls=[],provider=()=>Promise.resolve([]),paint=0;
  const storage={getItem:k=>k==='lorefy.activeUser.v1'?owner:null};
  const scope={K_SCORES:'ratings',K_CHARCUSTOM:'custom-images',K_CHARIMG:'images',read:(k,f)=>k==='ratings'?scores:f,global:{localStorage:storage},
-  profileRatedCharacterCache:{},profileRatedCharacterLoads:{},profileRatedCharacterFailures:{},profileRatedCharacterGallery:null,
+  profileRatedCharacterCache:{},profileRatedCharacterLoads:{},profileRatedCharacterFailures:{},profileRatedCharacterGallery:null,profileTopCharacterEditor:null,
   castKey:c=>c.key,characterImageUrl:c=>c.image||'',profileWorkFor:id=>({id}),profileWorkTitle:id=>id,uiText:(ar,en)=>en,
   el:(tag,props,kids)=>new Node(tag,props||{},kids||[]),scheduleCharacterActionIcons(){},
   profileRatedCharacterShelfCard:item=>new Node('button',{class:'card',text:item.character.name}),

@@ -89,7 +89,7 @@ test('character selection persists immediately before leaving the editor', () =>
   const end = growth.indexOf('    function candidateMatches', start);
   let saved;
   const context = {draft:[null,null,null,null], activeSlot:0, selectionIndex:()=>-1,
-    render(){}, syncProfileTopCharacters(){},
+    render(){}, syncProfileTopCharacters(){}, editorActive:()=>true,
     setProfileTopCharacterSelection(value){ saved = JSON.parse(JSON.stringify(value)); }
   };
   vm.runInNewContext(growth.slice(start,end) + '\nchooseCandidate({workId:"hunter",characterKey:"gon"});', context);

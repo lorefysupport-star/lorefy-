@@ -4,6 +4,10 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest source receipt: [[sessions/2026-10-15-Character-Editor-Owner]], based on
+`fee2dc6` plus its patch: 1,225 passing tests and eight new owner/async regression
+cases. No native build, installation, Apple upload or service deployment.
+
 Latest repair receipts: [[sessions/2026-10-15-Gallery-Hydration-Repair]] (1,213
 passing tests) and [[sessions/2026-10-15-Push-Transport-Repair]] (1,217 passing
 tests). The latter is based on `ae66e5b` plus the source-only transport patch.

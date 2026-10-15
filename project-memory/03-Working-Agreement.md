@@ -17,6 +17,7 @@ instructions take precedence over this historical context.
 - Add a failing focused test before a risky fix, then verify source/native asset consistency.
 - Distinguish browser evidence, simulator evidence, real-device certification and deployment.
 - Push to GitHub when explicitly requested for the current work; do not infer release authorization.
+- Current repair queue (2026-10-15): test and push each issue separately, then continue directly to the next actionable issue without waiting for a continuation prompt. No new native builds or Apple uploads; ask only for genuinely required authorization or device evidence.
 - Record durable decisions and verified causes, not a transcript of every tool call.
 
 Source: [repository rules](../AGENTS.md),

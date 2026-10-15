@@ -3257,6 +3257,7 @@
   var profileRatedCharacterLoads = {};
   var profileRatedCharacterFailures = {};
   var profileRatedCharacterGallery = null;
+  var profileTopCharacterEditor = null;
   var homeReplyCloudItems = [];
   var homeReplyCloudLastFetch = 0;
   var homeReplyCloudFetching = false;
@@ -3682,9 +3683,15 @@
     }
     state.refresh();
   }
+  function syncProfileTopCharacterEditor() {
+    if (profileTopCharacterEditor && !profileTopCharacterEditor.active()) profileTopCharacterEditor = null;
+  }
   function profileRatedCharacterStateChanged(event) {
     var key = event && (event.detail ? event.detail.key : event.key);
-    if (!key || [K_SCORES, K_CHARCUSTOM, K_CHARIMG, "lorefy.activeUser.v1", "lorefy.session.v1", "lorefy.identity.v1"].indexOf(key) !== -1) syncProfileRatedCharacterGallery();
+    if (!key || [K_SCORES, K_CHARCUSTOM, K_CHARIMG, "lorefy.activeUser.v1", "lorefy.session.v1", "lorefy.identity.v1"].indexOf(key) !== -1) {
+      syncProfileRatedCharacterGallery();
+      syncProfileTopCharacterEditor();
+    }
   }
   function openProfileRatedCharacters() {
     if (profileRatedCharacterGallery) profileRatedCharacterGallery.close();
@@ -3944,6 +3951,7 @@
     return null;
   }
   function openProfileTopCharactersEditor() {
+    syncProfileTopCharacterEditor();
     var existing = doc.querySelector(".lf-profile-top-characters-editor");
     if (existing && existing.classList.contains("is-leaving")) { existing.remove(); existing = null; }
     if (existing) {
@@ -3956,6 +3964,19 @@
     while (draft.length < 4) draft.push(null);
     var activeSlot = 0, nameSearchTimer=null, nameSearchEpoch=0, nameSearchBusy=false, nameSearchFailed=false;
     var activeWorkId = "", loadingWorkId = "", pickerMode="characters";
+    var editorOwner = profileRatedCharacterOwner(), editorInvalid = false;
+    function editorActive() {
+      if (!editorInvalid && ov.page.isConnected && !ov.page.inert && editorOwner === profileRatedCharacterOwner()) return true;
+      if (!editorInvalid) {
+        editorInvalid = true;
+        ++nameSearchEpoch;
+        clearTimeout(nameSearchTimer);
+        if (search) clearTimeout(search.__renderTimer);
+        if (ov.page.isConnected && !ov.page.inert) ov.close();
+      }
+      return false;
+    }
+    profileTopCharacterEditor = { active: editorActive };
     var intro = el("section", { class: "lf-top-characters-editor-intro" }, [
       el("strong", { text: "اختيارك أنت، وليس ترتيبًا تلقائيًا" }),
       el("p", { text: "اختر الخانة أولاً، ثم اضغط شخصية لاستبدالها مباشرة. ترتيب الخانات هو ترتيب ظهورها في ملفك." })
@@ -3996,6 +4017,7 @@
       return -1;
     }
     function chooseCandidate(ref) {
+      if (!editorActive()) return;
       var existingIndex = selectionIndex(ref);
       if (existingIndex === activeSlot) return;
       var displaced = draft[activeSlot] || null;
@@ -4053,12 +4075,14 @@
           el("span", { class: "lf-top-characters-editor-work-action", text: "عرض" })
         ]);
         button.addEventListener("click", function () {
+          if (!editorActive()) return;
           ++nameSearchEpoch;clearTimeout(nameSearchTimer);clearTimeout(search.__renderTimer);nameSearchBusy=false;
           activeWorkId = workId;
           loadingWorkId = workId;
           search.value = "";
           render();
           hydrateProfileRatedCharacters(workId, function () {
+            if (!editorActive()) return;
             if (loadingWorkId === workId) loadingWorkId = "";
             render();
           });
@@ -4067,6 +4091,7 @@
       });
     }
     function render() {
+      if (!editorActive()) return;
       var data = dataNow(), selected = {}, query = profileTopCharacterSearchText(search.value);
       draft.forEach(function (ref, index) { if (ref) selected[profileTopCharacterRefKey(ref)] = index + 1; });
       clearSearch.hidden = !search.value;
@@ -4105,6 +4130,7 @@
       if (activeItem) {
         var remove = el("button", { type: "button", class: "lf-top-characters-editor-remove", text: "إزالة الشخصية من هذه الخانة" });
         remove.addEventListener("click", function () {
+          if (!editorActive()) return;
           draft[activeSlot] = null;
           setProfileTopCharacterSelection(draft);
           syncProfileTopCharacters();
@@ -4179,6 +4205,7 @@
       data.missing.forEach(function (workId) { hydrateProfileRatedCharacters(workId); });
     }
     search.addEventListener("input",function(){
+      if (!editorActive()) return;
       clearTimeout(nameSearchTimer);var epoch=++nameSearchEpoch,query=search.value.trim();nameSearchFailed=false;nameSearchBusy=false;
       var system=global.LorefyCharacterSystem;
       if(pickerMode==="characters"&&!activeWorkId && query.length>=2 && system && system.searchCharacters){
@@ -4186,16 +4213,17 @@
         nameSearchTimer=setTimeout(function(){
           var loader=global.LorefyCatalogLoader;
           var workSearch=Promise.resolve();
-          Promise.resolve(workSearch).catch(function(){}).then(function(){return system.searchCharacters(query,mlWorks(),{active:function(){return epoch===nameSearchEpoch&&ov.body.isConnected;}});}).then(function(rows){
-          if(epoch!==nameSearchEpoch || !ov.body.isConnected)return;
+          Promise.resolve(workSearch).catch(function(){}).then(function(){if(!editorActive() || epoch!==nameSearchEpoch)return [];return system.searchCharacters(query,mlWorks(),{active:function(){return editorActive()&&epoch===nameSearchEpoch;}});}).then(function(rows){
+          if(!editorActive() || epoch!==nameSearchEpoch)return;
           rows.forEach(function(row){profileRatedCharacterCache[row.workId]=row.cast;});
-        }).catch(function(){if(epoch===nameSearchEpoch)nameSearchFailed=true;}).finally(function(){if(epoch===nameSearchEpoch && ov.body.isConnected){nameSearchBusy=false;render();}});},450);
+        }).catch(function(){if(editorActive()&&epoch===nameSearchEpoch)nameSearchFailed=true;}).finally(function(){if(editorActive()&&epoch===nameSearchEpoch){nameSearchBusy=false;render();}});},450);
       }
-      if(pickerMode==="works"&&!activeWorkId&&query.length>=2){nameSearchTimer=setTimeout(function(){var loader=global.LorefyCatalogLoader;if(loader&&loader.loadAuthor)loader.loadAuthor(query,function(){return epoch===nameSearchEpoch&&ov.body.isConnected;}).then(function(){if(epoch===nameSearchEpoch&&ov.body.isConnected)render();}).catch(function(){});},450);}
+      if(pickerMode==="works"&&!activeWorkId&&query.length>=2){nameSearchTimer=setTimeout(function(){if(!editorActive()||epoch!==nameSearchEpoch)return;var loader=global.LorefyCatalogLoader;if(loader&&loader.loadAuthor)loader.loadAuthor(query,function(){return editorActive()&&epoch===nameSearchEpoch;}).then(function(){if(editorActive()&&epoch===nameSearchEpoch)render();}).catch(function(){});},450);}
       clearTimeout(search.__renderTimer);search.__renderTimer=setTimeout(function(){if(ov.body.isConnected)render();},180);
     });
     clearSearch.addEventListener("click", function () { nameSearchEpoch++;clearTimeout(nameSearchTimer);nameSearchBusy=false;search.value = ""; render(); search.focus(); });
     save.addEventListener("click", function () {
+      if (!editorActive()) return;
       setProfileTopCharacterSelection(draft);
       syncProfileTopCharacters();
       ov.close();
@@ -6398,6 +6426,7 @@
     try { run("syncProfileExtras",function(){syncProfileExtras();}); } catch (e) {}
     try { run("syncProfileRatedCharacters",function(){syncProfileRatedCharacters();}); } catch (e) {}
     try { run("syncProfileRatedCharacterGallery",function(){syncProfileRatedCharacterGallery();}); } catch (e) {}
+    try { run("syncProfileTopCharacterEditor",function(){syncProfileTopCharacterEditor();}); } catch (e) {}
     try { run("syncProfileFavouriteWorksControls",function(){syncProfileFavouriteWorksControls();}); } catch (e) {}
     try { run("syncProfileTopCharacters",function(){syncProfileTopCharacters();}); } catch (e) {}
     try { run("syncProfileCommunitySummary",function(){syncProfileCommunitySummary();}); } catch (e) {}
