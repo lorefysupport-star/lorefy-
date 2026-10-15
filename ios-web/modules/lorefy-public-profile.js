@@ -20,8 +20,15 @@
     const [connections, setConnections] = React.useState(null);
     const [libraryOpen, setLibraryOpen] = React.useState(false);
     const [attempt, setAttempt] = React.useState(0);
+    const [request, setRequest] = React.useState({ id:null, attempt:0, status:'loading' });
     const profile = snapshot.id === initial.id ? snapshot : initial;
     const backend = root.LorefyBackend;
+    const preview = root.LorefyPreviewReaders && root.LorefyPreviewReaders.isActive();
+    const remote = !!backend && (backend.mode === 'live' || !!preview);
+    const currentRequest = request.id === initial.id && request.attempt === attempt;
+    const loading = remote && (!currentRequest || request.status === 'loading');
+    const ready = !remote || currentRequest && request.status === 'ready';
+    const loadingLabel = root.document?.documentElement?.lang === 'en' ? 'Loading...' : 'جارٍ التحميل...';
     React.useEffect(() => {
       if (!root.document) return;
       const page = root.document.querySelector('.lf-reader-full');
@@ -33,13 +40,21 @@
     React.useEffect(() => {
       let active = true;
       setSnapshot(initial); setReviews(props.reviews || []); setConnections(null); setLibraryOpen(false); setError('');
-      const preview = root.LorefyPreviewReaders && root.LorefyPreviewReaders.isActive();
-      if (!backend || backend.mode !== 'live' && !preview) return;
+      if (!remote) return;
+      setRequest({ id:initial.id, attempt, status:'loading' });
       backend.getPublicProfile(initial.id).then(value => {
         if (!active) return;
-        if (!value) { setSnapshot({ id:initial.id }); setError('هذا الحساب غير متاح.'); return; }
+        if (!value || value.id !== initial.id) {
+          setSnapshot({ id:initial.id }); setError('هذا الحساب غير متاح.');
+          setRequest({ id:initial.id, attempt, status:'failed' }); return;
+        }
         setSnapshot(value);
-      }).catch(() => { if (active) setError('تعذر تحميل الحساب. حاول مجدداً.'); });
+        setRequest({ id:initial.id, attempt, status:'ready' });
+      }).catch(() => {
+        if (!active) return;
+        setError('تعذر تحميل الحساب. حاول مجدداً.');
+        setRequest({ id:initial.id, attempt, status:'failed' });
+      });
       const collection = preview ? Promise.resolve((props.reviews || []).filter(row => row.userId === initial.id)) : null;
       if (preview) collection.then(rows => { if (active) setReviews(rows); });
       else backend.listReviewCollection({ userId:initial.id }).then(rows => {
@@ -55,7 +70,7 @@
         }));
       }).catch(() => { if (active) setError('تعذر تحميل بعض معلومات الحساب. حاول مجدداً.'); });
       return () => { active = false; };
-    }, [initial.id, attempt]);
+    }, [initial.id, attempt, remote]);
 
     const username = profile.username || profile.un || '';
     const avatar = safeImage(profile.avatar || profile.av);
@@ -88,7 +103,7 @@
     const favoriteTypeLabel = {Manga:'مانجا',Manhwa:'مانهوا',Manhua:'مانهوا صيني',Comics:'كوميكس',Book:'كتاب',Novel:'رواية','Light Novel':'لايت نوفل','Web Novel':'ويب نوفل'}[favoriteType] || favoriteType;
 
     async function follow() {
-      if (busy) return;
+      if (busy || !ready) return;
       setBusy(true); setError('');
       const id = profile.id, following = !profile.is_following;
       try {
@@ -100,6 +115,7 @@
       finally { setBusy(false); }
     }
     async function openConnections(kind) {
+      if (!ready) return;
       const id = profile.id;
       setConnections({ id, kind, loading:true, rows:[] });
       try {
@@ -162,7 +178,7 @@
         'aria-label':'فتح ' + work.title
       }, spine ? spineCover(work) : h('span', { className:'lf-reader-library-cover' }, image(ownerCover(work), work.title)), h('span', { className:'lf-reader-library-copy' + (spine ? ' lf-library-copy' : '') }, h('strong', null, work.title), status && h('small', null, status)));
     }
-    return h('div', { className:'lf-public-profile-page lf-profile-page lf-reader-full', 'data-profile-renderer':'full',
+    return h('div', { className:'lf-public-profile-page lf-profile-page lf-reader-full', 'data-profile-renderer':'full', 'aria-busy':loading,
       style:ownerStyle, 'data-owner-theme':appearance.theme, 'data-owner-library-view':appearance.library_view,
       'data-profile-decoration':JSON.stringify(root.LorefyProfileShop ? root.LorefyProfileShop.normalizeDecoration(profile.profile_decoration) : {}),
       'data-profile-layout':root.LorefyProfileLayout ? root.LorefyProfileLayout.forProfile(profile) : (profile.profile_layout === 'immersive' ? 'immersive' : 'normal'), 'data-lf-public-profile-id':profile.id },
@@ -174,17 +190,18 @@
           h('h1', null, profile.name || username), h('p', { className:'lf-reader-handle', dir:'ltr' }, '@' + username),
           profile.bio && h('p', { className:'lf-reader-bio', dir:'auto' }, profile.bio),
           h('div', { className:'lf-reader-social-summary', 'aria-label':'إحصاءات التواصل' },
-            h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'following', onClick:() => openConnections('following'), 'aria-label':'عرض الحسابات التي يتابعها' }, h('strong', null, Number(profile.following_count) || 0), h('span', null, 'يتابع')),
+            h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'following', disabled:!ready, onClick:() => openConnections('following'), 'aria-label':'عرض الحسابات التي يتابعها' }, h('strong', null, ready ? Number(profile.following_count) || 0 : '—'), h('span', null, 'يتابع')),
             h('span', { className:'lf-reader-social-divider', 'aria-hidden':true }),
-            h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'followers', onClick:() => openConnections('followers'), 'aria-label':'عرض المتابعين' }, h('strong', null, Number(profile.follower_count) || 0), h('span', null, 'متابع'))),
+            h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'followers', disabled:!ready, onClick:() => openConnections('followers'), 'aria-label':'عرض المتابعين' }, h('strong', null, ready ? Number(profile.follower_count) || 0 : '—'), h('span', null, 'متابع'))),
           h('div', { className:'lf-reader-primary-actions' },
-            h('button', { type:'button', className:'lf-reader-follow' + (profile.is_following ? ' is-following' : ''), 'data-follow-action':true, onClick:follow, disabled:busy, 'aria-pressed':!!profile.is_following }, icon(profile.is_following ? 'UserCheck' : 'UserPlus', 17), h('span', null, profile.is_following ? 'متابَع' : 'متابعة')),
+            h('button', { type:'button', className:'lf-reader-follow' + (ready && profile.is_following ? ' is-following' : ''), 'data-follow-action':true, onClick:follow, disabled:busy || !ready, 'aria-pressed':ready ? !!profile.is_following : undefined }, icon(ready && profile.is_following ? 'UserCheck' : 'UserPlus', 17), h('span', null, loading ? loadingLabel : !ready ? '—' : profile.is_following ? 'متابَع' : 'متابعة')),
             h('div', { className:'lf-reader-socials', 'aria-label':'روابط التواصل' },
               ...Object.entries(profile.social_links || {}).map(([kind, value]) => {
                 const href = socialUrl(kind, value);
                 return href ? h('a', { key:kind, href, target:'_blank', rel:'noopener noreferrer', 'aria-label':kind, title:kind },
                   props.socialGlyph ? h(props.socialGlyph, { k:kind, size:19 }) : icon('Globe')) : null;
               }))),
+          loading && h('p', { role:'status', className:'lf-reader-loading' }, loadingLabel),
           error && h('div', { role:'alert', className:'lf-reader-error' }, error, h('button', { type:'button', onClick:() => setAttempt(attempt + 1) }, 'إعادة المحاولة')),
           h('div', { className:'lf-reader-metrics' }, ...[
             ['MessageCircle', Number(profile.review_count) || ownReviews.length, 'مراجعة'],
@@ -198,6 +215,7 @@
             return h(isPosts ? 'button' : 'div', {
               key:symbol,
               type:isPosts ? 'button' : undefined,
+              disabled:isPosts ? !ready : undefined,
               'data-profile-stat':symbol,
               'data-favorite-type':symbol === 'Heart' ? true : undefined,
               'aria-label':isPosts ? 'عرض منشورات القارئ' : undefined,
@@ -206,7 +224,7 @@
                 else if (root.LorefyProfileSections) root.dispatchEvent(new root.CustomEvent('lorefy:open-profile-section', {detail:{tab:'posts'}}));
                 else root.dispatchEvent(new root.CustomEvent('lorefy:open-reader-posts', { detail:profile }));
               } : undefined
-            }, icon(symbol), h('strong', null, value), h('span', null, label));
+            }, icon(symbol), h('strong', null, ready ? value : '—'), h('span', null, label));
           }))),
         shelf('works', works.map(work => workCard(work))),
         shelf('characters', characters.map(characterCard)),
@@ -217,7 +235,7 @@
         library.length > 0 && h('section', { className:'lf-reader-shelf lf-reader-library-preview', 'aria-label':'المكتبة' },
           h('header', { className:'lf-reader-shelf-head' }, h('h2', null, 'المكتبة'), h('button', { type:'button', className:'lf-reader-view-all', 'data-library-view-all':true, onClick:() => setLibraryOpen(true) }, 'عرض الكل', h('span', null, library.length), icon(root.document?.documentElement?.lang === 'en' ? 'ChevronRight' : 'ChevronLeft', 15))),
           h('div', { className:'lf-reader-library-grid' + (spine ? ' lf-library-grid is-spine-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.slice(0, 4).map(work => libraryCard(work, true)))),
-        h('section', { className:'lf-public-profile-reviews' }, h('h2', null, 'المراجعات'), ownReviews.length ? ownReviews.map(props.renderReview) : h('p', { className:'lf-reader-empty' }, 'لا مراجعات بعد'))),
+        h('section', { className:'lf-public-profile-reviews' }, h('h2', null, 'المراجعات'), ownReviews.length ? ownReviews.map(props.renderReview) : ready && h('p', { className:'lf-reader-empty' }, 'لا مراجعات بعد'))),
       libraryOpen && h('div', { className:'lf-reader-modal', role:'dialog', 'aria-modal':true, 'aria-label':'مكتبة القارئ', onClick:() => setLibraryOpen(false) },
         h('section', { className:'lf-reader-library-dialog', onClick:event => event.stopPropagation() },
           h('header', null, h('div', null, h('h2', null, 'المكتبة'), h('p', null, library.length + ' عمل')), h('button', { type:'button', onClick:() => setLibraryOpen(false), 'aria-label':'إغلاق' }, icon('X'))),

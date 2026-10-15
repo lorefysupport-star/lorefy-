@@ -28,11 +28,20 @@ aliases: ["تقرير الجوال", "إصلاحات الجهاز", "device audi
 | LF-001 | P1 | قيد التشخيص | `backend/lorefy-native-runtime.js`، التطبيق الرئيسي | `tests/notification-delivery-runtime.test.js` |
 | LF-002 | P2 | مفتوحة | `modules/lorefy-chapter-detail.js`، `modules/lorefy-reading-metrics.js` | `tests/reading-checkpoint-history.test.js` |
 | LF-003 | P2 | مفتوحة | `styles/lorefy-profile-shop.css`، إطار الصفحة والهيدر | `tests/frame-motion.test.js`، QA على الجهاز |
-| LF-004 | P2 | مفتوحة | `modules/lorefy-public-profile.js` | `tests/public-profile-view.test.js` |
+| LF-004 | P2 | أُصلحت بالمصدر؛ تنتظر نسخة جهاز | `modules/lorefy-public-profile.js` | `tests/public-profile-loading.test.js`، 18 اختبارًا ناجحًا مع عرض الحساب |
 | LF-005 | P3 | مفتوحة | `uploads/files/lorefy-app.js`، صفحة الجرس | DOM/accessible name |
 | LF-006 | P3 | مفتوحة | قوائم المتابعة والتوطين | `tests/followers-localization.test.js` |
 
 ## ضوابط الأدلة
+
+### LF-004: تحميل الحساب الآخر
+
+أثبتت ثلاثة اختبارات فاشلة أن القيم الافتراضية تظهر قبل وصول الملف البعيد.
+أصبح التحميل وحالة الفشل مرتبطين بمعرف الحساب والمحاولة، مع شرطة بدل الأرقام
+غير المعروفة وتعطيل المتابعة حتى وصول بيانات مؤكدة. اختُبر التأخير والفشل
+وإعادة المحاولة والتنقل السريع بين حسابين دون قبول استجابة متأخرة.
+لا تغيير في بيانات الحساب أو المتابعة على الخادم. مزامنة ملف runtime وحده
+تحافظ على تعديلات إعداد البناء المحلية السابقة. التثبيت على الجهاز لم يُحدّث بعد.
 
 - التقرير يخص التطبيق المثبت الذي فُحص؛ تطابقه بايتًا مع الـIPA المرفق غير مثبت.
 - صور الحساب والسجلات الشخصية تبقى خارج الخزنة وGit. نستخدم ملخصًا منزوع الهوية.
