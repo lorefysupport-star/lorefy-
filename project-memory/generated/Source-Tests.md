@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-15T13:52:45.480Z
-Source commit: 542b39cef11d5d6bd07ce324ab7288d77869fd10
+Observed: 2026-10-15T14:00:55.390Z
+Source commit: 279a9dcaa663c3008d9f3d6a689188a4d8154f94
 
 # Tests Source Inventory
 
@@ -163,6 +163,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/ranobedb-metadata-refresh.test.js](../../tests/ranobedb-metadata-refresh.test.js) (1922 bytes)
 - [tests/reading-checkpoint-history.test.js](../../tests/reading-checkpoint-history.test.js) (1320 bytes)
 - [tests/reading-diary-checkpoint.test.js](../../tests/reading-diary-checkpoint.test.js) (1735 bytes)
+- [tests/reading-diary-draft.test.js](../../tests/reading-diary-draft.test.js) (2536 bytes)
 - [tests/reading-diary-language.test.js](../../tests/reading-diary-language.test.js) (5896 bytes)
 - [tests/reading-diary.test.js](../../tests/reading-diary.test.js) (7331 bytes)
 - [tests/reading-metrics-stability.test.js](../../tests/reading-metrics-stability.test.js) (2595 bytes)

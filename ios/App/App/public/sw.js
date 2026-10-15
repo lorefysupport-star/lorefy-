@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v455-live-spoiler';
+const CACHE = 'lorefy-v456-diary-draft';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -60,7 +60,7 @@ const CORE = [
   './modules/lorefy-catalog-data.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-reading-metrics.js?v=20261011-reading-stable-v1',
   './modules/lorefy-reading-diary-core.js?v=20261015-live-spoiler-v1',
-  './modules/lorefy-reading-diary.js?v=20261015-live-spoiler-v1',
+  './modules/lorefy-reading-diary.js?v=20261015-diary-draft-v1',
   './modules/lorefy-chapter-detail-core.js?v=20261015-reading-owner-v1',
   './modules/lorefy-chapter-metadata.js?v=20261003-beta-final-v1',
   './modules/lorefy-chapter-detail.js?v=20261015-live-spoiler-v1',

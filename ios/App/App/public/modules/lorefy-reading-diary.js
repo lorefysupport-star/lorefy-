@@ -7,7 +7,7 @@
   var LOG_KEY = 'lorefy.user.readingDiary.v1';
   var SNAP_KEY = 'lorefy.user.readingDiarySnapshot.v1';
   var SESSION_KEY = 'lorefy.user.readingSession.v1';
-  var state = { filter: 'all', composing: false, sessionView: false, composeKind: 'note', selectedWork: '', workFilter: '', initialAnchor: null, editing: null, revealed: new Set() };
+  var state = { filter: 'all', composing: false, sessionView: false, composeKind: 'note', selectedWork: '', workFilter: '', initialAnchor: null, editing: null, owner:null, revealed: new Set() };
   var scheduled = false;
   var sessionTicker = 0;
   var lastFingerprint = '';
@@ -53,6 +53,11 @@
   function snapshot() {
     return { library: read('lorefy.user.library.v2', {}), progress: read('lorefy.user.progress.v2', {}) };
   }
+  function diaryOwner() {
+    var backend=global.LorefyBackend;
+    return JSON.stringify([global.localStorage.getItem('lorefy.activeUser.v1'),read('lorefy.session.v1',{}).userId,
+      read('lorefy.identity.v1',{}).id,backend && backend.user && backend.user.id]);
+  }
   function entries() { return read(LOG_KEY, []); }
   function activeSession() {
     var session = read(SESSION_KEY, null);
@@ -65,6 +70,9 @@
   }
   function sync() {
     if (!doc.querySelector('#screen .lf-app')) return;
+    if (doc.querySelector('.lf-diary-page') && state.owner!==diaryOwner()) {
+      close(); lastFingerprint=''; return;
+    }
     var current = snapshot();
     var fingerprint = JSON.stringify(current);
     if (fingerprint === lastFingerprint) return;
@@ -75,7 +83,7 @@
       if (changes.length) write(LOG_KEY, core.merge(entries(), changes));
     }
     write(SNAP_KEY, current);
-    if (doc.querySelector('.lf-diary-page')) render();
+    if (doc.querySelector('.lf-diary-page') && !state.composing) render();
   }
   function works() {
     var library = read('lorefy.user.library.v2', {});
@@ -177,6 +185,8 @@
     state.sessionView = false;
     state.editing = null;
     state.initialAnchor = null;
+    state.owner = null;
+    state.revealed.clear();
   }
   function startReadingSession(id) {
     if (activeSession()) { state.sessionView = true; render(); return; }
@@ -273,6 +283,7 @@
     body.appendChild(section);
   }
   function createEntry(workId, noteText, quoteText, anchorType, anchorValue, spoiler) {
+    if (state.owner!==diaryOwner()) return false;
     var text = String(noteText || '').trim();
     var position = Number(anchorValue);
     var isQuote = state.composeKind === 'quote';
@@ -555,10 +566,18 @@
     state.sessionView = !state.composing && !!(runningSession || options && options.session);
     state.initialAnchor = options && ['chapter', 'page', 'volume'].includes(options.anchorType) && Number.isSafeInteger(Number(options.anchorValue)) && Number(options.anchorValue) > 0 ? { type: options.anchorType, value: Number(options.anchorValue) } : null;
     state.editing = null; state.revealed.clear();
+    state.owner=diaryOwner();
     var page = node('section', 'lf-diary-page');
     if (doc.querySelector('.lf-app.is-dark')) page.classList.add('is-dark');
     page.setAttribute('role', 'dialog'); page.setAttribute('aria-modal', 'true'); page.setAttribute('aria-label', text('سجل القراءة', 'Reading diary'));
     screen.appendChild(page);
+    var pageOwner=state.owner;
+    function guardOwner(event) {
+      if (pageOwner===diaryOwner() && state.owner===pageOwner) return;
+      event.preventDefault(); event.stopImmediatePropagation();
+      if (page.isConnected) close();
+    }
+    ['click','submit','keydown'].forEach(function (type) { page.addEventListener(type,guardOwner,true); });
     render();
     page.addEventListener('keydown', function (event) {
       var shareOverlay = page.querySelector('.lf-diary-share-overlay');
@@ -625,6 +644,9 @@
     new MutationObserver(schedule).observe(screen, { childList: true, subtree: true });
     global.addEventListener('storage', schedule);
     global.addEventListener('lorefy:routechange', schedule);
+    global.addEventListener('lorefy:stored-state',function (event) {
+      if (event.detail && ['lorefy.user.progress.v2','lorefy.user.library.v2','lorefy.activeUser.v1','lorefy.session.v1','lorefy.identity.v1'].indexOf(event.detail.key)!==-1) schedule();
+    });
     global.setInterval(function () { if (!doc.hidden) sync(); }, 2500);
     schedule();
   }
