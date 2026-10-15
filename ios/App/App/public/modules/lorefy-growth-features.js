@@ -3537,7 +3537,10 @@
       }
     });
     entries.sort(function (a, b) { return b.score - a.score || String(a.character.name || "").localeCompare(String(b.character.name || ""), "ar"); });
-    return { entries: entries, missing: Object.keys(missing) };
+    return { entries: entries, missing: Object.keys(missing), total: rows.length,
+      workCount: new Set(rows.map(function (row) { return row.workId; })).size,
+      average: rows.length ? rows.reduce(function (sum, row) { return sum + row.score; }, 0) / rows.length : 0,
+      unresolved: rows.length - entries.length };
   }
   function profileCharacterEntries() {
     var allScores = read(K_SCORES, {}) || {}, entries = [], seen = {};
@@ -3671,11 +3674,8 @@
       ]));
       return;
     }
-    var workCount = {};
-    data.entries.forEach(function (item) { workCount[item.workId] = true; });
-    var average = data.entries.reduce(function (sum, item) { return sum + item.score; }, 0) / data.entries.length;
     var overview = el("section", { class: "lf-rated-characters-overview" });
-    [[data.entries.length, uiText("شخصية", "Characters")], [Object.keys(workCount).length, uiText("أعمال", "Works")], [average.toFixed(2), uiText("متوسطك", "Your average")]].forEach(function (stat) {
+    [[data.total, uiText("شخصية", "Characters")], [data.workCount, uiText("أعمال", "Works")], [data.average.toFixed(2), uiText("متوسطك", "Your average")]].forEach(function (stat) {
       overview.appendChild(el("div", { class: "lf-character-atlas-stat" }, [el("strong", { text: String(stat[0]), "data-no-translate": "" }), el("small", { text: stat[1] })]));
     });
     ov.body.appendChild(overview);
@@ -3740,7 +3740,7 @@
     var data = profileRatedCharacterEntries();
     var count = section.querySelector("[data-lf-rated-characters-count]");
     var rail = section.querySelector(".lf-profile-rated-characters-rail");
-    var countText = data.entries.length ? data.entries.length + uiText(" شخصية", " characters") : uiText("جارٍ التحميل", "Loading");
+    var countText = data.total + uiText(" شخصية", " characters");
     if (count && count.textContent !== countText) count.textContent = countText;
     if (!rail) return;
     var signature = JSON.stringify(data.entries.slice(0, 8).map(function (item) {
