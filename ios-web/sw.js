@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v448-reviewed-performance';
+const CACHE = 'lorefy-v449-device-repairs';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -13,7 +13,7 @@ const CORE = [
  './styles/lorefy-customize.css?v=20261013-final',
  './styles/lorefy-work-layout.css?v=20261013-final',
   './uploads/lorefy-editorial-picks.js?v=20261011-explore-v2',
-  './styles/lorefy-user-experience.css?v=20261011-explore-v2',
+  './styles/lorefy-user-experience.css?v=20261015-device-repairs-v1',
   './modules/lorefy-user-experience.js?v=20261011-explore-v2',
   './modules/lorefy-friend-activity.js?v=20261013-discover-reviewed-v2',
   './modules/lorefy-original-illustrated.js?v=20261013-all-profile-frames-v6',
@@ -61,9 +61,9 @@ const CORE = [
   './modules/lorefy-reading-metrics.js?v=20261011-reading-stable-v1',
   './modules/lorefy-reading-diary-core.js?v=20261007-diary-language-v1',
   './modules/lorefy-reading-diary.js?v=20261007-diary-language-v1',
-  './modules/lorefy-chapter-detail-core.js?v=20261007-quarter-ratings-v1',
+  './modules/lorefy-chapter-detail-core.js?v=20261015-device-repairs-v1',
   './modules/lorefy-chapter-metadata.js?v=20261003-beta-final-v1',
-  './modules/lorefy-chapter-detail.js?v=20261008-feature-dialogs-v1',
+  './modules/lorefy-chapter-detail.js?v=20261015-device-repairs-v1',
   './modules/lorefy-product-core.js?v=20261011-explore-v2',
   './modules/lorefy-product-tools.js?v=20261011-explore-v2',
   './modules/lorefy-user-discovery.js?v=20261013-discover-reviewed-v2',
@@ -101,7 +101,7 @@ const CORE = [
   './styles/lorefy-public-profile.css?v=20261011-public-profile-layout-v4',
   './styles/lorefy-visual-polish.css?v=20260930-reference-v2',
   './modules/lorefy-public-appearance.js?v=20261009-public-appearance-v4',
-  './modules/lorefy-public-profile.js?v=20261011-public-profile-layout-v4',
+  './modules/lorefy-public-profile.js?v=20261015-device-repairs-v1',
   './modules/lorefy-community.js?v=20261011-profile-sections-v1',
   './modules/lorefy-library-view.js?v=20261011-public-profile-layout-v4',
   './modules/lorefy-interface-settings.js?v=20261009-custom-appearance-v1',
