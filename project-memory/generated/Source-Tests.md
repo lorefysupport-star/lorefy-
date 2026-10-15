@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-15T16:09:18.490Z
-Source commit: cc1f29acc6f5bc0d5df2e36553e9a5e6e4d3d73f
+Observed: 2026-10-15T16:18:05.773Z
+Source commit: ae66e5bca2a3841584d7908479c84b60f383d95b
 
 # Tests Source Inventory
 
@@ -162,6 +162,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/public-appearance.test.js](../../tests/public-appearance.test.js) (3984 bytes)
 - [tests/public-profile-loading.test.js](../../tests/public-profile-loading.test.js) (4418 bytes)
 - [tests/public-profile-view.test.js](../../tests/public-profile-view.test.js) (11668 bytes)
+- [tests/push-dispatch-transport.test.js](../../tests/push-dispatch-transport.test.js) (4361 bytes)
 - [tests/quarter-ratings.test.js](../../tests/quarter-ratings.test.js) (6055 bytes)
 - [tests/ranobedb-import.test.js](../../tests/ranobedb-import.test.js) (2125 bytes)
 - [tests/ranobedb-metadata-refresh.test.js](../../tests/ranobedb-metadata-refresh.test.js) (1945 bytes)

@@ -4,6 +4,12 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest repair receipts: [[sessions/2026-10-15-Gallery-Hydration-Repair]] (1,213
+passing tests) and [[sessions/2026-10-15-Push-Transport-Repair]] (1,217 passing
+tests). The latter is based on `ae66e5b` plus the source-only transport patch.
+No new native binary or Edge Function deployment was performed. The source tests
+and isolated browser fixture do not close physical-device/APNs display checks.
+
 Latest local-memory workflow receipt: [[sessions/2026-10-15-Obsidian-Research]].
 On source base `1950599` plus that workflow change, `npm test` passed 1,204 tests
 with no failures, skips or cancellations; focused memory/workflow tests passed

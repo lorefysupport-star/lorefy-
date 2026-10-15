@@ -13,12 +13,14 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 
 ![[dashboards/Work.base]]
 
-هذه ثلاث فجوات متابعة محددة، وليست جردًا جديدًا لكل مشكلات التطبيق.
+هذه بنود متابعة محددة، وليست جردًا جديدًا لكل مشكلات التطبيق. العرض يخفي
+المغلق منها؛ الملفات المرتبطة أدناه تبقى كسجل أدلة.
 السجل التاريخي يبقى في [[12-Device-Repairs]]، ولا ننسخه إلى كل بند.
 
 - [[bugs/LF-003-Frame-Device-QA]]
 - [[bugs/LF-009-Gallery-Hydration]]
 - [[bugs/APNS-001-Background-Delivery]]
+- [[bugs/APNS-002-Transport-Isolation]]
 
 ## جودة المعرفة
 

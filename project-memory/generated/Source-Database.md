@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-15T16:09:18.490Z
-Source commit: cc1f29acc6f5bc0d5df2e36553e9a5e6e4d3d73f
+Observed: 2026-10-15T16:18:05.773Z
+Source commit: ae66e5bca2a3841584d7908479c84b60f383d95b
 
 # Database Source Inventory
 
@@ -15,7 +15,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [supabase/functions/decoration-purchases/index.ts](../../supabase/functions/decoration-purchases/index.ts) (4820 bytes)
 - [supabase/functions/decoration-purchases/policy.mjs](../../supabase/functions/decoration-purchases/policy.mjs) (1319 bytes)
 - [supabase/functions/delete-account/index.ts](../../supabase/functions/delete-account/index.ts) (6667 bytes)
-- [supabase/functions/dispatch-notifications/index.ts](../../supabase/functions/dispatch-notifications/index.ts) (6623 bytes)
+- [supabase/functions/dispatch-notifications/index.ts](../../supabase/functions/dispatch-notifications/index.ts) (6877 bytes)
 - [supabase/functions/lorefy-public/index.ts](../../supabase/functions/lorefy-public/index.ts) (16024 bytes)
 - [supabase/migrations/20260722000000_account_foundation.sql](../../supabase/migrations/20260722000000_account_foundation.sql) (5151 bytes)
 - [supabase/migrations/20260722000100_entitlements.sql](../../supabase/migrations/20260722000100_entitlements.sql) (1337 bytes)

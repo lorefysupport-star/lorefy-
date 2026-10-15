@@ -30,4 +30,8 @@
 [الاختبار](../../tests/profile-decoration.test.js)،
 [الهندسة](../../styles/lorefy-frame-motion.css).
 
+مراجعة المصدر 2026-10-15 بعد ae66e5b: نجح 56 اختبارًا في frame-motion و
+profile-decoration وprofile-layout وbeta-decorations. لا تغيير رسومي جديد
+بلا إعادة إنتاج خلل، ولا إغلاق QA الجهاز بهذه النتيجة. التوجيه لا يزال دون build.
+
 [[15-Work-Control]] | [[10-Open-Questions]]

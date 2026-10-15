@@ -121,35 +121,41 @@ Deno.serve(async (request) => {
   let delivered = 0;
   let unavailable = 0;
   await Promise.all(devices.map(async (device) => {
-    const endpoint = device.environment === "development" ? APNS_SANDBOX_URL : APNS_PRODUCTION_URL;
-    const response = await fetch(`${endpoint}/${encodeURIComponent(device.token)}`, {
-      method: "POST",
-      headers: {
-        "Authorization": `bearer ${authorization}`,
-        "Content-Type": "application/json",
-        "apns-topic": topic,
-        "apns-push-type": "alert",
-        "apns-priority": "10",
-        "apns-collapse-id": String(notification.event_key).slice(0, 64)
-      },
-      body: JSON.stringify({
-        aps: {
-          alert: { title: notification.title, body: notification.body },
-          badge: 1,
-          sound: "default"
+    try {
+      const endpoint = device.environment === "development" ? APNS_SANDBOX_URL : APNS_PRODUCTION_URL;
+      const response = await fetch(`${endpoint}/${encodeURIComponent(device.token)}`, {
+        method: "POST",
+        // Leave room for lookup/signing within the database webhook's five-second budget.
+        signal: AbortSignal.timeout(3500),
+        headers: {
+          "Authorization": `bearer ${authorization}`,
+          "Content-Type": "application/json",
+          "apns-topic": topic,
+          "apns-push-type": "alert",
+          "apns-priority": "10",
+          "apns-collapse-id": String(notification.event_key).slice(0, 64)
         },
-        notificationId: notification.id,
-        kind: notification.kind,
-        targetPath: notification.target_path,
-        data: notification.data
-      })
-    });
-    if (response.ok) { delivered += 1; return; }
-    unavailable += 1;
-    let reason = "";
-    try { reason = String((await response.json())?.reason || ""); } catch {}
-    if (response.status === 410 || ["BadDeviceToken", "Unregistered", "DeviceTokenNotForTopic"].includes(reason)) {
-      invalidDeviceIds.push(device.id);
+        body: JSON.stringify({
+          aps: {
+            alert: { title: notification.title, body: notification.body },
+            badge: 1,
+            sound: "default"
+          },
+          notificationId: notification.id,
+          kind: notification.kind,
+          targetPath: notification.target_path,
+          data: notification.data
+        })
+      });
+      if (response.ok) { delivered += 1; return; }
+      unavailable += 1;
+      let reason = "";
+      try { reason = String((await response.json())?.reason || ""); } catch {}
+      if (response.status === 410 || ["BadDeviceToken", "Unregistered", "DeviceTokenNotForTopic"].includes(reason)) {
+        invalidDeviceIds.push(device.id);
+      }
+    } catch {
+      unavailable += 1;
     }
   }));
 

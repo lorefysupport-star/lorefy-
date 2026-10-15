@@ -2,7 +2,7 @@
 {
   "kind": "bug", "id": "APNS-001", "status": "needs-service", "priority": "P1",
   "area": "notifications", "date": "2026-10-15", "reviewed_on": "2026-10-15",
-  "source_commit": "1950599", "source_verified": false,
+  "source_commit": "ae66e5b", "source_verified": false,
   "device_verified": false, "service_verified": false,
   "requires_device": true, "requires_service": true,
   "verified_on": null,
@@ -18,6 +18,11 @@
 [[12-Device-Repairs#LF-001: إعادة تحميل صندوق الإشعارات]] يخص صندوق الجرس
 داخل التطبيق، ولا يغلق مشكلة push. حقول التحقق هنا خاصة بالتسليم الشامل.
 لم يُفحص الخادم مجددًا في جولة تنظيم الذاكرة.
+
+تحديث 2026-10-15: [[sessions/2026-10-15-Push-Transport-Repair]] يتضمن قراءة
+حديثة للجهاز المسجل وtrigger ونسخة dispatcher وسجلات قبول محدودة. لا يثبت
+العرض على iPhone، ولا يجعل فشل النقل المثبت بالمحاكاة سببًا لبلاغ الحساب.
+إصلاح [[bugs/APNS-002-Transport-Isolation]] في الكود فقط، ولم يُنشر إلى الخادم.
 
 ## شرط الإغلاق
 

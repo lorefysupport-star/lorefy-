@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "head": "cc1f29acc6f5bc0d5df2e36553e9a5e6e4d3d73f",
+  "head": "ae66e5bca2a3841584d7908479c84b60f383d95b",
   "branch": "main",
   "fingerprints": {
     "package.json": "9f16962c0014a1df81cb5e6dce4db0315f8f330c54cac1b71795e372943e9ae8",
@@ -15,10 +15,7 @@
     "tools/prepare-ios-web.mjs": "10340219b33369787bedb3fa3c75dcaee1f4e68f7f820a349d8bf19efae12e6f",
     "tools/project-memory.mjs": "445cf699ef2d54178cf89c3b4107c345233a63f4ad6ab7d9b87c25dcd9e90251"
   },
-  "changes": {
-    "modules/lorefy-growth-features.js": "0cd8dd611393bb830490a480f12cf88dd851afbaba67e59b5cc47c3780547149",
-    "tests/ui-unity.test.js": "abd00bc5d2937b0f7922911dc503148fc182142ae0ab7379dd0f12c229327ce5"
-  },
+  "changes": {},
   "inventory": [
     {
       "path": "AGENTS.md",
@@ -1355,8 +1352,8 @@
     {
       "path": "supabase/functions/dispatch-notifications/index.ts",
       "area": "Database",
-      "bytes": 6623,
-      "sha256": "2d34d214385e405b8bf6fcd55fda1676086018da5e182b0d6e8a2afb463e6947"
+      "bytes": 6877,
+      "sha256": "f504e200e5a562b0ff4e3c0b375c9e74bda8786b5455bcfa357829085c1fa7a2"
     },
     {
       "path": "supabase/functions/lorefy-public/index.ts",
@@ -2397,6 +2394,12 @@
       "sha256": "69820866a2bf2d6f5bf5c91068c751f94c3ebdfad0c1f8ff5dca54828a35ab66"
     },
     {
+      "path": "tests/push-dispatch-transport.test.js",
+      "area": "Tests",
+      "bytes": 4361,
+      "sha256": "2123c9d16a548d95147e1253b35ca2fd87a0aee55654324de181b76178b148bc"
+    },
+    {
       "path": "tests/quarter-ratings.test.js",
       "area": "Tests",
       "bytes": 6055,
@@ -3048,19 +3051,19 @@
     "apple:audit",
     "apple:audit:strict"
   ],
-  "verifiedAt": "2026-10-15T16:09:18.490Z",
+  "verifiedAt": "2026-10-15T16:18:05.773Z",
   "artifacts": {
-    "04-Current-State.md": "4614d0a125576050baca2f52b89f1f7afc2c38cec49e0e39bb553ca475e35a25",
-    "07-Source-Atlas.md": "ce99307fccf8beb08d00476d52cdb8dce5ba4437cd887a6ea8593cace1a9350f",
-    "generated/Source-Modules.md": "9b60f432782d1b3f056e2673323ca43957649ad51e0abd254677aa465e614765",
-    "generated/Source-Styles.md": "95d0f31531e3b5cd62395b7e23aed1105f4e649d1a5bea496963a752aa26fcb6",
-    "generated/Source-Backend.md": "ac549b9546b7af89a7addfac568268af9f7489ad370846de6549b0cea889c058",
-    "generated/Source-Tooling.md": "fdc3b988bca8d2e4f67bf12ce9b6b2a5091f231141abc362e7ba71556f0782e5",
-    "generated/Source-Tests.md": "fd030597defa34a67abacc66ac31af7788c879a8de0205b1360fec1f5218bda1",
-    "generated/Source-Docs.md": "655ede211bc098a9377f694315113cfaacdb785d6c953d318baf5cc2c573139c",
-    "generated/Source-Database.md": "69fa321d463bba3957ab413534a66fa8cb91cf7c1d0442f4ae4968879f8ef655",
-    "generated/Source-Native.md": "2181f876e4fa638b73fe1abcdcd14a26e2fa875a054f9b77485f5974cd909c2d",
-    "generated/Source-Shell.md": "39e51f355d39359ba81e0ffe3f1e088a59063819ddb527b26194b27f2cd98fb1",
+    "04-Current-State.md": "62785c4f0fb8cd7b9e13cc3980c2395025453fb1a5e618e9336679e03a72f781",
+    "07-Source-Atlas.md": "c7783529fa9547068f32c2d26a8d28d311bc8e9e614d1a1ace959bc2017e67d7",
+    "generated/Source-Modules.md": "4a8c05a9a0c994685538d293f1efb4b4580f12e5e9e4a693d8d9fb3eb235f364",
+    "generated/Source-Styles.md": "3f87050f549e721014363b880fbaf98a7a011e267e1e74924cdb02c757a0d77b",
+    "generated/Source-Backend.md": "9d42b7458521f1947ed73547e1601957189058a62fea1d776cc3559ac5f1f86a",
+    "generated/Source-Tooling.md": "62d997efa197499d81457fb9d4bd607444eda9be9e263f6f50763c41529080f1",
+    "generated/Source-Tests.md": "34731590ac572a755dfb2cd6d96c9f4ef53ffdaded2d25b4bde6e2e24b863c16",
+    "generated/Source-Docs.md": "6eee3fa86a6a3a078197ea38bfe4ae59bf16e892a564c1f97ffe06b953139f6e",
+    "generated/Source-Database.md": "e1a550a070f2838b5da7355de967926826676a5b65e0e8480a0e8932a1f37437",
+    "generated/Source-Native.md": "90c4c06eccfcd3a7f5551243e795dfcef74491f16ce6c720d16e0c1ae85a748b",
+    "generated/Source-Shell.md": "97b429a68c4dfaa6d7cedba522dade2f9fce811f26d72224a7b4195887171dc2",
     "generated/Project-Brain.canvas": "3955aeb46974f461d4321dc37f303afcaa8e59281d1038629295e32ef4cbc3f1",
     "brain-map.json": "ccbcdcec84c2f2c7b53a06cdfd6a1d420de0601d2103e8f7a6945236e6d0399a"
   }

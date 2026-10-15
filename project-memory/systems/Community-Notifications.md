@@ -32,6 +32,12 @@ responses مهمان. تنبيه foreground محلي مختلف عن وصول AP
 في 14 أكتوبر وفحصًا محميًا تجاوز نقص الإعدادات دون إرسال. قبول Apple والتسليم
 الفعلي على iPhone ما زالا غير مختبرين؛ لا تعتبر تهيئة الأسرار إثباتًا للتسليم.
 
+[[sessions/2026-10-15-Push-Transport-Repair]] يحدّث المعرفة: قراءة حية للـhook
+والتسجيل وسجلات قبول محدودة، وإصلاح مصدر مثبت لعزل فشل جهاز وتحديد مهلة
+APNs I/O. الإصلاح لم يُنشر، ولم يُثبت عرض إشعار على الجوال أو سبب بلاغ الحساب.
+قبول Apple وظهور التنبيه مرحلتان مستقلتان؛ [[bugs/APNS-001-Background-Delivery]]
+يبقى مفتوحًا.
+
 الفحص: [home-social](../../tests/home-social-discovery.test.js)،
 [community-cloud](../../tests/community-cloud.test.js)،
 [subscription](../../tests/community-live-subscription.test.js)،
