@@ -593,17 +593,23 @@
       var viewport = global.visualViewport;
       var host = composer.parentElement;
       if (!host) return;
-      composer.style.setProperty('--composer-viewport-height', Math.min(host.clientHeight, viewport ? viewport.height : global.innerHeight) + 'px');
+      var height = Math.min(host.clientHeight, viewport ? viewport.height : global.innerHeight);
+      composer.style.setProperty('--composer-viewport-height', height + 'px');
       composer.style.setProperty('--composer-viewport-top', Math.max(0,(viewport ? viewport.offsetTop : 0) - host.getBoundingClientRect().top) + 'px');
+      composer.classList.toggle('is-keyboard-open', !!viewport && global.innerHeight - viewport.height > 120);
     }
+    global.addEventListener('resize',fitComposerViewport);
     if (global.visualViewport) {
       global.visualViewport.addEventListener('resize',fitComposerViewport);
       global.visualViewport.addEventListener('scroll',fitComposerViewport);
-      composerViewportCleanup = function () {
+    }
+    composerViewportCleanup = function () {
+      global.removeEventListener('resize',fitComposerViewport);
+      if (global.visualViewport) {
         global.visualViewport.removeEventListener('resize',fitComposerViewport);
         global.visualViewport.removeEventListener('scroll',fitComposerViewport);
-      };
-    }
+      }
+    };
     var toolButtons = composer.querySelectorAll(".lf-community-compose-tools button");
     var publishing = false;
     toolButtons[0].addEventListener("click", function () { openAttachmentPicker("list"); });
@@ -665,7 +671,7 @@
     fitComposerViewport();
     hydrateIcons(composer);
     syncComposerAttachment();
-    global.setTimeout(function () { textarea.focus(); }, 40);
+    global.setTimeout(function () { if (composer.isConnected) textarea.focus({preventScroll:true}); }, 40);
   }
 
   function createComposerFab() {
@@ -1102,16 +1108,22 @@
     if (existing) {
       var existingCount = existing.querySelector("strong");
       if (existingCount && existingCount.textContent !== String(count)) existingCount.textContent = String(count);
+      var existingLabel = existing.querySelector('span');
+      var label = uiText('منشور', count === 1 ? 'Post' : 'Posts');
+      if (existingLabel && existingLabel.textContent !== label) existingLabel.textContent = label;
+      if(existing.getAttribute('data-no-translate')!=='1')existing.setAttribute('data-no-translate','1');
+      var accessibleLabel=uiText('عرض منشوراتي','View my posts');
+      if(existing.getAttribute('aria-label')!==accessibleLabel)existing.setAttribute('aria-label',accessibleLabel);
       return true;
     }
-    var reviewLeaf = metricLeaf(page, ["مراجعة", "Review"]);
+    var reviewLeaf = metricLeaf(page, ["مراجعة", "Review", "Reviews"]);
     var completedLeaf = metricLeaf(page, ["مكتملة", "مكتمل", "Completed"]);
     if (!reviewLeaf || !completedLeaf) return false;
     var reviewItem = metricItem(reviewLeaf);
     var completedItem = metricItem(completedLeaf);
     if (!reviewItem || !completedItem || reviewItem.parentElement !== completedItem.parentElement) return false;
-    var button = el("button", { type:"button", class:"lf-owner-post-metric", "data-profile-stat":"MessagesSquare", "aria-label":uiText("عرض منشوراتي", "View my posts") }, [
-      icon("messages-square", 21), el("strong", { text:String(count) }), el("span", { text:uiText("منشور", "Post") })
+    var button = el("button", { type:"button", class:"lf-owner-post-metric", "data-no-translate":"1", "data-profile-stat":"MessagesSquare", "aria-label":uiText("عرض منشوراتي", "View my posts") }, [
+      icon("messages-square", 21), el("strong", { text:String(count) }), el("span", { text:uiText("منشور", count === 1 ? "Post" : "Posts") })
     ]);
     button.addEventListener("click", function () {
       if (global.LorefyProfileSections) global.dispatchEvent(new global.CustomEvent('lorefy:open-profile-section', {detail:{tab:'posts'}}));

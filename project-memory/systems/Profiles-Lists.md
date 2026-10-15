@@ -30,6 +30,11 @@ Lists / Posts والقوائم المرتبة. المفتاح `lorefy.user.profi
 
 ## الهندسة والفحص
 
+بعد [[sessions/2026-10-15-Privacy-Safety-Repairs]] يقرأ مركز البيانات القوائم
+الجديدة أيضًا. تعديل الرؤية يمر عبر `setFolderVisibility` مع فحص المالك ووجود
+القائمة الأحدث؛ لا يستخدم خريطة رؤية القوائم القديمة للقوائم الجديدة. المزامنة
+المعلقة ليست تأكيدًا لتغير الرؤية في الخادم.
+
 [profile-layout](../../modules/lorefy-profile-layout.js) وترتيب العناصر،
 [public profile CSS](../../styles/lorefy-public-profile.css) والمفضلة والرفوف
 تتداخل مع [[systems/Appearance-Bundles]]. احفظ الأربعة عناصر وbaseline واضحًا

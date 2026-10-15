@@ -964,7 +964,13 @@
       if (!current() || (this.mode === "live" && owner !== sess.userId)) return false;
       var payload = gather();
       var pendingAtStart = readPendingState();
+      var status = function(value){
+        if (!current()) return;
+        backend._syncStatus = value;
+        if (typeof global !== "undefined" && global.dispatchEvent && global.CustomEvent) global.dispatchEvent(new global.CustomEvent("lorefy:sync-status", {detail:{status:value}}));
+      };
       if (this.mode === "live"){
+        status("syncing");
         try{
           var base = this._stateBase || {};
           var patch = {};
@@ -978,6 +984,7 @@
           if (!Object.keys(patch).length && !removed.length) {
             clearPendingState(Object.keys(pendingAtStart), pendingAtStart);
             writeStateBase(sess.userId, payload, this._stateVersion);
+            status("synced");
             return true;
           }
           var batchPatch = {}, batchRemoved = [];
@@ -1006,7 +1013,12 @@
             if (!current()) return false;
             if (latest.error) throw latest.error;
             var remote = latest.data && latest.data.data && typeof latest.data.data === "object" ? latest.data.data : {};
-            var overlaps = batchKeys.some(function(key){ return remote[key] !== base[key]; });
+            var overlaps = batchKeys.some(function(key){
+              var desired = Object.prototype.hasOwnProperty.call(batchPatch, key) ? batchPatch[key] : undefined;
+              // A newer server version may already contain this exact change.
+              // Only a third, different value is a genuine concurrent edit.
+              return remote[key] !== base[key] && remote[key] !== desired;
+            });
             if (overlaps){
               var conflict = new Error("Your library changed on another device. Reopen the app before saving again.");
               conflict.code = "LOREFY_STATE_CONFLICT";
@@ -1024,8 +1036,30 @@
           clearPendingState(batchKeys, pendingAtStart);
           writeStateBase(sess.userId, this._stateBase, this._stateVersion);
           }
+          // Adopt unrelated remote edits only when the local value has not
+          // changed before or during this push. Otherwise a later push would
+          // mistake the old local copy for a new edit and undo the remote one.
+          var localNow = gather();
+          var pendingNow = readPendingState();
+          var adopted = [];
+          this._isApplyingRemote = true;
+          try {
+            accountStateKeys().forEach(function(key){
+              if (payload[key] !== base[key] || localNow[key] !== payload[key] || Object.prototype.hasOwnProperty.call(pendingNow,key)) return;
+              var value = backend._stateBase[key];
+              if (value === localNow[key]) return;
+              if (value == null) localStorage.removeItem(key);
+              else localStorage.setItem(key,value);
+              adopted.push(key);
+            });
+          } finally { this._isApplyingRemote = false; }
+          adopted.forEach(function(key){
+            if (typeof global !== "undefined" && global.dispatchEvent && global.CustomEvent) global.dispatchEvent(new global.CustomEvent("lorefy:stored-state", {detail:{key:key}}));
+          });
+          status("synced");
           return true;
         }catch(e){
+          status(e && e.code === "LOREFY_STATE_CONFLICT" ? "conflict" : "pending");
           console.warn("[Lorefy] push:", e);
           throw e;
         }
@@ -1628,6 +1662,8 @@
       this._schedulePush();
     },
     stopSync: function(){
+      this._syncStatus = null;
+      if (global.dispatchEvent && global.CustomEvent) global.dispatchEvent(new global.CustomEvent("lorefy:sync-status", {detail:{status:null}}));
       this._pullGeneration = (this._pullGeneration || 0) + 1;
       var target = this._syncStorageTarget;
       if (this._origSetItem){ target.setItem = this._origSetItem; this._origSetItem = null; }

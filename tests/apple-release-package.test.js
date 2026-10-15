@@ -43,7 +43,7 @@ test("configures a native iOS release shell", () => {
   const pkg = JSON.parse(read("package.json"));
   const capacitor = JSON.parse(read("capacitor.config.json"));
   assert.equal(pkg.scripts["ios:prepare"], "node tools/prepare-ios-web.mjs");
-  assert.equal(pkg.scripts["ios:sync"], "node tools/patch-apple-sign-in.mjs && npm run ios:prepare && npx cap sync ios && node tools/fix-capacitor-spm-paths.mjs");
+  assert.equal(pkg.scripts["ios:sync"], "node tools/patch-apple-sign-in.mjs && npm run ios:prepare && npx cap sync ios && node tools/align-native-capacitor.mjs && node tools/fix-capacitor-spm-paths.mjs");
   assert.equal(pkg.dependencies["@capacitor/core"], "8.4.3");
   assert.equal(pkg.dependencies["@capacitor/app"], "8.1.1");
   assert.equal(pkg.dependencies["@capacitor/browser"], "8.0.4");

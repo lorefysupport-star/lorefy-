@@ -107,7 +107,14 @@
       editorial.picks.forEach(function(pick){(pick.editorialTopics || []).forEach(function(topic){var ids=topics.get(topic)||new Set();ids.add(idOf(pick));topics.set(topic,ids);});});
       COLLECTIONS.filter(function(entry){return !activeType || /^(?:all|الكل)$/i.test(activeType) || formatKey(entry[1])===formatKey(activeType);}).forEach(function(entry){
         var ids=topics.get(entry[0]);
-        add('collection-'+entry[0],entry[en?3:2],candidates.filter(function(w){return ids&&ids.has(idOf(w));}),entry[en?5:4],6,2);
+        var collection=candidates.filter(function(w){return ids&&ids.has(idOf(w));});
+        // Prefer complete cards within an editorial collection, while keeping
+        // personal ranking and author diversity for all other shelves.
+        collection.sort(function(a,b){
+          function quality(w){return (w.synopsisAttribution && (w.synopsisAr || w.synopsisEn) ? 4 : 0) + (w.sourceCoverUrl || w.coverImage ? 1 : 0);}
+          return quality(b)-quality(a);
+        });
+        add('collection-'+entry[0],entry[en?3:2],collection,entry[en?5:4],6,2);
       });
     }
     add('for-you', en ? 'Picked for you' : 'مختارة لك', candidates, '', 6, shelves.length ? 2 : 1);

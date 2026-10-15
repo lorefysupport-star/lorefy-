@@ -108,6 +108,14 @@
   function createProductCore(store) {
     store = store || (typeof localStorage !== "undefined" ? localStorage : createMemoryStore());
 
+    function safetyAccount(backend) {
+      return [store.getItem('lorefy.activeUser.v1'), readJson(store, 'lorefy.session.v1', {}).userId,
+        backend && backend.user && backend.user.id, backend && backend._pullGeneration];
+    }
+    function assertSafetyAccount(backend, owner) {
+      if (JSON.stringify(safetyAccount(backend)) !== JSON.stringify(owner)) throw new Error('Safety account changed');
+    }
+
     var safety = {
       getReports: function () { return readJson(store, KEYS.reports, []); },
       report: function (input) {
@@ -151,8 +159,11 @@
         var id = cleanText(userId, 120);
         if (!id) throw new Error("user is required");
         var backend = typeof window !== "undefined" && window.LorefyBackend;
+        if (backend && backend.mode === "live" && typeof backend.setProfileBlock !== "function") throw new Error('Blocking service unavailable');
         if (backend && backend.mode === "live" && typeof backend.setProfileBlock === "function") {
+          var owner = safetyAccount(backend);
           return backend.setProfileBlock(id, true).then(function () {
+            assertSafetyAccount(backend, owner);
             var liveUsers = safety.getBlockedUsers();
             if (liveUsers.indexOf(id) === -1) liveUsers.push(id);
             writeJson(store, KEYS.blocked, liveUsers);
@@ -167,8 +178,13 @@
       unblockUser: function (userId) {
         var id = String(userId);
         var backend = typeof window !== "undefined" && window.LorefyBackend;
-        if (backend && backend.mode === "live" && typeof backend.setProfileBlock === "function") {
-          backend.setProfileBlock(id, false).catch(function () {});
+        if (backend && backend.mode === "live") {
+          if (typeof backend.setProfileBlock !== "function") throw new Error('Blocking service unavailable');
+          var owner = safetyAccount(backend);
+          return backend.setProfileBlock(id, false).then(function () {
+            assertSafetyAccount(backend, owner);
+            return writeJson(store, KEYS.blocked, safety.getBlockedUsers().filter(function (value) { return value !== id; }));
+          });
         }
         return writeJson(store, KEYS.blocked, safety.getBlockedUsers().filter(function (value) { return value !== id; }));
       },

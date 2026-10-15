@@ -33,6 +33,7 @@ function compactRecord(record, features) {
   for (const key of ['synopsis','synopsisAr','synopsisEn','description','sourceSynopsis','originalSynopsis']) {
     if (typeof record[key] === 'string' && record[key]) card[key] = record[key].slice(0,400);
   }
+  if (record.synopsisAttribution) card.synopsisAttribution = record.synopsisAttribution;
   if(record.provenance) card.provenance={url:record.provenance.url,acceptableUse:record.provenance.acceptableUse,license:record.provenance.license,webNovelUrl:record.provenance.webNovelUrl,publisherUrl:record.provenance.publisherUrl};
   if (card.ar === card.title) card.ar = '';
   return card;

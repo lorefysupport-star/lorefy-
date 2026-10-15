@@ -133,14 +133,35 @@
     return el("button", { type: "button", class: className, onclick: handler }, children);
   }
 
-  function downloadFile(name, text, type) {
-    var blob = new Blob([text], { type: type || "application/octet-stream" });
-    var url = URL.createObjectURL(blob);
+  async function downloadFile(name, text, type) {
+    var cap = global.Capacitor;
+    var native = cap && (cap.isNativePlatform ? cap.isNativePlatform() : cap.getPlatform && cap.getPlatform() !== "web");
+    if (native) {
+      var filesystem = cap.Plugins && cap.Plugins.Filesystem;
+      var share = cap.Plugins && cap.Plugins.Share;
+      if (!filesystem || !filesystem.writeFile || !share || !share.share) throw new Error("native_export_unavailable");
+      var saved = await filesystem.writeFile({ path: "Lorefy-exports/" + Date.now() + "-" + name, data: text, encoding: "utf8", directory: "CACHE", recursive: true });
+      if (!saved || !saved.uri) throw new Error("native_export_file_missing");
+      await share.share({ title: name, files: [saved.uri], dialogTitle: doc.documentElement.lang === "en" ? "Save or share your file" : "حفظ الملف أو مشاركته" });
+      return;
+    }
+    var blob = new global.Blob([text], { type: type || "application/octet-stream" });
+    var url = global.URL.createObjectURL(blob);
     var link = el("a", { href: url, download: name });
     doc.body.appendChild(link);
     link.click();
     link.remove();
-    global.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    global.setTimeout(function () { global.URL.revokeObjectURL(url); }, 1000);
+  }
+
+  async function runExport(event, prepare, message) {
+    var control = event && event.currentTarget;
+    if (control) { control.disabled = true; control.setAttribute("aria-busy", "true"); }
+    try { await prepare(); toast(message); }
+    catch (error) {
+      if (!/cancel/i.test(String(error && error.message || error))) toast(doc.documentElement.lang === "en" ? "Unable to export. Please try again." : "تعذر تصدير الملف. حاول مجددًا.");
+    }
+    finally { if (control) { control.disabled = false; control.removeAttribute("aria-busy"); } }
   }
 
   function csvCell(value) {
@@ -155,40 +176,75 @@
     var progress = safeRead("lorefy.user.progress.v2", {});
     var works = Array.isArray(global.LorefyMangaData) ? global.LorefyMangaData : [];
     var byId = new Map(works.map(function (work) { return [String(work.id), work]; }));
-    var rows = [["id", "title", "type", "status", "chapter", "volume"]];
+    var rows = [["id", "title", "type", "status", "chapter", "volume", "page", "note"]];
     Object.keys(library).forEach(function (id) {
       var work = byId.get(String(id)) || {};
       var itemProgress = progress[id] || {};
-      rows.push([id, work.title || work.ar || "", work.type || "", library[id], itemProgress.ch || 0, itemProgress.vol || 0]);
+      rows.push([id, work.title || work.ar || "", work.type || "", library[id], itemProgress.chapter != null ? itemProgress.chapter : itemProgress.ch || 0, itemProgress.volume != null ? itemProgress.volume : itemProgress.vol || 0, itemProgress.page || 0, itemProgress.note || ""]);
     });
     var csv = "\ufeff" + rows.map(function (row) { return row.map(csvCell).join(","); }).join("\r\n");
-    downloadFile("lorefy-library.csv", csv, "text/csv;charset=utf-8");
-    toast("تم تجهيز ملف المكتبة");
+    return downloadFile("lorefy-library.csv", csv, "text/csv;charset=utf-8");
   }
 
   function allLists() {
     var workLists = safeRead("lorefy.customLists.v1", []);
     var characterLists = safeRead("lorefy.charTopLists.v1", []);
-    return workLists.map(function (list) { return { id: list.id, name: list.name || "قائمة أعمال", kind: "أعمال" }; })
-      .concat(characterLists.map(function (list) { return { id: list.id, name: list.title || "قائمة شخصيات", kind: "شخصيات" }; }));
+    var sections = global.LorefyProfileSections;
+    var profileLists = sections ? sections.foldersFor({}, true, global.localStorage).map(function (list) {
+      return { id: list.id, name: list.name, kind: list.kind === 'characters' ? 'شخصيات' : 'أعمال', profileList: true, isPublic: list.isPublic };
+    }) : [];
+    return profileLists.concat(workLists.map(function (list) { return { id: list.id, name: list.name || "قائمة أعمال", kind: "أعمال" }; })
+      .concat(characterLists.map(function (list) { return { id: list.id, name: list.title || "قائمة شخصيات", kind: "شخصيات" }; })));
+  }
+
+  function accountStamp() {
+    var backend = global.LorefyBackend;
+    return JSON.stringify([global.localStorage.getItem('lorefy.activeUser.v1'), safeRead('lorefy.session.v1', {}).userId,
+      safeRead('lorefy.identity.v1', {}).id, backend && backend.user && backend.user.id]);
   }
 
   function renderVisibilityRows(container) {
     var lists = allLists();
+    var stamp = accountStamp(), sections = global.LorefyProfileSections;
+    var owner = sections && sections.account(global.localStorage);
     if (!lists.length) {
       container.appendChild(el("div", { class: "lf-product-empty", text: "لا توجد قوائم مخصصة بعد. أي قائمة جديدة تبدأ كقائمة خاصة." }));
       return;
     }
     lists.forEach(function (list) {
       var select = el("select", { "aria-label": "خصوصية " + list.name });
-      ["private", "unlisted", "public"].forEach(function (value) {
+      var selected = list.profileList ? (list.isPublic ? 'public' : 'private') : core.privacy.getListVisibility(list.id);
+      (list.profileList ? ["private", "public"] : ["private", "unlisted", "public"]).forEach(function (value) {
         var option = el("option", { value: value, text: VISIBILITY_LABELS[value] });
-        if (core.privacy.getListVisibility(list.id) === value) option.selected = true;
+        if (selected === value) option.selected = true;
         select.appendChild(option);
       });
-      select.addEventListener("change", function () {
-        core.privacy.setListVisibility(list.id, select.value);
-        toast("تم تحديث خصوصية القائمة");
+      select.addEventListener("change", async function () {
+        if (select.disabled) return;
+        if (stamp !== accountStamp()) { select.disabled = true; return; }
+        select.disabled = true;
+        try {
+          var synced = true;
+          if (list.profileList) {
+            sections.setFolderVisibility(global.localStorage, owner, list.id, select.value === 'public');
+            selected = select.value;
+            var backend = global.LorefyBackend;
+            if (backend && backend.mode === 'live') {
+              try { synced = await backend.push() !== false; } catch (_) { synced = false; }
+            }
+          } else {
+            core.privacy.setListVisibility(list.id, select.value);
+            selected = select.value;
+          }
+          if (stamp !== accountStamp() || !container.isConnected) return;
+          toast(synced ? (doc.documentElement.lang === 'en' ? 'List visibility updated' : 'تم تحديث خصوصية القائمة') : sections.labels(doc.documentElement.lang).syncPending);
+        } catch (_) {
+          if (stamp !== accountStamp() || !container.isConnected) return;
+          select.value = selected;
+          toast(doc.documentElement.lang === 'en' ? 'Could not update list visibility. Try again.' : 'تعذر تحديث خصوصية القائمة. حاول مجددًا.');
+        } finally {
+          if (stamp === accountStamp()) select.disabled = false;
+        }
       });
       container.appendChild(el("div", { class: "lf-product-list-row" }, [
         el("div", { class: "lf-product-list-copy" }, [el("strong", { text: list.name }), el("small", { text: list.kind })]),
@@ -201,17 +257,15 @@
     openSheet("الخصوصية والبيانات", "تحكم واضح ببياناتك وقوائمك", function (body) {
       var exports = section("نسخة من بياناتك", "صدّر مكتبتك وتقييماتك وقوائمك. لا يتضمن الملف بيانات الجلسة أو حالة Premium.");
       var exportButtons = el("div", { class: "lf-product-inline-actions" });
-      exportButtons.appendChild(button("تصدير JSON", "lf-product-secondary", function () {
+      exportButtons.appendChild(button("تصدير JSON", "lf-product-secondary", function (event) {
         var data = core.exportPortable(new Date());
-        downloadFile("lorefy-data.json", JSON.stringify(data, null, 2), "application/json;charset=utf-8");
-        toast("تم تجهيز نسخة بياناتك");
+        return runExport(event, function () { return downloadFile("lorefy-data.json", JSON.stringify(data, null, 2), "application/json;charset=utf-8"); }, "تم تجهيز نسخة بياناتك");
       }, ICONS.file));
-      exportButtons.appendChild(button("المكتبة CSV", "lf-product-secondary", exportLibraryCsv, ICONS.table));
+      exportButtons.appendChild(button("المكتبة CSV", "lf-product-secondary", function (event) { return runExport(event, exportLibraryCsv, "تم تجهيز ملف المكتبة"); }, ICONS.table));
       exports.appendChild(exportButtons);
       if (global.LorefyMonitoring && global.LorefyMonitoring.getDiagnostics) {
-        exports.appendChild(button("تصدير تقرير التشخيص", "lf-product-secondary", function () {
-          downloadFile("lorefy-diagnostics.json", JSON.stringify(global.LorefyMonitoring.getDiagnostics(), null, 2), "application/json;charset=utf-8");
-          toast("تم تجهيز تقرير التشخيص بدون بيانات الحساب");
+        exports.appendChild(button("تصدير تقرير التشخيص", "lf-product-secondary", function (event) {
+          return runExport(event, function () { return downloadFile("lorefy-diagnostics.json", JSON.stringify(global.LorefyMonitoring.getDiagnostics(), null, 2), "application/json;charset=utf-8"); }, "تم تجهيز تقرير التشخيص بدون بيانات الحساب");
         }, "activity"));
       }
       body.appendChild(exports);
@@ -251,10 +305,22 @@
   }
 
   function safetyUserRow(userId, kind) {
-    var remove = function () {
-      if (kind === "blocked") core.safety.unblockUser(userId); else core.safety.unmuteUser(userId);
-      toast(kind === "blocked" ? "تم إلغاء الحظر" : "تم إلغاء الكتم");
-      openSafetyCenter();
+    var stamp = accountStamp();
+    var remove = async function (event) {
+      var control = event.currentTarget;
+      if (control.disabled) return;
+      if (stamp !== accountStamp()) { control.disabled = true; return; }
+      control.disabled = true;
+      try {
+        if (kind === "blocked") await core.safety.unblockUser(userId); else core.safety.unmuteUser(userId);
+        if (stamp !== accountStamp() || !control.isConnected) return;
+        openSafetyCenter();
+        toast(doc.documentElement.lang === 'en' ? (kind === 'blocked' ? 'User unblocked' : 'User unmuted') : (kind === "blocked" ? "تم إلغاء الحظر" : "تم إلغاء الكتم"));
+      } catch (_) {
+        if (stamp === accountStamp() && control.isConnected) toast(doc.documentElement.lang === 'en' ? 'Could not update. Try again.' : 'تعذر التحديث. حاول مجددًا.');
+      } finally {
+        if (stamp === accountStamp()) control.disabled = false;
+      }
     };
     return el("div", { class: "lf-product-list-row" }, [
       el("div", { class: "lf-product-list-copy" }, [el("strong", { text: "@" + userId }), el("small", { text: kind === "blocked" ? "محظور" : "مكتوم" })]),

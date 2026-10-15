@@ -5,6 +5,7 @@
 })(typeof window !== 'undefined' ? window : this, function() {
   'use strict';
   var messages = {
+    'تم، العودة إلى التطبيق':'Done, return to app',
     'تعذر اختيار الصورة. حاول مرة أخرى من مكتبة الصور.':'Could not select the image. Try again from your photo library.',
     'تم إلغاء تسجيل الدخول بواسطة Google.':'Google sign-in was cancelled.',
     'تم إلغاء تسجيل الدخول بواسطة Apple.':'Apple sign-in was cancelled.',
@@ -313,6 +314,13 @@
         var count = parent.textContent.match(/^\s*(\d+)\s+(?:عمل|أعمال|فصل|فصول|مراجعة|مراجعات|رد|ردود|works?|chapters?|reviews?|reply|replies)\s*$/i);
         if (count) {
           next = record.original.replace(unit,translate(count[1] + ' ' + unit,'en').replace(/^\d+\s+/,''));
+          if (node.nodeValue !== next) node.nodeValue = next;
+        }
+        // Profile metrics place their numeric value in a sibling element.
+        var metric = parent.closest('.lf-owner-metrics-with-posts');
+        var number = metric && parent.parentElement && (parent.parentElement.querySelector('strong') || parent.previousElementSibling);
+        if (!count && number && /^\d+$/.test(number.textContent.trim())) {
+          next = record.original.replace(unit,translate(number.textContent.trim() + ' ' + unit,'en').replace(/^\d+\s+/,''));
           if (node.nodeValue !== next) node.nodeValue = next;
         }
       }

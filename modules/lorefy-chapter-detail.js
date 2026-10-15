@@ -77,7 +77,8 @@
     var id = work ? String(work.id) : queryId;
     if (queryId && !work && catalogCache.idExists) return null;
     if (!id) return null;
-    var metadataText = Array.prototype.slice.call(content.children, 0, 6).map(function (item) { return item.textContent; }).join(' ');
+    var facts = content.querySelector('.lf-work-facts');
+    var metadataText = facts ? facts.textContent : '';
     var verifiedSource = metadata && metadata.sourceFor(id);
     var record = global.LorefyChapterData && global.LorefyChapterData[id];
     var savedCount = core.total(work, metadataText) || core.total(record, '') || verifiedSource && verifiedSource.count || 0;
@@ -87,7 +88,7 @@
     if (!count && !/مانجا|مانهوا|كوميكس|ويب نوفل|لايت نوفل|manga|manhwa|comic|web novel|light novel/i.test(type)) return null;
     var heroImage = content.closest('.lf-detail-page').querySelector('.lf-detail-hero > img');
     return { content: content, id: id, title: label, total: count,
-      finished: core.isFinished(work,verifiedSource),
+      finished: core.isFinished(work,verifiedSource), owner:readingOwner(),
       cover: heroImage && heroImage.getAttribute('src') || '', chapterDetails: {},
       numbers: catalog && catalog.total >= savedCount ? catalog.numbers : null,
       catalogState: catalog ? 'ready' : 'idle' };
@@ -97,6 +98,14 @@
 
   function english() { return doc.documentElement.lang === 'en'; }
   function text(ar, en) { return english() ? en : ar; }
+  function readingOwner() {
+    function identity(key) {
+      try { return JSON.parse(global.localStorage.getItem(key) || '{}') || {}; } catch (_) { return {}; }
+    }
+    var backend = global.LorefyBackend;
+    return JSON.stringify([global.localStorage.getItem('lorefy.activeUser.v1'), identity('lorefy.session.v1').userId,
+      identity('lorefy.identity.v1').id, backend && backend.user && backend.user.id]);
+  }
   function readingState() {
     function value(key) {
       var parsed = JSON.parse(global.localStorage.getItem(key) || '{}');
@@ -112,11 +121,12 @@
   }
   function saveReading(section, info, chapter) {
     try {
+      if (info.owner !== readingOwner()) throw new Error('Reading account changed');
       var before = readingState();
       var updated = core.updateReading(before, info.id, chapter, info.total, info.finished);
       if (!updated) throw new Error('Invalid chapter');
       core.persistReading(global.localStorage,updated);
-      readingUndo = {id:info.id,before:before,after:updated};
+      readingUndo = {id:info.id,owner:info.owner,before:before,after:updated};
       notifyReading(); render(section, info);
       announce(section, text('تم حفظ القراءة حتى الفصل ', 'Reading saved through chapter ') + chapter);
     } catch (error) {
@@ -126,6 +136,7 @@
   function undoReading(section, info) {
     try {
       if (!readingUndo || readingUndo.id !== info.id) return;
+      if (readingUndo.owner !== readingOwner() || info.owner !== readingUndo.owner) throw new Error('Reading account changed');
       var state = readingState(), previous = readingUndo.before;
       if (JSON.stringify(state.progress[info.id]) !== JSON.stringify(readingUndo.after.progress[info.id]) || state.library[info.id] !== readingUndo.after.library[info.id]) {
         throw new Error('Reading changed since action');
@@ -336,17 +347,23 @@
       var meter = el('progress'); meter.max=info.total; meter.value=readCount;
       meter.setAttribute('aria-label',text('الفصول المقروءة','Chapters read')); readingCopy.appendChild(meter); reading.appendChild(readingCopy);
       var readingActions = el('div','lf-chapter-reading-actions');
-      if (next) {
+      {
         var continueButton = button(text('الفصل التالي','Next chapter'),'',doc.documentElement.lang === 'en' ? 'arrow-right' : 'arrow-left',function () {
-          selected=next; expanded=next; render(section,info);
+          var latest;
+          try { latest=core.nextUnread(readingState().progress[info.id],info.total); } catch (_) { return; }
+          if (!latest) { refreshReading(section,info); return; }
+          selected=latest; expanded=latest; render(section,info);
           var target=section.querySelector('.lf-chapter-item.is-expanded'); if(target) target.scrollIntoView({block:'start'});
         });
+        continueButton.dataset.readingAction='continue'; continueButton.hidden=!next;
         continueButton.appendChild(el('span','',text('الفصل التالي','Next chapter') + ' · ' + next)); readingActions.appendChild(continueButton);
         var allButton=button(text('قرأت كل الفصول المتاحة','Mark all available chapters read'),'','check-check',function () { saveReading(section,info,info.total); });
+        allButton.dataset.readingAction='all'; allButton.hidden=!next;
         allButton.appendChild(el('span','',text('قرأت كل المتاح','Mark all read'))); readingActions.appendChild(allButton);
       }
-      if(readingUndo && readingUndo.id===info.id) {
+      if(readingUndo && readingUndo.id===info.id && readingUndo.owner===readingOwner()) {
         var undoButton=button(text('تراجع عن تسجيل القراءة','Undo reading progress'),'','undo-2',function(){undoReading(section,info);});
+        undoButton.dataset.readingAction='undo';
         undoButton.appendChild(el('span','',text('تراجع','Undo'))); readingActions.appendChild(undoButton);
       }
       reading.appendChild(readingActions); section.appendChild(reading);
@@ -584,16 +601,49 @@
     });
   }
 
+  function refreshReading(section, info) {
+    var reading=section.querySelector('.lf-chapter-reading'), state;
+    if (!reading || !info.total) return;
+    try { state=readingState(); } catch (_) { return; }
+    var next=core.nextUnread(state.progress[info.id],info.total), count=next?next-1:info.total;
+    var copy=reading.querySelector('.lf-chapter-reading-copy > span'), meter=reading.querySelector('progress');
+    var label=count+' / '+info.total;
+    if (copy && copy.textContent!==label) copy.textContent=label;
+    if (meter && meter.value!==count) meter.value=count;
+    var proceed=reading.querySelector('[data-reading-action="continue"]');
+    if (proceed) {
+      proceed.hidden=!next;
+      var caption=proceed.querySelector('span'), value=text('الفصل التالي','Next chapter')+' · '+next;
+      if (caption && caption.textContent!==value) caption.textContent=value;
+    }
+    var all=reading.querySelector('[data-reading-action="all"]'); if (all) all.hidden=!next;
+    var undo=reading.querySelector('[data-reading-action="undo"]');
+    if (undo) undo.hidden=!(readingUndo && readingUndo.owner===readingOwner() && readingUndo.id===info.id &&
+      state.library[info.id]===readingUndo.after.library[info.id] &&
+      JSON.stringify(state.progress[info.id])===JSON.stringify(readingUndo.after.progress[info.id]));
+    section.querySelectorAll('.lf-chapter-item').forEach(function (item) {
+      var row=item.querySelector('.lf-chapter-row'), mark=item.querySelector('.lf-chapter-read-mark');
+      if (!row || !mark) return;
+      var read=Number(row.dataset.chapter)<=count, pressed=String(read);
+      if (mark.getAttribute('aria-pressed')!==pressed) mark.setAttribute('aria-pressed',pressed);
+      var caption=mark.querySelector('span'), label=read?text('مقروء','Read'):text('قرأت حتى هنا','Read through here');
+      if (caption && caption.textContent!==label) caption.textContent=label;
+    });
+  }
   function enhance() {
+    if (readingUndo && readingUndo.owner !== readingOwner()) readingUndo = null;
     var info = context();
     if (!info) return;
     var actions = info.content.querySelector('.lf-detail-actions'); if (!actions) return;
     enhanceActions(actions);
     var section = info.content.querySelector('.lf-chapter-section');
-    if (section && section.dataset.workId === info.id && Number(section.dataset.total) === info.total) return;
+    if (section && section.dataset.workId === info.id && Number(section.dataset.total) === info.total && section.dataset.owner === info.owner) {
+      refreshReading(section,info); return;
+    }
     if (activeWork !== info.id) { activeWork = info.id; selected = 1; expanded = 0; }
     if (section) section.remove();
     section = el('section', 'lf-chapter-section'); section.dataset.workId = info.id;
+    section.dataset.owner = info.owner;
     section.dataset.total = String(info.total); section.setAttribute('aria-label', text('فصول ', 'Chapters ') + info.title);
     actions.parentNode.insertBefore(section, actions);
     render(section, info);
@@ -609,6 +659,9 @@
     new MutationObserver(schedule).observe(screen, { childList: true, subtree: true });
     global.addEventListener('lorefy:routechange', schedule);
     global.addEventListener('storage', schedule);
+    global.addEventListener('lorefy:stored-state',function (event) {
+      if (event.detail && ['lorefy.user.progress.v2','lorefy.user.library.v2'].indexOf(event.detail.key)!==-1) schedule();
+    });
     schedule();
   }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', start); else start();

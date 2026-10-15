@@ -14,7 +14,7 @@
     "community:patch": "node tools/patch-community-cloud.js && node tools/patch-community-social.js && node tools/patch-product-report-cloud.js && node tools/patch-community-followups.js",
     "ios:prepare": "node tools/prepare-ios-web.mjs",
     "ios:add": "npm run ios:prepare && npx cap add ios",
-    "ios:sync": "node tools/patch-apple-sign-in.mjs && npm run ios:prepare && npx cap sync ios && node tools/fix-capacitor-spm-paths.mjs",
+    "ios:sync": "node tools/patch-apple-sign-in.mjs && npm run ios:prepare && npx cap sync ios && node tools/align-native-capacitor.mjs && node tools/fix-capacitor-spm-paths.mjs",
     "eas-build-post-install": "npm run ios:sync",
     "apple:audit": "node tools/apple-release-audit.mjs",
     "apple:audit:strict": "node tools/apple-release-audit.mjs --strict"
@@ -36,6 +36,7 @@
     "csv-parse": "7.0.3"
   },
   "overrides": {
+    "@capacitor/core": "8.4.3",
     "@capacitor/android": "8.4.3"
   }
 }

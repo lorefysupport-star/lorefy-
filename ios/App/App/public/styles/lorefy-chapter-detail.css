@@ -134,3 +134,4 @@
 .lf-chapter-read-mark[aria-pressed="true"] { color:var(--chapter-accent); }
 .lf-chapter-reading button:focus-visible, .lf-chapter-read-mark:focus-visible { outline:2px solid var(--chapter-accent); outline-offset:3px; }
 @media(max-width:360px) { .lf-chapter-read-mark { margin-inline-start:97px; } }
+.lf-chapter-reading-actions > button[hidden] { display:none!important; }

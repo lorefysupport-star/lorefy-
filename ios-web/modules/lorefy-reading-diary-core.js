@@ -5,9 +5,14 @@
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
 
+  function progressAt(value, type) {
+    var aliases = {chapter:'ch',volume:'vol'};
+    var raw = value && typeof value === 'object' ? (value[type] !== undefined ? value[type] : value[aliases[type]]) : type === 'chapter' ? value : 0;
+    var number = Number(raw);
+    return Number.isFinite(number) && number > 0 ? Math.floor(number) : 0;
+  }
   function chapter(value) {
-    var raw = value && typeof value === 'object' ? (value.chapter !== undefined ? value.chapter : value.ch) : value;
-    return Math.max(0, Math.floor(Number(raw) || 0));
+    return progressAt(value, 'chapter');
   }
 
   function transitions(before, after, at) {
@@ -44,8 +49,7 @@
     var position = anchor(event);
     if (!position.value) return false;
     var progress = (state.progress || {})[event.id] || {};
-    var aliases = { chapter: ['chapter', 'ch'], page: ['page'], volume: ['volume', 'vol'] };
-    return aliases[position.type].some(function (key) { return Number(progress[key]) >= position.value; });
+    return progressAt(progress, position.type) >= position.value;
   }
 
   function quoteEntry(draft) {
@@ -167,7 +171,7 @@
       .slice(0, 300);
   }
 
-  return { transitions: transitions, merge: merge, anchor: anchor, canReveal: canReveal, quoteEntry: quoteEntry, communityQuote: communityQuote, shareText: shareText,
+  return { progressAt:progressAt, transitions: transitions, merge: merge, anchor: anchor, canReveal: canReveal, quoteEntry: quoteEntry, communityQuote: communityQuote, shareText: shareText,
     startSession: startSession, sessionElapsed: sessionElapsed, pauseSession: pauseSession, resumeSession: resumeSession,
     finishSession: finishSession, sumSessionMs: sumSessionMs, durationLabel: durationLabel, clockTime: clockTime };
 });

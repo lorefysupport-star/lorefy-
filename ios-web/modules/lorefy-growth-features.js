@@ -2917,6 +2917,9 @@
     write("lorefy.user.library.v2", lib);
     write("lorefy.user.progress.v2", prog);
     write("lorefy.user.privateReviews.v2", revs);
+    ["lorefy.user.library.v2", "lorefy.user.progress.v2", "lorefy.user.privateReviews.v2"].forEach(function (key) {
+      global.dispatchEvent(new global.CustomEvent("lorefy:stored-state", { detail: { key: key } }));
+    });
     return { added: added, ratings: ratings, skipped: skipped };
   }
   function imStatusFromAL(s) {
@@ -2941,7 +2944,7 @@
           var w = (med.idMal && maps.byMal.get(String(med.idMal))) ||
                   imFindByTitle((med.title && (med.title.english || med.title.romaji)) || "");
           if (!w) { misses++; return; }
-          rows.push({ work: w, status: imStatusFromAL(e.status), chapters: Number(e.progress) || 0, score: Math.min(5, Math.max(0, Math.round((Number(e.score) || 0) / 2))) });
+          rows.push({ work: w, status: imStatusFromAL(e.status), chapters: Number(e.progress) || 0, score: Math.min(5, Math.max(0, Math.round((Number(e.score) || 0) * 2) / 4)) });
         });
       });
       return { rows: rows, misses: misses };
@@ -2958,7 +2961,7 @@
       if (!w) { misses++; continue; }
       var st = tx("my_status");
       var status = /Reading/i.test(st) ? IM_READING : /Completed/i.test(st) ? IM_DONE : /Plan/i.test(st) ? IM_WISH : /Dropped|^4$/i.test(st) ? IM_DROPPED : IM_PAUSED;
-      rows.push({ work: w, status: status, chapters: Number(tx("my_read_chapters")) || 0, score: Math.min(5, Math.max(0, Math.round((Number(tx("my_score")) || 0) / 2))) });
+      rows.push({ work: w, status: status, chapters: Number(tx("my_read_chapters")) || 0, score: Math.min(5, Math.max(0, Math.round((Number(tx("my_score")) || 0) * 2) / 4)) });
     }
     if (!items.length) throw new Error("الملف لا يبدو تصدير مانجا من MAL");
     return { rows: rows, misses: misses };
@@ -3019,8 +3022,8 @@
       var w = imFindByTitle(c[iT] || "");
       if (!w) { misses++; continue; }
       var status = (iS >= 0 && imStatusWord(c[iS])) || defStatus || IM_DONE;
-      var raw = iR >= 0 ? Number(String(c[iR] || "").replace(/[^\d.]/g, "")) : 0;
-      var score = raw > 5 ? Math.round(raw / 2) : Math.round(raw);
+      var raw = iR >= 0 ? Number(String(c[iR] || "").trim()) : 0;
+      var score = Number.isFinite(raw) ? Math.round((raw > 5 ? raw / 2 : raw) * 4) / 4 : 0;
       rows.push({ work: w, status: status, chapters: 0, score: Math.min(5, Math.max(0, score || 0)) });
     }
     return { rows: rows, misses: misses };
@@ -3050,7 +3053,7 @@
             var w = imFindByTitle(at.canonicalTitle || (at.titles && (at.titles.en || at.titles.en_jp)) || "");
             if (!w) { misses++; return; }
             var st = a.status === "current" ? IM_READING : a.status === "completed" ? IM_DONE : a.status === "planned" ? IM_WISH : a.status === "dropped" ? IM_DROPPED : IM_PAUSED;
-            rows.push({ work: w, status: st, chapters: Number(a.progress) || 0, score: Math.min(5, Math.max(0, Math.round((Number(a.ratingTwenty) || 0) / 4))) });
+            rows.push({ work: w, status: st, chapters: Number(a.progress) || 0, score: Math.min(5, Math.max(0, Math.round(Number(a.ratingTwenty) || 0) / 4)) });
           });
           var next = j.links && j.links.next;
           if (next && n < 5) return pageLoad(next, n + 1);
@@ -3131,8 +3134,8 @@
         out.skipped ? el("span", { text: "↺ " + out.skipped + " موجود مسبقًا (تُرك كما هو)" }) : null,
         res.misses ? el("span", { text: "— " + res.misses + " عمل غير موجود في كتالوج لورفي" }) : null
       ]));
-      var reload = el("button", { type: "button", class: "lf-im-reload", text: "تطبيق وإعادة التشغيل" });
-      reload.addEventListener("click", function () { location.reload(); });
+      var reload = el("button", { type: "button", class: "lf-im-reload", text: "تم، العودة إلى التطبيق" });
+      reload.addEventListener("click", function () { ov.close(); });
       result.appendChild(reload);
     }
     function fail(msg) {
@@ -5268,6 +5271,28 @@
   function enhanceInteractionAccessibility(scope) {
     var root = scope || doc;
     labelIconOnlyButtons(root);
+    // Legacy React sheets close through their overlay handler; keep that
+    // state transition instead of removing React-owned nodes directly.
+    Array.from(root.querySelectorAll ? root.querySelectorAll('.nc-sheet:not([data-lf-dialog-wired])') : []).forEach(function (sheet) {
+      if (sheet.closest('[role="dialog"]') || sheet.getAttribute('role') === 'dialog') return;
+      sheet.dataset.lfDialogWired = '1';
+      sheet.setAttribute('role','dialog'); sheet.setAttribute('aria-modal','true');
+      var heading = sheet.querySelector('h1,h2,h3,strong');
+      sheet.setAttribute('aria-label', sheet.classList.contains('lf-settings-sheet') ? uiText('الإعدادات','Settings') : heading && heading.textContent.trim() || uiText('خيارات العمل','Work options'));
+      var overlay = sheet.parentElement;
+      var initial = sheet.querySelector('button,input,select,textarea,[tabindex="0"]');
+      var release = bindDialogKeys(sheet, function () { if (overlay && overlay.isConnected) overlay.click(); }, initial);
+      var cleanup = new MutationObserver(function () {
+        if (sheet.isConnected) return;
+        cleanup.disconnect(); release();
+      });
+      cleanup.observe(overlay.parentElement || doc.body,{childList:true,subtree:true});
+      Array.from(sheet.querySelectorAll('div')).forEach(function (option) {
+        if (!/^(أقرأ حالياً|تم القراءة|قائمة الأمنيات|متوقف مؤقتًا|توقفت نهائيًا|Reading|Completed|Wishlist|Paused|Dropped)$/.test(option.textContent.trim()) || option.children.length > 2 || option.querySelector('button,input,select')) return;
+        option.setAttribute('role','button'); option.tabIndex=0;
+        option.addEventListener('keydown',function(event){ if(event.key==='Enter'||event.key===' '){event.preventDefault();option.click();} });
+      });
+    });
 
     var links = root.querySelectorAll ? root.querySelectorAll("a[href]") : [];
     for (var i = 0; i < links.length; i++) {

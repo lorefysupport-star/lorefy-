@@ -58,6 +58,15 @@
     assertOwner(storage, owner);
     storage.setItem(KEY, JSON.stringify(foldersFor({}, true, storage).filter(row => row.id !== id)));
   }
+  function setFolderVisibility(storage, owner, id, isPublic) {
+    assertOwner(storage, owner);
+    if (typeof isPublic !== 'boolean') throw Error('Invalid profile list visibility');
+    const folder = foldersFor({}, true, storage).find(row => row.id === id);
+    if (!folder) throw Error('Profile list no longer exists');
+    const saved = saveFolder(storage, owner, Object.assign({}, folder, {isPublic, updatedAt:new Date().toISOString()}));
+    if (root && storage === root.localStorage) root.dispatchEvent(new root.CustomEvent('lorefy:stored-state', {detail:{key:KEY}}));
+    return saved;
+  }
   function moveItem(items, index, delta) {
     const result = items.slice(), target = index + delta;
     if (index >= 0 && index < result.length && target >= 0 && target < result.length)
@@ -107,7 +116,7 @@
       add:'إضافة', selected:'محدد', noResults:'لا توجد نتائج', count:'عنصر', newTitle:'قائمة مرتبة جديدة'
     };
   }
-  const api = {KEY, normalizeFolders, foldersFor, saveFolder, deleteFolder, moveItem, postsFor, profileEntries, labels};
+  const api = {KEY, account, normalizeFolders, foldersFor, saveFolder, deleteFolder, setFolderVisibility, moveItem, postsFor, profileEntries, labels};
   if (!root || !root.document) return api;
   const doc = root.document, states = new WeakMap(), liveStates = new Set();
   let scheduled = false, serial = 0;
@@ -442,7 +451,7 @@
     if (tab==='posts') { renderPosts(state); if (!state.postLoaded) loadPosts(state); }
   }
   function compactMetrics(page) {
-    const socialLabels = new Set(['مراجعة','Review','منشور','Post','Posts']);
+    const socialLabels = new Set(['مراجعة','Review','Reviews','منشور','Post','Posts']);
     page.querySelectorAll('.lf-profile-metrics,.lf-reader-metrics').forEach(metrics => {
       let count = 0;
       Array.from(metrics.children).forEach(row => {
@@ -533,6 +542,12 @@
   }
   const observer=new root.MutationObserver(schedule);
   observer.observe(doc.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['lang']});
+  root.addEventListener('lorefy:stored-state',event => {
+    if (!event.detail || event.detail.key !== KEY) return;
+    liveStates.forEach(state => {
+      if (state.owner && current(state) && state.tab === 'lists' && !state.panel.querySelector('.lf-profile-list-editor')) renderFolders(state);
+    });
+  });
   root.addEventListener('lorefy:profile-snapshot',event => {
     schedule();
     doc.querySelectorAll('.lf-public-profile-page').forEach(page => {

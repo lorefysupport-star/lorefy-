@@ -87,7 +87,7 @@ test('owner post metric finds translated statistics on a fresh English startup',
   const leaf={textContent:'Review'};
   const page={querySelectorAll:()=>[leaf]};
   assert.equal(fn(page,['مراجعة','Review']),leaf);
-  assert.match(source,/metricLeaf\(page, \["مراجعة", "Review"\]\)/);
+  assert.match(source,/metricLeaf\(page, \["مراجعة", "Review", "Reviews"\]\)/);
   assert.match(source,/metricLeaf\(page, \["مكتملة", "مكتمل", "Completed"\]\)/);
 });
 test('section headings use themed ink rather than legacy profile heading colors', () => {

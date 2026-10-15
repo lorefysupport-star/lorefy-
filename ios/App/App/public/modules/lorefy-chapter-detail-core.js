@@ -78,7 +78,7 @@
   }
   function nextUnread(progress, count) {
     if (!positive(count)) return 0;
-    var read = positive(typeof progress === 'number' ? progress : progress && (progress.chapter || progress.ch)) || 0;
+    var read = positive(typeof progress === 'number' ? progress : progress && (progress.chapter !== undefined ? progress.chapter : progress.ch)) || 0;
     return read >= count ? 0 : read + 1;
   }
   function persistReading(storage, state) {

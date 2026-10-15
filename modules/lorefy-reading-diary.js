@@ -339,7 +339,7 @@
     }
     var existing = state.editing && core.anchor(state.editing);
     var currentProgress = snapshot().progress[select.value] || {};
-    var anchorType = existing ? existing.type : state.initialAnchor ? state.initialAnchor.type : (Number(currentProgress.page) > 0 && !Number(currentProgress.chapter || currentProgress.ch) ? 'page' : 'chapter');
+    var anchorType = existing ? existing.type : state.initialAnchor ? state.initialAnchor.type : (core.progressAt(currentProgress,'page') > 0 && !core.progressAt(currentProgress,'chapter') ? 'page' : 'chapter');
     var placeLabel = node('div', 'lf-diary-label', text('موضع القراءة', 'Reading position'));
     var kinds = node('div', 'lf-diary-position-kinds');
     [['chapter', text('فصل', 'Chapter')], ['page', text('صفحة', 'Page')], ['volume', text('مجلد', 'Volume')]].forEach(function (choice) {
@@ -347,7 +347,7 @@
         anchorType = choice[0];
         kinds.querySelectorAll('button').forEach(function (item) { item.classList.toggle('is-active', item === control); item.setAttribute('aria-pressed', item === control ? 'true' : 'false'); });
         var progress = snapshot().progress[select.value] || {};
-        position.value = String(progress[anchorType] || (anchorType === 'chapter' ? progress.ch : anchorType === 'volume' ? progress.vol : '') || '');
+        position.value = String(core.progressAt(progress,anchorType) || '');
       });
       control.textContent = choice[1]; control.setAttribute('aria-pressed', anchorType === choice[0] ? 'true' : 'false'); kinds.appendChild(control);
     });
@@ -355,9 +355,9 @@
     placeLabel.appendChild(kinds);
     var position = node('input', 'lf-diary-position-input'); position.type = 'number'; position.min = '1'; position.max = '1000000'; position.step = '1'; position.required = true;
     position.placeholder = text('رقم الموضع', 'Position number'); position.setAttribute('aria-label', text('رقم الفصل أو الصفحة أو المجلد', 'Chapter, page or volume number'));
-    position.value = existing ? (existing.value || '') : state.initialAnchor ? state.initialAnchor.value : (currentProgress[anchorType] || (anchorType === 'chapter' ? currentProgress.ch : '') || '');
+    position.value = existing ? (existing.value || '') : state.initialAnchor ? state.initialAnchor.value : (core.progressAt(currentProgress,anchorType) || '');
     placeLabel.appendChild(position); form.appendChild(placeLabel);
-    select.addEventListener('change', function () { var progress = snapshot().progress[select.value] || {}; position.value = String(progress[anchorType] || ''); });
+    select.addEventListener('change', function () { var progress = snapshot().progress[select.value] || {}; position.value = String(core.progressAt(progress,anchorType) || ''); });
     var quoteLabel = node('label', 'lf-diary-label lf-diary-quote-label', text('المقطع الذي تريد الاحتفاظ به', 'A passage to keep'));
     var quote = node('textarea', 'lf-diary-textarea lf-diary-quote-input');
     quote.maxLength = 280; quote.required = state.composeKind === 'quote'; quote.rows = 3;

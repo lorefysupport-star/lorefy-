@@ -25,6 +25,11 @@ aliases: ["حساب", "دخول", "مزامنة", "ضياع", "auth", "offline",
 
 ## الفحص
 
+[[sessions/2026-10-15-Privacy-Safety-Repairs]] أضاف انتظار تأكيد إلغاء الحظر،
+وعدم اعتماد رد قديم بعد تبديل المالك أو جيل المزامنة. إعدادات القوائم والحظر
+المفتوحة تحت حساب قديم لا ترسل تعديلات باسم الحساب التالي. الفحص معزول وليس
+اختبارًا لإلغاء حظر قارئ فعلي.
+
 [account-sync-isolation](../../tests/account-sync-isolation.test.js)،
 [account-local-data](../../tests/account-local-data.test.js)،
 [state-recovery-runtime](../../tests/state-recovery-runtime.test.js)،

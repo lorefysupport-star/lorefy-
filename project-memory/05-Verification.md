@@ -4,6 +4,10 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Current integration: [[sessions/2026-10-15-GitHub-Sync]] records GitHub source
+`542b39c` plus preserved local runtime repairs. Use its new verification receipt;
+the earlier IPA and test counts do not establish this merged source was tested.
+
 ## Core commands
 
 ```text
