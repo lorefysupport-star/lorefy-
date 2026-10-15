@@ -28,13 +28,13 @@ function harness(options = {}) {
   let owner = 'account-a', selection = [], overlay, timers = new Map(), serial = 0;
   const writes = [], searches = [], messages = [], loads = [];
   let provider = () => Promise.resolve([]);
-  const item = { workId: 'work', character: { key: 'hero', name: 'Hero' }, workTitle: 'Work', score: 5 };
+  const item = { workId: 'work', character: { key: 'hero', name: options.name || 'Hero' }, workTitle: options.workTitle || 'Work', score: 5 };
   const scope = {
     profileTopCharacterEditor: null, profileRatedCharacterCache: {}, K_SCORES: 'ratings', K_CHARCUSTOM: 'custom', K_CHARIMG: 'images',
     profileRatedCharacterLoads: {}, profileRatedCharacterFailures: {},
     profileRatedCharacterOwner: () => owner, syncProfileRatedCharacterGallery() {},
     doc: { querySelector: () => null }, el: (tag, attrs, kids) => new Element(tag, attrs || {}, kids || []),
-    ovOpen() { const page = new Element('div'), body = new Element('div'); page.appendChild(body);
+    ovOpen(cls, title) { const page = new Element('div', { 'aria-label': title }), body = new Element('div'); page.appendChild(body);
       overlay = { page, body, close() { page.inert = true; page.isConnected = false; body.isConnected = false; } }; return overlay; },
     profileTopCharacterSelection: () => selection,
     profileCharacterEntries: () => ({ entries: [item], missing: [] }),
@@ -44,7 +44,7 @@ function harness(options = {}) {
     profileTopCharacterSearchText: value => value.toLowerCase(), profileTopCharacterSearchWorks: query => options.works && query ? [{ id: 'work', title: 'Work' }] : [],
     mlTitleOf: work => work.title || '', mlCoverOf: () => '',
     profileRatedCharacterPortrait: () => new Element('span'), profileRatedCharacterStars: () => new Element('span'),
-    uiText: (ar, en) => en, toastSafe: message => messages.push(message), mlWorks: () => [],
+    uiText: (ar, en) => options.lang === 'ar' ? ar : en, toastSafe: message => messages.push(message), mlWorks: () => [],
     setTimeout: fn => { const id = ++serial; timers.set(id, fn); return id; }, clearTimeout: id => timers.delete(id),
     global: { LorefyCharacterSystem: { characterMatches: () => true, searchCharacters: (query, works, options) => new Promise(resolve => searches.push({ resolve, options })) } }
   };
@@ -192,5 +192,53 @@ test('a work selected from search can retry a failed unrated cast and settle to 
   find(ov.page, 'lf-top-characters-editor-retry').click(); await flush();
   assert.equal(attempts, 2); assert.equal(find(ov.page, 'lf-top-characters-editor-retry'), undefined);
   assert.doesNotMatch(ov.body.textContent, /Could not load characters|Loading rated characters/);
-  assert.match(ov.body.textContent, /لم نجد شخصيات موثقة/); assert.equal(h.writes.length, 0);
+  assert.match(ov.body.textContent, /No verified characters found/); assert.equal(h.writes.length, 0);
+});
+
+test('English character editor chrome and accessibility labels are English on first render', () => {
+  const h = harness(), ov = h.open();
+  assert.equal(ov.page.attrs['aria-label'], 'Favorites');
+  assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'Save favorites');
+  assert.match(ov.body.textContent, /Your choices/);
+  for (const node of all(ov.page)) {
+    assert.doesNotMatch(node._text + (node.attrs['aria-label'] || ''), /[\u0600-\u06ff]/);
+  }
+});
+
+test('filled English editor controls and confirmation stay localized without changing user names', () => {
+  const h = harness({ name: 'شخصية مخصصة', workTitle: 'عمل مخصص' }), ov = h.open();
+  find(ov.page, 'lf-top-characters-editor-candidate').click();
+  assert.equal(find(ov.page, 'lf-top-characters-editor-remove').textContent, 'Remove from this slot');
+  const active = find(ov.page, 'lf-top-characters-editor-slot');
+  assert.equal(active.attrs['aria-label'], 'Select slot 1, شخصية مخصصة');
+  assert.match(ov.body.textContent, /شخصية مخصصة/); assert.match(ov.body.textContent, /عمل مخصص/);
+  find(ov.page, 'lf-top-characters-editor-save').click();
+  assert.equal(h.messages[0], 'Favorites saved'); assert.match(h.writes.at(-1).draft, /شخصية مخصصة/);
+});
+
+test('Arabic editor controls remain Arabic', () => {
+  const h = harness({ lang: 'ar' }), ov = h.open();
+  assert.equal(ov.page.attrs['aria-label'], 'المفضلة');
+  assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'حفظ المفضلة');
+  assert.match(ov.body.textContent, /اختيارك أنت/);
+});
+
+test('shared overlay back labels follow the selected language', () => {
+  for (const lang of ['en', 'ar']) {
+    const h = harness({ lang }), container = new Element('main');
+    h.scope.doc.getElementById = () => container; h.scope.bindDialogKeys = () => () => {};
+    const start = source.indexOf('  function ovOpen(');
+    vm.runInNewContext(source.slice(start, source.indexOf('  /*', start)), h.scope);
+    const ov = h.scope.ovOpen('fixture', 'Title');
+    assert.equal(find(ov.page, 'lf-ov-back').attrs['aria-label'], lang === 'ar' ? 'رجوع' : 'Back');
+  }
+});
+
+test('candidate action fits its grid track in either direction', () => {
+  const css = fs.readFileSync(require('node:path').join(__dirname, '../styles/lorefy-review-social.css'), 'utf8');
+  const row = css.match(/\.lf-top-characters-editor-candidate \{([^}]+)/)[1];
+  const action = css.match(/\.lf-top-characters-editor-candidate-action \{([^}]+)/)[1];
+  const track = Number(row.match(/grid-template-columns:[^;]* (\d+)px;/)[1]);
+  const width = Number(action.match(/\bwidth:\s*(\d+)px;/)[1]);
+  assert.ok(track >= width, `Action ${width}px exceeds its ${track}px track`);
 });

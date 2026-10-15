@@ -26,7 +26,7 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 | المتابعة والوصول والصور | [[12-Device-Repairs]] LF-006/007/008 | [avatars](../tests/connection-avatar.test.js)، [keys](../tests/connection-keyboard.test.js)، [locale](../tests/followers-localization.test.js) | جلسة VoiceOver فعلية أو كل روابط الصور البعيدة |
 | اللستات والخصوصية والحظر | [[systems/Profiles-Lists]]، [[sessions/2026-10-15-Privacy-Safety-Repairs]] | [sections](../tests/profile-sections.test.js)، [privacy](../tests/privacy-safety-repairs.test.js) | أن التغيير المحلي وصل إلى قاعدة الإنتاج |
 | المجتمع والتفاعلات والمحفوظات | [[systems/Community-Notifications]]؛ [community](../modules/lorefy-community.js) | [runtime repairs](../tests/runtime-repairs.test.js)، [account surfaces](../tests/account-surface-isolation.test.js) | نشر تفاعل فعلي أو قبول moderation على الخادم |
-| صندوق الجرس وAPNs | [[systems/Community-Notifications]]، [[sessions/2026-10-14-APNs-Server-Setup]] | [delivery runtime](../tests/notification-delivery-runtime.test.js)، [native links](../tests/native-notifications-links.test.js) | قبول Apple وتسليم إشعار في الخلفية |
+| صندوق الجرس وAPNs | [[systems/Community-Notifications]]، [[sessions/2026-10-16-Authorized-Push-Check]] | [delivery runtime](../tests/notification-delivery-runtime.test.js)، [native links](../tests/native-notifications-links.test.js)، قبول واختبار فعلي واحد أكد المالك استقباله وفتحه | تعميم كل الأجهزة والأحداث والإقلاع البارد؛ إصلاح النقل لم يُنشر |
 | الثيمات والرفوف والإطارات | [[systems/Appearance-Bundles]]، [[decisions/Profile-Frame-Geometry]] | [frame motion](../tests/frame-motion.test.js)، [profile decoration](../tests/profile-decoration.test.js) | أن كل حزمة اجتازت اللمس والأداء على iPhone |
 | مجانية الحزم وملكية الشراء | [[decisions/Temporary-Free-Bundles]]؛ [billing](../modules/lorefy-decoration-billing.js) | [paid collections](../tests/paid-collections.test.js) | جاهزية بيع فعلي أو موافقة حقوق الأصول |
 | الصور واللغة والمشاركة | [[systems/Language-Media]] | [native photo formats](../tests/native-photo-format.test.js)، [image resilience](../tests/image-resilience.test.js) | فحص الكاميرا والمعرض والرفض والاتجاه على الهاتف |
@@ -38,6 +38,8 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 - LF-003: يلزم فحص بصري وفعلي لكل إطار على نسخة جهاز مطابقة؛ البث القديم لا يكفي.
 - LF-009: العدد وتحديث المعرض وإعادة المحاولة اختُبرت بالمصدر والمعاينة؛ اكتمال كل cast خارجي وتحديث النسخة المثبتة غير مثبتين. [[sessions/2026-10-15-Gallery-Hydration-Repair]].
 - LF-010/LF-011: محرر المفضلة مربوط بمالكه، ويتجدد بعد تحميل الشخصيات مع Retry. [[sessions/2026-10-15-Character-Editor-Owner]] و[[sessions/2026-10-15-Character-Editor-Hydration]]؛ لا تثبيت جديد.
+- LF-012: ترجمة المحرر وقص الإجراءات مثبتان بالمصدر والمتصفح. [[sessions/2026-10-16-Character-Editor-Locale]].
+- APNS-001: اختبار واحد مقبول من APNs مع تأكيد المالك للاستقبال والفتح. [[sessions/2026-10-16-Authorized-Push-Check]]؛ ليس إثباتًا لكل الأجهزة أو نشرًا لإصلاح النقل.
 - تسليم APNs، أذونات الصور، VoiceOver والأداء على الهاتف ليست مغلقة باختبارات Node.
 - ملفات الإصلاح SQL لا تثبت نشرها؛ لا تُشغّلها لتغيير لون حالة في هذه الصفحة.
 - المصدر المحلي لا يساوي IPA ولا TestFlight؛ آخر توجيه يمنع إنشاء نسخة جديدة.

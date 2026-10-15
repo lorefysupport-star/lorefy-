@@ -1437,7 +1437,7 @@
   border-radius: 8px;
   background: color-mix(in srgb, var(--apple-blue, var(--lf-purple)) 7%, var(--apple-surface, var(--lf-surface)));
 }
-.lf-top-characters-editor-active-copy { display: grid; min-width: 0; gap: 3px; text-align: right; }
+.lf-top-characters-editor-active-copy { display: grid; min-width: 0; gap: 3px; text-align: start; }
 .lf-top-characters-editor-active-copy strong { color: var(--apple-label, var(--lf-ink)); font-size: 13px; font-weight: 900; }
 .lf-top-characters-editor-active-copy small { color: var(--apple-label-2, var(--lf-ink-muted)); font-size: 10px; line-height: 1.4; }
 .lf-top-characters-editor-remove {
@@ -1565,7 +1565,7 @@
 .lf-top-characters-editor-list { display: grid; gap: 1px; overflow: hidden; border-block: 1px solid var(--apple-separator-soft, var(--lf-line)); }
 .lf-top-characters-editor-candidate {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) 34px;
+  grid-template-columns: 56px minmax(0, 1fr) 48px;
   align-items: center;
   gap: 12px;
   min-height: 76px;
@@ -1574,7 +1574,7 @@
   border-bottom: 1px solid var(--apple-separator-soft, var(--lf-line));
   background: var(--apple-surface, var(--lf-surface));
   color: var(--apple-label, var(--lf-ink));
-  text-align: right;
+  text-align: start;
 }
 .lf-top-characters-editor-candidate:last-child { border-bottom: 0; }
 .lf-top-characters-editor-candidate .lf-profile-rated-character-portrait { width: 56px; height: 58px; aspect-ratio: auto; border-radius: 7px; }

@@ -4,6 +4,12 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest source/browser receipt: [[sessions/2026-10-16-Character-Editor-Locale]],
+base `ac2285f` plus patch: 1,236 passing tests. Separately, the authorized single
+push has correlated APNs acceptance plus owner-confirmed outside-app receipt and
+correct inbox tap target: [[sessions/2026-10-16-Authorized-Push-Check]].
+This does not certify every notification event or deploy the transport patch.
+
 Latest source/browser receipt: [[sessions/2026-10-15-Character-Editor-Hydration]],
 base `c2da5fd` plus its patch: 1,231 passing tests. Arabic 320px recovery and
 English 390px recovery/save used synthetic in-memory data, not a live account.

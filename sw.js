@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v461-editor-hydration';
+const CACHE = 'lorefy-v462-editor-locale';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -42,7 +42,7 @@ const CORE = [
   './styles/lorefy-chapter-detail.css?v=20261015-live-spoiler-v1',
   './styles/lorefy-cinema-ui.css?v=20261003-appearance-feather-v2',
   './styles/lorefy-native-layout-fix.css?v=20260921-product-remediation-v1',
-  './styles/lorefy-review-social.css?v=20260921-product-remediation-v1',
+  './styles/lorefy-review-social.css?v=20261015-editor-locale-v1',
   './styles/lorefy-community.css?v=20261009-public-appearance-v4',
   './styles/lorefy-comics-search.css?v=20260923-comics-identity-v2',
   './styles/lorefy-auth-flow.css?v=20261003-beta-final-v1',
@@ -125,7 +125,7 @@ const CORE = [
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
-  './modules/lorefy-growth-features.js?v=20261015-editor-hydration-v1',
+  './modules/lorefy-growth-features.js?v=20261015-editor-locale-v1',
   './modules/lorefy-share-studio.js?v=20261007-quarter-ratings-v1',
   './uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1',
   './launch/icons/icon-180.png',

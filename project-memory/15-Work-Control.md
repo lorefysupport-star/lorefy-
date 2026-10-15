@@ -21,6 +21,7 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 - [[bugs/LF-009-Gallery-Hydration]]
 - [[bugs/LF-010-Character-Editor-Owner]]
 - [[bugs/LF-011-Character-Editor-Hydration]]
+- [[bugs/LF-012-Character-Editor-Locale]]
 - [[bugs/APNS-001-Background-Delivery]]
 - [[bugs/APNS-002-Transport-Isolation]]
 

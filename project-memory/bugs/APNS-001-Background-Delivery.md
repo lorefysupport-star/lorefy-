@@ -1,12 +1,13 @@
 ---
 {
-  "kind": "bug", "id": "APNS-001", "status": "needs-service", "priority": "P1",
-  "area": "notifications", "date": "2026-10-15", "reviewed_on": "2026-10-15",
-  "source_commit": "ae66e5b", "source_verified": false,
-  "device_verified": false, "service_verified": false,
+  "kind": "bug", "id": "APNS-001", "status": "closed", "priority": "P1",
+  "area": "notifications", "date": "2026-10-15", "reviewed_on": "2026-10-16",
+  "source_commit": "ac2285f", "source_verified": true,
+  "device_verified": true, "service_verified": true,
   "requires_device": true, "requires_service": true,
-  "verified_on": null,
-  "next_action": "اختبار تسليم مصرح به مع قبول APNs ووصول إلى جهاز في الخلفية"
+  "verified_on": "2026-10-16",
+  "resolution_evidence": "[[sessions/2026-10-16-Authorized-Push-Check]]",
+  "next_action": "تم تحقق اختبار واحد والفتح؛ لا تعميم على كل الأجهزة أو تشخيص سبب البلاغ القديم"
 }
 ---
 # APNS-001: إثبات تسليم الإشعارات في الخلفية
@@ -31,6 +32,11 @@
 وفتح الوجهة الصحيحة. لا إرسال جماعي ولا تغيير أسرار أو migrations كاختبار.
 
 ## المصادر
+
+تحديث 2026-10-16: [[sessions/2026-10-16-Authorized-Push-Check]] يثبت قبول
+APNs لاختبار واحد مصرح به، ثم تأكيد المالك ظهوره خارج التطبيق وأن الضغط
+عليه فتح صندوق الإشعارات. الإغلاق لنطاق هذا الاختبار، لا لكل أحداث التطبيق
+والأجهزة أو سبب البلاغ القديم. لم يُنشر إصلاح النقل المحلي ولم تتغير الأسرار.
 
 [[systems/Community-Notifications]]،
 [dispatcher](../../supabase/functions/dispatch-notifications/index.ts)،

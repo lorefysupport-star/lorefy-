@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="styles/lorefy-reading-diary.css?v=20261007-diary-language-v1">
   <link rel="stylesheet" href="styles/lorefy-cinema-ui.css?v=20261003-appearance-feather-v2">
   <link rel="stylesheet" href="styles/lorefy-native-layout-fix.css?v=20260921-product-remediation-v1">
-  <link rel="stylesheet" href="styles/lorefy-review-social.css?v=20260921-product-remediation-v1">
+  <link rel="stylesheet" href="styles/lorefy-review-social.css?v=20261015-editor-locale-v1">
   <link rel="stylesheet" href="styles/lorefy-community.css?v=20261009-public-appearance-v4">
   <link rel="stylesheet" href="styles/lorefy-comics-search.css?v=20260923-comics-identity-v2">
   <link rel="stylesheet" href="styles/lorefy-auth-flow.css?v=20261003-beta-final-v1">
@@ -380,7 +380,7 @@
   <script defer src="modules/lorefy-friend-activity.js?v=20261013-discover-reviewed-v2"></script>
   <script defer src="uploads/files/lorefy-app.js?v=20261015-github-sync-v1"></script>
   <script defer src="modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1"></script>
-  <script defer src="modules/lorefy-growth-features.js?v=20261015-editor-hydration-v1"></script>
+  <script defer src="modules/lorefy-growth-features.js?v=20261015-editor-locale-v1"></script>
   <script defer src="modules/lorefy-community.js?v=20261015-github-sync-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-profile-sections.css?v=20261013-reviews-posts">
   <script defer src="modules/lorefy-profile-sections.js?v=20261015-privacy-safety-v1"></script>
@@ -551,7 +551,7 @@
           window.__lorefyGrowthRetryCount = (window.__lorefyGrowthRetryCount || 0) + 1;
           if (window.__lorefyGrowthRetryCount > 3) return;
           var script = document.createElement('script');
-      script.src = 'modules/lorefy-growth-features.js?v=20261015-editor-hydration-v1' + window.__lorefyGrowthRetryCount + '-' + Date.now();
+      script.src = 'modules/lorefy-growth-features.js?v=20261015-editor-locale-v1' + window.__lorefyGrowthRetryCount + '-' + Date.now();
           script.async = false;
           document.head.appendChild(script);
         }, 400);

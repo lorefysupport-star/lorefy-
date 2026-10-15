@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-15T16:35:38.942Z
-Source commit: c2da5fd24c04a8061ead276776be0f98544f1c53
+Observed: 2026-10-15T21:35:39.948Z
+Source commit: ac2285f2d157a43217f598c2577d3ab5b1188786
 
 # Tests Source Inventory
 
@@ -93,7 +93,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/chapter-reading-ownership.test.js](../../tests/chapter-reading-ownership.test.js) (3719 bytes)
 - [tests/chapter-reading-progress.test.js](../../tests/chapter-reading-progress.test.js) (4649 bytes)
 - [tests/character-atlas.test.js](../../tests/character-atlas.test.js) (5893 bytes)
-- [tests/character-editor-ownership.test.js](../../tests/character-editor-ownership.test.js) (13790 bytes)
+- [tests/character-editor-ownership.test.js](../../tests/character-editor-ownership.test.js) (16666 bytes)
 - [tests/character-gallery-hydration.test.js](../../tests/character-gallery-hydration.test.js) (8144 bytes)
 - [tests/character-name-search.test.js](../../tests/character-name-search.test.js) (2724 bytes)
 - [tests/character-rating-summary.test.js](../../tests/character-rating-summary.test.js) (2817 bytes)
@@ -195,9 +195,9 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/theme-wiring.test.js](../../tests/theme-wiring.test.js) (1472 bytes)
 - [tests/ui-coherence.test.js](../../tests/ui-coherence.test.js) (2423 bytes)
 - [tests/ui-finish-pass.test.js](../../tests/ui-finish-pass.test.js) (2362 bytes)
-- [tests/ui-placement.test.js](../../tests/ui-placement.test.js) (23446 bytes)
+- [tests/ui-placement.test.js](../../tests/ui-placement.test.js) (23548 bytes)
 - [tests/ui-profile-discover-polish.test.js](../../tests/ui-profile-discover-polish.test.js) (3647 bytes)
-- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (2778 bytes)
+- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (2772 bytes)
 - [tests/user-discovery.test.js](../../tests/user-discovery.test.js) (4492 bytes)
 - [tests/user-reported-fixes.test.js](../../tests/user-reported-fixes.test.js) (4767 bytes)
 - [tests/version-consistency.test.js](../../tests/version-consistency.test.js) (1492 bytes)

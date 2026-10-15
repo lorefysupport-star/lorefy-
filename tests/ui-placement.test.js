@@ -233,7 +233,7 @@ test('best-four character editor can search the full catalog and keeps unrated s
   assert.match(source, /function profileTopCharacterSearchWorks\(/);
   assert.match(source, /function profileCharacterEntries\(/);
   assert.match(editor, /class: "lf-top-characters-editor-search"/);
-  assert.match(editor, /placeholder: "ابحث عن عمل أو شخصية"/);
+  assert.match(editor, /placeholder: uiText\("ابحث عن عمل أو شخصية", "Search works or characters"\)/);
   assert.match(editor, /hydrateProfileRatedCharacters\(workId/);
   assert.match(editor, /profileTopCharacterSearchWorks\(query\)/);
   assert.match(source, /character: ref\.character/);
@@ -246,8 +246,8 @@ test('best-four character editor explicitly targets a slot and replaces a full s
 
   assert.match(editor, /var activeSlot = 0/);
   assert.match(editor, /draft\[activeSlot\] = ref/);
-  assert.match(editor, /text: "استبدال الخانة " \+ String\(activeSlot \+ 1\)/);
-  assert.match(editor, /text: "إزالة الشخصية من هذه الخانة"/);
+  assert.match(editor, /text: uiText\("استبدال الخانة ", "Replace slot "\) \+ String\(activeSlot \+ 1\)/);
+  assert.match(editor, /text: uiText\("إزالة الشخصية من هذه الخانة", "Remove from this slot"\)/);
   assert.doesNotMatch(editor, /else if \(draft\.length < 4\)/);
   assert.doesNotMatch(editor, /draft\.push\(ref\)/);
 });

@@ -1761,7 +1761,7 @@
   }
   function ovOpen(cls, titleText) {
     var page = el("div", { class: "lf-ov-page " + cls,role:"dialog","aria-modal":"true","aria-label":titleText });
-    var back = el("button", { type: "button", class: "lf-ov-back", "aria-label": "رجوع", text: "‹" });
+    var back = el("button", { type: "button", class: "lf-ov-back", "aria-label": uiText("رجوع", "Back"), text: "‹" });
     var restoreFocus;
     function closePage() {
       page.classList.add("is-leaving");
@@ -3961,7 +3961,7 @@
       if (existingSearch) existingSearch.focus();
       return;
     }
-    var ov = ovOpen("lf-profile-top-characters-editor", "المفضلة");
+    var ov = ovOpen("lf-profile-top-characters-editor", uiText("المفضلة", "Favorites"));
     var draft = profileTopCharacterSelection().slice(0, 4);
     while (draft.length < 4) draft.push(null);
     var activeSlot = 0, nameSearchTimer=null, nameSearchEpoch=0, nameSearchBusy=false, nameSearchFailed=false;
@@ -3980,19 +3980,19 @@
     }
     profileTopCharacterEditor = { active: editorActive, refresh: render };
     var intro = el("section", { class: "lf-top-characters-editor-intro" }, [
-      el("strong", { text: "اختيارك أنت، وليس ترتيبًا تلقائيًا" }),
-      el("p", { text: "اختر الخانة أولاً، ثم اضغط شخصية لاستبدالها مباشرة. ترتيب الخانات هو ترتيب ظهورها في ملفك." })
+      el("strong", { text: uiText("اختيارك أنت، وليس ترتيبًا تلقائيًا", "Your choices, not an automatic ranking") }),
+      el("p", { text: uiText("اختر الخانة أولاً، ثم اضغط شخصية لاستبدالها مباشرة. ترتيب الخانات هو ترتيب ظهورها في ملفك.", "Select a slot, then choose its character. Slot order matches your profile.") })
     ]);
     var slots = el("div", { class: "lf-top-characters-editor-slots" });
     var activeSlotCard = el("section", { class: "lf-top-characters-editor-active-slot", "aria-live": "polite" });
     var search = el("input", {
       type: "search",
       class: "lf-top-characters-editor-search",
-      placeholder: "ابحث عن عمل أو شخصية",
+      placeholder: uiText("ابحث عن عمل أو شخصية", "Search works or characters"),
       autocomplete: "off",
-      "aria-label": "ابحث عن عمل أو شخصية"
+      "aria-label": uiText("ابحث عن عمل أو شخصية", "Search works or characters")
     });
-    var clearSearch = el("button", { type: "button", class: "lf-top-characters-editor-search-clear", text: "×", "aria-label": "مسح البحث" });
+    var clearSearch = el("button", { type: "button", class: "lf-top-characters-editor-search-clear", text: "×", "aria-label": uiText("مسح البحث", "Clear search") });
     var searchBox = el("div", { class: "lf-top-characters-editor-search-box" }, [
       el("span", { class: "lf-top-characters-editor-search-icon", text: "⌕", "aria-hidden": "true" }),
       search,
@@ -4007,9 +4007,9 @@
     var workResults = el("div", { class: "lf-top-characters-editor-work-results", hidden: "" });
     var currentWork = el("div", { class: "lf-top-characters-editor-current-work", hidden: "" });
     var candidates = el("div", { class: "lf-top-characters-editor-list" });
-    var save = el("button", { type: "button", class: "lf-top-characters-editor-save", text: "حفظ المفضلة" });
-    var headingTitle = el("strong", { text: "الشخصيات التي قيّمتها" });
-    var headingMeta = el("small", { text: "أو ابحث عن أي عمل لإظهار شخصياته" });
+    var save = el("button", { type: "button", class: "lf-top-characters-editor-save", text: uiText("حفظ المفضلة", "Save favorites") });
+    var headingTitle = el("strong", { text: uiText("الشخصيات التي قيّمتها", "Characters you rated") });
+    var headingMeta = el("small", { text: uiText("أو ابحث عن أي عمل لإظهار شخصياته", "Or search for a work to see its characters") });
     function dataNow() { return profileCharacterEntries(); }
     function selectionIndex(ref) {
       var wanted = profileTopCharacterRefKey(ref);
@@ -4065,16 +4065,16 @@
         var coverUrl = mlCoverOf(work);
         if (coverUrl) {
           var img = el("img", { src: coverUrl, alt: mlTitleOf(work), loading: "lazy", referrerpolicy: "no-referrer" });
-          img.addEventListener("error", function () { img.remove(); cover.textContent = "ل"; });
+          img.addEventListener("error", function () { img.remove(); cover.textContent = uiText("ل", "L"); });
           cover.appendChild(img);
-        } else cover.textContent = "ل";
+        } else cover.textContent = uiText("ل", "L");
         var button = el("button", { type: "button", class: "lf-top-characters-editor-work-result" }, [
           cover,
           el("span", { class: "lf-top-characters-editor-work-copy" }, [
-            el("strong", { text: mlTitleOf(work) || work.title || "عمل" }),
-            el("small", { text: [work.type, work.auth || work.author].filter(Boolean).join(" · ") || "عرض الشخصيات" })
+            el("strong", { text: mlTitleOf(work) || work.title || uiText("عمل", "Work") }),
+            el("small", { text: [work.type, work.auth || work.author].filter(Boolean).join(" · ") || uiText("عرض الشخصيات", "View characters") })
           ]),
-          el("span", { class: "lf-top-characters-editor-work-action", text: "عرض" })
+          el("span", { class: "lf-top-characters-editor-work-action", text: uiText("عرض", "View") })
         ]);
         button.addEventListener("click", function () {
           if (!editorActive()) return;
@@ -4110,16 +4110,16 @@
             class: "lf-top-characters-editor-slot" + (item ? " is-filled" : " is-empty") + (slotIndex === activeSlot ? " is-active" : ""),
             "aria-pressed": String(slotIndex === activeSlot),
             "aria-label": item
-              ? "اختيار الخانة " + (slotIndex + 1) + "، " + (item.character.name || item.character.latin || "شخصية")
-              : "اختيار الخانة الفارغة " + (slotIndex + 1)
+              ? uiText("اختيار الخانة ", "Select slot ") + (slotIndex + 1) + uiText("، ", ", ") + (item.character.name || item.character.latin || uiText("شخصية", "Character"))
+              : uiText("اختيار الخانة الفارغة ", "Select empty slot ") + (slotIndex + 1)
           });
           if (item) {
             button.appendChild(profileRatedCharacterPortrait(item));
             button.appendChild(el("span", { class: "lf-top-characters-editor-slot-rank", text: String(slotIndex + 1) }));
-            button.appendChild(el("strong", { text: item.character.name || item.character.latin || "شخصية" }));
+            button.appendChild(el("strong", { text: item.character.name || item.character.latin || uiText("شخصية", "Character") }));
           } else {
             button.appendChild(el("span", { text: "+" }));
-            button.appendChild(el("small", { text: "الخانة " + (slotIndex + 1) }));
+            button.appendChild(el("small", { text: uiText("الخانة ", "Slot ") + (slotIndex + 1) }));
           }
           button.addEventListener("click", function () { activeSlot = slotIndex; render(); });
           slots.appendChild(button);
@@ -4128,13 +4128,13 @@
       activeSlotCard.textContent = "";
       var activeRef = draft[activeSlot], activeItem = activeRef && profileTopCharacterFromRef(activeRef, data.entries);
       activeSlotCard.appendChild(el("div", { class: "lf-top-characters-editor-active-copy" }, [
-        el("strong", { text: "استبدال الخانة " + String(activeSlot + 1) }),
+        el("strong", { text: uiText("استبدال الخانة ", "Replace slot ") + String(activeSlot + 1) }),
         el("small", { text: activeItem
-          ? "اختر شخصية من القائمة أو أزل " + (activeItem.character.name || activeItem.character.latin || "الشخصية")
-          : "اختر شخصية من القائمة لإضافتها هنا" })
+          ? uiText("اختر شخصية من القائمة أو أزل ", "Choose a character or remove ") + (activeItem.character.name || activeItem.character.latin || uiText("الشخصية", "this character"))
+          : uiText("اختر شخصية من القائمة لإضافتها هنا", "Choose a character to add here") })
       ]));
       if (activeItem) {
-        var remove = el("button", { type: "button", class: "lf-top-characters-editor-remove", text: "إزالة الشخصية من هذه الخانة" });
+        var remove = el("button", { type: "button", class: "lf-top-characters-editor-remove", text: uiText("إزالة الشخصية من هذه الخانة", "Remove from this slot") });
         remove.addEventListener("click", function () {
           if (!editorActive()) return;
           draft[activeSlot] = null;
@@ -4150,9 +4150,9 @@
         currentWork.hidden = false;
         currentWork.appendChild(el("span", null, [
           el("strong", { text: profileWorkTitle(activeWorkId) }),
-          el("small", { text: loadingWorkId === activeWorkId ? "جاري تحميل الشخصيات..." : "اختر شخصيات هذا العمل" })
+          el("small", { text: loadingWorkId === activeWorkId ? uiText("جاري تحميل الشخصيات...", "Loading characters...") : uiText("اختر شخصيات هذا العمل", "Choose characters from this work") })
         ]));
-        var changeWork = el("button", { type: "button", text: "تغيير العمل" });
+        var changeWork = el("button", { type: "button", text: uiText("تغيير العمل", "Change work") });
         changeWork.addEventListener("click", function () {
           activeWorkId = "";
           loadingWorkId = "";
@@ -4161,12 +4161,12 @@
           search.focus();
         });
         currentWork.appendChild(changeWork);
-        headingTitle.textContent = "شخصيات " + (mlTitleOf(activeWork) || profileWorkTitle(activeWorkId));
-        headingMeta.textContent = loadingWorkId === activeWorkId ? "يتم الآن جلب طاقم العمل" : "اضغط للإضافة أو الإزالة";
+        headingTitle.textContent = uiText("شخصيات ", "Characters: ") + (mlTitleOf(activeWork) || profileWorkTitle(activeWorkId));
+        headingMeta.textContent = loadingWorkId === activeWorkId ? uiText("يتم الآن جلب طاقم العمل", "Loading this work's cast") : uiText("اضغط للإضافة أو الإزالة", "Select to add or remove");
       } else {
         currentWork.hidden = true;
-        headingTitle.textContent = query ? "الشخصيات المطابقة" : "الشخصيات التي قيّمتها";
-        headingMeta.textContent = query ? (nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : "يمكنك أيضاً اختيار عمل من نتائج البحث") : "أو ابحث عن أي عمل لإظهار شخصياته";
+        headingTitle.textContent = query ? uiText("الشخصيات المطابقة", "Matching characters") : uiText("الشخصيات التي قيّمتها", "Characters you rated");
+        headingMeta.textContent = query ? (nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : uiText("يمكنك أيضاً اختيار عمل من نتائج البحث", "You can also select a work from search results")) : uiText("أو ابحث عن أي عمل لإظهار شخصياته", "Or search for a work to see its characters");
       }
       renderWorkResults(query);
       candidates.textContent = "";
@@ -4175,12 +4175,12 @@
         var emptyText = nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : nameSearchFailed ? uiText("تعذر البحث الآن. جرّب مرة أخرى أو ابحث باسم العمل.","Character search unavailable. Try again or search by work title.") : failedWorkIds.length
           ? uiText("تعذر تحميل الشخصيات. يمكنك إعادة المحاولة.", "Could not load characters. You can retry.")
           : castLoading ? uiText("جاري تحميل الشخصيات التي قيّمتها…", "Loading rated characters…") : loadingWorkId === activeWorkId && activeWorkId
-          ? "جاري تحميل شخصيات العمل..."
+          ? uiText("جاري تحميل شخصيات العمل...", "Loading this work's characters...")
           : activeWorkId
-            ? "لم نجد شخصيات موثقة لهذا العمل. جرّب عملاً آخر."
+            ? uiText("لم نجد شخصيات موثقة لهذا العمل. جرّب عملاً آخر.", "No verified characters found for this work. Try another work.")
             : query
-              ? (profileTopCharacterSearchWorks(query).length ? "اختر عملاً من نتائج البحث لعرض شخصياته." : uiText("لا توجد شخصيات أو أعمال مطابقة. جرّب اسماً آخر.","No matching characters or works. Try another name."))
-              : "ابحث باسم أي عمل، ثم اختر الشخصيات المفضلة لديك.";
+              ? (profileTopCharacterSearchWorks(query).length ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته.", "Select a work from search results to see its characters.") : uiText("لا توجد شخصيات أو أعمال مطابقة. جرّب اسماً آخر.","No matching characters or works. Try another name."))
+              : uiText("ابحث باسم أي عمل، ثم اختر الشخصيات المفضلة لديك.", "Search for a work, then choose your favorite characters.");
         candidates.appendChild(el("p", { class: "lf-profile-rated-characters-empty", role: "status", text: emptyText }));
       } else {
         rows.forEach(function (item) {
@@ -4188,21 +4188,21 @@
           var isActiveSelection = rank === activeSlot + 1;
           var rating = item.score
             ? profileRatedCharacterStars(item)
-            : el("span", { class: "lf-top-characters-editor-unrated", text: "اختيار حر" });
+            : el("span", { class: "lf-top-characters-editor-unrated", text: uiText("اختيار حر", "Unrated choice") });
           var button = el("button", {
             type: "button",
             class: "lf-top-characters-editor-candidate" + (rank ? " is-selected" : "") + (isActiveSelection ? " is-active" : ""),
             "aria-label": isActiveSelection
-              ? (item.character.name || item.character.latin || "شخصية") + " محددة في الخانة " + (activeSlot + 1)
-              : "استبدال الخانة " + (activeSlot + 1) + " بـ " + (item.character.name || item.character.latin || "شخصية")
+              ? (item.character.name || item.character.latin || uiText("شخصية", "Character")) + uiText(" محددة في الخانة ", " selected in slot ") + (activeSlot + 1)
+              : uiText("استبدال الخانة ", "Replace slot ") + (activeSlot + 1) + uiText(" بـ ", " with ") + (item.character.name || item.character.latin || uiText("شخصية", "Character"))
           }, [
             profileRatedCharacterPortrait(item),
             el("span", { class: "lf-top-characters-editor-candidate-copy" }, [
-              el("strong", { text: item.character.name || item.character.latin || "شخصية" }),
+              el("strong", { text: item.character.name || item.character.latin || uiText("شخصية", "Character") }),
               el("small", { text: item.workTitle }),
               rating
             ]),
-            el("span", { class: "lf-top-characters-editor-candidate-action", text: isActiveSelection ? "✓" : "تبديل" })
+            el("span", { class: "lf-top-characters-editor-candidate-action", text: isActiveSelection ? "✓" : uiText("تبديل", "Replace") })
           ]);
           button.addEventListener("click", function () {
             chooseCandidate(ref);
@@ -4245,7 +4245,7 @@
       setProfileTopCharacterSelection(draft);
       syncProfileTopCharacters();
       ov.close();
-      toastSafe("تم حفظ المفضلة");
+      toastSafe(uiText("تم حفظ المفضلة", "Favorites saved"));
     });
     ov.body.appendChild(intro);
     ov.body.appendChild(slots);
