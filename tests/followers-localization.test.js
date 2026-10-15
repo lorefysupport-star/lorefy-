@@ -2,6 +2,15 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const i18n=require('../modules/lorefy-i18n.js');
+
+test('connection handles isolate LTR punctuation without reversing display names or rows',()=>{
+  const css=fs.readFileSync(require('node:path').join(__dirname,'../styles/lorefy-user-experience.css'),'utf8');
+  const rule=css.match(/\.lf-followers-dialog \[role="button"\] > div > p \+ p\s*\{([^}]+)\}/);
+  assert.ok(rule,'the username paragraph needs its own bidi boundary');
+  assert.match(rule[1],/direction:\s*ltr\s*;/);
+  assert.match(rule[1],/unicode-bidi:\s*isolate\s*;/);
+  assert.match(rule[1],/text-align:\s*match-parent\s*;/);
+});
 test('connection dialog supplies complete Arabic and English copy including counters and empty states',()=>{
   const ar=i18n.connections('ar',12,7),en=i18n.connections('en',12,7);
   assert.equal(en.followers,'Followers (12)'); assert.equal(en.following,'Following (7)');
