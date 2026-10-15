@@ -3255,6 +3255,8 @@
   var K_PROFILE_TOP_CHARACTERS = "lorefy.user.profileTopCharacters.v1";
   var profileRatedCharacterCache = {};
   var profileRatedCharacterLoads = {};
+  var profileRatedCharacterFailures = {};
+  var profileRatedCharacterGallery = null;
   var homeReplyCloudItems = [];
   var homeReplyCloudLastFetch = 0;
   var homeReplyCloudFetching = false;
@@ -3664,27 +3666,66 @@
     });
     return groups;
   }
-  function openProfileRatedCharacters() {
-    var data = profileRatedCharacterEntries();
-    var ov = ovOpen("lf-profile-rated-characters-page", uiText("شخصيات قيّمتها", "Rated characters"));
-    if (!data.entries.length) {
-      ov.body.appendChild(el("div", { class: "lf-profile-rated-characters-empty" }, [
-        el("strong", { text: uiText("نجمع تقييمات الشخصيات", "Loading character ratings") }),
-        el("p", { text: uiText("ستظهر هنا الشخصيات التي قيّمتها عند اكتمال تحميل بياناتها.", "Your rated characters will appear when their details finish loading.") })
-      ]));
-      return;
+  function profileRatedCharacterOwner() {
+    try {
+      return String(global.localStorage.getItem("lorefy.activeUser.v1")
+        || read("lorefy.session.v1", {}).userId || read("lorefy.identity.v1", {}).id
+        || global.LorefyBackend && global.LorefyBackend.user && global.LorefyBackend.user.id || "");
+    } catch (e) { return ""; }
+  }
+  function syncProfileRatedCharacterGallery() {
+    var state = profileRatedCharacterGallery;
+    if (!state) return;
+    if (!state.page.isConnected || state.page.inert) { profileRatedCharacterGallery = null; return; }
+    if (state.owner !== profileRatedCharacterOwner()) {
+      state.close(); profileRatedCharacterGallery = null; return;
     }
+    state.refresh();
+  }
+  function profileRatedCharacterStateChanged(event) {
+    var key = event && (event.detail ? event.detail.key : event.key);
+    if (!key || [K_SCORES, K_CHARCUSTOM, K_CHARIMG, "lorefy.activeUser.v1", "lorefy.session.v1", "lorefy.identity.v1"].indexOf(key) !== -1) syncProfileRatedCharacterGallery();
+  }
+  function openProfileRatedCharacters() {
+    if (profileRatedCharacterGallery) profileRatedCharacterGallery.close();
+    var owner = profileRatedCharacterOwner(), signature = "";
+    var ov = ovOpen("lf-profile-rated-characters-page", uiText("شخصيات قيّمتها", "Rated characters"));
     var overview = el("section", { class: "lf-rated-characters-overview" });
-    [[data.total, uiText("شخصية", "Characters")], [data.workCount, uiText("أعمال", "Works")], [data.average.toFixed(2), uiText("متوسطك", "Your average")]].forEach(function (stat) {
-      overview.appendChild(el("div", { class: "lf-character-atlas-stat" }, [el("strong", { text: String(stat[0]), "data-no-translate": "" }), el("small", { text: stat[1] })]));
-    });
     ov.body.appendChild(overview);
     var mode = "rating", limit = 60;
     var search = el("input", { type: "search", placeholder: uiText("ابحث عن شخصية أو عمل…", "Search characters or works…"), "aria-label": uiText("البحث في شخصيات قيّمتها", "Search rated characters") });
     var modes = el("div", { class: "lf-character-atlas-modes", role: "tablist", "aria-label": uiText("ترتيب الشخصيات", "Character grouping") });
     var gallery = el("div", { class: "lf-character-atlas-gallery", role: "tabpanel", id: "lf-character-atlas-gallery" });
+    var status = el("div", { class: "lf-profile-rated-characters-empty", role: "status", "aria-live": "polite" });
     var buttons = [];
-    function render() {
+    function render(force) {
+      if (!ov.page.isConnected || ov.page.inert) return;
+      if (owner !== profileRatedCharacterOwner()) { ov.close(); profileRatedCharacterGallery = null; return; }
+      var data = profileRatedCharacterEntries();
+      var nextSignature = JSON.stringify([doc.documentElement.lang, data.total, data.workCount, data.average,
+        data.entries.map(function (item) { return [item.workId, castKey(item.character), item.score, item.character.name, characterImageUrl(item.character)]; }),
+        data.missing.map(function (id) { return [id, !!profileRatedCharacterFailures[id], !!profileRatedCharacterLoads[id]]; })]);
+      if (!force && signature === nextSignature) return;
+      signature = nextSignature;
+      overview.textContent = "";
+      [[data.total, uiText("شخصية", "Characters")], [data.workCount, uiText("أعمال", "Works")], [data.average.toFixed(2), uiText("متوسطك", "Your average")]].forEach(function (stat) {
+        overview.appendChild(el("div", { class: "lf-character-atlas-stat" }, [el("strong", { text: String(stat[0]), "data-no-translate": "" }), el("small", { text: stat[1] })]));
+      });
+      status.textContent = "";
+      var failed = data.missing.filter(function (id) { return !!profileRatedCharacterFailures[id]; });
+      if (!data.total) status.textContent = uiText("لم تقيّم أي شخصيات بعد", "No rated characters yet");
+      else if (failed.length) {
+        status.appendChild(el("p", { text: uiText("تعذّر تحميل بعض بيانات الشخصيات", "Some character details could not be loaded") }));
+        var retry = el("button", { type: "button", class: "lf-character-atlas-more", text: uiText("إعادة المحاولة", "Retry") });
+        retry.addEventListener("click", function () {
+          if (owner !== profileRatedCharacterOwner()) { syncProfileRatedCharacterGallery(); return; }
+          failed.forEach(function (id) { delete profileRatedCharacterFailures[id]; hydrateProfileRatedCharacters(id); });
+          render(true);
+        });
+        status.appendChild(retry);
+      } else if (data.missing.length) status.textContent = uiText("نجمع تقييمات الشخصيات", "Loading character ratings");
+      else if (data.unresolved) status.textContent = uiText("بعض تفاصيل الشخصيات غير متاحة من المصدر", "Some character details are unavailable from the source");
+      status.hidden = !status.textContent;
       gallery.textContent = "";
       var groups = ratedCharacterGroups(data.entries, search.value, mode), shown = 0, total = 0;
       if (mode === "rating" && groups.length) {
@@ -3707,20 +3748,21 @@
           ]), rail
         ]));
       });
-      if (!total) gallery.appendChild(el("p", { class: "lf-character-atlas-empty", text: uiText("لا توجد شخصيات تطابق بحثك", "No matching characters") }));
+      if (!total && data.entries.length) gallery.appendChild(el("p", { class: "lf-character-atlas-empty", text: uiText("لا توجد شخصيات تطابق بحثك", "No matching characters") }));
       if (total > shown) {
         var more = el("button", { type: "button", class: "lf-character-atlas-more", text: uiText("عرض المزيد", "Show more") });
-        more.addEventListener("click", function () { limit += 60; render(); }); gallery.appendChild(more);
+        more.addEventListener("click", function () { limit += 60; render(true); }); gallery.appendChild(more);
       }
       buttons.forEach(function (button) {
         button.setAttribute("aria-selected", String(button.dataset.mode === mode));
         button.setAttribute("tabindex", button.dataset.mode === mode ? "0" : "-1");
       });
       scheduleCharacterActionIcons();
+      data.missing.forEach(function (id) { hydrateProfileRatedCharacters(id); });
     }
     [["rating", uiText("حسب التقييم", "By rating"), "feather"], ["work", uiText("حسب العمل", "By work"), "book-open"]].forEach(function (option) {
       var button = el("button", { type: "button", role: "tab", "data-mode": option[0], "aria-controls": "lf-character-atlas-gallery" }, [el("i", { "data-lucide": option[2], "aria-hidden": "true" }), el("span", { text: option[1] })]);
-      button.addEventListener("click", function () { mode = option[0]; limit = 60; render(); }); buttons.push(button); modes.appendChild(button);
+      button.addEventListener("click", function () { mode = option[0]; limit = 60; render(true); }); buttons.push(button); modes.appendChild(button);
       button.addEventListener("keydown", function (event) {
         if (["ArrowLeft", "ArrowRight", "Home", "End"].indexOf(event.key) === -1) return;
         event.preventDefault();
@@ -3730,10 +3772,11 @@
         buttons[index].click(); buttons[index].focus();
       });
     });
-    search.addEventListener("input", function () { limit = 60; render(); });
+    search.addEventListener("input", function () { limit = 60; render(true); });
     ov.body.appendChild(el("div", { class: "lf-character-atlas-toolbar" }, [el("label", { class: "lf-character-atlas-search" }, [el("i", { "data-lucide": "search", "aria-hidden": "true" }), search]), modes]));
-    ov.body.appendChild(gallery);
-    render();
+    ov.body.appendChild(status); ov.body.appendChild(gallery);
+    profileRatedCharacterGallery = { owner: owner, page: ov.page, close: ov.close, refresh: render };
+    render(true);
   }
   function paintProfileRatedCharacters(section) {
     if (!section) return;
@@ -4487,23 +4530,29 @@
   function hydrateProfileRatedCharacters(workId, onDone) {
     workId = String(workId || "");
     if (!workId) return Promise.resolve([]);
+    var owner = profileRatedCharacterOwner();
     var pending = profileRatedCharacterLoads[workId];
+    if (!pending && profileRatedCharacterFailures[workId] && !onDone) return Promise.resolve([]);
     if (!pending) {
-      pending = loadCast(workContext({ workId: workId, work: profileWorkFor(workId) })).then(function (cast) {
+      delete profileRatedCharacterFailures[workId];
+      pending = Promise.resolve().then(function () {
+        return loadCast(workContext({ workId: workId, work: profileWorkFor(workId) }));
+      }).then(function (cast) {
         profileRatedCharacterCache[workId] = Array.isArray(cast) ? cast : [];
         return profileRatedCharacterCache[workId];
       }).catch(function () {
-        profileRatedCharacterCache[workId] = [];
-        return profileRatedCharacterCache[workId];
+        profileRatedCharacterFailures[workId] = true;
+        return [];
       });
       profileRatedCharacterLoads[workId] = pending;
       pending.then(function () {
         delete profileRatedCharacterLoads[workId];
         paintProfileRatedCharacters(doc.querySelector(".lf-profile-rated-characters"));
         syncProfileTopCharacters();
+        syncProfileRatedCharacterGallery();
       });
     }
-    if (onDone) pending.then(onDone);
+    if (onDone) pending.then(function (cast) { if (owner === profileRatedCharacterOwner()) onDone(cast); });
     return pending;
   }
   function syncProfileRatedCharacters() {
@@ -6348,6 +6397,7 @@
     try { run("enhanceReviewDetailPage",function(){enhanceReviewDetailPage();}); } catch (e) {}
     try { run("syncProfileExtras",function(){syncProfileExtras();}); } catch (e) {}
     try { run("syncProfileRatedCharacters",function(){syncProfileRatedCharacters();}); } catch (e) {}
+    try { run("syncProfileRatedCharacterGallery",function(){syncProfileRatedCharacterGallery();}); } catch (e) {}
     try { run("syncProfileFavouriteWorksControls",function(){syncProfileFavouriteWorksControls();}); } catch (e) {}
     try { run("syncProfileTopCharacters",function(){syncProfileTopCharacters();}); } catch (e) {}
     try { run("syncProfileCommunitySummary",function(){syncProfileCommunitySummary();}); } catch (e) {}
@@ -6367,6 +6417,8 @@
   }
 
   function boot() {
+    global.addEventListener("lorefy:stored-state", profileRatedCharacterStateChanged);
+    global.addEventListener("storage", profileRatedCharacterStateChanged);
     wireProfileTopCharacterEditorDelegation();
     installPublicProfileParity();
     startObserver();

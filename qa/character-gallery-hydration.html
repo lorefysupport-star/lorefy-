@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lorefy gallery hydration QA</title>
+<script src="../vendor/lucide.js"></script>
+<style>
+  body { margin:0; padding:24px; display:flex; gap:24px; justify-content:center; align-items:flex-start; background:#202223; font:14px system-ui; color:#fff; }
+  .qa-controls { width:220px; display:grid; gap:14px; }
+  .qa-controls label { display:grid; gap:6px; }
+  .qa-controls select,.qa-controls button { font:inherit; padding:10px; min-height:44px; }
+  #screen { width:390px; height:844px; flex:none; position:relative; transform:translateZ(0); overflow:hidden; background:#fafafa; color:#111; border:1px solid #aaa; }
+  @media(max-width:700px) { body { padding:12px; flex-direction:column; align-items:center; } .qa-controls { width:min(100%,390px); } }
+</style>
+<aside class="qa-controls">
+  <h1>Gallery QA</h1>
+  <label>Scenario<select id="scenario"><option value="delayed">Delayed cast</option><option value="partial">Partial cast</option><option value="offline">Failure then retry</option><option value="empty">No saved ratings</option><option value="missing">Empty verified cast</option><option value="account">Switch account while loading</option></select></label>
+  <label>Language<select id="language"><option value="en">English</option><option value="ar">العربية</option></select></label>
+  <label>Phone width<select id="width"><option>320</option><option selected>390</option><option>440</option></select></label>
+  <button id="open" disabled>Open gallery</button>
+  <output id="result" role="status">Loading source</output>
+</aside>
+<main id="screen"></main>
+<script>
+(async function () {
+  if (!['localhost','127.0.0.1'].includes(location.hostname)) throw Error('Local QA only');
+  // Load the actual application styles; the fixture never touches account storage.
+  const markup=await (await fetch('../index.html')).text();
+  const head=new DOMParser().parseFromString(markup,'text/html');
+  for (const entry of head.querySelectorAll('link[rel="stylesheet"]')) {
+    const link=document.createElement('link');link.rel='stylesheet';link.href=new URL(entry.getAttribute('href'),new URL('../index.html',location.href));document.head.append(link);
+  }
+  window.LorefyMangaData=[{id:'a',title:'Fixture work A'},{id:'b',title:'Fixture work B'}];
+  window.__galleryFixture={owner:'fixture-a',scores:{},request:()=>Promise.resolve([])};
+  const marker='global.LorefyGrowth = {';
+  const instrument=`
+    read=function(key,fallback){return key===K_SCORES?global.__galleryFixture.scores:fallback;};
+    write=function(){throw Error('Fixture storage writes are forbidden');};
+    profileRatedCharacterOwner=function(){return global.__galleryFixture.owner;};
+    loadCast=function(work){return global.__galleryFixture.request(work);};
+    paintProfileRatedCharacters=function(){};syncProfileTopCharacters=function(){};
+    global.__galleryFixture.api={open:openProfileRatedCharacters,sync:syncProfileRatedCharacterGallery,reset:function(){profileRatedCharacterCache={};profileRatedCharacterFailures={};profileRatedCharacterLoads={};}};
+  `;
+  const raw=await (await fetch('../modules/lorefy-growth-features.js')).text();
+  const boot='if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", boot); else boot();';
+  if(!raw.includes(marker)||!raw.includes(boot))throw Error('Fixture source hooks changed');
+  const script=document.createElement('script');script.textContent=raw.replace(boot,'').replace(marker,instrument+marker);document.head.append(script);
+  const state=window.__galleryFixture,result=document.getElementById('result');
+  document.getElementById('width').onchange=event=>{document.getElementById('screen').style.width=event.target.value+'px';};
+  document.getElementById('open').onclick=()=>{
+    const scenario=document.getElementById('scenario').value,lang=document.getElementById('language').value;
+    document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+    state.api.reset();state.owner='fixture-a';state.scores=scenario==='empty'?{}:{a:{hero:4.75},b:{other:3.25}};
+    let attempts=0;const generation=state.generation=(state.generation||0)+1;
+    state.request=work=>new Promise((resolve,reject)=>{
+      const attempt=++attempts;
+      setTimeout(()=>{
+        if(generation!==state.generation)return resolve([]);
+        if(scenario==='offline'&&attempt<=2){result.value='Source failed; use Retry';return reject(Error('fixture offline'));}
+        result.value='Source completed';
+        resolve(scenario==='missing'?[]:[{key:work.workId==='b'?'other':'hero',name:work.workId==='b'?'Other reader choice':'Hero reader choice',latin:'Fixture character',image:''}]);
+      },scenario==='partial'&&work.workId==='a'?100:2500);
+    });
+    result.value='Waiting for source';state.api.open();
+    if(scenario==='account')setTimeout(()=>{state.owner='fixture-b';state.scores={};state.api.sync();result.value='Old gallery closed after account change';},700);
+  };
+  document.getElementById('open').disabled=false;result.value='Ready';
+})().catch(error=>{document.getElementById('result').textContent=error.message;console.error(error);});
+</script>
+</html>

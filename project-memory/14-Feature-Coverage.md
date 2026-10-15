@@ -21,7 +21,7 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 | الاستكشاف وتفاصيل الأعمال | [[systems/Explore-Works]]؛ [studio](../modules/lorefy-explore-studio.js) | [source synopsis](../tests/catalog-source-synopsis.test.js)، [language](../tests/work-detail-language.test.js) | وجود نبذة موثوقة لكل عمل |
 | المكتبة والفصول والساعات | [[systems/Reading-Library]]، [[decisions/Saved-Reading-Metrics]] | [stability](../tests/reading-metrics-stability.test.js)، [chapter ownership](../tests/chapter-reading-ownership.test.js) | بقاء الحفظ بعد force-quit على كل جهاز |
 | اليوميات والاقتباسات والحرق | [[sessions/2026-10-15-Live-Reading-Spoilers]]، [[sessions/2026-10-15-Diary-Drafts]] | [draft](../tests/reading-diary-draft.test.js)، [feedback](../tests/reading-diary-feedback.test.js) | قبول مشاركة أصلية أو Clipboard من النظام الحقيقي |
-| الشخصيات وتقييماتها ومفضلاتها | [[systems/Explore-Works]]؛ [growth](../modules/lorefy-growth-features.js) | [atlas](../tests/character-atlas.test.js)، [saved summary](../tests/character-rating-summary.test.js) | اكتمال كل cast أو توافر كل صورة؛ تحديث المعرض المفتوح متبقٍ |
+| الشخصيات وتقييماتها ومفضلاتها | [[systems/Explore-Works]]؛ [growth](../modules/lorefy-growth-features.js) | [atlas](../tests/character-atlas.test.js)، [saved summary](../tests/character-rating-summary.test.js)، [hydration](../tests/character-gallery-hydration.test.js) | اكتمال كل cast أو توافر كل صورة أو تثبيت المصدر على الجهاز |
 | البروفايل الشخصي والعام | [[systems/Profiles-Lists]]؛ [public profile](../modules/lorefy-public-profile.js) | [view](../tests/public-profile-view.test.js)، [loading](../tests/public-profile-loading.test.js) | تحديث النسخة المثبتة أو صحة الإسقاط المنشور الآن |
 | المتابعة والوصول والصور | [[12-Device-Repairs]] LF-006/007/008 | [avatars](../tests/connection-avatar.test.js)، [keys](../tests/connection-keyboard.test.js)، [locale](../tests/followers-localization.test.js) | جلسة VoiceOver فعلية أو كل روابط الصور البعيدة |
 | اللستات والخصوصية والحظر | [[systems/Profiles-Lists]]، [[sessions/2026-10-15-Privacy-Safety-Repairs]] | [sections](../tests/profile-sections.test.js)، [privacy](../tests/privacy-safety-repairs.test.js) | أن التغيير المحلي وصل إلى قاعدة الإنتاج |
@@ -36,7 +36,7 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ## ثغرات المعرفة التي تبقى ظاهرة
 
 - LF-003: يلزم فحص بصري وفعلي لكل إطار على نسخة جهاز مطابقة؛ البث القديم لا يكفي.
-- LF-009: العدد محفوظ ومستقر بالمصدر؛ اكتمال cast وتحديث معرض مفتوح حالة مستقلة.
+- LF-009: العدد وتحديث المعرض وإعادة المحاولة اختُبرت بالمصدر والمعاينة؛ اكتمال كل cast خارجي وتحديث النسخة المثبتة غير مثبتين. [[sessions/2026-10-15-Gallery-Hydration-Repair]].
 - تسليم APNs، أذونات الصور، VoiceOver والأداء على الهاتف ليست مغلقة باختبارات Node.
 - ملفات الإصلاح SQL لا تثبت نشرها؛ لا تُشغّلها لتغيير لون حالة في هذه الصفحة.
 - المصدر المحلي لا يساوي IPA ولا TestFlight؛ آخر توجيه يمنع إنشاء نسخة جديدة.

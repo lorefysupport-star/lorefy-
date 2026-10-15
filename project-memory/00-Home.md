@@ -54,6 +54,7 @@ aliases: ["ذاكرة Lorefy", "ذاكرة المشروع"]
 
 ## سجل العمل والقوالب
 
+- [[sessions/2026-10-15-Gallery-Hydration-Repair|استكمال تحديث المعرض وإعادة المحاولة]]
 - [[sessions/2026-10-15-Obsidian-Research|البحث الرسمي والتحسينات المطبقة]]
 - [[sessions/2026-10-15-Source-Reorganization|آخر جلب وتنظيم وحالة التحقق الحالية]]
 - [[sessions/2026-10-15-GitHub-Sync|دمج إصلاحات التشغيل والقراءة]]
