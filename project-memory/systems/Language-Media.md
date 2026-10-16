@@ -22,6 +22,9 @@ aliases: ["عربي", "إنجليزي", "ترجمة", "صور", "مشاركة", 
 
 ## الفحص
 
+[[sessions/2026-10-16-Statistics-Locale]] يثبت ترجمة الإحصاءات في أول render
+مع اتجاه وأرقام اللغة الحالية، دون تمرير النصوص المخصصة إلى ترجمة DOM.
+
 [followers localization](../../tests/followers-localization.test.js)،
 [work detail language](../../tests/work-detail-language.test.js)،
 [reading diary language](../../tests/reading-diary-language.test.js)،

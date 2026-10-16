@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v468-reading-estimate';
+const CACHE = 'lorefy-v469-statistics-locale';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -23,7 +23,7 @@ const CORE = [
   './modules/lorefy-preview-readers.js?v=20261011-profile-sections-v1',
   './styles/lorefy-profile-sections.css?v=20261013-reviews-posts',
   './modules/lorefy-profile-sections.js?v=20261015-privacy-safety-v1',
-  './modules/lorefy-i18n.js?v=20261016-reading-estimate-v1',
+  './modules/lorefy-i18n.js?v=20261016-statistics-locale-v1',
   './',
   './index.html',
   './manifest.webmanifest',
@@ -75,7 +75,7 @@ const CORE = [
   './uploads/lorefy-catalog-quality.js?v=20261011-explore-v2',
   './modules/lorefy-bibliographic-overrides.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-character-system.js?v=20261003-beta-final-v1',
-  './modules/lorefy-v2.js?v=20261016-reading-estimate-v1',
+  './modules/lorefy-v2.js?v=20261016-statistics-locale-v1',
   './modules/lorefy-ui-runtime.js?v=20261015-github-sync-v1',
   './vendor/react.production.min.js',
   './vendor/react-dom.production.min.js',
@@ -121,7 +121,7 @@ const CORE = [
   './styles/lorefy-explore-studio.css?v=20261016-friend-rating-rows-v1',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1',
-  './uploads/files/lorefy-app.js?v=20261016-reading-estimate-v1',
+  './uploads/files/lorefy-app.js?v=20261016-statistics-locale-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',

@@ -4,6 +4,11 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest statistics-locale receipt: [[sessions/2026-10-16-Statistics-Locale]],
+base `9f972ae` plus LF-019: 1,272 passing tests; AR/EN 320px light and EN
+440px dark source previews. No installed-device update; calendar-day mapping
+remains [[bugs/LF-020-Statistics-Activity-Dates]].
+
 Latest estimate-copy receipt: [[sessions/2026-10-16-Reading-Estimate-Labels]],
 base `5c07689` plus LF-018: 1,265 passing source tests; owner/statistics at
 320px AR/EN and independent visitor fixture at 440px. No device update;
