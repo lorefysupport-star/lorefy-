@@ -139,7 +139,7 @@ html:root:root:root:root:root:root:root .lf-profile-page[data-profile-section]:n
 }
 .lf-profile-section-button svg { width: 18px; height: 18px; flex-shrink: 0; }
 .lf-profile-section-button:disabled { opacity: .4; cursor: default; }
-.lf-profile-section-button.is-icon { padding: 4px; width: 28px; min-height: 44px; background: transparent; }
+.lf-profile-section-button.is-icon { padding: 4px; width: 44px; min-height: 44px; background: transparent; }
 .lf-profile-section-button.is-back { background: transparent; margin-bottom: 10px; padding-inline: 0; }
 .lf-profile-section-button.is-destructive { background: transparent; color: var(--ui-danger,#dc3545); }
 .lf-profile-section-empty { color: var(--ui-muted); padding: 30px 8px; text-align: center; font-size: 13px; line-height: 1.8; }
@@ -217,9 +217,10 @@ html:root:root:root:root:root:root:root .lf-profile-page[data-profile-section]:n
 .lf-profile-list-options label { display: flex; align-items: center; gap: 8px; font-size: 12px; line-height: 1.5; }
 .lf-profile-list-options input { width: 18px; height: 18px; accent-color: var(--ui-action); }
 .lf-profile-ranked-list.is-editing { margin: 0; }
-.lf-profile-ranked-list.is-editing > li { grid-template-columns: 22px 36px minmax(0,1fr) 84px; gap: 6px; min-height: 78px; padding: 10px 0; }
+.lf-profile-ranked-list.is-editing > li { grid-template-columns: 22px 36px minmax(0,1fr) max-content; gap: 6px; min-height: 78px; padding: 10px 0; }
 .is-editing .lf-profile-list-image { width: 36px; height: 48px; }
-.lf-profile-rank-tools { display: flex; }
+.lf-profile-rank-tools { display: grid; grid-template-columns: repeat(3,44px); gap: 4px; }
+.lf-profile-rank-tools > button { box-sizing: border-box; min-width: 44px; }
 .lf-profile-ranked-list.is-editing strong { font-size: 12px; }
 .lf-profile-list-results { display: flex; flex-direction: column; gap: 4px; max-height: 330px; overflow-y: auto; overscroll-behavior: contain; }
 .lf-profile-list-results p { font-size: 13px; color: var(--ui-muted); padding: 8px; }
