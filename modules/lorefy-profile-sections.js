@@ -101,7 +101,7 @@
       syncPending:'Saved on this device. Cloud sync is pending.', older:'Older posts',
       unavailable:'Public lists are not available yet. The database update is required.',
       up:'Move up', down:'Move down', removeItem:'Remove item', limit:'Up to 50 entries per list',
-      add:'Add', selected:'Selected', noResults:'No results', count:'entries', newTitle:'New ranked list'
+      add:'Add', selected:'Selected', noResults:'No results', count:'entries', position:'Position', newTitle:'New ranked list'
     } : {
       tabs:['الرئيسية','القوائم','التغريدات'], navigation:'أقسام البروفايل', create:'قائمة جديدة', edit:'تعديل القائمة',
       name:'اسم القائمة', description:'الوصف', works:'أعمال', characters:'شخصيات', public:'ظاهرة للجميع',
@@ -113,7 +113,7 @@
       syncPending:'حُفظت على هذا الجهاز. المزامنة السحابية معلقة.', older:'تغريدات أقدم',
       unavailable:'القوائم العامة غير متاحة بعد. يلزم تفعيل تحديث قاعدة البيانات.',
       up:'رفع الترتيب', down:'خفض الترتيب', removeItem:'إزالة العنصر', limit:'حتى 50 عنصراً لكل قائمة',
-      add:'إضافة', selected:'محدد', noResults:'لا توجد نتائج', count:'عنصر', newTitle:'قائمة مرتبة جديدة'
+      add:'إضافة', selected:'محدد', noResults:'لا توجد نتائج', count:'عنصر', position:'الترتيب', newTitle:'قائمة مرتبة جديدة'
     };
   }
   const api = {KEY, account, normalizeFolders, foldersFor, saveFolder, deleteFolder, setFolderVisibility, moveItem, postsFor, profileEntries, labels};
@@ -285,22 +285,33 @@
     const workLabel = node('div',{class:'lf-profile-list-work-label'});
     let activeWork = null, cast = [], castBusy = false, generation = 0;
     function isEditing() { return current(state) && form.isConnected && editOwner === account(root.localStorage); }
-    function selectedRows() {
+    function selectedRows(focusIndex, action) {
       selected.replaceChildren();
       draft.items.forEach((item,index) => {
-        const up = button(t.up,'arrow-up',() => { draft.items=moveItem(draft.items,index,-1); selectedRows(); },'is-icon');
-        const down = button(t.down,'arrow-down',() => { draft.items=moveItem(draft.items,index,1); selectedRows(); },'is-icon');
+        function move(delta) {
+          draft.items=moveItem(draft.items,index,delta);
+          selectedRows(index+delta,delta<0?0:1);
+          status.textContent=item.name+' · '+t.position+' '+(index+delta+1)+' / '+draft.items.length;
+        }
+        const up = button(t.up+' · '+item.name,'arrow-up',() => move(-1),'is-icon');
+        const down = button(t.down+' · '+item.name,'arrow-down',() => move(1),'is-icon');
         up.disabled = index===0; down.disabled = index===draft.items.length-1;
         selected.appendChild(node('li',{},[node('span',{class:'lf-profile-list-rank',text:String(index+1)}),image(item),
           node('strong',{'data-no-translate':'true',dir:'auto',text:item.name}),
-          node('div',{class:'lf-profile-rank-tools'},[up,down,button(t.removeItem,'x',() => {
-            draft.items.splice(index,1); kind.disabled=draft.items.length>0; selectedRows(); searchResults();
+          node('div',{class:'lf-profile-rank-tools'},[up,down,button(t.removeItem+' · '+item.name,'x',() => {
+            draft.items.splice(index,1); kind.disabled=draft.items.length>0;
+            selectedRows(Math.min(index,draft.items.length-1),2); searchResults();
           },'is-icon')])
         ]));
       });
       kind.disabled = draft.items.length>0;
       status.textContent = draft.items.length+' / 50';
       hydrate(selected);
+      if (action != null) {
+        const row=selected.children[focusIndex], controls=row && row.querySelectorAll('button');
+        const control=controls && (controls[action].disabled ? controls[action===0?1:0] : controls[action]);
+        (control || search).focus();
+      }
     }
     function add(item) {
       if (draft.items.length >= 50) { status.textContent=t.limit; return; }

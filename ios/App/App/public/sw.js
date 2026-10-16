@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v470-statistics-activity';
+const CACHE = 'lorefy-v471-list-keyboard';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -22,7 +22,7 @@ const CORE = [
   './modules/lorefy-decoration-billing.js?v=20261011-shop',
   './modules/lorefy-preview-readers.js?v=20261011-profile-sections-v1',
   './styles/lorefy-profile-sections.css?v=20261013-reviews-posts',
-  './modules/lorefy-profile-sections.js?v=20261015-privacy-safety-v1',
+  './modules/lorefy-profile-sections.js?v=20261016-list-keyboard-v1',
   './modules/lorefy-i18n.js?v=20261016-statistics-activity-v1',
   './',
   './index.html',
