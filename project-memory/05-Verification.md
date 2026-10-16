@@ -4,6 +4,12 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest installed-device receipt: [[sessions/2026-10-16-Native-Touch-Audit]],
+existing Build 35. Actual mirror taps and swipes navigated profile, library,
+work/list details and import entry/exit; 13 local control/guard tests passed.
+No native build, installation, full source-suite rerun or live-data edit occurred.
+This does not close LF-002 or all-frame device QA.
+
 Latest source/browser receipt: [[sessions/2026-10-16-Review-Timestamp]], base
 `3451cc2` plus LF-017: 1,256 passing tests and AR/EN review date/time verified
 in isolated Chromium at 390x844. This does not certify a new installed iPhone app.

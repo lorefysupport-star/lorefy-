@@ -60,8 +60,9 @@ user-authored prose. Native verification remains separate for both changes.
   source repairs into the live app or mark hardware checks passed from Chromium.
 - Current device metadata later identified Build 35, with native streaming and
   element reading restored: [[sessions/2026-10-16-Native-Connection-Recovery]].
-  Keep the report's older version boundary historical; automatic tapping and
-  the masked header area are not certified.
+  Keep the report's older version boundary historical. The subsequent
+  [[sessions/2026-10-16-Native-Touch-Audit]] verifies actual HID tapping and
+  swiping on the local unmasked mirror, not installation of current repairs.
 - The mirror is loopback-only. Device images and raw account data remain outside
   the repository. Connection failure is not an application failure.
 - Keep unresolved work visible. This is a development backlog, not a certificate

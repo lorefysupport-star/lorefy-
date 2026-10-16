@@ -179,5 +179,9 @@ device verification remains separate. No new build is authorized.
 
 [[sessions/2026-10-16-Native-Connection-Recovery]] restores the physical stream
 and native element reading without the iTunes UI. Current installed version is
-Build 35, not the older Build 34 audit target. Automatic tapping did not produce
-a verified transition; no source repair is marked installed or hardware-passed.
+Build 35, not the older Build 34 audit target. The earlier accessibility activation
+did not produce a transition. It is superseded by the verified HID tap/swipe
+receipt in [[sessions/2026-10-16-Native-Touch-Audit]]: owner profile, library,
+work details, list details/end and import entry/exit were inspected read-only.
+The installed completed-status/progress discrepancy remains evidence for LF-002;
+no current source repair is marked installed or hardware-passed.
