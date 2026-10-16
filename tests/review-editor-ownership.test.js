@@ -81,3 +81,51 @@ test('the current editor still publishes and a current failure preserves its dra
   const failed=harness(),retry=failed.scope.publish();failed.reject(Error('Offline'));await retry;
   assert.deepEqual(failed.writes,['toast']);assert.equal(failed.scope.ct.current,'First draft');
 });
+
+function imageHarness() {
+  const h=harness(),readers=[],images=[],canvases=[],updates=[];
+  h.scope.FileReader=class { constructor(){readers.push(this);} readAsDataURL(file){this.file=file;this.result='data:fictional-input';} };
+  h.scope.Image=class { constructor(){images.push(this);this.width=1000;this.height=500;} };
+  h.scope.document={createElement:tag=>{
+    assert.equal(tag,'canvas');const canvas={width:0,height:0,getContext:()=>({drawImage(){}}),
+      toDataURL:(type,quality)=>{assert.equal(type,'image/jpeg');assert.equal(quality,0.72);return 'data:fictional-output';}};
+    canvases.push(canvas);return canvas;
+  }};
+  h.scope.ht=update=>updates.push(update);
+  const start=source.indexOf('Yn=t=>'),end=source.indexOf(',Uo=',start);
+  vm.runInContext('const '+source.slice(start,end)+';this.upload=Yn;',h.scope);
+  const input={files:[{name:'fictional.png'}],value:'selected'};
+  return {...h,readers,images,canvases,updates,input,begin:()=>h.scope.upload({target:input}),
+    reopen(){h.reopen();updates.length=0;}};
+}
+
+test('a FileReader completed after switching accounts does not start image decoding',()=>{
+  const h=imageHarness();h.begin();h.switchAccount();h.readers[0].onload();
+  assert.equal(h.images.length,0);assert.equal(h.updates.length,0);
+});
+
+for(const transition of ['account','replacement','closed']) {
+  test('late image decoding is ignored after editor transition: '+transition,()=>{
+    const h=imageHarness();h.begin();h.readers[0].onload();
+    if(transition==='account')h.switchAccount();
+    else if(transition==='replacement')h.reopen();
+    else h.scope.render().props.onClose();
+    h.images[0].onload();assert.equal(h.canvases.length,0);assert.equal(h.updates.length,0);
+  });
+}
+
+test('a queued image state update rechecks the editor before attaching',()=>{
+  const h=imageHarness();h.begin();h.readers[0].onload();h.images[0].onload();const update=h.updates[0];h.reopen();
+  const current=['new-editor-image'];assert.equal(update(current),current);
+});
+
+test('the current editor still resizes images and preserves the attachment cap',()=>{
+  const h=imageHarness();h.begin();h.readers[0].onload();h.images[0].onload();
+  assert.equal(h.input.value,'');assert.equal(h.canvases[0].width,560);assert.equal(h.canvases[0].height,280);
+  assert.deepEqual(Array.from(h.updates[0](['existing'])),['existing','data:fictional-output']);
+  const full=Array(10).fill('image');assert.equal(h.updates[0](full),full);
+});
+
+test('a stale retained upload action fails before reading a selected file',()=>{
+  const h=imageHarness();h.switchAccount();h.begin();assert.equal(h.readers.length,0);
+});

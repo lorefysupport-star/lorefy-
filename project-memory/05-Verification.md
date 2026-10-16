@@ -135,6 +135,11 @@ This becomes historical as soon as the source or environment changes.
 
 ## Completion gate
 
+2026-10-17 source repairs: [[sessions/2026-10-17-Review-Editor-Owner]] records
+1328 passing tests; [[sessions/2026-10-17-Review-Image-Owner]] records the later
+1335-test run (0 failures), matching selective web copies and local demo checks.
+These are source results, not installed-device or live-backend certification.
+
 Record the command, exit code, date, source commit and working-tree changes,
 actual result, evidence path and remaining limitations. Synchronize any changed
 runtime assets and compare source/generated hashes. A memory-only change does
