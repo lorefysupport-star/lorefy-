@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-16T09:04:17.440Z
-Source commit: 590bf33316fb606883fdcc20440e204406418b80
+Observed: 2026-10-16T09:14:42.007Z
+Source commit: 6708c2a75e461da87892a14f16d4c80b0222c480
 
 # Tests Source Inventory
 
@@ -16,6 +16,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [qa/community-polish-fixture.html](../../qa/community-polish-fixture.html) (2035 bytes)
 - [qa/connection-avatar-fixture.html](../../qa/connection-avatar-fixture.html) (2017 bytes)
 - [qa/custom-artwork-rls.sql](../../qa/custom-artwork-rls.sql) (2707 bytes)
+- [qa/diary-position-browser.cjs](../../qa/diary-position-browser.cjs) (3893 bytes)
 - [qa/frame-chrome-browser.cjs](../../qa/frame-chrome-browser.cjs) (8662 bytes)
 - [qa/friend-activity-layout-browser.cjs](../../qa/friend-activity-layout-browser.cjs) (5965 bytes)
 - [qa/full-audit-20261004/render-report.mjs](../../qa/full-audit-20261004/render-report.mjs) (7665 bytes)
@@ -173,6 +174,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/reading-diary-draft.test.js](../../tests/reading-diary-draft.test.js) (2536 bytes)
 - [tests/reading-diary-feedback.test.js](../../tests/reading-diary-feedback.test.js) (3101 bytes)
 - [tests/reading-diary-language.test.js](../../tests/reading-diary-language.test.js) (5896 bytes)
+- [tests/reading-diary-position.test.js](../../tests/reading-diary-position.test.js) (4904 bytes)
 - [tests/reading-diary.test.js](../../tests/reading-diary.test.js) (7331 bytes)
 - [tests/reading-metrics-stability.test.js](../../tests/reading-metrics-stability.test.js) (2595 bytes)
 - [tests/reading-session-ui.test.js](../../tests/reading-session-ui.test.js) (2410 bytes)

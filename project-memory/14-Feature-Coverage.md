@@ -53,3 +53,5 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 [[00-Home]] | [[08-Feature-Router]] | [[10-Open-Questions]] | [[12-Device-Repairs]]
 
 - LF-013: [[sessions/2026-10-16-Friend-Rating-Rows]]؛ محاذاة الاسم والدرجة في 80 حالة متصفح، دون اعتماد ذلك كفحص VoiceOver أو تثبيت جهاز.
+
+- LF-014: [[sessions/2026-10-16-Diary-Position-Defaults]]؛ 10 regressions وملاحظة صفحة محفوظة ومعاد تحميلها مع الحرق باللغتين في متصفح معزول. لا دليل تركيب على جهاز.

@@ -57,3 +57,6 @@ Clipboard يعلن فشلًا. بقاء النص محفوظًا سابقًا ل�
 
 [[decisions/Saved-Reading-Metrics]] | [[playbooks/Reading-Metrics]] |
 [[09-Data-Contracts]] | [[systems/Profiles-Lists]]
+
+## الافتراضي لا يحوّل التقدم
+[[sessions/2026-10-16-Diary-Position-Defaults]] تربط اختيار موضع الملاحظة بالتقدم الموجود ثم نوع العمل. الكتاب/الرواية يبدأ بصفحة عند غياب checkpoint؛ التعديل والمدخل الصريح والاختيار اليدوي محفوظة. لا أثر على تقدم القراءة أو قيم اليوميات القديمة.

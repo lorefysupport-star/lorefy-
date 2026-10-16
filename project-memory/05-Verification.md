@@ -4,6 +4,12 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest source/browser receipt: [[sessions/2026-10-16-Diary-Position-Defaults]],
+base 6708c2a plus LF-014: 1,246/1,246 passing tests. LF-013 also passed
+80 browser layout cases; Arabic/English diary page save, reload and spoiler
+reveal/hide passed in isolated demo contexts. No native build or device update.
+
+
 Latest source/browser receipt: [[sessions/2026-10-16-Character-Editor-Locale]],
 base `ac2285f` plus patch: 1,236 passing tests. Separately, the authorized single
 push has correlated APNs acceptance plus owner-confirmed outside-app receipt and

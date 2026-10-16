@@ -351,17 +351,19 @@
     }
     var existing = state.editing && core.anchor(state.editing);
     var currentProgress = snapshot().progress[select.value] || {};
-    var anchorType = existing ? existing.type : state.initialAnchor ? state.initialAnchor.type : (core.progressAt(currentProgress,'page') > 0 && !core.progressAt(currentProgress,'chapter') ? 'page' : 'chapter');
+    var anchorType = existing ? existing.type : state.initialAnchor ? state.initialAnchor.type : core.preferredAnchor(catalogWork(select.value),currentProgress);
+    var anchorChosen = !!(existing || state.initialAnchor);
     var placeLabel = node('div', 'lf-diary-label', text('موضع القراءة', 'Reading position'));
     var kinds = node('div', 'lf-diary-position-kinds');
     [['chapter', text('فصل', 'Chapter')], ['page', text('صفحة', 'Page')], ['volume', text('مجلد', 'Volume')]].forEach(function (choice) {
       var control = button('lf-diary-position-kind' + (anchorType === choice[0] ? ' is-active' : ''), choice[1], null, function () {
         anchorType = choice[0];
+        anchorChosen = true;
         kinds.querySelectorAll('button').forEach(function (item) { item.classList.toggle('is-active', item === control); item.setAttribute('aria-pressed', item === control ? 'true' : 'false'); });
         var progress = snapshot().progress[select.value] || {};
         position.value = String(core.progressAt(progress,anchorType) || '');
       });
-      control.textContent = choice[1]; control.setAttribute('aria-pressed', anchorType === choice[0] ? 'true' : 'false'); kinds.appendChild(control);
+      control.textContent = choice[1]; control.setAttribute('data-anchor-type',choice[0]); control.setAttribute('aria-pressed', anchorType === choice[0] ? 'true' : 'false'); kinds.appendChild(control);
     });
     kinds.setAttribute('role', 'group'); kinds.setAttribute('aria-label', text('نوع موضع القراءة', 'Reading position type'));
     placeLabel.appendChild(kinds);
@@ -369,7 +371,17 @@
     position.placeholder = text('رقم الموضع', 'Position number'); position.setAttribute('aria-label', text('رقم الفصل أو الصفحة أو المجلد', 'Chapter, page or volume number'));
     position.value = existing ? (existing.value || '') : state.initialAnchor ? state.initialAnchor.value : (core.progressAt(currentProgress,anchorType) || '');
     placeLabel.appendChild(position); form.appendChild(placeLabel);
-    select.addEventListener('change', function () { var progress = snapshot().progress[select.value] || {}; position.value = String(core.progressAt(progress,anchorType) || ''); });
+    select.addEventListener('change', function () {
+      var progress = snapshot().progress[select.value] || {};
+      if (!anchorChosen) {
+        anchorType = core.preferredAnchor(catalogWork(select.value),progress);
+        kinds.querySelectorAll('button').forEach(function (control) {
+          var active = control.getAttribute('data-anchor-type') === anchorType;
+          control.classList.toggle('is-active',active); control.setAttribute('aria-pressed',active ? 'true' : 'false');
+        });
+      }
+      position.value = String(core.progressAt(progress,anchorType) || '');
+    });
     var quoteLabel = node('label', 'lf-diary-label lf-diary-quote-label', text('المقطع الذي تريد الاحتفاظ به', 'A passage to keep'));
     var quote = node('textarea', 'lf-diary-textarea lf-diary-quote-input');
     quote.maxLength = 280; quote.required = state.composeKind === 'quote'; quote.rows = 3;

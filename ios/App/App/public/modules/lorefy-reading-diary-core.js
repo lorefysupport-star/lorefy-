@@ -15,6 +15,14 @@
     return progressAt(value, 'chapter');
   }
 
+  function preferredAnchor(work, progress) {
+    // A saved checkpoint takes precedence; changing defaults never converts it.
+    if (progressAt(progress, 'chapter')) return 'chapter';
+    if (progressAt(progress, 'page')) return 'page';
+    if (progressAt(progress, 'volume')) return 'volume';
+    return /^(Book|Novel|كتاب|رواية)$/i.test(String(work && work.type || '').trim()) ? 'page' : 'chapter';
+  }
+
   function transitions(before, after, at) {
     var oldLibrary = before && before.library || {};
     var newLibrary = after && after.library || {};
@@ -171,7 +179,7 @@
       .slice(0, 300);
   }
 
-  return { progressAt:progressAt, transitions: transitions, merge: merge, anchor: anchor, canReveal: canReveal, quoteEntry: quoteEntry, communityQuote: communityQuote, shareText: shareText,
+  return { progressAt:progressAt, preferredAnchor:preferredAnchor, transitions: transitions, merge: merge, anchor: anchor, canReveal: canReveal, quoteEntry: quoteEntry, communityQuote: communityQuote, shareText: shareText,
     startSession: startSession, sessionElapsed: sessionElapsed, pauseSession: pauseSession, resumeSession: resumeSession,
     finishSession: finishSession, sumSessionMs: sumSessionMs, durationLabel: durationLabel, clockTime: clockTime };
 });
