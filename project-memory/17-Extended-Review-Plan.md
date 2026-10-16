@@ -48,8 +48,9 @@ This implements the review's contrast/accessibility requirement in an existing
 workflow; it does not claim a completed import or cloud synchronization test.
 
 [[bugs/LF-016-Review-Reply-Direction]] then corrected the English review input's
-forced RTL direction while retaining Arabic RTL. Dates and user-authored language
-are separate paths; review-date localization still needs a targeted repair.
+forced RTL direction while retaining Arabic RTL. [[bugs/LF-017-Review-Timestamp]]
+subsequently localized review date/time from the raw timestamp without translating
+user-authored prose. Native verification remains separate for both changes.
 
 ## Evidence Rules
 

@@ -364,5 +364,15 @@
       error:en?'Could not update follow status':'تعذر تحديث المتابعة'
     };
   }
-  return {messages:messages,translate:translate,textNode:textNode,attributes:attributes,connections:connections};
+  function reviewTimestamp(value, lang) {
+    var locale = lang === 'en' ? 'en' : 'ar';
+    var missing = locale === 'en' ? 'Date unavailable' : '\u0627\u0644\u062a\u0627\u0631\u064a\u062e \u063a\u064a\u0631 \u0645\u062a\u0627\u062d';
+    if (typeof value !== 'number' && typeof value !== 'string') return missing;
+    if (typeof value === 'string' && !value.trim()) return missing;
+    var date = new Date(value);
+    if (!Number.isFinite(date.getTime())) return missing;
+    return date.toLocaleDateString(locale, { day:'numeric', month:'long', year:'numeric' })
+      + ' \u00b7 ' + date.toLocaleTimeString(locale, { hour:'2-digit', minute:'2-digit' });
+  }
+  return {messages:messages,translate:translate,textNode:textNode,attributes:attributes,connections:connections,reviewTimestamp:reviewTimestamp};
 });

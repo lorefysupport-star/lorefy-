@@ -4,6 +4,10 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest source/browser receipt: [[sessions/2026-10-16-Review-Timestamp]], base
+`3451cc2` plus LF-017: 1,256 passing tests and AR/EN review date/time verified
+in isolated Chromium at 390x844. This does not certify a new installed iPhone app.
+
 Latest source/browser receipt: [[sessions/2026-10-16-Review-Reply-Direction]],
 base `7907d05` plus LF-016: 1,250/1,250 passing tests; EN/440px and AR/320px
 reply input direction verified without submitting replies. Native keyboard,
