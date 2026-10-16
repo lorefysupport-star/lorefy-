@@ -30,7 +30,7 @@ merely because they appear in this reference.
 | Priority | Outcome and existing owner | Current evidence / next acceptance gate |
 | --- | --- | --- |
 | P0 | Friend rating rows: `styles/lorefy-explore-studio.css`, `modules/lorefy-friend-activity.js` | Incoming [[bugs/LF-013-Friend-Rating-Rows]] already addresses layout. Recheck real device later; do not round 2.75 or replace scores. |
-| P0 | Independent reading status, checkpoint and review: [[systems/Reading-Library]] | Existing stability/ownership repairs are relevant, not full acceptance. Verify wishlist without review, removing only a rating, explicit zero, reload and account switch in isolated data. |
+| P0 | Independent reading status, checkpoint and review: [[systems/Reading-Library]] | [[bugs/LF-024-Review-Progress-Independence]] removes publication's direct completion side effect and verifies explicit states/zero/reload. Review-only legacy seeding, removing only a rating and async account switching remain separate gates. |
 | P0 | Book/novel/comics metadata: [[systems/Catalog-Search]] | Needs a reproducible per-shelf sample and source provenance. Missing description, fallback cover and edition identity are separate facts; do not fabricate descriptions or merge by title alone. |
 | P0 | Durable saving and visibility: [[09-Data-Contracts]] | Keep drafts on recoverable failure, show failure, read back state, reject stale-account responses. Private-list visitor checks require a controlled second-account fixture, not owner UI alone. |
 | P1 | Arabic aliases, typo search and editions: [[systems/Catalog-Search]] | Build a fixed AR/EN query set with correct names, typos, absent matches and provider failure. Keep edition selection explicit. |

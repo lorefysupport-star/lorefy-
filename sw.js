@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v473-home-checkpoint';
+const CACHE = 'lorefy-v474-review-progress';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -121,7 +121,7 @@ const CORE = [
   './styles/lorefy-explore-studio.css?v=20261016-friend-rating-rows-v1',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1',
-  './uploads/files/lorefy-app.js?v=20261016-home-checkpoint-v1',
+  './uploads/files/lorefy-app.js?v=20261016-review-progress-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
