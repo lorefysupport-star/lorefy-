@@ -35,7 +35,8 @@ test("home continuation requires active reading status and a real saved stop poi
   assert.notEqual(homeStart, -1);
   const home = app.slice(homeStart, homeStart + 30000);
 
-  assert.match(home, /pe=Object\.entries\(b\)\.filter\(\(\[,k\]\)=>k===STATUS_READING&&hasSavedProgress\(le\[k\]\)\)/);
+  assert.match(home, /pe=Object\.entries\(b\)\.filter\(\(\[k,status\]\)=>status===STATUS_READING&&hasSavedProgress\(le\[k\]\)\)/);
+  assert.doesNotMatch(home, /\(\[,k\]\)=>k===STATUS_READING&&hasSavedProgress\(le\[k\]\)/);
   assert.match(home, /w=pe\.slice\(0,4\)/);
   assert.match(home, /w\.length>0&&React\.createElement\("section",\{className:"lf-continue-section"\}/);
   assert.doesNotMatch(home, /w=\(pe\.length\?pe:g\)/);
