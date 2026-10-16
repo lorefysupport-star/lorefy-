@@ -51,6 +51,7 @@
     var errorState = R.useState(''), error = errorState[0], setError = errorState[1];
     var host = R.useRef(null), closeButton = R.useRef(null), busyRef = R.useRef(false);
     var limit = p.premium ? 4000 : 750;
+    var isCurrent = function () { return !p.isCurrent || p.isCurrent(); };
     var icon = function (name, props) { return p.icons[name] ? h(p.icons[name], Object.assign({size:18, 'aria-hidden':true}, props || {})) : null; };
     var label = function (value) { return root.LorefyI18n ? root.LorefyI18n.translate(value, p.language) : value; };
     R.useEffect(function () {
@@ -84,11 +85,11 @@
         h('div',{className:'lf-rating-scale-labels','aria-hidden':true},[0,1,2,3,4,5].map(function(n){return h('span',{key:n},String(n));})));
     }
     async function publish() {
-      if (busyRef.current || !canPublish(p.rating)) return;
+      if (!isCurrent() || busyRef.current || !canPublish(p.rating)) return;
       busyRef.current = true; setBusy(true); setError('');
-      try { if (await p.onPublish() === false) setError(w.failure); }
-      catch (e) { setError(w.failure); }
-      finally { busyRef.current = false; setBusy(false); }
+      try { if (await p.onPublish() === false && isCurrent()) setError(w.failure); }
+      catch (e) { if (isCurrent()) setError(w.failure); }
+      finally { busyRef.current = false; if (isCurrent()) setBusy(false); }
     }
     function optionalTitle(title) { return h('summary', null, h('span', null, title), h('small', null, w.optional)); }
     return h('div', {className:'nc-fade lf-review-editor-overlay', 'data-no-translate':'1', dir:english ? 'ltr' : 'rtl'},
@@ -106,13 +107,13 @@
           }))),
           h('section', {className:'lf-rating-writing'},
             h('label', {htmlFor:'lf-rating-text'}, w.review, h('small', null, w.optional)),
-            h('textarea', {id:'lf-rating-text', dir:'auto', rows:3, value:text, placeholder:w.placeholder, maxLength:limit, onChange:function (event) { p.textRef.current = event.target.value; setText(event.target.value); }}),
+            h('textarea', {id:'lf-rating-text', dir:'auto', rows:3, value:text, placeholder:w.placeholder, maxLength:limit, onChange:function (event) { if (!isCurrent()) return; p.textRef.current = event.target.value; setText(event.target.value); }}),
             h('div', {className:'lf-rating-writing-meta'}, h('label', {className:'lf-rating-spoiler'}, h('input', {type:'checkbox', checked:p.spoiler, onChange:function (event) { p.onSpoiler(event.target.checked); }}), w.spoiler), h('span', {dir:'ltr'}, text.length+' / '+limit))),
           h('details', {className:'lf-rating-details'}, optionalTitle(w.details), h('div', {className:'lf-rating-metrics'}, p.fields.map(function (field) {
             return h('div', {key:field.k, className:'lf-rating-metric'}, h('div', null, h('span', null, label(field.l)), h('output', null, p.ratings[field.k] ? Number(p.ratings[field.k]).toFixed(2) : '—')), feathers(p.ratings[field.k] || 0, function (value) { p.onMetric(field.k,value); },label(field.l)));
           }))),
           h('details', {className:'lf-rating-extras'}, optionalTitle(w.extras),
-            h('label', {htmlFor:'lf-rating-moment'}, w.moment), h('textarea', {id:'lf-rating-moment', dir:'auto', rows:2, value:moment, maxLength:1000, placeholder:w.momentPlaceholder, onChange:function (event) { p.momentRef.current = event.target.value; setMoment(event.target.value); }}),
+            h('label', {htmlFor:'lf-rating-moment'}, w.moment), h('textarea', {id:'lf-rating-moment', dir:'auto', rows:2, value:moment, maxLength:1000, placeholder:w.momentPlaceholder, onChange:function (event) { if (!isCurrent()) return; p.momentRef.current = event.target.value; setMoment(event.target.value); }}),
             h('div', {className:'lf-rating-images'}, h('p', null, w.images), p.images.map(function (url,index) { return h('div', {key:index}, h('img', {src:url, alt:''}), h('button', {type:'button', 'aria-label':w.remove, onClick:function () { p.onRemoveImage(index); }}, icon('X'))); }),
               p.premium && p.images.length < 10 ? h('label', {className:'lf-rating-attach'}, icon('Plus'), h('span', null, w.attach), h('input', {type:'file', accept:'image/*', onChange:p.onUpload})) : !p.premium && h('button', {type:'button', onClick:p.onPaywall}, icon('Lock'), w.premium)),
             h('div', {className:'lf-rating-ranking', 'data-lf-review-ranking':'', 'aria-label':w.characters}))),

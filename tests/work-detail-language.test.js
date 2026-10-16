@@ -21,13 +21,15 @@ function render(lang, options = {}) {
     isOngoingWork:() => true, legalCoverOf:() => '', I:() => '', _:() => 4,
     ratingSourceLabel:() => '', synopsisFor:() => 'نص المصدر العربي', recommendationEligible:() => true,
     workById:() => null, T(){}, R(){}, er(){}, xe(){}, ot(){}, D(){}, we:key => calls.push(key),
-    dt:value => calls.push(value), no(){}, ct:{}, pt:{}, ht(){}, ro(){}, io(){}, Se:value => calls.push(value),
-    window:{LorefyI18n:i18n, LorefyCatalogIdentity:{relatedWorks:() => []},
+    dt:value => calls.push(value), no(){}, ct:{}, pt:{}, reviewEditor:{current:null}, ht(){}, ro(){}, io(){}, Se:value => calls.push(value),
+    window:{localStorage:{getItem:key=>key==='lorefy.activeUser.v1'?'reader':null},LorefyI18n:i18n, LorefyCatalogIdentity:{relatedWorks:() => []},
       LorefyWorkRelations:{Section:() => null}, LorefyDesignSystem:{subtitle:() => ''},
       LorefyWorkIdentity:() => null, LorefySavedReviewDraft:() => ({rating:3,text:'keep',moment:'moment'})},
     React:{createElement:(type,props,...children) => ({type,props:props || {},children})}};
   for (const icon of ['ChevronRight','ChevronLeft','Share2','Bell','BookOpen','ImageIcon','Users','Globe','BookMarked','SBadge','PBar','Av','Stars']) scope[icon] = icon;
   scope.progressSummary = helper('progressSummary','completedProgressFor',scope);
+  const guard=app.indexOf('function lorefyReviewRequestScope(');
+  vm.runInNewContext(app.slice(guard,app.indexOf('const{useState',guard)),scope);
   const start = app.indexOf('ar=()=>'), end = app.indexOf(',catalogSearchStatus=',start);
   vm.runInNewContext('const ' + app.slice(start,end) + ';this.render = ar;',scope);
   const nodes = [];

@@ -40,7 +40,7 @@ test('the app directly mounts the focused editor and does not erase a manual rat
   const source = fs.readFileSync(path.join(root, 'uploads/files/lorefy-app.js'), 'utf8');
   assert.match(source, /React\.createElement\(window\.LorefyReviewComposer/);
   assert.doesNotMatch(source, /t\.every\(r=>r>0\)\?dt\([^;]+:dt\(0\)/);
-  assert.match(source, /onPublish:tr/);
+  assert.match(source, /onPublish:guard\(tr\)/);
 });
 
 test('the new editor is included in the runtime, with fixed footer and theme tokens', () => {
@@ -93,6 +93,28 @@ test('writing updates the existing draft refs and preserves English text', () =>
   textarea.attributes.onChange({target:{value:'An honest review in English.'}});
   assert.equal(ref.current,'An honest review in English.');
   assert.equal(textarea.attributes.dir,'auto');
+});
+
+test('a stale composer cannot overwrite shared text refs or submit a new editor', async () => {
+  let current=true, calls=0;
+  const textRef={current:'New draft'},momentRef={current:'New moment'};
+  const model=rendered({textRef,momentRef,isCurrent:()=>current,onPublish:async()=>{calls++;}});
+  current=false;
+  find(model.tree,n=>n.attributes.id==='lf-rating-text').attributes.onChange({target:{value:'Old text'}});
+  find(model.tree,n=>n.attributes.id==='lf-rating-moment').attributes.onChange({target:{value:'Old moment'}});
+  const footer=find(model.tree,n=>n.attributes.className==='lf-rating-footer');
+  await find(footer,n=>n.type==='button').attributes.onClick();
+  assert.equal(textRef.current,'New draft');assert.equal(momentRef.current,'New moment');
+  assert.equal(calls,0);assert.deepEqual(model.states,[]);
+});
+
+test('an obsolete composer does not set local state after its request settles',async()=>{
+  let current=true,finish;
+  const model=rendered({isCurrent:()=>current,onPublish:()=>new Promise(resolve=>{finish=resolve;})});
+  const footer=find(model.tree,n=>n.attributes.className==='lf-rating-footer');
+  const request=find(footer,n=>n.type==='button').attributes.onClick();
+  current=false;model.states.length=0;finish(false);await request;
+  assert.deepEqual(model.states,[]);
 });
 
 test('rating uses a labelled native slider with visible quarter-step values', () => {

@@ -26,6 +26,7 @@ function harness(action) {
   vm.createContext(scope);
   const guardStart=source.indexOf('function lorefyReviewRequestScope(');
   if(guardStart>=0) vm.runInContext(source.slice(guardStart,source.indexOf('const{useState',guardStart)),scope);
+  scope.reviewEditor={current:{owner:scope.lorefyReviewRequestScope(),workId:'work',id:1,closed:false}};
   const start=source.indexOf({publish:'tr=async()=>',remove:'qo=async t=>',reply:'Ko=async(t,r,o)=>'}[action]);
   const end=source.indexOf({publish:',qo=async',remove:',or=()=>',reply:',Jo=t=>'}[action],start);
   assert.ok(start>=0 && end>start);

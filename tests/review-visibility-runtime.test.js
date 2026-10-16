@@ -87,6 +87,7 @@ test('publishing a review preserves reviews by other authors for the same work',
   const guardStart=app.indexOf('function lorefyReviewRequestScope(');
   assert.ok(guardStart>=0);
   vm.runInContext(app.slice(guardStart,app.indexOf('const{useState',guardStart)),scope);
+  scope.reviewEditor={current:{owner:scope.lorefyReviewRequestScope(),workId:'hunter',id:1,closed:false}};
   vm.runInContext('var '+app.slice(start,end)+';',scope);await scope.tr();
   assert.ok(reviews.some(r=>r.userId==='other'));
   assert.equal(reviews.filter(r=>r.userId==='me'&&r.mid==='hunter').length,1);

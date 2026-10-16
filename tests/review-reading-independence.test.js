@@ -21,6 +21,7 @@ function harness(status, saved = {chapter:12,page:30,volume:1,note:'My checkpoin
   vm.createContext(scope);
   const guardStart=source.indexOf('function lorefyReviewRequestScope(');
   if(guardStart>=0)vm.runInContext(source.slice(guardStart,source.indexOf('const{useState',guardStart)),scope);
+  scope.reviewEditor={current:{owner:scope.lorefyReviewRequestScope(),workId:'work',id:1,closed:false}};
   const completion = source.slice(source.indexOf('Zn=t=>'), source.indexOf(';useEffect(',source.indexOf('Zn=t=>')));
   const start = source.indexOf('tr=async()=>');
   vm.runInContext('const '+completion+';const '+source.slice(start,source.indexOf(',qo=async',start))+';this.publish=tr;',scope);
@@ -51,6 +52,7 @@ test('publishing a review preserves an explicit zero instead of capturing provid
 test('failed publication keeps the review draft, status and progress for retry', async () => {
   const h=harness('توقف'), before=h.state();
   h.scope.window.LorefyBackend={mode:'live',publishReview:async()=>{throw Error('Offline');}};
+  h.scope.reviewEditor.current.owner=h.scope.lorefyReviewRequestScope();
   assert.equal(await h.scope.publish(),false);
   assert.deepEqual(h.state(),before);
   assert.equal(h.scope.ct.current,'My review');
