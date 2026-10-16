@@ -2493,7 +2493,7 @@
       el("strong", { class: "lf-wr-hero-num", text: String(s.chapters) }),
       el("span", { class: "lf-wr-hero-unit", text: "فصلاً قرأتها هذه السنة" }),
       el("div", { class: "lf-wr-hero-meta" }, [
-        el("span", { text: "≈ " + s.hours + " ساعة قراءة" }),
+        el("span", { text: "≈ " + s.hours + " ساعات تقديرية" }),
         el("span", { text: s.streak + " يوم قراءة متواصل" })
       ])
     ]));
@@ -3380,7 +3380,7 @@
     var summaryGrid = el("div", { class: "lf-public-profile-reading-summary-grid" });
     [
       [publicProfileFavoriteType(profile), "النوع المفضل"],
-      [Number(profile.read_hours) || 0, "ساعة قراءة"],
+      [Number(profile.read_hours) || 0, "ساعات تقديرية"],
       [Number(profile.total_chapters) || 0, "فصل"],
       [Number(profile.completed_count) || 0, "مكتملة"]
     ].forEach(function (entry) {

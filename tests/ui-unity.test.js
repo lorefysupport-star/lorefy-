@@ -28,8 +28,12 @@ test('updated UI assets use fresh cache keys', () => {
   assert.match(html, /lorefy-apple-ui\.css\?v=20260925-ui-coherence-v1/);
   assert.match(html, /lorefy-cinema-ui\.css\?v=20261003-appearance-feather-v2/);
   assert.match(html, /lorefy-community\.css\?v=20261009-public-appearance-v4/);
-  assert.match(html, /lorefy-growth-features\.js\?v=20261016-import-ui-v1/);
-  assert.ok(read('sw.js').includes('modules/lorefy-growth-features.js?v=20261016-import-ui-v1'));
+  for (const asset of ['modules/lorefy-growth-features.js', 'modules/lorefy-i18n.js',
+    'modules/lorefy-v2.js', 'modules/lorefy-public-profile.js', 'uploads/files/lorefy-app.js']) {
+    const versioned = asset + '?v=20261016-reading-estimate-v1';
+    assert.ok(html.includes(versioned), asset + ' entry cache key');
+    assert.ok(read('sw.js').includes(versioned), asset + ' service worker cache key');
+  }
 });
 
 test('thread body fills available height and its posts are unframed rows', () => {

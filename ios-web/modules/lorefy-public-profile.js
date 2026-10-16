@@ -208,7 +208,7 @@
             ['MessagesSquare', Number(profile.post_count) || 0, 'منشور'],
             ['BookMarked', Number(profile.completed_count) || 0, 'مكتملة'],
             ['BookOpen', Number(profile.total_chapters) || 0, 'فصل'],
-            ['Clock', Number(profile.read_hours) || 0, 'ساعة قراءة'],
+            ['Clock', Number(profile.read_hours) || 0, 'ساعات تقديرية'],
             ['Heart', favoriteTypeLabel, 'النوع المفضل']
           ].map(([symbol, value, label]) => {
             const isPosts = symbol === 'MessagesSquare';

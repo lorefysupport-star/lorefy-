@@ -198,6 +198,9 @@
     'المتابعة باستخدام Google':'Continue with Google', 'المتابعة باستخدام Apple':'Continue with Apple',
     'تبديل المظهر':'Toggle appearance', 'الحسابات التي أتابعها':'Following accounts',
     'الحسابات التي تتابعني':'Followers', 'فصل':'chapters', 'ساعة قراءة':'reading hours',
+    'ساعات تقديرية':'Estimated hours', 'ساعة تقديرية':'Estimated hour',
+    'من التقدم المحفوظ':'From saved progress', 'كيف يُحسب التقدير؟':'How is this estimated?',
+    'تقدير تراكمي من التقدم المحفوظ، وليس مؤقّت قراءة. لكل عمل: الفصل × 12 دقيقة؛ وإلا الصفحة × 1.5 دقيقة؛ وإلا المجلد × 90 دقيقة. لا تُجمع الوحدات لنفس العمل، ويُقرّب الوقت الموجب إلى ساعات كاملة بحد أدنى ساعة.':'Cumulative estimate from saved progress, not a reading timer. Per work: chapters x 12 minutes; otherwise pages x 1.5 minutes; otherwise volumes x 90 minutes. Units are not added together for the same work. Positive time is rounded to whole hours with a minimum of one hour.',
     'اختر الأعمال التي تحبها':'Choose your favorite works', 'تعديل الشخصيات المفضلة':'Edit favorite characters',
     'اختر شخصياتك المفضلة':'Choose your favorite characters', 'النشاط الأخير':'Recent activity',
     'آخر تفاعل محفوظ':'Last saved activity', 'لا يوجد نشاط حديث بعد':'No recent activity yet',
@@ -286,6 +289,7 @@
       .replace(/^(\d+) يوم نشاط$/, '$1 active days')
       .replace(/^(\d+) يوم توالي$/, '$1-day streak')
       .replace(/^≈ (\d+) ساعة$/, '≈ $1 hours')
+      .replace(/^≈ (\d+) ساعات تقديرية$/, function (_,n) { return '≈ ' + n + (Number(n) === 1 ? ' estimated hour' : ' estimated hours'); })
       .replace(/^(\d+) صفحة$/, '$1 pages')
       .replace(/^قيّمت (\d+) من (\d+)$/, 'Rated $1 of $2')
       .replace(/^شخصية (\d+)$/, 'Character $1')

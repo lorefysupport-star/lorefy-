@@ -67,7 +67,7 @@
     var gold = C.gold || "#FF9500";
 
     var metrics = [
-      { label: "\u0633\u0627\u0639\u0629 \u0642\u0631\u0627\u0621\u0629", value: ctx.readHours, Icon: Icons.Clock, color: accent },
+      { label: "\u0633\u0627\u0639\u0627\u062A \u062A\u0642\u062F\u064A\u0631\u064A\u0629", value: ctx.readHours, Icon: Icons.Clock, color: accent },
       { label: "\u0639\u0645\u0644 \u0645\u0643\u062A\u0645\u0644", value: totals.totalRead, Icon: Icons.BookMarked, color: green },
       { label: "\u0641\u0635\u0644 \u0645\u0642\u0631\u0648\u0621", value: totals.totalChRead, Icon: Icons.BookOpen, color: blue },
       { label: "\u0645\u0631\u0627\u062C\u0639\u0629", value: totals.reviewCount, Icon: Icons.MessageCircle, color: gold }
@@ -103,8 +103,8 @@
       },
         h("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginBottom: 14 } },
           h("div", null,
-            h("p", { style: { margin: 0, color: sub, fontSize: 11.5, fontWeight: 700 } }, "\u0647\u0630\u0627 \u0627\u0644\u0639\u0627\u0645"),
-            h("p", { style: { margin: "4px 0 0", fontSize: 29, fontWeight: 900, lineHeight: 1, fontVariantNumeric: "tabular-nums" } }, format(ctx.readHours), " ", h("span", { style: { color: sub, fontSize: 12, fontWeight: 700 } }, "\u0633\u0627\u0639\u0629"))
+            h("p", { style: { margin: 0, color: sub, fontSize: 11.5, fontWeight: 700 } }, "\u0645\u0646 \u0627\u0644\u062A\u0642\u062F\u0645 \u0627\u0644\u0645\u062D\u0641\u0648\u0638"),
+            h("p", { style: { margin: "4px 0 0", fontSize: 29, fontWeight: 900, lineHeight: 1, fontVariantNumeric: "tabular-nums" } }, format(ctx.readHours), " ", h("span", { style: { color: sub, fontSize: 12, fontWeight: 700 } }, "\u0633\u0627\u0639\u0627\u062A \u062A\u0642\u062F\u064A\u0631\u064A\u0629"))
           ),
           h("span", { style: { display: "inline-flex", alignItems: "center", gap: 6, background: accentSoft, color: accent, borderRadius: 16, padding: "7px 10px", fontSize: 11, fontWeight: 800 } }, icon(Icons.Sparkles, accent, 14), "Premium")
         ),
@@ -113,10 +113,14 @@
             h("span", { style: { width: 34, height: 34, borderRadius: 17, background: metric.color + "18", display: "grid", placeItems: "center" } }, icon(metric.Icon, metric.color, 16)),
             h("span", { style: { minWidth: 0 } },
               h("strong", { style: { display: "block", fontSize: 18, lineHeight: 1, fontVariantNumeric: "tabular-nums" } }, format(metric.value)),
-              h("small", { style: { display: "block", color: sub, fontSize: 9.5, marginTop: 5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, metric.label)
+              h("small", { style: { display: "block", color: sub, fontSize: 9.5, lineHeight: 1.4, marginTop: 5, whiteSpace: "normal", overflowWrap: "anywhere" } }, metric.label)
             )
           );
-        }))
+        })),
+        h("details", { "data-reading-estimate": true, dir: "auto", style: { marginTop: 12, color: sub, fontSize: 12, lineHeight: 1.7 } },
+          h("summary", { style: { minHeight: 44, padding: "10px 0", cursor: "pointer", color: text, fontWeight: 700 } }, "\u0643\u064A\u0641 \u064A\u064F\u062D\u0633\u0628 \u0627\u0644\u062A\u0642\u062F\u064A\u0631\u061F"),
+          h("p", { style: { margin: "0 0 4px", overflowWrap: "anywhere" } }, "\u062A\u0642\u062F\u064A\u0631 \u062A\u0631\u0627\u0643\u0645\u064A \u0645\u0646 \u0627\u0644\u062A\u0642\u062F\u0645 \u0627\u0644\u0645\u062D\u0641\u0648\u0638\u060C \u0648\u0644\u064A\u0633 \u0645\u0624\u0642\u0651\u062A \u0642\u0631\u0627\u0621\u0629. \u0644\u0643\u0644 \u0639\u0645\u0644: \u0627\u0644\u0641\u0635\u0644 \u00D7 12 \u062F\u0642\u064A\u0642\u0629\u061B \u0648\u0625\u0644\u0627 \u0627\u0644\u0635\u0641\u062D\u0629 \u00D7 1.5 \u062F\u0642\u064A\u0642\u0629\u061B \u0648\u0625\u0644\u0627 \u0627\u0644\u0645\u062C\u0644\u062F \u00D7 90 \u062F\u0642\u064A\u0642\u0629. \u0644\u0627 \u062A\u064F\u062C\u0645\u0639 \u0627\u0644\u0648\u062D\u062F\u0627\u062A \u0644\u0646\u0641\u0633 \u0627\u0644\u0639\u0645\u0644\u060C \u0648\u064A\u064F\u0642\u0631\u0651\u0628 \u0627\u0644\u0648\u0642\u062A \u0627\u0644\u0645\u0648\u062C\u0628 \u0625\u0644\u0649 \u0633\u0627\u0639\u0627\u062A \u0643\u0627\u0645\u0644\u0629 \u0628\u062D\u062F \u0623\u062F\u0646\u0649 \u0633\u0627\u0639\u0629.")
+        )
       ),
 
       h("section", {

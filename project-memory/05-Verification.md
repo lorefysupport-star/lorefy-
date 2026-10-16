@@ -4,6 +4,11 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest estimate-copy receipt: [[sessions/2026-10-16-Reading-Estimate-Labels]],
+base `5c07689` plus LF-018: 1,265 passing source tests; owner/statistics at
+320px AR/EN and independent visitor fixture at 440px. No device update;
+remaining statistics localization is [[bugs/LF-019-Statistics-Locale]].
+
 Latest installed-device receipt: [[sessions/2026-10-16-Native-Touch-Audit]],
 existing Build 35. Actual mirror taps and swipes navigated profile, library,
 work/list details and import entry/exit; 13 local control/guard tests passed.

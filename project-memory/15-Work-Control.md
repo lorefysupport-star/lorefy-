@@ -61,3 +61,6 @@ path:bugs [status:open OR needs-device OR needs-service]
 - [[bugs/LF-016-Review-Reply-Direction]]: اتجاه حقل الرد يتبع اللغة؛ تاريخ المراجعة مسار مستقل لم يُصلح بهذه الدفعة.
 
 - [[bugs/LF-017-Review-Timestamp]]: التاريخ والوقت يتبعان لغة الواجهة؛ القيم المخزنة ونصوص القارئ لا تتغير.
+
+- [[bugs/LF-018-Reading-Estimate-Labels]]: الساعات موصوفة كتقدير من التقدم المحفوظ، دون تغيير الأرقام.
+- [[bugs/LF-019-Statistics-Locale]]: استكمال ترجمة واتجاه بقية صفحة الإحصاءات؛ ملاحظة مؤكدة في المتصفح.
