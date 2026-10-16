@@ -56,8 +56,12 @@ user-authored prose. Native verification remains separate for both changes.
 
 - Develop canonical source, synchronize only affected existing web assets, then
   verify before committing and pushing each independent repair.
-- Installed Build 34 and current source are separate test targets. Do not inject
+- Historical Build 34, the installed build and current source are separate test targets. Do not inject
   source repairs into the live app or mark hardware checks passed from Chromium.
+- Current device metadata later identified Build 35, with native streaming and
+  element reading restored: [[sessions/2026-10-16-Native-Connection-Recovery]].
+  Keep the report's older version boundary historical; automatic tapping and
+  the masked header area are not certified.
 - The mirror is loopback-only. Device images and raw account data remain outside
   the repository. Connection failure is not an application failure.
 - Keep unresolved work visible. This is a development backlog, not a certificate

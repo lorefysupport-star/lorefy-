@@ -176,3 +176,8 @@ renderers القديمة على الجهاز أثناء التشغيل تجنب�
 [[17-Extended-Review-Plan]] reconciles the supplied extended review with the
 latest fetched source. [[bugs/LF-015-Import-UI]] is source/browser verified;
 device verification remains separate. No new build is authorized.
+
+[[sessions/2026-10-16-Native-Connection-Recovery]] restores the physical stream
+and native element reading without the iTunes UI. Current installed version is
+Build 35, not the older Build 34 audit target. Automatic tapping did not produce
+a verified transition; no source repair is marked installed or hardware-passed.
