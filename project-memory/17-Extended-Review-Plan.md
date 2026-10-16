@@ -47,9 +47,9 @@ UI audit: import action text was white on a pale dark-theme action background.
 This implements the review's contrast/accessibility requirement in an existing
 workflow; it does not claim a completed import or cloud synchronization test.
 
-The next visual follow-up is English review-input direction, observed in the
-current browser UI. Dates, user-authored language and input direction must be
-checked independently rather than rewriting user text.
+[[bugs/LF-016-Review-Reply-Direction]] then corrected the English review input's
+forced RTL direction while retaining Arabic RTL. Dates and user-authored language
+are separate paths; review-date localization still needs a targeted repair.
 
 ## Evidence Rules
 

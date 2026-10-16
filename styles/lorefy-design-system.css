@@ -88,6 +88,7 @@ html .lf-cb-poster { --lf-cb-accent:var(--ui-action) !important; }
 .lf-wr-goal-controls button { min-height:44px; padding:8px 14px; border:0; border-radius:8px; background:var(--ui-action); color:var(--ui-on-action); font:inherit; }
 html[lang='en'] .lf-app.lf-app.lf-app { direction:ltr !important; }
 html[lang='en'] :is(.lf-community-thread,.lf-community-compose-sheet,.lf-community-profile-posts,.lf-community-picker) { direction:ltr !important; }
+.lf-review-detail #rev-reply-input { direction:inherit !important; text-align:start; }
 html .lf-community-post-body { text-align:start; unicode-bidi:plaintext; }
 html .lf-community-thread-rail { right:auto; inset-inline-start:36px; }
 html[lang='en'] .lf-app.lf-app.lf-app .lf-profile-favorites.is-empty > [role="button"]:first-child::after { content:'Choose your favorite works'; }

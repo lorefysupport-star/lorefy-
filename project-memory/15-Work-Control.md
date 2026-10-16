@@ -57,3 +57,5 @@ path:bugs [status:open OR needs-device OR needs-service]
 - [[bugs/LF-014-Diary-Position-Defaults]]: افتراضي الصفحة يحترم التقدم المحفوظ والاختيار اليدوي.
 
 - [[bugs/LF-015-Import-UI]]: تباين أزرار الاستيراد وأسماء الحقول؛ إثبات المصدر والمتصفح منفصل عن الجهاز.
+
+- [[bugs/LF-016-Review-Reply-Direction]]: اتجاه حقل الرد يتبع اللغة؛ تاريخ المراجعة مسار مستقل لم يُصلح بهذه الدفعة.

@@ -4,6 +4,11 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest source/browser receipt: [[sessions/2026-10-16-Review-Reply-Direction]],
+base `7907d05` plus LF-016: 1,250/1,250 passing tests; EN/440px and AR/320px
+reply input direction verified without submitting replies. Native keyboard,
+VoiceOver and review-date localization are not certified by this receipt.
+
 Latest source/browser receipt: [[sessions/2026-10-16-Import-UI]], base `80ba6b5`
 plus LF-015: 1,249/1,249 passing source tests, AR/EN import UI evidence at
 320px/440px across light/dark samples. No actual import or native update;

@@ -78,3 +78,11 @@ test('async replies hydrate their icons after being attached to the document', (
   const section = source.slice(source.indexOf('async function paintReplies('), source.indexOf('send.addEventListener("click"'));
   assert.match(section, /repliesHost\.appendChild\(row\);[\s\S]*hydrateIcons\(repliesHost\);/);
 });
+
+test('review reply input follows interface direction instead of the legacy inline RTL value', () => {
+  const css = fs.readFileSync(path.join(root, 'styles/lorefy-design-system.css'), 'utf8');
+  const rule = css.match(/\.lf-review-detail #rev-reply-input\s*\{([^}]+)\}/);
+  assert.ok(rule, 'reply direction needs an authoritative shared-style rule');
+  assert.match(rule[1], /direction:\s*inherit\s*!important/);
+  assert.match(rule[1], /text-align:\s*start/);
+});
