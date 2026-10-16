@@ -204,6 +204,7 @@
     'صورة دقيقة لرحلتك القرائية':'Your reading overview', 'العودة للحساب':'Back to profile',
     'ملخص القراءة':'Reading summary', 'عمل مكتمل':'Completed works', 'فصل مقروء':'Chapters read',
     'نشاط القراءة':'Reading activity', 'آخر ٧ أيام':'Last 7 days', 'توزيع الأنواع':'Format breakdown',
+    'لا توجد بيانات قراءة لهذه الفترة.':'No reading data for this period.',
     'ستظهر تفاصيل أنواعك هنا':'No format data yet',
     'أضف أعمالا لمكتبتك لبناء إحصائياتك':'Add works to your library to see your statistics.',
     'السبت':'Saturday', 'الأحد':'Sunday', 'الاثنين':'Monday', 'الثلاثاء':'Tuesday',

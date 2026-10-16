@@ -30,8 +30,14 @@ test('updated UI assets use fresh cache keys', () => {
   assert.match(html, /lorefy-community\.css\?v=20261009-public-appearance-v4/);
   for (const asset of ['modules/lorefy-growth-features.js', 'modules/lorefy-i18n.js',
     'modules/lorefy-v2.js', 'modules/lorefy-public-profile.js', 'uploads/files/lorefy-app.js']) {
-    const version = ['modules/lorefy-growth-features.js', 'modules/lorefy-public-profile.js'].includes(asset)
-      ? '20261016-reading-estimate-v1' : '20261016-statistics-locale-v1';
+    const versions = {
+      'modules/lorefy-growth-features.js':'20261016-reading-estimate-v1',
+      'modules/lorefy-public-profile.js':'20261016-reading-estimate-v1',
+      'modules/lorefy-i18n.js':'20261016-statistics-activity-v1',
+      'modules/lorefy-v2.js':'20261016-statistics-activity-v1',
+      'uploads/files/lorefy-app.js':'20261016-statistics-locale-v1'
+    };
+    const version = versions[asset];
     const versioned = asset + '?v=' + version;
     assert.ok(html.includes(versioned), asset + ' entry cache key');
     assert.ok(read('sw.js').includes(versioned), asset + ' service worker cache key');

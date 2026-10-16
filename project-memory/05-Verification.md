@@ -4,6 +4,11 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest calendar/activity receipt: [[sessions/2026-10-16-Statistics-Activity-Dates]],
+base `47a3861` plus LF-020: 1,283 passing full-suite tests and 15 focused
+memory/activity tests. EN 440px and AR 320px source previews expose matching
+Gregorian dates. Timezone/non-Friday cases are unit evidence; no phone update.
+
 Latest statistics-locale receipt: [[sessions/2026-10-16-Statistics-Locale]],
 base `9f972ae` plus LF-019: 1,272 passing tests; AR/EN 320px light and EN
 440px dark source previews. No installed-device update; calendar-day mapping

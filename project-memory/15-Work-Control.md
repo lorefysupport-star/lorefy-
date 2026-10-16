@@ -64,4 +64,4 @@ path:bugs [status:open OR needs-device OR needs-service]
 
 - [[bugs/LF-018-Reading-Estimate-Labels]]: الساعات موصوفة كتقدير من التقدم المحفوظ، دون تغيير الأرقام.
 - [[bugs/LF-019-Statistics-Locale]]: اكتملت ترجمة الإحصاءات وأرقامها واتجاهها بالمصدر والمتصفح.
-- [[bugs/LF-020-Statistics-Activity-Dates]]: أيام الرسم يجب أن تتبع تواريخ سجل القراءة، لا ترتيبًا أسبوعيًا ثابتًا.
+- [[bugs/LF-020-Statistics-Activity-Dates]]: رُبطت أيام الرسم بتواريخ السجل، مع حفظ الصفر وتمييز غياب البيانات بالمصدر.

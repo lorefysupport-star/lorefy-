@@ -32,13 +32,25 @@
     });
   }
 
+  function calendarDate(value) {
+    var match = typeof value === "string" && /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(value);
+    if (!match) return null;
+    var year = Number(match[1]), month = Number(match[2]), day = Number(match[3]);
+    var date = new Date(Date.UTC(year, month - 1, day));
+    return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day ? date : null;
+  }
+
   function normalizeActivity(value) {
     var items = Array.isArray(value) ? value.slice(-7) : [];
-    return DAY_LABELS.map(function (day, index) {
-      var item = items[index];
+    return items.map(function (item) {
+      item = item && typeof item === "object" ? item : {};
+      var date = calendarDate(item.key);
+      var count = item.value !== undefined ? item.value : item.minutes !== undefined ? item.minutes : item.count !== undefined ? item.count : item.total;
       return {
-        label: item && (item.label || item.day) || day,
-        value: number(item && (item.value || item.minutes || item.count || item.total))
+        key: date ? date.toISOString().slice(0, 10) : undefined,
+        date: date,
+        label: item.label || item.day || "\u2014",
+        value: Math.max(0, number(count))
       };
     });
   }
@@ -57,6 +69,13 @@
       var label = String(value);
       if (DAY_LABELS.indexOf(label) === -1) return label;
       return short ? lang === "en" ? t(label).slice(0, 3) : label.replace(/^\u0627\u0644/, "") : t(label);
+    }
+    function activityDateLabel(item, short) {
+      if (!item.date) return activityLabel(item.label, short);
+      var options = { weekday: short ? "short" : "long", timeZone: "UTC", calendar: "gregory" };
+      if (!short) { options.year = "numeric"; options.month = "long"; options.day = "numeric"; }
+      var label = new Intl.DateTimeFormat(lang === "en" ? "en-US" : "ar-SA", options).format(item.date);
+      return short && lang === "ar" ? label.replace(/^\u0627\u0644/, "") : label;
     }
     var C = ctx.C || {};
     var totals = ctx.achStats || {};
@@ -142,14 +161,15 @@
           h("h2", { style: { margin: 0, fontSize: 17, fontWeight: 850 } }, t("\u0646\u0634\u0627\u0637 \u0627\u0644\u0642\u0631\u0627\u0621\u0629")),
           h("span", { style: { color: sub, fontSize: 10.5 } }, t("\u0622\u062E\u0631 \u0667 \u0623\u064A\u0627\u0645"))
         ),
-        h("div", { style: { height: 128, display: "grid", gridTemplateColumns: "repeat(7, minmax(0, 1fr))", alignItems: "end", gap: 7 } }, activity.map(function (item, index) {
+        activity.length ? h("div", { style: { height: 128, display: "grid", gridTemplateColumns: "repeat(7, minmax(0, 1fr))", alignItems: "end", gap: 7 } }, activity.map(function (item, index) {
           var height = item.value ? Math.max(14, Math.round(item.value / activityMax * 92)) : 5;
-          return h("div", { key: index, title: activityLabel(item.label, false) + ": " + format(item.value), style: { minWidth: 0, display: "flex", height: "100%", flexDirection: "column", justifyContent: "flex-end", alignItems: "center", gap: 7 } },
+          var description = activityDateLabel(item, false) + ": " + format(item.value);
+          return h("div", { key: index, "data-reading-date": item.key, role: "img", "aria-label": description, title: description, style: { minWidth: 0, display: "flex", height: "100%", flexDirection: "column", justifyContent: "flex-end", alignItems: "center", gap: 7 } },
             h("span", { style: { color: item.value ? text : sub, fontSize: 9, fontWeight: 800, fontVariantNumeric: "tabular-nums" } }, item.value ? format(item.value) : ""),
             h("span", { style: { width: "100%", maxWidth: 24, height: height, background: item.value ? accent : C.fill || "#E8E4EE", borderRadius: 6, transition: "height .25s ease" } }),
-            h("small", { style: { color: sub, fontSize: 8.5, whiteSpace: "normal", overflowWrap: "anywhere", maxWidth: "100%" } }, activityLabel(item.label, true))
+            h("small", { style: { color: sub, fontSize: 8.5, whiteSpace: "normal", overflowWrap: "anywhere", maxWidth: "100%" } }, activityDateLabel(item, true))
           );
-        }))
+        })) : h("p", { role: "status", style: { minHeight: 128, display: "grid", alignItems: "center", margin: 0, color: sub, fontSize: 12 } }, t("\u0644\u0627 \u062A\u0648\u062C\u062F \u0628\u064A\u0627\u0646\u0627\u062A \u0642\u0631\u0627\u0621\u0629 \u0644\u0647\u0630\u0647 \u0627\u0644\u0641\u062A\u0631\u0629."))
       ),
 
       h("section", {
