@@ -6,6 +6,8 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[17-Extended-Review-Plan|خطة تطوير التقرير الموسع وربطها بالمصدر الحالي]]
+
 [[13-Project-Story|الرواية]] | [[14-Feature-Coverage|تغطية التطبيق]] |
 [[12-Device-Repairs|أدلة الإصلاح]] | [[16-Obsidian-Workflow|طريقة تشغيل الذاكرة]]
 
@@ -53,3 +55,5 @@ path:bugs [status:open OR needs-device OR needs-service]
 - [[bugs/LF-013-Friend-Rating-Rows]]: أُصلح تنسيق التقييم بالمصدر والمتصفح؛ لا تحديث جهاز.
 
 - [[bugs/LF-014-Diary-Position-Defaults]]: افتراضي الصفحة يحترم التقدم المحفوظ والاختيار اليدوي.
+
+- [[bugs/LF-015-Import-UI]]: تباين أزرار الاستيراد وأسماء الحقول؛ إثبات المصدر والمتصفح منفصل عن الجهاز.

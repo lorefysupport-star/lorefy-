@@ -170,3 +170,9 @@ renderers القديمة على الجهاز أثناء التشغيل تجنب�
 [[00-Home]] | [[08-Feature-Router]] | [[05-Verification]] |
 [[systems/Community-Notifications]] | [[systems/Reading-Library]] |
 [[systems/Profiles-Lists]] | [[systems/Appearance-Bundles]]
+
+## Current Review Follow-Up: 2026-10-16
+
+[[17-Extended-Review-Plan]] reconciles the supplied extended review with the
+latest fetched source. [[bugs/LF-015-Import-UI]] is source/browser verified;
+device verification remains separate. No new build is authorized.

@@ -3143,7 +3143,7 @@
       result.appendChild(el("p", { class: "lf-im-error", text: msg }));
     }
     /* AniList — one-tap by username */
-    var alInput = el("input", { class: "lf-ml-search", type: "text", placeholder: "اسم المستخدم في AniList", autocapitalize: "none", autocorrect: "off" });
+    var alInput = el("input", { class: "lf-ml-search", type: "text", "aria-label": uiText("اسم المستخدم في AniList", "AniList username"), placeholder: "اسم المستخدم في AniList", autocapitalize: "none", autocorrect: "off" });
     var alBtn = el("button", { type: "button", class: "lf-im-go", text: "استيراد" });
     alBtn.addEventListener("click", function () {
       var name = alInput.value.trim();
@@ -3189,7 +3189,7 @@
       grBtn, grFile
     ]));
     /* Kitsu — one-tap by username */
-    var ktInput = el("input", { class: "lf-ml-search", type: "text", placeholder: "اسم المستخدم في Kitsu", autocapitalize: "none", autocorrect: "off" });
+    var ktInput = el("input", { class: "lf-ml-search", type: "text", "aria-label": uiText("اسم المستخدم في Kitsu", "Kitsu username"), placeholder: "اسم المستخدم في Kitsu", autocapitalize: "none", autocorrect: "off" });
     var ktBtn = el("button", { type: "button", class: "lf-im-go", text: "استيراد" });
     ktBtn.addEventListener("click", function () {
       var name = ktInput.value.trim();
@@ -3229,7 +3229,7 @@
       });
       chipsWrap.appendChild(chip);
     });
-    var pasteTa = el("textarea", { class: "lf-im-paste", rows: "5", placeholder: "الصق العناوين هنا — عنوان واحد في كل سطر…" });
+    var pasteTa = el("textarea", { class: "lf-im-paste", rows: "5", "aria-label": uiText("عناوين الأعمال للاستيراد", "Titles to import"), placeholder: "الصق العناوين هنا — عنوان واحد في كل سطر…" });
     var pasteBtn = el("button", { type: "button", class: "lf-im-go lf-im-go-wide", text: "استيراد القائمة" });
     pasteBtn.addEventListener("click", function () {
       var lines = pasteTa.value.split(/\r?\n/).map(function (l) { return l.replace(/^\s*[\d\u0660-\u0669]+[).\-–]\s*/, "").trim(); }).filter(Boolean);

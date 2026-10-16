@@ -4,6 +4,11 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest source/browser receipt: [[sessions/2026-10-16-Import-UI]], base `80ba6b5`
+plus LF-015: 1,249/1,249 passing source tests, AR/EN import UI evidence at
+320px/440px across light/dark samples. No actual import or native update;
+physical connection was unavailable during this check.
+
 Latest source/browser receipt: [[sessions/2026-10-16-Diary-Position-Defaults]],
 base 6708c2a plus LF-014: 1,246/1,246 passing tests. LF-013 also passed
 80 browser layout cases; Arabic/English diary page save, reload and spoiler

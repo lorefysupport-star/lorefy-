@@ -49,6 +49,12 @@ html .lf-wr-summary-goal-track i { min-width:0; background:var(--ui-action); }
 .lf-im-preview-row { display:grid; grid-template-columns:44px minmax(0,1fr); gap:12px; align-items:center; padding-block:12px; border-bottom:1px solid var(--ui-line); }
 .lf-im-preview-row > :first-child { width:44px; height:66px; object-fit:cover; border-radius:4px; }
 .lf-im-preview-row select { width:100%; min-width:0; min-height:44px; padding:8px; font:inherit; font-size:13px; background:var(--ui-surface); color:var(--ui-ink); border:1px solid var(--ui-line); border-radius:8px; }
+/* Import overlays are siblings of .lf-app, so use the paired document tokens. */
+.lf-im-page :is(.lf-im-go, .lf-im-reload, .lf-im-chip.is-on) {
+  background:var(--ui-action); color:var(--ui-on-action); min-height:44px;
+}
+.lf-im-page .lf-im-chip { min-height:44px; }
+.lf-im-page .lf-im-row .lf-ml-search { min-width:0; }
 html .lf-pref-share-sheet .lf-pref-share-sheet-card,
 html .lf-cb-share-sheet .lf-cb-share-card,
 html .lf-work-share-sheet .nc-sheet { background:var(--ui-bg) !important; color:var(--ui-ink) !important; }
