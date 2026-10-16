@@ -43,9 +43,12 @@ states. The native screen is 440x956 logical points.
 One initial one-off capture unexpectedly showed another app. No interaction was
 performed there; that local image was deleted and its content is not retained
 in this vault. A later OS notification banner showed the additional privacy
-boundary of full-device capture. Native preview now masks the top 160 logical
-points before publication. This mask is local tooling, not an app UI defect or
-an application-source change; the hidden header region is not visually audited.
+boundary of full-device capture. The native preview initially masked the top 160
+logical points. The owner subsequently explicitly requested removal of that mask
+for the local live preview. It was removed; the Lorefy foreground guard remains.
+Neither state is an application UI change, and removal does not retroactively
+certify the previously hidden header. Permission to push source repairs is not
+treated as permission to publish personal screenshots or account data to GitHub.
 Raw screen/account data, installers, logs and mirroring helpers remain outside
 Git and the vault. The server binds only to loopback.
 
