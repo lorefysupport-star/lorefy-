@@ -11,7 +11,7 @@ function harness(status, saved = {chapter:12,page:30,volume:1,note:'My checkpoin
   const calls = [], scope = {
     m:{id:'work',title:'A work',ch:420}, G:4, J:'Reader', Y:'reader', Z:'', Fe:'yes', se:false,
     ct:{current:'My review'}, pt:{current:'My moment'}, ft:[], ze:{story:4}, gt:false,
-    STATUS_DONE:'تم القراءة', window:{LorefyReadingMetrics:metrics,
+    STATUS_DONE:'تم القراءة', window:{LorefyReadingMetrics:metrics,localStorage:{getItem:key=>key==='lorefy.activeUser.v1'?'owner':null},
       dispatchEvent:()=>calls.push('refresh'), LorefyBackend:{mode:'demo'}},
     CustomEvent:class {}, workChapterCount:()=>420, workVolumeCount:()=>40, workPageCount:()=>0,
     $:update=>{removed=update(removed);}, j:update=>{library=update(library);},
@@ -19,6 +19,8 @@ function harness(status, saved = {chapter:12,page:30,volume:1,note:'My checkpoin
     A:()=>calls.push('error'), ht(){}, Wo(){}, bo(){}, setTimeout(){}, Se(){}, dt(){}, no(){}, ro(){}, io(){}
   };
   vm.createContext(scope);
+  const guardStart=source.indexOf('function lorefyReviewRequestScope(');
+  if(guardStart>=0)vm.runInContext(source.slice(guardStart,source.indexOf('const{useState',guardStart)),scope);
   const completion = source.slice(source.indexOf('Zn=t=>'), source.indexOf(';useEffect(',source.indexOf('Zn=t=>')));
   const start = source.indexOf('tr=async()=>');
   vm.runInContext('const '+completion+';const '+source.slice(start,source.indexOf(',qo=async',start))+';this.publish=tr;',scope);

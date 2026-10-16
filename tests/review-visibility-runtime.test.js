@@ -81,9 +81,13 @@ test('opening a work loads reviews outside the global feed window', async () => 
 test('publishing a review preserves reviews by other authors for the same work', async () => {
   const start=app.indexOf('tr=async()=>'),end=app.indexOf(',qo=async',start);
   let reviews=[{id:id(1),mid:'hunter',userId:'other'},{id:id(2),mid:'hunter',userId:'me'}];
-  const scope={window:{dispatchEvent(){},LorefyBackend:null},CustomEvent:function(){},m:{id:'hunter',title:'Hunter'},G:4,J:'Reader',Y:'reader',Z:'',Fe:null,se:false,ct:{current:'My review'},ft:[],ze:{},pt:{current:''},gt:false,
+  const scope={window:{dispatchEvent(){},LorefyBackend:null,localStorage:{getItem:key=>key==='lorefy.activeUser.v1'?'reader':null}},CustomEvent:function(){},m:{id:'hunter',title:'Hunter'},G:4,J:'Reader',Y:'reader',Z:'',Fe:null,se:false,ct:{current:'My review'},ft:[],ze:{},pt:{current:''},gt:false,
     fo:fn=>{reviews=fn(reviews);},Zn(){},ht(){},Wo(){},bo(){},setTimeout(){},Se(){},dt(){},no(){},ro(){},io(){},A(){}};
-  vm.runInNewContext('var '+app.slice(start,end)+';',scope);await scope.tr();
+  vm.createContext(scope);
+  const guardStart=app.indexOf('function lorefyReviewRequestScope(');
+  assert.ok(guardStart>=0);
+  vm.runInContext(app.slice(guardStart,app.indexOf('const{useState',guardStart)),scope);
+  vm.runInContext('var '+app.slice(start,end)+';',scope);await scope.tr();
   assert.ok(reviews.some(r=>r.userId==='other'));
   assert.equal(reviews.filter(r=>r.userId==='me'&&r.mid==='hunter').length,1);
 });

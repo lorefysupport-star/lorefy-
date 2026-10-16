@@ -4,6 +4,12 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest review-mutation receipts: [[sessions/2026-10-16-Review-Progress-Independence]]
+and [[sessions/2026-10-17-Review-Response-Owner]]. Final source suite: 1318 passed,
+0 failed; deferred mutation tests cover account/session changes. An isolated
+demo publication/reload retained Reading and 90 pages. No live request, native
+installation or authorization certification follows from these source results.
+
 Latest calendar/activity receipt: [[sessions/2026-10-16-Statistics-Activity-Dates]],
 base `47a3861` plus LF-020: 1,283 passing full-suite tests and 15 focused
 memory/activity tests. EN 440px and AR 320px source previews expose matching

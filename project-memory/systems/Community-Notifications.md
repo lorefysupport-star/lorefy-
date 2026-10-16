@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-10-17-Review-Response-Owner]] يربط نتائج نشر/حذف المراجعة والرد
+بالحساب والجلسة اللذين أرسلا الطلب، قبل تعديل الواجهة أو عرض خطأ قديم.
+هذا لا يلغي طلبًا وصل للخادم ولا يغني عن صلاحياته أو ملكية المحرر عند فتحه.
+
 [community](../../modules/lorefy-community.js) و[growth features](../../modules/lorefy-growth-features.js)
 يضيفان الـfeed والتفاعلات. [friend activity](../../modules/lorefy-friend-activity.js)
 منطق أصدقاء القارئ. الصفحة الرئيسية للمجتمع، والاكتشاف في Explore؛ لا تعِد
