@@ -51,3 +51,5 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 يتعلق بالجهاز أو خدمة حية، لا تُغلق تلك الطبقة بنتيجة fixture فقط.
 
 [[00-Home]] | [[08-Feature-Router]] | [[10-Open-Questions]] | [[12-Device-Repairs]]
+
+- LF-013: [[sessions/2026-10-16-Friend-Rating-Rows]]؛ محاذاة الاسم والدرجة في 80 حالة متصفح، دون اعتماد ذلك كفحص VoiceOver أو تثبيت جهاز.

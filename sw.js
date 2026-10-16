@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v462-editor-locale';
+const CACHE = 'lorefy-v463-friend-rating-rows';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -118,7 +118,7 @@ const CORE = [
   './modules/lorefy-work-relations.js?v=20261007-work-relations-v3',
   './styles/lorefy-work-relations.css?v=20261007-work-relations-v3',
   './modules/lorefy-explore-studio.js?v=20261015-github-sync-v1',
-  './styles/lorefy-explore-studio.css?v=20261013-discover-reviewed-v2',
+  './styles/lorefy-explore-studio.css?v=20261016-friend-rating-rows-v1',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1',
   './uploads/files/lorefy-app.js?v=20261015-github-sync-v1',

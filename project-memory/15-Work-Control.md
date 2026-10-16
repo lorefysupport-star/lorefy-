@@ -49,3 +49,5 @@ path:bugs [status:open OR needs-device OR needs-service]
 ```
 
 [[00-Home]] | [[playbooks/Memory-Maintenance]]
+
+- [[bugs/LF-013-Friend-Rating-Rows]]: أُصلح تنسيق التقييم بالمصدر والمتصفح؛ لا تحديث جهاز.

@@ -50,3 +50,6 @@ APNs I/O. الإصلاح لم يُنشر، وتلك الجولة لم تثبت �
 
 [[systems/Accounts-Sync]] | [[systems/Native-Release]] |
 [[systems/Language-Media]] | [[10-Open-Questions]]
+
+## صفوف تقييم الأصدقاء
+[[sessions/2026-10-16-Friend-Rating-Rows]] وحدت هندسة الاسم والتقييم في [CSS](../../styles/lorefy-explore-studio.css). لا تغيير لمنطق المتابعة أو القيم الكسرية أو الحسابات.
