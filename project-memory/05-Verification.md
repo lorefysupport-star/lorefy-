@@ -346,3 +346,15 @@ record count 121920 retained, eight assets match SHA-256 across three trees.
 Generated files retain hashes and mtime during the suite. Evidence:
 D:/LorefyDevelopment/QA/remaining-repairs-20261017/editorial-next2-*.
 [[sessions/2026-10-17-Travel-Fiction-Summaries]]. No full generator, build, account or service write.
+
+## Fixed book sample summaries — 2026-10-17
+
+LF-050 on 6029d87 plus patch: **1803/1803 full passed**, zero failures, exit 0
+(58643ms), focused 110/110. Thirty-seven new cases (19 failed before); all
+24 curated book cards have attributed AR/EN summaries. Actual local Chrome
+verified 36 detail/language pages and source URLs. No runtime shard contains
+the 18 bootstrap IDs, so no catalog/index generation or mutation was needed;
+five source assets match across three trees, monitored generated files retain
+hashes and mtime. Evidence: D:/LorefyDevelopment/QA/remaining-repairs-20261017/books-fixed-*
+and book-sample-hydrated-before.json. [[sessions/2026-10-17-Book-Sample-Summaries]]. Presence/source
+review does not certify contributor roles, edition years, covers or rights.

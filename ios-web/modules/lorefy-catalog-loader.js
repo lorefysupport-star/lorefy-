@@ -10,7 +10,7 @@
   var loading = new Map();
   var activeQueue = Promise.resolve();
   var version = "20261013-discover-reviewed-v2";
-  var workerVersion = "20261017-editorial-travel-v1";
+  var workerVersion = "20261017-editorial-books-v1";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
