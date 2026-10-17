@@ -362,3 +362,7 @@ review does not certify contributor roles, edition years, covers or rights.
 - [[bugs/LF-051-Novel-Sample-Summaries]]: أوصاف موثقة للروايات الـ18 المتبقية؛ جميع روايات العينة الـ23 لها AR/EN، و36 صفحة/لغة مفحوصة؛ [[sessions/2026-10-17-Novel-Sample-Summaries]]. حفظ هوية العمل والطبعة والتقدم، مع بقاء الحقوق والمراجعة الببليوغرافية منفصلتين.
 
 - LF-051: **1840/1840** في الفحص الكامل، صفر فشل، exit 0؛ الدليل novels-full-tests.txt. [[sessions/2026-10-17-Novel-Sample-Summaries]]
+
+- [[bugs/LF-052-Comic-Sample-Summaries]]: استُكملت أوصاف الكوميكس الـ21 المتبقية؛ جميع كوميكس العينة الـ24 لها AR/EN، مع 42 صفحة/لغة وفصل وصف المجلد الثاني عن العدد الثاني؛ [[sessions/2026-10-17-Comic-Sample-Summaries]]. مصدر Peanuts فهرس Open Library، لا تحقق ناشر؛ حقوق الصور والطبعات مستقلة.
+
+- LF-052: **1883/1883** كاملة، صفر فشل، exit 0؛ الدليل comics-full-tests.txt. [[sessions/2026-10-17-Comic-Sample-Summaries]]

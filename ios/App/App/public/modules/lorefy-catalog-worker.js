@@ -7,7 +7,7 @@ importScripts(
   "lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4",
   "lorefy-comics-taxonomy.js?v=20261008-arabic-library-v2",
   "lorefy-bibliographic-overrides.js?v=20261008-arabic-breadth-v4",
-  "../uploads/lorefy-editorial-picks.js?v=20261017-editorial-novels-v1",
+  "../uploads/lorefy-editorial-picks.js?v=20261017-editorial-comics-v1",
   "../uploads/lorefy-catalog-quality.js?v=20261011-explore-v2"
 );
 
