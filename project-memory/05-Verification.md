@@ -358,3 +358,7 @@ five source assets match across three trees, monitored generated files retain
 hashes and mtime. Evidence: D:/LorefyDevelopment/QA/remaining-repairs-20261017/books-fixed-*
 and book-sample-hydrated-before.json. [[sessions/2026-10-17-Book-Sample-Summaries]]. Presence/source
 review does not certify contributor roles, edition years, covers or rights.
+
+- [[bugs/LF-051-Novel-Sample-Summaries]]: أوصاف موثقة للروايات الـ18 المتبقية؛ جميع روايات العينة الـ23 لها AR/EN، و36 صفحة/لغة مفحوصة؛ [[sessions/2026-10-17-Novel-Sample-Summaries]]. حفظ هوية العمل والطبعة والتقدم، مع بقاء الحقوق والمراجعة الببليوغرافية منفصلتين.
+
+- LF-051: **1840/1840** في الفحص الكامل، صفر فشل، exit 0؛ الدليل novels-full-tests.txt. [[sessions/2026-10-17-Novel-Sample-Summaries]]
