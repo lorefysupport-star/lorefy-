@@ -561,7 +561,13 @@
   doc.addEventListener("input", function (event) {
     var target = event && event.target;
     if (!target || target.tagName !== "INPUT" || !target.closest || !target.closest(".lf-search-box")) return;
-    scheduleSearch(target.value, routeState().rawType);
+    var query = target.value;
+    // Let controlled inputs consume the event before a parent refresh can
+    // restore their previous value. A detached field must not restart a query.
+    global.setTimeout(function () {
+      if (target.isConnected === false) return;
+      scheduleSearch(query, routeState().rawType);
+    }, 0);
   }, true);
   (doc.readyState === "loading" ? doc.addEventListener.bind(doc, "DOMContentLoaded") : function (fn) { fn(); })(function () {
     // index.html has already inserted the first route part. Announce that the

@@ -93,3 +93,19 @@ test('generated search index matches the bundled catalog snapshot', () => {
   assert.equal(index.records.length, manifest.count);
   assert.ok(index.records.every(row => Number.isInteger(row[0]) && row[0] >= 1 && row[0] <= 163 && row[1] && row[2]));
 });
+
+test('controlled inputs consume typing before catalog status refreshes their parent', async () => {
+  const app=harness(),order=[];
+  app.win.__lorefyRefresh=()=>order.push('refresh');
+  app.documentEvents.get('input')({target:{tagName:'INPUT',value:'One Piece',closest:()=>true}});
+  assert.deepEqual(order,[],'capture must not restore the old controlled value before React onChange');
+  order.push('input handled');
+  await app.settle();
+  assert.equal(order[0],'input handled');assert.ok(order.includes('refresh'));
+});
+
+test('an input removed before the deferred search cannot restart an obsolete query', async () => {
+  const app=harness(),target={tagName:'INPUT',value:'Old query',isConnected:true,closest:()=>true};
+  app.documentEvents.get('input')({target});target.isConnected=false;
+  await app.settle();assert.equal(app.workers.length,0);assert.equal(app.win.LorefyCatalogLoader.state().searching,false);
+});

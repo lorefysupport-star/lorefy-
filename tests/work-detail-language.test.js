@@ -98,6 +98,8 @@ function search(lang, ready = true, count = 2) {
     window:{LorefyCatalogLoader:{state:()=>({ready})},LorefyCatalogData:{sortRanked:items=>items}},
     React:{createElement:(type,props,...children)=>({type,props:props||{},children})}};
   const start = app.indexOf('catalogSearchStatus='),end = app.indexOf(',dr=()=>',start);
+  // This fragment now renders the shared stable input adapter as production does.
+  vm.runInNewContext(app.slice(0,app.indexOf('function lorefyReviewRequestScope')),scope);
   vm.runInNewContext('const '+app.slice(start,end)+';this.render=lr;this.status=catalogSearchStatus;',scope);
   const nodes=[];
   function visit(node) { if(Array.isArray(node)) return node.forEach(visit);if(!node||typeof node!=='object')return;

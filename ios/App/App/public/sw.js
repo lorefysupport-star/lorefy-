@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v505-shard-deadline';
+const CACHE = 'lorefy-v506-search-field';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -52,7 +52,7 @@ const CORE = [
   './modules/lorefy-cover-api.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-plan.js?v=20261010-catalog-demand-v1',
-  './modules/lorefy-catalog-loader.js?v=20261018-shard-deadline-v1',
+  './modules/lorefy-catalog-loader.js?v=20261018-search-field-v1',
   './modules/lorefy-catalog-search-worker.js?v=20261017-editorial-comics-v1',
   './modules/lorefy-catalog-identity.js?v=20261010-identity-batch-v1',
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
@@ -121,7 +121,7 @@ const CORE = [
   './styles/lorefy-explore-studio.css?v=20261018-search-retry-v1',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1',
-  './uploads/files/lorefy-app.js?v=20261018-search-retry-v1',
+  './uploads/files/lorefy-app.js?v=20261018-search-field-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
