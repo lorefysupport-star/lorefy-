@@ -43,3 +43,5 @@ Capacitor copy/sync → `ios/App/App/public/` → Xcode/EAS → معالجة App
 
 [[systems/App-Boot]] | [[systems/Accounts-Sync]] |
 [[systems/Community-Notifications]] | [[11-Organization-Plan]]
+
+- [[bugs/LF-048-Test-Preparation-Isolation]]: اختبار إعدادات native ينفذ projection المحدود دون تجهيز المشروع أو توليد الكتالوج؛ [[sessions/2026-10-17-Test-Preparation-Isolation]]. فحص parity الفعلي باقٍ.

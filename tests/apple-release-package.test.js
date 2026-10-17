@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { execFileSync } = require("node:child_process");
 const test = require("node:test");
+const vm = require("node:vm");
 const plist = require("plist");
 
 const root = path.resolve(__dirname, "..");
@@ -148,9 +149,20 @@ test("keeps every shipped web asset synchronized with the Xcode bundle", () => {
   }
 });
 
-test("prepares a native runtime config without exposing server secrets", () => {
-  execFileSync(process.execPath, ["tools/prepare-ios-web.mjs"], { cwd: root, encoding: "utf8" });
-  const runtime = read("ios-web/config/lorefy-runtime.js");
+test("prepares a native runtime config without exposing server secrets", async () => {
+  const prepare = read("tools/prepare-ios-web.mjs");
+  const start = prepare.indexOf("// Only browser-safe configuration is emitted");
+  const end = prepare.indexOf('await writeFile(path.join(output, "config", "lorefy-runtime.js")', start);
+  assert.ok(start >= 0 && end > start, "runtime projection must remain a bounded, write-free section");
+  const app = JSON.parse(read("app.json")).expo;
+  const release = { ...JSON.parse(read("config/lorefy-build-public.json")), serviceRoleKey:"TEST_SERVER_SECRET_DO_NOT_SHIP" };
+  const runtime = await vm.runInNewContext("(async () => {" + prepare.slice(start, end) + ";return runtimeScript;})()", {
+    release, nativeRelease:app.extra.lorefy, nativeBuildNumber:String(app.ios.buildNumber), nativeVersion:String(app.version),
+    root, path, readFile:async filename => {
+      assert.equal(filename, path.join(root, "config", "lorefy-runtime.js"));
+      return read("config/lorefy-runtime.js");
+    }
+  });
   assert.match(runtime, /LOREFY_SUPABASE/);
   assert.match(runtime, /https:\/\/qsroxmltioxqozmykens\.supabase\.co/);
   assert.match(runtime, /sb_publishable_/);
@@ -160,6 +172,7 @@ test("prepares a native runtime config without exposing server secrets", () => {
   assert.match(runtime, new RegExp(`"buildNumber":"${JSON.parse(read("app.json")).expo.ios.buildNumber}"`));
   assert.match(runtime, /window\.LOREFY_BUILD_NUMBER = window\.LOREFY_RELEASE\.buildNumber/);
   assert.doesNotMatch(runtime, /SERVICE_ROLE/);
+  assert.doesNotMatch(runtime, /TEST_SERVER_SECRET_DO_NOT_SHIP/);
 });
 
 test("EAS receives the browser-safe auth configuration without the editable release file", () => {

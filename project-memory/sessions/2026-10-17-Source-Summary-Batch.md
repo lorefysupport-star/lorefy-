@@ -52,3 +52,10 @@ editorial-next-catalog-artifacts.json. اختبار parity نفسه الآن **1
 عزل الاختبار عن المشروع هو المتابعة التالية قبل تكرار full.
 الدليل editorial-next-asset-parity.txt وeditorial-next-final-focused.txt
 وeditorial-next-full-tests.txt. صار التغيير تسعة أصول محددة، لا تركيب native.
+
+## Integrated confirmation after test isolation
+
+LF-048 eliminated the preparation side effect; current-source full **1760/1760**
+passed (58428ms) with nine monitored files unchanged in content and mtime.
+[[sessions/2026-10-17-Test-Preparation-Isolation]]. This includes the reviewed source summaries,
+AR/EN source label and all nine selectively synchronized artifacts.

@@ -323,3 +323,15 @@ synced and SHA-256 matched; parity test **1/1**, follow-up contracts **30/30**.
 Evidence: D:/LorefyDevelopment/QA/remaining-repairs-20261017/editorial-next-*.
 [[sessions/2026-10-17-Source-Summary-Batch]]. Full failed run remains historical; isolate
 the mutating config test before repeating it. No native build/service claim.
+
+## Read-only test preparation — 2026-10-17
+
+LF-048 on 65e9339 plus patch: **1760/1760 full passed**, zero failures, exit 0
+(58428ms), focused 15/15. The isolation regression failed before and now
+observes zero builder commands. SHA-256 and mtime of nine generated/runtime
+files were identical before/after the full suite. Evidence in
+D:/LorefyDevelopment/QA/remaining-repairs-20261017/test-isolation-full-tests.txt
+and test-isolation-files-before/after.json. [[sessions/2026-10-17-Test-Preparation-Isolation]].
+The full result includes LF-047 summaries/labels and the reviewed native asset
+parity fix, superseding the failed parity run without relabeling its history.
+No native build, production config write or service deployment.
