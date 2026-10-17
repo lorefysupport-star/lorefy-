@@ -23,3 +23,10 @@ cache v495، growth/index/sw فقط؛ الفحص الكامل بعد CSV يشم�
 
 بعد مراجعة مفاتيح الأصول مع ui-unity: **91/91** مرتبطة ناجحة؛ النسخ
 الثلاث للملفات الثلاثة تطابقت SHA-256، وmemory:audit بلا مشاكل (147 ملاحظة،534 مصدر).
+
+## Current-source full verification
+
+فحص المصدر اللاحق مع LF-046 على ca18a18 plus patch: **1751/1751**،
+صفر فشل، exit 0 (239320ms). csv-record-full-tests.txt في مجلد QA نفسه.
+هذه نتيجة جديدة تشمل الإصلاح وتوافق الكاش؛ لا تمحو إيصالات الفشل السابقة.
+[[sessions/2026-10-17-Import-CSV-Records]]

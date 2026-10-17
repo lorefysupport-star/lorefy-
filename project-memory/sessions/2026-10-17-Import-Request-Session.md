@@ -25,3 +25,10 @@ growth/index/sw فقط، دون بناء. الفحص الكامل الأول 172
 فشل كتابة التخزين المحلي ما زال يُدقق منفصلاً.
 
 [[bugs/LF-044-Import-Request-Session]] | [[05-Verification]] | [[15-Work-Control]] | [[18-Progress-Handoff]]
+
+## Current-source full verification
+
+فحص المصدر اللاحق مع LF-046 على ca18a18 plus patch: **1751/1751**،
+صفر فشل، exit 0 (239320ms). csv-record-full-tests.txt في مجلد QA نفسه.
+هذه نتيجة جديدة تشمل الإصلاح وتوافق الكاش؛ لا تمحو إيصالات الفشل السابقة.
+[[sessions/2026-10-17-Import-CSV-Records]]

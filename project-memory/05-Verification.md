@@ -298,3 +298,15 @@ after a forced write failure, then explicit retry succeeded. Evidence in
 D:/LorefyDevelopment/QA/remaining-repairs-20261017/import-save-focused.txt
 and import-save-browser.json. [[sessions/2026-10-17-Import-Save-Failure]]. A failed rollback
 is distinctly reported; no atomic multi-key/cloud/device guarantee.
+
+## CSV/TSV and integrated source verification — 2026-10-17
+
+LF-046 on ca18a18 plus patch: **1751/1751 full passed**, zero failures, exit 0
+(239320ms), focused 138/138. This includes LF-043/044/045 and the cache/test
+compatibility repairs. Eleven CSV cases (initial nine: six failed).
+Chrome imported actual QA files through FileReader/preview/confirmation: TSV
+with leading blank lines preserves statuses and 4.25/3.5; a multiline Goodreads
+review is a single record, with no phantom work. SHA-256 matched growth/index/sw
+in all three trees. Evidence: D:/LorefyDevelopment/QA/remaining-repairs-20261017/
+csv-record-full-tests.txt and csv-record-browser.json. [[sessions/2026-10-17-Import-CSV-Records]].
+No real provider account, production sync or physical-device certification.

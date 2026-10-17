@@ -37,3 +37,10 @@
 الذي ساوى إصدار loader URL بإصدار بيانات shards. عُدّل ليتحقق من
 workerVersion بعد الفصل، مع بقاء تأكيد نسخة identity نفسها. لا تغيير مصدر
 لهذا التعديل الاختباري. إيصال المجموعة في search-alias-worker-compat.txt.
+
+## Current-source full verification
+
+فحص المصدر اللاحق مع LF-046 على ca18a18 plus patch: **1751/1751**،
+صفر فشل، exit 0 (239320ms). csv-record-full-tests.txt في مجلد QA نفسه.
+هذه نتيجة جديدة تشمل الإصلاح وتوافق الكاش؛ لا تمحو إيصالات الفشل السابقة.
+[[sessions/2026-10-17-Import-CSV-Records]]

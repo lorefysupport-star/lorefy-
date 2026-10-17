@@ -2987,26 +2987,58 @@
     return { rows: rows, misses: misses };
   }
   function imParseCsvLine(line) {
-    var out = [], cur = "", inQ = false;
-    for (var i = 0; i < line.length; i++) {
-      var ch = line[i];
-      if (inQ) { if (ch === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else inQ = false; } else cur += ch; }
-      else if (ch === '"') inQ = true;
-      else if (ch === ",") { out.push(cur); cur = ""; }
-      else cur += ch;
+    return imParseCsvRows(line, ",")[0] || [""];
+  }
+  function imParseCsvRows(text, separator) {
+    text = String(text || "").replace(/^\uFEFF/, "").replace(/^(?:[ \t]*(?:\r\n|\r|\n))+/, "");
+    if (!separator) {
+      var quoted = false, commas = 0, tabs = 0;
+      for (var h = 0; h < text.length; h++) {
+        var headerChar = text[h];
+        if (headerChar === '"') {
+          if (quoted && text[h + 1] === '"') h++;
+          else quoted = !quoted;
+        } else if (!quoted) {
+          if (headerChar === "\r" || headerChar === "\n") break;
+          if (headerChar === ",") commas++;
+          if (headerChar === "\t") tabs++;
+        }
+      }
+      separator = tabs > commas ? "\t" : ",";
     }
-    out.push(cur);
-    return out;
+    var records = [], record = [], field = "", inQuotes = false;
+    function endRecord() {
+      record.push(field); field = "";
+      if (record.some(function (value) { return value.trim(); })) records.push(record);
+      record = [];
+    }
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (inQuotes) {
+        if (ch === '"') {
+          if (text[i + 1] === '"') { field += '"'; i++; }
+          else inQuotes = false;
+        } else field += ch;
+      } else if (ch === '"') inQuotes = true;
+      else if (ch === separator) { record.push(field); field = ""; }
+      else if (ch === "\r" || ch === "\n") {
+        if (ch === "\r" && text[i + 1] === "\n") i++;
+        endRecord();
+      } else field += ch;
+    }
+    if (inQuotes) throw new Error(uiText("ملف CSV غير صالح: علامة اقتباس غير مغلقة.", "Invalid CSV: an unfinished quoted field."));
+    if (field.length || record.length) endRecord();
+    return records;
   }
   function imParseGoodreads(text) {
-    var lines = text.split(/\r?\n/).filter(function (l) { return l.trim(); });
+    var lines = imParseCsvRows(text, ",");
     if (!lines.length) throw new Error("ملف فارغ");
-    var head = imParseCsvLine(lines[0]).map(function (h) { return h.trim().toLowerCase(); });
+    var head = lines[0].map(function (h) { return h.trim().toLowerCase(); });
     var iT = head.indexOf("title"), iR = head.indexOf("my rating"), iS = head.indexOf("exclusive shelf");
     if (iT < 0) throw new Error("الملف لا يبدو تصدير Goodreads (لا يوجد عمود Title)");
     var rows = [], misses = 0;
     for (var i = 1; i < lines.length; i++) {
-      var c = imParseCsvLine(lines[i]);
+      var c = lines[i];
       var w = imFindByTitle(c[iT] || "");
       if (!w) { misses++; continue; }
       var shelf = (iS >= 0 ? c[iS] : "") || "";
@@ -3028,9 +3060,9 @@
   /* generic CSV: auto-detect title/status/rating columns — covers StoryGraph,
      LibraryThing, Anime-Planet, League of Comic Geeks وغيرها */
   function imParseGenericCsv(text, defStatus) {
-    var lines = text.split(/\r?\n/).filter(function (l) { return l.trim(); });
+    var lines = imParseCsvRows(text);
     if (lines.length < 2) throw new Error("ملف فارغ أو بلا صفوف");
-    var head = imParseCsvLine(lines[0]).map(function (h) { return h.trim().toLowerCase(); });
+    var head = lines[0].map(function (h) { return h.trim().toLowerCase(); });
     function col(cands) { for (var i = 0; i < cands.length; i++) { var at = head.indexOf(cands[i]); if (at >= 0) return at; } return -1; }
     var iT = col(["title", "name", "book title", "series", "manga", "work", "العنوان"]);
     if (iT < 0) throw new Error("لم أجد عمود العنوان (Title) في الملف");
@@ -3038,7 +3070,7 @@
     var iR = col(["star rating", "my rating", "rating", "score"]);
     var rows = [], misses = 0;
     for (var i = 1; i < lines.length; i++) {
-      var c = imParseCsvLine(lines[i]);
+      var c = lines[i];
       var w = imFindByTitle(c[iT] || "");
       if (!w) { misses++; continue; }
       var status = (iS >= 0 && imStatusWord(c[iS])) || defStatus || IM_DONE;
