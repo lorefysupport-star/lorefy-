@@ -310,3 +310,16 @@ review is a single record, with no phantom work. SHA-256 matched growth/index/sw
 in all three trees. Evidence: D:/LorefyDevelopment/QA/remaining-repairs-20261017/
 csv-record-full-tests.txt and csv-record-browser.json. [[sessions/2026-10-17-Import-CSV-Records]].
 No real provider account, production sync or physical-device certification.
+
+## Source summary batch and provenance label — 2026-10-17
+
+LF-047 on ace871c plus patch: 8 new cases, focused **111/111**, browser AR/EN
+visible descriptions and source labels; source-attribution-browser.json.
+Pre-label full 1757/1757; final full 1758/1759 found native catalog asset
+parity. The existing runtime-config test regenerated catalogs/ios-web. Diff
+review found exactly one changed work (Nimona synopsis fields), unchanged
+121920 records, search index sourceHash only. Three specific generated assets
+synced and SHA-256 matched; parity test **1/1**, follow-up contracts **30/30**.
+Evidence: D:/LorefyDevelopment/QA/remaining-repairs-20261017/editorial-next-*.
+[[sessions/2026-10-17-Source-Summary-Batch]]. Full failed run remains historical; isolate
+the mutating config test before repeating it. No native build/service claim.

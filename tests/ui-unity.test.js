@@ -35,7 +35,7 @@ test('updated UI assets use fresh cache keys', () => {
       'modules/lorefy-public-profile.js':'20261016-reading-estimate-v1',
       'modules/lorefy-i18n.js':'20261016-statistics-activity-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',
-      'uploads/files/lorefy-app.js':'20261017-review-image-owner-v1'
+      'uploads/files/lorefy-app.js':'20261017-source-label-v1'
     };
     const version = versions[asset];
     const versioned = asset + '?v=' + version;
