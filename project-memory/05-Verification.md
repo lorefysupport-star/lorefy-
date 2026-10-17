@@ -199,3 +199,10 @@ LF-034 on 20fca00 plus patch: **1431/1431 passed**, zero failures, exit 0.
 20 regressions (18 failed before patch); 75/75 related cases. Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/review-mutation-full-tests.txt`.
 Isolated demo home 390px had no pageerrors. No live account mutations/device certification.
 [[sessions/2026-10-17-Review-Mutation-Session]] records the remaining cleanup atomicity and service boundary.
+
+## Profile relationship ownership — 2026-10-17
+
+LF-035 on 73447e3 plus patch: **1476/1476 passed**, zero failures, exit 0.
+45 regressions (36 failed before patch), 84/84 related cases. Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/profile-relationship-full-tests.txt`.
+backend/index/sw SHA-256 match both native web copies. No live follow/block writes,
+RLS/visibility certification or new native binary. [[sessions/2026-10-17-Profile-Relationship-Session]].

@@ -558,11 +558,15 @@
         writeLS("lorefy.user.following.v1", JSON.stringify(local.slice(0, 500)));
         return following;
       }
+      var request = mediaRequestScope(this);
       var session = await this.getSession();
+      assertMediaRequest(this, request);
+      if (session && session.userId !== request.owner) throw invalidSessionError();
       if (!session || !session.userId || session.userId === profileId) return false;
       var result = following
         ? await this.client.from("profile_follows").upsert({ follower_id: session.userId, following_id: profileId }, { onConflict:"follower_id,following_id", ignoreDuplicates:true })
         : await this.client.from("profile_follows").delete().eq("follower_id", session.userId).eq("following_id", profileId);
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return following;
     },
@@ -1682,12 +1686,17 @@
       return { id:result.data, status:"open" };
     },
     setProfileBlock: async function(profileId, blocked){
-      if (!await this.getSession()) throw invalidSessionError();
-      if (!isUuid(profileId) || profileId === this.user.id) throw new Error("Invalid profile.");
+      var request = this.mode === "live" ? mediaRequestScope(this) : null;
+      var session = await this.getSession();
+      if (request) assertMediaRequest(this, request);
+      if (!session || request && session.userId !== request.owner) throw invalidSessionError();
+      var owner = request ? request.owner : this.user.id;
+      if (!isUuid(profileId) || profileId === owner) throw new Error("Invalid profile.");
       var query = this.client.from("profile_blocks");
       var result = blocked === false
-        ? await query.delete().eq("blocker_id", this.user.id).eq("blocked_id", profileId)
-        : await query.upsert({ blocker_id:this.user.id, blocked_id:profileId }, { onConflict:"blocker_id,blocked_id" });
+        ? await query.delete().eq("blocker_id", owner).eq("blocked_id", profileId)
+        : await query.upsert({ blocker_id:owner, blocked_id:profileId }, { onConflict:"blocker_id,blocked_id" });
+      if (request) assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return blocked !== false;
     },
