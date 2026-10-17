@@ -40,8 +40,12 @@ test('the background catalog worker uses the current identity implementation', (
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const identityVersion = html.match(/modules\/lorefy-catalog-identity\.js\?v=([^" ]+)/)[1];
   assert.ok(worker.includes('lorefy-catalog-identity.js?v=' + identityVersion));
-  const loaderVersion = html.match(/modules\/lorefy-catalog-loader\.js\?v=([^" ]+)/)[1];
-  assert.ok(loader.includes('var workerVersion = "' + loaderVersion + '"'));
+  const workerVersion = loader.match(/var workerVersion = "([^"]+)"/)[1];
+  const serviceWorker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  for (const name of ['lorefy-catalog-worker.js','lorefy-catalog-search-worker.js']) {
+    assert.ok(serviceWorker.includes('modules/' + name + '?v=' + workerVersion));
+    assert.ok(loader.includes('"modules/' + name + '?v=" + workerVersion'));
+  }
 });
 
 test('comic search keeps different Batman runs separate despite matching titles', () => {

@@ -352,6 +352,7 @@
   }
 
   function loadSearchBatch(generation, first) {
+    var batchStart = searchCursor;
     var parts = [], expected = 0;
     var target = first ? 160 : 120;
     var limit = first ? 12 : 8;
@@ -363,19 +364,27 @@
     }
     if (!parts.length) { searchBusy = false; refreshSearchStatus(); return Promise.resolve(); }
     searchBusy = true;
+    searchError = false;
     refreshSearchStatus();
     return enqueue(parts, {
       gapMs: 80,
       shouldContinue: function () { return generation === searchGeneration; }
+    }).then(function () {
+      if (generation !== searchGeneration) return;
+      if (parts.some(function (part) { return !loaded.has(part); })) {
+        // Keep the failed page reachable; successful shards remain loaded.
+        searchCursor = batchStart;
+        searchError = true;
+      }
     }).finally(function () {
       if (generation === searchGeneration) { searchBusy = false; refreshSearchStatus(); }
     });
   }
 
-  function scheduleSearch(query, type) {
+  function scheduleSearch(query, type, retry) {
     query = String(query || "").trim();
     type = String(type || "All");
-    if (query === searchQuery && type === searchType) return;
+    if (query === searchQuery && type === searchType && (searchBusy || !retry && !searchError)) return;
     searchQuery = query;
     searchType = type;
     searchGeneration += 1;
@@ -544,6 +553,9 @@
       });
     },
     loadMore: loadMore,
+    retrySearch: function () {
+      if (searchQuery && !searchBusy) scheduleSearch(searchQuery, searchType, true);
+    },
     // Explore's format page uses the same shard/search pipeline without
     // leaving Explore or adding redundant global format controls.
     loadFormat: function (type, query) {

@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v502-editorial-comics';
+const CACHE = 'lorefy-v503-search-retry';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -52,7 +52,7 @@ const CORE = [
   './modules/lorefy-cover-api.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-plan.js?v=20261010-catalog-demand-v1',
-  './modules/lorefy-catalog-loader.js?v=20261017-editorial-comics-v1',
+  './modules/lorefy-catalog-loader.js?v=20261018-search-retry-v1',
   './modules/lorefy-catalog-search-worker.js?v=20261017-editorial-comics-v1',
   './modules/lorefy-catalog-identity.js?v=20261010-identity-batch-v1',
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
@@ -117,11 +117,11 @@ const CORE = [
   './styles/lorefy-character-atlas.css?v=20261007-character-atlas-v1',
   './modules/lorefy-work-relations.js?v=20261007-work-relations-v3',
   './styles/lorefy-work-relations.css?v=20261007-work-relations-v3',
-  './modules/lorefy-explore-studio.js?v=20261015-github-sync-v1',
-  './styles/lorefy-explore-studio.css?v=20261016-friend-rating-rows-v1',
+  './modules/lorefy-explore-studio.js?v=20261018-search-retry-v1',
+  './styles/lorefy-explore-studio.css?v=20261018-search-retry-v1',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1',
-  './uploads/files/lorefy-app.js?v=20261017-source-label-v1',
+  './uploads/files/lorefy-app.js?v=20261018-search-retry-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',

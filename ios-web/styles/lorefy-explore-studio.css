@@ -131,6 +131,7 @@
 .lf-explore-format-grid { padding:8px 18px 0; }
 .lf-explore-more { min-height:44px; display:grid; place-items:center; padding:8px 18px; }
 .lf-explore-more button { width:100%; min-height:44px; border:1px solid var(--ui-line); background:var(--ui-fill); color:var(--ui-action); }
+.lf-explore-studio .lf-explore-search-retry { min-height:44px; padding:8px 16px; border:1px solid var(--ui-line); border-radius:10px; background:var(--ui-fill); color:var(--ui-action); }
 .lf-explore-studio .lf-friend-activity.is-compact { padding:0 18px; border:0; color:var(--ui-ink); margin:0 0 12px; }
 .lf-explore-studio .lf-friend-section + .lf-friend-section { margin-top:12px; }
 .lf-explore-studio .lf-friend-section > header { margin-bottom:8px; min-height:44px; }

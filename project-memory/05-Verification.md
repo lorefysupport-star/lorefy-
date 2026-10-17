@@ -366,3 +366,7 @@ review does not certify contributor roles, edition years, covers or rights.
 - [[bugs/LF-052-Comic-Sample-Summaries]]: استُكملت أوصاف الكوميكس الـ21 المتبقية؛ جميع كوميكس العينة الـ24 لها AR/EN، مع 42 صفحة/لغة وفصل وصف المجلد الثاني عن العدد الثاني؛ [[sessions/2026-10-17-Comic-Sample-Summaries]]. مصدر Peanuts فهرس Open Library، لا تحقق ناشر؛ حقوق الصور والطبعات مستقلة.
 
 - LF-052: **1883/1883** كاملة، صفر فشل، exit 0؛ الدليل comics-full-tests.txt. [[sessions/2026-10-17-Comic-Sample-Summaries]]
+
+- [[bugs/LF-053-Catalog-Search-Retry]]: فشل الفهرس أو جزء نتائج لا يتحول إلى «لا توجد نتائج»؛ زر retry يعيد نفس البحث والنوع، والأجزاء الناجحة تبقى محملة؛ [[sessions/2026-10-18-Catalog-Search-Retry]]. لا تصحيح إملائي أو اختبار مزود/جهاز حي ضمن هذه الدفعة.
+
+- LF-053: **1894/1894** كاملة نهائية، صفر فشل، exit 0؛ search-retry-full-tests-final.txt. الملفات الـ9 المراقبة بقيت SHA-256 وmtime كما كانت. [[sessions/2026-10-18-Catalog-Search-Retry]]
