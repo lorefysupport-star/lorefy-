@@ -289,3 +289,12 @@ and import-session-browser.json. Full first run 1728/1730, second 1730/1731:
 cache integration and obsolete version assertions were corrected and their
 focused tests passed; these runs are not relabeled as a full pass.
 [[sessions/2026-10-17-Import-Request-Session]]. No live service/device claim.
+
+## Import save failure — 2026-10-17
+
+LF-045 on 8001097 plus patch: **86/86 focused passed**, 7 unit cases (6 failed before)
+and 2 UI cases. Chrome isolated actual Web Storage retained previous raw values
+after a forced write failure, then explicit retry succeeded. Evidence in
+D:/LorefyDevelopment/QA/remaining-repairs-20261017/import-save-focused.txt
+and import-save-browser.json. [[sessions/2026-10-17-Import-Save-Failure]]. A failed rollback
+is distinctly reported; no atomic multi-key/cloud/device guarantee.

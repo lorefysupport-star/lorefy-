@@ -10,12 +10,12 @@ function harness(){
     querySelectorAll(){return[];},click(){if(this.handlers.click&&!this.disabled)return this.handlers.click();}};
     let text=attrs.text||'';Object.defineProperty(n,'textContent',{get:()=>text,set:v=>{text=String(v);n.children=[];}});
     nodes.push(n);return n;}
-  const page=el('div'),body=el('div'),storage={getItem:k=>values.get(k)||null};
+  const page=el('div'),body=el('div'),storage={getItem:k=>values.get(k)||null,setItem(k,v){if(hooks.restore)hooks.restore(k,v);values.set(k,String(v));},removeItem:k=>values.delete(k)};
   const global={localStorage:storage,LorefyBackend:{mode:'live',user:{id:'a'},client:{},_communityEpoch:1},
     dispatchEvent:e=>events.push(e),CustomEvent:function(type,options){this.type=type;this.detail=options.detail;}};
   const scope={global,el,ovOpen:()=>({page,body,close(){page.inert=true;page.isConnected=false;}}),
     read:(k,fallback)=>values.has(k)?JSON.parse(values.get(k)):fallback,
-    write:(k,v)=>{writes.push(k);values.set(k,JSON.stringify(v));return true;},
+    write:(k,v)=>{writes.push(k);if(hooks.write&&hooks.write(k,v)===false)return false;values.set(k,JSON.stringify(v));return true;},
     uiText:(ar,en)=>en,toastSafe:t=>notices.push(t),mlTitleOf:w=>w.title,mlResultCover:w=>el('img',{alt:w.title}),
     imBuildMaps:()=>({byTitle:new Map(works.map(w=>[w.title.toLowerCase(),[w]]))}),imNorm:s=>s.toLowerCase(),
     imFindByTitle:s=>works.find(w=>w.title===s),imReadFileText:(file,cb,fail)=>fileReads.push({file,cb,fail}),
@@ -94,4 +94,21 @@ test('an older success does not hide an error from the newest file attempt',()=>
 test('an old import window cannot start a provider request under the next account',async()=>{
   const h=harness();let calls=0;h.hooks.anilist=async()=>{calls++;return result(h,0);};h.transition();
   await h.network('anilist');assert.equal(calls,0);assert.equal(h.writes.length,0);assert.equal(h.page.isConnected,false);
+});
+
+test('a failed import save retains the preview, reports the failure and permits an explicit retry',()=>{
+  const h=harness(),file=h.file(0);file.cb('first');let calls=0;h.hooks.write=()=>++calls!==2;
+  const confirm=h.confirm();confirm.click();assert.equal(h.events.length,0);assert.ok(!h.find('lf-im-summary'));
+  assert.equal(confirm.disabled,false);assert.equal(h.find('lf-im-save-error').attrs.role,'alert');
+  assert.ok(h.find('lf-im-save-error').textContent.includes('Unable to save'));
+  assert.deepEqual(JSON.parse(h.values.get('lorefy.user.library.v2')),{keep:'paused'});
+  h.hooks.write=null;confirm.click();assert.ok(h.find('lf-im-summary'));assert.equal(h.events.length,3);
+  assert.equal(JSON.parse(h.values.get('lorefy.user.library.v2')).first,'reading');
+});
+test('a partial storage rollback requires library review and cannot offer a misleading immediate retry',()=>{
+  const h=harness(),original=h.values.get('lorefy.user.library.v2'),file=h.file(0);file.cb('first');let calls=0,failed=false;
+  h.hooks.write=()=>{if(++calls===2){failed=true;return false;}return true;};
+  h.hooks.restore=(k,v)=>{if(failed&&k==='lorefy.user.library.v2'&&v===original)throw Error('restore unavailable');};
+  h.confirm().click();assert.equal(h.events.length,0);assert.ok(!h.find('lf-im-summary'));
+  assert.equal(h.confirm().disabled,true);assert.ok(h.find('lf-im-save-error').textContent.includes('partly saved'));
 });

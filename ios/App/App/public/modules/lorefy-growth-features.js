@@ -2892,6 +2892,9 @@
   }
   /* rows: [{work, status, chapters, score(1-5|0)}] → merge into app storage */
   function imApply(rows) {
+    var keys = ["lorefy.user.library.v2", "lorefy.user.progress.v2", "lorefy.user.privateReviews.v2"];
+    var storage = global.localStorage;
+    var previous = keys.map(function (key) { return storage.getItem(key); });
     var lib = read("lorefy.user.library.v2", {}) || {};
     var prog = read("lorefy.user.progress.v2", {}) || {};
     var revs = read("lorefy.user.privateReviews.v2", []) || [];
@@ -2914,10 +2917,27 @@
         revHas[mid] = 1; ratings++;
       }
     });
-    write("lorefy.user.library.v2", lib);
-    write("lorefy.user.progress.v2", prog);
-    write("lorefy.user.privateReviews.v2", revs);
-    ["lorefy.user.library.v2", "lorefy.user.progress.v2", "lorefy.user.privateReviews.v2"].forEach(function (key) {
+    var updates = [lib, prog, revs];
+    try {
+      keys.forEach(function (key, index) {
+        if (!write(key, updates[index])) throw new Error("Import storage write failed.");
+      });
+    } catch (error) {
+      var restored = true;
+      keys.forEach(function (key, index) {
+        try {
+          if (storage.getItem(key) !== previous[index]) {
+            if (previous[index] === null) storage.removeItem(key);
+            else storage.setItem(key, previous[index]);
+          }
+          if (storage.getItem(key) !== previous[index]) restored = false;
+        } catch (restoreError) { restored = false; }
+      });
+      var failure = new Error("Unable to save imported library.");
+      failure.code = restored ? "LOREFY_IMPORT_SAVE_FAILED" : "LOREFY_IMPORT_PARTIAL_SAVE";
+      throw failure;
+    }
+    keys.forEach(function (key) {
       global.dispatchEvent(new global.CustomEvent("lorefy:stored-state", { detail: { key: key } }));
     });
     return { added: added, ratings: ratings, skipped: skipped };
@@ -3139,12 +3159,29 @@
       preview.appendChild(more);
       preview.appendChild(el("p", { role:"status", text:selectedRows.length + uiText(" مطابقة", " matches") + (res.misses ? " · " + res.misses + uiText(" غير مطابق", " unmatched") : '') }));
       var confirm = el("button", { type:"button", class:"lf-im-confirm lf-im-go", text:uiText("تأكيد الاستيراد", "Confirm import") });
+      var saveError = null;
       confirm.disabled = !selectedRows.length;
       confirm.addEventListener("click", function () {
         if (confirm.disabled || !currentAttempt(attempt)) return;
         confirm.disabled = true;
         selectedRows = selectedRows.filter(function (row) { return !!row.work; });
-        var out = imApply(selectedRows);
+        if (saveError) saveError.hidden = true;
+        var out;
+        try { out = imApply(selectedRows); }
+        catch (error) {
+          if (!currentAttempt(attempt)) return;
+          var partial = error && error.code === "LOREFY_IMPORT_PARTIAL_SAVE";
+          confirm.disabled = !!partial;
+          if (!saveError) {
+            saveError = el("p", { class:"lf-im-error lf-im-save-error", role:"alert" });
+            preview.appendChild(saveError);
+          }
+          saveError.textContent = partial
+            ? uiText("لم يكتمل الحفظ وقد بقيت بعض التغييرات. راجع مكتبتك قبل إعادة الاستيراد.", "Import was only partly saved. Check your library before importing again.")
+            : uiText("تعذر تأكيد حفظ الاستيراد. حاول مجددًا.", "Unable to save your import. Please try again.");
+          saveError.hidden = false;
+          return;
+        }
         if (currentAttempt(attempt)) renderResult(out,res,sourceLabel);
       });
       preview.appendChild(confirm);
