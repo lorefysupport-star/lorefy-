@@ -4,6 +4,11 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest completed source follow-up: [[sessions/2026-10-17-Notification-Backend-Session]],
+**1566/1566 passing tests**, zero failures, 2026-10-17. Isolated AR/EN demo
+home opened without pageerrors; backend/index/sw hashes match both native web
+copies. Live RLS/APNs/installed-device evidence remains separate.
+
 Latest profile follow-up: [[sessions/2026-10-17-Profile-Mutation-Owner]],
 1374/1374 tests passed. Profile/privacy/onboarding results are bound to their
 opening account. Supabase project inspection was denied by the connector;
@@ -223,3 +228,11 @@ LF-037 on e629e43 plus patch: **1526/1526 passed**, zero failures, exit 0.
 comment-only, spoiler flag and owner-scoped deletion remain verified.
 Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/chapter-session-full-tests.txt`.
 [[sessions/2026-10-17-Chapter-Review-Session]]. No live writes, RLS or installed-device certification.
+
+## Notification Backend and channel ownership — 2026-10-17
+
+LF-038 on 271f6ad plus patch: **1566/1566 passed**, zero failures, exit 0.
+First 37 new cases had 34 failures; final 40 cases and related 64/64 passed.
+Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/notification-backend-full-tests.txt`.
+Isolated home AR/EN and matching source/native web assets are recorded in
+[[sessions/2026-10-17-Notification-Backend-Session]]. No live push send, service deployment or native build.

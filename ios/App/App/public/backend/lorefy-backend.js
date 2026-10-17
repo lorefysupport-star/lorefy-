@@ -703,8 +703,11 @@
         try{ await this.unregisterPushDevice(installationId); }catch(e){}
       }
       if (this._notificationChannel && this.client){
-        try{ await this.client.removeChannel(this._notificationChannel); }catch(e){}
+        var notificationChannel = this._notificationChannel;
+        var notificationClient = this._notificationChannelClient || this.client;
         this._notificationChannel = null;
+        this._notificationChannelClient = null;
+        try{ await notificationClient.removeChannel(notificationChannel); }catch(e){}
       }
       if (this.mode === "live"){ try{ await this.client.auth.signOut({ scope:"local" }); }catch(e){} }
       try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
@@ -1811,8 +1814,10 @@
     registerPushDevice: async function(input){
       input = input || {};
       if (this.mode !== "live") return false;
+      var request = mediaRequestScope(this);
       var session = await this.getSession();
-      if (!session) throw invalidSessionError();
+      assertMediaRequest(this, request);
+      if (!session || session.userId !== request.owner) throw invalidSessionError();
       var installationId = String(input.installationId || "").trim();
       var token = String(input.token || "").trim();
       var platform = String(input.platform || "ios").toLowerCase();
@@ -1829,6 +1834,7 @@
         device_locale:String(input.locale || "ar").slice(0, 16),
         client_version:String(input.appVersion || "").slice(0, 32)
       });
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return result.data || true;
     },
@@ -1836,19 +1842,25 @@
       if (this.mode !== "live") return false;
       installationId = String(installationId || "").trim();
       if (!isUuid(installationId)) return false;
+      var request = mediaRequestScope(this);
       var result = await this.client.rpc("unregister_push_device", { installation_ref:installationId });
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return result.data === true;
     },
     listNotifications: async function(limit){
       if (this.mode !== "live") return [];
+      var request = mediaRequestScope(this);
       var session = await this.getSession();
+      assertMediaRequest(this, request);
       if (!session) return [];
+      if (session.userId !== request.owner) throw invalidSessionError();
       var result = await this.client.from("notifications")
         .select("id,actor_id,kind,title,body,target_path,data,read_at,created_at")
         .eq("user_id", session.userId)
         .order("created_at", { ascending:false })
         .limit(Math.min(Math.max(Number(limit) || 50, 1), 100));
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return Array.isArray(result.data) ? result.data.filter(function(row){ return row && row.actor_id !== session.userId; }) : [];
     },
@@ -1856,30 +1868,50 @@
       if (this.mode !== "live") return 0;
       var ids = notificationIds == null ? null : (Array.isArray(notificationIds) ? notificationIds : [notificationIds]);
       if (ids && (ids.length > 200 || ids.some(function(id){ return !isUuid(id); }))) throw new Error("Invalid notification selection.");
+      var request = mediaRequestScope(this);
       var result = await this.client.rpc("mark_notifications_read", { notification_ids:ids });
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return Number(result.data) || 0;
     },
     subscribeNotifications: async function(callback){
       if (this.mode !== "live" || typeof callback !== "function") return function(){};
+      var request = mediaRequestScope(this);
+      var attempt = (this._notificationAttempt || 0) + 1;
+      this._notificationAttempt = attempt;
       var session = await this.getSession();
+      assertMediaRequest(this, request);
       if (!session) return function(){};
+      if (session.userId !== request.owner) throw invalidSessionError();
+      if (this._notificationAttempt !== attempt) return function(){};
+      var client = request.client;
       if (this._notificationChannel){
-        try{ await this.client.removeChannel(this._notificationChannel); }catch(e){}
+        var previous = this._notificationChannel;
+        var previousClient = this._notificationChannelClient || client;
+        this._notificationChannel = null;
+        this._notificationChannelClient = null;
+        try{ await previousClient.removeChannel(previous); }catch(e){}
+        assertMediaRequest(this, request);
+        if (this._notificationAttempt !== attempt) return function(){};
       }
       var self = this;
-      var channel = this.client.channel("notifications:" + session.userId)
+      var channel = client.channel("notifications:" + session.userId)
         .on("postgres_changes", {
           event:"INSERT", schema:"public", table:"notifications", filter:"user_id=eq." + session.userId
         }, function(payload){
+          if (!mediaRequestCurrent(self, request) || self._notificationChannel !== channel) return;
           var notification = payload && payload.new;
           if (notification && notification.actor_id !== session.userId) callback(notification);
         })
         .subscribe();
       this._notificationChannel = channel;
+      this._notificationChannelClient = client;
       return function(){
-        if (self._notificationChannel === channel) self._notificationChannel = null;
-        try{ self.client.removeChannel(channel); }catch(e){}
+        if (self._notificationChannel === channel) {
+          self._notificationChannel = null;
+          self._notificationChannelClient = null;
+        }
+        try{ Promise.resolve(client.removeChannel(channel)).catch(function(){}); }catch(e){}
       };
     },
 

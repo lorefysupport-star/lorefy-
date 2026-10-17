@@ -27,10 +27,10 @@ test('a failed identity-specific image lookup cannot fall back to name-only sear
 });
 test('notification list suppresses own actions but preserves system and other-user events',async()=>{
   const src=read('backend/lorefy-backend.js');
-  const begin=src.indexOf('    listNotifications: async function('),end=src.indexOf('    markNotificationsRead:',begin);
   const rows=[{id:'own',actor_id:'me'},{id:'system',actor_id:null},{id:'other',actor_id:'reader'}];
   const chain={select(){return this},eq(){return this},order(){return this},limit(){return Promise.resolve({data:rows})}};
-  const scope={};vm.runInNewContext('var api={'+src.slice(begin,end)+'};',scope);
-  Object.assign(scope.api,{mode:'live',getSession:async()=>({userId:'me'}),client:{from:()=>chain}});
-  assert.deepEqual(Array.from(await scope.api.listNotifications(),row=>row.id),['system','other']);
+  const window={};vm.runInNewContext(src,{window,console,URL,setTimeout,clearTimeout});
+  const api=window.LorefyBackend;
+  Object.assign(api,{mode:'live',user:{id:'me'},getSession:async()=>({userId:'me'}),client:{from:()=>chain}});
+  assert.deepEqual(Array.from(await api.listNotifications(),row=>row.id),['system','other']);
 });
