@@ -186,3 +186,9 @@ links corrected, workflow 4/4 and full rerun passed. Evidence: `D:/LorefyDevelop
 [[sessions/2026-10-17-Editorial-Detail-Synopsis]] records publisher sources and
 local browser results. Four repaired web files match both native web copies
 by SHA-256. This does not certify installed native UI, live service or all metadata.
+
+## Storage operation ownership — 2026-10-17
+
+LF-033 on e02ef95 plus patch: **1411/1411 passed**, zero failures, exit 0.
+24 regressions (23 failed before patch), 67/67 related cases. Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/storage-owner-full-tests.txt`.
+[[sessions/2026-10-17-Storage-Operation-Owner]] documents scope and limits; no live service/device certification.

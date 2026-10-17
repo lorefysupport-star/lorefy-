@@ -129,6 +129,7 @@ test('backend uploads immutable owner-scoped files with the raster MIME and no u
     fetch:async(url,options)=>{requests.push({url,options});return {ok:true};}
   });
   const b=window.LorefyBackend;
+  b.mode='live'; b.user={id:owner};
   b._storageHeaders=async type=>({'content-type':type,Authorization:'Bearer test'});
   b._storageObjectUrl=(prefix,object,bucket)=>`https://storage.test/${bucket}/${object}`;
   const first=await b._uploadCustomArtwork(owner,'covers',image);

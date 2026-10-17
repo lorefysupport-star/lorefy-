@@ -233,3 +233,5 @@ script أو نقل عنصر يملكه React قد يكسر حالة أو حدث�
 [[sessions/2026-10-17-Session-Read-Owner]] تغلق استجابة قراءة auth القديمة ومشاركة promise عبر الحسابات قبل طبقات حفظ المراجعة والملف.
 
 - [[bugs/LF-032-Editorial-Detail-Synopsis]]: استُكملت أوصاف ثلاثة أعمال AR/EN من الناشر؛ العينة لا تغلق جودة بقية الكتالوج. [[sessions/2026-10-17-Editorial-Detail-Synopsis]]
+
+- [[bugs/LF-033-Storage-Operation-Owner]]: نطاق حساب داخل عمليات رفع/توقيع/حذف Storage؛ لا اعتماد RLS أو جهاز. [[sessions/2026-10-17-Storage-Operation-Owner]]

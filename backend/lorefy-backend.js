@@ -839,9 +839,11 @@
       if (["image/jpeg","image/png","image/webp"].indexOf(file.type) === -1 || file.size > 5 * 1024 * 1024){
         throw new Error("اختر صورة JPEG أو PNG أو WebP أصغر من 5 MB.");
       }
+      var request = mediaRequestScope(this, userId);
       var extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
       var path = userId + "/" + kind + "." + extension;
-      var headers = await this._storageHeaders(file.type);
+      var headers = await this._storageHeaders(file.type, userId);
+      assertMediaRequest(this, request);
       headers["cache-control"] = "max-age=0";
       headers["x-upsert"] = "true";
       var response = await fetch(this._storageObjectUrl("", path, PROFILE_MEDIA_BUCKET), {
@@ -849,6 +851,7 @@
         headers:headers,
         body:file.body
       });
+      assertMediaRequest(this, request);
       if (!response.ok){
         var problem = null;
         try{ problem = await response.json(); }catch(e){}
@@ -862,14 +865,19 @@
       var fromUrl = storagePathFromUrl(value, bucket);
       if (fromUrl) value = fromUrl;
       if (/^(?:data:|https?:\/\/)/i.test(value)) return "";
-      var headers = await this._storageHeaders("application/json");
+      // The viewer owns this request; the image may belong to a permitted reader.
+      var request = mediaRequestScope(this);
+      var headers = await this._storageHeaders("application/json", request.owner);
+      assertMediaRequest(this, request);
       var response = await fetch(this._storageObjectUrl("sign", value, bucket), {
         method:"POST",
         headers:headers,
         body:JSON.stringify({ expiresIn:ttl || PROFILE_MEDIA_TTL })
       });
+      assertMediaRequest(this, request);
       var data = null;
       try{ data = await response.json(); }catch(e){}
+      assertMediaRequest(this, request);
       if (!response.ok) throw new Error(data && (data.message || data.error) || "تعذّر تحميل الصورة.");
       return data && data.signedURL ? global.LOREFY_SUPABASE.url + "/storage/v1" + data.signedURL : "";
     },
@@ -916,13 +924,16 @@
       if (!rasterDataUrl(value) || ["covers", "characters"].indexOf(kind) === -1) throw new Error("Invalid artwork image.");
       var file = dataUrlFile(value);
       if (["image/jpeg","image/png","image/webp"].indexOf(file.type) === -1 || file.size > 5 * 1024 * 1024) throw new Error("اختر صورة أصغر من 5 MB.");
+      var request = mediaRequestScope(this, userId);
       var extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
       var objectId = global.crypto && global.crypto.randomUUID ? global.crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
       var objectPath = userId + "/" + kind + "/" + objectId + "." + extension;
-      var headers = await this._storageHeaders(file.type);
+      var headers = await this._storageHeaders(file.type, userId);
+      assertMediaRequest(this, request);
       headers["cache-control"] = "max-age=3600";
       headers["x-upsert"] = "false";
       var response = await fetch(this._storageObjectUrl("", objectPath, "custom-covers"), {method:"POST", headers:headers, body:file.body});
+      assertMediaRequest(this, request);
       if (!response.ok){
         var problem = null;
         try{ problem = await response.json(); }catch(e){}
@@ -933,10 +944,13 @@
     _removeReviewMedia: async function(paths){
       paths = (Array.isArray(paths) ? paths : []).filter(Boolean);
       if (!paths.length) return true;
-      var headers = await this._storageHeaders("application/json");
+      var request = mediaRequestScope(this);
+      var headers = await this._storageHeaders("application/json", request.owner);
+      assertMediaRequest(this, request);
       var response = await fetch(global.LOREFY_SUPABASE.url + "/storage/v1/object/" + REVIEW_MEDIA_BUCKET, {
         method:"DELETE", headers:headers, body:JSON.stringify({ prefixes:paths })
       });
+      assertMediaRequest(this, request);
       if (!response.ok){
         var problem = null;
         try{ problem = await response.json(); }catch(e){}

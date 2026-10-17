@@ -79,3 +79,5 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 - [[bugs/LF-031-Session-Read-Owner]]: 10 حالات مصدر لفصل قراءات الجلسات وfinally؛ لا اعتماد تسجيل دخول حقيقي أو جهاز.
 
 - [[bugs/LF-032-Editorial-Detail-Synopsis]]: استُكملت أوصاف ثلاثة أعمال AR/EN من الناشر؛ العينة لا تغلق جودة بقية الكتالوج. [[sessions/2026-10-17-Editorial-Detail-Synopsis]]
+
+- [[bugs/LF-033-Storage-Operation-Owner]]: نطاق حساب داخل عمليات رفع/توقيع/حذف Storage؛ لا اعتماد RLS أو جهاز. [[sessions/2026-10-17-Storage-Operation-Owner]]
