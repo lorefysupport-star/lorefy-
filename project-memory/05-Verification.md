@@ -335,3 +335,14 @@ and test-isolation-files-before/after.json. [[sessions/2026-10-17-Test-Preparati
 The full result includes LF-047 summaries/labels and the reviewed native asset
 parity fix, superseding the failed parity run without relabeling its history.
 No native build, production config write or service deployment.
+
+## Travel, fiction and graphic memoir summaries — 2026-10-17
+
+LF-049 on 446b544 plus patch: **1766/1766 full passed**, zero failures, exit 0
+(58320ms), focused 73/73. Six new cases (three failed before), and actual
+local app AR/EN descriptions/source links visible on six pages. Selective
+part04 update changes only El Deafo synopsis fields; 162 other shards untouched,
+record count 121920 retained, eight assets match SHA-256 across three trees.
+Generated files retain hashes and mtime during the suite. Evidence:
+D:/LorefyDevelopment/QA/remaining-repairs-20261017/editorial-next2-*.
+[[sessions/2026-10-17-Travel-Fiction-Summaries]]. No full generator, build, account or service write.
