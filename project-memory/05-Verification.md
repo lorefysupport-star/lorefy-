@@ -192,3 +192,10 @@ by SHA-256. This does not certify installed native UI, live service or all metad
 LF-033 on e02ef95 plus patch: **1411/1411 passed**, zero failures, exit 0.
 24 regressions (23 failed before patch), 67/67 related cases. Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/storage-owner-full-tests.txt`.
 [[sessions/2026-10-17-Storage-Operation-Owner]] documents scope and limits; no live service/device certification.
+
+## Review mutation session ownership — 2026-10-17
+
+LF-034 on 20fca00 plus patch: **1431/1431 passed**, zero failures, exit 0.
+20 regressions (18 failed before patch); 75/75 related cases. Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/review-mutation-full-tests.txt`.
+Isolated demo home 390px had no pageerrors. No live account mutations/device certification.
+[[sessions/2026-10-17-Review-Mutation-Session]] records the remaining cleanup atomicity and service boundary.

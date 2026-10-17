@@ -1631,29 +1631,41 @@
     deleteReview: async function(reviewId){
       if (this.mode !== "live") return true;
       if (!isUuid(reviewId)) return true;
+      var request = mediaRequestScope(this);
       var found = await this.client.from("reviews").select("image_urls").eq("id", String(reviewId)).maybeSingle();
+      assertMediaRequest(this, request);
       if (found.error) throw found.error;
       await this._removeReviewMedia(found.data && found.data.image_urls);
+      assertMediaRequest(this, request);
       var removed = await this.client.from("reviews").delete().eq("id", String(reviewId));
+      assertMediaRequest(this, request);
       if (removed.error) throw removed.error;
       return true;
     },
     addReviewComment: async function(reviewId, body, parentId){
-      if (!await this.getSession()) throw invalidSessionError();
+      var request = this.mode === "live" ? mediaRequestScope(this) : null;
+      var session = await this.getSession();
+      if (request) assertMediaRequest(this, request);
+      if (!session || request && session.userId !== request.owner) throw invalidSessionError();
       if (!isUuid(reviewId)) return null;
       body = String(body || "").trim().slice(0, 2000);
       if (!body) throw new Error("Comment cannot be empty.");
       parentId = isUuid(parentId) ? String(parentId) : null;
       var result = await this.client.rpc("publish_review_comment", { review_ref:String(reviewId), comment_body:body, parent_ref:parentId });
+      if (request) assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return Array.isArray(result.data) ? result.data[0] : result.data;
     },
     setReviewReaction: async function(reviewId, kind, active){
-      if (!await this.getSession()) throw invalidSessionError();
+      var request = this.mode === "live" ? mediaRequestScope(this) : null;
+      var session = await this.getSession();
+      if (request) assertMediaRequest(this, request);
+      if (!session || request && session.userId !== request.owner) throw invalidSessionError();
       if (!isUuid(reviewId)) return active !== false;
       kind = String(kind || "");
       if (["like","dislike","heart"].indexOf(kind) === -1) throw new Error("Unsupported reaction.");
       var result = await this.client.rpc("set_review_reaction", { review_ref:String(reviewId), reaction_kind:kind, reaction_active:active !== false });
+      if (request) assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return active !== false;
     },

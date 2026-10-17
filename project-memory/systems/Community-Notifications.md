@@ -64,3 +64,5 @@ APNs I/O. الإصلاح لم يُنشر، وتلك الجولة لم تثبت �
 
 ## صفوف تقييم الأصدقاء
 [[sessions/2026-10-16-Friend-Rating-Rows]] وحدت هندسة الاسم والتقييم في [CSS](../../styles/lorefy-explore-studio.css). لا تغيير لمنطق المتابعة أو القيم الكسرية أو الحسابات.
+
+- [[bugs/LF-034-Review-Mutation-Session]]: منع طلب حذف/رد/تفاعل مراجعة قديم من استكمال سلسلة حساب آخر أو إرجاع نجاح متأخر. [[sessions/2026-10-17-Review-Mutation-Session]]

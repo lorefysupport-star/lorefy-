@@ -50,3 +50,5 @@ aliases: ["حساب", "دخول", "مزامنة", "ضياع", "auth", "offline",
 [[sessions/2026-10-17-Session-Read-Owner]] تعزل قراءة auth وpromise المشتركة عن تغير الحساب؛ لا يعاد user قديم أو تمسح جلسة جديدة برد قديم.
 
 - [[bugs/LF-033-Storage-Operation-Owner]]: نطاق حساب داخل عمليات رفع/توقيع/حذف Storage؛ لا اعتماد RLS أو جهاز. [[sessions/2026-10-17-Storage-Operation-Owner]]
+
+- [[bugs/LF-034-Review-Mutation-Session]]: منع طلب حذف/رد/تفاعل مراجعة قديم من استكمال سلسلة حساب آخر أو إرجاع نجاح متأخر. [[sessions/2026-10-17-Review-Mutation-Session]]
