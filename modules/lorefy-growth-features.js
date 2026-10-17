@@ -4091,6 +4091,8 @@
     var search = el("input", {
       type: "search",
       class: "lf-top-characters-editor-search",
+      dir: "auto",
+      style: "text-align: start",
       placeholder: uiText("ابحث عن عمل أو شخصية", "Search works or characters"),
       autocomplete: "off",
       "aria-label": uiText("ابحث عن عمل أو شخصية", "Search works or characters")
@@ -4417,6 +4419,8 @@
     var search = el("input", {
       type: "search",
       class: "lf-top-works-editor-search",
+      dir: "auto",
+      style: "text-align: start",
       placeholder: uiText("ابحث عن عمل لإضافته...", "Search for a work to add..."),
       autocomplete: "off",
       "aria-label": uiText("ابحث عن عمل لإضافته", "Search for a work to add")

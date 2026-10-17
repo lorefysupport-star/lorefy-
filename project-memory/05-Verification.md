@@ -379,6 +379,8 @@ review does not certify contributor roles, edition years, covers or rights.
 
 - LF-055: **1911/1911** كاملة، صفر فشل، exit0؛ shard-deadline-full-tests.txt. [[sessions/2026-10-18-Catalog-Shard-Deadline]]
 
-- [[bugs/LF-056-Search-Field-Lifecycle]]: كتابة البحث لا تُفقد عند تحديث النتائج، مع اتجاه النص التلقائي وزر مسح مسمّى يعيد التركيز؛ [[sessions/2026-10-18-Search-Field-Lifecycle]]. محرر المفضلة الحالي حقل مستقل؛ اتجاهه اللاتيني ضمن المتابعة.
+- [[bugs/LF-056-Search-Field-Lifecycle]]: كتابة البحث لا تُفقد عند تحديث النتائج، مع اتجاه النص التلقائي وزر مسح مسمّى يعيد التركيز؛ [[sessions/2026-10-18-Search-Field-Lifecycle]]. محرر المفضلة الحالي حقل مستقل؛ استكمل [[bugs/LF-057-Editor-Search-Direction]] اتجاهه.
 
 - LF-056: **1919/1919** كاملة نهائية، صفر فشل، exit0؛ search-field-full-tests-final.txt (177119ms). [[sessions/2026-10-18-Search-Field-Lifecycle]]
+
+- [[bugs/LF-057-Editor-Search-Direction]]: اتجاه بحث مفضلة الأعمال والشخصيات يتبع النص في الواجهتين؛ 8 حالات متصفح و110 اختبارات مرتبطة؛ [[sessions/2026-10-18-Editor-Search-Direction]]. لا تغيير للترتيب أو الحفظ.

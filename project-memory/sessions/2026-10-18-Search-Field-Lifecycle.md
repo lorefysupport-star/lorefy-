@@ -39,3 +39,5 @@ fragment دون تعريف LorefyStableInline. أضيف المحول الفعل�
 search-field-full-tests-final.txt.
 
 - LF-056: **1919/1919** كاملة نهائية، صفر فشل، exit0؛ search-field-full-tests-final.txt (177119ms). [[sessions/2026-10-18-Search-Field-Lifecycle]]
+
+متابعة المصدر: [[bugs/LF-057-Editor-Search-Direction]] استكمل اتجاه الحقلين المستقلين في المحرر الحالي، مع دليل منفصل.

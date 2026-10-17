@@ -1,5 +1,5 @@
 ---
-{"kind":"bug","id":"LF-056","status":"closed","priority":"P1","area":"controlled-search-field-lifecycle","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"d3dafa7","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Search-Field-Lifecycle]]","next_action":"Current favorites editor has an independent RTL input; fix its mixed-script direction separately. Typo/edition matrix and VoiceOver remain separate"}
+{"kind":"bug","id":"LF-056","status":"closed","priority":"P1","area":"controlled-search-field-lifecycle","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"d3dafa7","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Search-Field-Lifecycle]]","next_action":"Current editor direction addressed by LF-057; continue other search fields, typo/edition matrix and VoiceOver gates"}
 ---
 # LF-056: البحث يحفظ الكتابة والتركيز أثناء التحديث
 
@@ -21,3 +21,5 @@ LorefyStableInline القائم. تأجيل جدولة البحث إلى ما ب
 اتجاهها RTL للنص اللاتيني بقي للمتابعة، لا ادعاء إصلاحه بهذه الدفعة.
 
 [[sessions/2026-10-18-Search-Field-Lifecycle]] | [[systems/Catalog-Search]] | [[12-Device-Repairs]] | [[15-Work-Control]] | [[18-Progress-Handoff]]
+
+متابعة المصدر: [[bugs/LF-057-Editor-Search-Direction]] استكمل اتجاه الحقلين المستقلين في المحرر الحالي، مع دليل منفصل.
