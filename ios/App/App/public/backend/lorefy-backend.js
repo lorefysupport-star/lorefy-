@@ -145,6 +145,20 @@
     error.code = "LOREFY_SESSION_INVALID";
     return error;
   }
+  function mediaRequestScope(backend, expectedOwner){
+    var active = readLS(ACTIVE_USER_KEY), user = backend.user && backend.user.id;
+    var owner = expectedOwner || user || active;
+    if (!owner || user && user !== owner || active && active !== owner) throw invalidSessionError();
+    return {owner:owner, active:active, client:backend.client, epoch:backend._communityEpoch};
+  }
+  function mediaRequestCurrent(backend, request){
+    return backend.mode === "live" && global.LorefyBackend === backend &&
+      backend.client === request.client && backend._communityEpoch === request.epoch &&
+      (backend.user && backend.user.id) === request.owner && readLS(ACTIVE_USER_KEY) === request.active;
+  }
+  function assertMediaRequest(backend, request){
+    if (!mediaRequestCurrent(backend, request)) throw invalidSessionError();
+  }
   function reviewConflictError(){
     var error = new Error("لديك مراجعة سابقة لهذا العمل. حدّث مراجعتك بدلاً من إنشاء مراجعة ثانية.");
     error.code = "LOREFY_REVIEW_ALREADY_EXISTS";
@@ -771,9 +785,17 @@
       if (fallbackPath.indexOf(userId + "/") === 0) return fallbackPath;
       return "";
     },
-    _storageHeaders: async function(contentType){
-      var sessionResult = await this.client.auth.getSession();
+    _storageHeaders: async function(contentType, expectedOwner){
+      var client = this.client, epoch = this._communityEpoch, user = this.user && this.user.id;
+      var active = readLS(ACTIVE_USER_KEY);
+      expectedOwner = expectedOwner || user || active;
+      var sessionResult = await client.auth.getSession();
+      // A delayed auth failure belongs to its opening session, not the next one.
+      if (this.client !== client || this._communityEpoch !== epoch ||
+          (this.user && this.user.id) !== user || readLS(ACTIVE_USER_KEY) !== active) throw invalidSessionError();
       var session = sessionResult && sessionResult.data && sessionResult.data.session;
+      if (expectedOwner && (user && user !== expectedOwner || active && active !== expectedOwner ||
+          session && (!session.user || session.user.id !== expectedOwner))) throw invalidSessionError();
       if (sessionResult.error || !session || !session.access_token){
         await this._clearInvalidSession();
         throw invalidSessionError();
@@ -852,13 +874,16 @@
       if (["image/jpeg","image/png","image/webp"].indexOf(file.type) === -1 || file.size > 8 * 1024 * 1024){
         throw new Error("Choose a JPEG, PNG, or WebP image smaller than 8 MB.");
       }
+      var request = mediaRequestScope(this, userId);
       var extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
       var objectId = global.crypto && global.crypto.randomUUID ? global.crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
       var path = userId + "/" + reviewId + "/" + objectId + "." + extension;
-      var headers = await this._storageHeaders(file.type);
+      var headers = await this._storageHeaders(file.type, userId);
+      assertMediaRequest(this, request);
       headers["cache-control"] = "max-age=3600";
       headers["x-upsert"] = "false";
       var response = await fetch(this._storageObjectUrl("", path, REVIEW_MEDIA_BUCKET), { method:"POST", headers:headers, body:file.body });
+      assertMediaRequest(this, request);
       if (!response.ok){
         var problem = null;
         try{ problem = await response.json(); }catch(e){}
@@ -1176,14 +1201,21 @@
     publishReview: async function(review){
       this._requireAvailable();
       if (this.mode !== "live") throw new Error("Cloud review publishing is unavailable in demo mode.");
+      var request = mediaRequestScope(this);
       var session = await this.getSession();
-      if (!session || !session.userId) throw invalidSessionError();
+      assertMediaRequest(this, request);
+      if (!session || session.userId !== request.owner) throw invalidSessionError();
       review = review || {};
       var reviewId = String(review.id || (global.crypto && global.crypto.randomUUID ? global.crypto.randomUUID() : "00000000-0000-4000-8000-" + Date.now().toString().slice(-12)));
       var images = (Array.isArray(review.images) ? review.images : []).slice(0, 10);
       var uploaded = [];
+      var published = false;
       try{
-        for (var i=0; i<images.length; i++) uploaded.push(await this._uploadReviewMedia(session.userId, reviewId, images[i]));
+        for (var i=0; i<images.length; i++) {
+          assertMediaRequest(this, request);
+          uploaded.push(await this._uploadReviewMedia(session.userId, reviewId, images[i]));
+          assertMediaRequest(this, request);
+        }
         var result = await this.client.rpc("publish_review", {
           review_id:reviewId,
           work_ref:String(review.workId || "").trim().slice(0, 200),
@@ -1194,6 +1226,8 @@
           image_paths:uploaded,
           public_visible:review.isPublic !== false
         });
+        published = !result.error;
+        assertMediaRequest(this, request);
         if (result.error) {
           // Old production schemas may still have the unique index but not the
           // release upsert RPC. Never surface PostgreSQL internals to readers.
@@ -1202,9 +1236,14 @@
         }
         var row = result.data;
         if (Array.isArray(row)) row = row[0];
-        return this._hydrateReview(row || { id:reviewId, image_urls:uploaded });
+        var hydrated = await this._hydrateReview(row || { id:reviewId, image_urls:uploaded });
+        assertMediaRequest(this, request);
+        return hydrated;
       }catch(error){
-        try{ await this._removeReviewMedia(uploaded); }catch(ignore){}
+        if (!mediaRequestCurrent(this, request)) throw invalidSessionError();
+        // Never delete committed media, or clean an old upload with a new account.
+        if (!published) try{ await this._removeReviewMedia(uploaded); }catch(ignore){}
+        assertMediaRequest(this, request);
         throw error;
       }
     },

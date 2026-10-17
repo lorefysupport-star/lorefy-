@@ -4,6 +4,11 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest backend follow-up: [[sessions/2026-10-17-Backend-Review-Owner]],
+1357/1357 passing source tests. Storage token/owner and review request stages
+are guarded; no live Storage/RLS certification or request rollback is claimed.
+
+
 Latest source follow-up: [[sessions/2026-10-17-Review-Library-Lifecycle]],
 1343/1343 tests passed; no implicit completion from review-only state. Deletion
 preserves all five statuses and exact checkpoints. Isolated browser reload
