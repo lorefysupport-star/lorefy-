@@ -75,3 +75,5 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 - [[bugs/LF-029-Backend-Review-Owner]]: 14 حالة معزولة لحدود backend وStorage؛ لا اتصال إنتاج أو RLS حي.
 
 - [[bugs/LF-030-Profile-Mutation-Owner]]: 17 حالة لانتقال الحساب عبر حفظ الملف والخصوصية والتسجيل؛ لا اعتماد للجهاز أو RLS الحي.
+
+- [[bugs/LF-031-Session-Read-Owner]]: 10 حالات مصدر لفصل قراءات الجلسات وfinally؛ لا اعتماد تسجيل دخول حقيقي أو جهاز.

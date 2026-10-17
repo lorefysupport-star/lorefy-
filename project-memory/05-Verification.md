@@ -169,3 +169,11 @@ runtime assets and compare source/generated hashes. A memory-only change does
 not require shipping this vault in the application.
 
 [[00-Home]] | [[04-Current-State]] | [[06-Known-Risks]]
+
+## Session read owner verification — 2026-10-17
+
+LF-031 source on d803865 plus patch passed **1384/1384**, zero failures, exit 0.
+Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/session-owner-full-tests.txt`.
+[[sessions/2026-10-17-Session-Read-Owner]] records scope and limits.
+Backend/index/sw copies match ios-web and native public; this is source validation,
+not device or production RLS certification.

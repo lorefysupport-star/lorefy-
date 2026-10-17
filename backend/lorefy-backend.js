@@ -159,6 +159,18 @@
   function assertMediaRequest(backend, request){
     if (!mediaRequestCurrent(backend, request)) throw invalidSessionError();
   }
+  function sessionReadScope(backend){
+    return {mode:backend.mode, client:backend.client, epoch:backend._communityEpoch,
+      user:backend.user && backend.user.id, active:readLS(ACTIVE_USER_KEY)};
+  }
+  function sessionReadCurrent(backend, request){
+    return !!request && global.LorefyBackend === backend && backend.mode === request.mode &&
+      backend.client === request.client && backend._communityEpoch === request.epoch &&
+      (backend.user && backend.user.id) === request.user && readLS(ACTIVE_USER_KEY) === request.active;
+  }
+  function assertSessionRead(backend, request){
+    if (!sessionReadCurrent(backend, request)) throw invalidSessionError();
+  }
   function reviewConflictError(){
     var error = new Error("لديك مراجعة سابقة لهذا العمل. حدّث مراجعتك بدلاً من إنشاء مراجعة ثانية.");
     error.code = "LOREFY_REVIEW_ALREADY_EXISTS";
@@ -311,20 +323,27 @@
       if (!isEmailAuthEnabled()) throw new Error("Email/password sign-in is disabled by policy.");
     },
     getSession: async function(){
-      if (this._sessionCheck) return this._sessionCheck;
-      this._sessionCheck = this._readSession();
-      try { return await this._sessionCheck; }
-      finally { this._sessionCheck = null; }
+      if (this._sessionCheck && sessionReadCurrent(this, this._sessionCheckScope)) return this._sessionCheck;
+      var request = sessionReadScope(this), pending = this._readSession();
+      this._sessionCheck = pending;
+      this._sessionCheckScope = request;
+      try { return await pending; }
+      finally {
+        if (this._sessionCheck === pending) { this._sessionCheck = null; this._sessionCheckScope = null; }
+      }
     },
     _readSession: async function(){
       if (this.mode === "live"){
+        var request = sessionReadScope(this);
         // Signed-out screens must not call /user and /logout on every render.
         if (typeof this.client.auth.getSession === "function") {
           var saved = await this.client.auth.getSession();
+          assertSessionRead(this, request);
           if (saved.error) throw saved.error;
           if (!saved.data || !saved.data.session) { this.user = null; return null; }
         }
         var r = await this.client.auth.getUser();
+        assertSessionRead(this, request);
         var user = r && r.data && r.data.user;
         if (r.error && !["session_not_found", "refresh_token_not_found", "refresh_token_already_used", "bad_jwt", "user_not_found"].includes(r.error.code) && r.error.name !== "AuthSessionMissingError") {
           // Network/rate-limit/server errors are not proof that the saved identity is invalid.
@@ -334,6 +353,8 @@
           await this._clearInvalidSession();
           return null;
         }
+        var expectedOwner = request.user || request.active;
+        if (expectedOwner && user.id !== expectedOwner) throw invalidSessionError();
         this.user = user;
         this._sessionCleared = false;
         this.flushAppleAuthorization(user.id).catch(function(){
