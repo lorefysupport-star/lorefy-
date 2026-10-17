@@ -22,3 +22,13 @@
 فحص الهوية والمصدر. تعطل المزوّد واختيار الطبعة والجهاز gates مستقلة.
 
 [[bugs/LF-043-Search-Alias-Refresh]] | [[05-Verification]] | [[15-Work-Control]] | [[18-Progress-Handoff]]
+
+## Worker cache follow-up
+
+الفحص الكامل التالي كشف أن تغيير version العام للعامل غيّر أيضاً عنوان أجزاء
+بيانات الكتالوج دون تغيير بياناتها. صُحح loader ليفصل workerVersion الجديد
+عن version بيانات bootstrap السابق؛ العاملان يطابقان مفاتيح sw.
+31/31 في catalog-search-alias-refresh وcatalog-demand-loading وarabic-open-catalog؛
+الدليل search-alias-worker-cache.txt في مجلد QA نفسه. الحالة الجديدة تجعل
+حالات alias النهائية 16. نُسخت وحدة loader فقط للنسختين. تغييرات الاستيراد
+المعلقة لا تدخل هذا التصحيح المستقل. يُعاد الفحص الكامل في دفعة الاستيراد.

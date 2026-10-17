@@ -9,7 +9,8 @@
   var loaded = new Set((global.LOREFY_INITIAL_CATALOG_PARTS || []).map(Number));
   var loading = new Map();
   var activeQueue = Promise.resolve();
-  var version = "20261017-search-alias-v1";
+  var version = "20261013-discover-reviewed-v2";
+  var workerVersion = "20261017-search-alias-v1";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
@@ -143,7 +144,7 @@
     return new Promise(function (resolve, reject) {
       var worker;
       try {
-        worker = new global.Worker("modules/lorefy-catalog-worker.js?v=" + version);
+        worker = new global.Worker("modules/lorefy-catalog-worker.js?v=" + workerVersion);
       } catch (error) {
         reject(error);
         return;
@@ -321,7 +322,7 @@
   function requestSearchParts(query, type) {
     if (typeof global.Worker !== "function") return searchIndexFallback(query, type);
     if (!searchWorker) {
-      try { searchWorker = new global.Worker("modules/lorefy-catalog-search-worker.js?v=" + version); }
+      try { searchWorker = new global.Worker("modules/lorefy-catalog-search-worker.js?v=" + workerVersion); }
       catch (error) { return searchIndexFallback(query, type); }
       searchWorker.addEventListener("message", function (event) {
         var message = event.data || {};

@@ -26,3 +26,14 @@ test('unchanged compact metadata reuses the prepared index',()=>{
   for(let i=0;i<4;i++)assert.equal(data.matchesCatalogQuery(work,'Find me'),true);
   assert.equal(work._queryIndex,index);
 });
+
+test('worker cache versions change independently while unchanged bootstrap catalog shards keep their data version',()=>{
+  const fs=require('node:fs'),path=require('node:path'),root=path.join(__dirname,'..');
+  const loader=fs.readFileSync(path.join(root,'modules/lorefy-catalog-loader.js'),'utf8'),sw=fs.readFileSync(path.join(root,'sw.js'),'utf8'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  const dataVersion=/var version = "([^"]+)"/.exec(loader)[1],workerVersion=/var workerVersion = "([^"]+)"/.exec(loader)[1];
+  assert.ok(html.includes("'.js?v="+dataVersion+"\"><\\/script>"));
+  for(const worker of ['lorefy-catalog-worker.js','lorefy-catalog-search-worker.js']){
+    assert.ok(loader.includes('"modules/'+worker+'?v=" + workerVersion'));
+    assert.ok(sw.includes('modules/'+worker+'?v='+workerVersion));
+  }
+});
