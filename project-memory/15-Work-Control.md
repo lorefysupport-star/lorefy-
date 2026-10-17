@@ -75,3 +75,5 @@ path:bugs [status:open OR needs-device OR needs-service]
 - [[bugs/LF-030-Profile-Mutation-Owner]]: حفظ الملف والخصوصية والتسجيل معزول بالمصدر؛ اختبارات الخدمة والزائر مستقلة.
 
 - [[bugs/LF-031-Session-Read-Owner]]: قراءة auth ومشاركة الفحص معزولتان حسب السياق؛ اختبارات الدخول الحقيقي مستقلة.
+
+- [[bugs/LF-032-Editorial-Detail-Synopsis]]: استُكملت أوصاف ثلاثة أعمال AR/EN من الناشر؛ العينة لا تغلق جودة بقية الكتالوج. [[sessions/2026-10-17-Editorial-Detail-Synopsis]]

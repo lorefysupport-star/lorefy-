@@ -77,3 +77,5 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 - [[bugs/LF-030-Profile-Mutation-Owner]]: 17 حالة لانتقال الحساب عبر حفظ الملف والخصوصية والتسجيل؛ لا اعتماد للجهاز أو RLS الحي.
 
 - [[bugs/LF-031-Session-Read-Owner]]: 10 حالات مصدر لفصل قراءات الجلسات وfinally؛ لا اعتماد تسجيل دخول حقيقي أو جهاز.
+
+- [[bugs/LF-032-Editorial-Detail-Synopsis]]: استُكملت أوصاف ثلاثة أعمال AR/EN من الناشر؛ العينة لا تغلق جودة بقية الكتالوج. [[sessions/2026-10-17-Editorial-Detail-Synopsis]]

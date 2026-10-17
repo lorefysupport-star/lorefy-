@@ -38,3 +38,5 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 [[systems/Catalog-Search]] | [[systems/Reading-Library]] |
 [[systems/Language-Media]] | [[08-Feature-Router]]
+
+- [[bugs/LF-032-Editorial-Detail-Synopsis]]: استُكملت أوصاف ثلاثة أعمال AR/EN من الناشر؛ العينة لا تغلق جودة بقية الكتالوج. [[sessions/2026-10-17-Editorial-Detail-Synopsis]]

@@ -177,3 +177,12 @@ Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/session-owner-full
 [[sessions/2026-10-17-Session-Read-Owner]] records scope and limits.
 Backend/index/sw copies match ios-web and native public; this is source validation,
 not device or production RLS certification.
+
+## Editorial description batch — 2026-10-17
+
+On 8d75726 plus LF-032 patch, full rerun passed **1387/1387**, zero failures,
+exit 0. Initial 1386/1387 run found missing work-board links in the new note;
+links corrected, workflow 4/4 and full rerun passed. Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/editorial-detail-final-tests.txt`.
+[[sessions/2026-10-17-Editorial-Detail-Synopsis]] records publisher sources and
+local browser results. Four repaired web files match both native web copies
+by SHA-256. This does not certify installed native UI, live service or all metadata.

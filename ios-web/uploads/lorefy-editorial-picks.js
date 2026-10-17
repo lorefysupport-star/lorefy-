@@ -3,6 +3,9 @@ var picks=[{"id":"n-pride-and-prejudice","title":"Pride and Prejudice","ar":"Pri
 // Short editorial summaries checked against the linked publisher pages.
 // These are paraphrases, not copied publisher descriptions or source ratings.
 var summaries=[
+ ["editorial-hindawi-49160836","السفر بين الكواكب","أ. شتيرنفلد","https://www.safahat.org/books/49160836/","مدخل مبسط إلى استكشاف الفضاء، من الصواريخ والأقمار الصناعية إلى الحياة داخل المركبات. يناقش التحديات التي تعترض الرحلات خارج الأرض والتطلع إلى القمر والكواكب.","An introduction to space exploration, covering rockets, satellites and life aboard spacecraft. It considers the obstacles to leaving Earth and the prospect of reaching the Moon and other planets.","2026-10-17"],
+ ["editorial-hindawi-25868315","الحرير","أليساندرو باريكو","https://www.safahat.org/books/25868315/","يسافر تاجر فرنسي إلى اليابان لجلب بيض دودة القز بعد أزمة في صناعة الحرير. تفتح لقاءاته هناك بابًا إلى تأمل الرغبة والذاكرة والحياة التي يتخيلها بعيدًا عن موطنه.","A French merchant travels to Japan to obtain silkworm eggs during a crisis in the silk trade. His encounters turn a business journey into a meditation on desire, memory and an imagined life far from home.","2026-10-17"],
+ ["editorial-hindawi-91719359","الثورة المغدورة: قصة كومونة باريس في شرائط مصورة","برنار فيسك","https://www.safahat.org/books/91719359/","سرد مصور لكومونة باريس عام 1871، يتتبع ظروف الثورة وتشكيل مجلسها. يبرز مشاركة العمال والنساء ومحاولتهم إعادة تنظيم المجتمع والحكم.","An illustrated account of the Paris Commune of 1871, tracing the conditions behind the uprising and the formation of its council. It highlights workers and women and their efforts to reshape society and government.","2026-10-17"],
  ['n-pride-and-prejudice','Pride and Prejudice','Jane Austen','https://www.penguinrandomhouse.com/books/6400/pride-and-prejudice-by-jane-austen/',
   'تلتقي إليزابيث بينيت بالسيد دارسي في مجتمع تحكمه المكانة والزواج. تكشف علاقتهما كيف تتغير الأحكام الأولى مع فهم الآخرين، في حكاية ساخرة عن الحب والكبرياء.',
   'Elizabeth Bennet and Mr Darcy navigate courtship and social expectations. Their changing judgments shape a witty story of love, pride and first impressions.'],
@@ -26,7 +29,7 @@ function enrich(work){
  var row=summaries.find(function(entry){return entry[0]===String(work.id)&&entry[1]===work.title&&entry[2]===work.auth;});
  if(!row)return;
  work.synopsisAr=row[4];work.synopsisEn=row[5];
- work.synopsisAttribution={url:row[3],method:'editorial-paraphrase',reviewedAt:'2026-10-15'};
+ work.synopsisAttribution={url:row[3],method:'editorial-paraphrase',reviewedAt:row[6]||'2026-10-15'};
 }
 picks.forEach(enrich);
 var byId=new Map(picks.map(function(w){return [String(w.id),w];}));
