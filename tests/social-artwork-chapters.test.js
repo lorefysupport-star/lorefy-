@@ -9,6 +9,7 @@ function backendForTest() {
   vm.runInNewContext(read('backend/lorefy-backend.js'), {window, console, URL, URLSearchParams, setTimeout, clearTimeout});
   const backend = window.LorefyBackend;
   backend.mode = 'live';
+  backend.user = {id:'00000000-0000-4000-8000-000000000001'};
   backend.getSession = async () => ({userId:'00000000-0000-4000-8000-000000000001'});
   return backend;
 }

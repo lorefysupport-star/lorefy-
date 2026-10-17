@@ -1530,22 +1530,29 @@
       return result.data || [];
     },
     deleteChapterReview: async function(reviewId){
+      var request = this.mode === "live" ? mediaRequestScope(this) : null;
       var session = await this.getSession();
-      if (!session) throw invalidSessionError();
+      if (request) assertMediaRequest(this, request);
+      if (!session || request && session.userId !== request.owner) throw invalidSessionError();
       if (!isUuid(reviewId)) throw new Error("Invalid chapter review.");
       var result = await this.client.from("chapter_reviews").delete().eq("id", reviewId).eq("user_id", session.userId).select("id");
+      if (request) assertMediaRequest(this, request);
       if (result.error) throw result.error;
       if (!(result.data || []).length) throw new Error("Chapter review is unavailable.");
       return true;
     },
     publishChapterReview: async function(workId, chapter, rating, body, spoiler){
-      if (!await this.getSession()) throw invalidSessionError();
+      var request = this.mode === "live" ? mediaRequestScope(this) : null;
+      var session = await this.getSession();
+      if (request) assertMediaRequest(this, request);
+      if (!session || request && session.userId !== request.owner) throw invalidSessionError();
       if (!Number.isInteger(Number(chapter)) || Number(chapter) < 1 || Number(chapter) > 100000) throw new Error("Invalid chapter.");
       var score = Number(rating);
       if (!Number.isFinite(score) || !Number.isInteger(score * 4) || score < 0 || score > 5) throw new Error("Invalid rating.");
       var text = String(body || "").trim();
       if (text.length > 1000 || (!score && !text)) throw new Error("Invalid chapter review.");
       var result = await this.client.rpc("publish_chapter_review", { work_ref:String(workId), chapter_ref:Number(chapter), score:score, comment_body:text, has_spoiler:!!spoiler });
+      if (request) assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return result.data;
     },

@@ -215,3 +215,11 @@ localStorage/auth/RPC rejected an old request before RPC and retained current re
 Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/community-mutation-full-tests.txt`
 and community-mutation-browser.json. [[sessions/2026-10-17-Community-Mutation-Session]].
 No production operation or installed-device certification.
+
+## Chapter review request ownership — 2026-10-17
+
+LF-037 on e629e43 plus patch: **1526/1526 passed**, zero failures, exit 0.
+23 regressions (18 failed before), 56/56 related. Exact quarters, zero for
+comment-only, spoiler flag and owner-scoped deletion remain verified.
+Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/chapter-session-full-tests.txt`.
+[[sessions/2026-10-17-Chapter-Review-Session]]. No live writes, RLS or installed-device certification.

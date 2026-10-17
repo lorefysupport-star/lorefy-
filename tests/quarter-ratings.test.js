@@ -37,6 +37,7 @@ test('chapter storage accepts every quarter including zero for comment-only inpu
 test('backend sends the exact chapter quarter to the dedicated RPC', async () => {
   const window={};vm.runInNewContext(read('backend/lorefy-backend.js'),{window,console,URL,URLSearchParams,setTimeout,clearTimeout});
   const backend=window.LorefyBackend,calls=[];backend.mode='live';backend.getSession=async()=>({userId:'00000000-0000-4000-8000-000000000001'});
+  backend.user={id:'00000000-0000-4000-8000-000000000001'};
   backend.client={rpc:async(name,args)=>{calls.push({name,args});return {data:{rating:args.score}};}};
   assert.equal((await backend.publishChapterReview('work',2,4.25,'',false)).rating,4.25);
   assert.equal(calls[0].name,'publish_chapter_review');
