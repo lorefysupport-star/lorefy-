@@ -73,3 +73,5 @@ Lists / Posts والقوائم المرتبة. المفتاح `lorefy.user.profi
 [[systems/Appearance-Bundles]] | [[08-Feature-Router]] | [[10-Open-Questions]]
 
 - [[bugs/LF-035-Profile-Relationship-Session]]: عزل متابعة/إلغاء متابعة وحظر/إلغاء حظر الملف حسب حساب الطلب. [[sessions/2026-10-17-Profile-Relationship-Session]]؛ الرؤية الحية منفصلة.
+
+- [[bugs/LF-041-Profile-Read-Session]]: عزل قراءة الملفات والبحث والمتابَعين حسب جلسة المشاهد مع بقاء زيارة الآخرين؛ [[sessions/2026-10-17-Profile-Read-Session]]. الرؤية الحية والجهاز منفصلان.

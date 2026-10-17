@@ -62,7 +62,7 @@ test('public snapshot projects lists and degrades safely before database activat
   const vm=require('node:vm'), window={};
   vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../backend/lorefy-backend.js'),'utf8'),{window,console,URL,setTimeout,clearTimeout});
   const b=window.LorefyBackend, owner='11111111-1111-4111-8111-111111111111';
-  b.mode='live'; b.getSession=async()=>({userId:owner}); b._storageMediaUrl=async()=> '';
+  b.mode='live'; b.user={id:owner}; b.getSession=async()=>({userId:owner}); b._storageMediaUrl=async()=> '';
   let missing=false;
   b.client={rpc:async(name,args)=>{
     assert.equal(args.profile_ref,owner);

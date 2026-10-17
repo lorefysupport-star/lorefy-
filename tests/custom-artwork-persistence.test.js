@@ -97,7 +97,7 @@ test('compiled cover picker and both portrait pickers await durable saving',()=>
 test('public profile resolves owner storage references without reading local viewer choices',async()=>{
   const window={};
   vm.runInNewContext(fs.readFileSync(path.join(root,'backend/lorefy-backend.js'),'utf8'),{window, console, URL, setTimeout, clearTimeout});
-  const b=window.LorefyBackend; b.mode='live'; b.getSession=async()=>({userId:other});
+  const b=window.LorefyBackend; b.mode='live'; b.user={id:other}; b.getSession=async()=>({userId:other});
   b.client={rpc:async name=>({data:name==='get_public_profile_social'?{id:owner}: {
     custom_work_covers:{work:'lorefy-artwork:'+owner+'/covers/a.jpg'},
     custom_character_images:{hero:'lorefy-artwork:'+owner+'/characters/b.jpg'}

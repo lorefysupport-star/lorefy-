@@ -253,3 +253,11 @@ Actual Chrome isolated localStorage retained the new account after an old logout
 then current logout cleared it. Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/session-teardown-full-tests.txt`
 and session-teardown-browser.json. [[sessions/2026-10-17-Session-Teardown-Owner]].
 SDK transport mocked; live SDK/auth storage and physical device remain separate.
+
+## Profile requester reads — 2026-10-17
+
+LF-041 on 05cfd24 plus patch: **1645/1645 passed**, zero failures, exit 0.
+35 new cases (32 failed before); focused 77/77. Isolated Chrome rejected old
+profile reads before another RPC and accepted current search. Evidence in
+D:/LorefyDevelopment/QA/remaining-repairs-20261017/profile-read-full-tests.txt
+and profile-read-browser.json. [[sessions/2026-10-17-Profile-Read-Session]]. No live RLS/device claim.

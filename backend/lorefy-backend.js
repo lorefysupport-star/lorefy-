@@ -541,26 +541,34 @@
       query = normalizeUsername(query).replace(/\s+/g, " ").slice(0, 64);
       if (query.length < 2) return [];
       if (this.mode !== "live") return [];
+      var request = mediaRequestScope(this);
       var result = await this.client.rpc("search_public_readers", {
         search_text: query,
         result_limit: Math.min(Math.max(Number(limit) || 20, 1), 20)
       });
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       var rows = Array.isArray(result.data) ? result.data : [];
-      return Promise.all(rows.map(async function(row){
+      var profiles = await Promise.all(rows.map(async function(row){
         var copy = Object.assign({}, row);
         try{ copy.avatar = await B._storageMediaUrl(PROFILE_MEDIA_BUCKET, copy.avatar, PROFILE_MEDIA_TTL); }
         catch(e){ copy.avatar = ""; }
         return copy;
       }));
+      assertMediaRequest(this, request);
+      return profiles;
     },
     getFollowedProfileIds: async function(){
       if (this.mode !== "live") {
         try { return JSON.parse(readLS("lorefy.user.following.v1") || "[]"); } catch (error) { return []; }
       }
+      var request = mediaRequestScope(this);
       var session = await this.getSession();
+      assertMediaRequest(this, request);
+      if (session && session.userId !== request.owner) throw invalidSessionError();
       if (!session || !session.userId) return [];
       var result = await this.client.from("profile_follows").select("following_id").eq("follower_id", session.userId).limit(500);
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return (result.data || []).map(function(row){ return row.following_id; });
     },
@@ -591,17 +599,23 @@
     getPublicProfile: async function(profileId){
       profileId = String(profileId || "").trim();
       if (this.mode !== "live" || !isUuid(profileId)) return null;
+      var request = mediaRequestScope(this);
       var session = await this.getSession();
+      assertMediaRequest(this, request);
+      if (session && session.userId !== request.owner) throw invalidSessionError();
       if (!session) return null;
       var result = await this.client.rpc("get_public_profile_social", { profile_ref:profileId });
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       var row = Array.isArray(result.data) ? result.data[0] : result.data;
       if (!row) return null;
       var copy = Object.assign({}, row);
       var artwork = await this.client.rpc("get_public_profile_artwork", { profile_ref:profileId });
+      assertMediaRequest(this, request);
       if (artwork.error) throw artwork.error;
       Object.assign(copy, artwork.data || {});
       var appearance = await this.client.rpc("get_public_profile_appearance", { profile_ref:profileId });
+      assertMediaRequest(this, request);
       if (appearance.error) throw appearance.error;
       Object.assign(copy, appearance.data || {});
       // Lists are a narrow public projection, never a read of another user's state.
@@ -613,6 +627,7 @@
         copy.profile_lists = [];
         copy.profile_lists_error = true;
       }
+      assertMediaRequest(this, request);
       // Resolve only this owner's projected artwork, never the viewer's choices.
       for (var artworkKey of ["custom_work_covers", "custom_character_images"]){
         var images = copy[artworkKey] || {};
@@ -622,19 +637,26 @@
           try{ images[key] = await B._storageMediaUrl("custom-covers", value.slice(15), PROFILE_MEDIA_TTL); }
           catch(e){ delete images[key]; }
         }));
+        assertMediaRequest(this, request);
       }
       try{
         var posts = await this.client.from("community_posts").select("id", { count:"exact", head:true }).eq("user_id", profileId).is("parent_id", null).eq("is_deleted", false);
         if (!posts.error) copy.post_count = Number(posts.count) || 0;
       }catch(e){ copy.post_count = Number(copy.post_count) || 0; }
+      assertMediaRequest(this, request);
       try{ copy.avatar = await B._storageMediaUrl(PROFILE_MEDIA_BUCKET, copy.avatar, PROFILE_MEDIA_TTL); }catch(e){ copy.avatar = ""; }
+      assertMediaRequest(this, request);
       try{ copy.banner = await B._storageMediaUrl(PROFILE_MEDIA_BUCKET, copy.banner, PROFILE_MEDIA_TTL); }catch(e){ copy.banner = ""; }
+      assertMediaRequest(this, request);
       return copy;
     },
     _listProfileConnections: async function(profileId, kind, limit, offset){
       profileId = String(profileId || "").trim();
       if (this.mode !== "live" || !isUuid(profileId)) return [];
+      var request = mediaRequestScope(this);
       var session = await this.getSession();
+      assertMediaRequest(this, request);
+      if (session && session.userId !== request.owner) throw invalidSessionError();
       if (!session) return [];
       var result = await this.client.rpc("list_profile_connections", {
         profile_ref:profileId,
@@ -642,13 +664,16 @@
         result_limit:Math.min(Math.max(Number(limit) || 100, 1), 200),
         result_offset:Math.min(Math.max(Number(offset) || 0, 0), 10000)
       });
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       var rows = Array.isArray(result.data) ? result.data : [];
-      return Promise.all(rows.map(async function(row){
+      var connections = await Promise.all(rows.map(async function(row){
         var copy = Object.assign({}, row);
         try{ copy.avatar = await B._storageMediaUrl(PROFILE_MEDIA_BUCKET, copy.avatar, PROFILE_MEDIA_TTL); }catch(e){ copy.avatar = ""; }
         return copy;
       }));
+      assertMediaRequest(this, request);
+      return connections;
     },
     listProfileFollowers: async function(profileId, limit, offset){
       return this._listProfileConnections(profileId, "followers", limit, offset);
