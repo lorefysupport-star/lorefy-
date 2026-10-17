@@ -370,3 +370,7 @@ review does not certify contributor roles, edition years, covers or rights.
 - [[bugs/LF-053-Catalog-Search-Retry]]: فشل الفهرس أو جزء نتائج لا يتحول إلى «لا توجد نتائج»؛ زر retry يعيد نفس البحث والنوع، والأجزاء الناجحة تبقى محملة؛ [[sessions/2026-10-18-Catalog-Search-Retry]]. لا تصحيح إملائي أو اختبار مزود/جهاز حي ضمن هذه الدفعة.
 
 - LF-053: **1894/1894** كاملة نهائية، صفر فشل، exit 0؛ search-retry-full-tests-final.txt. الملفات الـ9 المراقبة بقيت SHA-256 وmtime كما كانت. [[sessions/2026-10-18-Catalog-Search-Retry]]
+
+- [[bugs/LF-054-Catalog-Search-Deadline]]: مهلة محدودة لـWorker وفهرس البحث البديل، مع إلغاء الطلب وإهمال رسائل Worker القديم؛ [[sessions/2026-10-18-Catalog-Search-Deadline]]. تعليق raw shard وتصحيح الإملاء والمزوّد والجهاز بوابات مستقلة.
+
+- LF-054: **1903/1903** كاملة، صفر فشل، exit 0؛ search-deadline-full-tests.txt (183712ms). [[sessions/2026-10-18-Catalog-Search-Deadline]]

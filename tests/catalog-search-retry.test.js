@@ -21,7 +21,7 @@ function harness() {
   const win = {document:doc,location:{search:''},LorefyMangaData:data,
     LOREFY_INITIAL_CATALOG_PARTS:[1],LorefyCatalogManifest:{partCount:4,featuredParts:[1],types:{Manga:[1,2,3],Novel:[4]}},
     LorefyCatalogPlan:require('../modules/lorefy-catalog-plan'),LorefyCatalogData:require('../modules/lorefy-catalog-data'),
-    setTimeout(fn){queueMicrotask(fn);return 1;},clearTimeout(){},addEventListener(){},dispatchEvent(){},
+    setTimeout(fn,ms){if(ms>=5000){const timer=setTimeout(fn,ms);timer.unref();return timer;}queueMicrotask(fn);return 1;},clearTimeout(timer){clearTimeout(timer);},addEventListener(){},dispatchEvent(){},
     history:{pushState(){},replaceState(){}},__lorefyIngest(){},__lorefyRefresh(){},
     fetch(url){fetches.push(url);if(heldIndex)return heldIndex;return indexFails?Promise.reject(new Error('offline')):Promise.resolve({ok:true,json:async()=>({schema:1,records:rows})});}
   };

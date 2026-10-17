@@ -33,6 +33,7 @@
   var searchType = "";
   var searchBusy = false;
   var searchError = false;
+  var SEARCH_REQUEST_TIMEOUT_MS = 20000;
   var browseParts = [];
   var browseCursor = 0;
   var queryWarmCursor=0,queryWarmPending=false;
@@ -304,19 +305,42 @@
   }
 
   function searchIndexFallback(query, type) {
-    return global.fetch("uploads/catalog-search-index.json?v=" + version).then(function (response) {
-      if (!response.ok) throw new Error("Search index returned " + response.status);
-      return response.json();
-    }).then(function (index) {
-      if (!index || index.schema !== 1 || !Array.isArray(index.records)) throw new Error("Invalid catalog search index");
-      var entries = index.records.map(function (row) {
-        return { part: Number(row[0]), work: {
-          id: row[1], title: row[2], ar: row[3], auth: row[4], type: row[5],
-          altTitles: row[6], aliases: row[7], authorAliases: row[8]
-        } };
-      });
-      return planner.searchIndexParts(entries, query, type, global.LorefyCatalogData);
+    var controller = typeof global.AbortController === "function" ? new global.AbortController() : null;
+    var timer, expired = false;
+    return new Promise(function (resolve, reject) {
+      timer = global.setTimeout(function () {
+        expired = true;
+        try { if (controller) controller.abort(); } catch (error) {}
+        reject(new Error("Catalog search index timed out"));
+      }, SEARCH_REQUEST_TIMEOUT_MS);
+      global.fetch("uploads/catalog-search-index.json?v=" + version, controller ? {signal: controller.signal} : undefined).then(function (response) {
+        if (expired) throw new Error("Catalog search index timed out");
+        if (!response.ok) throw new Error("Search index returned " + response.status);
+        return response.json();
+      }).then(function (index) {
+        if (expired) throw new Error("Catalog search index timed out");
+        if (!index || index.schema !== 1 || !Array.isArray(index.records)) throw new Error("Invalid catalog search index");
+        var entries = index.records.map(function (row) {
+          return { part: Number(row[0]), work: {
+            id: row[1], title: row[2], ar: row[3], auth: row[4], type: row[5],
+            altTitles: row[6], aliases: row[7], authorAliases: row[8]
+          } };
+        });
+        return planner.searchIndexParts(entries, query, type, global.LorefyCatalogData);
+      }).then(resolve, reject);
+    }).finally(function () { global.clearTimeout(timer); });
+  }
+
+  function failSearchWorker(worker, error) {
+    if (searchWorker !== worker) return;
+    searchWorker = null;
+    searchRequests.forEach(function (pending, requestId) {
+      if (pending.worker !== worker) return;
+      global.clearTimeout(pending.timer);
+      searchRequests.delete(requestId);
+      pending.reject(error);
     });
+    try { worker.terminate(); } catch (ignore) {}
   }
 
   function requestSearchParts(query, type) {
@@ -324,26 +348,29 @@
     if (!searchWorker) {
       try { searchWorker = new global.Worker("modules/lorefy-catalog-search-worker.js?v=" + workerVersion); }
       catch (error) { return searchIndexFallback(query, type); }
+      var activeWorker = searchWorker;
       searchWorker.addEventListener("message", function (event) {
         var message = event.data || {};
         var pending = searchRequests.get(message.requestId);
-        if (!pending) return;
+        if (!pending || pending.worker !== activeWorker) return;
+        global.clearTimeout(pending.timer);
         searchRequests.delete(message.requestId);
         if (message.type === "result") pending.resolve(message.matches || []);
         else pending.reject(new Error(message.message || "Catalog search failed"));
       });
       searchWorker.addEventListener("error", function (error) {
-        searchRequests.forEach(function (pending) { pending.reject(error); });
-        searchRequests.clear();
-        try { searchWorker.terminate(); } catch (ignore) {}
-        searchWorker = null;
+        failSearchWorker(activeWorker, error);
       });
     }
     return new Promise(function (resolve, reject) {
       var requestId = ++searchRequestId;
-      searchRequests.set(requestId, { resolve: resolve, reject: reject });
-      try { searchWorker.postMessage({type: "search", requestId: requestId, query: query, catalogType: type}); }
-      catch (error) { searchRequests.delete(requestId); reject(error); }
+      var worker = searchWorker;
+      var timer = global.setTimeout(function () {
+        failSearchWorker(worker, new Error("Catalog search worker timed out"));
+      }, SEARCH_REQUEST_TIMEOUT_MS);
+      searchRequests.set(requestId, { resolve: resolve, reject: reject, worker: worker, timer: timer });
+      try { worker.postMessage({type: "search", requestId: requestId, query: query, catalogType: type}); }
+      catch (error) { failSearchWorker(worker, error); }
     }).catch(function () { return searchIndexFallback(query, type); });
   }
 

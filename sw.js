@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v503-search-retry';
+const CACHE = 'lorefy-v504-search-deadline';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -52,7 +52,7 @@ const CORE = [
   './modules/lorefy-cover-api.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-plan.js?v=20261010-catalog-demand-v1',
-  './modules/lorefy-catalog-loader.js?v=20261018-search-retry-v1',
+  './modules/lorefy-catalog-loader.js?v=20261018-search-deadline-v1',
   './modules/lorefy-catalog-search-worker.js?v=20261017-editorial-comics-v1',
   './modules/lorefy-catalog-identity.js?v=20261010-identity-batch-v1',
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',

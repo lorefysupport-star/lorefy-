@@ -42,7 +42,10 @@ function harness() {
     LorefyCatalogManifest:{partCount:3,featuredParts:[1],types:{Manga:[1,2],Novel:[3]},workParts:{'direct-hit':3}},
     LorefyCatalogPlan:require('../modules/lorefy-catalog-plan'),
     Worker, CustomEvent, URLSearchParams,
-    setTimeout(callback) { queueMicrotask(callback); return 1; }, clearTimeout() {},
+    setTimeout(callback, ms) {
+      if (ms >= 5000) { const timer=setTimeout(callback,ms);timer.unref();return timer; }
+      queueMicrotask(callback);return 1;
+    }, clearTimeout(timer) { clearTimeout(timer); },
     addEventListener(name, callback) { windowEvents.set(name, callback); },
     dispatchEvent() {},
     history:{pushState(){},replaceState(){}},
