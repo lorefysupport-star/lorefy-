@@ -34,6 +34,7 @@
   var searchBusy = false;
   var searchError = false;
   var SEARCH_REQUEST_TIMEOUT_MS = 20000;
+  var PART_REQUEST_TIMEOUT_MS = 20000;
   var browseParts = [];
   var browseCursor = 0;
   var queryWarmCursor=0,queryWarmPending=false;
@@ -115,28 +116,37 @@
     if (!Number.isInteger(part) || part < 1) return Promise.resolve(false);
     if (loaded.has(part)) return Promise.resolve(true);
     if (loading.has(part)) return loading.get(part);
+    var settled = false;
     var promise = new Promise(function (resolve) {
       var previousLength = (global.LorefyMangaData || []).length;
       var script = doc.createElement("script");
       script.src = "uploads/lorefy-data-part" + String(part).padStart(2, "0") + ".js?v=" + version;
       script.async = true;
       script.dataset.lorefyCatalogPart = String(part);
-      script.onload = function () {
-        ensureSearchFields(previousLength);
-        warmQueryIndexes();
-        loaded.add(part);
+      var timer = global.setTimeout(function () { finish(false); }, PART_REQUEST_TIMEOUT_MS);
+      function finish(success) {
+        if (settled) return;
+        settled = true;
+        global.clearTimeout(timer);
         loading.delete(part);
-        // Coalesce re-indexing work so loading all catalog parts does not freeze the UI.
-        scheduleNotify(part, true);
-        resolve(true);
-      };
-      script.onerror = function () {
-        loading.delete(part);
-        resolve(false);
-      };
-      doc.head.appendChild(script);
+        script.onload = null;
+        script.onerror = null;
+        if (success) {
+          ensureSearchFields(previousLength);
+          warmQueryIndexes();
+          loaded.add(part);
+          // Coalesce re-indexing work without holding later requests open.
+          scheduleNotify(part, true);
+        } else {
+          try { if (typeof script.remove === "function") script.remove(); } catch (error) {}
+        }
+        resolve(success);
+      }
+      script.onload = function () { finish(true); };
+      script.onerror = function () { finish(false); };
+      try { doc.head.appendChild(script); } catch (error) { finish(false); }
     });
-    loading.set(part, promise);
+    if (!settled) loading.set(part, promise);
     return promise;
   }
 

@@ -374,3 +374,7 @@ review does not certify contributor roles, edition years, covers or rights.
 - [[bugs/LF-054-Catalog-Search-Deadline]]: مهلة محدودة لـWorker وفهرس البحث البديل، مع إلغاء الطلب وإهمال رسائل Worker القديم؛ [[sessions/2026-10-18-Catalog-Search-Deadline]]. تعليق raw shard وتصحيح الإملاء والمزوّد والجهاز بوابات مستقلة.
 
 - LF-054: **1903/1903** كاملة، صفر فشل، exit 0؛ search-deadline-full-tests.txt (183712ms). [[sessions/2026-10-18-Catalog-Search-Deadline]]
+
+- [[bugs/LF-055-Catalog-Shard-Deadline]]: جزء كتالوج صامت يحرر طابور التحميل بعد مهلة؛ retries معزولة عن callbacks القديمة، مع إبقاء تحميل الأجزاء الناجحة؛ [[sessions/2026-10-18-Catalog-Shard-Deadline]]. ليست مهلة إجمالية لكل الكتالوج أو اعتماد أداء الجهاز.
+
+- LF-055: **1911/1911** كاملة، صفر فشل، exit0؛ shard-deadline-full-tests.txt. [[sessions/2026-10-18-Catalog-Shard-Deadline]]
