@@ -236,3 +236,11 @@ First 37 new cases had 34 failures; final 40 cases and related 64/64 passed.
 Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/notification-backend-full-tests.txt`.
 Isolated home AR/EN and matching source/native web assets are recorded in
 [[sessions/2026-10-17-Notification-Backend-Session]]. No live push send, service deployment or native build.
+
+## Account deletion request isolation — 2026-10-17
+
+LF-039 on c4b07e7 plus patch: **1579/1579 passed**, zero failures, exit 0.
+First 12 cases had 11 failures; final 13 and related 22/22 passed.
+Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/account-deletion-session-full-tests.txt`.
+[[sessions/2026-10-17-Account-Deletion-Session]]. All deletion/sign-out calls mocked; no live account deletion,
+SDK-internal teardown or installed-device certification.

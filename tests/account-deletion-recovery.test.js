@@ -6,12 +6,13 @@ const path=require('node:path');
 const source=fs.readFileSync(path.resolve(__dirname,'../backend/lorefy-backend.js'),'utf8');
 function harness(result,session={userId:'reader'}){
   let signedOut=0,calls=0;
-  const scope={readLS:()=> 'en',invalidSessionError:()=>Object.assign(new Error('Sign in again'),{code:'LOREFY_SESSION_INVALID'}),console};
-  const start=source.indexOf('    deleteAccount: async function(');
-  const end=source.indexOf('    SYNC_KEYS:',start);
-  vm.runInNewContext('var B={'+source.slice(start,end)+'};',scope);
-  Object.assign(scope.B,{mode:'live',getSession:async()=>session,signOut:async()=>signedOut++,client:{functions:{invoke:async()=>{calls++;return typeof result==='function'?result():result;}}}});
-  return {api:scope.B,signedOut:()=>signedOut,calls:()=>calls};
+  const values=new Map([['lorefy.activeUser.v1','reader'],['lorefy.ui.lang.v1','en']]);
+  const storage={getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,String(v))};
+  const window={localStorage:storage};
+  vm.runInNewContext(source,{window,localStorage:storage,console,URL,setTimeout,clearTimeout});
+  const api=window.LorefyBackend;
+  Object.assign(api,{mode:'live',user:{id:'reader'},getSession:async()=>session,signOut:async()=>signedOut++,client:{functions:{invoke:async()=>{calls++;return typeof result==='function'?result():result;}}}});
+  return {api,signedOut:()=>signedOut,calls:()=>calls};
 }
 test('live account deletion cannot succeed without a session',async()=>{
   const h=harness({data:null},null);

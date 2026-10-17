@@ -1973,19 +1973,30 @@
 
     /* ── حذف الحساب ── */
     deleteAccount: async function(){
-      if (this._deletionRunning) return this._deletionRunning;
-      this._deletionRunning = this._deleteAccount();
-      try { return await this._deletionRunning; }
-      finally { this._deletionRunning = null; }
+      if (this._deletionRunning && sessionReadCurrent(this, this._deletionScope)) return this._deletionRunning;
+      var scope = sessionReadScope(this), pending = this._deleteAccount();
+      this._deletionRunning = pending;
+      this._deletionScope = scope;
+      try { return await pending; }
+      finally {
+        if (this._deletionRunning === pending) { this._deletionRunning = null; this._deletionScope = null; }
+      }
     },
     _deleteAccount: async function(){
+      var live = this.mode === "live";
+      var request = live ? mediaRequestScope(this) : sessionReadScope(this);
+      var check = live ? assertMediaRequest : assertSessionRead;
       var sess = await this.getSession();
+      check(this, request);
       if (this.mode !== "demo" && !sess) throw invalidSessionError();
       if (this.mode === "live"){
+        if (sess.userId !== request.owner) throw invalidSessionError();
         var r = await this.client.functions.invoke("delete-account", { body:{ confirm:true } });
+        check(this, request);
         if (r.error) {
           var details = {};
           try { if (r.error.context && r.error.context.clone) details = await r.error.context.clone().json(); } catch (_) {}
+          check(this, request);
           var reason = String(details.error || '');
           var reauth = reason === 'recent_authentication_required' || reason === 'unauthorized';
           var english = readLS("lorefy.ui.lang.v1") === 'en';
@@ -1997,6 +2008,7 @@
           throw failure;
         }
       }
+      check(this, request);
       await this.signOut();
       return true;
     },
