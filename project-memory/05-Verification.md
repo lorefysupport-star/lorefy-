@@ -4,6 +4,12 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest source follow-up: [[sessions/2026-10-17-Review-Library-Lifecycle]],
+1343/1343 tests passed; no implicit completion from review-only state. Deletion
+preserves all five statuses and exact checkpoints. Isolated browser reload
+retained the review with empty library/progress. No device/cloud certification.
+
+
 Latest review editor/image receipts (2026-10-17):
 [[sessions/2026-10-17-Review-Editor-Owner]] and
 [[sessions/2026-10-17-Review-Image-Owner]], 1335 source tests passed, 0 failed.

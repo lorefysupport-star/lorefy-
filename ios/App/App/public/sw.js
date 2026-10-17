@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v477-review-image-owner';
+const CACHE = 'lorefy-v478-review-library-independent';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -58,7 +58,7 @@ const CORE = [
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
   './modules/lorefy-catalog-worker.js?v=20261015-github-sync-v1',
   './modules/lorefy-catalog-data.js?v=20261008-arabic-breadth-v4',
-  './modules/lorefy-reading-metrics.js?v=20261011-reading-stable-v1',
+  './modules/lorefy-reading-metrics.js?v=20261017-review-library-independent-v1',
   './modules/lorefy-reading-diary-core.js?v=20261016-diary-position-v1',
   './modules/lorefy-reading-diary.js?v=20261016-diary-position-v1',
   './modules/lorefy-chapter-detail-core.js?v=20261015-reading-owner-v1',

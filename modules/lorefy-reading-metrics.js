@@ -98,16 +98,10 @@
     return {progressById:options && options.progressById || {}, removedIds:[], pendingIds:[]};
   }
 
-  // A review can fill a missing legacy library entry, but must never overwrite a reader's choice.
-  function seedReviewedWorks(library, reviewIds, removed, completedStatus) {
-    var next = library, owns = Object.prototype.hasOwnProperty;
-    (reviewIds || []).forEach(function (id) {
-      id=String(id || '');
-      if (!id || removed && removed[id] || owns.call(next,id)) return;
-      if (next===library) next=Object.assign({},library);
-      next[id]=completedStatus;
-    });
-    return next;
+  // Compatibility for older callers. A review is not evidence of completion.
+  // Keep already saved library entries intact; never seed state from ratings.
+  function seedReviewedWorks(library) {
+    return library;
   }
 
   return {

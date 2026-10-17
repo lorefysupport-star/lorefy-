@@ -8,7 +8,7 @@ test('review reconciliation preserves paused to reading, dropped, wishlist and e
 test('removal and readdition do not revive a removed work or overwrite a newly chosen state',()=>{
   const removed={work:123};assert.deepEqual(metrics.seedReviewedWorks({},['work'],removed,'تم القراءة'),{});
   assert.deepEqual(metrics.seedReviewedWorks({work:'أقرأ حالياً'},['work'],{},'تم القراءة'),{work:'أقرأ حالياً'});
-  assert.deepEqual(metrics.seedReviewedWorks({},['legacy'],{},'تم القراءة'),{legacy:'تم القراءة'});
+  assert.deepEqual(metrics.seedReviewedWorks({},['legacy'],{},'تم القراءة'),{});
 });
 function reactHarness(){
   let revealed=false;
