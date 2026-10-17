@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v492-feed-read';
+const CACHE = 'lorefy-v493-search-alias';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -52,12 +52,12 @@ const CORE = [
   './modules/lorefy-cover-api.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-plan.js?v=20261010-catalog-demand-v1',
-  './modules/lorefy-catalog-loader.js?v=20261013-discover-reviewed-v2',
-  './modules/lorefy-catalog-search-worker.js?v=20261010-catalog-demand-v1',
+  './modules/lorefy-catalog-loader.js?v=20261017-search-alias-v1',
+  './modules/lorefy-catalog-search-worker.js?v=20261017-search-alias-v1',
   './modules/lorefy-catalog-identity.js?v=20261010-identity-batch-v1',
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
-  './modules/lorefy-catalog-worker.js?v=20261017-editorial-details-v1',
-  './modules/lorefy-catalog-data.js?v=20261008-arabic-breadth-v4',
+  './modules/lorefy-catalog-worker.js?v=20261017-search-alias-v1',
+  './modules/lorefy-catalog-data.js?v=20261017-search-alias-v1',
   './modules/lorefy-reading-metrics.js?v=20261017-review-library-independent-v1',
   './modules/lorefy-reading-diary-core.js?v=20261016-diary-position-v1',
   './modules/lorefy-reading-diary.js?v=20261016-diary-position-v1',

@@ -38,3 +38,5 @@ aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 
 [[systems/App-Boot]] | [[systems/Explore-Works]] |
 [[systems/Reading-Library]] | [[11-Organization-Plan]]
+
+- [[bugs/LF-043-Search-Alias-Refresh]]: تحديث محتوى الأسماء البديلة في الفهرس compact مع بقاء هوية الطبعة؛ [[sessions/2026-10-17-Search-Alias-Refresh]]. تصحيح الأخطاء الإملائية وفشل المزوّد ما زالا مستقلين.

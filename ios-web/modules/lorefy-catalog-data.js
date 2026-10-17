@@ -53,6 +53,13 @@
     ['Solo Leveling','التطور بمفردي','سولو ليفلينج'],
     ['Omniscient Reader','Omniscient Reader\'s Viewpoint','القارئ العليم']
   ].map(function(group){return group.map(queryText);});
+  function rawSearchField(value) {
+    if (value && typeof value === "object") value = Object.values(value).join(" ");
+    return String(value == null ? "" : value);
+  }
+  function aliasSearchContent(record) {
+    return [].concat(record.altTitles || [], record.aliases || [], record.authorAliases || []).map(rawSearchField).join("\u0000");
+  }
   var lastQuery, lastNormalizedQuery, lastQueryTokens;
   function buildQueryIndex(record) {
     var aliases = [].concat(record.altTitles || [], record.aliases || [], record.authorAliases || []);
@@ -70,7 +77,7 @@
     });
     return {signature:signature,text:fields.join(' '),fields:fields,
       title:record.title,ar:record.ar,auth:record.auth,author:record.author,
-      aliasCount:aliases.length};
+      aliasCount:aliases.length,aliasContent:aliases.map(rawSearchField).join("\u0000")};
   }
   function matchesCatalogQuery(record, query) {
     if (!record || typeof record !== 'object' || !record.id) return false;
@@ -85,7 +92,8 @@
     var cached;
     if (prepared && prepared.title === record.title && prepared.ar === record.ar &&
       prepared.auth === record.auth && prepared.author === record.author &&
-      prepared.aliasCount === (record.altTitles || []).length + (record.aliases || []).length + (record.authorAliases || []).length) {
+      prepared.aliasCount === (record.altTitles || []).length + (record.aliases || []).length + (record.authorAliases || []).length &&
+      prepared.aliasContent === aliasSearchContent(record)) {
       cached = prepared;
     } else {
       cached = searchIndex.get(record);
@@ -97,6 +105,10 @@
       if (!cached || cached.signature !== signature) {
         cached = buildQueryIndex(record);
         searchIndex.set(record,cached);
+      }
+      if (record._catalogCompact) {
+        record._queryIndex = cached;
+        delete cached.signature;
       }
     }
     if (cached.text.indexOf(text) !== -1) return true;

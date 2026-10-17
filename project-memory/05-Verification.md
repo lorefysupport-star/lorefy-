@@ -269,3 +269,12 @@ LF-042 on 539b15d plus patch: **1695/1695 passed**, zero failures, exit 0.
 old review results before a profile fetch and current posts work.
 Evidence: D:/LorefyDevelopment/QA/remaining-repairs-20261017/feed-read-full-tests.txt
 and feed-read-browser.json. [[sessions/2026-10-17-Feed-Read-Session]]. No production/device claim.
+
+## Search alias refresh — 2026-10-17
+
+LF-043 on 38bc374 plus patch: 15 new cases (14 failed before), **74/74 focused passed**.
+Chrome isolated Arabic alias replacement and stable ID/index reuse passed; six
+canonical/ios-web/native public assets SHA-256 matched. Evidence in
+D:/LorefyDevelopment/QA/remaining-repairs-20261017/search-alias-focused.txt
+and search-alias-browser.json. [[sessions/2026-10-17-Search-Alias-Refresh]]. This patch has
+focused evidence; prior full 1695/1695 belongs to the LF-042 source.
