@@ -366,23 +366,41 @@
       try{ var raw = readLS(SESSION_KEY); return raw ? JSON.parse(raw) : null; }catch(e){ return null; }
     },
     _clearInvalidSession: async function(){
-      if (this._sessionCleared) return;
+      if (this._sessionCleared && sessionReadCurrent(this, this._clearedSessionScope)) return;
+      var request = sessionReadScope(this);
       this._sessionCleared = true;
+      this._clearedSessionScope = request;
       this.stopSync();
+      assertSessionRead(this, request);
       this._communityEpoch += 1;
+      request.epoch = this._communityEpoch;
       await this._stopCommunitySubscription();
-      if (this.client){
-        try{ await this.client.auth.signOut({ scope:"local" }); }catch(e){}
+      assertSessionRead(this, request);
+      await this._stopNotificationSubscription();
+      assertSessionRead(this, request);
+      if (request.client){
+        try{ await request.client.auth.signOut({ scope:"local" }); }catch(e){}
       }
+      assertSessionRead(this, request);
       try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
       try{ localStorage.removeItem(ONBOARDING_DRAFT_KEY); }catch(e){}
       clearUserData();
       this.user = null;
+      this._clearedSessionScope = sessionReadScope(this);
       if (window.LorefyMonitoring) {
         window.LorefyMonitoring.setUserId(null);
         window.LorefyMonitoring.clear();
       }
       this._emit(null);
+    },
+    _stopNotificationSubscription: function(){
+      var channel = this._notificationChannel;
+      var client = this._notificationChannelClient || this.client;
+      this._notificationChannel = null;
+      this._notificationChannelClient = null;
+      if (!channel || !client) return Promise.resolve();
+      try{ return Promise.resolve(client.removeChannel(channel)).catch(function(){}); }
+      catch(e){ return Promise.resolve(); }
     },
 
     onAuth: function(cb){ this._authCbs.push(cb); },
@@ -695,21 +713,22 @@
 
     /* ── خروج ── */
     signOut: async function(){
+      var request = sessionReadScope(this);
       this.stopSync();
+      assertSessionRead(this, request);
       this._communityEpoch += 1;
+      request.epoch = this._communityEpoch;
       await this._stopCommunitySubscription();
+      assertSessionRead(this, request);
       var installationId = readLS("lorefy.native.installation.v1");
       if (this.mode === "live" && isUuid(installationId)){
         try{ await this.unregisterPushDevice(installationId); }catch(e){}
       }
-      if (this._notificationChannel && this.client){
-        var notificationChannel = this._notificationChannel;
-        var notificationClient = this._notificationChannelClient || this.client;
-        this._notificationChannel = null;
-        this._notificationChannelClient = null;
-        try{ await notificationClient.removeChannel(notificationChannel); }catch(e){}
-      }
-      if (this.mode === "live"){ try{ await this.client.auth.signOut({ scope:"local" }); }catch(e){} }
+      assertSessionRead(this, request);
+      await this._stopNotificationSubscription();
+      assertSessionRead(this, request);
+      if (this.mode === "live"){ try{ await request.client.auth.signOut({ scope:"local" }); }catch(e){} }
+      assertSessionRead(this, request);
       try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
       try{ localStorage.removeItem(ONBOARDING_DRAFT_KEY); }catch(e){}
       clearUserData();

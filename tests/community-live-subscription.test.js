@@ -134,7 +134,8 @@ test('sign-out generation prevents a pending subscription from reopening a chann
   const unsubscribe = await pending;
   unsubscribe();
   assert.equal(app.channels.length, 0);
-  assert.match(source, /signOut: async function\(\)\{\s*this\.stopSync\(\);\s*this\._communityEpoch \+= 1;\s*await this\._stopCommunitySubscription\(\)/);
+  const logout=source.slice(source.indexOf('    signOut:'),source.indexOf('    pull:'));
+  assert.match(logout, /this\.stopSync\(\);[\s\S]*?this\._communityEpoch \+= 1;[\s\S]*?await this\._stopCommunitySubscription\(\)/);
   assert.match(source, /_clearInvalidSession: async function\(\)\{[\s\S]*?await this\._stopCommunitySubscription\(\)/);
 });
 

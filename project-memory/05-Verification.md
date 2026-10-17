@@ -244,3 +244,12 @@ First 12 cases had 11 failures; final 13 and related 22/22 passed.
 Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/account-deletion-session-full-tests.txt`.
 [[sessions/2026-10-17-Account-Deletion-Session]]. All deletion/sign-out calls mocked; no live account deletion,
 SDK-internal teardown or installed-device certification.
+
+## Local teardown ownership — 2026-10-17
+
+LF-040 on 5e0c700 plus patch: **1610/1610 passed**, zero failures, exit 0.
+First 28 new cases had 26 failures; final 31 and related 109/109 passed.
+Actual Chrome isolated localStorage retained the new account after an old logout,
+then current logout cleared it. Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/session-teardown-full-tests.txt`
+and session-teardown-browser.json. [[sessions/2026-10-17-Session-Teardown-Owner]].
+SDK transport mocked; live SDK/auth storage and physical device remain separate.

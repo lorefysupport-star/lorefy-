@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v489-account-deletion-owner';
+const CACHE = 'lorefy-v490-teardown-owner';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -86,7 +86,7 @@ const CORE = [
   './config/lorefy-runtime.js?v=20260930-character-share-v1',
   './config/lorefy-config.js?v=20260924-catalog-v1',
   './backend/lorefy-secure-storage.js?v=20260824-keychain-v2',
-  './backend/lorefy-backend.js?v=20261017-account-deletion-owner-v1',
+  './backend/lorefy-backend.js?v=20261017-teardown-owner-v1',
   './backend/lorefy-custom-artwork.js?v=20261008-durable-artwork-v1',
   './backend/lorefy-native-crypto.js?v=20261001-auth-recovery-v1',
   './modules/lorefy-subscriptions.js?v=20260722-billing-guard-v1',
