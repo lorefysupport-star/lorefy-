@@ -104,9 +104,9 @@ test('review queries have a stable tie-breaker and accept only validated older-p
   const start=backend.indexOf('    listReviews: async function('),end=backend.indexOf('    publishCommunityPost:',start);
   const calls=[];
   const query={select(){return this;},order(...args){calls.push(['order',...args]);return this;},limit(){return this;},eq(){return this;},or(value){calls.push(['or',value]);return this;},then(resolve){return Promise.resolve({data:[]}).then(resolve);}};
-  const scope={isUuid:value=>/^[0-9a-f-]{36}$/.test(value)};
-  vm.runInNewContext('var B={'+backend.slice(start,end)+'};',scope);
-  Object.assign(scope.B,{mode:'live',client:{from:()=>query}});
+  const window={}; vm.runInNewContext(backend,{window,console,URL,setTimeout,clearTimeout});
+  const scope={B:window.LorefyBackend};
+  Object.assign(scope.B,{mode:'live',user:{id:'reader'},client:{from:()=>query}});
   await scope.B.listReviews({before:{id:id(100),created_at:'2026-10-01T00:00:00Z'}});
   assert.ok(calls.some(c=>c[0]==='order'&&c[1]==='id'));
   assert.ok(calls.some(c=>c[0]==='or'&&c[1].includes('id.lt.'+id(100))));
@@ -117,8 +117,8 @@ test('review queries have a stable tie-breaker and accept only validated older-p
 
 test('scoped collection fetches every page and keeps tied timestamps without duplicate rows', async () => {
   const start=backend.indexOf('    listReviewCollection: async function('),end=backend.indexOf('    publishCommunityPost:',start);
-  const scope={invalidSessionError:()=>new Error('Account changed')};
-  vm.runInNewContext('var B={'+backend.slice(start,end)+'};',scope);
+  const window={}; vm.runInNewContext(backend,{window,console,URL,setTimeout,clearTimeout});
+  const scope={B:window.LorefyBackend};
   const pages=[Array.from({length:100},(_,i)=>row(i+1,'reader')),[row(100,'reader'),row(101,'reader')]];
   const calls=[];
   Object.assign(scope.B,{user:{id:'reader'},listReviews:async options=>{calls.push(options);return pages.shift();}});

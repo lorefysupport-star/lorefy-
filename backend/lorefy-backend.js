@@ -936,6 +936,7 @@
       return this._storageMediaUrl(PROFILE_MEDIA_BUCKET, value, PROFILE_MEDIA_TTL);
     },
     _resolveArtworkAttachment: async function(attachment){
+      var request = this.mode === "live" ? mediaRequestScope(this) : null;
       var copy = Object.assign({}, attachment || {});
       var resolveImage = async function(value){
         if (typeof value !== "string" || value.indexOf("lorefy-artwork:") !== 0) return value;
@@ -943,9 +944,11 @@
         catch(e){ return ""; }
       };
       if (copy.image) copy.image = await resolveImage(copy.image);
+      if (request) assertMediaRequest(this, request);
       if (Array.isArray(copy.items)) copy.items = await Promise.all(copy.items.slice(0,10).map(async function(item){
         return Object.assign({}, item, {image:await resolveImage(item.image)});
       }));
+      if (request) assertMediaRequest(this, request);
       return copy;
     },
     _uploadReviewMedia: async function(userId, reviewId, value){
@@ -1360,10 +1363,9 @@
     // Rating shelves use public metadata only; review bodies and media load in the normal review view.
     listFriendRatings: async function(){
       if (this.mode !== "live") return {followingIds:[],ratings:[],limited:false};
-      var owner = this.user && this.user.id;
-      if (!owner) throw invalidSessionError();
+      var request = mediaRequestScope(this), owner = request.owner;
       var followingIds = Array.from(new Set(await this.getFollowedProfileIds())).filter(function(id){ return isUuid(id) && id !== owner; });
-      if (owner !== (this.user && this.user.id)) throw invalidSessionError();
+      assertMediaRequest(this, request);
       if (!followingIds.length) return {followingIds:[],ratings:[],limited:false};
       var batches = [], client = this.client, rows = [], limited = false, profiles = {};
       for (var i=0; i<followingIds.length; i+=50) batches.push(followingIds.slice(i,i+50));
@@ -1372,12 +1374,14 @@
         var results = await Promise.all(batches.slice(offset,offset+3).map(async function(ids){
           var result = await client.from("reviews").select("id,user_id,work_id,rating,is_public,created_at")
             .in("user_id",ids).eq("is_public",true).order("created_at",{ascending:false}).order("id",{ascending:false}).limit(500);
+          assertMediaRequest(B, request);
           if (result.error) throw result.error;
           var readers = await client.from("profiles").select("id,name,username,avatar").in("id",ids);
+          assertMediaRequest(B, request);
           if (readers.error) throw readers.error;
           return {rows:result.data || [],profiles:readers.data || []};
         }));
-        if (owner !== (this.user && this.user.id)) throw invalidSessionError();
+        assertMediaRequest(this, request);
         results.forEach(function(result){
           if (result.rows.length===500) limited=true;
           rows = rows.concat(result.rows);
@@ -1388,12 +1392,13 @@
         var profile=profiles[id];
         try { profile.avatar=await B._storageMediaUrl(PROFILE_MEDIA_BUCKET,profile.avatar,PROFILE_MEDIA_TTL); } catch(e) { profile.avatar=""; }
       }));
-      if (owner !== (this.user && this.user.id)) throw invalidSessionError();
+      assertMediaRequest(this, request);
       var allowed = new Set(followingIds);
       return {followingIds:followingIds,limited:limited,ratings:rows.filter(function(row){ return allowed.has(row.user_id) && profiles[row.user_id] && row.is_public===true; }).map(function(row){ return Object.assign({},row,{profile:profiles[row.user_id]}); })};
     },
     listReviews: async function(options){
       if (this.mode !== "live") return [];
+      var request = mediaRequestScope(this);
       options = options || {};
       var limit = Math.min(Math.max(Number(options.limit) || 50, 1), 100);
       var query = this.client.from("reviews")
@@ -1406,6 +1411,7 @@
         if (!isNaN(date.getTime())) query = query.or("created_at.lt." + date.toISOString() + ",and(created_at.eq." + date.toISOString() + ",id.lt." + options.before.id + ")");
       }
       var result = await query;
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       var rows = result.data || [];
       var userIds = Array.from(new Set(rows.map(function(row){ return row.user_id; }).filter(Boolean)));
@@ -1415,52 +1421,60 @@
       var reactionsByReview = {};
       if (userIds.length){
         var profiles = await this.client.from("profiles").select("id,name,username,avatar").in("id", userIds);
+        assertMediaRequest(this, request);
         if (profiles.error) throw profiles.error;
         await Promise.all((profiles.data || []).map(async function(profile){
           try{ profile.avatar = await B._storageMediaUrl(PROFILE_MEDIA_BUCKET, profile.avatar, PROFILE_MEDIA_TTL); }catch(e){ profile.avatar = ""; }
           profileMap[profile.id] = profile;
         }));
+        assertMediaRequest(this, request);
       }
       if (reviewIds.length){
         var comments = await this.client.from("review_comments").select("id,review_id,user_id,parent_id,body,created_at").in("review_id", reviewIds).eq("is_deleted", false).order("created_at", { ascending:true }).limit(500);
+        assertMediaRequest(this, request);
         if (comments.error) throw comments.error;
         var commentUserIds = (comments.data || []).map(function(comment){ return comment.user_id; }).filter(Boolean);
         var missingProfileIds = Array.from(new Set(commentUserIds)).filter(function(userId){ return !profileMap[userId]; });
         if (missingProfileIds.length){
           var commentProfiles = await this.client.from("profiles").select("id,name,username,avatar").in("id", missingProfileIds);
+          assertMediaRequest(this, request);
           if (commentProfiles.error) throw commentProfiles.error;
           await Promise.all((commentProfiles.data || []).map(async function(profile){
             try{ profile.avatar = await B._storageMediaUrl(PROFILE_MEDIA_BUCKET, profile.avatar, PROFILE_MEDIA_TTL); }catch(e){ profile.avatar = ""; }
             profileMap[profile.id] = profile;
           }));
+          assertMediaRequest(this, request);
         }
         (comments.data || []).forEach(function(comment){
           comment.profile = profileMap[comment.user_id] || null;
           (commentsByReview[comment.review_id] || (commentsByReview[comment.review_id] = [])).push(comment);
         });
         var reactions = await this.client.from("review_reactions").select("review_id,user_id,kind").in("review_id", reviewIds).limit(1000);
+        assertMediaRequest(this, request);
         if (reactions.error) throw reactions.error;
         (reactions.data || []).forEach(function(reaction){
           var stats = reactionsByReview[reaction.review_id] || (reactionsByReview[reaction.review_id] = { like:0, dislike:0, heart:0, mine:{} });
           stats[reaction.kind] = (stats[reaction.kind] || 0) + 1;
-          if (B.user && reaction.user_id === B.user.id) stats.mine[reaction.kind] = true;
+          if (reaction.user_id === request.owner) stats.mine[reaction.kind] = true;
         });
       }
-      return Promise.all(rows.map(async function(row){
+      var hydratedRows = await Promise.all(rows.map(async function(row){
         var hydrated = await B._hydrateReview(row);
         hydrated.profile = profileMap[row.user_id] || null;
         hydrated.comments = commentsByReview[row.id] || [];
         hydrated.reactions = reactionsByReview[row.id] || { like:0, dislike:0, heart:0, mine:{} };
         return hydrated;
       }));
+      assertMediaRequest(this, request);
+      return hydratedRows;
     },
     listReviewCollection: async function(options){
       options = options || {};
       if (!options.userId && !options.workId) throw new Error("A review collection must be scoped to a reader or work.");
-      var owner = this.user && this.user.id, before = null, rows = new Map();
+      var request = sessionReadScope(this), before = null, rows = new Map();
       do {
         var page = await this.listReviews(Object.assign({}, options, {limit:100, before:before}));
-        if (owner !== (this.user && this.user.id)) throw invalidSessionError();
+        assertSessionRead(this, request);
         page.forEach(function(row){ rows.set(row.id, row); });
         var last = page[page.length - 1];
         if (page.length < 100) break;
@@ -1494,6 +1508,7 @@
     },
     listCommunityPosts: async function(options){
       if (this.mode !== "live") return [];
+      var request = mediaRequestScope(this);
       options = options || {};
       var limit = Math.min(Math.max(Number(options.limit) || 40, 1), 100);
       var query = this.client.from("community_posts")
@@ -1517,35 +1532,41 @@
       else query = query.is("parent_id", null);
       if (options.userId && !options.replyActivity) query = query.eq("user_id", String(options.userId));
       var result = await query;
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       var rows = result.data || [];
       var postIds = rows.map(function(row){ return row.id; }).filter(Boolean);
       await Promise.all(rows.map(async function(row){ row.attachment = await B._resolveArtworkAttachment(row.attachment); }));
+      assertMediaRequest(this, request);
       var userIds = Array.from(new Set(rows.map(function(row){ return row.user_id; }).filter(Boolean)));
       var profileMap = {};
       var reactionMap = {};
       var replyCountMap = {};
       if (userIds.length){
         var profiles = await this.client.from("profiles").select("id,name,username,avatar").in("id", userIds);
+        assertMediaRequest(this, request);
         if (profiles.error) throw profiles.error;
         await Promise.all((profiles.data || []).map(async function(profile){
           try{ profile.avatar = await B._storageMediaUrl(PROFILE_MEDIA_BUCKET, profile.avatar, PROFILE_MEDIA_TTL); }catch(e){ profile.avatar = ""; }
           profileMap[profile.id] = profile;
         }));
+        assertMediaRequest(this, request);
       }
       if (postIds.length){
         var reactions = await this.client.from("community_post_reactions")
           .select("post_id,user_id,kind").in("post_id", postIds).limit(1000);
+        assertMediaRequest(this, request);
         if (reactions.error) throw reactions.error;
         (reactions.data || []).forEach(function(reaction){
           var stats = reactionMap[reaction.post_id] || (reactionMap[reaction.post_id] = { like:0, dislike:0, mine:{ like:false, dislike:false } });
           var kind = reaction.kind === "dislike" ? "dislike" : "like";
           stats[kind] += 1;
-          if (B.user && reaction.user_id === B.user.id) stats.mine[kind] = true;
+          if (reaction.user_id === request.owner) stats.mine[kind] = true;
         });
         if (!options.parentId){
           var replies = await this.client.from("community_posts")
             .select("id,parent_id").in("parent_id", postIds).eq("is_deleted", false).limit(1000);
+          assertMediaRequest(this, request);
           if (replies.error) throw replies.error;
           (replies.data || []).forEach(function(reply){
             replyCountMap[reply.parent_id] = (replyCountMap[reply.parent_id] || 0) + 1;
@@ -1562,11 +1583,13 @@
     },
     listChapterReviews: async function(workId, chapter, offset){
       if (this.mode !== "live") return [];
+      var request = mediaRequestScope(this);
       var start = Math.max(0, Number(offset) || 0);
       var result = await this.client.from("chapter_reviews")
         .select("id,user_id,work_id,chapter,rating,body,spoiler,updated_at,profile:profiles(id,name,username,avatar)")
         .eq("work_id", String(workId)).eq("chapter", Number(chapter))
         .order("updated_at", { ascending:false }).order("id", { ascending:false }).range(start, start + 19);
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       await Promise.all((result.data || []).map(async function(row){
         if (row.profile) {
@@ -1574,6 +1597,7 @@
           catch (_) { row.profile.avatar = ""; }
         }
       }));
+      assertMediaRequest(this, request);
       return result.data || [];
     },
     deleteChapterReview: async function(reviewId){

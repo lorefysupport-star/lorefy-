@@ -22,18 +22,20 @@ test('friend shelves follow the published feed policy, even when editorial disco
 
 const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 function backendHarness(from){
-  const s=fs.readFileSync(path.join(__dirname,'../backend/lorefy-backend.js'),'utf8');const start=s.indexOf('    listFriendRatings:');const scope={isUuid:v=>/^[abcf]-id$/.test(v),invalidSessionError:()=>Error('stale session'),B:{_storageMediaUrl:async()=>''},PROFILE_MEDIA_BUCKET:'profile',PROFILE_MEDIA_TTL:1};
-  vm.runInNewContext('this.backend={'+s.slice(start,s.indexOf('    listReviews:',start))+'};',scope);
-  Object.assign(scope.backend,{mode:'live',user:{id:'owner'},getFollowedProfileIds:async()=>['a-id','b-id'],client:{from}});return scope.backend;
+  const s=fs.readFileSync(path.join(__dirname,'../backend/lorefy-backend.js'),'utf8'),window={};
+  vm.runInNewContext(s,{window,console,URL,setTimeout,clearTimeout});
+  const b=window.LorefyBackend;
+  Object.assign(b,{mode:'live',user:{id:'owner'},getFollowedProfileIds:async()=>['11111111-1111-4111-8111-111111111111','22222222-2222-4222-8222-222222222222'],client:{from},_storageMediaUrl:async()=>''});
+  return b;
 }
 function query(data,log){return {select(v){log.push(['select',v]);return this;},in(k,v){log.push(['in',k,Array.from(v)]);return this;},eq(k,v){log.push(['eq',k,v]);return this;},order(){return this;},limit(v){log.push(['limit',v]);return this;},then(resolve){return Promise.resolve({data}).then(resolve);}};}
 test('cloud shelves scope reads to actual follows and exclude private or inaccessible profiles',async()=>{
-  const log=[];const b=backendHarness(table=>query(table==='profiles'?[{id:'a-id',name:'A'}]:[{id:'good',user_id:'a-id',work_id:'one',is_public:true,rating:4},{id:'private',user_id:'a-id',is_public:false},{id:'unfollowed',user_id:'c-id',is_public:true},{id:'blocked',user_id:'b-id',is_public:true}],log));
+  const log=[];const b=backendHarness(table=>query(table==='profiles'?[{id:'11111111-1111-4111-8111-111111111111',name:'A'}]:[{id:'good',user_id:'11111111-1111-4111-8111-111111111111',work_id:'one',is_public:true,rating:4},{id:'private',user_id:'11111111-1111-4111-8111-111111111111',is_public:false},{id:'unfollowed',user_id:'33333333-3333-4333-8333-333333333333',is_public:true},{id:'blocked',user_id:'22222222-2222-4222-8222-222222222222',is_public:true}],log));
   const value=await b.listFriendRatings();assert.deepEqual(Array.from(value.ratings,r=>r.id),['good']);
   assert(log.some(x=>x[0]==='in' && x[1]==='user_id'));assert(log.some(x=>x[0]==='eq' && x[1]==='is_public' && x[2]===true));
   assert(log.filter(x=>x[0]==='select').every(x=>!x[1].includes('body')&&!x[1].includes('image_urls')));
 });
 test('changing accounts while a shelf request runs discards the previous account data',async()=>{
-  const b=backendHarness(()=>{throw Error('should not query');});b.getFollowedProfileIds=async()=>{b.user={id:'other'};return ['a-id'];};
-  await assert.rejects(b.listFriendRatings(),/stale session/);
+  const b=backendHarness(()=>{throw Error('should not query');});b.getFollowedProfileIds=async()=>{b.user={id:'other'};return ['11111111-1111-4111-8111-111111111111'];};
+  await assert.rejects(b.listFriendRatings(),e=>e.code==='LOREFY_SESSION_INVALID');
 });

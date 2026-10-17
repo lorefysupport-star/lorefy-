@@ -261,3 +261,11 @@ LF-041 on 05cfd24 plus patch: **1645/1645 passed**, zero failures, exit 0.
 profile reads before another RPC and accepted current search. Evidence in
 D:/LorefyDevelopment/QA/remaining-repairs-20261017/profile-read-full-tests.txt
 and profile-read-browser.json. [[sessions/2026-10-17-Profile-Read-Session]]. No live RLS/device claim.
+
+## Feed requester reads — 2026-10-17
+
+LF-042 on 539b15d plus patch: **1695/1695 passed**, zero failures, exit 0.
+50 new cases (initial 49: 38 failed), related 171/171; isolated Chrome rejects
+old review results before a profile fetch and current posts work.
+Evidence: D:/LorefyDevelopment/QA/remaining-repairs-20261017/feed-read-full-tests.txt
+and feed-read-browser.json. [[sessions/2026-10-17-Feed-Read-Session]]. No production/device claim.
