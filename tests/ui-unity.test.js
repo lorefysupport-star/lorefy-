@@ -31,7 +31,7 @@ test('updated UI assets use fresh cache keys', () => {
   for (const asset of ['modules/lorefy-growth-features.js', 'modules/lorefy-i18n.js',
     'modules/lorefy-v2.js', 'modules/lorefy-public-profile.js', 'uploads/files/lorefy-app.js']) {
     const versions = {
-      'modules/lorefy-growth-features.js':'20261016-reading-estimate-v1',
+      'modules/lorefy-growth-features.js':'20261017-import-session-v1',
       'modules/lorefy-public-profile.js':'20261016-reading-estimate-v1',
       'modules/lorefy-i18n.js':'20261016-statistics-activity-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',

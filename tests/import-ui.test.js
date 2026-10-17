@@ -17,7 +17,7 @@ function openImport(lang) {
     nodes.push(node);
     return node;
   };
-  const scope = { el, ovOpen: () => ({ body: el('div') }),
+  const scope = { global: { localStorage: { getItem: () => null } }, el, ovOpen: () => ({ body: el('div') }),
     uiText: (ar, en) => lang === 'ar' ? ar : en,
     IM_DONE: 'done', IM_READING: 'reading', IM_WISH: 'wish', IM_PAUSED: 'paused', IM_DROPPED: 'dropped'
   };

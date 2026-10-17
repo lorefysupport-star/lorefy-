@@ -380,7 +380,7 @@
   <script defer src="modules/lorefy-friend-activity.js?v=20261013-discover-reviewed-v2"></script>
   <script defer src="uploads/files/lorefy-app.js?v=20261017-review-image-owner-v1"></script>
   <script defer src="modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1"></script>
-  <script defer src="modules/lorefy-growth-features.js?v=20261016-reading-estimate-v1"></script>
+  <script defer src="modules/lorefy-growth-features.js?v=20261017-import-session-v1"></script>
   <script defer src="modules/lorefy-community.js?v=20261015-github-sync-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-profile-sections.css?v=20261016-list-tools-v1">
   <script defer src="modules/lorefy-profile-sections.js?v=20261016-list-keyboard-v1"></script>
@@ -551,7 +551,7 @@
           window.__lorefyGrowthRetryCount = (window.__lorefyGrowthRetryCount || 0) + 1;
           if (window.__lorefyGrowthRetryCount > 3) return;
           var script = document.createElement('script');
-      script.src = 'modules/lorefy-growth-features.js?v=20261016-reading-estimate-v1' + window.__lorefyGrowthRetryCount + '-' + Date.now();
+      script.src = 'modules/lorefy-growth-features.js?v=20261017-import-session-v1' + window.__lorefyGrowthRetryCount + '-' + Date.now();
           script.async = false;
           document.head.appendChild(script);
         }, 400);

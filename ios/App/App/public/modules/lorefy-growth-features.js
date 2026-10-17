@@ -3078,7 +3078,31 @@
     var note = el("p", { class: "lf-im-note", text: "انقل مكتبتك من حساباتك القديمة بدل إضافة كل عمل يدويًا. الأعمال الموجودة مسبقًا في مكتبتك لن تُمس." });
     ov.body.appendChild(note);
     var result = el("div", { class: "lf-im-result" });
-    function finish(res, sourceLabel) {
+    var openingContext = importContext(), attemptId = 0;
+    function importContext() {
+      var backend = global.LorefyBackend || null, active = "";
+      try { active = global.localStorage.getItem("lorefy.activeUser.v1") || ""; } catch (e) {}
+      return { backend:backend, client:backend && backend.client, mode:backend && backend.mode,
+        epoch:backend && backend._communityEpoch, user:backend && backend.user && backend.user.id || "", active:active };
+    }
+    function currentAttempt(attempt) {
+      if (attempt !== attemptId || !ov.page.isConnected || ov.page.inert) return false;
+      var current = importContext();
+      if (!Object.keys(openingContext).every(function (key) { return openingContext[key] === current[key]; })) {
+        ov.close();
+        toastSafe(uiText("تغير الحساب أو الجلسة. افتح الاستيراد مجددًا.", "Your account or session changed. Reopen import."));
+        return false;
+      }
+      return true;
+    }
+    function beginImport() {
+      if (!currentAttempt(attemptId)) return 0;
+      attemptId++;
+      result.textContent = "";
+      return attemptId;
+    }
+    function finish(res, sourceLabel, attempt) {
+      if (!currentAttempt(attempt)) return;
       result.textContent = "";
       var selectedRows = res.rows.map(function (row) { return Object.assign({}, row); });
       var preview = el("section", { class:"lf-im-preview" }, [
@@ -3089,6 +3113,7 @@
       var visible = 0;
       var more = el("button", { type:"button", class:"lf-im-more", text:uiText("عرض المزيد", "Show more") });
       function paintMore() {
+        if (!currentAttempt(attempt)) return;
         var end = Math.min(visible + 40, selectedRows.length);
         for (; visible < end; visible++) {
           (function (index) {
@@ -3116,11 +3141,11 @@
       var confirm = el("button", { type:"button", class:"lf-im-confirm lf-im-go", text:uiText("تأكيد الاستيراد", "Confirm import") });
       confirm.disabled = !selectedRows.length;
       confirm.addEventListener("click", function () {
-        if (confirm.disabled) return;
+        if (confirm.disabled || !currentAttempt(attempt)) return;
         confirm.disabled = true;
         selectedRows = selectedRows.filter(function (row) { return !!row.work; });
         var out = imApply(selectedRows);
-        renderResult(out,res,sourceLabel);
+        if (currentAttempt(attempt)) renderResult(out,res,sourceLabel);
       });
       preview.appendChild(confirm);
       result.appendChild(preview);
@@ -3138,7 +3163,8 @@
       reload.addEventListener("click", function () { ov.close(); });
       result.appendChild(reload);
     }
-    function fail(msg) {
+    function fail(msg, attempt) {
+      if (!currentAttempt(attempt)) return;
       result.textContent = "";
       result.appendChild(el("p", { class: "lf-im-error", text: msg }));
     }
@@ -3148,8 +3174,10 @@
     alBtn.addEventListener("click", function () {
       var name = alInput.value.trim();
       if (!name) { toastSafe("اكتب اسم المستخدم"); return; }
+      if (alBtn.disabled) return;
+      var attempt = beginImport(); if (!attempt) return;
       alBtn.disabled = true; alBtn.textContent = "جارٍ الجلب…";
-      imFetchAniList(name).then(function (res) { finish(res, "AniList"); }).catch(function (e) { fail(e && e.message || "تعذر الجلب من AniList"); }).then(function () { alBtn.disabled = false; alBtn.textContent = "استيراد"; });
+      imFetchAniList(name).then(function (res) { finish(res, "AniList", attempt); }).catch(function (e) { fail(e && e.message || "تعذر الجلب من AniList", attempt); }).then(function () { alBtn.disabled = false; alBtn.textContent = "استيراد"; });
     });
     ov.body.appendChild(el("section", { class: "lf-im-card" }, [
       el("header", { class: "lf-im-card-head" }, [el("strong", { text: "AniList" }), el("em", { text: "بزر واحد — اكتب اسمك فقط" })]),
@@ -3160,9 +3188,10 @@
     var malFile = el("input", { type: "file", accept: ".xml,.gz,application/xml,text/xml,application/gzip", style: "display:none" });
     malFile.addEventListener("change", function () {
       var f = malFile.files && malFile.files[0]; if (!f) return;
+      var attempt = beginImport(); if (!attempt) return;
       imReadFileText(f, function (text) {
-        try { finish(imParseMalXml(text), "MyAnimeList"); } catch (e) { fail(e.message || "ملف غير صالح"); }
-      }, fail);
+        try { finish(imParseMalXml(text), "MyAnimeList", attempt); } catch (e) { fail(e.message || "ملف غير صالح", attempt); }
+      }, function (message) { fail(message, attempt); });
       malFile.value = "";
     });
     var malBtn = el("button", { type: "button", class: "lf-im-file", text: "اختر ملف التصدير (.xml)" });
@@ -3176,9 +3205,10 @@
     var grFile = el("input", { type: "file", accept: ".csv,text/csv", style: "display:none" });
     grFile.addEventListener("change", function () {
       var f = grFile.files && grFile.files[0]; if (!f) return;
+      var attempt = beginImport(); if (!attempt) return;
       imReadFileText(f, function (text) {
-        try { finish(imParseGoodreads(text), "Goodreads"); } catch (e) { fail(e.message || "ملف غير صالح"); }
-      }, fail);
+        try { finish(imParseGoodreads(text), "Goodreads", attempt); } catch (e) { fail(e.message || "ملف غير صالح", attempt); }
+      }, function (message) { fail(message, attempt); });
       grFile.value = "";
     });
     var grBtn = el("button", { type: "button", class: "lf-im-file", text: "اختر ملف التصدير (.csv)" });
@@ -3194,8 +3224,10 @@
     ktBtn.addEventListener("click", function () {
       var name = ktInput.value.trim();
       if (!name) { toastSafe("اكتب اسم المستخدم"); return; }
+      if (ktBtn.disabled) return;
+      var attempt = beginImport(); if (!attempt) return;
       ktBtn.disabled = true; ktBtn.textContent = "جارٍ الجلب…";
-      imFetchKitsu(name).then(function (res) { finish(res, "Kitsu"); }).catch(function (e) { fail(e && e.message || "تعذر الجلب من Kitsu"); }).then(function () { ktBtn.disabled = false; ktBtn.textContent = "استيراد"; });
+      imFetchKitsu(name).then(function (res) { finish(res, "Kitsu", attempt); }).catch(function (e) { fail(e && e.message || "تعذر الجلب من Kitsu", attempt); }).then(function () { ktBtn.disabled = false; ktBtn.textContent = "استيراد"; });
     });
     ov.body.appendChild(el("section", { class: "lf-im-card" }, [
       el("header", { class: "lf-im-card-head" }, [el("strong", { text: "Kitsu" }), el("em", { text: "بزر واحد — اسم المستخدم فقط" })]),
@@ -3205,9 +3237,10 @@
     var anyFile = el("input", { type: "file", accept: ".csv,.tsv,text/csv", style: "display:none" });
     anyFile.addEventListener("change", function () {
       var f = anyFile.files && anyFile.files[0]; if (!f) return;
+      var attempt = beginImport(); if (!attempt) return;
       imReadFileText(f, function (text) {
-        try { finish(imParseGenericCsv(text, IM_DONE), "ملف CSV"); } catch (e) { fail(e.message || "ملف غير صالح"); }
-      }, fail);
+        try { finish(imParseGenericCsv(text, IM_DONE), "ملف CSV", attempt); } catch (e) { fail(e.message || "ملف غير صالح", attempt); }
+      }, function (message) { fail(message, attempt); });
       anyFile.value = "";
     });
     var anyBtn = el("button", { type: "button", class: "lf-im-file", text: "اختر ملف CSV" });
@@ -3234,13 +3267,14 @@
     pasteBtn.addEventListener("click", function () {
       var lines = pasteTa.value.split(/\r?\n/).map(function (l) { return l.replace(/^\s*[\d\u0660-\u0669]+[).\-–]\s*/, "").trim(); }).filter(Boolean);
       if (!lines.length) { toastSafe("الصق العناوين أولاً"); return; }
+      var attempt = beginImport(); if (!attempt) return;
       var rows = [], misses = 0;
       lines.forEach(function (t) {
         var w = imFindByTitle(t);
         if (w) rows.push({ work: w, status: pasteStatus, chapters: 0, score: 0 });
         else misses++;
       });
-      finish({ rows: rows, misses: misses }, "قائمة العناوين");
+      finish({ rows: rows, misses: misses }, "قائمة العناوين", attempt);
     });
     ov.body.appendChild(el("section", { class: "lf-im-card" }, [
       el("header", { class: "lf-im-card-head" }, [el("strong", { text: "أي موقع — الصق العناوين" }), el("em", { text: "NovelUpdates وغيره" })]),

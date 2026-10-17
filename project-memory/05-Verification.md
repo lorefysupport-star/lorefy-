@@ -278,3 +278,14 @@ canonical/ios-web/native public assets SHA-256 matched. Evidence in
 D:/LorefyDevelopment/QA/remaining-repairs-20261017/search-alias-focused.txt
 and search-alias-browser.json. [[sessions/2026-10-17-Search-Alias-Refresh]]. This patch has
 focused evidence; prior full 1695/1695 belongs to the LF-042 source.
+
+## Import preview scope — 2026-10-17
+
+LF-044 on e10f3d5 plus patch: **118/118 focused passed**, with 20 new cases
+(initial 17: 16 failures). Chrome isolated real DOM/localStorage blocked stale
+confirmation and retained a valid retry and fractional score. Evidence:
+D:/LorefyDevelopment/QA/remaining-repairs-20261017/import-session-focused.txt
+and import-session-browser.json. Full first run 1728/1730, second 1730/1731:
+cache integration and obsolete version assertions were corrected and their
+focused tests passed; these runs are not relabeled as a full pass.
+[[sessions/2026-10-17-Import-Request-Session]]. No live service/device claim.
