@@ -44,3 +44,5 @@ aliases: ["حساب", "دخول", "مزامنة", "ضياع", "auth", "offline",
 [[systems/Community-Notifications]] | [[10-Open-Questions]]
 
 [[sessions/2026-10-17-Backend-Review-Owner]] يمنع نشر/رفع المراجعة من استكمال طلب تحت حساب جديد، ويرفض توكن Storage المخالف. لا يثبت إلغاء طلب سبق إرساله أو صلاحيات الخادم.
+
+[[sessions/2026-10-17-Profile-Mutation-Owner]] تربط حفظ الملف والخصوصية وإكمال التسجيل بنطاق الحساب الافتتاحي؛ لا كتابة identity/preferences بعد رد حساب قديم.

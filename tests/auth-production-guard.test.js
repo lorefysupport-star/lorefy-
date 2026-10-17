@@ -187,6 +187,7 @@ test('a revoked session is cleared instead of reused', async () => {
 test('saving an existing profile submits a username change through the owner RPC', async () => {
   const backend = await loadBackend({ hostname:'localhost' });
   backend.mode = 'live';
+  backend.user = { id:'owner' };
   let submitted;
   backend._uploadProfileMedia = async () => '';
   backend._profileMediaUrl = async () => '';
@@ -205,6 +206,7 @@ for (const [message, code] of [['username_change_cooldown','LOREFY_USERNAME_COOL
   test(`profile saving surfaces ${code} without claiming a saved identity`, async () => {
     const backend = await loadBackend({ hostname:'localhost' });
     backend.mode = 'live';
+    backend.user = { id:'owner' };
     backend._uploadProfileMedia = async () => '';
     backend.client = {
       auth:{ getUser:async () => ({ data:{ user:{ id:'owner' } } }) },
@@ -218,6 +220,7 @@ for (const [message, code] of [['username_change_cooldown','LOREFY_USERNAME_COOL
 test('an invalid replacement handle is rejected before uploading media or calling the RPC', async () => {
   const backend = await loadBackend({ hostname:'localhost' });
   backend.mode = 'live';
+  backend.user = { id:'owner' };
   let writes = 0;
   backend._uploadProfileMedia = async () => { writes++; };
   backend.client = {

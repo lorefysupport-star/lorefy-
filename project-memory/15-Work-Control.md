@@ -71,3 +71,5 @@ path:bugs [status:open OR needs-device OR needs-service]
 - [[bugs/LF-028-Review-Only-Library]]: التهيئة من مراجعة وحدها ممنوعة؛ الحذف مستقل بالمصدر.
 
 - [[bugs/LF-029-Backend-Review-Owner]]: سياق نشر المراجعة وStorage معزول؛ بقية حفظ الملف/الوسائط وفحوص RLS الحقيقية مستقلة.
+
+- [[bugs/LF-030-Profile-Mutation-Owner]]: حفظ الملف والخصوصية والتسجيل معزول بالمصدر؛ اختبارات الخدمة والزائر مستقلة.

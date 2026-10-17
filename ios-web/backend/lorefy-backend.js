@@ -1096,13 +1096,17 @@
     saveProfile: async function(profile){
       this._requireAvailable();
       if (this.mode !== "live") return true;
+      var request = mediaRequestScope(this);
       var authResult = await this.client.auth.getUser();
+      assertMediaRequest(this, request);
       var authUser = authResult && authResult.data && authResult.data.user;
       if (authResult.error || !authUser){
         await this._clearInvalidSession();
         throw invalidSessionError();
       }
+      if (authUser.id !== request.owner) throw invalidSessionError();
       var currentResult = await this.client.from("profiles").select("username,avatar,banner,social_links,is_private").eq("id", authUser.id).maybeSingle();
+      assertMediaRequest(this, request);
       if (currentResult.error) throw currentResult.error;
       var current = currentResult.data || {};
       var requestedUsername = profile.un == null ? normalizeUsername(current.username) : normalizeUsername(profile.un);
@@ -1112,10 +1116,11 @@
         invalid.code = "LOREFY_USERNAME_INVALID";
         throw invalid;
       }
-      var media = [
-        await this._uploadProfileMedia(authUser.id, "avatar", profile.avatar, current.avatar),
-        await this._uploadProfileMedia(authUser.id, "banner", profile.banner, current.banner)
-      ];
+      var avatar = await this._uploadProfileMedia(authUser.id, "avatar", profile.avatar, current.avatar);
+      assertMediaRequest(this, request);
+      var banner = await this._uploadProfileMedia(authUser.id, "banner", profile.banner, current.banner);
+      assertMediaRequest(this, request);
+      var media = [avatar, banner];
       var row = {
         username: requestedUsername || null,
         name: profile.name || "",
@@ -1139,6 +1144,7 @@
         profile_social_links:row.social_links,
         profile_is_private:row.is_private
       });
+      assertMediaRequest(this, request);
       if (r.error){
         if (/username_change_cooldown/i.test(String(r.error.message || ""))) {
           var cooldown = new Error(english ? "You can change your username once every 7 days." : "يمكنك تغيير اسم المستخدم مرة كل 7 أيام.");
@@ -1158,7 +1164,11 @@
       }
       var saved = Array.isArray(r.data) ? r.data[0] : r.data;
       saved = saved && typeof saved === "object" ? saved : row;
-      var view = [await this._profileMediaUrl(saved.avatar), await this._profileMediaUrl(saved.banner)];
+      var avatarUrl = await this._profileMediaUrl(saved.avatar);
+      assertMediaRequest(this, request);
+      var bannerUrl = await this._profileMediaUrl(saved.banner);
+      assertMediaRequest(this, request);
+      var view = [avatarUrl, bannerUrl];
       return {
         username:saved.username || row.username || "",
         avatar:view[0], banner:view[1],
@@ -1170,16 +1180,20 @@
       this._requireAvailable();
       isPrivate = isPrivate === true;
       if (this.mode !== "live") return isPrivate;
+      var request = mediaRequestScope(this);
       var authResult = await this.client.auth.getUser();
+      assertMediaRequest(this, request);
       var authUser = authResult && authResult.data && authResult.data.user;
       if (authResult.error || !authUser){
         await this._clearInvalidSession();
         throw invalidSessionError();
       }
+      if (authUser.id !== request.owner) throw invalidSessionError();
       var currentResult = await this.client.from("profiles")
         .select("name,username,bio,avatar,banner,genres,social_links,is_private")
         .eq("id", authUser.id)
         .maybeSingle();
+      assertMediaRequest(this, request);
       if (currentResult.error) throw currentResult.error;
       var current = currentResult.data || {};
       var saved = await this.saveProfile({
@@ -1192,6 +1206,7 @@
         socials:current.social_links && typeof current.social_links === "object" ? current.social_links : {},
         isPrivate:isPrivate
       });
+      assertMediaRequest(this, request);
       var identity = {};
       try{ identity = JSON.parse(readLS("lorefy.identity.v1") || "{}") || {}; }catch(e){}
       identity.isPrivate = saved.isPrivate === true;
@@ -1631,6 +1646,7 @@
     },
     completeOnboarding: async function(profile, preferences){
       this._requireAvailable();
+      var request = this.mode === "live" ? mediaRequestScope(this) : null;
       var cleanPreferences = {
         version:2,
         formats:Array.isArray(preferences&&preferences.formats) ? preferences.formats : [],
@@ -1646,10 +1662,12 @@
         preferences:cleanPreferences
       });
       await this.saveProfile(cleanProfile);
+      if (request) assertMediaRequest(this, request);
       writeLS("lorefy.identity.v1", JSON.stringify(cleanProfile));
       writeLS("lorefy.user.preferences.v2", JSON.stringify(cleanPreferences));
       try{ localStorage.removeItem(ONBOARDING_DRAFT_KEY); }catch(e){}
       await this.push();
+      if (request) assertMediaRequest(this, request);
       return { profile:cleanProfile, preferences:cleanPreferences };
     },
     _schedulePush: function(){

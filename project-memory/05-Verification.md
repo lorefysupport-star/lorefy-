@@ -4,6 +4,12 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+Latest profile follow-up: [[sessions/2026-10-17-Profile-Mutation-Owner]],
+1374/1374 tests passed. Profile/privacy/onboarding results are bound to their
+opening account. Supabase project inspection was denied by the connector;
+no live profile, RLS or installed-device certification is claimed.
+
+
 Latest backend follow-up: [[sessions/2026-10-17-Backend-Review-Owner]],
 1357/1357 passing source tests. Storage token/owner and review request stages
 are guarded; no live Storage/RLS certification or request rollback is claimed.
