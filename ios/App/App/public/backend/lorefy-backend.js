@@ -1425,8 +1425,10 @@
     publishCommunityPost: async function(input){
       this._requireAvailable();
       if (this.mode !== "live") throw new Error("Cloud community publishing is unavailable in demo mode.");
+      var request = mediaRequestScope(this);
       var session = await this.getSession();
-      if (!session || !session.userId) throw invalidSessionError();
+      assertMediaRequest(this, request);
+      if (!session || session.userId !== request.owner) throw invalidSessionError();
       input = input || {};
       var kind = ["text", "list", "top"].indexOf(String(input.kind || "text")) >= 0 ? String(input.kind || "text") : "text";
       var body = String(input.body || "").trim().slice(0, 1000);
@@ -1438,6 +1440,7 @@
         post_attachment:attachment,
         parent_ref:parentId
       });
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       var row = Array.isArray(result.data) ? result.data[0] : result.data;
       return row || null;
@@ -1552,7 +1555,11 @@
     },
     mutateCommunityPost: async function(postId, changes){
       this._requireAvailable();
-      if (this.mode !== "live" || !await this.getSession()) throw invalidSessionError();
+      if (this.mode !== "live") throw invalidSessionError();
+      var request = mediaRequestScope(this);
+      var session = await this.getSession();
+      assertMediaRequest(this, request);
+      if (!session || session.userId !== request.owner) throw invalidSessionError();
       if (!isUuid(postId)) throw new Error("Invalid community post.");
       changes = changes || {};
       var result = await this.client.rpc("mutate_community_post", {
@@ -1560,11 +1567,15 @@
         post_body:typeof changes.body === 'string' ? changes.body.trim() : null,
         removed:typeof changes.is_deleted === 'boolean' ? changes.is_deleted : null
       });
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return Array.isArray(result.data) ? result.data[0] : result.data;
     },
     setCommunityPostReaction: async function(postId, kind, active){
-      if (!await this.getSession()) throw invalidSessionError();
+      var request = this.mode === "live" ? mediaRequestScope(this) : null;
+      var session = await this.getSession();
+      if (request) assertMediaRequest(this, request);
+      if (!session || request && session.userId !== request.owner) throw invalidSessionError();
       kind = kind === "dislike" ? "dislike" : "like";
       if (!isUuid(postId)) return active !== false;
       var result = await this.client.rpc("set_community_post_reaction", {
@@ -1572,6 +1583,7 @@
         reaction_kind:kind,
         reaction_active:active !== false
       });
+      if (request) assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return active !== false;
     },
@@ -1676,12 +1688,14 @@
     submitReport: async function(input){
       input = input || {};
       if (this.mode !== "live") throw new Error("Cloud reporting is unavailable.");
+      var request = mediaRequestScope(this);
       var result = await this.client.rpc("submit_report", {
         target_kind:String(input.targetType || "review"),
         target_ref:String(input.targetId || "").trim().slice(0, 200),
         report_reason:String(input.reason || "spam"),
         report_details:String(input.note || "").trim().slice(0, 800)
       });
+      assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return { id:result.data, status:"open" };
     },

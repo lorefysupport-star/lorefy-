@@ -206,3 +206,12 @@ LF-035 on 73447e3 plus patch: **1476/1476 passed**, zero failures, exit 0.
 45 regressions (36 failed before patch), 84/84 related cases. Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/profile-relationship-full-tests.txt`.
 backend/index/sw SHA-256 match both native web copies. No live follow/block writes,
 RLS/visibility certification or new native binary. [[sessions/2026-10-17-Profile-Relationship-Session]].
+
+## Community request ownership — 2026-10-17
+
+LF-036 on d801080 plus patch: **1503/1503 passed**, zero failures, exit 0.
+27 regressions (25 failed before), 80/80 related. Actual Chrome with isolated
+localStorage/auth/RPC rejected an old request before RPC and retained current reply parent.
+Evidence: `D:/LorefyDevelopment/QA/remaining-repairs-20261017/community-mutation-full-tests.txt`
+and community-mutation-browser.json. [[sessions/2026-10-17-Community-Mutation-Session]].
+No production operation or installed-device certification.
