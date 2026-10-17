@@ -4,7 +4,13 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
-Latest review-mutation receipts: [[sessions/2026-10-16-Review-Progress-Independence]]
+Latest review editor/image receipts (2026-10-17):
+[[sessions/2026-10-17-Review-Editor-Owner]] and
+[[sessions/2026-10-17-Review-Image-Owner]], 1335 source tests passed, 0 failed.
+The current handoff and its fresh verification are in [[18-Progress-Handoff]].
+No new installed-device or service certification follows from these results.
+
+Earlier review-mutation receipts: [[sessions/2026-10-16-Review-Progress-Independence]]
 and [[sessions/2026-10-17-Review-Response-Owner]]. Final source suite: 1318 passed,
 0 failed; deferred mutation tests cover account/session changes. An isolated
 demo publication/reload retained Reading and 90 pages. No live request, native

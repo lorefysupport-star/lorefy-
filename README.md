@@ -1,5 +1,7 @@
 # Lorefy — مصدر التطبيق وذاكرة المشروع
 
+[حالة التطوير والتسليم: ما أُنجز وما بقي، 17 أكتوبر 2026](project-memory/18-Progress-Handoff.md).
+
 ابدأ من [خريطة ملف التطبيق](PROJECT_MAP.md)، ثم [رواية Lorefy](project-memory/13-Project-Story.md)
 و[مصفوفة الميزات والتحقق](project-memory/14-Feature-Coverage.md).
 [لوحة التطوير](project-memory/15-Work-Control.md) تربط العمل المتبقي بمراجعته وأدلته.
