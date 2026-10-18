@@ -6,6 +6,11 @@ aliases: ["تشغيل", "تحميل", "bootstrap", "cache", "NenApp"]
 ---
 # تشغيل التطبيق
 
+[[bugs/LF-073-Surface-Render-Recovery]] adds an AppShell React render boundary
+with manual AR/EN recovery and no storage clearing or automatic retry loop.
+[[sessions/2026-10-19-Surface-Render-Recovery]]:5 added,15 focused,2195 full passing;
+actual React browser injection/recovery, not an installed-device crash diagnosis.
+
 أحدث واجهة فتح: [[sessions/2026-10-18-Feather-Launch-Motion]]؛ ريشة تكتب
 Lorefy بلا عبارة تحميل أو تأخير تشغيل، وبديل ثابت لتقليل الحركة. صفحة الدخول
 تبقى Apple/Google فقط؛ شاشة إطلاق iOS الأصلية والنسخة المثبتة لم تتغيرا.

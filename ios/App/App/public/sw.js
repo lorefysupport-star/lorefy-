@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v528-read-intent';
+const CACHE = 'lorefy-v529-render-recovery';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -79,7 +79,7 @@ const CORE = [
   './modules/lorefy-bibliographic-overrides.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-character-system.js?v=20261003-beta-final-v1',
   './modules/lorefy-v2.js?v=20261016-statistics-activity-v1',
-  './modules/lorefy-ui-runtime.js?v=20261015-github-sync-v1',
+  './modules/lorefy-ui-runtime.js?v=20261019-render-recovery-v1',
   './vendor/react.production.min.js',
   './vendor/react-dom.production.min.js',
   './vendor/lucide.js',
