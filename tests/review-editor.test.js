@@ -72,6 +72,16 @@ function find(node, predicate) {
   return null;
 }
 
+test('a first-completion publish button names the reading action in both languages',()=>{
+  for(const [language,label] of [['ar','نشر وإضافة للمكتملة'],['en','Publish and mark completed']]) {
+    const model=rendered({language,completeOnPublish:true});
+    const footer=find(model.tree,n=>n.attributes.className==='lf-rating-footer');
+    assert.equal(find(footer,n=>n.type==='button').children[0],label);
+  }
+  const existing=rendered({language:'en',completeOnPublish:false});
+  assert.equal(find(find(existing.tree,n=>n.attributes.className==='lf-rating-footer'),n=>n.type==='button').children[0],'Publish review');
+});
+
 test('publishing is guarded against duplicate taps and retains the draft on failure', async () => {
   let calls=0, finish;
   const model=rendered({onPublish:()=>{calls++;return new Promise(resolve=>{finish=resolve;});}});

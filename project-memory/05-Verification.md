@@ -4,6 +4,12 @@ status: maintained
 ---
 # Verification Recipes and Evidence
 
+2026-10-18 owner-reported Berserk follow-up:
+[[sessions/2026-10-18-Rating-First-Completion]], **2107/2107**, zero failures.
+The local demo retained 2 completed / 804 chapters / 161 estimated hours after
+republishing and reload. Existing reading choices remain protected; no build,
+installed-device update or live-service certification.
+
 Latest completed source follow-up: [[sessions/2026-10-17-Notification-Backend-Session]],
 **1566/1566 passing tests**, zero failures, 2026-10-17. Isolated AR/EN demo
 home opened without pageerrors; backend/index/sw hashes match both native web

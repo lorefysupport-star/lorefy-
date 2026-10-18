@@ -18,6 +18,11 @@ Daily chapter history records explicit increases, not rendering, migration or
 library removal. Hours are the existing estimate, not an actual session timer.
 Normalize non-finite saved progress without poisoning profile totals.
 
+2026-10-18 owner-directed update: [[sessions/2026-10-18-Rating-First-Completion]]
+uses the existing one-time completion checkpoint after successful publication of
+a currently untracked work. Existing library/progress/removal entries win, even
+an explicit zero. Historical review hydration never backfills reading totals.
+
 This is a dated design contract, not a fresh correctness assertion.
 Sources: [audit](../../docs/FEATURE_AUDIT_20261011.md),
 [metrics module](../../modules/lorefy-reading-metrics.js),
