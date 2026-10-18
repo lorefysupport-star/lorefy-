@@ -22,6 +22,12 @@ aliases: ["عربي", "إنجليزي", "ترجمة", "صور", "مشاركة", 
 
 ## الفحص
 
+[[bugs/LF-071-Artwork-Storage-Quota]] addresses the Discord cover-picker quota
+toast: reclaim only regenerable downloaded cast caches, retry, or reject with
+AR/EN text preserving prior artwork/account state. Six new cases,42 focused,
+2183 full passing; [[sessions/2026-10-19-Discord-Artwork-Quota]]. Actual device
+storage composition and native permission/upload evidence remain separate.
+
 [[sessions/2026-10-16-Statistics-Locale]] يثبت ترجمة الإحصاءات في أول render
 مع اتجاه وأرقام اللغة الحالية، دون تمرير النصوص المخصصة إلى ترجمة DOM.
 

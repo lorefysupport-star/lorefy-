@@ -27,6 +27,95 @@ function harness(values = new Map([['lorefy.activeUser.v1', owner]])) {
   return {api:window.LorefyArtwork,backend,window,values,uploaded,cloud,events};
 }
 
+function quotaStorage(h, capacity, alwaysFull = false) {
+  const storage = h.window.localStorage, removed = [], writes = [];
+  Object.defineProperty(storage, 'length', {get: () => h.values.size});
+  storage.key = index => [...h.values.keys()][index] ?? null;
+  storage.removeItem = key => { removed.push(key); h.values.delete(key); };
+  storage.setItem = (key, value) => {
+    writes.push(key);
+    const next = new Map(h.values); next.set(key, String(value));
+    const bytes = [...next].reduce((sum, [k, v]) => sum + k.length + v.length, 0);
+    if (alwaysFull || bytes > capacity) {
+      const error = new Error('The quota has been exceeded.');
+      error.name = 'QuotaExceededError'; error.code = 22;
+      throw error;
+    }
+    h.values.set(key, String(value));
+  };
+  return {removed, writes};
+}
+
+test('quota recovery frees downloaded cast cache and saves the cover without deleting account data', async () => {
+  const h = harness();
+  h.values.set('lorefy.characterCastCache.v20', 'x'.repeat(2000));
+  h.values.set('lorefy.user.library.v2', '{"book":"done"}');
+  h.values.set(portraits, '{"hero":"keep"}');
+  h.values.set(covers, '{"previous":"https://cover.test/old"}');
+  const storage = quotaStorage(h, 1000);
+  await h.api.saveCover('work', 'https://cover.test/new');
+  assert.deepEqual(storage.removed, ['lorefy.characterCastCache.v20']);
+  assert.deepEqual(JSON.parse(h.values.get(covers)), {previous: 'https://cover.test/old', work: 'https://cover.test/new'});
+  assert.equal(h.values.get('lorefy.user.library.v2'), '{"book":"done"}');
+  assert.equal(h.values.get(portraits), '{"hero":"keep"}');
+  assert.equal(h.cloud[covers], h.values.get(covers));
+});
+
+test('quota recovery also retries character portraits and recognizes old cast-cache generations', async () => {
+  const h = harness();
+  h.values.set('lorefy.characterCastCache.v19', 'x'.repeat(2000));
+  const storage = quotaStorage(h, 1000);
+  await h.api.saveCharacter('hero', 'https://portrait.test/new');
+  assert.deepEqual(storage.removed, ['lorefy.characterCastCache.v19']);
+  assert.equal(JSON.parse(h.cloud[portraits]).hero, 'https://portrait.test/new');
+});
+
+for (const lang of ['ar', 'en']) test('persistent quota failure keeps existing artwork and reports a localized error: ' + lang, async () => {
+  const h = harness();
+  h.window.document = {documentElement: {lang}};
+  h.values.set(covers, '{"work":"old"}');
+  h.values.set('lorefy.user.library.v2', 'x'.repeat(2000));
+  h.values.set('lorefy.characterCastCache.v20.user', 'keep');
+  const storage = quotaStorage(h, 100);
+  await assert.rejects(h.api.saveCover('work', 'https://cover.test/new'), error => {
+    assert.equal(error.code, 'LOREFY_ARTWORK_STORAGE_FULL');
+    assert.match(error.message, lang === 'en' ? /storage.*full/i : /التخزين.*ممتلئة/);
+    return true;
+  });
+  assert.equal(h.values.get(covers), '{"work":"old"}');
+  assert.equal(h.values.get('lorefy.user.library.v2'), 'x'.repeat(2000));
+  assert.equal(h.values.get('lorefy.characterCastCache.v20.user'), 'keep');
+  assert.deepEqual(storage.removed, []);
+  assert.equal(h.events.length, 0);
+  assert.deepEqual(h.cloud, {});
+});
+
+test('a retry that still exceeds quota rejects without announcing a save or removing private state', async () => {
+  const h = harness();
+  h.values.set(covers, '{"work":"old"}');
+  h.values.set('lorefy.characterCastCache.v20', 'downloaded');
+  h.values.set('lorefy.pendingState.v1', '{"keep":"pending"}');
+  h.values.set('lorefy.stateBase.v1', '{"keep":"base"}');
+  const storage = quotaStorage(h, 0, true);
+  await assert.rejects(h.api.saveCover('work', 'https://cover.test/new'), {code: 'LOREFY_ARTWORK_STORAGE_FULL'});
+  assert.deepEqual(storage.removed, ['lorefy.characterCastCache.v20']);
+  assert.equal(h.values.get(covers), '{"work":"old"}');
+  assert.equal(h.values.get('lorefy.pendingState.v1'), '{"keep":"pending"}');
+  assert.equal(h.values.get('lorefy.stateBase.v1'), '{"keep":"base"}');
+  assert.equal(h.events.length, 0);
+  assert.deepEqual(h.cloud, {});
+});
+
+test('non-quota storage errors do not evict any cache or claim success', async () => {
+  const h = harness();
+  h.values.set('lorefy.characterCastCache.v20', 'downloaded');
+  const storage = quotaStorage(h, 10000);
+  h.window.localStorage.setItem = () => { throw new Error('storage denied'); };
+  await assert.rejects(h.api.saveCover('work', 'https://cover.test/new'), /storage denied/);
+  assert.deepEqual(storage.removed, []);
+  assert.equal(h.events.length, 0);
+});
+
 test('uploaded covers persist a durable owner reference, not base64 or an expiring URL',async()=>{
   const h=harness();
   await h.api.saveCover('work',image);

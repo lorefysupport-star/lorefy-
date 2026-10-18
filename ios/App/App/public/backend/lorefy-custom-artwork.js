@@ -17,6 +17,31 @@
   function notify(key) {
     global.dispatchEvent(new CustomEvent("lorefy:stored-state", { detail:{key:key} }));
   }
+  function quotaError(error) {
+    return error && (error.name === "QuotaExceededError" || error.name === "NS_ERROR_DOM_QUOTA_REACHED" || error.code === 22 || error.code === 1014);
+  }
+  function writeEntries(key, entries) {
+    var storage = global.localStorage, serialized = JSON.stringify(entries);
+    try { storage.setItem(key, serialized); return; }
+    catch (error) { if (!quotaError(error)) throw error; }
+    // Only downloaded cast caches are disposable; never reclaim account data.
+    var caches = [];
+    for (var index = 0; index < storage.length; index++) {
+      var candidate = storage.key(index);
+      if (/^lorefy\.characterCastCache\.v\d+$/.test(candidate || "")) caches.push(candidate);
+    }
+    for (var cacheIndex = 0; cacheIndex < caches.length; cacheIndex++) {
+      storage.removeItem(caches[cacheIndex]);
+      try { storage.setItem(key, serialized); return; }
+      catch (retryError) { if (!quotaError(retryError)) throw retryError; }
+    }
+    var english = global.document && global.document.documentElement && global.document.documentElement.lang === "en";
+    var failure = new Error(english
+      ? "Local storage is full. The image choice was not saved; your previous data is unchanged."
+      : "مساحة التخزين المحلية ممتلئة. لم يُحفظ اختيار الصورة؛ بياناتك السابقة لم تتغير.");
+    failure.code = "LOREFY_ARTWORK_STORAGE_FULL";
+    throw failure;
+  }
   function current(owner, generation) {
     var backend = global.LorefyBackend;
     return global.localStorage.getItem("lorefy.activeUser.v1") === owner && backend._pullGeneration === generation;
@@ -87,7 +112,7 @@
       var entries = map(KEYS[kind]);
       if (durable) entries[id] = durable; else delete entries[id];
       // Synchronous durable local write comes before any success or UI update.
-      global.localStorage.setItem(KEYS[kind], JSON.stringify(entries));
+      writeEntries(KEYS[kind], entries);
       notify(KEYS[kind]);
       if (backend && backend.mode === "live") {
         try {
