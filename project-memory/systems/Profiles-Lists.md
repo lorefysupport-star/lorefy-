@@ -23,6 +23,12 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 
 ## القوائم والأقسام
 
+[[sessions/2026-10-18-List-Removal-Public-Projection]] confirmed the missing live
+public-list RPC and activated only that reviewed projection with owner approval.
+Visibility choices remain unchanged. Owner cards/detail toolbar now expose
+confirmed removal, including legacy folders, with account checks and pending
+cloud-sync reporting; public fetch failures have retry.
+
 [profile-sections](../../modules/lorefy-profile-sections.js) يملك Overview /
 Lists / Posts والقوائم المرتبة. المفتاح `lorefy.user.profileLists.v1`؛ حد
 التطبيع المحلي 40 قائمة و50 عنصرًا لكل قائمة، ومنع IDs المكررة. النوع works

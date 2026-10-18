@@ -1,3 +1,9 @@
+.lf-profile-folder-entry { position: relative; min-width: 0; }
+.lf-profile-folder-entry > .lf-profile-folder { width: 100%; }
+.lf-profile-folder-entry .is-folder-delete { position: absolute; inset-inline-end: 0; top: 0; width: 44px; height: 44px; z-index: 2; background: var(--ui-surface); }
+.lf-profile-list-toolbar-actions { display: flex; gap: 8px; align-items: center; }
+.lf-profile-list-confirm { padding: 16px; margin-block: 12px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-surface); }
+.lf-profile-list-confirm > button { min-height: 44px; margin-inline-end: 8px; }
 .lf-profile-section-tabs {
   display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
   gap: 4px; margin: 0 16px 8px; padding: 0;

@@ -1971,7 +1971,13 @@
       return mlLists().map(function(l){return {id:'legacy-work:'+l.id,legacyId:l.id,legacyKind:'works',name:l.name,kind:'works',isPublic:false,items:(l.works||[]).map(function(id){var w=mlWorkBy(id);return {id:String(id),name:mlTitleOf(w),image:w ? (global.LorefyCoverAPI && global.LorefyCoverAPI.primary ? global.LorefyCoverAPI.primary(w) : w.cover || w.sourceCoverUrl || '') : ''};})};})
       .concat(clLists().map(function(l){return {id:'legacy-character:'+l.id,legacyId:l.id,legacyKind:'characters',name:l.title||'قائمة شخصيات',kind:'characters',isPublic:false,items:(l.chars||[]).map(function(ch){return {id:ch.id,name:ch.name,image:ch.img};})};}));
     },
-    open: function(row){openListsHub(row.legacyKind==='characters'?{charListId:row.legacyId}:{listId:row.legacyId});}
+    open: function(row){openListsHub(row.legacyKind==='characters'?{charListId:row.legacyId}:{listId:row.legacyId});},
+    remove: function(row, owner){
+      if (!owner || !global.LorefyProfileSections || global.LorefyProfileSections.account(global.localStorage)!==owner) throw Error('Profile list account changed');
+      if (row.legacyKind==='works') mlSave(mlLists().filter(function(list){return list.id!==row.legacyId;}));
+      else if (row.legacyKind==='characters') clSave(clLists().filter(function(list){return list.id!==row.legacyId;}));
+      else throw Error('Invalid legacy list kind');
+    }
   };
   function openListsHub(opts) {
     opts = opts || {};

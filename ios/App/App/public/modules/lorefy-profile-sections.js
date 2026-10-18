@@ -58,6 +58,19 @@
     assertOwner(storage, owner);
     storage.setItem(KEY, JSON.stringify(foldersFor({}, true, storage).filter(row => row.id !== id)));
   }
+  async function removeFolderAndSync(storage, owner, folder, backend, legacy) {
+    assertOwner(storage, owner);
+    if (folder.legacyId) {
+      if (!legacy || !legacy.remove) throw Error('Legacy list unavailable');
+      legacy.remove(folder, owner);
+    } else deleteFolder(storage, owner, folder.id);
+    let synced = true;
+    if (backend && backend.mode === 'live') {
+      try { synced = await backend.push() !== false; } catch (_) { synced = false; }
+    }
+    assertOwner(storage, owner);
+    return synced;
+  }
   function setFolderVisibility(storage, owner, id, isPublic) {
     assertOwner(storage, owner);
     if (typeof isPublic !== 'boolean') throw Error('Invalid profile list visibility');
@@ -94,29 +107,29 @@
       tabs:['Overview','Lists','Posts'], navigation:'Profile sections', create:'New list', edit:'Edit list',
       name:'List name', description:'Description', works:'Works', characters:'Characters', public:'Visible to everyone',
       private:'Private', save:'Save list', cancel:'Cancel', back:'Back to lists', remove:'Delete list',
-      confirm:'Delete this list?', yes:'Delete', no:'Keep list', empty:'No lists yet',
+      confirm:'Delete this list?', yes:'Delete', no:'Keep list', empty:'No lists yet', deleted:'List deleted',
       emptyPosts:'No posts yet', write:'Write a post', search:'Search works', searchCharacters:'Search characters',
       chooseWork:'Choose a work', changeWork:'Change work', loading:'Loading...', retry:'Retry',
       failed:'Could not load. Try again.', saved:'List saved', saveFailed:'Could not save the list.',
       syncPending:'Saved on this device. Cloud sync is pending.', older:'Older posts',
-      unavailable:'Public lists are not available yet. The database update is required.',
+      unavailable:'Could not load public lists. Try again.',
       up:'Move up', down:'Move down', removeItem:'Remove item', limit:'Up to 50 entries per list',
       add:'Add', selected:'Selected', noResults:'No results', count:'entries', position:'Position', newTitle:'New ranked list'
     } : {
       tabs:['الرئيسية','القوائم','التغريدات'], navigation:'أقسام البروفايل', create:'قائمة جديدة', edit:'تعديل القائمة',
       name:'اسم القائمة', description:'الوصف', works:'أعمال', characters:'شخصيات', public:'ظاهرة للجميع',
       private:'خاصة', save:'حفظ القائمة', cancel:'إلغاء', back:'العودة للقوائم', remove:'حذف القائمة',
-      confirm:'حذف هذه القائمة؟', yes:'حذف', no:'إبقاء القائمة', empty:'لا توجد قوائم بعد',
+      confirm:'حذف هذه القائمة؟', yes:'حذف', no:'إبقاء القائمة', empty:'لا توجد قوائم بعد', deleted:'تم حذف القائمة',
       emptyPosts:'لا توجد تغريدات بعد', write:'كتابة تغريدة', search:'ابحث عن عمل', searchCharacters:'ابحث عن شخصية',
       chooseWork:'اختيار عمل', changeWork:'تغيير العمل', loading:'جارٍ التحميل...', retry:'إعادة المحاولة',
       failed:'تعذر التحميل. حاول مجدداً.', saved:'تم حفظ القائمة', saveFailed:'تعذر حفظ القائمة.',
       syncPending:'حُفظت على هذا الجهاز. المزامنة السحابية معلقة.', older:'تغريدات أقدم',
-      unavailable:'القوائم العامة غير متاحة بعد. يلزم تفعيل تحديث قاعدة البيانات.',
+      unavailable:'تعذر تحميل القوائم العامة. حاول مجدداً.',
       up:'رفع الترتيب', down:'خفض الترتيب', removeItem:'إزالة العنصر', limit:'حتى 50 عنصراً لكل قائمة',
       add:'إضافة', selected:'محدد', noResults:'لا توجد نتائج', count:'عنصر', position:'الترتيب', newTitle:'قائمة مرتبة جديدة'
     };
   }
-  const api = {KEY, account, normalizeFolders, foldersFor, saveFolder, deleteFolder, setFolderVisibility, moveItem, postsFor, profileEntries, labels};
+  const api = {KEY, account, normalizeFolders, foldersFor, saveFolder, deleteFolder, removeFolderAndSync, setFolderVisibility, moveItem, postsFor, profileEntries, labels};
   if (!root || !root.document) return api;
   const doc = root.document, states = new WeakMap(), liveStates = new Set();
   let scheduled = false, serial = 0;
@@ -199,6 +212,7 @@
     state.panel.replaceChildren(contentHeader(t.tabs[1],state.owner && button(t.create,'plus',() => chooseListKind(state),'is-profile-create')));
     if (!state.owner && state.profile.profile_lists_error) {
       state.panel.appendChild(node('p',{role:'status',class:'lf-profile-section-empty',text:t.unavailable}));
+      state.panel.appendChild(button(t.retry,'rotate-cw',() => reloadFolders(state)));
       return;
     }
     if (!rows.length) state.panel.appendChild(node('p',{class:'lf-profile-section-empty',text:t.empty}));
@@ -213,9 +227,29 @@
             node('small',{text:folder.items.length+' '+t.count}),folderVisibility(folder,t)])
         ])
       ]);
-      grid.appendChild(card);
+      const entry = node('div',{class:'lf-profile-folder-entry'},[card]);
+      if (state.owner) entry.appendChild(button(t.remove+' · '+folder.name,'trash-2',() => confirmDelete(state,folder),'is-icon is-folder-delete is-destructive'));
+      grid.appendChild(entry);
     });
     state.panel.appendChild(grid); hydrate(state.panel);
+  }
+  async function reloadFolders(state) {
+    if (!current(state) || state.listsBusy || state.owner) return;
+    const viewer=account(root.localStorage), profileId=state.profile.id;
+    state.listsBusy=true; notice(state,text().loading);
+    try {
+      const profile=await root.LorefyBackend.getPublicProfile(profileId);
+      if (!current(state) || viewer!==account(root.localStorage) || state.profile.id!==profileId) return;
+      if (profile && profile.id===profileId) state.profile=Object.assign({},state.profile,{
+        profile_lists:profile.profile_lists,profile_lists_error:!!profile.profile_lists_error
+      });
+    } catch (_) {
+      if (!current(state) || viewer!==account(root.localStorage)) return;
+      state.profile.profile_lists_error=true;
+    } finally {
+      state.listsBusy=false;
+      if (current(state) && viewer===account(root.localStorage) && state.tab==='lists') renderFolders(state);
+    }
   }
   function showFolder(state, folder) {
     const t = text();
@@ -231,7 +265,10 @@
         if (card) card.focus({preventScroll:true});
         state.panel.scrollIntoView({block:'start',behavior:'instant'});
       },'is-back'),
-      state.owner && button(t.edit,'pencil',() => editFolder(state,folder))
+      state.owner && node('div',{class:'lf-profile-list-toolbar-actions'},[
+        button(t.edit,'pencil',() => editFolder(state,folder)),
+        button(t.remove,'trash-2',() => confirmDelete(state,folder),'is-icon is-destructive')
+      ])
     ]),intro);
     if (folder.description) intro.appendChild(node('p',{class:'lf-profile-list-description',
       'data-no-translate':'true',dir:'auto',text:folder.description}));
@@ -242,18 +279,35 @@
     ])));
     state.panel.appendChild(list);
     if (!folder.items.length) state.panel.appendChild(node('p',{class:'lf-profile-section-empty',text:t.noResults}));
-    if (state.owner) state.panel.appendChild(button(t.remove,'trash-2',() => {
-      const confirmation = node('div',{class:'lf-profile-list-confirm'},[
-        node('p',{text:t.confirm}),button(t.yes,'trash-2',() => {
-          try { deleteFolder(root.localStorage,state.profile.id,folder.id); renderFolders(state); }
-          catch (_) { notice(state,t.saveFailed); }
-        },'is-destructive'),button(t.no,'x',() => confirmation.remove())
-      ]);
-      state.panel.appendChild(confirmation); hydrate(confirmation);
-    },'is-destructive'));
     hydrate(state.panel);
     state.panel.scrollIntoView({block:'start',behavior:'instant'});
     state.panel.querySelector('.is-back').focus({preventScroll:true});
+  }
+  function confirmDelete(state, folder) {
+    if (!state.owner || !current(state)) return;
+    const t=text(), opener=doc.activeElement;
+    state.panel.querySelector('.lf-profile-list-confirm')?.remove();
+    const confirmation=node('div',{class:'lf-profile-list-confirm',role:'group','aria-label':t.confirm},[
+      node('p',{text:t.confirm+' '+folder.name})
+    ]);
+    const cancel=button(t.no,'x',()=>{confirmation.remove(); if(opener?.isConnected)opener.focus();});
+    const accept=button(t.yes,'trash-2',async()=>{
+      if (accept.disabled || !current(state)) return;
+      accept.disabled=true; cancel.disabled=true;
+      try {
+        const synced=await removeFolderAndSync(root.localStorage,state.profile.id,folder,root.LorefyBackend,root.LorefyLegacyLists);
+        if (!current(state)) return;
+        renderFolders(state);
+        state.panel.appendChild(node('p',{role:'status',class:'lf-profile-list-meta',text:synced?t.deleted:t.syncPending}));
+        state.panel.querySelector('.is-profile-create')?.focus({preventScroll:true});
+      } catch (_) {
+        if (!current(state)) return;
+        accept.disabled=false; cancel.disabled=false;
+        confirmation.appendChild(node('p',{role:'alert',text:t.saveFailed}));
+      }
+    },'is-destructive');
+    confirmation.append(accept,cancel); state.panel.prepend(confirmation); hydrate(confirmation);
+    cancel.focus(); confirmation.scrollIntoView({block:'nearest',behavior:'instant'});
   }
   function catalog() { return root.LorefyMangaData || []; }
   function workItem(work) {
