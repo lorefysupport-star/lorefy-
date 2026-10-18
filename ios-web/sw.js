@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v521-minimal-entry';
+const CACHE = 'lorefy-v522-feather-signature';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',

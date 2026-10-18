@@ -5,6 +5,9 @@ date: 2026-10-18
 ---
 # Minimal sign-in and launch, selected owner direction
 
+Update: [[sessions/2026-10-18-Feather-Launch-Motion]] supersedes only this
+session's L/dots bootstrap. The clean two-provider sign-in remains selected.
+
 The owner supplied two sparse dark launch references and explicitly rejected
 illustrative sign-in imagery. This supersedes the earlier editorial opening
 for the welcome stage. A generated book scene was explored before that change

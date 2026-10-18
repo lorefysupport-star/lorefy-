@@ -16,14 +16,14 @@ test('welcome keeps exactly Apple and Google activations without adding email or
   assert.match(welcome,/c\("apple"\)/);assert.match(welcome,/c\("google"\)/);
   assert.doesNotMatch(welcome,/createElement\("img"|onClick:i/);
 });
-test('bootstrap is a centered local monogram and indeterminate cue without old floating artwork',()=>{
+test('bootstrap keeps the selected feather signature without old loading artwork or copy',()=>{
   const html=read('index.html');
   const boot=html.slice(html.indexOf('class="lf-bootstrap-splash"'),html.indexOf('</div></div>',html.indexOf('class="lf-bootstrap-splash"')));
-  assert.match(boot,/lf-launch-monogram/);
-  assert.match(boot,/lf-bootstrap-dots/);
+  assert.match(boot,/lf-launch-feather/);
+  assert.match(boot,/lf-launch-wordmark/);
   assert.doesNotMatch(boot,/<img|<strong|<small/);
   assert.doesNotMatch(html,/lfBootstrapBreathe/);
-  assert.match(html,/@media \(prefers-reduced-motion: reduce\)[\s\S]*lf-bootstrap-dots i[^}]*animation:\s*none/);
+  assert.match(html,/@media \(prefers-reduced-motion: reduce\)[\s\S]*lf-launch-feather[^}]*animation:\s*none/);
 });
 test('entry focus uses its own contrasting token after the shared stylesheet',()=>{
   assert.match(read('styles/lorefy-auth-flow.css'),/html \.lf-auth :is\(button,input\):focus-visible\s*\{[^}]*outline:\s*2px solid var\(--auth-action\)\s*!important/);

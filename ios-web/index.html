@@ -58,16 +58,27 @@
   #root{position:absolute;inset:0;}
   .lf-bootstrap-splash{
     position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
-    justify-content:center;gap:28px;background:#101214;color:#f5f6f6;
+    justify-content:center;background:#101214;color:#f5f6f6;
     font-family:'Readex Pro','Cairo',sans-serif;text-align:center;
   }
-  .lf-launch-monogram{display:grid;place-items:center;width:76px;height:76px;border-radius:50%;background:#60cab5;color:#102720;font:650 42px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-  .lf-bootstrap-dots{display:flex;gap:6px;height:6px;direction:ltr;}
-  .lf-bootstrap-dots i{width:6px;height:6px;border-radius:50%;background:#60cab5;animation:lfBootstrapPulse 1.2s ease-in-out infinite;}
-  .lf-bootstrap-dots i:nth-child(2){animation-delay:150ms;background:#b5d8d0;}
-  .lf-bootstrap-dots i:nth-child(3){animation-delay:300ms;background:#d78c78;}
-  @keyframes lfBootstrapPulse{0%,100%{opacity:.25}50%{opacity:1}}
-  @media (prefers-reduced-motion: reduce){.lf-bootstrap-dots i{animation:none;opacity:.7}}
+  .lf-launch-signature{position:relative;width:240px;height:180px;flex:none;direction:ltr;}
+  .lf-launch-feather{position:absolute;left:84px;top:5px;width:72px;height:88px;overflow:visible;color:#d9f4ed;transform-origin:8px 80px;transform:translate(7px,15px) scale(.76);animation:lfLaunchFeather 1600ms cubic-bezier(.4,0,.2,1) both;}
+  .lf-launch-feather path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0;animation:lfLaunchStroke 460ms ease-out both;}
+  .lf-launch-feather .lf-launch-vane{fill:rgb(217 244 237 / .04);stroke-width:1.6;}
+  .lf-launch-wordmark{position:absolute;left:40px;top:112px;width:160px;direction:ltr;white-space:nowrap;text-align:center;font-size:44px;font-weight:600;line-height:1.25;letter-spacing:0;clip-path:none;animation:lfLaunchWrite 1600ms linear both;}
+  @keyframes lfLaunchStroke{from{stroke-dashoffset:1;opacity:0}to{stroke-dashoffset:0;opacity:1}}
+  @keyframes lfLaunchFeather{
+    0%{opacity:0;transform:translate(0,12px) scale(.88) rotate(-8deg)}
+    14%{opacity:1}
+    28%{transform:translate(0,12px) scale(1) rotate(0)}
+    35%{transform:translate(-52px,67px) scale(.62) rotate(-8deg);animation-timing-function:linear}
+    78%{transform:translate(108px,67px) scale(.62) rotate(-8deg)}
+    100%{opacity:1;transform:translate(7px,15px) scale(.76) rotate(0)}
+  }
+  @keyframes lfLaunchWrite{0%,35%{opacity:0;clip-path:inset(0 100% 0 0)}36%{opacity:1;clip-path:inset(0 100% 0 0)}78%,100%{opacity:1;clip-path:inset(0)}}
+  @media (prefers-reduced-motion: reduce){
+    .lf-launch-feather,.lf-launch-feather path,.lf-launch-wordmark{animation:none !important;opacity:1;stroke-dashoffset:0;clip-path:none;}
+  }
   /* Dynamic Island */
   #island{
     position:absolute;top:11px;left:50%;transform:translateX(-50%);
@@ -127,7 +138,7 @@
   <div id="stage">
     <div id="device">
       <div id="screen">
-        <div id="root"><div class="lf-bootstrap-splash" role="status" aria-label="Loading Lorefy"><span class="lf-bootstrap-logo lf-launch-monogram" aria-hidden="true">L</span><span class="lf-bootstrap-dots" aria-hidden="true"><i></i><i></i><i></i></span></div></div>
+        <div id="root"><div class="lf-bootstrap-splash" role="status" aria-label="Loading Lorefy"><div class="lf-launch-signature" aria-hidden="true"><svg class="lf-bootstrap-logo lf-launch-feather" viewBox="0 0 72 88" aria-hidden="true"><path class="lf-launch-vane" pathLength="1" d="M12 72C10 59 12 42 22 28L23 37L28 21C38 11 53 6 64 8C64 16 61 24 57 31L45 36L54 37C48 46 40 52 30 55L23 54L23 59C18 63 15 67 12 72Z"/><path pathLength="1" d="M8 80C21 66 45 32 59 14"/><path pathLength="1" d="M21 59L19 47M31 46L32 30M41 34L46 21M27 52L40 49M38 39L51 34"/></svg><span class="lf-launch-wordmark">Lorefy</span></div></div></div>
         <div id="island"></div>
         <div id="statusbar">
           <div id="sb-time">9:41</div>

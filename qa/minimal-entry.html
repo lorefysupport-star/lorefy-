@@ -7,7 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles/lorefy-design-system.css?v=20261018-social-profile-v1">
   <link rel="stylesheet" href="../styles/lorefy-auth-flow.css?v=20261018-minimal-entry-v1">
-  <style>html,body{margin:0;width:100%;height:100%;background:#101214}#root{position:absolute;inset:0} :root{--nc-top:0px;--nc-bottom:0px}</style>
+  <style>html,body{margin:0;width:100%;height:100%;background:#101214}#root{position:absolute;inset:0} :root{--nc-top:0px;--nc-bottom:0px}
+  #launch-controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:12px;width:min(270px,calc(100% - 32px));direction:ltr;color:#a7afb0}
+  #launch-controls button{width:44px;height:44px;flex:none;border:1px solid #34393c;border-radius:50%;background:transparent;color:#d9f4ed;font:24px sans-serif;cursor:pointer}
+  #launch-controls input{width:100%;min-width:0;accent-color:#80c7b5;height:44px}
+  </style>
   <script src="../vendor/react.production.min.js"></script>
   <script src="../vendor/react-dom.production.min.js"></script>
   <script src="../auth/lorefy-auth.js?v=20261007-review-identity-v1"></script>
@@ -24,6 +28,16 @@
       const style=document.createElement('style');style.textContent=original.textContent;document.head.append(style);
     }
     document.getElementById('root').append(source.querySelector('.lf-bootstrap-splash').cloneNode(true));
+    const controls=document.createElement('div');controls.id='launch-controls';
+    controls.innerHTML='<button type="button" aria-label="إعادة العرض" title="إعادة العرض">&#8635;</button><input type="range" min="0" max="1600" step="40" value="1600" dir="ltr" aria-label="موضع الحركة">';
+    document.body.append(controls);
+    const slider=controls.querySelector('input');
+    slider.addEventListener('input',()=>{
+      document.querySelector('.lf-launch-signature').getAnimations({subtree:true}).forEach(animation=>{animation.pause();animation.currentTime=Number(slider.value);});
+    });
+    controls.querySelector('button').addEventListener('click',()=>{
+      const mark=document.querySelector('.lf-launch-signature');mark.replaceWith(mark.cloneNode(true));slider.value='1600';
+    });
     return;
   }
   window.LorefyBackend={mode:'live',signInWithOAuth:async function(provider){

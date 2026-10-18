@@ -73,3 +73,8 @@ Latest entry direction: [[sessions/2026-10-18-Minimal-Entry-Launch]] supersedes
 the illustrated welcome with a sparse two-provider screen and a restrained web
 bootstrap. Owner reference takes precedence over earlier generated exploration;
 do not restore imagery or introduce delayed/fake progress for visual effect.
+
+Latest launch refinement: [[sessions/2026-10-18-Feather-Launch-Motion]] replaces
+the monogram/dots with a finite feather-writing signature, without changing the
+minimal provider gate. Its Libraries.dev review separates useful state feedback
+from decorative packages, framework ports and unimplemented app-wide proposals.

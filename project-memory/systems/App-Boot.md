@@ -6,6 +6,10 @@ aliases: ["تشغيل", "تحميل", "bootstrap", "cache", "NenApp"]
 ---
 # تشغيل التطبيق
 
+أحدث واجهة فتح: [[sessions/2026-10-18-Feather-Launch-Motion]]؛ ريشة تكتب
+Lorefy بلا عبارة تحميل أو تأخير تشغيل، وبديل ثابت لتقليل الحركة. صفحة الدخول
+تبقى Apple/Google فقط؛ شاشة إطلاق iOS الأصلية والنسخة المثبتة لم تتغيرا.
+
 ## المسؤولية
 
 [index.html](../../index.html) هو نقطة الدخول. React/ReactDOM وLucide محليون
