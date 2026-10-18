@@ -1,5 +1,5 @@
 ---
-{"kind":"bug","id":"LF-061","status":"closed","priority":"P1","area":"review-image-read-decode-failure","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"dc269b0","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Review-Image-Failure]]","next_action":"Inspect profile-image draft errors/ownership and invalid fallback artwork; physical Photos permission, real storage uploads and device certification remain separate"}
+{"kind":"bug","id":"LF-061","status":"closed","priority":"P1","area":"review-image-read-decode-failure","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"dc269b0","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Review-Image-Failure]]","next_action":"Profile-image draft errors/ownership resolved in LF-062; invalid fallback artwork, physical Photos permission, real uploads and device certification remain separate"}
 ---
 # LF-061: فشل إرفاق صورة المراجعة ظاهر وقابل للتعافي
 

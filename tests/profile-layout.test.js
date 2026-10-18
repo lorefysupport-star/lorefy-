@@ -25,9 +25,11 @@ test('layout sync is account scoped, and editor commits only after successful sa
   const app = read('uploads/files/lorefy-app.js');
   assert.match(read('backend/lorefy-backend.js'), /"lorefy.user.profileLayout.v1"/);
   assert.match(app, /setProfileLayoutDraft\(window.LorefyProfileLayout.normalize\(profileLayout\)\)/);
-  const save = app.slice(app.indexOf('profileSaveBusy.current=true'), app.indexOf('finally{profileSaveBusy.current=false'));
-  assert.ok(save.indexOf('await y.saveProfile') < save.indexOf('setProfileLayout('));
-  assert.match(save, /setProfileLayout\(window.LorefyProfileLayout.normalize\(profileLayoutDraft\)\)/);
+  const start = app.indexOf('o=async()=>', app.indexOf('br=()=>'));
+  const save = app.slice(start, app.indexOf(';return React.createElement', start));
+  assert.ok(save.indexOf('await y.saveProfile') >= 0);
+  assert.ok(save.indexOf('await y.saveProfile') < save.indexOf('commit(setProfileLayout,'));
+  assert.match(save, /commit\(setProfileLayout,window.LorefyProfileLayout.normalize\(profileLayoutDraft\)\)/);
 });
 
 test('picker has translated choices and standard native radios', () => {
