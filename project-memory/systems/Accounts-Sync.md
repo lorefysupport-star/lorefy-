@@ -30,6 +30,12 @@ the selected appearance. Mock callback checks do not certify native sign-in.
 
 ## الفحص
 
+[[bugs/LF-069-Pull-Remote-Deletions]] prevents an acknowledged remote deletion
+from being re-uploaded beside an unrelated offline edit. Seven complete-Backend
+VM cases and 51 related tests pass; [[sessions/2026-10-19-Pull-Remote-Deletions]]
+separates the read-only deployed privacy projection check from live two-account
+or matching-device verification. No build or service changes.
+
 [[sessions/2026-10-15-Privacy-Safety-Repairs]] أضاف انتظار تأكيد إلغاء الحظر،
 وعدم اعتماد رد قديم بعد تبديل المالك أو جيل المزامنة. إعدادات القوائم والحظر
 المفتوحة تحت حساب قديم لا ترسل تعديلات باسم الحساب التالي. الفحص معزول وليس

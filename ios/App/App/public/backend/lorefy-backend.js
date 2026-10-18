@@ -821,11 +821,14 @@
               Object.keys(data).forEach(function(k){ if (isAccountStateKey(k) && data[k] != null) writeLS(k, data[k]); });
               clearPendingState();
             } else {
-              // Keep writes made while the app was offline. Remote values fill
-              // only missing local keys; the next push resolves the remainder.
-              Object.keys(data).forEach(function(k){
-                if (isAccountStateKey(k) && data[k] != null &&
-                    (localState[k] == null || knownBase && !Object.prototype.hasOwnProperty.call(pending, k))) writeLS(k, data[k]);
+              // With an acknowledged base, remote absence is a deletion too.
+              // Never apply it over a local edit or guess without that base.
+              Object.keys(Object.assign({}, knownBase && knownBase.data, localState, data)).forEach(function(k){
+                if (!isAccountStateKey(k) || Object.prototype.hasOwnProperty.call(pending, k)) return;
+                if (knownBase) {
+                  if (data[k] == null) localStorage.removeItem(k);
+                  else writeLS(k, data[k]);
+                } else if (localState[k] == null && data[k] != null) writeLS(k, data[k]);
               });
               Object.keys(pending).forEach(function(k){
                 if (!isAccountStateKey(k)) return;
