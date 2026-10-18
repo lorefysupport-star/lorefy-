@@ -7,7 +7,7 @@
 
   function SearchSuggestions(props) {
     var state = props.state || {}, query = String(props.query || '').trim();
-    function typeKey(type) { return !type || type === 'All' || type === 'الكل' ? 'All' : root.LorefyCatalogPlan.normalizeRouteType(type); }
+    function typeKey(type) { return root.LorefyCatalogPlan.normalizeSearchType(type); }
     if (!query || state.searching || state.searchError || state.searchQuery !== query
       || typeKey(state.searchType) !== typeKey(props.type) || !Array.isArray(state.suggestions) || !state.suggestions.length) return null;
     var h = root.React.createElement, en = props.language === 'en';

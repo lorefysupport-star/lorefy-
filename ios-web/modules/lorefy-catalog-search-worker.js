@@ -3,7 +3,7 @@
 self.window = self;
 importScripts(
   "lorefy-catalog-data.js?v=20261017-search-alias-v1",
-  "lorefy-catalog-plan.js?v=20261018-search-suggestions-v1"
+  "lorefy-catalog-plan.js?v=20261018-search-all-formats-v1"
 );
 
 var indexPromise = null;

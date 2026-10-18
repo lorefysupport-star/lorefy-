@@ -32,6 +32,12 @@
     return TYPE_ALIASES[text] || "Manga";
   }
 
+  // An absent/all search filter is not the Manga browse bootstrap default.
+  function normalizeSearchType(value) {
+    var text = String(value || '').trim();
+    return !text || /^(all|الكل)$/i.test(text) ? '' : normalizeRouteType(text);
+  }
+
   function uniqueParts(parts) {
     var seen = new Set();
     return (Array.isArray(parts) ? parts : []).map(Number).filter(function (part) {
@@ -77,7 +83,7 @@
   function searchIndexParts(entries, query, type, searchApi) {
     var normalized = searchApi.normalizeQuery(query);
     if (!normalized) return [];
-    var selectedType = type && type !== "All" ? normalizeRouteType(type) : "";
+    var selectedType = normalizeSearchType(type);
     var found = new Map();
     (entries || []).forEach(function (entry) {
       var work = entry.work;
@@ -116,7 +122,7 @@
     var normalized = searchApi.normalizeQuery(query);
     // Avoid guessing from very short text or spending unbounded work on a draft.
     if (normalized.length < 5 || normalized.length > 80) return [];
-    var selectedType = type && type !== 'All' ? normalizeRouteType(type) : '';
+    var selectedType = normalizeSearchType(type);
     var candidates = new Map();
     (entries || []).forEach(function (entry) {
       var work = entry && entry.work;
@@ -185,6 +191,7 @@
   return {
     preserveReadingTotals: preserveReadingTotals,
     normalizeRouteType: normalizeRouteType,
+    normalizeSearchType: normalizeSearchType,
     initialCatalogPlan: initialCatalogPlan,
     remainingCatalogPlan: remainingCatalogPlan,
     allCatalogParts: allCatalogParts,

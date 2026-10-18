@@ -1,5 +1,5 @@
 ---
-{"kind":"bug","id":"LF-058","status":"closed","priority":"P1","area":"catalog-query-correction","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"41510ed","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Search-Typo-Suggestions]]","next_action":"Repair Arabic all-format selection; author typo recovery, multi-edit queries, device timing and live-service gates remain separate"}
+{"kind":"bug","id":"LF-058","status":"closed","priority":"P1","area":"catalog-query-correction","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"41510ed","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Search-Typo-Suggestions]]","next_action":"Arabic all-format selection resolved in LF-059; author typo recovery, multi-edit queries, device timing and live-service gates remain separate"}
 ---
 # LF-058: اقتراح تصحيح العنوان بدلاً من صفر نتائج صامت
 
@@ -19,3 +19,5 @@ planner ينتج matches دقيقة وsuggestions منفصلة؛ Worker وfallba
 فحص جميع الأنواع كشف خللاً مستقلاً للكلمة العربية «الكل» وسيتابع منفصلاً.
 
 [[sessions/2026-10-18-Search-Typo-Suggestions]] | [[systems/Catalog-Search]] | [[12-Device-Repairs]] | [[15-Work-Control]] | [[18-Progress-Handoff]]
+
+متابعة: [[bugs/LF-059-All-Format-Search]] أصلح فلترالكل؛ يبقى إثبات LF-058 وتاريخه مستقلاً.
