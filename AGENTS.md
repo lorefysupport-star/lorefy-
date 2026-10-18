@@ -33,3 +33,13 @@ When the user's task permits repository edits, maintain the relevant decision, b
 After meaningful authorized edits or a source sync, update the affected system/decision and open-question status, run `npm run memory:refresh`, then `npm run memory:audit`. This checks source drift, generated-artifact integrity, broken links, unreachable notes and exact duplicate notes. Only generated snapshot/index/Canvas files are refreshed automatically; curated knowledge is updated deliberately. Do not erase old evidence, move application code, prune catalogs or regenerate native bundles merely to tidy memory. See `project-memory/11-Organization-Plan.md`.
 
 Keep this vault out of the app, native bundles and EAS uploads. Keep Obsidian Restricted Mode on; no third-party AI plugin, cloud upload, community plugin or sync is needed for this local memory workflow. Do not enable a network service or publish the vault without explicit user authorization.
+
+## Apple Interaction Quality
+
+For UI changes, consult the developer-local `apple-design` skill when available;
+use `swiftui-pro` only for actual SwiftUI files. The current app is React inside
+Capacitor, with a UIKit shell, not SwiftUI. Do not migrate frameworks to use a skill.
+See `project-memory/playbooks/Apple-Interaction-Quality.md` for pinned sources,
+the adoption checklist and the first verified application. Skills are development
+guidance, never runtime dependencies, and project/user constraints take precedence.
+Preserve Lorefy's chosen art, typography, palette and zero letter spacing.

@@ -803,3 +803,18 @@ html .lf-profile-top-characters-editor .lf-ov-body{min-height:0;overflow-y:auto}
 html .lf-profile-top-characters-editor .lf-ov-body>*{flex-shrink:0}
 
 html .lf-profile-top-characters-editor > .lf-top-characters-editor-save{margin:8px 16px max(12px,var(--nc-bottom,0px));width:calc(100% - 32px)}
+
+/* Immediate press feedback; reduced motion keeps the cue without scaling. */
+.lf-app.lf-app.lf-app :is(.lf-profile-banner button, .lf-nav-item, .lf-primary, .lf-btn, .lf-review-action-button, .lf-character-action-button, .lf-rating-pick, .lf-settings-switch):not(:disabled):not([aria-disabled='true']):active,
+.lf-auth :is(.lf-primary, .lf-btn):not(:disabled):not([aria-disabled='true']):active {
+  opacity: .76 !important;
+  transform: scale(.97) !important;
+  transition-duration: 0s !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-app.lf-app.lf-app :is(.lf-profile-banner button, .lf-nav-item, .lf-primary, .lf-btn, .lf-review-action-button, .lf-character-action-button, .lf-rating-pick, .lf-settings-switch):not(:disabled):not([aria-disabled='true']):active,
+  .lf-auth :is(.lf-primary, .lf-btn):not(:disabled):not([aria-disabled='true']):active {
+    transform: none !important;
+  }
+}
+/* End immediate press feedback */

@@ -6,6 +6,10 @@ aliases: ["إطارات", "بنرات", "حزم", "مجانية", "ثيم", "ز�
 ---
 # المظهر والإطارات والحزم
 
+تطبيق قواعد Apple على التفاعل موثّق في [[playbooks/Apple-Interaction-Quality]]؛
+أول إصلاح [[bugs/LF-067-Press-Motion-Feedback]] مع أدلة المصدر والمتصفح في
+[[sessions/2026-10-18-Apple-Interaction-Quality]]. لا تحويل إلى SwiftUI أو تغيير لهندسة الزينة.
+
 [design system](../../modules/lorefy-design-system.js) والثيمات و
 [interface settings](../../modules/lorefy-interface-settings.js) يحددان المظهر.
 [profile shop](../../modules/lorefy-profile-shop.js) يختار مجموعة الزينة؛
