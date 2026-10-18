@@ -57,4 +57,9 @@ First applied change: [[sessions/2026-10-18-Apple-Interaction-Quality]] and
 [[bugs/LF-067-Press-Motion-Feedback]]. This is a scoped adoption, not an exhaustive
 whole-app gesture or accessibility certification.
 
+Broader UI adoption: [[sessions/2026-10-18-Apple-UI-Surfaces]] covers live
+Home/Explore segmented controls, responsive library tools, Settings geometry,
+functional materials and accessibility preferences. Preserve source/browser
+versus installed-device evidence boundaries on future refinements.
+
 [[systems/Appearance-Bundles]] | [[13-Project-Story]] | [[15-Work-Control]]

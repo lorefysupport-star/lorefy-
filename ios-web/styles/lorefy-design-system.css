@@ -818,3 +818,117 @@ html .lf-profile-top-characters-editor > .lf-top-characters-editor-save{margin:8
   }
 }
 /* End immediate press feedback */
+
+/* Apple UI surfaces: shared controls, not a replacement for Lorefy artwork. */
+.lf-app.lf-app.lf-app .lf-explore-studio .lf-explore-tabs { --ui-segment-inline: 18px; }
+.lf-app.lf-app.lf-app .lf-social-timeline > .lf-community-tabs,
+html .lf-app.lf-app.lf-app .lf-explore-studio .lf-explore-tabs {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px !important;
+  width: calc(100% - 2 * var(--ui-segment-inline, var(--ui-inline))) !important;
+  margin: 8px var(--ui-segment-inline, var(--ui-inline)) 16px !important;
+  padding: 4px !important;
+  min-height: 52px;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: var(--ui-fill) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.lf-app.lf-app.lf-app .lf-social-timeline > .lf-community-tabs > button,
+html .lf-app.lf-app.lf-app .lf-explore-studio .lf-explore-tabs > button {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 44px !important;
+  padding: 8px !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  color: var(--ui-muted) !important;
+  background: transparent !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.5;
+  white-space: normal;
+  transition: background-color 120ms ease-out, color 120ms ease-out;
+}
+.lf-app.lf-app.lf-app .lf-social-timeline > .lf-community-tabs > button[aria-selected='true'],
+html .lf-app.lf-app.lf-app .lf-explore-studio .lf-explore-tabs > button[aria-selected='true'] {
+  background: var(--ui-surface) !important;
+  color: var(--ui-action) !important;
+  font-weight: 650 !important;
+  box-shadow: inset 0 0 0 1px var(--ui-separator), 0 1px 3px rgb(0 0 0 / .06) !important;
+}
+.lf-app.lf-app.lf-app :is(.lf-library-header h1, .lf-explore-header h1) {
+  font-size: 26px !important;
+  line-height: 1.4 !important;
+  font-weight: 650 !important;
+}
+.lf-app.lf-app.lf-app .lf-social-header .lf-user-greeting strong { font-size: 18px !important; font-weight: 650 !important; }
+.lf-app.lf-app.lf-app .lf-library-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(112px, .65fr);
+  gap: 8px;
+  padding: 12px var(--ui-inline) 20px;
+}
+.lf-app.lf-app.lf-app .lf-library-controls :is(input, select) {
+  width: 100%; min-width: 0; min-height: 48px; border-radius: 8px;
+  border-color: var(--ui-line); background: var(--ui-fill); color: var(--ui-ink);
+}
+.lf-app.lf-app.lf-app .lf-library-controls input { font-size: 16px; }
+.lf-app.lf-app.lf-app .lf-library-controls select { font-size: 13px; }
+@media (max-width: 480px) {
+  .lf-app.lf-app.lf-app .lf-library-controls { grid-template-columns: minmax(0, 1fr); }
+}
+.lf-app.lf-app.lf-app :is(.lf-library-controls, .lf-explore-studio) :is(input, select):focus-visible { outline-offset: -3px; }
+.lf-app.lf-app.lf-app .lf-explore-studio :is(.lf-explore-search, .lf-explore-format-search):focus-within {
+  outline: 2px solid var(--ui-action); outline-offset: 2px;
+}
+.lf-app.lf-app.lf-app .lf-library-tabs > button { gap: 8px; }
+.lf-app.lf-app.lf-app .lf-library-tabs > button > b {
+  display: inline-grid; place-items: center; min-width: 22px; min-height: 22px;
+  padding-inline: 4px; border-radius: 5px; background: var(--ui-fill) !important;
+  font-variant-numeric: tabular-nums;
+}
+.lf-app.lf-app.lf-app .lf-library-tabs > button.is-active > b { background: var(--ui-surface) !important; }
+.lf-app.lf-app.lf-app .lf-settings-head { padding: 12px var(--ui-inline) !important; }
+.lf-app.lf-app.lf-app .lf-settings-sheet { position: relative; }
+.lf-app.lf-app.lf-app .lf-settings-head > span:first-child { width: 64px !important; flex: none; }
+.lf-app.lf-app.lf-app .lf-settings-head > span:nth-child(2) { font-size: 18px !important; font-weight: 650 !important; }
+html .lf-app.lf-app.lf-app .lf-settings-head button {
+  width: 64px !important; min-width: 64px !important; min-height: 44px; flex: none;
+  padding: 8px 12px; border-radius: 8px; background: var(--ui-selected) !important;
+  color: var(--ui-action) !important; text-align: center !important;
+}
+.lf-app.lf-app.lf-app .lf-bottom-nav {
+  background: var(--ui-surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.lf-app.lf-app.lf-app .lf-settings-head { background: var(--ui-surface) !important; }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) and (background: color-mix(in srgb, white 92%, transparent)) {
+  .lf-app.lf-app.lf-app :is(.lf-bottom-nav, .lf-settings-head) {
+    background: color-mix(in srgb, var(--ui-surface) 92%, transparent) !important;
+    backdrop-filter: blur(18px) saturate(125%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(125%) !important;
+  }
+}
+.lf-app.lf-app.lf-app :is(.lf-settings-sheet, .lf-explore-dialog, .lf-community-compose-sheet > section) {
+  animation: lf-ui-surface-in 140ms ease-out;
+}
+@keyframes lf-ui-surface-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .lf-app.lf-app.lf-app :is(.lf-settings-sheet, .lf-explore-dialog, .lf-community-compose-sheet > section) { animation: none !important; }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .lf-app.lf-app.lf-app :is(.lf-bottom-nav, .lf-settings-head) {
+    background: var(--ui-surface) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+@media (prefers-contrast: more) {
+  .lf-app.lf-app.lf-app :is(.lf-bottom-nav, .lf-library-controls input, .lf-library-controls select) { border-color: var(--ui-ink) !important; }
+  .lf-app.lf-app.lf-app :is(.lf-community-tabs, .lf-explore-tabs) > button[aria-selected='true'] { outline: 2px solid var(--ui-action); outline-offset: -2px; }
+}
+/* End Apple UI surfaces */

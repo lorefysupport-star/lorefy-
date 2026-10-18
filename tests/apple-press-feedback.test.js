@@ -32,7 +32,7 @@ test('reduced-motion feedback replaces legacy press scaling with a static cue', 
 });
 
 test('entry and service worker use the same refreshed feedback stylesheet', () => {
-  const asset = 'styles/lorefy-design-system.css?v=20261018-apple-press-v1';
+  const asset = 'styles/lorefy-design-system.css?v=20261018-apple-surfaces-v1';
   assert.ok(read('index.html').includes(asset));
   assert.ok(read('sw.js').includes(asset));
 });
