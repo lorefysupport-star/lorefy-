@@ -52,3 +52,10 @@ test('a failed visitor list fetch offers retry tied to the same viewer and profi
   assert.match(src,/button\(t.retry,'rotate-cw',\(\) => reloadFolders\(state\)\)/);
   assert.match(src,/viewer!==account\(root.localStorage\)/);
 });
+test('delete completion does not replace another active tab and retry survives the DOM observer',()=>{
+  const src=fs.readFileSync('modules/lorefy-profile-sections.js','utf8');
+  const remove=src.slice(src.indexOf('function confirmDelete('),src.indexOf('function catalog()'));
+  assert.match(remove,/!current\(state\) \|\| state.tab!=='lists'/);
+  const retry=src.slice(src.indexOf('async function reloadFolders('),src.indexOf('function showFolder('));
+  assert.match(retry,/state.page.__lorefyProfileSnapshot=state.profile/);
+});

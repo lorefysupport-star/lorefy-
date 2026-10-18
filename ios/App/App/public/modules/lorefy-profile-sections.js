@@ -243,6 +243,7 @@
       if (profile && profile.id===profileId) state.profile=Object.assign({},state.profile,{
         profile_lists:profile.profile_lists,profile_lists_error:!!profile.profile_lists_error
       });
+      state.page.__lorefyProfileSnapshot=state.profile;
     } catch (_) {
       if (!current(state) || viewer!==account(root.localStorage)) return;
       state.profile.profile_lists_error=true;
@@ -296,12 +297,12 @@
       accept.disabled=true; cancel.disabled=true;
       try {
         const synced=await removeFolderAndSync(root.localStorage,state.profile.id,folder,root.LorefyBackend,root.LorefyLegacyLists);
-        if (!current(state)) return;
+        if (!current(state) || state.tab!=='lists') return;
         renderFolders(state);
         state.panel.appendChild(node('p',{role:'status',class:'lf-profile-list-meta',text:synced?t.deleted:t.syncPending}));
         state.panel.querySelector('.is-profile-create')?.focus({preventScroll:true});
       } catch (_) {
-        if (!current(state)) return;
+        if (!current(state) || state.tab!=='lists') return;
         accept.disabled=false; cancel.disabled=false;
         confirmation.appendChild(node('p',{role:'alert',text:t.saveFailed}));
       }

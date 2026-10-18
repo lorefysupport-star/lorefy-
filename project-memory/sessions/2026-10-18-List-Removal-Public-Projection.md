@@ -47,3 +47,9 @@ viewer and profile, instead of a permanent database-setup message.
   and list-removal-full.log.
 
 [[systems/Profiles-Lists]] | [[09-Data-Contracts]] | [[18-Progress-Handoff]]
+
+Follow-up in the same development session: deletion completion no longer
+replaces Posts/Overview after navigation during cloud sync. Successful public
+retry updates the page snapshot so the DOM observer does not restore a stale
+error. One additional regression observed failing then passing; 2145 full-suite
+tests passed including the concurrent minimal-entry work. No further DB change.
