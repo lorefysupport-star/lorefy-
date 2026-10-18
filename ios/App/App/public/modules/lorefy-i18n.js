@@ -5,6 +5,9 @@
 })(typeof window !== 'undefined' ? window : this, function() {
   'use strict';
   var messages = {
+    'اختر الغلاف':'Choose cover', 'اختر الغلاف الأساسي':'Choose default cover',
+    'الغلاف الأساسي':'Default cover', 'الغلاف غير متاح':'Cover unavailable',
+    'اختر غلاف المجلد':'Choose volume cover', 'حذف':'Delete',
     'تم، العودة إلى التطبيق':'Done, return to app',
     'تعذر اختيار الصورة. حاول مرة أخرى من مكتبة الصور.':'Could not select the image. Try again from your photo library.',
     'تم إلغاء تسجيل الدخول بواسطة Google.':'Google sign-in was cancelled.',
@@ -279,6 +282,10 @@
       .replace(/^(\s*\d+)\s*ي(\s*)$/, '$1d$2')
       .replace(/( · \d+)د$/, '$1m').replace(/( · \d+)س$/, '$1h').replace(/( · \d+)ي$/, '$1d');
     return text.replace(/^الفصل (\d+)$/, 'Chapter $1')
+      .replace(/^اختر غلاف (\d+)$/, 'Choose cover $1')
+      .replace(/^غلاف (\d+)$/, 'Cover $1')
+      .replace(/^غلاف (\d+) غير متاح$/, 'Cover $1 unavailable')
+      .replace(/ · اختر غلاف المجلد$/, ' · Choose volume cover')
       .replace(/^العودة إلى آخر فصل قيّمته، الفصل (\d+)$/, 'Return to your last rated chapter, chapter $1')
       .replace(/^تم الاستيراد من (.+) ✓$/, function(_,name){ return 'Imported from ' + (messages[name] || name) + ' ✓'; })
       .replace(/^(\d+) عمل أُضيف إلى مكتبتك$/, '$1 works added to your library')

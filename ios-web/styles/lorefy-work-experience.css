@@ -1,0 +1,104 @@
+/* Scoped work flow: keep the chosen artwork, palette and saved-data owners. */
+.lf-app.lf-app.lf-app .lf-detail-page .lf-detail-content[data-work-tab]{width:100%;max-width:820px;box-sizing:border-box;margin-inline:auto!important}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-identity{grid-template-columns:88px minmax(0,1fr);gap:16px;margin-block:0 18px!important}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-poster{width:88px;height:132px;border-radius:6px;object-fit:cover}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-copy{min-width:0;padding-top:0;align-self:center}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-title-line{display:block}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-title-line h1{font-size:22px!important;line-height:1.38!important;margin:4px 0!important;text-align:start}
+html[lang=ar] .lf-app .lf-work-title-line h1{text-align:right!important}
+html[lang=en] .lf-app .lf-work-title-line h1{text-align:left!important}
+.lf-app.lf-app.lf-app .lf-work-subtitle{font-size:11px!important;line-height:1.5!important;overflow-wrap:anywhere;margin:4px 0!important;color:var(--ui-muted)}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-rating{display:flex;align-items:center;justify-content:flex-start;gap:6px;margin-block:8px 2px;transform:none;color:var(--ui-rating,var(--ui-action))}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-rating-value{font-size:22px!important;line-height:1.3;font-variant-numeric:tabular-nums}
+.lf-work-rating-caption{font-size:11px;color:var(--ui-muted);font-weight:400}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-author-button{min-height:44px;padding:4px 0!important;text-align:start;font-size:12px!important;white-space:normal}
+.lf-app.lf-app.lf-app .lf-work-action-slot .lf-chapter-quick-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) 44px;gap:8px;margin:0!important}
+.lf-app.lf-app.lf-app .lf-work-action-slot .lf-chapter-quick-actions>button{min-height:48px;border-radius:8px;line-height:1.5;font-size:13px;padding:8px;overflow-wrap:anywhere;transition:background-color 120ms ease,opacity 120ms ease}
+.lf-work-action-slot :is(.lf-chapter-quick-add,.lf-chapter-quick-review){grid-column:span 3}
+.lf-work-action-slot .lf-chapter-quick-characters{grid-column:span 3}
+.lf-work-action-slot .lf-chapter-quick-cover{grid-column:span 2}
+.lf-work-action-slot .lf-chapter-quick-actions:not(:has(.lf-chapter-quick-characters)) .lf-chapter-quick-cover{grid-column:span 5}
+.lf-work-action-slot .lf-chapter-more{grid-column:span 1;min-width:44px}
+.lf-work-action-slot :is(.lf-chapter-quick-characters,.lf-chapter-quick-cover){background:transparent;border-color:var(--ui-line);color:var(--ui-ink)}
+.lf-work-action-slot .lf-chapter-quick-actions svg{width:18px;height:18px;flex:none;pointer-events:none}
+.lf-work-action-slot .lf-chapter-more-menu{top:calc(100% + 6px)}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-facts{display:flex;flex-wrap:wrap;gap:6px 14px;padding-block:12px;border-color:var(--ui-line);font-size:11px;line-height:1.6}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-section-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;border-bottom:1px solid var(--ui-line);margin:0}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-section-nav button{min-width:0;min-height:48px;padding:8px 4px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ui-muted);font:inherit;font-size:13px;line-height:1.5}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-section-nav button[aria-selected=true]{color:var(--ui-action);border-bottom-color:var(--ui-action);font-weight:600}
+.lf-detail-content[data-work-tab='reviews']>:not(.lf-work-identity):not(.lf-work-reader-tabs):not(.lf-work-reader-tabs+div){display:none!important}
+.lf-detail-content[data-work-tab='reviews']>.lf-work-reader-tabs{order:1;margin-top:0!important}
+.lf-detail-content[data-work-tab='reviews']>.lf-work-reader-tabs+div{order:2;min-height:120px}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-story>p{font-size:14px!important;line-height:1.8!important;text-align:start}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-reader-tabs{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border:1px solid var(--ui-line);border-radius:8px;background:var(--ui-fill)}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-reader-tabs>button{flex:1;min-width:60px;min-height:44px;border-radius:5px;font-size:12px!important;white-space:normal}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-heading h2{font-size:20px}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-copy{transform:none;padding-block-end:38px}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-reading{margin-block:0 12px!important;padding:12px!important;background:var(--ui-fill);border-radius:8px}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-reading-copy{min-width:0}
+
+/* Shared sheet rhythm, but no blanket restyling of unrelated settings dialogs. */
+.lf-app.lf-app.lf-app :is(.lf-work-status-sheet,.lf-work-cover-sheet,.lf-rating-sheet){width:min(100%,600px)!important;margin-inline:auto;max-height:calc(100% - max(24px,var(--nc-top,0px)))!important;overscroll-behavior:contain;color:var(--ui-ink);box-sizing:border-box}
+.lf-app.lf-app.lf-app .lf-work-status-sheet{padding:10px 20px max(20px,env(safe-area-inset-bottom))!important}
+.lf-app.lf-app.lf-app .lf-work-status-sheet .lf-reading-options{border:0!important;border-radius:0!important;background:transparent!important;overflow:visible!important;margin-bottom:16px!important}
+.lf-app.lf-app.lf-app .lf-work-status-sheet [data-lf-reading-choice]{display:flex;min-height:54px;box-sizing:border-box;padding:12px!important;border:0!important;border-bottom:1px solid var(--ui-line)!important;border-radius:0;background:transparent!important}
+.lf-app.lf-app.lf-app .lf-work-status-sheet [data-lf-reading-choice][aria-checked=true]{background:var(--ui-selected)!important;border-radius:8px}
+.lf-app.lf-app.lf-app .lf-work-status-sheet [data-lf-reading-choice] span{font-size:14px!important;color:var(--ui-ink)!important}
+.lf-app.lf-app.lf-app .lf-work-status-sheet [data-lf-reading-choice]>div>div{border-color:var(--ui-separator,var(--ui-line))!important;background:transparent!important}
+.lf-app.lf-app.lf-app .lf-work-status-sheet [data-lf-reading-choice][aria-checked=true]>div>div{border-color:var(--ui-action)!important;background:var(--ui-action)!important}
+.lf-app.lf-app.lf-app .lf-work-status-sheet [aria-checked=true] svg{stroke:var(--ui-on-action)!important}
+.lf-app.lf-app.lf-app .lf-work-status-sheet>button{min-height:48px;border-radius:8px!important;font-size:14px!important;line-height:1.5;padding:10px!important}
+.lf-app.lf-app.lf-app .lf-work-cover-sheet{padding:0!important;overflow:hidden!important}
+.lf-app.lf-app.lf-app .lf-work-cover-sheet>div:nth-child(2){padding:8px 20px 14px!important;border-bottom:1px solid var(--ui-line);gap:12px}
+.lf-app.lf-app.lf-app .lf-work-cover-sheet>div:nth-child(2)>div{min-width:0}
+.lf-app.lf-app.lf-app .lf-work-cover-sheet>div:nth-child(2) p{overflow-wrap:anywhere;line-height:1.6!important;font-weight:600!important}
+.lf-app.lf-app.lf-app .lf-work-cover-sheet>div:has(>input[type=file]){padding:14px 20px!important}
+.lf-app.lf-app.lf-app .lf-work-cover-sheet>div:has(>input[type=file])>button{min-height:44px;border:1px solid var(--ui-line)!important;border-radius:8px!important;background:var(--ui-fill)!important;color:var(--ui-ink)!important;font-size:13px!important;font-weight:600!important}
+.lf-app.lf-app.lf-app .lf-work-cover-sheet div:has(>.lf-cover-choice){gap:16px 12px!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.lf-app.lf-app.lf-app .lf-work-cover-sheet>div:has(>div>.lf-cover-choice){min-height:0;padding:8px 20px max(24px,env(safe-area-inset-bottom))!important;overscroll-behavior:contain}
+.lf-app.lf-app.lf-app .lf-cover-choice{border-radius:6px;touch-action:manipulation}
+.lf-app.lf-app.lf-app .lf-cover-choice>div{border-radius:6px!important;box-shadow:none!important;border:1px solid var(--ui-line)!important}
+.lf-app.lf-app.lf-app .lf-cover-choice[aria-pressed=true]>div{outline:2px solid var(--ui-action);outline-offset:3px}
+.lf-app.lf-app.lf-app .lf-cover-choice>p{font-size:12px!important;line-height:1.6!important;white-space:normal!important;overflow-wrap:anywhere}
+.lf-app.lf-app.lf-app .lf-cover-choice[aria-pressed=true]>div>div{background:var(--ui-action)!important;color:var(--ui-on-action)}
+.lf-app.lf-app.lf-app .lf-cover-choice[aria-pressed=true]>div>div svg{stroke:currentColor!important}
+.lf-app.lf-app.lf-app .lf-cover-choice[data-cover-state=error]{opacity:.6;cursor:not-allowed}
+.lf-app.lf-app.lf-app .lf-rating-sheet .lf-rating-primary{padding:16px 0;border-top:0}
+.lf-app.lf-app.lf-app .lf-rating-sheet .lf-rating-number{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;font-size:28px}
+.lf-app.lf-app.lf-app .lf-rating-sheet .lf-rating-number small{flex:0 0 100%;text-align:end}
+.lf-app.lf-app.lf-app .lf-rating-sheet .lf-rating-body{padding:18px 20px}
+.lf-app.lf-app.lf-app .lf-rating-sheet .lf-rating-work h3{font-size:18px;line-height:1.45}
+.lf-app.lf-app.lf-app .lf-rating-sheet .lf-rating-footer{padding-bottom:max(18px,env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgb(0 0 0 / .04)}
+.lf-app.lf-app.lf-app .lf-rating-sheet :is(textarea,input){scroll-margin-block:70px}
+.lf-app.lf-app.lf-app :is(.lf-work-identity,.lf-work-status-sheet,.lf-work-cover-sheet,.lf-rating-sheet) :is(button,[role=radio],input,textarea):focus-visible{outline:2px solid var(--ui-action);outline-offset:3px}
+.lf-app.lf-app.lf-app .lf-work-action-slot button:not(:disabled):active{background-color:var(--ui-selected);opacity:.8}
+
+/* The character screen is a portal outside .lf-app; keep its existing token scope. */
+html:root:root:root:root:root .lf-character-page .lf-character-hero{gap:16px!important;padding-block:18px!important}
+html:root:root:root:root:root .lf-character-page .lf-character-page-head{padding-block:4px 12px!important}
+html:root:root:root:root:root .lf-character-page .lf-character-toolbar{gap:12px!important;margin-bottom:12px}
+html:root:root:root:root:root .lf-character-page .lf-character-search{border:1px solid var(--ui-line)!important;border-radius:8px!important;background:var(--ui-fill)!important;min-height:48px;padding:0 12px!important}
+html:root:root:root:root:root .lf-character-page input:not([type=range]){min-height:44px;box-sizing:border-box;border:1px solid var(--ui-line)!important;border-radius:8px!important;background:var(--ui-fill)!important;color:var(--ui-ink)!important;font-size:16px!important}
+html:root:root:root:root:root .lf-character-page .lf-character-search input{min-width:0;width:100%;min-height:46px;border:0!important;background:transparent!important;color:var(--ui-ink)!important;font-size:16px!important;outline-offset:-2px}
+html:root:root:root:root:root .lf-character-page .lf-character-search input::placeholder{color:var(--ui-muted);opacity:1}
+html:root:root:root:root:root .lf-character-page .lf-character-filter-row{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px!important}
+html:root:root:root:root:root .lf-character-page .lf-character-filter-chip{min-width:0;min-height:44px;padding:8px 3px!important;white-space:normal;font-size:12px!important;line-height:1.5!important}
+html:root:root:root:root:root .lf-character-page .lf-character-rating-row{border:0!important;border-bottom:1px solid var(--ui-line)!important;border-radius:0!important;background:transparent!important;padding:16px 0!important;min-height:148px!important}
+html:root:root:root:root:root .lf-character-page .lf-character-page-list{gap:0!important}
+html:root:root:root:root:root .lf-character-page .lf-character-name-line strong{font-size:16px!important;overflow-wrap:anywhere}
+html:root:root:root:root:root .lf-character-page :is(button,input):focus-visible{outline:2px solid var(--ui-action)!important;outline-offset:2px}
+html:root:root:root:root:root .lf-character-page .lf-character-rating-row:focus-within{background:var(--ui-fill-soft)!important}
+@media(max-width:359px){
+  .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-identity{grid-template-columns:72px minmax(0,1fr);gap:12px}
+  .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-poster{width:72px;height:108px}
+  .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-title-line h1{font-size:20px!important}
+  .lf-app.lf-app.lf-app .lf-work-action-slot .lf-chapter-quick-actions>button{font-size:12px;padding:8px 5px}
+  .lf-app.lf-app.lf-app .lf-work-cover-sheet div:has(>.lf-cover-choice){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .lf-app.lf-app.lf-app .lf-work-status-sheet{padding-inline:16px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .lf-work-action-slot button,.lf-rating-sheet,.lf-character-page,.lf-character-page.is-leaving{animation:none!important;transition:none!important}
+}
+@media(prefers-reduced-transparency:reduce){
+  .lf-app.lf-app.lf-app .lf-rating-footer,.lf-character-page-top{background:var(--ui-surface)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+}

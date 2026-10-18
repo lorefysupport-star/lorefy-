@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v522-feather-signature';
+const CACHE = 'lorefy-v523-work-experience';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -12,6 +12,7 @@ const freshAssetPaths = [
 const CORE = [
  './styles/lorefy-customize.css?v=20261013-final',
  './styles/lorefy-work-layout.css?v=20261013-final',
+ './styles/lorefy-work-experience.css?v=20261018-work-experience-v1',
   './uploads/lorefy-editorial-picks.js?v=20261017-editorial-comics-v1',
   './styles/lorefy-user-experience.css?v=20261015-connection-avatar-v1',
   './modules/lorefy-user-experience.js?v=20261015-connection-avatar-v1',
@@ -23,7 +24,7 @@ const CORE = [
   './modules/lorefy-preview-readers.js?v=20261011-profile-sections-v1',
   './styles/lorefy-profile-sections.css?v=20261018-list-removal-v1',
   './modules/lorefy-profile-sections.js?v=20261018-list-removal-v1',
-  './modules/lorefy-i18n.js?v=20261016-statistics-activity-v1',
+  './modules/lorefy-i18n.js?v=20261018-work-experience-v1',
   './',
   './index.html',
   './manifest.webmanifest',
@@ -63,7 +64,7 @@ const CORE = [
   './modules/lorefy-reading-diary.js?v=20261018-runtime-cleanup-v1',
   './modules/lorefy-chapter-detail-core.js?v=20261015-reading-owner-v1',
   './modules/lorefy-chapter-metadata.js?v=20261003-beta-final-v1',
-  './modules/lorefy-chapter-detail.js?v=20261015-live-spoiler-v1',
+  './modules/lorefy-chapter-detail.js?v=20261018-work-experience-v1',
   './modules/lorefy-product-core.js?v=20261015-privacy-safety-v1',
   './modules/lorefy-product-tools.js?v=20261015-privacy-safety-v1',
   './modules/lorefy-user-discovery.js?v=20261013-discover-reviewed-v2',
@@ -113,7 +114,7 @@ const CORE = [
   './styles/lorefy-frame-motion.css?v=20261013-all-profile-frames-v6',
   './styles/lorefy-interface-settings.css?v=20261009-custom-appearance-v1',
   './modules/lorefy-scroll-memory.js?v=20261003-home-social-v2',
-  './modules/lorefy-review-editor.js?v=20261018-rating-completion-v1',
+  './modules/lorefy-review-editor.js?v=20261018-work-experience-v1',
   './styles/lorefy-review-editor.css?v=20261004-work-surface-v3',
   './styles/lorefy-work-surface.css?v=20261011-work-lists-v1',
   './styles/lorefy-character-atlas.css?v=20261007-character-atlas-v1',
@@ -123,11 +124,11 @@ const CORE = [
   './styles/lorefy-explore-studio.css?v=20261018-search-suggestions-v1',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1',
-  './uploads/files/lorefy-app.js?v=20261018-rating-completion-v1',
+  './uploads/files/lorefy-app.js?v=20261018-work-experience-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
-  './modules/lorefy-growth-features.js?v=20261018-list-removal-v1',
+  './modules/lorefy-growth-features.js?v=20261018-work-experience-v1',
   './modules/lorefy-share-studio.js?v=20261007-quarter-ratings-v1',
   './uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1',
   './launch/icons/icon-180.png',

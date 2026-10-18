@@ -5,6 +5,11 @@ date: 2026-10-18
 ---
 # Apple Interaction Quality for Lorefy
 
+Work-flow application: [[sessions/2026-10-19-Work-Experience]] covers work
+identity, reviews, status, character ratings and covers with the existing web
+stack. Apple Design, Apple-like UI and Frontend Design guide the implementation;
+SwiftUI Pro was checked for fit, not presented as a React runtime dependency.
+
 The owner supplied a short video recommending Apple Design and SwiftUI expertise.
 Its visible skill names are `apple-design` and `swiftui-pro`; the speaker calls the
 second a SwiftUI expert skill. No repository URLs are visible, so the Apple Design

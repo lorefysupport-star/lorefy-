@@ -26,20 +26,40 @@
     var feather=root.NenIcons && root.NenIcons.Feather;
     var R=root.React,tabState=R.useState('story'),activeTab=tabState[0],setTab=tabState[1],host=R.useRef(null);
     R.useEffect(function(){setTab('story');},[w.id]);
-    R.useEffect(function(){var content=host.current&&host.current.parentElement;if(content)content.dataset.workTab=activeTab;},[activeTab,w.id]);
+    R.useEffect(function(){
+      var content=host.current&&host.current.parentElement;
+      if(!content)return;
+      content.dataset.workTab=activeTab;
+      if(activeTab==='reviews'){
+        var reviews=Array.from(content.querySelectorAll('.lf-work-reader-tabs button')).find(function(button){return /^(مراجعات|Reviews)$/i.test(button.textContent.trim());});
+        if(reviews)reviews.click();
+      }
+    },[activeTab,w.id]);
+    function moveTab(event){
+      var buttons=Array.from(event.currentTarget.querySelectorAll('[role="tab"]'));
+      var index=buttons.indexOf(event.target),next=index;
+      if(event.key==='Home')next=0;
+      else if(event.key==='End')next=buttons.length-1;
+      else if(event.key===(english?'ArrowRight':'ArrowLeft'))next=(index+1)%buttons.length;
+      else if(event.key===(english?'ArrowLeft':'ArrowRight'))next=(index+buttons.length-1)%buttons.length;
+      else return;
+      if(index<0)return;
+      event.preventDefault();setTab(buttons[next].dataset.workTab);buttons[next].focus();
+    }
     return h('header',{className:'lf-work-identity',ref:host},
       h('img',{className:'lf-work-poster',src:p.cover,alt:w.title,decoding:'async',onError:p.onError,'data-fallback':p.fallback}),
       h('div',{className:'lf-work-copy'},
         h('p',{className:'lf-work-format'},[formatLabel(w.type,p.language),w.yr].filter(Boolean).join(' · ')),
-        h('div',{className:'lf-work-title-line'},h('h1',null,w.title),h('div',{className:'lf-work-rating'},feather&&h(feather,{size:24,'aria-hidden':true}),h('strong',{className:'lf-work-rating-value'},Number(p.rating)>0?Number(p.rating).toFixed(1):'—'))),
+        h('div',{className:'lf-work-title-line'},h('h1',{dir:'auto'},w.title)),
         p.subtitle && h('p',{className:'lf-work-subtitle'},p.subtitle),
+        h('div',{className:'lf-work-rating','aria-label':english?'Work rating':'تقييم العمل'},feather&&h(feather,{size:20,'aria-hidden':true}),h('strong',{className:'lf-work-rating-value'},Number(p.rating)>0?Number(p.rating).toFixed(1):'—'),h('span',{className:'lf-work-rating-caption'},english?'out of 5':'من 5')),
         p.creator && (root.LorefyProductCore && root.LorefyProductCore.authorWorks([w],p.creator).length
           ? h('button',{type:'button',className:'lf-work-creator lf-work-author-button',onClick:function(){ root.LorefyProductTools.openAuthor(p.creator); },'aria-label':(english?'Works by ':'أعمال ')+p.creator},p.creator,root.NenIcons && h(english?root.NenIcons.ChevronRight:root.NenIcons.ChevronLeft,{size:14,'aria-hidden':true}))
           : h('p',{className:'lf-work-creator'},p.creator))),
       h('div',{className:'lf-work-action-slot'}),
       h('div',{className:'lf-work-facts'},w.st && h('span',null,w.st),p.metadata && h('span',null,p.metadata),w.pl && h('span',null,w.pl)),
-      h('nav',{className:'lf-work-section-nav',role:'tablist','aria-label':english?'Work content':'محتوى العمل'},
-        [['story',english?'Story':'القصة'],['related',english?'Related':'ذات صلة']].map(function(item){return h('button',{key:item[0],type:'button',role:'tab','aria-selected':activeTab===item[0],onClick:function(){setTab(item[0]);}},item[1]);})));
+      h('nav',{className:'lf-work-section-nav',role:'tablist','aria-label':english?'Work content':'محتوى العمل',onKeyDown:moveTab},
+        [['story',english?'Story':'القصة'],['reviews',english?'Reviews':'المراجعات'],['related',english?'Related':'ذات صلة']].map(function(item){return h('button',{key:item[0],type:'button',role:'tab','data-work-tab':item[0],tabIndex:activeTab===item[0]?0:-1,'aria-selected':activeTab===item[0],onClick:function(){setTab(item[0]);}},item[1]);})));
 
   };
 

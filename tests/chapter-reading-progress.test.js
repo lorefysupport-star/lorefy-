@@ -69,7 +69,7 @@ test('quick action label follows the latest React library status',()=>{
   const label={textContent:'تم القراءة'};
   const toolbar={querySelector:selector=>selector==='.lf-chapter-quick-add span'?label:null};
   const actions={parentNode:{querySelector:()=>toolbar},querySelector:selector=>selector==='button:first-child'?{textContent:'أقرأ حالياً'}:null};
-  const scope={};const start=source.indexOf('  function enhanceActions(');
+  const scope={text:(ar,en)=>ar};const start=source.indexOf('  function enhanceActions(');
   vm.runInNewContext(source.slice(start,source.indexOf('  function enhance()',start)),scope);
   scope.enhanceActions(actions);assert.equal(label.textContent,'أقرأ حالياً');
 });

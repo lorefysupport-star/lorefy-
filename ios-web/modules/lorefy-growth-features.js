@@ -325,12 +325,12 @@
     });
   }
 
-  function scoreControl(workId, charKey, getStatus) {
+  function scoreControl(workId, charKey, getStatus, displayName) {
     var current = getScores(workId)[charKey] || 0;
     var label = uiText("تقييم الشخصية من 5", "Character rating out of 5");
     var row = el("div", { class: "lf-character-score-row", role: "group", "aria-label": label });
     var scale = el("div", { class: "lf-rating-scale" });
-    var slider = el("input", { type: "range", min: "0", max: "5", step: "0.25", value: String(current), "aria-label": label });
+    var slider = el("input", { type: "range", min: "0", max: "5", step: "0.25", value: String(current), "aria-label": label + (displayName ? " · " + displayName : "") });
     var output = el("output", { class: "lf-character-score-value", "data-no-translate": "" });
     function paint(v) {
       row.setAttribute("data-score", String(v || 0));
@@ -365,7 +365,7 @@
       el("span", { text: c.latin && c.latin !== c.name ? c.latin : (c.note || "") }),
       c.note && c.latin && c.latin !== c.name ? el("small", { text: c.note }) : null
     ]);
-    var control = scoreControl(work.workId, key, null);
+    var control = scoreControl(work.workId, key, null, c.name || c.latin);
     var rowEl = el("div", { class: "lf-character-rating-row", "data-name": (c.name || "") + " " + (c.latin || ""), "data-role": c.role || "" }, [portrait, meta, control]);
     return rowEl;
   }
@@ -438,22 +438,33 @@
     ]);
 
     /* toolbar: search + filters */
-    var searchInput = el("input", { type: "search", inputmode: "search", placeholder: uiText("ابحث عن شخصية…", "Search characters…"), "aria-label": uiText("ابحث عن شخصية", "Search characters") });
+    var searchInput = el("input", { type: "search", inputmode: "search", dir:"auto", placeholder: uiText("ابحث عن شخصية…", "Search characters…"), "aria-label": uiText("ابحث عن شخصية", "Search characters") });
     var search = el("div", { class: "lf-character-search" }, [el("i", { "data-lucide": "search", "aria-hidden": "true" }), searchInput]);
     var filterDefs = [["all", uiText("الكل", "All")], ["rated", uiText("قيّمتها", "Rated")], ["main", uiText("رئيسية", "Main")], ["support", uiText("مساعدة", "Supporting")]];
-    var filterRow = el("div", { class: "lf-character-filter-row", role: "tablist" });
+    var filterRow = el("div", { class: "lf-character-filter-row", role: "tablist", "aria-label": uiText("تصفية الشخصيات", "Filter characters") });
     var currentFilter = "all";
     var chips = filterDefs.map(function (d) {
-      var chip = el("button", { type: "button", role: "tab", "aria-selected": d[0] === "all" ? "true" : "false", class: "lf-character-filter-chip" + (d[0] === "all" ? " is-active" : ""), text: d[1], "data-filter": d[0] });
+      var chip = el("button", { type: "button", role: "tab", tabindex:d[0]==="all"?"0":"-1", "aria-selected": d[0] === "all" ? "true" : "false", class: "lf-character-filter-chip" + (d[0] === "all" ? " is-active" : ""), text: d[1], "data-filter": d[0] });
       chip.addEventListener("click", function () {
         currentFilter = d[0];
         chips.forEach(function (x) {
           x.classList.toggle("is-active", x === chip);
           x.setAttribute("aria-selected", x === chip ? "true" : "false");
+          x.tabIndex=x===chip?0:-1;
         });
         applyFilter(true);
       });
       filterRow.appendChild(chip); return chip;
+    });
+    filterRow.addEventListener("keydown",function(event){
+      var index=chips.indexOf(event.target),next=index,rtl=uiText("rtl","ltr")==="rtl";
+      if(index<0)return;
+      if(event.key==="Home")next=0;
+      else if(event.key==="End")next=chips.length-1;
+      else if(event.key===(rtl?"ArrowLeft":"ArrowRight"))next=(index+1)%chips.length;
+      else if(event.key===(rtl?"ArrowRight":"ArrowLeft"))next=(index+chips.length-1)%chips.length;
+      else return;
+      event.preventDefault();chips[next].click();chips[next].focus();
     });
 
     /* list */
@@ -5477,9 +5488,48 @@
     }
   }
 
+  function enhanceReadingChoices(sheet) {
+    var candidates=Array.from(sheet.querySelectorAll('div')).filter(function(option){
+      return /^(أقرأ حالياً|تم القراءة|قائمة الأمنيات|متوقف مؤقتًا|توقفت نهائيًا|Reading|Completed|Wishlist|Paused|Dropped)$/.test(option.textContent.trim()) && option.children.length<=2 && !option.querySelector('button,input,select');
+    });
+    var options=candidates.filter(function(option){return !candidates.some(function(parent){return parent!==option&&parent.contains(option);});});
+    if(options.length<3 || options.some(function(option){return option.parentElement!==options[0].parentElement;}))return;
+    sheet.classList.add('lf-work-status-sheet');
+    var group=options[0].parentElement;
+    group.classList.add('lf-reading-options');group.setAttribute('role','radiogroup');group.setAttribute('aria-label',uiText('حالة القراءة','Reading status'));
+    var selected=options.find(function(option){return !!option.querySelector('svg');})||options[0];
+    options.forEach(function(option){
+      option.setAttribute('role','radio');option.setAttribute('aria-checked',String(!!option.querySelector('svg')));option.tabIndex=option===selected?0:-1;
+      if(option.dataset.lfReadingChoice)return;
+      option.dataset.lfReadingChoice='1';
+      option.addEventListener('keydown',function(event){
+        if(event.target!==option)return;
+        var index=options.indexOf(option),next=index;
+        if(event.key==='Enter'||event.key===' '){event.preventDefault();option.click();return;}
+        if(event.key==='ArrowDown')next=(index+1)%options.length;
+        else if(event.key==='ArrowUp')next=(index+options.length-1)%options.length;
+        else if(event.key==='Home')next=0;
+        else if(event.key==='End')next=options.length-1;
+        else return;
+        event.preventDefault();options[next].click();options[next].focus();
+      });
+    });
+  }
+
+  function workReviewActionLabel(button){
+    if(button.querySelector('path[d^="M7.9 20"]'))return uiText('الردود','Replies');
+    if(button.querySelector('path[d^="M19 14"]'))return uiText('إعجاب','Like');
+    if(button.querySelector('path[d^="M7 10"]'))return uiText('توصية','Recommend');
+    if(button.querySelector('path[d^="M3 6h18"]'))return uiText('حذف','Delete');
+    if(button.querySelector('circle[cx="18"][cy="5"]'))return uiText('مشاركة','Share');
+    return '';
+  }
+
   function enhanceInteractionAccessibility(scope) {
     var root = scope || doc;
     labelIconOnlyButtons(root);
+    Array.from(root.querySelectorAll ? root.querySelectorAll('.nc-sheet') : []).forEach(enhanceReadingChoices);
+    Array.from(root.querySelectorAll ? root.querySelectorAll('.nc-sheet:has(.lf-cover-choice)') : []).forEach(function(sheet){sheet.classList.add('lf-work-cover-sheet');});
     // Legacy React sheets close through their overlay handler; keep that
     // state transition instead of removing React-owned nodes directly.
     Array.from(root.querySelectorAll ? root.querySelectorAll('.nc-sheet:not([data-lf-dialog-wired])') : []).forEach(function (sheet) {
@@ -5487,20 +5537,15 @@
       sheet.dataset.lfDialogWired = '1';
       sheet.setAttribute('role','dialog'); sheet.setAttribute('aria-modal','true');
       var heading = sheet.querySelector('h1,h2,h3,strong');
-      sheet.setAttribute('aria-label', sheet.classList.contains('lf-settings-sheet') ? uiText('الإعدادات','Settings') : heading && heading.textContent.trim() || uiText('خيارات العمل','Work options'));
+      sheet.setAttribute('aria-label', sheet.classList.contains('lf-settings-sheet') ? uiText('الإعدادات','Settings') : sheet.classList.contains('lf-work-cover-sheet') ? uiText('اختر الغلاف','Choose cover') : sheet.classList.contains('lf-work-status-sheet') ? uiText('حالة القراءة','Reading status') : heading && heading.textContent.trim() || uiText('خيارات العمل','Work options'));
       var overlay = sheet.parentElement;
-      var initial = sheet.querySelector('button,input,select,textarea,[tabindex="0"]');
+      var initial = sheet.querySelector('[aria-label="إغلاق"],[aria-label="Close"]') || sheet.querySelector('button,input,select,textarea,[tabindex="0"]');
       var release = bindDialogKeys(sheet, function () { if (overlay && overlay.isConnected) overlay.click(); }, initial);
       var cleanup = new MutationObserver(function () {
         if (sheet.isConnected) return;
         cleanup.disconnect(); release();
       });
       cleanup.observe(overlay.parentElement || doc.body,{childList:true,subtree:true});
-      Array.from(sheet.querySelectorAll('div')).forEach(function (option) {
-        if (!/^(أقرأ حالياً|تم القراءة|قائمة الأمنيات|متوقف مؤقتًا|توقفت نهائيًا|Reading|Completed|Wishlist|Paused|Dropped)$/.test(option.textContent.trim()) || option.children.length > 2 || option.querySelector('button,input,select')) return;
-        option.setAttribute('role','button'); option.tabIndex=0;
-        option.addEventListener('keydown',function(event){ if(event.key==='Enter'||event.key===' '){event.preventDefault();option.click();} });
-      });
     });
 
     var links = root.querySelectorAll ? root.querySelectorAll("a[href]") : [];
@@ -5523,6 +5568,10 @@
       var button = buttons[bIndex];
       var text = (button.textContent || "").replace(/\s+/g, " ").trim();
       var hasIcon = !!button.querySelector("svg");
+      if(hasIcon&&button.closest('.lf-work-reader-tabs + div,.lf-work-status-sheet')){
+        var actionLabel=workReviewActionLabel(button);
+        if(actionLabel){button.setAttribute('aria-label',actionLabel+(text?' · '+text:''));button.setAttribute('title',actionLabel);}
+      }
       var inRating = !!button.closest(".lf-rating-stars, [data-rating-control]");
       var ratingGroupButtons = button.parentElement && button.querySelector('svg path[d^="M12 2.6"]') ? button.parentElement.querySelectorAll(":scope > button") : [];
       var isReviewRating = ratingGroupButtons.length === 5 && !!button.querySelector('svg path[d^="M12 2.6"]');

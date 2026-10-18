@@ -550,10 +550,27 @@
       toolbar.insertBefore(review, toolbar.querySelector('.lf-chapter-more'));
       refreshIcons(review);
     }
+    function addSecondaryActions(toolbar){
+      [['lf-chapter-quick-characters','.lf-character-action-button:not(.lf-topchars-action-button)','users',text('تقييم الشخصيات','Rate characters'),text('الشخصيات','Characters')],
+       ['lf-chapter-quick-cover','button[title="تغيير الغلاف"],button[title="Change cover"]','image',text('تغيير الغلاف','Change cover'),text('الغلاف','Cover')]].forEach(function(choice){
+        if(toolbar.querySelector('.'+choice[0]) || !actions.querySelector(choice[1]))return;
+        var action=button(choice[3],choice[0],choice[2],function(){
+          var content=toolbar.closest('.lf-detail-content');
+          var currentActions=content&&content.querySelector('.lf-detail-actions');
+          var target=currentActions&&currentActions.querySelector(choice[1]);
+          if(target&&!target.disabled)target.click();
+        });
+        action.setAttribute('aria-haspopup','dialog');
+        action.appendChild(el('span','',choice[4]));
+        toolbar.insertBefore(action,toolbar.querySelector('.lf-chapter-more'));
+        refreshIcons(action);
+      });
+    }
     var toolbar = actions.parentNode.querySelector('.lf-chapter-quick-actions');
     var reviewTarget = actions.querySelector('[data-lorefy-action="write-review"], .lf-review-action-button');
     if (toolbar) {
       if (reviewTarget && !toolbar.querySelector('.lf-chapter-quick-review')) addReview(toolbar, reviewTarget);
+      addSecondaryActions(toolbar);
       var target = actions.querySelector('button:first-child');
       var label = toolbar.querySelector('.lf-chapter-quick-add span');
       if(target && label && label.textContent!==target.textContent.trim()) label.textContent=target.textContent.trim();
@@ -573,6 +590,7 @@
       if (event && toolbar.contains(event.target)) return;
       var openMenu = toolbar.querySelector('.lf-chapter-more-menu');
       if (openMenu) openMenu.remove();
+      more.setAttribute('aria-expanded', 'false');
       doc.removeEventListener('pointerdown', dismissMenu);
     }
     var more = button('المزيد من خيارات العمل', 'lf-chapter-more', 'ellipsis', function () {
@@ -587,17 +605,27 @@
         item.setAttribute('role', 'menuitem'); item.appendChild(el('span', '', choice[0])); menu.appendChild(item);
       });
       toolbar.appendChild(menu); refreshIcons(menu); doc.addEventListener('pointerdown', dismissMenu);
+      more.setAttribute('aria-expanded', 'true');
       var first = menu.querySelector('button'); if (first) first.focus();
     });
+    more.setAttribute('aria-haspopup', 'menu'); more.setAttribute('aria-expanded', 'false');
     toolbar.appendChild(more);
+    addSecondaryActions(toolbar);
     var synopsis = actions.parentNode.querySelector('.lf-detail-scores');
     var relations = actions.parentNode.querySelector('.lf-work-relations');
     var slot=actions.parentNode.querySelector('.lf-work-action-slot');
     if(slot)slot.appendChild(toolbar);else actions.parentNode.insertBefore(toolbar, relations || synopsis && synopsis.nextElementSibling || actions);
     refreshIcons(toolbar);
     toolbar.addEventListener('keydown', function (event) {
-      if (event.key !== 'Escape') return;
-      if (toolbar.querySelector('.lf-chapter-more-menu')) { dismissMenu(); more.focus(); }
+      var menu=toolbar.querySelector('.lf-chapter-more-menu');if(!menu)return;
+      if(event.key==='Escape'){event.preventDefault();dismissMenu();more.focus();return;}
+      var items=Array.from(menu.querySelectorAll('[role="menuitem"]')),index=items.indexOf(event.target),next=index;
+      if(event.key === 'ArrowDown')next=(index+1)%items.length;
+      else if(event.key === 'ArrowUp')next=(index+items.length-1)%items.length;
+      else if(event.key==='Home')next=0;
+      else if(event.key==='End')next=items.length-1;
+      else return;
+      if(items[next]){event.preventDefault();items[next].focus();}
     });
   }
 
