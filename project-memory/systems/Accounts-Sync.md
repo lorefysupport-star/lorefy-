@@ -30,6 +30,11 @@ the selected appearance. Mock callback checks do not certify native sign-in.
 
 ## الفحص
 
+[[bugs/LF-070-Dynamic-State-Sync]] extends push diff/adoption to supported
+dynamic keys from the acknowledged base/journal/response. Four new failures and
+six added cases confirm removal, remote addition, retry and 20/5 batching;
+76 focused tests pass. [[sessions/2026-10-19-Dynamic-State-Sync]]. No service writes.
+
 [[bugs/LF-069-Pull-Remote-Deletions]] prevents an acknowledged remote deletion
 from being re-uploaded beside an unrelated offline edit. Seven complete-Backend
 VM cases and 51 related tests pass; [[sessions/2026-10-19-Pull-Remote-Deletions]]

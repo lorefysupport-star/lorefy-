@@ -1092,7 +1092,12 @@
           var base = this._stateBase || {};
           var patch = {};
           var removed = [];
-          accountStateKeys().forEach(function(key){
+          var stateKeys = accountStateKeys();
+          // Removed dynamic keys no longer appear in the storage enumeration.
+          Object.keys(base).concat(Object.keys(pendingAtStart)).forEach(function(key){
+            if (stateKeys.indexOf(key) === -1 && isAccountStateKey(key)) stateKeys.push(key);
+          });
+          stateKeys.forEach(function(key){
             if (payload[key] !== base[key]){
               if (payload[key] == null) removed.push(key);
               else patch[key] = payload[key];
@@ -1159,9 +1164,12 @@
           var localNow = gather();
           var pendingNow = readPendingState();
           var adopted = [];
+          Object.keys(this._stateBase).forEach(function(key){
+            if (stateKeys.indexOf(key) === -1 && isAccountStateKey(key)) stateKeys.push(key);
+          });
           this._isApplyingRemote = true;
           try {
-            accountStateKeys().forEach(function(key){
+            stateKeys.forEach(function(key){
               if (payload[key] !== base[key] || localNow[key] !== payload[key] || Object.prototype.hasOwnProperty.call(pendingNow,key)) return;
               var value = backend._stateBase[key];
               if (value === localNow[key]) return;

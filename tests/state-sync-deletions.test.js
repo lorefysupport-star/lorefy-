@@ -25,8 +25,10 @@ function harness({local, remote, base = local, pending = {}, version = 2}) {
     removeItem: key => values.delete(key)
   };
   let cloud = {...remote}, cloudVersion = version, offline = false, beforeRead;
-  const calls = [];
-  const scope = {localStorage: storage, console: {warn() {}}};
+  const calls = [], events = [];
+  const scope = {localStorage: storage, console: {warn() {}},
+    CustomEvent: function(type, init) { this.type = type; this.detail = init.detail; },
+    dispatchEvent: event => events.push(event)};
   scope.window = scope;
   vm.runInNewContext(source, scope);
   const api = scope.LorefyBackend;
@@ -55,8 +57,12 @@ function harness({local, remote, base = local, pending = {}, version = 2}) {
       }
     }
   });
-  return {api, storage, values, calls, cloud: () => ({...cloud}),
+  return {api, storage, values, calls, events, cloud: () => ({...cloud}),
     journal: () => JSON.parse(storage.getItem(pendingKey) || '{}'),
+    serverEdit(key, value) {
+      if (value === null) delete cloud[key]; else cloud[key] = value;
+      cloudVersion++;
+    },
     offline: value => { offline = value; }, beforeRead: fn => { beforeRead = fn; }};
 }
 
@@ -133,4 +139,78 @@ test('an account switch during pull leaves the next account and its journal unto
   assert.equal(h.storage.getItem(activeKey), 'other-reader');
   assert.equal(h.storage.getItem(library), 'other-library');
   assert.deepEqual(h.journal(), {[library]: 'other-library'});
+});
+
+const portraits = 'lorefy.characterBoardImages.v2';
+
+test('deleting an acknowledged dynamic field is sent to the server, not silently acknowledged', async () => {
+  const h = harness({local: {[portraits]: 'old-portraits'}, remote: {[portraits]: 'old-portraits'}});
+  await h.api.pull(owner);
+  h.storage.removeItem(portraits);
+  h.storage.setItem(pendingKey, JSON.stringify({[portraits]: null}));
+  assert.equal(await h.api.push(), true);
+  assert.equal(h.cloud()[portraits], undefined);
+  assert.deepEqual(h.journal(), {});
+  assert.deepEqual(h.calls.flatMap(call => call.removed_keys), [portraits]);
+});
+
+test('an unobserved dynamic deletion is recovered from the acknowledged base on push', async () => {
+  const h = harness({local: {[portraits]: 'old-portraits'}, remote: {[portraits]: 'old-portraits'}});
+  await h.api.pull(owner);
+  h.storage.removeItem(portraits);
+  assert.equal(await h.api.push(), true);
+  assert.equal(h.cloud()[portraits], undefined);
+});
+
+test('a dynamic cloud addition is adopted during push and survives the next unrelated edit', async () => {
+  const h = harness({local: {[library]: 'old-library'}, remote: {[library]: 'old-library'}});
+  await h.api.pull(owner);
+  h.serverEdit(portraits, 'remote-portraits');
+  h.storage.setItem(library, 'new-library');
+  h.storage.setItem(pendingKey, JSON.stringify({[library]: 'new-library'}));
+  assert.equal(await h.api.push(), true);
+  assert.equal(h.storage.getItem(portraits), 'remote-portraits');
+  assert.equal(h.events.some(event => event.type === 'lorefy:stored-state' && event.detail.key === portraits), true);
+  h.storage.setItem(library, 'newer-library');
+  assert.equal(await h.api.push(), true);
+  assert.equal(h.cloud()[portraits], 'remote-portraits');
+  assert.equal(h.cloud()[library], 'newer-library');
+});
+
+test('offline dynamic deletion stays pending until a successful retry', async () => {
+  const h = harness({local: {[portraits]: 'old-portraits'}, remote: {[portraits]: 'old-portraits'}});
+  await h.api.pull(owner);
+  h.storage.removeItem(portraits);
+  h.storage.setItem(pendingKey, JSON.stringify({[portraits]: null}));
+  h.offline(true);
+  await assert.rejects(h.api.push());
+  assert.deepEqual(h.journal(), {[portraits]: null});
+  assert.equal(h.cloud()[portraits], 'old-portraits');
+  h.offline(false);
+  assert.equal(await h.api.push(), true);
+  assert.equal(h.cloud()[portraits], undefined);
+  assert.deepEqual(h.journal(), {});
+});
+
+test('foreign keys in server snapshots are neither copied locally nor sent as removals', async () => {
+  const h = harness({local: {[library]: 'old-library'}, remote: {[library]: 'old-library', 'other.private.key': 'opaque'}});
+  await h.api.pull(owner);
+  h.storage.setItem(library, 'new-library');
+  await h.api.push();
+  assert.equal(h.storage.getItem('other.private.key'), null);
+  assert.equal(h.cloud()['other.private.key'], 'opaque');
+  assert.equal(h.calls.some(call => call.removed_keys.includes('other.private.key')), false);
+});
+
+test('dynamic removals are deduplicated and retain the twenty-key batch limit', async () => {
+  const dynamic = Object.fromEntries(Array.from({length: 25}, (_, index) => ['lorefy.user.qa.' + index, 'saved']));
+  const h = harness({local: dynamic, remote: dynamic});
+  await h.api.pull(owner);
+  Object.keys(dynamic).forEach(key => h.storage.removeItem(key));
+  h.storage.setItem(pendingKey, JSON.stringify(Object.fromEntries(Object.keys(dynamic).map(key => [key, null]))));
+  await h.api.push();
+  assert.deepEqual(h.cloud(), {});
+  assert.deepEqual(h.journal(), {});
+  assert.deepEqual(h.calls.map(call => call.removed_keys.length), [20, 5]);
+  assert.equal(new Set(h.calls.flatMap(call => call.removed_keys)).size, 25);
 });
