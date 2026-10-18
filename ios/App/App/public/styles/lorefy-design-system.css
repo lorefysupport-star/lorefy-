@@ -179,8 +179,6 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
 .lf-app.lf-app.lf-app .lf-appearance-option { min-height: 76px; display: grid; justify-items: center; align-content: center; gap: 8px; padding: 10px 4px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-surface); color: var(--ui-ink); font-size: 13px; cursor: pointer; }
 .lf-app.lf-app.lf-app .lf-appearance-option[aria-pressed='true'] { border: 2px solid var(--ui-action); background: var(--ui-selected); }
 .lf-appearance-swatch { width: 26px; height: 26px; border: 1px solid #9996; border-radius: 50%; }
-.lf-app.lf-app.lf-app .lf-diary-entrypoint { border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }
-.lf-app.lf-app.lf-app .lf-diary-entrypoint-icon { border-radius: 8px !important; box-shadow: none !important; }
 .lf-app.lf-app.lf-app :is(.lf-chapter-star.is-filled,.lf-chapter-personal-summary,.lf-rating-display) { color: var(--ui-rating) !important; }
 .lf-app.lf-app.lf-app .lf-rating-feather { stroke: var(--ui-rating); stroke-width: 1.6; }
 .lf-app.lf-app.lf-app .lf-rating-pick-glyph > .lf-rating-feather { stroke: var(--ui-muted) !important; }
@@ -758,7 +756,7 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
 .lf-app.lf-app.lf-app.is-pink :is(.lf-social-avatar,.lf-community-post-avatar,.lf-reader-avatar,.lf-profile-banner > div:last-child,.lf-community-card > span) img[src^="data:image/svg+xml"] { filter: grayscale(1) sepia(1) saturate(3) hue-rotate(285deg) !important; }
 .lf-app.lf-app.lf-app.is-pink .lf-profile-banner button svg { stroke: var(--ui-action) !important; }
 .lf-app.lf-app.lf-app.is-pink .lf-profile-banner:has(> img[src^="data:image/svg+xml"]) > div:first-of-type { background: transparent !important; }
-.lf-app.lf-app.lf-app.is-pink :is(.lf-profile-rated-character,.lf-profile-preference-board,.lf-pref-board-icon,.lf-diary-entrypoint-icon,.lf-product-action-icon) { color: var(--ui-action) !important; }
+.lf-app.lf-app.lf-app.is-pink :is(.lf-profile-rated-character,.lf-profile-preference-board,.lf-pref-board-icon,.lf-product-action-icon) { color: var(--ui-action) !important; }
 @media (max-width: 600px) {
   .lf-app.lf-app.lf-app .lf-community-compose-sheet { align-items: flex-end !important; padding: max(16px,var(--nc-top)) 0 0 !important; }
   .lf-app.lf-app.lf-app .lf-community-compose-sheet > section { border-radius: 18px 18px 0 0 !important; border-inline: 0 !important; border-bottom: 0 !important; }

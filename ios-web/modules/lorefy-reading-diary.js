@@ -604,31 +604,6 @@
     var back = page.querySelector('.lf-diary-header button');
     if (back) back.focus();
   }
-  function enhanceProfile() { return; // Profile shortcut removed; diary data and other entry points remain.
-
-    var recent = doc.querySelector('.lf-profile-page > .lf-profile-recent');
-    if (!recent) return;
-    var page = recent.parentNode;
-    var anchor = page.querySelector(':scope > .lf-profile-community-summary') ||
-      page.querySelector(':scope > .lf-profile-rated-characters') || recent;
-    var currentSession = activeSession();
-    var nextSubtitle = currentSession ? currentSession.runningSince ? text('جلسة قراءة جارية', 'Reading session in progress') : text('جلسة متوقفة مؤقتًا', 'Session paused') : text('جلساتك وملاحظاتك واقتباساتك', 'Your sessions, notes and quotes');
-    if (global.LorefyI18n) nextSubtitle = global.LorefyI18n.translate(nextSubtitle, doc.documentElement.lang);
-    var existing = doc.querySelector('.lf-profile-page > .lf-diary-entrypoint');
-    var entry = existing;
-    if (entry) {
-      var subtitle = entry.querySelector('small');
-      if (subtitle && subtitle.textContent !== nextSubtitle) subtitle.textContent = nextSubtitle;
-    } else {
-      entry = button('lf-diary-entrypoint', text('فتح سجل القراءة', 'Open reading diary'), null, open);
-      var symbol = node('span', 'lf-diary-entrypoint-icon'); symbol.appendChild(icon('book-heart', 21)); entry.appendChild(symbol);
-      var copy = node('span', 'lf-diary-entrypoint-copy'); copy.appendChild(node('strong', '', text('سجل القراءة', 'Reading diary')));
-      copy.appendChild(node('small', '', nextSubtitle)); entry.appendChild(copy);
-      entry.appendChild(icon(language() === 'en' ? 'chevron-right' : 'chevron-left', 18));
-      refreshIcons(entry);
-    }
-    if (anchor.nextSibling !== entry) page.insertBefore(entry, anchor.nextSibling);
-  }
   function enhanceDetail() {
     var actions = doc.querySelector('.lf-detail-page .lf-detail-actions');
     if (!actions || doc.querySelector('.lf-detail-page .lf-diary-detail-entrypoint')) return;
@@ -649,7 +624,7 @@
   function schedule() {
     if (scheduled) return;
     scheduled = true;
-    global.setTimeout(function () { scheduled = false; sync(); enhanceProfile(); enhanceDetail(); }, 120);
+    global.setTimeout(function () { scheduled = false; sync(); enhanceDetail(); }, 120);
   }
   function start() {
     var screen = doc.getElementById('screen');

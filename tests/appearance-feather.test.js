@@ -17,9 +17,8 @@ test('appearance normalizes persisted values without treating pink as dark', () 
   assert.equal(design.normalizeMode('invalid'), 'dark');
   assert.equal(design.normalizeMode(false), 'light');
 });
-test('rating glyph is a feather and diary geometry cannot inherit a circular button', () => {
+test('rating glyph uses a feather and appearance settings remain integrated', () => {
   assert.match(read('uploads/files/lorefy-app.js'), /StarGlyph=.*?React.createElement\(Feather,/s);
-  assert.match(read('styles/lorefy-design-system.css'), /lf-diary-entrypoint[^}]*border-radius:\s*0\s*!important/s);
   assert.match(read('modules/lorefy-interface-settings.js'), /lf-appearance-options/);
   assert.match(read('uploads/files/lorefy-app.js'), /React\.createElement\(window\.LorefyInterfaceSettings,/);
   assert.doesNotMatch(read('modules/lorefy-chapter-detail.js'), /icon\('star'/);

@@ -463,10 +463,11 @@
 
   function loadRoute() {
     var route = routeState();
-    if (route.workId) hydrateWork(route.workId);
+
     browseParts = route.rawType === "All" ? planner.allCatalogParts(manifest) : planner.typeParts(manifest, route.type);
     browseCursor = 0;
     scheduleSearch(route.query, route.rawType);
+    if (route.workId) return loadWorks([route.workId]).then(function () { return hydrateWork(route.workId); });
     return enqueue(planner.initialCatalogPlan(manifest, route), { gapMs: 40 });
   }
 
@@ -479,6 +480,13 @@
     });
     if (!work || !work._catalogCompact) return Promise.resolve(work);
     if (hydration.has(canonicalId)) return hydration.get(canonicalId);
+    if (!manifest.workParts && global.LorefyCatalogMapLoader) {
+      return global.LorefyCatalogMapLoader.ensure().then(function (full) {
+        if (!full) return work;
+        Object.assign(manifest, full);
+        return hydrateWork(id);
+      });
+    }
     var part = manifest.workParts && (manifest.workParts[id] || manifest.workParts[canonicalId]);
     if (!part || !global.LorefyCatalogData) return Promise.resolve(work);
     var promise = global.fetch("uploads/lorefy-data-part" + String(part).padStart(2,"0") + ".js?v=" + version)
@@ -506,6 +514,18 @@
   }
 
   function loadWorks(workIds) {
+    var ids = (Array.isArray(workIds) ? workIds : []).map(function (id) { return String(id || ""); }).filter(Boolean);
+    if (!ids.length) return Promise.resolve();
+    if (!manifest.workParts && global.LorefyCatalogMapLoader) {
+      var known = new Set((global.LorefyMangaData || []).filter(Boolean).map(function (work) { return String(work.id); }));
+      var aliases = global.LorefyCatalogAliases || {};
+      if (ids.every(function (id) { return known.has(String(aliases[id] || id)); })) return Promise.resolve();
+      return global.LorefyCatalogMapLoader.ensure().then(function (full) {
+        if (!full) return false;
+        Object.assign(manifest, full);
+        return loadWorks(ids);
+      });
+    }
     var workParts = manifest.workParts || {};
     var aliases = global.LorefyCatalogAliases || {};
     var parts = (Array.isArray(workIds) ? workIds : []).map(function (workId) {

@@ -13,14 +13,14 @@
 <link rel="stylesheet" href="styles/lorefy-apple-ui.css?v=20260925-ui-coherence-v1">
 <link rel="stylesheet" href="styles/lorefy-share-studio.css?v=20261007-discord-followup-v1">
 <link rel="stylesheet" href="styles/lorefy-product-tools.css?v=20261004-reading-author-v1">
-<link rel="stylesheet" href="styles/lorefy-reading-diary.css?v=20261007-diary-language-v1">
+<link rel="stylesheet" href="styles/lorefy-reading-diary.css?v=20261018-runtime-cleanup-v1">
   <link rel="stylesheet" href="styles/lorefy-cinema-ui.css?v=20261003-appearance-feather-v2">
   <link rel="stylesheet" href="styles/lorefy-native-layout-fix.css?v=20260921-product-remediation-v1">
   <link rel="stylesheet" href="styles/lorefy-review-social.css?v=20261015-editor-locale-v1">
   <link rel="stylesheet" href="styles/lorefy-community.css?v=20261009-public-appearance-v4">
   <link rel="stylesheet" href="styles/lorefy-comics-search.css?v=20260923-comics-identity-v2">
   <link rel="stylesheet" href="styles/lorefy-auth-flow.css?v=20261003-beta-final-v1">
-  <link rel="stylesheet" href="styles/lorefy-design-system.css?v=20261016-review-direction-v1">
+  <link rel="stylesheet" href="styles/lorefy-design-system.css?v=20261018-runtime-cleanup-v1">
   <link rel="stylesheet" href="styles/lorefy-review-editor.css?v=20261004-work-surface-v3">
   <link rel="stylesheet" href="styles/lorefy-chapter-detail.css?v=20261015-live-spoiler-v1">
 <!-- PWA / iOS web-app -->
@@ -247,7 +247,16 @@
 
   <!-- Load one useful catalog part before the app; remaining parts load on demand. -->
   <script src="modules/lorefy-catalog-plan.js?v=20261018-search-all-formats-v1"></script>
-  <script src="uploads/lorefy-catalog-map.js?v=20261008-arabic-breadth-v4"></script>
+  <script src="uploads/lorefy-catalog-summary.js?v=20261018-runtime-cleanup-v1"></script>
+  <script>
+    // Direct work links still select their exact shard before mounting.
+    (function(){
+      var params = new URLSearchParams(location.search || '');
+      if (params.get('novel') || params.get('work')) {
+        document.write('<script src="uploads/lorefy-catalog-map.js?v=20261008-arabic-breadth-v4"><\/script>');
+      }
+    })();
+  </script>
   <script>
     window.LorefyMangaData = window.LorefyMangaData || [];
     (function(){
@@ -277,7 +286,8 @@
       } catch (error) {}
     })();
   </script>
-  <script defer src="modules/lorefy-catalog-loader.js?v=20261018-search-all-formats-v1"></script>
+  <script defer src="modules/lorefy-catalog-map-loader.js?v=20261018-runtime-cleanup-v1"></script>
+  <script defer src="modules/lorefy-catalog-loader.js?v=20261018-runtime-cleanup-v1"></script>
   <script defer src="uploads/lorefy-chapter-overrides.js?v=20260616-v23"></script>
   <script defer src="uploads/lorefy-catalog-aliases.js?v=20260622-audit1"></script>
 
@@ -388,7 +398,7 @@
   <script defer src="modules/lorefy-share-studio.js?v=20261007-quarter-ratings-v1"></script>
   <script defer src="modules/lorefy-product-core.js?v=20261015-privacy-safety-v1"></script>
   <script defer src="modules/lorefy-product-tools.js?v=20261015-privacy-safety-v1"></script>
-  <script defer src="modules/lorefy-reading-diary.js?v=20261016-diary-position-v1"></script>
+  <script defer src="modules/lorefy-reading-diary.js?v=20261018-runtime-cleanup-v1"></script>
   <script defer src="modules/lorefy-chapter-detail.js?v=20261015-live-spoiler-v1"></script>
   <script defer src="modules/lorefy-user-discovery.js?v=20261013-discover-reviewed-v2"></script>
   <script>

@@ -12,8 +12,7 @@ test('onboarding exposes minimum and remaining selections before continuing',()=
   assert.match(auth,/lorefy:catalog-ingested/);
   assert.match(auth,/catalogRevision\]/);
 });
-test('imperative profile subtitles do not overwrite English on every observer pass',()=>{
-  assert.match(read('modules/lorefy-reading-diary.js'), /nextSubtitle = global.LorefyI18n.translate\(nextSubtitle, doc.documentElement.lang\)/);
+test('shared translations preserve English session and reaction labels',()=>{
   const i18n=require('../modules/lorefy-i18n.js');
   assert.equal(i18n.translate('جلساتك وملاحظاتك واقتباساتك','en'),'Sessions, notes and quotes');
   assert.equal(i18n.translate('إعجاب، 4','en'),'Like, 4');

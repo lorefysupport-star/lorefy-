@@ -50,3 +50,5 @@ aliases: ["تنظيف", "تنظيم", "cleanup", "repository boundaries"]
 [قائمة تحضير native](../tools/prepare-ios-web.mjs)، [استثناءات EAS](../.easignore).
 
 [[00-Home]] | [[07-Source-Atlas]] | [[playbooks/Memory-Maintenance]]
+
+- [[bugs/LF-065-Runtime-Cleanup]]: ملخص كتالوج2,991 بايت وتحميل فهرس المعرّفات عند الحاجة،مع إزالة كود اختصار متقاعد وتنسيقاته وتوثيق المسؤوليات؛موارد بداية الرئيسية أقل29.06% في Chrome المعزول؛15 اختبارًا جديدًا،180مرتبطة و2091كاملة؛ [[sessions/2026-10-18-Runtime-Cleanup]]. حجم التثبيت وFPS والجهاز والخدمة مستقلان.

@@ -20,7 +20,6 @@ test('reading-session controls persist their active state and completed events',
   assert.match(diary, /select\.addEventListener\('change'/);
   assert.match(diary, /جلسة متوقفة مؤقتًا/);
   assert.match(diary, /بدء جلسة لهذا العمل/);
-  assert.match(diary, /subtitle\.textContent !== nextSubtitle/);
   assert.match(diary, /حذف جلسة القراءة/);
   assert.match(diary, /item\.type === 'session' && item\.id === event\.id && item\.at === event\.at/);
   assert.match(diary, /if \(options && options\.session && runningSession\) workId = runningSession\.id/);
@@ -36,11 +35,8 @@ test('active session belongs to the account and has responsive accessible stylin
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
-test('profile characters follow favorite works while the diary stays below community activity', () => {
-  const diary = read('modules/lorefy-reading-diary.js');
+test('profile characters follow favorite works', () => {
   const growth = read('modules/lorefy-growth-features.js');
-  assert.match(diary, /var anchor = page\.querySelector\(':scope > \.lf-profile-community-summary'\)/);
-  assert.match(diary, /page\.insertBefore\(entry, anchor\.nextSibling\)/);
   assert.match(growth, /favorites\.nextSibling !== topCharacters/);
   assert.match(growth, /page\.insertBefore\(topCharacters, favorites\.nextSibling\)/);
 });
