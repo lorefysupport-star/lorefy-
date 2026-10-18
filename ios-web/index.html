@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="styles/lorefy-review-social.css?v=20261015-editor-locale-v1">
   <link rel="stylesheet" href="styles/lorefy-community.css?v=20261009-public-appearance-v4">
   <link rel="stylesheet" href="styles/lorefy-comics-search.css?v=20260923-comics-identity-v2">
-  <link rel="stylesheet" href="styles/lorefy-auth-flow.css?v=20261003-beta-final-v1">
+  <link rel="stylesheet" href="styles/lorefy-auth-flow.css?v=20261018-minimal-entry-v1">
   <link rel="stylesheet" href="styles/lorefy-design-system.css?v=20261018-social-profile-v1">
   <link rel="stylesheet" href="styles/lorefy-review-editor.css?v=20261004-work-surface-v3">
   <link rel="stylesheet" href="styles/lorefy-chapter-detail.css?v=20261015-live-spoiler-v1">
@@ -58,13 +58,16 @@
   #root{position:absolute;inset:0;}
   .lf-bootstrap-splash{
     position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
-    justify-content:center;gap:10px;background:#0d0d0f;color:#f7f4f3;
+    justify-content:center;gap:28px;background:#101214;color:#f5f6f6;
     font-family:'Readex Pro','Cairo',sans-serif;text-align:center;
   }
-  .lf-bootstrap-logo{width:76px;height:76px;object-fit:contain;filter:drop-shadow(0 14px 25px rgba(138,76,255,.3));animation:lfBootstrapBreathe 1.7s ease-in-out infinite;}
-  .lf-bootstrap-splash strong{font-size:25px;font-weight:800;}
-  .lf-bootstrap-splash small{color:#a8a3a7;font-size:12px;}
-  @keyframes lfBootstrapBreathe{50%{transform:translateY(-4px) scale(1.025);filter:drop-shadow(0 18px 32px rgba(138,76,255,.5));}}
+  .lf-launch-monogram{display:grid;place-items:center;width:76px;height:76px;border-radius:50%;background:#60cab5;color:#102720;font:650 42px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+  .lf-bootstrap-dots{display:flex;gap:6px;height:6px;direction:ltr;}
+  .lf-bootstrap-dots i{width:6px;height:6px;border-radius:50%;background:#60cab5;animation:lfBootstrapPulse 1.2s ease-in-out infinite;}
+  .lf-bootstrap-dots i:nth-child(2){animation-delay:150ms;background:#b5d8d0;}
+  .lf-bootstrap-dots i:nth-child(3){animation-delay:300ms;background:#d78c78;}
+  @keyframes lfBootstrapPulse{0%,100%{opacity:.25}50%{opacity:1}}
+  @media (prefers-reduced-motion: reduce){.lf-bootstrap-dots i{animation:none;opacity:.7}}
   /* Dynamic Island */
   #island{
     position:absolute;top:11px;left:50%;transform:translateX(-50%);
@@ -124,7 +127,7 @@
   <div id="stage">
     <div id="device">
       <div id="screen">
-        <div id="root"><div class="lf-bootstrap-splash" role="status" aria-label="Loading Lorefy"><img class="lf-bootstrap-logo" src="launch/brand/lorefy-feather.png" alt="" aria-hidden="true"><strong>Lorefy</strong><small>جارٍ تجهيز مكتبتك</small></div></div>
+        <div id="root"><div class="lf-bootstrap-splash" role="status" aria-label="Loading Lorefy"><span class="lf-bootstrap-logo lf-launch-monogram" aria-hidden="true">L</span><span class="lf-bootstrap-dots" aria-hidden="true"><i></i><i></i><i></i></span></div></div>
         <div id="island"></div>
         <div id="statusbar">
           <div id="sb-time">9:41</div>

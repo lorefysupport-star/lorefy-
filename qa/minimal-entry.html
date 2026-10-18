@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Lorefy Entry Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/lorefy-design-system.css?v=20261018-social-profile-v1">
+  <link rel="stylesheet" href="../styles/lorefy-auth-flow.css?v=20261018-minimal-entry-v1">
+  <style>html,body{margin:0;width:100%;height:100%;background:#101214}#root{position:absolute;inset:0} :root{--nc-top:0px;--nc-bottom:0px}</style>
+  <script src="../vendor/react.production.min.js"></script>
+  <script src="../vendor/react-dom.production.min.js"></script>
+  <script src="../auth/lorefy-auth.js?v=20261007-review-identity-v1"></script>
+</head>
+<body><main id="root"></main>
+<script>
+// Local-only presentation harness; no provider, credentials or cloud writes.
+(async function(){
+  const screen=new URLSearchParams(location.search).get('screen');
+  if(screen==='loading'){
+    const source=new DOMParser().parseFromString(await (await fetch('../index.html')).text(),'text/html');
+    for(const original of source.querySelectorAll('style')){
+      if(!original.textContent.includes('.lf-bootstrap-splash'))continue;
+      const style=document.createElement('style');style.textContent=original.textContent;document.head.append(style);
+    }
+    document.getElementById('root').append(source.querySelector('.lf-bootstrap-splash').cloneNode(true));
+    return;
+  }
+  window.LorefyBackend={mode:'live',signInWithOAuth:async function(provider){
+    document.documentElement.dataset.qaProvider=provider;
+    throw Error(document.querySelector('.lf-page')?.dir==='ltr'?'Preview only. No account was connected.':'معاينة فقط. لم يتم الاتصال بأي حساب.');
+  }};
+  ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(LorefyAuthGate,{startStep:'welcome',onComplete:function(){}}));
+})();
+</script></body></html>

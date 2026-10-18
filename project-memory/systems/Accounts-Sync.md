@@ -8,6 +8,11 @@ aliases: ["حساب", "دخول", "مزامنة", "ضياع", "auth", "offline",
 
 ## المسؤولية والمصدر
 
+[[sessions/2026-10-18-Minimal-Entry-Launch]] replaces the illustrated welcome
+with a minimal dark two-provider view and a local monogram web bootstrap.
+Provider policy and auth logic are unchanged; preference/account stages retain
+the selected appearance. Mock callback checks do not certify native sign-in.
+
 [lorefy-backend.js](../../backend/lorefy-backend.js) يملك مفاتيح المزامنة وسجل
 التغييرات والمالك والطلبات السحابية. [lorefy-auth.js](../../auth/lorefy-auth.js)
 واجهة الدخول/onboarding. [secure-storage](../../backend/lorefy-secure-storage.js)

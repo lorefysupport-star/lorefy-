@@ -7,7 +7,6 @@
   --auth-action: var(--ui-action);
   --auth-action-pressed: var(--ui-action-pressed);
   --auth-selected: var(--ui-selected);
-  --auth-coral: #d56e56;
   color: var(--auth-ink) !important;
   background: var(--auth-paper) !important;
 }
@@ -17,7 +16,8 @@
   padding: calc(var(--nc-top) + 16px) 20px calc(var(--nc-bottom) + 18px) !important;
   color: var(--auth-ink) !important;
   background: var(--auth-paper) !important;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .lf-auth :where(.lf-title, h1, h2, h3, strong) {
@@ -30,7 +30,7 @@
   color: var(--auth-ink) !important;
   font-size: 26px !important;
   line-height: 1.35 !important;
-  font-weight: 800 !important;
+  font-weight: 650 !important;
 }
 
 .lf-auth .lf-sub {
@@ -76,11 +76,11 @@
   background: var(--auth-action) !important;
 }
 
-.lf-auth .lf-btn {
-  min-height: 54px !important;
+html .lf-auth .lf-btn {
+  min-height: 56px !important;
   border-radius: 8px !important;
   font-size: 14px !important;
-  font-weight: 800 !important;
+  font-weight: 600 !important;
   box-shadow: none !important;
 }
 
@@ -106,7 +106,7 @@
   font-size: 12px !important;
 }
 
-.lf-auth .lf-field {
+html .lf-auth .lf-field {
   min-height: 52px !important;
   padding-inline: 14px !important;
   color: var(--auth-ink) !important;
@@ -166,48 +166,50 @@
   text-align: center;
 }
 
-/* An editorial opening with real reading imagery, then a quiet sign-in area. */
+/* Deliberately quiet: brand, two providers, no illustrative sign-in imagery. */
+html .lf-auth[data-lf-auth-stage="welcome"] {
+  --auth-paper: #101214;
+  --auth-ink: #f5f6f6;
+  --auth-muted: #a7afb0;
+  --auth-line: #34393c;
+  --auth-action: #60cab5;
+  --auth-action-pressed: #41ae9a;
+  --auth-selected: #213b36;
+}
 .lf-auth[data-lf-auth-stage="welcome"],
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page {
-  background: #142e30 !important;
+  background: var(--auth-paper) !important;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 50%;
-  background: url("../launch/brand/lorefy-reading-scene.jpg") center 38% / cover no-repeat;
-  border-bottom: 3px solid var(--auth-coral);
+  content: none;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-lang {
   z-index: 2;
-  color: #fff !important;
-  background: #142e30d9 !important;
-  border-color: #ffffff4d !important;
+  color: var(--auth-muted) !important;
+  background: transparent !important;
+  border-color: var(--auth-line) !important;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) {
   min-height: 0;
-  justify-content: flex-end !important;
-  align-items: flex-start !important;
-  padding: 0 0 20px !important;
-  text-align: start !important;
+  flex: 1 0 180px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 48px 0 24px !important;
+  text-align: center !important;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child {
   flex-direction: row !important;
   align-items: center !important;
-  gap: 10px !important;
-  margin-bottom: 14px;
+  gap: 0 !important;
+  margin: 0;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child > div {
-  width: 33px;
-  height: 33px;
-  background: url("../launch/brand/lorefy-feather.png") center / contain no-repeat;
-  mix-blend-mode: screen;
+  display: none;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child svg {
@@ -216,45 +218,50 @@
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) strong {
   color: #fff !important;
-  font-size: 26px !important;
+  font-size: 40px !important;
+  line-height: 1.25;
+  font-weight: 650 !important;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] h1 {
-  max-width: 15ch;
-  margin: 0 0 9px !important;
-  color: #fff !important;
-  font-size: 23px !important;
-  line-height: 1.38 !important;
-  text-align: start !important;
+  display: none;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-sub {
-  max-width: 34ch !important;
-  margin: 0 !important;
-  color: #c9d9d6 !important;
-  text-align: start !important;
+  display: none;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) {
   flex: none;
-  gap: 8px !important;
+  gap: 12px !important;
+  padding-bottom: 12px;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-white {
-  border-color: #fff !important;
+  order: 1;
+  border-color: #555d60 !important;
+  background: #1a1e20 !important;
+  color: #f5f6f6 !important;
 }
 
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) > .lf-btn:not(.lf-white) {
-  color: #fff !important;
-  background: transparent !important;
-  border: 1px solid #708886 !important;
+  order: 2;
+  color: #111315 !important;
+  background: #f5f6f6 !important;
+  border: 1px solid #f5f6f6 !important;
 }
 
+.lf-auth[data-lf-auth-stage="welcome"] .lf-error { order: 3; color: #ffaaa7 !important; }
+.lf-auth:has(#lorefy-local-demo-entry) .lf-page > div:nth-child(3) { padding-bottom: 120px; }
+.lf-auth[data-lf-auth-stage="welcome"] .lf-btn svg { flex: 0 0 20px; }
+html .lf-auth :is(button,input):focus-visible { outline: 2px solid var(--auth-action) !important; outline-offset: 3px; }
+
 .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(3) > p:last-child {
-  margin: 10px 4px 0 !important;
-  color: #b9cbc8 !important;
-  font-size: 10px !important;
-  line-height: 1.6;
+  order: 4;
+  margin: 12px 8px 0 !important;
+  color: var(--auth-muted) !important;
+  font-size: 11px !important;
+  line-height: 1.7;
 }
 
 /* Reading formats have clear, stable hit areas instead of floating pills. */
@@ -444,12 +451,7 @@
 }
 
 .lf-auth[data-lf-auth-stage="account"] .lf-page::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 120px;
-  background: #142e30;
-  border-bottom: 3px solid var(--auth-coral);
+  content: none;
 }
 
 .lf-auth[data-lf-auth-stage="account"] .lf-page > * {
@@ -461,10 +463,7 @@ body:has(.lf-auth .lf-progress) #statusbar {
 }
 
 @media (max-height: 700px) {
-  .lf-auth[data-lf-auth-stage="welcome"] .lf-page::before { height: 45%; }
-  .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) { padding-bottom: 12px !important; }
-  .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) > div:first-child { margin-bottom: 7px; }
-  .lf-auth[data-lf-auth-stage="welcome"] h1 { font-size: 21px !important; }
+  .lf-auth[data-lf-auth-stage="welcome"] .lf-page > div:nth-child(2) { flex-basis: 100px !important; padding-top: 20px !important; }
   .lf-auth .lf-genre-grid { margin-top: 17px; }
   .lf-auth .lf-genre { height: 68px !important; min-height: 68px !important; }
   .lf-auth .lf-genre-grid { grid-auto-rows: 68px; }

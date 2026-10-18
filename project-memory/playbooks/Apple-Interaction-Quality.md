@@ -68,3 +68,8 @@ Validate whole-word English captions at 320px and visitor appearance isolation;
 do not equate a presentation-only pass with semantic accessibility completion.
 
 [[systems/Appearance-Bundles]] | [[13-Project-Story]] | [[15-Work-Control]]
+
+Latest entry direction: [[sessions/2026-10-18-Minimal-Entry-Launch]] supersedes
+the illustrated welcome with a sparse two-provider screen and a restrained web
+bootstrap. Owner reference takes precedence over earlier generated exploration;
+do not restore imagery or introduce delayed/fake progress for visual effect.

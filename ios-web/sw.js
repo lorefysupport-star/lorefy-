@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v520-list-removal';
+const CACHE = 'lorefy-v521-minimal-entry';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -45,7 +45,7 @@ const CORE = [
   './styles/lorefy-review-social.css?v=20261015-editor-locale-v1',
   './styles/lorefy-community.css?v=20261009-public-appearance-v4',
   './styles/lorefy-comics-search.css?v=20260923-comics-identity-v2',
-  './styles/lorefy-auth-flow.css?v=20261003-beta-final-v1',
+  './styles/lorefy-auth-flow.css?v=20261018-minimal-entry-v1',
   './styles/lorefy-design-system.css?v=20261018-social-profile-v1',
   './modules/lorefy-design-system.js?v=20261009-full-color-theme-v2',
   './modules/lorefy-data-proxy.js?v=20260909-full-catalog-v1',
