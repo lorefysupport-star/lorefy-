@@ -2,10 +2,13 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const source=fs.readFileSync(require.resolve('../uploads/files/lorefy-app.js'),'utf8');
 function harness(options={}) {
   const values=new Map([['lorefy.activeUser.v1','a'],['lorefy.session.v1','{"userId":"a"}'],['lorefy.identity.v1','{"name":"Reader A"}']]);
+  const timers=new Map();let now=0,timerId=0;
+  const clock={setTimeout(fn,ms){const id=++timerId;timers.set(id,{fn,at:now+ms});return id;},clearTimeout(id){timers.delete(id);}};
+  function advance(ms){now+=ms;for(const [id,t]of [...timers])if(t.at<=now&&timers.delete(id))t.fn();}
   const writes=[],toasts=[],readers=[],images=[],canvases=[],queued=[],calls=[];
   const backend={mode:'live',user:{id:'a'},_communityEpoch:1,saveProfile(body){let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});calls.push({body,resolve,reject});return promise;}};
   const React={createElement:(type,props,...children)=>({type,props:props||{},children:children.flat(Infinity)})};
-  const scope={window:{LorefyBackend:backend,LorefyProfileLayout:{normalize:v=>v,Picker(){}},LorefyProfileShop:{Entry(){}},LorefyCustomizeCamera(){},LorefyInterfaceSettings(){},
+  const scope={window:{...clock,LorefyBackend:backend,LorefyProfileLayout:{normalize:v=>v,Picker(){}},LorefyProfileShop:{Entry(){}},LorefyCustomizeCamera(){},LorefyInterfaceSettings(){},
     localStorage:{getItem:k=>values.get(k)||null,setItem(k,v){writes.push(['storage',k]);values.set(k,v);}},dispatchEvent(){writes.push(['event']);}},localStorage:null,
     React,profileEditor:{current:null},profileSaveBusy:{current:false},profileSaving:false,yn:false,
     profileLayout:'normal',profileLayoutDraft:'normal',J:'Reader A',Y:'reader_a',_e:'bio',Z:'avatar-original',mt:'banner-original',So:50,mn:50,bt:{},me:{},
@@ -26,7 +29,7 @@ function harness(options={}) {
   function tree(){return scope.br();}function nodes(n){return n&&typeof n==='object'?[n,...(n.children||[]).flatMap(nodes)]:[];}
   function input(slot){return nodes(tree()).find(n=>n.props.id===(slot==='avatar'?'avatarUp':'bannerUp'));}
   function upload(slot='avatar',file={type:'image/png',size:120}){const field={files:[file],value:'selected'};input(slot).props.onChange({target:field});return field;}
-  open();return{scope,values,writes,toasts,readers,images,canvases,queued,calls,open,tree,nodes,upload,
+  open();return{timers,advance,scope,values,writes,toasts,readers,images,canvases,queued,calls,open,tree,nodes,upload,
     close(){tree().props.onClick();},save(){return nodes(tree()).find(n=>'aria-busy'in n.props).props.onClick();},
     preset(slot){const src=slot==='avatar'?'avatar:F':'banner:aurora';nodes(tree()).find(n=>n.props.onClick&&n.children.some(c=>c?.type==='img'&&c.props.src===src)).props.onClick();},
     switchAccount(){values.set('lorefy.activeUser.v1','b');values.set('lorefy.session.v1','{"userId":"b"}');backend.user={id:'b'};backend._communityEpoch++;},
@@ -60,3 +63,16 @@ test('invalid decoded dimensions report failure without replacing the avatar',()
 test('file selection cancellation is silent and does not block saving',async()=>{const h=harness();const input=h.nodes(h.tree()).find(n=>n.props.id==='avatarUp');input.props.onChange({target:{files:[],value:''}});assert.equal(h.readers.length,0);assert.equal(h.toasts.length,0);const p=h.save();h.calls[0].resolve({});await p;});
 test('only the editor currently saving disables its image inputs',async()=>{const h=harness(),p=h.save();assert.ok(h.nodes(h.tree()).filter(n=>n.props.type==='file').every(n=>n.props.disabled===true));h.upload();assert.equal(h.readers.length,0);h.calls[0].resolve({});await p;});
 test('a replacement draft can prepare photos while the same account old save finishes',async()=>{const h=harness(),p=h.save();h.close();h.open();assert.ok(h.nodes(h.tree()).filter(n=>n.props.type==='file').every(n=>!n.props.disabled));h.upload();h.read();h.decode();const current=h.scope.xt;h.calls[0].resolve({avatar:'old-save'});await p;assert.equal(h.scope.yn,true);assert.equal(h.scope.xt,current);});
+
+for(const slot of ['avatar','banner'])for(const language of ['ar','en'])for(const stage of ['read','decode'])test('a stalled '+slot+' '+stage+' expires without changing artwork in '+language,()=>{
+ const h=harness({language});h.upload(slot);if(stage==='decode')h.read();h.advance(29999);assert.equal(h.toasts.length,0);h.advance(1);
+ assert.equal(h.toasts.length,1);assert.match(h.toasts[0].message,language==='en'?/timed out/i:/تأخر/);assert.equal(h.scope.profileEditor.current.pending[slot],0);assert.equal(h.scope[slot==='avatar'?'xt':'wt'],slot==='avatar'?'avatar-original':'banner-original');
+ if(stage==='read')h.read();else h.decode();assert.equal(h.canvases.length,0);assert.equal(h.toasts.length,1);assert.equal(h.timers.size,0);
+});
+test('timed out preparation releases Save and preserves the prior avatar',async()=>{const h=harness();h.upload();h.advance(30000);const p=h.save();assert.equal(h.calls.length,1);assert.equal(h.calls[0].body.avatar,'avatar-original');h.calls[0].resolve({});await p;});
+test('successful profile preparation clears its deadline',()=>{const h=harness();h.upload();assert.equal(h.timers.size,1);h.read();h.decode();assert.equal(h.timers.size,0);h.advance(60000);assert.equal(h.toasts.length,0);});
+test('profile read failure clears its deadline without a second toast',()=>{const h=harness();h.upload();h.readers[0].onerror();assert.equal(h.timers.size,0);h.advance(60000);assert.equal(h.toasts.length,1);});
+test('the profile deadline covers reading and decoding together',()=>{const h=harness();h.upload();h.advance(25000);h.read();h.advance(5000);assert.equal(h.toasts.length,1);assert.equal(h.scope.profileEditor.current.pending.avatar,0);});
+test('an expired old selection cannot release the newer avatar request',()=>{const h=harness();h.upload();h.advance(10000);h.upload();const request=h.scope.profileEditor.current.pending.avatar;h.advance(20000);assert.equal(h.scope.profileEditor.current.pending.avatar,request);assert.equal(h.toasts.length,0);h.advance(10000);assert.equal(h.toasts.length,1);assert.equal(h.scope.profileEditor.current.pending.avatar,0);});
+for(const transition of ['close','reopen','account'])test('profile timeout is silent after '+transition,()=>{const h=harness();h.upload();if(transition==='close')h.close();else if(transition==='reopen')h.open();else h.switchAccount();h.writes.length=0;h.advance(30000);assert.equal(h.toasts.length,0);assert.equal(h.writes.length,0);assert.equal(h.timers.size,0);});
+test('avatar timeout does not clear the newer banner preparation',()=>{const h=harness();h.upload('avatar');h.advance(10000);h.upload('banner');h.advance(20000);assert.equal(h.scope.profileEditor.current.pending.avatar,0);assert.ok(h.scope.profileEditor.current.pending.banner);h.read();h.decode();assert.equal(h.scope.profileEditor.current.pending.banner,0);assert.match(h.scope.wt,/prepared/);});

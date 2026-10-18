@@ -1,9 +1,12 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const source=fs.readFileSync(require.resolve('../uploads/files/lorefy-app.js'),'utf8');
 function harness(options={}) {
+  const timers=new Map();let now=0,timerId=0;
+  const clock={setTimeout(fn,ms){const id=++timerId;timers.set(id,{fn,at:now+ms});return id;},clearTimeout(id){timers.delete(id);}};
+  function advance(ms){now+=ms;for(const [id,t]of [...timers])if(t.at<=now&&timers.delete(id))t.fn();}
   const readers=[],images=[],canvases=[],toasts=[],updates=[],values=new Map([['lorefy.activeUser.v1','a'],['lorefy.session.v1','{"userId":"a"}']]);
   const backend={user:{id:'a'},mode:'live',_communityEpoch:1};let attached=['kept'];
-  const scope={window:{localStorage:{getItem:k=>values.get(k)||null},LorefyBackend:backend},reviewEditor:{current:null},m:{id:'work'},
+  const scope={window:{...clock,localStorage:{getItem:k=>values.get(k)||null},LorefyBackend:backend},reviewEditor:{current:null},m:{id:'work'},
     currentUILang:()=>options.language||'en',uiText:(lang,ar,en)=>lang==='en'?en:ar,A:(message,kind)=>toasts.push({message,kind}),
     FileReader:class {constructor(){if(options.readerConstructor)throw Error('reader unavailable');readers.push(this);}readAsDataURL(file){if(options.readThrows)throw Error('read failed');this.result='data:image/png;base64,input';}},
     Image:class {constructor(){if(options.imageConstructor)throw Error('decoder unavailable');this.width=options.width??1000;this.height=options.height??500;images.push(this);}},
@@ -16,7 +19,7 @@ function harness(options={}) {
   function open(){scope.reviewEditor.current={workId:'work',owner:scope.lorefyReviewRequestScope(),closed:false};}
   open();const begin=source.indexOf('Yn=t=>');vm.runInContext('const '+source.slice(begin,source.indexOf(',Uo=',begin))+';this.upload=Yn;',scope);
   const input={files:[{name:'picture.png',type:options.fileType??'image/png',size:120}],value:'selected'};
-  return{scope,readers,images,canvases,toasts,updates,input,get attached(){return attached;},begin(){scope.upload({target:input});},
+  return{timers,advance,scope,readers,images,canvases,toasts,updates,input,get attached(){return attached;},begin(){scope.upload({target:input});},
     read(){readers.at(-1).onload();},decode(){images.at(-1).onload();},reopen:open,
     switchAccount(){values.set('lorefy.activeUser.v1','b');values.set('lorefy.session.v1','{"userId":"b"}');backend.user={id:'b'};backend._communityEpoch++;}};
 }
@@ -40,3 +43,10 @@ test('closing the editor before decoding prevents processing errors and state ch
 test('a queued attachment update still rechecks editor ownership',()=>{const h=harness({queued:true});h.begin();h.read();h.decode();h.reopen();const current=['new draft'];assert.equal(h.updates[0](current),current);});
 test('a file with no MIME label can still use the image decoder',()=>{const h=harness({fileType:''});h.begin();h.read();h.decode();assert.equal(h.attached.length,2);assert.equal(h.toasts.length,0);});
 test('a late decoder success after its error cannot attach an image or repeat the message',()=>{const h=harness();h.begin();h.read();h.images[0].onerror();h.decode();assert.equal(h.toasts.length,1);assert.deepEqual(h.attached,['kept']);assert.equal(h.canvases.length,0);});
+
+for(const language of ['ar','en'])for(const stage of ['read','decode'])test('a stalled review image '+stage+' expires in '+language,()=>{const h=harness({language});h.begin();if(stage==='decode')h.read();h.advance(29999);assert.equal(h.toasts.length,0);h.advance(1);assert.equal(h.toasts.length,1);assert.match(h.toasts[0].message,language==='en'?/timed out/i:/تأخر/);assert.deepEqual(h.attached,['kept']);if(stage==='read')h.read();else h.decode();assert.equal(h.canvases.length,0);assert.equal(h.timers.size,0);assert.equal(h.toasts.length,1);});
+test('successful review preparation clears its deadline',()=>{const h=harness();h.begin();assert.equal(h.timers.size,1);h.read();h.decode();assert.equal(h.timers.size,0);h.advance(60000);assert.equal(h.toasts.length,0);});
+test('review failure clears its deadline and only reports once',()=>{const h=harness();h.begin();h.readers[0].onerror();assert.equal(h.timers.size,0);h.advance(60000);assert.equal(h.toasts.length,1);});
+test('the review preparation deadline does not restart after file reading',()=>{const h=harness();h.begin();h.advance(25000);h.read();h.advance(5000);assert.equal(h.toasts.length,1);assert.deepEqual(h.attached,['kept']);});
+for(const transition of ['close','reopen','account'])test('review timeout never notifies an obsolete '+transition+' editor',()=>{const h=harness();h.begin();if(transition==='close')h.scope.reviewEditor.current.closed=true;else if(transition==='reopen')h.reopen();else h.switchAccount();h.advance(30000);assert.equal(h.toasts.length,0);assert.equal(h.timers.size,0);assert.deepEqual(h.attached,['kept']);});
+test('one review image timeout cannot finish another pending selection',()=>{const h=harness();h.begin();h.advance(10000);h.begin();h.advance(20000);assert.equal(h.toasts.length,1);h.read();h.decode();assert.equal(h.attached.length,2);assert.equal(h.timers.size,0);});

@@ -405,20 +405,22 @@ return()=>{i=true;n&&n();clearInterval(a);document.removeEventListener("visibili
  const editor=reviewEditor.current,isCurrent=()=>lorefyReviewEditorCurrent(editor,reviewEditor,m),r=t.target.files&&t.target.files[0];
  if(!r||!isCurrent())return;
  t.target.value="";
- let finished=false;
- const fail=(ar,en)=>{if(finished||!isCurrent())return;finished=true;A(uiText(currentUILang(),ar,en),"err")};
+ let finished=false,timer=null;
+ const finish=()=>{finished=true;if(timer!==null){window.clearTimeout(timer);timer=null}};
+ const fail=(ar,en)=>{if(finished)return;finish();if(!isCurrent())return;A(uiText(currentUILang(),ar,en),"err")};
  if(r.type&&!/^image\//i.test(r.type)){fail("اختر ملف صورة صالحًا.","Choose a valid image file.");return}
+ timer=window.setTimeout(()=>fail("تأخر تجهيز الصورة. جرّب اختيارها مرة أخرى.","Image preparation timed out. Select the image again."),30000);
  try{
   const o=new FileReader;
   const readFailed=()=>fail("تعذّرت قراءة الصورة. اخترها مرة أخرى.","Could not read the image. Select it again.");
   o.onerror=readFailed;o.onabort=readFailed;
   o.onload=()=>{
-   if(finished||!isCurrent())return;
+   if(finished||!isCurrent()){finish();return}
    try{
     const n=new Image;
     n.onerror=()=>fail("تعذّر فتح الصورة. جرّب صورة أخرى.","Could not open the image. Try another image.");
     n.onload=()=>{
-     if(finished||!isCurrent())return;
+     if(finished||!isCurrent()){finish();return}
      try{
       if(!Number.isFinite(n.width)||!Number.isFinite(n.height)||n.width<=0||n.height<=0)throw new Error("Invalid image dimensions");
       const d=Math.min(1,560/Math.max(n.width,n.height)),h=document.createElement("canvas");
@@ -426,7 +428,7 @@ return()=>{i=true;n&&n();clearInterval(a);document.removeEventListener("visibili
       const context=h.getContext("2d");if(!context)throw new Error("Canvas unavailable");
       context.drawImage(n,0,0,h.width,h.height);
       const result=h.toDataURL("image/jpeg",.72);
-      finished=true;ht(g=>!isCurrent()||g.length>=10?g:[...g,result]);
+      finish();ht(g=>!isCurrent()||g.length>=10?g:[...g,result]);
      }catch(_){fail("تعذّرت معالجة الصورة. جرّب صورة أخرى.","Could not process the image. Try another image.")}
     };
     n.src=o.result;
@@ -440,26 +442,28 @@ return()=>{i=true;n&&n();clearInterval(a);document.removeEventListener("visibili
  t.target.value="";
  const request=++editor.images[slot];editor.pending[slot]=request;
  const isCurrent=()=>lorefyProfileEditorCurrent(editor,profileEditor)&&editor.images[slot]===request;
- let finished=false;
- const fail=(ar,en)=>{if(finished||!isCurrent())return;finished=true;editor.pending[slot]=0;A(uiText(currentUILang(),ar,en),"err")};
+ let finished=false,timer=null;
+ const finish=()=>{finished=true;if(timer!==null){window.clearTimeout(timer);timer=null}};
+ const fail=(ar,en)=>{if(finished)return;finish();if(!isCurrent())return;editor.pending[slot]=0;A(uiText(currentUILang(),ar,en),"err")};
  if(!/^image\//i.test(file.type||"")){fail("اختر ملف صورة صالحًا.","Choose a valid image file.");return}
  if(file.size>8*1024*1024){fail("اختر صورة أصغر من 8 MB.","Choose an image smaller than 8 MB.");return}
+ timer=window.setTimeout(()=>fail("تأخر تجهيز الصورة. جرّب اختيارها مرة أخرى.","Image preparation timed out. Select the image again."),30000);
  try{
   const reader=new FileReader,readFailed=()=>fail("تعذّرت قراءة الصورة. اخترها مرة أخرى.","Could not read the image. Select it again.");
   reader.onerror=readFailed;reader.onabort=readFailed;
   reader.onload=()=>{
-   if(finished||!isCurrent())return;
+   if(finished||!isCurrent()){finish();return}
    try{
     const image=new Image;image.onerror=()=>fail("تعذّر فتح الصورة. جرّب صورة أخرى.","Could not open the image. Try another image.");
     image.onload=()=>{
-     if(finished||!isCurrent())return;
+     if(finished||!isCurrent()){finish();return}
      try{
       if(!Number.isFinite(image.width)||!Number.isFinite(image.height)||image.width<=0||image.height<=0)throw new Error("Invalid image dimensions");
       const scale=Math.min(1,1400/Math.max(image.width,image.height)),canvas=document.createElement("canvas");
       canvas.width=Math.max(1,Math.round(image.width*scale));canvas.height=Math.max(1,Math.round(image.height*scale));
       const context=canvas.getContext("2d");if(!context)throw new Error("Canvas unavailable");
       context.drawImage(image,0,0,canvas.width,canvas.height);const result=canvas.toDataURL("image/jpeg",.82);
-      finished=true;editor.pending[slot]=0;r(previous=>isCurrent()?result:previous);
+      finish();editor.pending[slot]=0;r(previous=>isCurrent()?result:previous);
      }catch(_){fail("تعذّرت معالجة الصورة. جرّب صورة أخرى.","Could not process the image. Try another image.")}
     };image.src=reader.result;
    }catch(_){fail("تعذّر فتح الصورة. جرّب صورة أخرى.","Could not open the image. Try another image.")}

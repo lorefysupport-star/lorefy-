@@ -12,7 +12,7 @@ function harness() {
   const pending=new Promise((yes,no)=>{resolve=yes;reject=no;});
   const mark=name=>(...args)=>writes.push(name);
   const backend={mode:'live',user:{id:'a'},_communityEpoch:0,publishReview:body=>{calls.push(body);return pending;}};
-  const scope={window:{LorefyBackend:backend,localStorage:{getItem:key=>values.get(key)||null},dispatchEvent:mark('refresh'),
+  const scope={window:{setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout(){},LorefyBackend:backend,localStorage:{getItem:key=>values.get(key)||null},dispatchEvent:mark('refresh'),
     LorefySavedReviewDraft:require('../modules/lorefy-review-editor').savedDraft,LorefyReviewComposer:()=>{}},
     React:{createElement:(type,props)=>({type,props})},currentUILang:()=> 'en',I:()=>'',getScoreFields:()=>[],
     m:{id:'work',title:'A work'},M:[],G:4,J:'Reader',Y:'reader',Z:'',Fe:null,se:false,ze:{},gt:false,
