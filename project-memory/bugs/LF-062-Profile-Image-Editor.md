@@ -1,5 +1,5 @@
 ---
-{"kind":"bug","id":"LF-062","status":"closed","priority":"P0","area":"profile-draft-image-save-ownership","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"93f43e2","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Profile-Image-Editor]]","next_action":"Inspect invalid fallback artwork; real Photos permissions, two-account storage visibility and deployed-service validation remain separate"}
+{"kind":"bug","id":"LF-062","status":"closed","priority":"P0","area":"profile-draft-image-save-ownership","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"93f43e2","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Profile-Image-Editor]]","next_action":"Invalid fallback artwork resolved in LF-063; real Photos permissions, two-account storage visibility and deployed-service validation remain separate"}
 ---
 # LF-062: صور البروفايل والحفظ يتبعان مسودة المالك
 

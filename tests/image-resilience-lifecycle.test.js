@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const html=fs.readFileSync(require.resolve('../index.html'),'utf8');
 const source=html.slice(html.indexOf('function installImageResilience(){'),html.indexOf('function mountApp(){'));
-function harness({picker=false,lazy=false,alreadyFailed=false}={}) {
+function harness({picker=false,lazy=false,alreadyFailed=false,explicit="",avatar=false}={}) {
   const timers=new Map(),timerHistory=[],frames=[],observed=new Set();let observer,intersection,id=0;
   function image() {
     const attrs={src:'https://example.invalid/first.jpg',srcset:''},listeners=new Map(),once=new Set();
@@ -14,7 +14,7 @@ function harness({picker=false,lazy=false,alreadyFailed=false}={}) {
       getBoundingClientRect(){throw Error('No synchronous layout');}};
     return img;
   }
-  const img=image(),win={IntersectionObserver:true,setTimeout(fn){const timer=++id;timers.set(timer,fn);timerHistory.push(fn);return timer;},clearTimeout:timer=>timers.delete(timer),requestAnimationFrame:fn=>frames.push(fn)};
+  const img=image(); if(explicit) img.setAttribute('data-fallback',explicit); if(avatar){img.alt='Profile avatar';img.className='avatar';} const win={IntersectionObserver:true,setTimeout(fn){const timer=++id;timers.set(timer,fn);timerHistory.push(fn);return timer;},clearTimeout:timer=>timers.delete(timer),requestAnimationFrame:fn=>frames.push(fn)};
   vm.runInNewContext(source+'installImageResilience();',{window:win,document:{documentElement:{},querySelectorAll:()=>[img]},Set,Event,encodeURIComponent,
     IntersectionObserver:class{constructor(fn){intersection=fn;}observe(i){observed.add(i);}unobserve(i){observed.delete(i);}},MutationObserver:class{constructor(fn){observer=fn;}observe(){}}});
   function mutate(attribute='src'){observer([{type:'attributes',attributeName:attribute,target:img}]);while(frames.length)frames.shift()();}
@@ -85,4 +85,46 @@ test('an error before the observer frame keeps a bounded fallback without replac
 });
 test('an already failed picker is not notified a second time by the observer',()=>{
   const h=harness({picker:true,alreadyFailed:true});assert.equal(h.timers.size,0);assert.deepEqual(h.img.dispatched,[]);assert.match(h.img.src,/^https:/);
+});
+
+const brokenFallback='data:image/png;base64,not-valid';
+test('a corrupt explicit cover fallback reaches a built-in local cover once',()=>{
+ const h=harness({explicit:brokenFallback});h.error();assert.equal(h.img.src,brokenFallback);h.mutate();h.error();
+ assert.match(h.img.src,/^data:image\/svg\+xml/);assert.match(decodeURIComponent(h.img.src),/LOREFY/);
+ const final=h.img.src;h.error();h.expire();assert.equal(h.img.src,final);assert.equal(h.timers.size,0);
+});
+test('a corrupt explicit avatar fallback reaches the local avatar',()=>{
+ const h=harness({explicit:brokenFallback,avatar:true});h.error();h.error();
+ assert.match(decodeURIComponent(h.img.src),/viewBox="0 0 160 160"/);assert.doesNotMatch(decodeURIComponent(h.img.src),/LOREFY/);
+});
+test('an explicit fallback that never completes has its own bounded deadline',()=>{
+ const h=harness({explicit:brokenFallback});h.error();assert.equal(h.timers.size,1);h.expire();assert.match(h.img.src,/^data:image\/svg/);assert.equal(h.timers.size,0);
+});
+test('a successful explicit fallback releases all listeners and deadlines',()=>{
+ const h=harness({explicit:'data:image/png;base64,valid'});h.error();assert.equal(h.timers.size,1);h.load();
+ assert.equal(h.timers.size,0);assert.equal(h.img.listeners.get('error')?.size||0,0);assert.equal(h.img.src,'data:image/png;base64,valid');
+});
+test('a fallback deadline and error cannot overwrite a newer remote source',()=>{
+ const h=harness({explicit:brokenFallback});h.error();const old=[...h.img.listeners.get('error')||[]][0],deadline=h.timerHistory.at(-1);
+ assert.equal(typeof old,'function');h.setSource('https://example.invalid/new.jpg');old();deadline();assert.equal(h.img.src,'https://example.invalid/new.jpg');assert.equal(h.timers.size,1);
+});
+test('a pending fallback cannot overwrite a local user image',()=>{
+ const h=harness({explicit:brokenFallback});h.error();const old=[...h.img.listeners.get('error')||[]][0];assert.equal(typeof old,'function');
+ h.setSource('blob:user-photo');old();h.expire();assert.equal(h.img.src,'blob:user-photo');assert.equal(h.timers.size,0);
+});
+test('removing an image during fallback releases its deadline',()=>{
+ const h=harness({explicit:brokenFallback});h.error();assert.equal(h.timers.size,1);const old=h.timerHistory.at(-1);h.remove();old();assert.equal(h.img.src,brokenFallback);assert.equal(h.timers.size,0);
+});
+test('a lazy image already in its fallback does not wait for another intersection',()=>{
+ const h=harness({explicit:brokenFallback,lazy:true});h.error();assert.equal(h.timers.size,1);h.expire();assert.match(h.img.src,/^data:image\/svg/);
+});
+test('a cover picker with a corrupt explicit fallback still only reports its original error',()=>{
+ const h=harness({explicit:brokenFallback,picker:true});h.error();h.expire();assert.match(h.img.src,/^https:/);assert.deepEqual(h.img.dispatched,['error']);
+});
+test('changing fallback metadata invalidates a pending fallback callback',()=>{
+ const h=harness({explicit:brokenFallback});h.error();const old=[...h.img.listeners.get('error')||[]][0];assert.equal(typeof old,'function');
+ h.img.setAttribute('data-fallback','data:image/png;base64,new');h.mutate('data-fallback');old();assert.equal(h.img.src,brokenFallback);assert.equal(h.timers.size,0);
+});
+test('changing srcset during fallback starts a remote image lifecycle',()=>{
+ const h=harness({explicit:brokenFallback});h.error();h.img.src='https://example.invalid/responsive.jpg';h.img.setAttribute('srcset','https://example.invalid/responsive2.jpg 2x');h.mutate('srcset');h.error();assert.equal(h.img.src,brokenFallback);h.error();assert.match(h.img.src,/^data:image\/svg/);
 });

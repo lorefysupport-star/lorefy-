@@ -451,9 +451,9 @@
             return rect.bottom >= -240 && rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 240;
           }catch(e){ return true; }
         };
-        var fallbackFor = function(img){
+        var fallbackFor = function(img, localOnly){
           var explicit = img.getAttribute("data-fallback") || "";
-          if (/^data:image\//i.test(explicit)) return explicit;
+          if (!localOnly && /^data:image\//i.test(explicit)) return explicit;
           var context = String(img.alt || "") + " " + String(img.className || "");
           try{ context += " " + String((img.closest("[class]") || {}).className || ""); }catch(e){}
           var coverLike = /cover|hero|poster|work/i.test(context);
@@ -490,10 +490,21 @@
           img.dataset.lorefyFallbackApplied = "1";
           img.removeAttribute("srcset");
           img.src = state.fallback;
+          state.key = sourceKey(img);
+          if (state.fallback !== state.localFallback) {
+            // Give a custom data image one attempt, then use our bounded local asset.
+            var next = {key:state.key, active:true, timer:null, fallback:state.localFallback, localFallback:state.localFallback, fallbackSrc:state.fallback, background:state.background};
+            imageStates.set(img, next);
+            listen(img, next);
+            armTimeout(img, next);
+          } else {
+            img.style.backgroundImage = 'url("' + state.localFallback.replace(/"/g, "%22") + '")';
+            state.background = img.style.backgroundImage;
+          }
         };
         var armTimeout = function(img, state){
           if (!current(img, state) || state.timer !== null) return;
-          if (img.loading === "lazy" && !img.dataset.lorefyImageInViewport){
+          if (!state.fallbackSrc && img.loading === "lazy" && !img.dataset.lorefyImageInViewport){
             if (observer) { observer.observe(img); return; }
             if (!nearViewport(img)) return;
           }
@@ -504,12 +515,22 @@
             else stop(img, state);
           }, 5500);
         };
+        var listen = function(img, state){
+          state.onError = function(){
+            // Native picker errors already notify its owner; don't dispatch twice.
+            if (img.hasAttribute("data-cover-picker-image")) { if (current(img, state)) stop(img, state); }
+            else fail(img, state);
+          };
+          state.onLoad = function(){ if (current(img, state) && img.naturalWidth > 0) stop(img, state); };
+          img.addEventListener("error", state.onError);
+          img.addEventListener("load", state.onLoad);
+        };
         var guard = function(img, retry){
           if (!img || img.tagName !== "IMG") return;
           var previous = imageStates.get(img);
           var src = img.getAttribute("src") || "";
           // Ignore our own fallback mutation; a real retry assigns the remote URL.
-          if (previous && previous.fallbackSrc && previous.fallbackSrc === src && !img.getAttribute("srcset")) return;
+          if (previous && previous.fallbackSrc && previous.fallbackSrc === src && previous.key === sourceKey(img) && !img.getAttribute("srcset")) return;
           if (previous && !retry && previous.key === sourceKey(img)) return;
           stop(img, previous);
           imageStates.delete(img);
@@ -523,7 +544,7 @@
           }
           if (!/^https?:\/\//i.test(src) && !/^\/api\/media(?:\?|$)/i.test(src)) return;
           img.dataset.lorefyImageGuard = "1";
-          var state = {key:sourceKey(img), active:true, timer:null, fallback:fallbackFor(img), fallbackSrc:"", background:""};
+          var state = {key:sourceKey(img), active:true, timer:null, fallback:fallbackFor(img), localFallback:fallbackFor(img, true), fallbackSrc:"", background:""};
           imageStates.set(img, state);
           if (!img.hasAttribute("data-cover-picker-image")) {
             img.style.backgroundImage = 'url("' + state.fallback.replace(/"/g, "%22") + '")';
@@ -531,14 +552,7 @@
             img.style.backgroundPosition = "center";
             state.background = img.style.backgroundImage;
           }
-          state.onError = function(){
-            // Native picker errors already notify its owner; don't dispatch twice.
-            if (img.hasAttribute("data-cover-picker-image")) { if (current(img, state)) stop(img, state); }
-            else fail(img, state);
-          };
-          state.onLoad = function(){ if (current(img, state) && img.naturalWidth > 0) stop(img, state); };
-          img.addEventListener("error", state.onError);
-          img.addEventListener("load", state.onLoad);
+          listen(img, state);
           if (img.complete && (img.naturalWidth > 0 || img.hasAttribute("data-cover-picker-image"))) stop(img, state);
           else armTimeout(img, state);
         };

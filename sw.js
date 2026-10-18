@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v512-profile-image-editor';
+const CACHE = 'lorefy-v513-invalid-image-fallback';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
