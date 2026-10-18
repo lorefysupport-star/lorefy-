@@ -36,10 +36,10 @@ test('updated UI assets use fresh cache keys', () => {
       'modules/lorefy-public-profile.js':'20261016-reading-estimate-v1',
       'modules/lorefy-i18n.js':'20261016-statistics-activity-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',
-      'uploads/files/lorefy-app.js':'20261018-search-field-v1',
-      'modules/lorefy-catalog-loader.js':'20261018-search-field-v1',
-      'modules/lorefy-explore-studio.js':'20261018-search-retry-v1',
-      'styles/lorefy-explore-studio.css':'20261018-search-retry-v1'
+      'uploads/files/lorefy-app.js':'20261018-search-suggestions-v1',
+      'modules/lorefy-catalog-loader.js':'20261018-search-suggestions-v1',
+      'modules/lorefy-explore-studio.js':'20261018-search-suggestions-v1',
+      'styles/lorefy-explore-studio.css':'20261018-search-suggestions-v1'
     };
     const version = versions[asset];
     const versioned = asset + '?v=' + version;

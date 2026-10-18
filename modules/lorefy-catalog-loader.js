@@ -10,7 +10,7 @@
   var loading = new Map();
   var activeQueue = Promise.resolve();
   var version = "20261013-discover-reviewed-v2";
-  var workerVersion = "20261017-editorial-comics-v1";
+  var workerVersion = "20261018-search-suggestions-v1";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
@@ -33,6 +33,7 @@
   var searchType = "";
   var searchBusy = false;
   var searchError = false;
+  var searchSuggestions = [];
   var SEARCH_REQUEST_TIMEOUT_MS = 20000;
   var PART_REQUEST_TIMEOUT_MS = 20000;
   var browseParts = [];
@@ -314,7 +315,7 @@
     return activeQueue;
   }
 
-  function searchIndexFallback(query, type) {
+  function searchIndexFallback(query, type, withSuggestions) {
     var controller = typeof global.AbortController === "function" ? new global.AbortController() : null;
     var timer, expired = false;
     return new Promise(function (resolve, reject) {
@@ -336,7 +337,7 @@
             altTitles: row[6], aliases: row[7], authorAliases: row[8]
           } };
         });
-        return planner.searchIndexParts(entries, query, type, global.LorefyCatalogData);
+        return planner.searchIndexResult(entries, query, type, global.LorefyCatalogData, withSuggestions);
       }).then(resolve, reject);
     }).finally(function () { global.clearTimeout(timer); });
   }
@@ -353,11 +354,11 @@
     try { worker.terminate(); } catch (ignore) {}
   }
 
-  function requestSearchParts(query, type) {
-    if (typeof global.Worker !== "function") return searchIndexFallback(query, type);
+  function requestSearchResult(query, type, withSuggestions) {
+    if (typeof global.Worker !== "function") return searchIndexFallback(query, type, withSuggestions);
     if (!searchWorker) {
       try { searchWorker = new global.Worker("modules/lorefy-catalog-search-worker.js?v=" + workerVersion); }
-      catch (error) { return searchIndexFallback(query, type); }
+      catch (error) { return searchIndexFallback(query, type, withSuggestions); }
       var activeWorker = searchWorker;
       searchWorker.addEventListener("message", function (event) {
         var message = event.data || {};
@@ -365,7 +366,7 @@
         if (!pending || pending.worker !== activeWorker) return;
         global.clearTimeout(pending.timer);
         searchRequests.delete(message.requestId);
-        if (message.type === "result") pending.resolve(message.matches || []);
+        if (message.type === "result") pending.resolve({matches: message.matches || [], suggestions: message.suggestions || []});
         else pending.reject(new Error(message.message || "Catalog search failed"));
       });
       searchWorker.addEventListener("error", function (error) {
@@ -379,9 +380,9 @@
         failSearchWorker(worker, new Error("Catalog search worker timed out"));
       }, SEARCH_REQUEST_TIMEOUT_MS);
       searchRequests.set(requestId, { resolve: resolve, reject: reject, worker: worker, timer: timer });
-      try { worker.postMessage({type: "search", requestId: requestId, query: query, catalogType: type}); }
+      try { worker.postMessage({type: "search", requestId: requestId, query: query, catalogType: type, withSuggestions: withSuggestions !== false}); }
       catch (error) { failSearchWorker(worker, error); }
-    }).catch(function () { return searchIndexFallback(query, type); });
+    }).catch(function () { return searchIndexFallback(query, type, withSuggestions); });
   }
 
   function refreshSearchStatus() {
@@ -428,15 +429,17 @@
     var generation = searchGeneration;
     global.clearTimeout(searchTimer);
     searchMatches = [];
+    searchSuggestions = [];
     searchCursor = 0;
     searchBusy = !!query;
     searchError = false;
     refreshSearchStatus();
     if (!query) return;
     searchTimer = global.setTimeout(function () {
-      requestSearchParts(query, type).then(function (matches) {
+      requestSearchResult(query, type).then(function (result) {
         if (generation !== searchGeneration) return;
-        searchMatches = matches;
+        searchMatches = result.matches;
+        searchSuggestions = result.matches.length ? [] : result.suggestions;
         return loadSearchBatch(generation, true);
       }).catch(function (error) {
         if (generation !== searchGeneration) return;
@@ -591,8 +594,8 @@
     loadAuthor: function (author, active) {
       var query=String(author || '').replace(/[,،]/g,' ').trim();
       if (!query) return Promise.resolve();
-      return requestSearchParts(query,'').then(function (matches) {
-        return enqueue(matches.map(function (match) { return match.part; }),{gapMs:40,shouldContinue:active});
+      return requestSearchResult(query,'',false).then(function (result) {
+        return enqueue(result.matches.map(function (match) { return match.part; }),{gapMs:40,shouldContinue:active});
       });
     },
     loadMore: loadMore,
@@ -623,6 +626,9 @@
         partial: loaded.size < Number(manifest.partCount || 0),
         searching: searchBusy,
         searchError: searchError,
+        searchQuery: searchQuery,
+        searchType: searchType,
+        suggestions: searchSuggestions.slice(),
         hasMore: searchQuery ? searchCursor < searchMatches.length : browseParts.slice(browseCursor).some(function (part) { return !loaded.has(part); })
       };
     }

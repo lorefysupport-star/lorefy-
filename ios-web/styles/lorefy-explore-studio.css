@@ -281,3 +281,10 @@
   font-size:12px !important; line-height:1.5 !important; font-weight:600 !important;
   font-variant-numeric:tabular-nums; white-space:nowrap; unicode-bidi:isolate;
 }
+
+/* Explicit query correction; exact work/edition results stay separate. */
+.lf-app .lf-search-suggestions{margin:16px 0;padding:14px;border:1px solid var(--ui-line);border-radius:14px;background:var(--ui-card);color:var(--ui-ink)}
+.lf-app .lf-search-suggestions p{margin:0 0 10px;font-size:14px;font-weight:700}
+.lf-app .lf-search-suggestions>div{display:flex;gap:8px;flex-wrap:wrap}
+.lf-app .lf-search-suggestions button{min-height:44px;max-width:100%;padding:10px 14px;border:1px solid var(--ui-line);border-radius:12px;background:var(--ui-bg);color:var(--ui-action);font:inherit;text-align:start;overflow-wrap:anywhere;cursor:pointer}
+.lf-app .lf-search-suggestions button:focus-visible{outline:2px solid var(--ui-action);outline-offset:3px}

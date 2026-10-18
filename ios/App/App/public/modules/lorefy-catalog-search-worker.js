@@ -3,7 +3,7 @@
 self.window = self;
 importScripts(
   "lorefy-catalog-data.js?v=20261017-search-alias-v1",
-  "lorefy-catalog-plan.js?v=20261010-catalog-demand-v1"
+  "lorefy-catalog-plan.js?v=20261018-search-suggestions-v1"
 );
 
 var indexPromise = null;
@@ -39,11 +39,12 @@ self.addEventListener("message", function (event) {
   var request = event.data || {};
   if (request.type !== "search") return;
   loadIndex().then(function (records) {
+    var result = self.LorefyCatalogPlan.searchIndexResult(
+      records, String(request.query || ""), String(request.catalogType || ""), self.LorefyCatalogData, request.withSuggestions
+    );
     self.postMessage({
       type: "result", requestId: request.requestId,
-      matches: self.LorefyCatalogPlan.searchIndexParts(
-        records, String(request.query || ""), String(request.catalogType || ""), self.LorefyCatalogData
-      )
+      matches: result.matches, suggestions: result.suggestions
     });
   }).catch(function (error) {
     self.postMessage({type: "error", requestId: request.requestId, message: String(error && error.message || error)});

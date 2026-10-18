@@ -98,6 +98,51 @@
     });
   }
 
+  // Conservative recovery: one insertion, omission, substitution or adjacent
+  // transposition in a full title/alias. Suggestions are queries, never works
+  // or edition IDs; the exact matcher remains the authority for results.
+  function oneEditApart(a, b) {
+    if (Math.abs(a.length - b.length) > 1 || a === b) return false;
+    var i = 0;
+    while (i < a.length && i < b.length && a[i] === b[i]) i++;
+    if (a.length !== b.length) {
+      return a.length > b.length ? a.slice(i + 1) === b.slice(i) : a.slice(i) === b.slice(i + 1);
+    }
+    return a.slice(i + 1) === b.slice(i + 1)
+      || a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2);
+  }
+
+  function suggestCatalogQueries(entries, query, type, searchApi) {
+    var normalized = searchApi.normalizeQuery(query);
+    // Avoid guessing from very short text or spending unbounded work on a draft.
+    if (normalized.length < 5 || normalized.length > 80) return [];
+    var selectedType = type && type !== 'All' ? normalizeRouteType(type) : '';
+    var candidates = new Map();
+    (entries || []).forEach(function (entry) {
+      var work = entry && entry.work;
+      if (!work || !work.id || selectedType && normalizeRouteType(work.type) !== selectedType) return;
+      var titles = [work.title, work.ar];
+      // Only textual title aliases; do not turn arbitrary metadata into a query.
+      [work.altTitles, work.aliases].forEach(function (aliases) {
+        if (typeof aliases === 'string') titles.push(aliases);
+        else if (Array.isArray(aliases)) aliases.forEach(function (alias) { if (typeof alias === 'string') titles.push(alias); });
+      });
+      titles.forEach(function (title) {
+        if (typeof title !== 'string') return;
+        var text = searchApi.normalizeQuery(title);
+        if (!oneEditApart(normalized, text) || candidates.has(text)) return;
+        candidates.set(text, title.trim());
+      });
+    });
+    return Array.from(candidates.keys()).sort().slice(0, 3).map(function (key) { return candidates.get(key); });
+  }
+
+  function searchIndexResult(entries, query, type, searchApi, withSuggestions) {
+    var matches = searchIndexParts(entries, query, type, searchApi);
+    return { matches: matches, suggestions: !matches.length && withSuggestions !== false
+      ? suggestCatalogQueries(entries, query, type, searchApi) : [] };
+  }
+
   function shouldWaitForInteraction(lastInteractionAt, now, quietWindowMs) {
     var last = Number(lastInteractionAt) || 0;
     var current = Number(now) || 0;
@@ -144,6 +189,7 @@
     remainingCatalogPlan: remainingCatalogPlan,
     allCatalogParts: allCatalogParts,
     searchIndexParts: searchIndexParts,
+    searchIndexResult: searchIndexResult,
     shouldWaitForInteraction: shouldWaitForInteraction,
     pickFeaturedWork: pickFeaturedWork,
     typeParts: typeParts,
