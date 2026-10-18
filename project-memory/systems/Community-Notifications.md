@@ -63,6 +63,12 @@ APNs I/O. الإصلاح لم يُنشر، وتلك الجولة لم تثبت �
 [[systems/Language-Media]] | [[10-Open-Questions]]
 
 ## صفوف تقييم الأصدقاء
+[[sessions/2026-10-18-Social-Profile-UI]] aligns social/Profile author hierarchy,
+40px avatars and adaptive 44px action grids. Composer tools, scrim and reply
+bars share the UI tokens and reduced-preference fallbacks. Compact 88px friend
+items apply only to unexpanded Home rails; Explore retains its existing width.
+No notification, publication, relationship or stored-rating behavior changed.
+
 [[sessions/2026-10-16-Friend-Rating-Rows]] وحدت هندسة الاسم والتقييم في [CSS](../../styles/lorefy-explore-studio.css). لا تغيير لمنطق المتابعة أو القيم الكسرية أو الحسابات.
 
 - [[bugs/LF-034-Review-Mutation-Session]]: منع طلب حذف/رد/تفاعل مراجعة قديم من استكمال سلسلة حساب آخر أو إرجاع نجاح متأخر. [[sessions/2026-10-17-Review-Mutation-Session]]

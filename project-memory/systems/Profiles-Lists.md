@@ -70,6 +70,11 @@ Lists / Posts والقوائم المرتبة. المفتاح `lorefy.user.profi
 [favorites spines](../../tests/profile-favorites-spines.test.js)،
 [QA public layout](../../qa/public-profile-layout-browser.cjs).
 
+[[sessions/2026-10-18-Social-Profile-UI]] applies the shared segmented tabs,
+metric hierarchy, compact Lists/Posts actions, readable ranked rows and social
+post styling to owner and visitor. It preserves saved values and frame/banner
+geometry. Count-only accessible names in legacy review actions remain separate.
+
 [[systems/Appearance-Bundles]] | [[08-Feature-Router]] | [[10-Open-Questions]]
 
 - [[bugs/LF-035-Profile-Relationship-Session]]: عزل متابعة/إلغاء متابعة وحظر/إلغاء حظر الملف حسب حساب الطلب. [[sessions/2026-10-17-Profile-Relationship-Session]]؛ الرؤية الحية منفصلة.

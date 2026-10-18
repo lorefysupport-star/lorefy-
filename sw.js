@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v518-apple-surfaces';
+const CACHE = 'lorefy-v519-social-profile';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -46,7 +46,7 @@ const CORE = [
   './styles/lorefy-community.css?v=20261009-public-appearance-v4',
   './styles/lorefy-comics-search.css?v=20260923-comics-identity-v2',
   './styles/lorefy-auth-flow.css?v=20261003-beta-final-v1',
-  './styles/lorefy-design-system.css?v=20261018-apple-surfaces-v1',
+  './styles/lorefy-design-system.css?v=20261018-social-profile-v1',
   './modules/lorefy-design-system.js?v=20261009-full-color-theme-v2',
   './modules/lorefy-data-proxy.js?v=20260909-full-catalog-v1',
   './modules/lorefy-cover-api.js?v=20261008-arabic-breadth-v4',

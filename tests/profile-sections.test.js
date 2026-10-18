@@ -115,11 +115,12 @@ test('profile header keeps reading metrics and removes redundant social shortcut
     assert.ok(classes.has('lf-profile-reading-metrics'));
   }
 });
-test('profile header uses an adaptive grid and a single active tab underline', () => {
+test('profile header keeps its adaptive metrics and the shared selected-tab surface', () => {
   const css=fs.readFileSync(path.join(__dirname,'../styles/lorefy-profile-sections.css'),'utf8');
   assert.match(css,/repeat\(var\(--profile-metric-count\),\s*minmax\(0,1fr\)\)/);
   assert.match(css,/\.is-profile-social-stat\s*\{\s*display:\s*none !important/);
-  assert.match(css,/button\[aria-selected='true'\]\s*\{[^}]*border-bottom-color:\s*var\(--ui-action\)/s);
+  const shared=fs.readFileSync(path.join(__dirname,'../styles/lorefy-design-system.css'),'utf8');
+  assert.match(shared,/\.lf-profile-section-tabs > button\[aria-selected='true'\]\s*\{[^}]*background:\s*var\(--ui-surface\)/s);
 });
 
 test('profile Posts combines reviews and posts chronologically without borrowing another reader or duplicating a review',()=>{

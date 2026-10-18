@@ -62,4 +62,9 @@ Home/Explore segmented controls, responsive library tools, Settings geometry,
 functional materials and accessibility preferences. Preserve source/browser
 versus installed-device evidence boundaries on future refinements.
 
+Community/Profile adoption: [[sessions/2026-10-18-Social-Profile-UI]] extends
+shared tabs, metric labels, action grids, author typography and thread materials.
+Validate whole-word English captions at 320px and visitor appearance isolation;
+do not equate a presentation-only pass with semantic accessibility completion.
+
 [[systems/Appearance-Bundles]] | [[13-Project-Story]] | [[15-Work-Control]]
