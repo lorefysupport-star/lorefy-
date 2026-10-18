@@ -6,6 +6,12 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[bugs/LF-072-Reading-Intent-Label]] changes only the picker display to
+`أرغب بالقراءة` / `Want to read`. The persisted wish key and click/save identity
+are untouched; no migration, automatic save or metric change.
+[[sessions/2026-10-19-Reading-Intent-Label]]:7 added,38 focused,2190 full passing;
+Arabic demo opened with the previous Completed choice unchanged.
+
 [[bugs/LF-068-Review-Rating-Restore]] يمنع متوسط التفاصيل من استبدال التقييم
 اليدوي عند فتح محرر المراجعة؛ لا يغير حالة القراءة أو checkpoint. عرض الحالات
 المسمّى والاختيار بلوحة المفاتيح موثقان في [[sessions/2026-10-19-Work-Experience]].

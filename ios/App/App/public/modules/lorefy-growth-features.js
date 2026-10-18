@@ -5490,7 +5490,7 @@
 
   function enhanceReadingChoices(sheet) {
     var candidates=Array.from(sheet.querySelectorAll('div')).filter(function(option){
-      return /^(أقرأ حالياً|تم القراءة|قائمة الأمنيات|متوقف مؤقتًا|توقفت نهائيًا|Reading|Completed|Wishlist|Paused|Dropped)$/.test(option.textContent.trim()) && option.children.length<=2 && !option.querySelector('button,input,select');
+      return /^(أقرأ حالياً|تم القراءة|قائمة الأمنيات|أرغب بالقراءة|متوقف مؤقتًا|توقفت نهائيًا|Reading|Completed|Wishlist|Want to read|Paused|Dropped)$/.test(option.textContent.trim()) && option.children.length<=2 && !option.querySelector('button,input,select');
     });
     var options=candidates.filter(function(option){return !candidates.some(function(parent){return parent!==option&&parent.contains(option);});});
     if(options.length<3 || options.some(function(option){return option.parentElement!==options[0].parentElement;}))return;

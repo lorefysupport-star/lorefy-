@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v526-artwork-quota';
+const CACHE = 'lorefy-v528-read-intent';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -24,7 +24,7 @@ const CORE = [
   './modules/lorefy-preview-readers.js?v=20261011-profile-sections-v1',
   './styles/lorefy-profile-sections.css?v=20261018-list-removal-v1',
   './modules/lorefy-profile-sections.js?v=20261018-list-removal-v1',
-  './modules/lorefy-i18n.js?v=20261018-work-experience-v1',
+  './modules/lorefy-i18n.js?v=20261019-read-intent-v1',
   './',
   './index.html',
   './manifest.webmanifest',
@@ -124,11 +124,11 @@ const CORE = [
   './styles/lorefy-explore-studio.css?v=20261018-search-suggestions-v1',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1',
-  './uploads/files/lorefy-app.js?v=20261018-work-experience-v1',
+  './uploads/files/lorefy-app.js?v=20261019-read-intent-v2',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
-  './modules/lorefy-growth-features.js?v=20261018-work-experience-v1',
+  './modules/lorefy-growth-features.js?v=20261019-read-intent-v1',
   './modules/lorefy-share-studio.js?v=20261007-quarter-ratings-v1',
   './uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1',
   './launch/icons/icon-180.png',

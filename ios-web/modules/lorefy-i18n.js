@@ -17,7 +17,7 @@
     'تسجيل الدخول غير جاهز. أعد فتح التطبيق وحاول مجدداً.':'Sign-in is not ready. Reopen the app and try again.',
     'انتهت مهلة تسجيل الدخول. حاول مجدداً.':'Sign-in timed out. Try again.',
     'المراجعة':'Review', 'أضف رداً...':'Add a reply...', 'رد':'Reply',
-    'أقرأ حالياً':'Reading', 'تم القراءة':'Completed', 'قائمة الأمنيات':'Wishlist', 'توقف':'Paused',
+    'أقرأ حالياً':'Reading', 'تم القراءة':'Completed', 'قائمة الأمنيات':'Wishlist', 'أرغب بالقراءة':'Want to read', 'توقف':'Paused',
     'تم حفظ الملف الشخصي':'Profile saved', 'نبذة قصيرة عنك...':'A little about you...',
     'خانات':'slots', 'اختر 10 أعمال من نفس تصنيف':'Choose 10 works from',
     'سنة قراءتك في صفحة واحدة':'Your year in reading', 'مؤشرات السنة':'Yearly statistics',
