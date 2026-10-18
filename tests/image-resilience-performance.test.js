@@ -9,12 +9,12 @@ function setup() {
   const timers = [], frames = [], observed = new Set();
   const image = (picker = false) => ({tagName:'IMG',nodeType:1,isConnected:true,dataset:{},style:{},loading:'lazy',complete:false,naturalWidth:0,src:'https://example.org/cover.jpg',
     getAttribute(name){return name === 'src' ? this.src : '';},hasAttribute(name){return picker && name === 'data-cover-picker-image';},closest(){return null;},
-    getBoundingClientRect(){throw Error('synchronous layout forbidden');},addEventListener(name,fn){this[name]=fn;},removeAttribute(){},dispatchEvent(event){this.dispatched=event.type;},querySelectorAll(){return [];}});
+    getBoundingClientRect(){throw Error('synchronous layout forbidden');},addEventListener(name,fn){this[name]=fn;},removeEventListener(name,fn){if(this[name]===fn)delete this[name];},removeAttribute(){},dispatchEvent(event){this.dispatched=event.type;},querySelectorAll(){return [];}});
   const first = image();
   const context = {Set,Event,encodeURIComponent,document:{documentElement:{},querySelectorAll(){scans++;return [first];}},
     IntersectionObserver:class{constructor(fn){intersection=fn;}observe(img){observed.add(img);}unobserve(img){observed.delete(img);}},
     MutationObserver:class{constructor(fn){mutation=fn;}observe(){}},
-    window:{IntersectionObserver:true,setTimeout(fn){timers.push(fn);},requestAnimationFrame(fn){frames.push(fn);}}};
+    window:{IntersectionObserver:true,setTimeout(fn){timers.push(fn);return timers.length;},clearTimeout(id){timers[id-1]=null;},requestAnimationFrame(fn){frames.push(fn);}}};
   vm.runInNewContext(source+'installImageResilience();',context);
   return {first,image,timers,frames,observed,intersect(img){intersection([{target:img,isIntersecting:true}]);},mutate(records){mutation(records);},get scans(){return scans;}};
 }

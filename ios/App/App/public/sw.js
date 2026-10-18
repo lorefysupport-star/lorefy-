@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v509-search-all-formats';
+const CACHE = 'lorefy-v510-image-lifecycle';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',

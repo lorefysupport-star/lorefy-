@@ -39,3 +39,5 @@ aliases: ["عربي", "إنجليزي", "ترجمة", "صور", "مشاركة", 
 
 [[systems/Profiles-Lists]] | [[systems/Explore-Works]] |
 [[systems/Community-Notifications]] | [[systems/Appearance-Bundles]]
+
+- [[bugs/LF-060-Image-Source-Lifecycle]]: حماية الصور تتجدد مع الرابط وإعادة المحاولة، وتلغي callbacks القديمة والمؤقت عند نجاح/إزالة الصورة؛17حالة جديدة،117مرتبطة،1977كاملة و4حالات Chrome؛ [[sessions/2026-10-18-Image-Source-Lifecycle]]. رفع الصور والأذونات الحية مستقلان.

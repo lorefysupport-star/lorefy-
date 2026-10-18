@@ -459,82 +459,135 @@
           var coverLike = /cover|hero|poster|work/i.test(context);
           return !coverLike && /avatar|profile|portrait|character|author|user/i.test(context) ? avatarFallback : coverFallback;
         };
-        var armTimeout = function(img, fallback){
-          if (img.dataset.lorefyImageTimer || img.dataset.lorefyFallbackApplied === "1") return;
+        var imageStates = new WeakMap();
+        var sourceKey = function(img){
+          return JSON.stringify([img.getAttribute("src") || "", img.getAttribute("srcset") || "", img.getAttribute("data-fallback") || ""]);
+        };
+        var stop = function(img, state){
+          if (!state) return;
+          state.active = false;
+          if (state.timer !== null) { window.clearTimeout(state.timer); state.timer = null; }
+          img.removeEventListener("error", state.onError);
+          img.removeEventListener("load", state.onLoad);
+          // A queued old callback must not clear the new source's timer/observer.
+          if (imageStates.get(img) === state) {
+            if (observer) observer.unobserve(img);
+            delete img.dataset.lorefyImageTimer;
+          }
+        };
+        var current = function(img, state){
+          return imageStates.get(img) === state && state.active && img.isConnected && sourceKey(img) === state.key;
+        };
+        var fail = function(img, state){
+          if (!current(img, state)) return;
+          stop(img, state);
+          // A cover choice must never become a selectable generated cover.
+          if (img.hasAttribute("data-cover-picker-image")) {
+            img.dispatchEvent(new Event("error"));
+            return;
+          }
+          state.fallbackSrc = state.fallback;
+          img.dataset.lorefyFallbackApplied = "1";
+          img.removeAttribute("srcset");
+          img.src = state.fallback;
+        };
+        var armTimeout = function(img, state){
+          if (!current(img, state) || state.timer !== null) return;
           if (img.loading === "lazy" && !img.dataset.lorefyImageInViewport){
             if (observer) { observer.observe(img); return; }
             if (!nearViewport(img)) return;
           }
           img.dataset.lorefyImageTimer = "1";
-          window.setTimeout(function(){
-            if (!img.complete || img.naturalWidth === 0){
-              if (img.hasAttribute("data-cover-picker-image")) {
-                img.dispatchEvent(new Event("error"));
-                return;
-              }
-              img.dataset.lorefyFallbackApplied = "1";
-              img.removeAttribute("srcset");
-              img.src = fallback;
-            }
+          state.timer = window.setTimeout(function(){
+            if (!current(img, state)) { stop(img, state); return; }
+            if (!img.complete || img.naturalWidth === 0) fail(img, state);
+            else stop(img, state);
           }, 5500);
         };
-        var guard = function(img){
-          if (!img || img.dataset.lorefyImageGuard === "1") return;
+        var guard = function(img, retry){
+          if (!img || img.tagName !== "IMG") return;
+          var previous = imageStates.get(img);
           var src = img.getAttribute("src") || "";
+          // Ignore our own fallback mutation; a real retry assigns the remote URL.
+          if (previous && previous.fallbackSrc && previous.fallbackSrc === src && !img.getAttribute("srcset")) return;
+          if (previous && !retry && previous.key === sourceKey(img)) return;
+          stop(img, previous);
+          imageStates.delete(img);
+          delete img.dataset.lorefyImageGuard;
+          delete img.dataset.lorefyFallbackApplied;
+          delete img.dataset.lorefyImageInViewport;
+          if (previous && img.style.backgroundImage === previous.background) {
+            img.style.backgroundImage = "";
+            img.style.backgroundSize = "";
+            img.style.backgroundPosition = "";
+          }
           if (!/^https?:\/\//i.test(src) && !/^\/api\/media(?:\?|$)/i.test(src)) return;
           img.dataset.lorefyImageGuard = "1";
-          // A cover choice must not be replaced by a selectable generated cover.
-          if (img.hasAttribute("data-cover-picker-image")) {
-            armTimeout(img, "");
-            return;
+          var state = {key:sourceKey(img), active:true, timer:null, fallback:fallbackFor(img), fallbackSrc:"", background:""};
+          imageStates.set(img, state);
+          if (!img.hasAttribute("data-cover-picker-image")) {
+            img.style.backgroundImage = 'url("' + state.fallback.replace(/"/g, "%22") + '")';
+            img.style.backgroundSize = "cover";
+            img.style.backgroundPosition = "center";
+            state.background = img.style.backgroundImage;
           }
-          var fallback = fallbackFor(img);
-          img.style.backgroundImage = 'url("' + fallback.replace(/"/g, "%22") + '")';
-          img.style.backgroundSize = "cover";
-          img.style.backgroundPosition = "center";
-          img.addEventListener("error", function(){
-            if (img.dataset.lorefyFallbackApplied === "1") return;
-            img.dataset.lorefyFallbackApplied = "1";
-            img.removeAttribute("srcset");
-            img.src = fallback;
-          }, { once: true });
-          armTimeout(img, fallback);
+          state.onError = function(){
+            // Native picker errors already notify its owner; don't dispatch twice.
+            if (img.hasAttribute("data-cover-picker-image")) { if (current(img, state)) stop(img, state); }
+            else fail(img, state);
+          };
+          state.onLoad = function(){ if (current(img, state) && img.naturalWidth > 0) stop(img, state); };
+          img.addEventListener("error", state.onError);
+          img.addEventListener("load", state.onLoad);
+          if (img.complete && (img.naturalWidth > 0 || img.hasAttribute("data-cover-picker-image"))) stop(img, state);
+          else armTimeout(img, state);
         };
         observer = "IntersectionObserver" in window ? new IntersectionObserver(function(entries){
           entries.forEach(function(entry){
             if (!entry.isIntersecting) return;
             entry.target.dataset.lorefyImageInViewport = "1";
             observer.unobserve(entry.target);
-            armTimeout(entry.target, fallbackFor(entry.target));
+            var state = imageStates.get(entry.target);
+            if (state) armTimeout(entry.target, state);
           });
         }, { rootMargin: "240px" }) : null;
         var pendingImages = new Set();
+        var retries = new Set();
         var scanQueued = false;
         var queueScan = function(records){
           records.forEach(function(record){
-            if (record.type === "attributes") pendingImages.add(record.target);
-            else record.addedNodes.forEach(function(node){
+            if (record.type === "attributes") { pendingImages.add(record.target); retries.add(record.target); }
+            else {
+              (record.removedNodes || []).forEach(function(node){
+                if (node.nodeType !== 1) return;
+                var release = function(img){ if (!img.isConnected) { stop(img, imageStates.get(img)); imageStates.delete(img); } };
+                if (node.tagName === "IMG") release(node);
+                node.querySelectorAll("img").forEach(release);
+              });
+              record.addedNodes.forEach(function(node){
               if (node.nodeType !== 1) return;
               if (node.tagName === "IMG") pendingImages.add(node);
               node.querySelectorAll("img").forEach(function(img){ pendingImages.add(img); });
-            });
+              });
+            }
           });
           if (scanQueued || !pendingImages.size) return;
           scanQueued = true;
           var flush = function(){
             scanQueued = false;
-            pendingImages.forEach(function(img){ if (img.isConnected) guard(img); });
+            pendingImages.forEach(function(img){ if (img.isConnected) guard(img, retries.has(img)); });
             pendingImages.clear();
+            retries.clear();
           };
           if (window.requestAnimationFrame) window.requestAnimationFrame(flush);
           else window.setTimeout(flush, 0);
         };
-        document.querySelectorAll("img").forEach(guard);
+        document.querySelectorAll("img").forEach(function(img){ guard(img, false); });
         new MutationObserver(queueScan).observe(document.documentElement, {
           childList: true,
           subtree: true,
           attributes: true,
-          attributeFilter: ["src", "srcset"]
+          attributeFilter: ["src", "srcset", "data-fallback"]
         });
       }
       function mountApp(){
