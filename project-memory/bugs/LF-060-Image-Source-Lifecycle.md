@@ -1,5 +1,5 @@
 ---
-{"kind":"bug","id":"LF-060","status":"closed","priority":"P1","area":"image-source-fallback-lifecycle","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"1b56a19","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Image-Source-Lifecycle]]","next_action":"Inspect local upload read/decode failures; physical permissions, real storage uploads and source-cover rights remain separate"}
+{"kind":"bug","id":"LF-060","status":"closed","priority":"P1","area":"image-source-fallback-lifecycle","date":"2026-10-18","reviewed_on":"2026-10-18","source_commit":"1b56a19","source_verified":true,"device_verified":false,"service_verified":false,"requires_device":false,"requires_service":false,"verified_on":"2026-10-18","resolution_evidence":"[[sessions/2026-10-18-Image-Source-Lifecycle]]","next_action":"Review upload read/decode failures resolved in LF-061; profile-image drafts, invalid fallback artwork, physical permissions and real uploads remain separate"}
 ---
 # LF-060: حماية الصورة تتبع رابطها الحالي
 
