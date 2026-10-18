@@ -53,7 +53,8 @@ test('rating sharing does not truncate quarters to tenths', () => {
 });
 test('automatic detailed-score average rounds to quarters, not halves', () => {
   const app=read('uploads/files/lorefy-app.js');
-  assert.ok(app.includes('dt(Math.round(t.reduce((r,o)=>r+o,0)/t.length*4)/4)'));
+  assert.ok(app.includes('Math.round(values.reduce((sum,value)=>sum+value,0)/values.length*4)/4'));
+  assert.ok(app.includes('lorefyReviewAutoRating(reviewEditor.current,reviewEditor,m,ze)'));
 });
 
 test('character slider displays, saves and clears exact quarters with a localized label', () => {
