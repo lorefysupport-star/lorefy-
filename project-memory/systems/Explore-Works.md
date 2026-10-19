@@ -29,6 +29,10 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 ## الشخصيات
 
+[[bugs/LF-083-Character-Discovery-Retry]] evicts rejected discovery promises so
+the next explicit attempt can recover; concurrent callers and successful sources
+remain shared. Domain matching and live-provider approval are unchanged.
+
 [[bugs/LF-082-Character-Provider-Body]] bounds eighteen remaining provider JSON
 reads separately from header deadlines, retaining pagination, fallbacks and
 partial-cast flags. It neither aborts transport nor caps total traversal time.

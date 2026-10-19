@@ -917,8 +917,12 @@
         .catch(function () { return next(index + 1); });
     }
     var request = domains.length ? next(0) : Promise.reject(new Error("no fandom domain candidates"));
-    fandomCategoryDiscoveryCache.set(cacheKey, request);
-    return request;
+    var pending = request.catch(function (error) {
+      if (fandomCategoryDiscoveryCache.get(cacheKey) === pending) fandomCategoryDiscoveryCache.delete(cacheKey);
+      throw error;
+    });
+    fandomCategoryDiscoveryCache.set(cacheKey, pending);
+    return pending;
   }
 
   function fandomCategoryRoots(source, work) {
