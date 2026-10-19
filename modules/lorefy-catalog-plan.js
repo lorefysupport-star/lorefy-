@@ -105,7 +105,7 @@
   }
 
   // Conservative recovery: one insertion, omission, substitution or adjacent
-  // transposition in a full title/alias. Suggestions are queries, never works
+  // transposition in a full title/author/alias. Suggestions are queries, never works
   // or edition IDs; the exact matcher remains the authority for results.
   function oneEditApart(a, b) {
     if (Math.abs(a.length - b.length) > 1 || a === b) return false;
@@ -118,6 +118,20 @@
       || a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2);
   }
 
+  function queryCorrection(a, b) {
+    if (oneEditApart(a, b)) return true;
+    // Two independent word typos are useful in long names, but too ambiguous
+    // in short queries. Never allow multiple edits inside a single word.
+    if (a.length < 12 || Math.abs(a.length - b.length) > 2) return false;
+    var left = a.split(' '), right = b.split(' '), changed = 0;
+    if (left.length !== right.length) return false;
+    for (var i = 0; i < left.length; i++) {
+      if (left[i] === right[i]) continue;
+      if (++changed > 2 || !oneEditApart(left[i], right[i])) return false;
+    }
+    return changed === 2;
+  }
+
   function suggestCatalogQueries(entries, query, type, searchApi) {
     var normalized = searchApi.normalizeQuery(query);
     // Avoid guessing from very short text or spending unbounded work on a draft.
@@ -127,16 +141,16 @@
     (entries || []).forEach(function (entry) {
       var work = entry && entry.work;
       if (!work || !work.id || selectedType && normalizeRouteType(work.type) !== selectedType) return;
-      var titles = [work.title, work.ar];
-      // Only textual title aliases; do not turn arbitrary metadata into a query.
-      [work.altTitles, work.aliases].forEach(function (aliases) {
+      var titles = [work.title, work.ar, work.auth || work.author];
+      // Only sourced textual aliases; never stringify arbitrary metadata.
+      [work.altTitles, work.aliases, work.authorAliases].forEach(function (aliases) {
         if (typeof aliases === 'string') titles.push(aliases);
         else if (Array.isArray(aliases)) aliases.forEach(function (alias) { if (typeof alias === 'string') titles.push(alias); });
       });
       titles.forEach(function (title) {
         if (typeof title !== 'string') return;
         var text = searchApi.normalizeQuery(title);
-        if (!oneEditApart(normalized, text) || candidates.has(text)) return;
+        if (!queryCorrection(normalized, text) || candidates.has(text)) return;
         candidates.set(text, title.trim());
       });
     });

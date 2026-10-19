@@ -43,6 +43,39 @@ test('suggestions are deterministic, capped at three and deduplicated by normali
   const many=suggestions('Book xouse','All',records);assert.equal(many.length,3);
 });
 
+const authored = [
+  {part:11,work:{id:'pride',title:'Pride and Prejudice',auth:'Jane Austen',authorAliases:['جين أوستن'],type:'Book'}},
+  {part:12,work:{id:'sense',title:'Sense and Sensibility',author:'Jane Austen',type:'Book'}},
+  {part:13,work:{id:'hunter',title:'Hunter x Hunter',auth:'Yoshihiro Togashi',type:'Manga'}}
+];
+test('suggests a sourced author name without automatically returning their works',()=>{
+  const result=planner.searchIndexResult(authored,'Jane Austne','Book',data);
+  assert.deepEqual(result.matches,[]);
+  assert.deepEqual(result.suggestions,['Jane Austen']);
+  assert.deepEqual(planner.searchIndexResult(authored,result.suggestions[0],'Book',data).matches.map(x=>x.part),[11,12]);
+});
+test('suggests textual Arabic author aliases while respecting the format filter',()=>{
+  assert.deepEqual(suggestions('جين اوستت','Book',authored),['جين أوستن']);
+  assert.deepEqual(suggestions('Jane Austne','Manga',authored),[]);
+  assert.deepEqual(suggestions('Yoshihiro Togahsi','Book',authored),[]);
+});
+test('long queries allow one typo in each of two separate words',()=>{
+  assert.deepEqual(suggestions('Pride nad Prejudcie','Book',authored),['Pride and Prejudice']);
+  assert.deepEqual(suggestions('Yoshihior Togahsi','Manga',authored),['Yoshihiro Togashi']);
+});
+test('two-word recovery rejects short, three-word, repeated and oversized corruption',()=>{
+  for(const query of ['Pne Peice','Prdie nad Prejudcie','Pride and Prejxxice','Pride Prejudcie','a'.repeat(81)]) {
+    assert.deepEqual(suggestions(query,'All',authored),[]);
+  }
+  assert.deepEqual(suggestions('Pride nad Prejudcie','Manga',authored),[]);
+});
+test('nontext author metadata is not suggested and entries remain untouched',()=>{
+  const records=authored.concat({part:14,work:{id:'bad',title:'Unknown',auth:{name:'Jane Austen'},authorAliases:[{name:'Jane Austen'}],type:'Book'}});
+  const before=JSON.stringify(records);
+  assert.deepEqual(suggestions('Jane Austne','Book',records),['Jane Austen']);
+  assert.equal(JSON.stringify(records),before);
+});
+
 function harness(worker=false) {
   const events={},requests=[],pending=[],scripts=[];let held=null,fail=false;
   const rows=entries.map(e=>[e.part,e.work.id,e.work.title,e.work.ar,e.work.auth,e.work.type,e.work.altTitles]);

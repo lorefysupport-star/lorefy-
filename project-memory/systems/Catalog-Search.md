@@ -8,6 +8,10 @@ aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 
 ## التدفق
 
+[[bugs/LF-074-Author-Query-Corrections]] adds sourced author aliases and bounded
+two-word typo suggestions for longer queries; exact matching and edition identity
+remain authoritative. [[sessions/2026-10-19-Author-Query-Corrections]].
+
 [خطة التحميل](../../modules/lorefy-catalog-plan.js) تختار أجزاء البدء من نوع
 العمل/هويته؛ [loader](../../modules/lorefy-catalog-loader.js) يحمل أجزاء أخرى
 عند الطلب. [عامل البحث](../../modules/lorefy-catalog-search-worker.js) يستخدم

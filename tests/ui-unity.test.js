@@ -37,7 +37,7 @@ test('updated UI assets use fresh cache keys', () => {
       'modules/lorefy-i18n.js':'20261019-read-intent-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',
       'uploads/files/lorefy-app.js':'20261019-read-intent-v2',
-      'modules/lorefy-catalog-loader.js':'20261018-runtime-cleanup-v1',
+      'modules/lorefy-catalog-loader.js':'20261019-search-authors-v1',
       'modules/lorefy-catalog-map-loader.js':'20261018-runtime-cleanup-v1',
       'uploads/lorefy-catalog-summary.js':'20261018-runtime-cleanup-v1',
       'modules/lorefy-explore-studio.js':'20261018-search-all-formats-v1',
