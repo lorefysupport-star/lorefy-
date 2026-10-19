@@ -2277,6 +2277,18 @@
   }
 
   var nameSearchCache = new Map();
+  function characterSearchRows(json) {
+    function record(value) { return !!value && typeof value === 'object' && !Array.isArray(value); }
+    var page=json && json.data && json.data.Page;
+    if(!record(json) || json.errors && (!Array.isArray(json.errors) || json.errors.length) || !page || !Array.isArray(page.characters))throw new Error('Character search unavailable');
+    var rows=page.characters;
+    if(rows.some(function(character){
+      return !record(character) || !record(character.name) || character.media!=null && (
+        !record(character.media) || !Array.isArray(character.media.nodes) || character.media.nodes.some(function(media){return !record(media);})
+      );
+    }))throw new Error('Character search unavailable');
+    return rows;
+  }
   function characterMatches(character, query) {
     var normalize=global.LorefyCatalogData && global.LorefyCatalogData.normalizeQuery || function(v){return String(v||'').toLowerCase().trim();};
     return normalize([character.name,character.latin].concat(character.aliases||[]).join(' ')).indexOf(normalize(query))!==-1;
@@ -2296,8 +2308,7 @@
         if(!response.ok)throw new Error('Character search unavailable');
         return response.json();
       }),10000);
-      if(json.errors)throw new Error('Character search unavailable');
-      remote=json.data && json.data.Page && json.data.Page.characters || [];nameSearchCache.set(key,remote);
+      remote=characterSearchRows(json);nameSearchCache.set(key,remote);
       if(nameSearchCache.size>40)nameSearchCache.delete(nameSearchCache.keys().next().value);
     }
     if(options.active && !options.active())return [];

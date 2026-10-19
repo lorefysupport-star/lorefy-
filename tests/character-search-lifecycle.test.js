@@ -88,3 +88,33 @@ test('failed JSON parsing remains retryable without caching an empty result', as
   await assert.rejects(h.search(), /Invalid JSON/); assert.equal(h.timers.size, 0); assert.equal(h.values.size, 0);
   assert.equal((await h.search()).length, 1); assert.equal(h.requests(), 2);
 });
+
+const malformedResponses = {
+  'missing data': {},
+  'missing page': { data: {} },
+  'null character list': { data: { Page: { characters: null } } },
+  'object instead of character list': { data: { Page: { characters: {} } } },
+  'null character row': { data: { Page: { characters: [null] } } },
+  'missing character name': { data: { Page: { characters: [{ ...payload().data.Page.characters[0], name: null }] } } },
+  'object instead of media list': { data: { Page: { characters: [{ ...payload().data.Page.characters[0], media: { nodes: {} } }] } } },
+  'null media row': { data: { Page: { characters: [{ ...payload().data.Page.characters[0], media: { nodes: [null] } }] } } }
+};
+
+for (const [label, invalid] of Object.entries(malformedResponses)) test(`malformed response is not cached and the same name retries: ${label}`, async () => {
+  let first = true;
+  const h = harness(async () => ({ ok: true, json: async () => first ? (first = false, invalid) : payload() }));
+  await assert.rejects(h.search()); assert.equal(h.values.size, 0); assert.equal(h.timers.size, 0);
+  const rows = await h.search(); assert.equal(h.requests(), 2);
+  assert.equal(rows.length, 1); assert.equal(rows[0].cast[0].name, 'Killua Zoldyck');
+});
+
+test('a structurally valid empty search response is cached without treating it as a failure', async () => {
+  const h = harness(async () => ({ ok: true, json: async () => ({ data: { Page: { characters: [] } } }) }));
+  assert.equal((await h.search()).length, 0); assert.equal((await h.search()).length, 0);
+  assert.equal(h.requests(), 1); assert.equal(h.values.size, 0); assert.equal(h.timers.size, 0);
+});
+
+test('a valid response with an empty GraphQL errors array still returns its verified cast', async () => {
+  const h = harness(async () => ({ ok: true, json: async () => ({ ...payload(), errors: [] }) }));
+  assert.equal((await h.search()).length, 1); assert.equal(h.requests(), 1);
+});

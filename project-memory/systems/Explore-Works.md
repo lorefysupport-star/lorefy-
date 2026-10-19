@@ -29,6 +29,10 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 ## الشخصيات
 
+[[bugs/LF-079-Character-Search-Response]] rejects invalid list/record structures
+before caching; same-query retry can recover, while valid empty results still
+cache normally. It is not a full-provider or bibliographic data-quality approval.
+
 [[bugs/LF-078-Character-Search-Deadline]] bounds both headers and JSON for name
 search in one ten-second budget; late data cannot populate either cache. Other
 provider paths and physical-device performance remain separate acceptance.
