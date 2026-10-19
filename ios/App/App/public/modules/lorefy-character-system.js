@@ -2299,6 +2299,7 @@
   }
 
   var nameSearchCache = new Map();
+  var nameSearchPending = new Map();
   function characterSearchRows(json) {
     function record(value) { return !!value && typeof value === 'object' && !Array.isArray(value); }
     var page=json && json.data && json.data.Page;
@@ -2325,13 +2326,22 @@
     query=String(query||'').trim().slice(0,100);if(query.length<2)return [];
     var cached=cachedCharacterMatches(query,works),key=query.toLowerCase(),remote=nameSearchCache.get(key);
     if(!remote){
-      var request='query($search:String){Page(perPage:50){characters(search:$search,sort:FAVOURITES_DESC){id name{full native alternative} image{large medium} media(type:MANGA,perPage:10){nodes{id idMal title{romaji english native}}}}}}';
-      var json=await withTimeout(fetch(catalogEndpoint('anilist','https://graphql.anilist.co'),{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({query:request,variables:{search:query}})}).then(function(response){
-        if(!response.ok)throw new Error('Character search unavailable');
-        return response.json();
-      }),10000);
-      remote=characterSearchRows(json);nameSearchCache.set(key,remote);
-      if(nameSearchCache.size>40)nameSearchCache.delete(nameSearchCache.keys().next().value);
+      var pending=nameSearchPending.get(key);
+      if(!pending){
+        var request='query($search:String){Page(perPage:50){characters(search:$search,sort:FAVOURITES_DESC){id name{full native alternative} image{large medium} media(type:MANGA,perPage:10){nodes{id idMal title{romaji english native}}}}}}';
+        pending=withTimeout(fetch(catalogEndpoint('anilist','https://graphql.anilist.co'),{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({query:request,variables:{search:query}})}).then(function(response){
+          if(!response.ok)throw new Error('Character search unavailable');
+          return response.json();
+        }),10000).then(function(json){
+          var rows=characterSearchRows(json);nameSearchCache.set(key,rows);
+          if(nameSearchCache.size>40)nameSearchCache.delete(nameSearchCache.keys().next().value);
+          return rows;
+        });
+        nameSearchPending.set(key,pending);
+        var release=function(){if(nameSearchPending.get(key)===pending)nameSearchPending.delete(key);};
+        pending.then(release,release);
+      }
+      remote=await pending;
     }
     if(options.active && !options.active())return [];
     var found=new Map(cached.map(function(row){return [row.workId,row];}));

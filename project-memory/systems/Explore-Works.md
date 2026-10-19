@@ -29,6 +29,10 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 ## الشخصيات
 
+[[bugs/LF-084-Character-Search-Coalescing]] shares pending name-provider rows by
+normalized query only. Each caller keeps its own work matching and active guard;
+failure/timeout releases the query without admitting expired results to cache.
+
 [[bugs/LF-083-Character-Discovery-Retry]] evicts rejected discovery promises so
 the next explicit attempt can recover; concurrent callers and successful sources
 remain shared. Domain matching and live-provider approval are unchanged.

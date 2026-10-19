@@ -118,3 +118,71 @@ test('a valid response with an empty GraphQL errors array still returns its veri
   const h = harness(async () => ({ ok: true, json: async () => ({ ...payload(), errors: [] }) }));
   assert.equal((await h.search()).length, 1); assert.equal(h.requests(), 1);
 });
+
+test('concurrent normalized character-name searches share one pending provider request', async () => {
+  const headers = deferred(), h = harness(() => headers.promise);
+  const first = h.search(' Killua '), second = h.search('killua');
+  headers.resolve({ ok: true, json: async () => payload() });
+  const rows = await Promise.all([first, second]);
+  assert.equal(rows[0][0].cast[0].name, 'Killua Zoldyck');
+  assert.equal(rows[1][0].workId, h.work.id);
+  assert.equal(h.requests(), 1); assert.equal(h.timers.size, 0);
+});
+
+test('shared name data is matched separately to each caller work catalog', async () => {
+  const body = deferred(), h = harness(async () => ({ ok: true, json: () => body.promise }));
+  const other = { id: 'anilist-30026-local', title: 'Hunter x Hunter', type: 'Manga' };
+  const first = h.search(), second = h.api.searchCharacters('Killua', [other]);
+  body.resolve(payload()); const [a, b] = await Promise.all([first, second]);
+  assert.equal(a[0].workId, h.work.id); assert.equal(b[0].workId, other.id);
+  assert.equal(h.requests(), 1); assert.equal(h.timers.size, 0);
+});
+
+test('a stale caller does not cancel another caller or write its own cast projection', async () => {
+  const body = deferred(), h = harness(async () => ({ ok: true, json: () => body.promise }));
+  let active = true;
+  const other = { id: 'anilist-30026-local', title: 'Hunter x Hunter', type: 'Manga' };
+  const first = h.search('Killua', { active: () => active });
+  const second = h.api.searchCharacters('Killua', [other]);
+  active = false; body.resolve(payload()); const [a, b] = await Promise.all([first, second]);
+  assert.equal(a.length, 0); assert.equal(b[0].workId, other.id);
+  const cache = JSON.parse(h.values.get('lorefy.characterCastCache.v20'));
+  assert.equal(cache[h.work.id], undefined); assert.ok(cache[other.id]);
+  assert.equal(h.requests(), 1); assert.equal(h.timers.size, 0);
+});
+
+test('a shared malformed response rejects all callers and releases the query for retry', async () => {
+  const body = deferred(); let ready = false;
+  const h = harness(async () => ({ ok: true, json: () => ready ? Promise.resolve(payload()) : body.promise }));
+  const waiting = Promise.allSettled([h.search(), h.search()]);
+  body.resolve({}); assert.deepEqual((await waiting).map(row => row.status), ['rejected', 'rejected']);
+  ready = true; assert.equal((await h.search()).length, 1);
+  assert.equal(h.requests(), 2); assert.equal(h.timers.size, 0);
+});
+
+test('shared timeout releases the query and expired JSON cannot replace a fresh result', async () => {
+  const body = deferred(); let ready = false;
+  const h = harness(async () => ({ ok: true, json: () => ready ? Promise.resolve(payload()) : body.promise }));
+  const waiting = Promise.allSettled([h.search(), h.search()]);
+  await flush(); await h.advance(10000);
+  assert.deepEqual((await waiting).map(row => row.status), ['rejected', 'rejected']);
+  ready = true; await h.search(); body.resolve(payload('Late character')); await flush();
+  const rows = await h.search();
+  assert.equal(rows[0].cast.some(row => row.name === 'Late character'), false);
+  assert.equal(h.requests(), 2); assert.equal(h.timers.size, 0);
+});
+
+test('different name queries keep independent requests and results', async () => {
+  const h = harness(async (url, init) => ({ ok: true, json: async () => payload(JSON.parse(init.body).variables.search) }));
+  await Promise.all([h.search('Killua'), h.search('Gon')]);
+  assert.equal(h.requests(), 2); assert.equal(h.timers.size, 0);
+});
+
+test('concurrent valid empty results share the request and remain cached', async () => {
+  const body = deferred(), h = harness(async () => ({ ok: true, json: () => body.promise }));
+  const waiting = Promise.all([h.search(), h.search()]);
+  body.resolve({ data: { Page: { characters: [] } } });
+  assert.deepEqual((await waiting).map(rows => rows.length), [0, 0]);
+  assert.equal((await h.search()).length, 0);
+  assert.equal(h.requests(), 1); assert.equal(h.values.size, 0); assert.equal(h.timers.size, 0);
+});
