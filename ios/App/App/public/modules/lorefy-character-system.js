@@ -2144,22 +2144,34 @@
       : assets[assetKey];
     if (!global.document || !src) return Promise.resolve();
     if (bundledCharacterCatalogPromises[src]) return bundledCharacterCatalogPromises[src];
-    bundledCharacterCatalogPromises[src] = new Promise(function (resolve) {
+    var resolveAttempt;
+    var attempt = new Promise(function (resolve) { resolveAttempt = resolve; });
+    bundledCharacterCatalogPromises[src] = attempt;
+    var script = null, timer = null, settled = false;
+    function finish(failed) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      if (script) { script.onload = null; script.onerror = null; }
+      if (failed) {
+        if (bundledCharacterCatalogPromises[src] === attempt) delete bundledCharacterCatalogPromises[src];
+        if (script) { try { script.remove(); } catch (e) {} }
+      }
+      resolveAttempt();
+    }
+    try {
       var selector = 'script[data-lorefy-character-asset="' + src + '"]';
-      if (global.document.querySelector(selector)) { resolve(); return; }
-      var script = global.document.createElement("script");
+      if (global.document.querySelector(selector)) { finish(false); return attempt; }
+      script = global.document.createElement("script");
       script.src = src;
       script.async = true;
       script.dataset.lorefyCharacterAsset = src;
-      script.onload = resolve;
-      script.onerror = function () {
-        delete bundledCharacterCatalogPromises[src];
-        script.remove();
-        resolve();
-      };
+      script.onload = function () { finish(false); };
+      script.onerror = function () { finish(true); };
+      timer = setTimeout(function () { finish(true); }, 10000);
       global.document.head.appendChild(script);
-    });
-    return bundledCharacterCatalogPromises[src];
+    } catch (e) { finish(true); }
+    return attempt;
   }
 
   function loadCast(work, options) {

@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v536-character-response';
+const CACHE = 'lorefy-v537-character-assets';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',
@@ -78,7 +78,7 @@ const CORE = [
   './modules/lorefy-comics-taxonomy.js?v=20261008-arabic-library-v2',
   './uploads/lorefy-catalog-quality.js?v=20261011-explore-v2',
   './modules/lorefy-bibliographic-overrides.js?v=20261008-arabic-breadth-v4',
-  './modules/lorefy-character-system.js?v=20261019-character-response-v1',
+  './modules/lorefy-character-system.js?v=20261019-character-assets-v1',
   './modules/lorefy-v2.js?v=20261016-statistics-activity-v1',
   './modules/lorefy-ui-runtime.js?v=20261019-render-recovery-v1',
   './vendor/react.production.min.js',

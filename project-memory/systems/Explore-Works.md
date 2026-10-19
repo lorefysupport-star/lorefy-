@@ -29,6 +29,9 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 ## الشخصيات
 
+[[bugs/LF-080-Character-Catalog-Loading]] bounds bundled-script loading, releases
+failed attempts for retry and isolates late callbacks before provider fallback.
+
 [[bugs/LF-079-Character-Search-Response]] rejects invalid list/record structures
 before caching; same-query retry can recover, while valid empty results still
 cache normally. It is not a full-provider or bibliographic data-quality approval.

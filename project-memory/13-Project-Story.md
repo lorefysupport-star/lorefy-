@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[bugs/LF-080-Character-Catalog-Loading]] يضبط انتظار ملف الشخصيات قبل جلب
+المزوّدين ويحمي إعادة المحاولة من callbacks قديمة؛2276 اختبارًا ناجحًا.
+[[sessions/2026-10-19-Character-Catalog-Loading]] يحدد حدود التحقق بالمصدر.
+
 [[bugs/LF-079-Character-Search-Response]] يتبع إصلاح المهلة بمنع كاش الردود
 المعطوبة والفراغ الوهمي الدائم.2268 اختبارًا ناجحًا واسترداد في React الفعلي؛
 [[sessions/2026-10-19-Character-Search-Response]] يوضح حدود الفحص.
