@@ -2134,11 +2134,11 @@
 
   var bundledCharacterCatalogPromises = {};
   function ensureBundledCharacterCatalogs(work) {
+    if (isNormalBook(work)) return Promise.resolve();
     var assets = global.LOREFY_CHARACTER_ASSETS || {};
-    var type = String(work && work.type || "");
-    var assetKey = type === "كوميكس"
+    var assetKey = isComicWork(work)
       ? "comics"
-      : /رواية|كتاب|لايت نوفل|ويب نوفل/.test(type) ? "literary" : "visual";
+      : isTextWork(work) ? "literary" : "visual";
     var src = Array.isArray(assets)
       ? assets[assetKey === "visual" ? 0 : assetKey === "literary" ? 1 : 2]
       : assets[assetKey];

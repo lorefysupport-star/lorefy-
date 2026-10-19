@@ -46,3 +46,19 @@ test('a timed-out bundle without verified cast is a retryable failure, never a s
  const h=harness('',false),first=observe(h.api.loadCast(h.work));await h.expire();assert.equal(first.state,'rejected');assert.equal(h.values.size,0);
  h.window.LorefyCharacterCatalog[h.work.id]=h.cast;const next=h.api.loadCast(h.work);h.scripts[1].onload();assert.equal((await next).length,1);
 });
+
+for(const [type,key] of [['Novel','literary'],['Light Novel','literary'],['Web Novel','literary'],['Comic','comics'],['Comics','comics'],['رواية','literary'],['Manga','visual']])test(`bundled character asset follows the shared work taxonomy: ${type}`,async()=>{
+ const h=harness();h.window.LOREFY_CHARACTER_ASSETS={visual:'/visual.js',literary:'/literary.js',comics:'/comics.js'};
+ h.work.type=type;h.cast[0].image='https://example.com/hero.jpg';
+ const result=observe(h.api.loadCast(h.work));assert.equal(h.scripts[0].src,`/${key}.js`);h.scripts[0].onload();await flush();
+ assert.equal(result.state,'fulfilled');assert.equal(h.timers.size,0);
+});
+for(const type of ['Book','كتاب'])test(`excluded ordinary books never load an unrelated character bundle: ${type}`,async()=>{
+ const h=harness();h.window.LOREFY_CHARACTER_ASSETS={visual:'/visual.js',literary:'/literary.js',comics:'/comics.js'};h.work.type=type;const result=observe(h.api.loadCast(h.work));
+ assert.equal(h.scripts.length,0);await flush();assert.equal(result.state,'fulfilled');assert.equal(result.value.length,0);assert.equal(h.timers.size,0);
+});
+test('a recognized novel identity routes to literary characters even without a type label',async()=>{
+ const h=harness();h.work.id='ol-novel-fixture';h.work.type='';h.cast[0].image='https://example.com/hero.jpg';
+ h.window.LorefyCharacterCatalog={[h.work.id]:h.cast};h.window.LOREFY_CHARACTER_ASSETS={visual:'/visual.js',literary:'/literary.js'};
+ const result=observe(h.api.loadCast(h.work));assert.equal(h.scripts[0].src,'/literary.js');h.scripts[0].onload();await flush();assert.equal(result.state,'fulfilled');
+});

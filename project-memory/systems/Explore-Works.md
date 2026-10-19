@@ -29,6 +29,9 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 ## الشخصيات
 
+[[bugs/LF-081-Character-Catalog-Taxonomy]] reuses shared work-type predicates for
+bundled assets in Arabic/English and skips excluded ordinary-book downloads.
+
 [[bugs/LF-080-Character-Catalog-Loading]] bounds bundled-script loading, releases
 failed attempts for retry and isolates late callbacks before provider fallback.
 
