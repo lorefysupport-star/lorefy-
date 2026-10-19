@@ -6,6 +6,10 @@ aliases: ["إطارات", "بنرات", "حزم", "مجانية", "ثيم", "ز�
 ---
 # المظهر والإطارات والحزم
 
+[[sessions/2026-10-19-All-Followups-Acceptance]] records a fresh39-bundle browser
+geometry matrix with468 owner/visitor layouts and three visually reviewed visitor
+screenshots. [[bugs/LF-003-Frame-Device-QA]] remains needs-device; no art changed.
+
 متابعة الواجهة [[sessions/2026-10-18-Apple-UI-Surfaces]] توحّد تبويبات
 الرئيسية والاستكشاف وتحسّن أدوات المكتبة والإعدادات والمواد الوظيفية، مع
 2119 اختبارًا ناجحًا وفحص AR/EN في المتصفح دون تغيير أصول الإطارات.
