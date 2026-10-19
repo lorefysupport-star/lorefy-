@@ -84,3 +84,65 @@ test('permission denied never registers, and opt-in enables before the native re
  h.window.Capacitor.Plugins.PushNotifications.register=async()=>{assert.equal(h.values.get('lorefy.native.push.enabled.v1'),'true');registered++;};
  assert.equal(await h.api.setPushEnabled(true),true);assert.equal(registered,1);
 });
+
+test('disabling push while permission checking is pending cannot be undone by its late grant',async()=>{
+ const h=harness(true);let resolvePermission,registered=0;
+ h.window.Capacitor.Plugins.PushNotifications={checkPermissions:()=>new Promise(r=>resolvePermission=r),register:async()=>registered++,unregister:async()=>{}};
+ const enable=h.api.setPushEnabled(true);await new Promise(r=>setImmediate(r));
+ await h.api.setPushEnabled(false);resolvePermission({receive:'granted'});
+ assert.equal(await enable,false);assert.equal(registered,0);
+ assert.equal(h.values.get('lorefy.native.push.enabled.v1'),'false');
+});
+
+test('disabling push while the native prompt is open prevents registration after accepting it',async()=>{
+ const h=harness(true);let resolvePrompt,registered=0;
+ h.window.Capacitor.Plugins.PushNotifications={checkPermissions:async()=>({receive:'prompt'}),requestPermissions:()=>new Promise(r=>resolvePrompt=r),register:async()=>registered++,unregister:async()=>{}};
+ const enable=h.api.setPushEnabled(true);await new Promise(r=>setImmediate(r));
+ await h.api.setPushEnabled(false);resolvePrompt({receive:'granted'});
+ assert.equal(await enable,false);assert.equal(registered,0);
+ assert.equal(h.values.get('lorefy.native.push.enabled.v1'),'false');
+});
+
+test('a new explicit opt-in is independent of an old cancelled permission check',async()=>{
+ const h=harness(true);let resolveOld,checks=0,registered=0;
+ h.window.Capacitor.Plugins.PushNotifications={checkPermissions:()=>++checks===1?new Promise(r=>resolveOld=r):Promise.resolve({receive:'granted'}),register:async()=>registered++,unregister:async()=>{}};
+ const old=h.api.setPushEnabled(true);await new Promise(r=>setImmediate(r));
+ await h.api.setPushEnabled(false);const current=h.api.setPushEnabled(true);
+ await new Promise(r=>setImmediate(r));resolveOld({receive:'denied'});
+ assert.equal(await old,false);assert.equal(await current,true);
+ assert.equal(registered,1);assert.equal(h.values.get('lorefy.native.push.enabled.v1'),'true');
+});
+
+test('simultaneous opt-ins share one current permission and registration attempt',async()=>{
+ const h=harness(true);let checks=0,registered=0,resolvePermission;
+ h.window.Capacitor.Plugins.PushNotifications={checkPermissions:()=>{checks++;return new Promise(r=>resolvePermission=r);},register:async()=>registered++};
+ const a=h.api.setPushEnabled(true),b=h.api.setPushEnabled(true);resolvePermission({receive:'granted'});
+ assert.equal(await a,true);assert.equal(await b,true);assert.equal(checks,1);assert.equal(registered,1);
+});
+
+test('a late native registration failure cannot disable a newer successful opt-in',async()=>{
+ const h=harness(true);let rejectOld,registrations=0;
+ h.window.Capacitor.Plugins.PushNotifications={checkPermissions:async()=>({receive:'granted'}),register:()=>++registrations===1?new Promise((r,j)=>rejectOld=j):Promise.resolve(),unregister:async()=>{}};
+ const old=h.api.setPushEnabled(true).catch(e=>e);await new Promise(r=>setImmediate(r));
+ await h.api.setPushEnabled(false);assert.equal(await h.api.setPushEnabled(true),true);
+ rejectOld(Error('old registration failed'));assert.match((await old).message,/old registration failed/);
+ assert.equal(h.values.get('lorefy.native.push.enabled.v1'),'true');
+});
+
+test('a registration completing after opt-out is unregistered again without enabling push',async()=>{
+ const h=harness(true);let resolveRegistration,unregistered=0;
+ h.window.Capacitor.Plugins.PushNotifications={checkPermissions:async()=>({receive:'granted'}),register:()=>new Promise(r=>resolveRegistration=r),unregister:async()=>unregistered++};
+ const old=h.api.setPushEnabled(true);await new Promise(r=>setImmediate(r));
+ await h.api.setPushEnabled(false);assert.equal(unregistered,1);resolveRegistration();
+ assert.equal(await old,false);assert.equal(unregistered,2);
+ assert.equal(h.values.get('lorefy.native.push.enabled.v1'),'false');
+});
+
+test('late opt-out cleanup does not unregister the newer native opt-in',async()=>{
+ const h=harness(true);let resolveCleanup,unregistered=0;
+ h.window.LorefyBackend.unregisterPushDevice=()=>new Promise(r=>resolveCleanup=r);
+ h.window.Capacitor.Plugins.PushNotifications={checkPermissions:async()=>({receive:'granted'}),register:async()=>{},unregister:async()=>unregistered++};
+ const off=h.api.setPushEnabled(false);assert.equal(await h.api.setPushEnabled(true),true);
+ resolveCleanup(true);assert.equal(await off,false);assert.equal(unregistered,0);
+ assert.equal(h.values.get('lorefy.native.push.enabled.v1'),'true');
+});

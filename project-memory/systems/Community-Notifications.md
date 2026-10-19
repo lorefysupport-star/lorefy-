@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[bugs/APNS-003-Permission-Intent-Race]] guards the current push preference across
+permission and registration awaits. Seven new cases and2251 full-suite tests
+pass; [[sessions/2026-10-19-Push-Permission-Intent]]. No live send/deploy/build.
+
 [[bugs/LF-075-Pull-Refresh-Lifecycle]] adds coalesced pull refresh and bounded
 community loading, removes unconditional30s polling and avoids rebuilding an
 identical post feed. [[sessions/2026-10-19-Pull-Refresh-Lifecycle]] tracks acceptance.

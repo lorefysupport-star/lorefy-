@@ -16,6 +16,7 @@
   var cloudUnsubscribe = null;
   var started = false;
   var pushRegistration = null;
+  var pushPreferenceEpoch = 0;
   var pendingToken = '';
   var connectionEpoch = 0, refreshEpoch = 0, activeAccount = '';
   var shownNotifications = new Set(), bannerTimer = null;
@@ -110,37 +111,46 @@
   }
 
   async function requestPermissionAndRegister() {
-    if (pushRegistration) return pushRegistration;
-    pushRegistration = registerWithPermission();
-    try { return await pushRegistration; }
-    finally { pushRegistration = null; }
+    if (pushRegistration && pushRegistration.epoch === pushPreferenceEpoch) return pushRegistration.promise;
+    var job = { epoch:++pushPreferenceEpoch, promise:null };
+    pushRegistration = job;
+    job.promise = registerWithPermission(job.epoch);
+    try { return await job.promise; }
+    finally { if (pushRegistration === job) pushRegistration = null; }
   }
 
-  async function registerWithPermission() {
+  async function registerWithPermission(epoch) {
     var push = pushPlugin();
     if (!isNative() || !push) return false;
     var permission = await push.checkPermissions();
+    if (epoch !== pushPreferenceEpoch) return false;
     if (!permission || permission.receive === "prompt") permission = await push.requestPermissions();
+    if (epoch !== pushPreferenceEpoch) return false;
     if (!permission || permission.receive !== "granted") {
       try { root.localStorage.setItem(PUSH_ENABLED_KEY, "false"); } catch (error) {}
       return false;
     }
     try { root.localStorage.setItem(PUSH_ENABLED_KEY, 'true'); } catch (error) {}
     try { await push.register(); }
-    catch(error) { root.localStorage.setItem(PUSH_ENABLED_KEY,'false'); throw error; }
+    catch(error) { if (epoch === pushPreferenceEpoch) root.localStorage.setItem(PUSH_ENABLED_KEY,'false'); throw error; }
+    if (epoch !== pushPreferenceEpoch) {
+      if (root.localStorage.getItem(PUSH_ENABLED_KEY) === 'false' && push.unregister) await push.unregister();
+      return false;
+    }
     return true;
   }
 
   async function setPushEnabled(enabled) {
     enabled = enabled === true;
     if (enabled) return requestPermissionAndRegister();
+    var epoch = ++pushPreferenceEpoch;
     try { root.localStorage.setItem(PUSH_ENABLED_KEY, 'false'); } catch (error) {}
     var backend = root.LorefyBackend;
     try {
       if (backend && typeof backend.unregisterPushDevice === "function") await backend.unregisterPushDevice(installationId());
     } finally {
       var push = pushPlugin();
-      if (isNative() && push && push.unregister) await push.unregister();
+      if (epoch === pushPreferenceEpoch && isNative() && push && push.unregister) await push.unregister();
     }
     return false;
   }
