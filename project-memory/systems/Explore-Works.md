@@ -29,6 +29,10 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 ## الشخصيات
 
+[[bugs/LF-082-Character-Provider-Body]] bounds eighteen remaining provider JSON
+reads separately from header deadlines, retaining pagination, fallbacks and
+partial-cast flags. It neither aborts transport nor caps total traversal time.
+
 [[bugs/LF-081-Character-Catalog-Taxonomy]] reuses shared work-type predicates for
 bundled assets in Arabic/English and skips excluded ordinary-book downloads.
 

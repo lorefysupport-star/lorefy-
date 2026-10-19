@@ -755,10 +755,10 @@ test('literary works can fall back to a dedicated Wikipedia character page', asy
 
 test('the browser loads the image-scoped character system after the catalog', () => {
   const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(index, /modules\/lorefy-character-system\.js\?v=20261019-character-taxonomy-v1/);
+  assert.match(index, /modules\/lorefy-character-system\.js\?v=20261019-character-provider-body-v1/);
   assert.match(index, /modules\/lorefy-catalog-updater\.js\?v=20260726-catalog-safety-v4/);
   const catalogAt = index.indexOf('uploads/lorefy-character-catalog.js?v=20260722-character-images-v2');
-  const systemAt = index.indexOf('modules/lorefy-character-system.js?v=20261019-character-taxonomy-v1');
+  const systemAt = index.indexOf('modules/lorefy-character-system.js?v=20261019-character-provider-body-v1');
   const appAt = index.indexOf('uploads/files/lorefy-app.js');
   assert.ok(catalogAt > 0 && catalogAt < systemAt && systemAt < appAt);
   assert.doesNotMatch(index.slice(index.indexOf('window.LOREFY_DEFERRED_ASSETS')), /lorefy-character/);

@@ -451,6 +451,12 @@
     });
   }
 
+  function readResponseJson(response, ms) {
+    return withTimeout(Promise.resolve().then(function () {
+      return response.json();
+    }), ms || 9000);
+  }
+
   function wait(ms) {
     return new Promise(function (resolve) { setTimeout(resolve, ms); });
   }
@@ -465,7 +471,7 @@
             error.retryable = response.status === 429 || response.status >= 500;
             throw error;
           }
-          return response.json();
+          return readResponseJson(response, timeoutMs);
         })
         .catch(function (error) {
           if (attempt >= retries || error.retryable === false) throw error;
@@ -548,7 +554,7 @@
     }), 9000)
       .then(function (response) {
         if (!response.ok) throw new Error("jikan " + response.status);
-        return response.json();
+        return readResponseJson(response, 9000);
       })
       .then(function (json) {
         var cast = normalizeJikanRows(json && json.data);
@@ -610,7 +616,7 @@
       return withTimeout(fetch(requestUrl, { headers: { Accept: "application/vnd.api+json" } }), 9000)
         .then(function (response) {
           if (!response.ok) throw new Error("kitsu " + response.status);
-          return response.json();
+          return readResponseJson(response, 9000);
         })
         .then(function (json) {
           pages.push(normalizeKitsuPage(json));
@@ -644,7 +650,7 @@
     return withTimeout(fetch(url, { headers: { Accept: "application/vnd.api+json" } }), 9000)
       .then(function (response) {
         if (!response.ok) throw new Error("kitsu " + response.status);
-        return response.json();
+        return readResponseJson(response, 9000);
       })
       .then(function (json) {
         var rows = asArray(json && json.data);
@@ -666,7 +672,7 @@
     return anilistRequest({ query: query, variables: variables })
       .then(function (response) {
         if (!response.ok) throw new Error("anilist " + response.status);
-        return response.json();
+        return readResponseJson(response, 9000);
       })
       .then(function (json) {
         var errorStatus = anilistErrorStatus(json);
@@ -901,7 +907,7 @@
       return withTimeout(fetch(api + "?" + params.toString(), { headers: { Accept: "application/json" } }), 3500)
         .then(function (response) {
           if (!response.ok) throw new Error("fandom discovery " + response.status);
-          return response.json();
+          return readResponseJson(response, 3500);
         })
         .then(function (json) {
           var siteName = json && json.query && json.query.general && json.query.general.sitename || "";
@@ -929,7 +935,7 @@
       headers: { Accept: "application/json" }
     }), 7000).then(function (response) {
       if (!response.ok) throw new Error("fandom subcategories " + response.status);
-      return response.json();
+      return readResponseJson(response, 7000);
     }).then(function (json) {
       var titles = asArray(json && json.query && json.query.categorymembers)
         .map(function (row) { return String(row && row.title || ""); })
@@ -978,7 +984,7 @@
             headers: { Accept: "application/json" }
           }), 12000).then(function (response) {
             if (!response.ok) throw new Error("fandom category " + response.status);
-            return response.json();
+            return readResponseJson(response, 12000);
           }).catch(function (error) {
             if ((Number(attempt) || 0) < 1) {
               return wait(500).then(function () { return requestCategoryPage(params, 1); });
@@ -1414,7 +1420,7 @@
       }), 9000)
         .then(function (response) {
           if (!response.ok) throw new Error("fandom images " + response.status);
-          return response.json();
+          return readResponseJson(response, 9000);
         });
     })).then(function (responses) {
       var byTitle = {};
@@ -1451,7 +1457,7 @@
     return withTimeout(fetch(api + "?" + params.toString(), { headers: { Accept: "application/json" } }), 7000)
       .then(function (response) {
         if (!response.ok) throw new Error("fandom image search " + response.status);
-        return response.json();
+        return readResponseJson(response, 7000);
       })
       .then(function (json) {
         var pages = ((json.query || {}).pages) || {};
@@ -1492,7 +1498,7 @@
     }), 7000)
       .then(function (response) {
         if (!response.ok) throw new Error("commons images " + response.status);
-        return response.json();
+        return readResponseJson(response, 7000);
       })
       .then(function (json) {
         var pages = ((json.query || {}).pages) || {};
@@ -1740,7 +1746,7 @@
     }), 9000)
       .then(function (response) {
         if (!response.ok) throw new Error("wikidata " + response.status);
-        return response.json();
+        return readResponseJson(response, 9000);
       });
   }
 
@@ -1897,7 +1903,7 @@
     }), 9000)
       .then(function (response) {
         if (!response.ok) throw new Error("wikipedia search " + response.status);
-        return response.json();
+        return readResponseJson(response, 9000);
       })
       .then(function (json) {
         var rows = ((json.query || {}).search) || [];
@@ -1925,7 +1931,7 @@
     }), 9000)
       .then(function (response) {
         if (!response.ok) throw new Error("wikipedia character search " + response.status);
-        return response.json();
+        return readResponseJson(response, 9000);
       })
       .then(function (json) {
         var rows = ((json.query || {}).search) || [];
@@ -1952,7 +1958,7 @@
     }), 9000)
       .then(function (response) {
         if (!response.ok) throw new Error("wikipedia parse " + response.status);
-        return response.json();
+        return readResponseJson(response, 9000);
       })
       .then(function (json) {
         return (((json.parse || {}).wikitext || {})["*"]) || "";
@@ -2036,7 +2042,7 @@
     }), 9000)
       .then(function (response) {
         if (!response.ok) throw new Error("fandom " + response.status);
-        return response.json();
+        return readResponseJson(response, 9000);
       })
       .then(function (json) {
         var text = (((json.parse || {}).wikitext || {})["*"]) || "";
@@ -2090,7 +2096,7 @@
     }), 9000)
       .then(function (response) {
         if (!response.ok) throw new Error("jikan pictures " + response.status);
-        return response.json();
+        return readResponseJson(response, 9000);
       })
       .then(function (json) { return normalizeJikanPictureRows(json && json.data); });
   }
@@ -2103,7 +2109,7 @@
     }), 9000)
       .then(function (response) {
       if (!response.ok) throw new Error("jikan character search " + response.status);
-      return response.json();
+      return readResponseJson(response, 9000);
     })
       .then(function (json) {
         var match = bestJikanCharacterMatch(json && json.data, name);
