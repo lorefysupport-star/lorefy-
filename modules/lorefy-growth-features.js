@@ -4288,7 +4288,7 @@
       } else {
         currentWork.hidden = true;
         headingTitle.textContent = query ? uiText("الشخصيات المطابقة", "Matching characters") : uiText("الشخصيات التي قيّمتها", "Characters you rated");
-        headingMeta.textContent = query ? (nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : uiText("يمكنك أيضاً اختيار عمل من نتائج البحث", "You can also select a work from search results")) : uiText("أو ابحث عن أي عمل لإظهار شخصياته", "Or search for a work to see its characters");
+        headingMeta.textContent = query ? (nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : pickerMode==="works" ? uiText("يمكنك أيضاً اختيار عمل من نتائج البحث", "You can also select a work from search results") : "") : uiText("أو ابحث عن أي عمل لإظهار شخصياته", "Or search for a work to see its characters");
       }
       renderWorkResults(query);
       candidates.textContent = "";
@@ -4301,7 +4301,7 @@
           : activeWorkId
             ? uiText("لم نجد شخصيات موثقة لهذا العمل. جرّب عملاً آخر.", "No verified characters found for this work. Try another work.")
             : query
-              ? (profileTopCharacterSearchWorks(query).length ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته.", "Select a work from search results to see its characters.") : uiText("لا توجد شخصيات أو أعمال مطابقة. جرّب اسماً آخر.","No matching characters or works. Try another name."))
+              ? (pickerMode==="works" && !workResults.hidden ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته.", "Select a work from search results to see its characters.") : uiText("لا توجد شخصيات أو أعمال مطابقة. جرّب اسماً آخر.","No matching characters or works. Try another name."))
               : uiText("ابحث باسم أي عمل، ثم اختر الشخصيات المفضلة لديك.", "Search for a work, then choose your favorite characters.");
         candidates.appendChild(el("p", { class: "lf-profile-rated-characters-empty", role: "status", text: emptyText }));
       } else {
@@ -4361,7 +4361,7 @@
       if(pickerMode==="works"&&!activeWorkId&&query.length>=2){nameSearchTimer=setTimeout(function(){if(!editorActive()||epoch!==nameSearchEpoch)return;var loader=global.LorefyCatalogLoader;if(loader&&loader.loadAuthor)loader.loadAuthor(query,function(){return editorActive()&&epoch===nameSearchEpoch;}).then(function(){if(editorActive()&&epoch===nameSearchEpoch)render();}).catch(function(){});},450);}
       clearTimeout(search.__renderTimer);search.__renderTimer=setTimeout(function(){if(ov.body.isConnected)render();},180);
     });
-    clearSearch.addEventListener("click", function () { nameSearchEpoch++;clearTimeout(nameSearchTimer);nameSearchBusy=false;search.value = ""; render(); search.focus(); });
+    clearSearch.addEventListener("click", function () { nameSearchEpoch++;clearTimeout(nameSearchTimer);clearTimeout(search.__renderTimer);nameSearchBusy=false;nameSearchFailed=false;search.value = ""; render(); search.focus(); });
     save.addEventListener("click", function () {
       if (!editorActive()) return;
       setProfileTopCharacterSelection(draft);

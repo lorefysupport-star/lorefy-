@@ -26,7 +26,7 @@ function find(root, className) {
 function all(root) { return [root, ...root.children.flatMap(all)]; }
 function harness(options = {}) {
   let owner = 'account-a', selection = [], overlay, timers = new Map(), serial = 0;
-  const writes = [], searches = [], messages = [], loads = [];
+  const writes = [], searches = [], messages = [], loads = [], workQueries = [];
   let provider = () => Promise.resolve([]);
   const item = { workId: 'work', character: { key: 'hero', name: options.name || 'Hero' }, workTitle: options.workTitle || 'Work', score: 5 };
   const scope = {
@@ -41,7 +41,7 @@ function harness(options = {}) {
     profileTopCharacterRefKey: ref => ref?.characterKey || '', profileTopCharacterRef: row => ({ characterKey: row.character.key, character: row.character }),
     profileTopCharacterFromRef: ref => ref ? item : null,
     setProfileTopCharacterSelection: draft => writes.push({ owner, draft: JSON.stringify(draft) }), syncProfileTopCharacters() {},
-    profileTopCharacterSearchText: value => value.toLowerCase(), profileTopCharacterSearchWorks: query => options.works && query ? [{ id: 'work', title: 'Work' }] : [],
+    profileTopCharacterSearchText: value => value.toLowerCase(), profileTopCharacterSearchWorks: query => { workQueries.push(query); return options.works && query ? [{ id: 'work', title: 'Work' }] : []; },
     mlTitleOf: work => work.title || '', mlCoverOf: () => '',
     profileRatedCharacterPortrait: () => new Element('span'), profileRatedCharacterStars: () => new Element('span'),
     uiText: (ar, en) => options.lang === 'ar' ? ar : en, toastSafe: message => messages.push(message), mlWorks: () => [],
@@ -67,12 +67,38 @@ function harness(options = {}) {
     start = source.indexOf('  function hydrateProfileRatedCharacters(');
     vm.runInNewContext(source.slice(start, source.indexOf('  function syncProfileRatedCharacters(', start)), scope);
   }
-  return { scope, writes, searches, messages, loads, provider: fn => { provider = fn; }, setOwner: value => { owner = value; },
+  return { scope, writes, searches, messages, loads, workQueries, provider: fn => { provider = fn; }, setOwner: value => { owner = value; },
     open(saved = []) { selection = saved; scope.openProfileTopCharactersEditor(); return overlay; },
     stateChanged() { scope.profileRatedCharacterStateChanged({ detail: { key: 'lorefy.activeUser.v1' } }); },
     runTimers() { const pending = [...timers.values()]; timers.clear(); pending.forEach(fn => fn()); }, timers };
 }
 const flush = async () => { for (let i = 0; i < 12; i++) await Promise.resolve(); };
+
+test('empty character-name results never scan the work catalog or suggest hidden work rows', async () => {
+  const h = harness({ works: true }), ov = h.open(), input = find(ov.page, 'lf-top-characters-editor-search');
+  h.scope.global.LorefyCharacterSystem.characterMatches = () => false;
+  input.value = 'Unknown'; input.handlers.input(); h.runTimers(); await flush();
+  h.searches[0].resolve([]); await flush();
+  assert.equal(h.workQueries.filter(Boolean).length, 0);
+  assert.match(ov.body.textContent, /No matching characters/);
+  assert.doesNotMatch(ov.body.textContent, /Select a work from search results|You can also select a work/);
+});
+
+test('the explicit work-search tab continues to scan and display matching works', () => {
+  const h = harness({ works: true }), ov = h.open();
+  find(ov.page, 'lf-character-picker-modes').children[1].click();
+  const input = find(ov.page, 'lf-top-characters-editor-search');
+  input.value = 'Unknown'; input.handlers.input(); h.runTimers();
+  assert.ok(h.workQueries.includes('unknown'));
+  assert.match(find(ov.page, 'lf-top-characters-editor-work-results').textContent, /Work/);
+});
+
+test('clearing a character query cancels both queued search and queued render', () => {
+  const h = harness(), ov = h.open(), input = find(ov.page, 'lf-top-characters-editor-search');
+  input.value = 'Hero'; input.handlers.input(); assert.equal(h.timers.size, 2);
+  find(ov.page, 'lf-top-characters-editor-search-clear').click();
+  assert.equal(h.timers.size, 0); assert.equal(input.value, '');
+});
 
 test('a stale character editor cannot save into the next account', () => {
   const h = harness(), ov = h.open(); h.setOwner('account-b');

@@ -29,6 +29,10 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 ## الشخصيات
 
+[[bugs/LF-077-Character-Editor-Extra-Work]] removes a full catalog scan for hidden
+work results and the redundant queued render after Clear. This is operation-count
+acceptance, not a physical-device latency certification.
+
 [[bugs/LF-076-Character-Search-Identity]] documents reproduced name-search leakage
 across ordinary books, ambiguous titles and conflicting provider identities.
 [[sessions/2026-10-19-Character-Search-Identity]] separates source acceptance from
