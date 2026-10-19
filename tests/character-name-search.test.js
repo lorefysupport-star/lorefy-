@@ -22,3 +22,51 @@ test('all editable inputs have a shared iOS-safe font rule without locking user 
 });
 
 test('a broad character response batches its shared cache write instead of serializing per character',async()=>{const h=setup(50);const rows=await h.api.searchCharacters('Killua',[h.work]);assert.equal(rows.length,1);assert.equal(h.writes(),1);assert.equal(h.values.get('lorefy.user.profileTopCharacters.v1'),'unchanged');});
+
+test('ordinary books cannot receive manga character matches through a shared title or provider field',async()=>{
+ const h=setup(),book={id:'ol-book-hunter',title:h.work.title,type:'Book',malId:26};
+ const rows=await h.api.searchCharacters('Killua',[book]);
+ assert.equal(rows.length,0);assert.equal(h.writes(),0);
+});
+
+test('ordinary books with a previously contaminated cache stay out of character name results',()=>{
+ const h=setup(),book={id:'book-hunter',title:h.work.title,type:'كتاب'};
+ h.values.set('lorefy.characterCastCache.v20',JSON.stringify({[book.id]:{cast:[{name:'Killua Zoldyck'}],ts:Date.now()}}));
+ assert.equal(h.api.cachedCharacterMatches('Killua',[book]).length,0);
+});
+
+test('a matching title cannot override a contradictory provider identity',async()=>{
+ const h=setup(),other={id:'mal-manga-999-other',title:h.work.title,type:'Manga'};
+ assert.equal((await h.api.searchCharacters('Killua',[other])).length,0);
+ assert.equal(h.writes(),0);
+});
+
+test('ambiguous titles without provider identities do not assign a cast arbitrarily',async()=>{
+ const h=setup(),a={id:'local-a',title:h.work.title,type:'Manga'},b={...a,id:'local-b'};
+ assert.equal((await h.api.searchCharacters('Killua',[a,b])).length,0);
+ assert.equal(h.writes(),0);
+});
+
+test('an unambiguous title remains a fallback for works with no provider identity',async()=>{
+ const h=setup(),work={id:'local-hunter',title:h.work.title,type:'Manga'};
+ const rows=await h.api.searchCharacters('Killua',[work]);
+ assert.equal(rows.length,1);assert.equal(rows[0].workId,work.id);
+});
+
+test('provider identity beats an unrelated duplicate title and books never displace the manga',async()=>{
+ const h=setup(),book={id:'book-hunter',title:h.work.title,type:'Book'},other={id:'mal-manga-999-other',title:h.work.title,type:'Manga'};
+ const rows=await h.api.searchCharacters('Killua',[h.work,book,other]);
+ assert.deepEqual(Array.from(rows,r=>r.workId),[h.work.id]);
+});
+
+test('conflicting AniList and MAL identities cannot bind a character to either work',async()=>{
+ const h=setup(),other={id:'local-other',anilistId:30026,title:'Other',type:'Manga'};
+ assert.equal((await h.api.searchCharacters('Killua',[h.work,other])).length,0);
+ assert.equal(h.writes(),0);
+});
+
+test('a provider match with contradictory secondary identity is rejected',async()=>{
+ const h=setup(),work={...h.work,anilistId:999};
+ assert.equal((await h.api.searchCharacters('Killua',[work])).length,0);
+ assert.equal(h.writes(),0);
+});

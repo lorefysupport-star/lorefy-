@@ -2282,7 +2282,7 @@
     return normalize([character.name,character.latin].concat(character.aliases||[]).join(' ')).indexOf(normalize(query))!==-1;
   }
   function cachedCharacterMatches(query, works) {
-    var result=[],cache=readCache(),byId=new Map((works||[]).map(function(w){return [String(w.id),w];}));
+    var result=[],cache=readCache(),byId=new Map((works||[]).filter(function(w){return !isNormalBook(w);}).map(function(w){return [String(w.id),w];}));
     Object.keys(cache).forEach(function(id){if(!byId.has(id))return;var entry=cache[id],cast=entry&&(!entry.ts||Date.now()-entry.ts<=CACHE_TTL)&&entry.cast;if(cast && cast.some(function(c){return characterMatches(c,query);}))result.push({workId:id,cast:cast});});
     return result;
   }
@@ -2301,9 +2301,38 @@
     if(options.active && !options.active())return [];
     var found=new Map(cached.map(function(row){return [row.workId,row];}));
     var byMal=new Map(),byAni=new Map(),byTitle=new Map(),cache=readCache(),changed=false;
-    (works||[]).forEach(function(w){var keys=sourceKeysForWork(w);if(keys.malId)byMal.set(keys.malId,w);if(keys.anilistId)byAni.set(keys.anilistId,w);workTitleCandidates(w).forEach(function(t){byTitle.set(String(t).toLowerCase(),w);});});
+    function indexUnique(index,key,work){
+      if(!key)return;
+      if(!index.has(key))index.set(key,work);
+      else if(!index.get(key)||String(index.get(key).id)!==String(work.id))index.set(key,null);
+    }
+    (works||[]).forEach(function(w){
+      var keys=sourceKeysForWork(w);if(keys.excluded)return;
+      if(keys.malId)indexUnique(byMal,keys.malId,w);
+      if(keys.anilistId)indexUnique(byAni,keys.anilistId,w);
+      workTitleCandidates(w).forEach(function(t){indexUnique(byTitle,String(t).toLowerCase(),w);});
+    });
     remote.forEach(function(character){(character.media && character.media.nodes || []).forEach(function(media){
-      var title=media.title||{},work=byMal.get(String(media.idMal))||byAni.get(String(media.id))||byTitle.get(String(title.english||'').toLowerCase())||byTitle.get(String(title.romaji||'').toLowerCase());
+      var title=media.title||{},malWork=byMal.get(String(media.idMal)),aniWork=byAni.get(String(media.id));
+      if(malWork&&aniWork&&String(malWork.id)!==String(aniWork.id))return;
+      var work=malWork||aniWork;
+      if(work){
+        var keys=sourceKeysForWork(work);
+        if(keys.malId&&media.idMal&&keys.malId!==String(media.idMal))return;
+        if(keys.anilistId&&media.id&&keys.anilistId!==String(media.id))return;
+      }else{
+        // A title is only a fallback when it identifies one work without provider IDs.
+        var titles=[title.english,title.romaji,title.native],matches=new Map(),ambiguous=false;
+        titles.forEach(function(t){
+          if(!t)return;var key=String(t).toLowerCase(),candidate=byTitle.get(key);
+          if(byTitle.has(key)&&!candidate)ambiguous=true;
+          if(candidate)matches.set(String(candidate.id),candidate);
+        });
+        if(ambiguous||matches.size!==1)return;
+        work=matches.values().next().value;
+        var fallbackKeys=sourceKeysForWork(work);
+        if(fallbackKeys.malId||fallbackKeys.anilistId)return;
+      }
       if(!work)return;
       var normalized=normalizeAniListEdges([{node:character}]);normalized.forEach(function(c){c.aliases=[character.name.native].concat(character.name.alternative||[]).filter(Boolean);});
       var id=String(work.id),old=cache[id],cast=dedupeCast((old && old.cast || catalogCast(work)).concat(normalized));

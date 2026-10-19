@@ -29,6 +29,11 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 ## الشخصيات
 
+[[bugs/LF-076-Character-Search-Identity]] documents reproduced name-search leakage
+across ordinary books, ambiguous titles and conflicting provider identities.
+[[sessions/2026-10-19-Character-Search-Identity]] separates source acceptance from
+historical Discord records and future device/provider verification.
+
 [character system](../../modules/lorefy-character-system.js) والـcatalogs المؤجلة
 يخدمان اختيار الشخصيات وتقييمها وقوائمها ومشاركتها. لا تخلط بحث شخصية ببحث
 عنوان عمل، ولا تخترع صورًا أو تقييمات عند غياب المصدر.
