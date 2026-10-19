@@ -6,6 +6,10 @@ aliases: ["حساب", "دخول", "مزامنة", "ضياع", "auth", "offline",
 ---
 # الحسابات والمزامنة
 
+[[bugs/LF-075-Pull-Refresh-Lifecycle]] adds read-only account refresh through
+the existing reconciler with strict errors and owner/client/epoch/editor guards.
+Pending local edits stay pending; changed fields update the mounted UI.
+
 ## المسؤولية والمصدر
 
 [[sessions/2026-10-18-Minimal-Entry-Launch]] replaces the illustrated welcome

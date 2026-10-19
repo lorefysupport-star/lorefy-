@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[bugs/LF-075-Pull-Refresh-Lifecycle]] adds coalesced pull refresh and bounded
+community loading, removes unconditional30s polling and avoids rebuilding an
+identical post feed. [[sessions/2026-10-19-Pull-Refresh-Lifecycle]] tracks acceptance.
+
 [[sessions/2026-10-17-Review-Response-Owner]] يربط نتائج نشر/حذف المراجعة والرد
 بالحساب والجلسة اللذين أرسلا الطلب، قبل تعديل الواجهة أو عرض خطأ قديم.
 هذا لا يلغي طلبًا وصل للخادم ولا يغني عن صلاحياته أو ملكية المحرر عند فتحه.

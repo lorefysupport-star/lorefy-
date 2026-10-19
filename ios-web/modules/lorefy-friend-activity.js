@@ -62,6 +62,19 @@
       }).catch(function () { if (current && owner === String(backend.user && backend.user.id || '')) set({owner:owner,rows:[],following:[],loading:false,error:true}); });
       return function () { current=false; };
     },[owner,live,followingKey,reviewKey,refresh]);
+    R.useEffect(function () {
+      if (!live || !root.LorefyPageRefresh) return;
+      var mounted=true;
+      var stop=root.LorefyPageRefresh.register('community-friends',async function (context) {
+        var data=await backend.listFriendRatings();
+        if (!mounted || !context.active() || owner!==String(backend.user && backend.user.id || '')) return false;
+        set({owner:owner,rows:data.ratings,following:data.followingIds,limited:data.limited,loading:false,error:false});
+        var loader=root.LorefyCatalogLoader;
+        if (loader && loader.loadWorks) loader.loadWorks(data.ratings.map(function (row) { return row.work_id; })).catch(function () {});
+        return true;
+      });
+      return function () { mounted=false; stop(); };
+    },[owner,live]);
     var valid=!live || result.owner===owner, loading=live && (!valid || result.loading), error=live && valid && result.error;
     var safety=root.LorefyProductTools && root.LorefyProductTools.core.safety;
     var hidden=safety ? safety.getBlockedUsers().concat(safety.getMutedUsers()) : [];

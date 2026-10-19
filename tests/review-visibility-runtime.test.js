@@ -23,7 +23,7 @@ function effectHarness() {
   const window = { LorefyBackend:api, addEventListener:(name,fn)=>listeners.set(name,fn), removeEventListener(){}, dispatchEvent(){} };
   const scope = { window, console, document:{hidden:false,addEventListener(){},removeEventListener(){}},
     CustomEvent:function(name,options){this.type=name;this.detail=options?.detail;},
-    setInterval:()=>0,clearInterval(){},useEffect:fn=>fn(),
+    setTimeout,clearTimeout,setInterval:()=>0,clearInterval(){},useEffect:fn=>fn(),
     Io(){},co(){},po(){},fo:fn=>{ reviews = fn(reviews); },Ye(){},S(){},setCloudFollowers(){},setCloudFollowing(){}
   };
   vm.runInNewContext(app.slice(start,end+6),scope);

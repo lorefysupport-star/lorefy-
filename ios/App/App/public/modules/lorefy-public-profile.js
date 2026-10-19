@@ -10,6 +10,15 @@
     const bases = { instagram:'https://instagram.com/', tiktok:'https://tiktok.com/@', twitter:'https://x.com/', youtube:'https://youtube.com/@', telegram:'https://t.me/' };
     return bases[kind] ? bases[kind] + encodeURIComponent(String(value).replace(/^@/, '')) : '';
   };
+  const reviewRow = row => {
+    const author = row.profile || {}, reactions = row.reactions || {}, mine = reactions.mine || {};
+    return { id:row.id, userId:row.user_id, user:author.name || author.username, un:author.username,
+      av:author.avatar, mid:row.work_id, r:Number(row.rating) || 0, txt:row.body || '',
+      rec:row.recommend === true, recVal:row.recommend === true ? 'yes' : row.recommend === false ? 'no' : null,
+      imgs:row.images || [], ts:Date.parse(row.created_at), likes:Number(reactions.heart) || 0,
+      likeCount:Number(reactions.like) || 0, myHeart:!!mine.heart, myLike:!!mine.like,
+      comments:(row.comments || []).length, spoiler:!!row.spoiler };
+  };
 
   root.LorefyPublicProfile = function PublicProfile(props) {
     const initial = props.profile || {};
@@ -59,18 +68,28 @@
       if (preview) collection.then(rows => { if (active) setReviews(rows); });
       else backend.listReviewCollection({ userId:initial.id }).then(rows => {
         if (!active) return;
-        setReviews(rows.map(row => {
-          const author = row.profile || {}, reactions = row.reactions || {}, mine = reactions.mine || {};
-          return { id:row.id, userId:row.user_id, user:author.name || author.username, un:author.username,
-            av:author.avatar, mid:row.work_id, r:Number(row.rating) || 0, txt:row.body || '',
-            rec:row.recommend === true, recVal:row.recommend === true ? 'yes' : row.recommend === false ? 'no' : null,
-            imgs:row.images || [], ts:Date.parse(row.created_at), likes:Number(reactions.heart) || 0,
-            likeCount:Number(reactions.like) || 0, myHeart:!!mine.heart, myLike:!!mine.like,
-            comments:(row.comments || []).length, spoiler:!!row.spoiler };
-        }));
+        setReviews(rows.map(reviewRow));
       }).catch(() => { if (active) setError('تعذر تحميل بعض معلومات الحساب. حاول مجدداً.'); });
       return () => { active = false; };
     }, [initial.id, attempt, remote]);
+
+    React.useEffect(() => {
+      if (!remote || !root.LorefyPageRefresh) return;
+      let mounted = true;
+      const owner = backend.user && backend.user.id;
+      const stop = root.LorefyPageRefresh.register('profile-visitor', async context => {
+        const current = () => mounted && ready && context.active() && backend === root.LorefyBackend
+          && owner === (backend.user && backend.user.id);
+        if (!current()) return false;
+        const [value, rows] = await Promise.all([backend.getPublicProfile(initial.id),
+          preview ? Promise.resolve(props.reviews || []) : backend.listReviewCollection({userId:initial.id})]);
+        if (!current()) return false;
+        if (!value || value.id !== initial.id) throw new Error('Profile unavailable');
+        setSnapshot(value); setReviews(preview ? rows : rows.map(reviewRow)); setError('');
+        return true;
+      });
+      return () => { mounted = false; stop(); };
+    }, [initial.id, remote, ready]);
 
     const username = profile.username || profile.un || '';
     const avatar = safeImage(profile.avatar || profile.av);

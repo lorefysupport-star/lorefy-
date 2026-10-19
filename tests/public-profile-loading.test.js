@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const path = require('node:path');
 
 function harness() {
-  const states = [], effects = [], requests = [], follows = [];
+  const states = [], effects = [], requests = [], follows = [], handlers = new Map();
   let cursor = 0;
   const React = {
     createElement: (type, props, ...children) => ({ type, props: props || {}, children: children.flat(Infinity) }),
@@ -22,7 +22,7 @@ function harness() {
       }
     }
   };
-  const window = { React, NenIcons: {}, LorefyBackend: {
+  const window = { React, NenIcons: {}, LorefyPageRefresh:{register:(key,fn)=>{handlers.set(key,fn);return()=>{if(handlers.get(key)===fn)handlers.delete(key);};}}, LorefyBackend: {
     mode: 'live',
     getPublicProfile(id) { return new Promise((resolve, reject) => requests.push({ id, resolve, reject })); },
     listReviewCollection: async () => [],
@@ -30,7 +30,7 @@ function harness() {
   } };
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../modules/lorefy-public-profile.js'), 'utf8'), { window, URL });
   return {
-    requests, follows,
+    requests, follows, handlers,
     render(id = 'reader-a') {
       cursor = 0;
       const tree = window.LorefyPublicProfile({ profile: { id, username: id }, workById: () => null });
@@ -97,4 +97,13 @@ test('switching readers immediately hides old counts and ignores a late response
   await settle();
   assert.equal(count(app.render('reader-b')), 5);
   assert.equal(followButton(app.render('reader-b')).props['aria-pressed'], false);
+});
+
+test('pull refresh reloads the visited reader without changing the viewer and ignores cancellation',async()=>{
+  const app=harness();app.render();app.requests[0].resolve({id:'reader-a',follower_count:4});await settle();app.render();
+  assert.equal(typeof app.handlers.get('profile-visitor'),'function');
+  const job=app.handlers.get('profile-visitor')({active:()=>true});
+  app.requests[1].resolve({id:'reader-a',follower_count:7});assert.equal(await job,true);assert.equal(count(app.render()),7);
+  const cancelled=app.handlers.get('profile-visitor')({active:()=>false});
+  assert.equal(await cancelled,false);assert.equal(app.requests.length,2);
 });

@@ -59,8 +59,8 @@ test('reply targeting preserves the draft and closing a thread does not discard 
 
 test('a feed response from an abandoned screen cannot overwrite the current screen', () => {
   const source = read('modules/lorefy-community.js');
-  assert.match(source, /request !== state\.feedRequest/);
-  assert.match(source, /feedPage !== state\.page/);
+  assert.match(source, /request === state\.feedRequest && feedPage === state\.page/);
+  assert.match(source, /if \(!job\.current\(\)\) return false/);
 });
 
 test('chapter discussion supports owner deletion and reader reporting without public draft migration', () => {

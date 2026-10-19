@@ -213,53 +213,74 @@
     }).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });
   }
 
-  async function loadFollowedProfileIds(force) {
+  async function loadFollowedProfileIds(force, current) {
     if (state.followsLoaded && !force) return state.followedIds;
     var ids = [];
     var backend = global.LorefyBackend;
     try {
       if (backend && backend.getFollowedProfileIds) ids = await backend.getFollowedProfileIds();
-    } catch (error) { console.warn("[Lorefy] followed profiles:", error); }
+    } catch (error) {
+      if (!isDemo()) throw error;
+      console.warn("[Lorefy] followed profiles:", error);
+    }
     if (isDemo() && (!Array.isArray(ids) || !ids.length) && global.LorefyDemoCommunity && global.LorefyDemoCommunity.buildReaders) {
       ids = global.LorefyDemoCommunity.buildReaders(works().slice(0, 30).map(function (work) { return work.id; }))
         .filter(function (profile) { return profile.is_following === true; })
         .map(function (profile) { return profile.id; });
     }
+    if (current && !current()) return [];
     state.followedIds = Array.from(new Set((Array.isArray(ids) ? ids : []).map(String)));
     state.followsLoaded = true;
     return state.followedIds;
   }
 
-  async function loadPosts(force, older) {
-    if (state.loading || (state.loaded && !force)) return;
+  function loadPosts(force, older, context) {
+    if (state.postJob && state.postJob.current()) return state.postJob.promise;
+    if (state.loaded && !force) return Promise.resolve(true);
     state.loading = true;
     state.error = false;
     var request = state.feedRequest = (state.feedRequest || 0) + 1;
     var feedPage = state.page;
-    var accountId = String(global.LorefyBackend && global.LorefyBackend.user && global.LorefyBackend.user.id || '');
+    var backend = global.LorefyBackend;
+    var accountId = String(backend && backend.user && backend.user.id || '');
+    var expired = false, timer, job = {};
+    function ownRequest() { return request === state.feedRequest && feedPage === state.page; }
+    job.current = function () { return !expired && ownRequest() && backend === global.LorefyBackend
+      && accountId === String(backend && backend.user && backend.user.id || '') && (!context || !context.active || context.active()); };
+    var deadline = new Promise(function (_, reject) { timer = global.setTimeout(function () {
+      expired = true; reject(new Error('Community refresh timeout'));
+    }, 14000); });
+    var work = (async function () {
     try {
-      var backend = global.LorefyBackend;
       if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {
         var cursor = older && state.posts[state.posts.length - 1];
         var rows = (await backend.listCommunityPosts({ limit:60, before:cursor || null })).map(normalizePost);
-        if (request !== state.feedRequest || feedPage !== state.page || accountId !== String(backend.user && backend.user.id || '')) return;
+        if (!job.current()) return false;
         state.hasMore = rows.length === 60;
         var merged = older ? state.posts.concat(rows) : rows;
         state.posts = Array.from(new Map(merged.map(function (row) { return [row.id, row]; })).values());
       }
       else if (isDemo()) state.posts = demoPosts();
       else throw new Error('Community connection is unavailable.');
-      await loadFollowedProfileIds(false);
-      if (request !== state.feedRequest || feedPage !== state.page) return;
+      await loadFollowedProfileIds(!!force, job.current);
+      if (!job.current()) return false;
       state.loaded = true;
-      renderPostFeed();
+      return true;
     } catch (error) {
-      if (request !== state.feedRequest || feedPage !== state.page) return;
-      console.warn("[Lorefy] community posts:", error);
-      state.error = true;
-      state.loaded = true;
-      renderPostFeed();
-    } finally { if (request === state.feedRequest && feedPage === state.page) { state.loading = false; renderPostFeed(); } }
+      if (!job.current()) return false;
+      throw error;
+    }
+    })();
+    job.promise = Promise.race([work, deadline]).catch(function () {
+      if (ownRequest()) { state.error = true; state.loaded = true; }
+      return false;
+    }).finally(function () {
+      expired = true; global.clearTimeout(timer);
+      if (state.postJob === job) state.postJob = null;
+      if (ownRequest()) { state.loading = false; renderPostFeed(); }
+    });
+    state.postJob = job;
+    return job.promise;
   }
 
   function localSavePost(input) {
@@ -965,6 +986,11 @@
     var list = host.querySelector(".lf-community-post-list");
     if (!list) return;
     var posts = visibleCommunityPosts();
+    var signature = JSON.stringify([posts, state.filter, !!state.error, !!state.loading,
+      !!state.hasMore, state.reviewFeed || {}, doc.documentElement.lang, Math.floor(Date.now() / 60000)]);
+    if (host.__lorefyFeedSignature === signature && host.__lorefyFeedList === list) return;
+    host.__lorefyFeedSignature = signature;
+    host.__lorefyFeedList = list;
     list.textContent = "";
     if (state.error) {
       var retry = el('button', { type:'button', class:'lf-community-retry', text:uiText('تعذر تحميل المنشورات · إعادة المحاولة', 'Could not load posts · Retry') });
@@ -1248,6 +1274,7 @@
   }
 
   function boot() {
+    if (global.LorefyPageRefresh) global.LorefyPageRefresh.register('community-posts', function (context) { return loadPosts(true, false, context); });
     enhance();
     ensureOwnerPostMetric();
     if (!state.loaded) loadPosts(false).then(ensureOwnerPostMetric);

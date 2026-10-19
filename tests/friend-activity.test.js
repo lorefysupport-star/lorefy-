@@ -39,3 +39,15 @@ test('changing accounts while a shelf request runs discards the previous account
   const b=backendHarness(()=>{throw Error('should not query');});b.getFollowedProfileIds=async()=>{b.user={id:'other'};return ['11111111-1111-4111-8111-111111111111'];};
   await assert.rejects(b.listFriendRatings(),e=>e.code==='LOREFY_SESSION_INVALID');
 });
+test('page refresh awaits current friend shelves and unregisters on unmount',async()=>{
+ const effects=[],states=[],handlers=new Map();
+ const window={React:{createElement:(type,props,...children)=>({type,props,children}),useState:value=>{const i=states.length;states.push(value);return[value,next=>{states[i]=typeof next==='function'?next(states[i]):next;}];},useEffect:fn=>effects.push(fn)},
+  LorefyBackend:{mode:'live',user:{id:'owner'},listFriendRatings:async()=>({ratings:[],followingIds:['friend'],limited:false})},
+  LorefyPageRefresh:{register:(name,fn)=>{handlers.set(name,fn);return()=>handlers.delete(name);}},addEventListener(){},removeEventListener(){}};
+ vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../modules/lorefy-friend-activity.js'),'utf8'),{window});
+ window.LorefyFriendActivity.Rails({language:'en',following:[],reviews:[],getWork:()=>null});
+ const cleanup=effects.map(fn=>fn());await new Promise(r=>setImmediate(r));
+ assert.equal(typeof handlers.get('community-friends'),'function');
+ assert.equal(await handlers.get('community-friends')({active:()=>true}),true);
+ assert.equal(states[0].following[0],'friend');cleanup.forEach(fn=>fn&&fn());assert.equal(handlers.size,0);
+});

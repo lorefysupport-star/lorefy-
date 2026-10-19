@@ -766,7 +766,36 @@
     },
 
     /* ── سحب حالة المستخدم من السحابة → localStorage ── */
-    pull: async function(userId){
+    refreshAccount: async function(options){
+      options = options || {};
+      if (this.mode !== "live") return this.mode === "demo";
+      var request = mediaRequestScope(this), backend = this;
+      if (request.active !== request.owner) throw invalidSessionError();
+      var current = function(){ return mediaRequestCurrent(backend, request) && (!options.active || options.active()); };
+      if (!current()) throw invalidSessionError();
+      if (this._accountRefresh && this._accountRefresh.current()) return this._accountRefresh.promise;
+      var before = gather(), job = {current:current};
+      job.promise = (async function(){
+        try {
+          await backend.pull(request.owner, {strict:true, current:current});
+          if (!current()) throw invalidSessionError();
+          return true;
+        } finally {
+          if (current()) {
+            var after = gather();
+            Object.keys(Object.assign({}, before, after)).forEach(function(key){
+              if (before[key] !== after[key] && global.dispatchEvent && global.CustomEvent)
+                global.dispatchEvent(new global.CustomEvent("lorefy:stored-state", {detail:{key:key}}));
+            });
+          }
+          if (backend._accountRefresh === job) backend._accountRefresh = null;
+        }
+      })();
+      this._accountRefresh = job;
+      return job.promise;
+    },
+    pull: async function(userId, options){
+      options = options || {};
       if (this.mode !== "live") return false;
       var pulled = false;
       var activeUser = readLS(ACTIVE_USER_KEY);
@@ -782,7 +811,11 @@
       var pullGeneration = this._pullGeneration = (this._pullGeneration || 0) + 1;
       try{
         var r = await this.client.from("user_state").select("data,version").eq("user_id", userId).maybeSingle();
-        if (this._pullGeneration !== pullGeneration || readLS(ACTIVE_USER_KEY) !== userId) return false;
+        if (options.current && !options.current()) throw invalidSessionError();
+        if (this._pullGeneration !== pullGeneration || readLS(ACTIVE_USER_KEY) !== userId) {
+          if (options.strict) throw invalidSessionError();
+          return false;
+        }
         if (r.error) throw r.error;
         // Writes can arrive while the network request is pending. Never apply
         // a pre-request journal over a newer rating or deletion.
@@ -845,9 +878,10 @@
           clearPendingState();
           writeStateBase(userId, {}, stateVersion);
         }
-      }catch(e){ console.warn("[Lorefy] pull:", e); }
-      try{ await this._hydrateProfile(userId); }
-      catch(e){ console.warn("[Lorefy] profile hydrate:", e); }
+      }catch(e){ if (options.strict) throw e; console.warn("[Lorefy] pull:", e); }
+      if (options.current && !options.current()) throw invalidSessionError();
+      try{ await this._hydrateProfile(userId, options); }
+      catch(e){ if (options.strict) throw e; console.warn("[Lorefy] profile hydrate:", e); }
       return pulled;
     },
 
@@ -1015,13 +1049,14 @@
       }
       return true;
     },
-    _hydrateProfile: async function(userId){
+    _hydrateProfile: async function(userId, options){
+      options = options || {};
       var generation = this._pullGeneration;
       var identityAtStart = readLS("lorefy.identity.v1");
       var socialsAtStart = readLS("lorefy.user.socials.v2");
       var backend = this;
       var current = function(){
-        return readLS(ACTIVE_USER_KEY) === userId && backend._pullGeneration === generation
+        return (!options.current || options.current()) && readLS(ACTIVE_USER_KEY) === userId && backend._pullGeneration === generation
           && readLS("lorefy.identity.v1") === identityAtStart
           && !Object.prototype.hasOwnProperty.call(readPendingState(), "lorefy.identity.v1");
       };
@@ -1052,10 +1087,16 @@
         genres:Array.isArray(profile.genres) ? profile.genres : (identity.genres || []),
         isPrivate:profile.is_private === true
       });
-      writeLS("lorefy.identity.v1", JSON.stringify(identity));
-      if (readLS("lorefy.user.socials.v2") === socialsAtStart && profile.social_links && typeof profile.social_links === "object" && Object.keys(profile.social_links).length){
-        writeLS("lorefy.user.socials.v2", JSON.stringify(profile.social_links));
-      }
+      // Hydration is a remote read, not a new user edit. Suppress observation
+      // only for these synchronous writes, never while awaiting the network.
+      var applyingRemote = this._isApplyingRemote;
+      this._isApplyingRemote = true;
+      try {
+        writeLS("lorefy.identity.v1", JSON.stringify(identity));
+        if (readLS("lorefy.user.socials.v2") === socialsAtStart && profile.social_links && typeof profile.social_links === "object" && Object.keys(profile.social_links).length){
+          writeLS("lorefy.user.socials.v2", JSON.stringify(profile.social_links));
+        }
+      } finally { this._isApplyingRemote = applyingRemote; }
       return true;
     },
 

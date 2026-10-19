@@ -1,0 +1,39 @@
+.lf-app .lf-page-refresh {
+  position: absolute;
+  inset-block-start: calc(env(safe-area-inset-top, 0px) + 8px);
+  inset-inline-start: calc(50% - 22px);
+  z-index: 125;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--ui-line, #dce1e5);
+  border-radius: 50%;
+  background: var(--ui-bg, #fff);
+  color: var(--ui-ink, #18252b);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(var(--refresh-pull, 0px));
+  box-shadow: 0 2px 8px #00000014;
+}
+.lf-app .lf-page-refresh[hidden] { display: none; }
+.lf-app .lf-page-refresh:focus-visible,
+.lf-app .lf-page-refresh:not([data-state="idle"]) { opacity: 1; }
+.lf-app .lf-page-refresh:focus-visible,
+.lf-app .lf-page-refresh[data-state="error"] { pointer-events: auto; }
+.lf-app .lf-page-refresh:focus-visible { outline: 2px solid var(--ui-accent, #087c83); outline-offset: 3px; }
+.lf-page-refresh svg { width: 20px; height: 20px; }
+.lf-page-refresh[data-state="armed"] svg { transform: rotate(180deg); }
+.lf-page-refresh[data-state="refreshing"] svg { animation: lf-refresh-spin .8s linear infinite; }
+.lf-page-refresh-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.lf-page-refresh[data-state="error"] .lf-page-refresh-status {
+  width: max-content; max-width: min(260px, 80vw); height: auto; clip-path: none;
+  top: 49px; padding: 6px 10px; border: 1px solid var(--ui-line, #dce1e5);
+  background: var(--ui-bg, #fff); color: var(--ui-ink, #18252b); border-radius: 6px;
+  font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.5;
+  white-space: normal; text-align: center;
+}
+@keyframes lf-refresh-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .lf-page-refresh[data-state="refreshing"] svg { animation: none; }
+}
