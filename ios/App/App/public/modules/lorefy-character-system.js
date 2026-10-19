@@ -2292,9 +2292,11 @@
     var cached=cachedCharacterMatches(query,works),key=query.toLowerCase(),remote=nameSearchCache.get(key);
     if(!remote){
       var request='query($search:String){Page(perPage:50){characters(search:$search,sort:FAVOURITES_DESC){id name{full native alternative} image{large medium} media(type:MANGA,perPage:10){nodes{id idMal title{romaji english native}}}}}}';
-      var response=await withTimeout(fetch(catalogEndpoint('anilist','https://graphql.anilist.co'),{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({query:request,variables:{search:query}})}),10000,'character search');
-      if(!response.ok)throw new Error('Character search unavailable');
-      var json=await response.json();if(json.errors)throw new Error('Character search unavailable');
+      var json=await withTimeout(fetch(catalogEndpoint('anilist','https://graphql.anilist.co'),{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({query:request,variables:{search:query}})}).then(function(response){
+        if(!response.ok)throw new Error('Character search unavailable');
+        return response.json();
+      }),10000);
+      if(json.errors)throw new Error('Character search unavailable');
       remote=json.data && json.data.Page && json.data.Page.characters || [];nameSearchCache.set(key,remote);
       if(nameSearchCache.size>40)nameSearchCache.delete(nameSearchCache.keys().next().value);
     }

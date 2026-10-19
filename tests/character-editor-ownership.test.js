@@ -74,6 +74,21 @@ function harness(options = {}) {
 }
 const flush = async () => { for (let i = 0; i < 12; i++) await Promise.resolve(); };
 
+test('an active character-search timeout releases loading and permits a same-query retry', async () => {
+  const h = harness(), ov = h.open(), input = find(ov.page, 'lf-top-characters-editor-search');
+  h.scope.global.LorefyCharacterSystem.characterMatches = () => false;
+  h.scope.global.LorefyCharacterSystem.searchCharacters = () => new Promise((resolve, reject) => h.searches.push({ resolve, reject }));
+  input.value = 'Unknown'; input.handlers.input(); h.runTimers(); await flush();
+  assert.match(ov.body.textContent, /Searching characters/);
+  h.searches[0].reject(Error('timeout')); await flush();
+  assert.match(ov.body.textContent, /Character search unavailable/);
+  assert.doesNotMatch(ov.body.textContent, /Searching characters/);
+  input.handlers.input(); h.runTimers(); await flush(); assert.equal(h.searches.length, 2);
+  h.searches[1].resolve([]); await flush();
+  assert.doesNotMatch(ov.body.textContent, /Character search unavailable|Searching characters/);
+  assert.equal(h.writes.length, 0);
+});
+
 test('empty character-name results never scan the work catalog or suggest hidden work rows', async () => {
   const h = harness({ works: true }), ov = h.open(), input = find(ov.page, 'lf-top-characters-editor-search');
   h.scope.global.LorefyCharacterSystem.characterMatches = () => false;

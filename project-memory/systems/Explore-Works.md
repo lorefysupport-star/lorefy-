@@ -29,6 +29,10 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 
 ## الشخصيات
 
+[[bugs/LF-078-Character-Search-Deadline]] bounds both headers and JSON for name
+search in one ten-second budget; late data cannot populate either cache. Other
+provider paths and physical-device performance remain separate acceptance.
+
 [[bugs/LF-077-Character-Editor-Extra-Work]] removes a full catalog scan for hidden
 work results and the redundant queued render after Clear. This is operation-count
 acceptance, not a physical-device latency certification.
