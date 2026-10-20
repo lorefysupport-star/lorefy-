@@ -114,8 +114,9 @@
 .lf-explore-feature-copy > span { font-size:12px; color:var(--ui-muted); overflow-wrap:anywhere; }
 .lf-explore-feature-copy .lf-explore-feature-link { display:flex; align-items:center; gap:5px; margin-top:2px; color:var(--ui-action); }
 .lf-explore-feature-pause { position:absolute; inset-inline-end:0; top:0; width:44px; height:44px; display:grid; place-items:center; color:var(--ui-action) !important; }
-.lf-explore-feature-controls { display:flex; justify-content:center; align-items:center; height:44px; }
+.lf-explore-feature-controls { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; min-height:44px; }
 .lf-explore-feature-controls > button { display:grid; place-items:center; width:44px; height:44px; padding:0; color:var(--ui-action); }
+.lf-explore-feature-controls > .lf-explore-feature-rotation { width:auto; min-width:60px; padding-inline:8px; border-radius:8px; background:var(--ui-fill); font-size:12px; }
 .lf-explore-feature-dot > span { display:block; width:5px; height:5px; background:var(--ui-line); }
 .lf-explore-feature-dot[aria-pressed='true'] > span { width:17px; background:var(--ui-action); }
 .lf-explore-browse { padding-top:10px; }

@@ -434,10 +434,11 @@
         row.appendChild(art);
         var copy = el('span', 'lf-chapter-copy');
         copy.appendChild(el('span', 'lf-chapter-number', 'الفصل ' + number));
-        var headline = el('span', 'lf-chapter-title', metadata && metadata.sourceFor(info.id) ? 'جاري جلب عنوان الفصل' : 'عنوان الفصل غير متوفر');
+        var headline = el('span', 'lf-chapter-title');
         headline.dir = 'auto'; copy.appendChild(headline);
         copy.appendChild(el('span', 'lf-chapter-meta', ''));
         copy.appendChild(el('span', 'lf-chapter-date', '')); row.appendChild(copy);
+        updateChapterTitle(row, info.chapterDetails[number] && info.chapterDetails[number].title, !!(metadata && metadata.sourceFor(info.id)));
         var review = reviews[String(number)] || null;
         var summary = el('span', 'lf-chapter-summary');
         if (review && review.rating) { summary.appendChild(icon('feather', 15)); summary.appendChild(el('span', '', 'تقييمك ' + review.rating + '/5')); }
@@ -506,6 +507,14 @@
     });
   }
 
+  function updateChapterTitle(row, value, loading) {
+    var headline = row.querySelector('.lf-chapter-title');
+    var title = String(value || '').trim();
+    row.dataset.titleState = title ? 'ready' : loading ? 'loading' : 'missing';
+    headline.hidden = !title && !loading;
+    headline.textContent = title || (loading ? text('جارٍ تحميل عنوان الفصل…', 'Loading chapter title…') : '');
+  }
+
   function enrichRows(section, info, chapters) {
     if (!metadata || !metadata.sourceFor(info.id) || !chapters.length) return;
     var rangeKey = chapters.join(','); section.dataset.range = rangeKey;
@@ -516,8 +525,7 @@
         var row = section.querySelector('.lf-chapter-row[data-chapter="' + number + '"]');
         var detail = details[number];
         if (!row) return;
-        var title = row.querySelector('.lf-chapter-title');
-        title.textContent = detail && detail.title || 'عنوان الفصل غير متوفر';
+        updateChapterTitle(row, detail && detail.title, false);
         var extra = [];
         if (detail && detail.volume) extra.push((english() ? 'Volume ' : 'المجلد ') + detail.volume);
         if (detail && detail.pages) extra.push(detail.pages + (english() ? ' pages' : ' صفحة'));
@@ -535,7 +543,10 @@
       });
     }).catch(function () {
       if (!section.isConnected || section.dataset.range !== rangeKey) return;
-      section.querySelectorAll('.lf-chapter-title').forEach(function (title) { title.textContent = 'عنوان الفصل غير متوفر'; });
+      section.querySelectorAll('.lf-chapter-row').forEach(function (row) {
+        var detail = info.chapterDetails[row.dataset.chapter];
+        updateChapterTitle(row, detail && detail.title, false);
+      });
     });
   }
 

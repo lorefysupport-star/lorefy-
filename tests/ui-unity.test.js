@@ -32,16 +32,16 @@ test('updated UI assets use fresh cache keys', () => {
     'modules/lorefy-v2.js', 'modules/lorefy-public-profile.js', 'uploads/files/lorefy-app.js',
     'modules/lorefy-catalog-loader.js', 'modules/lorefy-explore-studio.js', 'styles/lorefy-explore-studio.css']) {
     const versions = {
-      'modules/lorefy-growth-features.js':'20261019-character-editor-work-v1',
+      'modules/lorefy-growth-features.js':'20261020-character-editor-recovery-v2',
       'modules/lorefy-public-profile.js':'20261019-page-refresh-v1',
       'modules/lorefy-i18n.js':'20261019-read-intent-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',
-      'uploads/files/lorefy-app.js':'20261019-page-refresh-v1',
+      'uploads/files/lorefy-app.js':'20261021-reader-filter-polish-v1',
       'modules/lorefy-catalog-loader.js':'20261019-search-authors-v1',
       'modules/lorefy-catalog-map-loader.js':'20261018-runtime-cleanup-v1',
       'uploads/lorefy-catalog-summary.js':'20261018-runtime-cleanup-v1',
-      'modules/lorefy-explore-studio.js':'20261018-search-all-formats-v1',
-      'styles/lorefy-explore-studio.css':'20261018-search-suggestions-v1'
+      'modules/lorefy-explore-studio.js':'20261020-carousel-control-v1',
+      'styles/lorefy-explore-studio.css':'20261020-carousel-control-v1'
     };
     const version = versions[asset];
     const versioned = asset + '?v=' + version;

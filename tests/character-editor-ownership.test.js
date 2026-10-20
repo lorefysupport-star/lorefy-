@@ -18,7 +18,7 @@ class Element {
   setAttribute(name, value) { this.attrs[name] = value; }
   addEventListener(name, fn) { this.handlers[name] = fn; }
   click() { this.handlers.click?.(); }
-  focus() {}
+  focus() { this.wasFocused = true; }
 }
 function find(root, className) {
   return [root, ...root.children.flatMap(child => all(child))].find(node => (node.attrs.class || '').split(' ').includes(className));
@@ -97,6 +97,36 @@ test('empty character-name results never scan the work catalog or suggest hidden
   assert.equal(h.workQueries.filter(Boolean).length, 0);
   assert.match(ov.body.textContent, /No matching characters/);
   assert.doesNotMatch(ov.body.textContent, /Select a work from search results|You can also select a work/);
+});
+
+for (const lang of ['ar','en']) test('character editor search tabs support keyboard navigation in '+lang, () => {
+  const h = harness({lang}), ov = h.open(), modes = find(ov.page, 'lf-character-picker-modes');
+  const [characters, works] = modes.children;
+  assert.equal(characters.attrs.tabindex,'0');assert.equal(works.attrs.tabindex,'-1');
+  let prevented = 0;
+  function key(target,value) { modes.handlers.keydown({target,key:value,preventDefault(){prevented++;}}); }
+  key(characters,lang==='ar'?'ArrowLeft':'ArrowRight');
+  assert.equal(works.attrs['aria-selected'],'true');assert.equal(works.attrs.tabindex,'0');
+  assert.equal(characters.attrs.tabindex,'-1');assert.equal(works.wasFocused,true);
+  assert.equal(find(ov.page,'lf-top-characters-editor-search').attrs['aria-label'],lang==='ar'?'ابحث عن عمل':'Search works');
+  key(works,'Home');assert.equal(characters.attrs['aria-selected'],'true');
+  key(characters,'End');assert.equal(works.attrs['aria-selected'],'true');
+  key(works,lang==='ar'?'ArrowRight':'ArrowLeft');assert.equal(characters.attrs['aria-selected'],'true');
+  key(characters,'ArrowDown');assert.equal(prevented,4);
+  assert.equal(h.writes.length,0);
+});
+
+for (const lang of ['ar', 'en']) test('switching search mode clears a prior character failure in ' + lang, async () => {
+  const h = harness({ lang }), ov = h.open(), input = find(ov.page, 'lf-top-characters-editor-search');
+  h.scope.global.LorefyCharacterSystem.characterMatches = () => false;
+  h.scope.global.LorefyCharacterSystem.searchCharacters = () => Promise.reject(Error('offline'));
+  input.value = 'Unknown'; input.handlers.input(); h.runTimers(); await flush();
+  const error = lang === 'ar' ? /تعذر البحث الآن/ : /Character search unavailable/;
+  assert.match(ov.body.textContent, error);
+  find(ov.page, 'lf-character-picker-modes').children[1].click();
+  assert.equal(input.value, '');
+  assert.doesNotMatch(ov.body.textContent, error);
+  assert.equal(h.writes.length, 0);
 });
 
 test('the explicit work-search tab continues to scan and display matching works', () => {
@@ -240,7 +270,7 @@ test('English character editor chrome and accessibility labels are English on fi
   const h = harness(), ov = h.open();
   assert.equal(ov.page.attrs['aria-label'], 'Favorites');
   assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'Save favorites');
-  assert.match(ov.body.textContent, /Your choices/);
+  assert.match(ov.body.textContent, /You choose the characters and their order/);
   for (const node of all(ov.page)) {
     assert.doesNotMatch(node._text + (node.attrs['aria-label'] || ''), /[\u0600-\u06ff]/);
   }
@@ -261,7 +291,7 @@ test('Arabic editor controls remain Arabic', () => {
   const h = harness({ lang: 'ar' }), ov = h.open();
   assert.equal(ov.page.attrs['aria-label'], 'المفضلة');
   assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'حفظ المفضلة');
-  assert.match(ov.body.textContent, /اختيارك أنت/);
+  assert.match(ov.body.textContent, /أنت تحدد الشخصيات وترتيبها/);
 });
 
 test('shared overlay back labels follow the selected language', () => {

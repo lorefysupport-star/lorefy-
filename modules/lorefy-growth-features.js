@@ -4100,7 +4100,7 @@
     }
     profileTopCharacterEditor = { active: editorActive, refresh: render };
     var intro = el("section", { class: "lf-top-characters-editor-intro" }, [
-      el("strong", { text: uiText("اختيارك أنت، وليس ترتيبًا تلقائيًا", "Your choices, not an automatic ranking") }),
+      el("strong", { text: uiText("أنت تحدد الشخصيات وترتيبها", "You choose the characters and their order") }),
       el("p", { text: uiText("اختر الخانة أولاً، ثم اضغط شخصية لاستبدالها مباشرة. ترتيب الخانات هو ترتيب ظهورها في ملفك.", "Select a slot, then choose its character. Slot order matches your profile.") })
     ]);
     var slots = el("div", { class: "lf-top-characters-editor-slots" });
@@ -4122,8 +4122,18 @@
     ]);
     var modes=el("div",{class:"lf-character-picker-modes",role:"tablist","aria-label":uiText("طريقة البحث","Search method")});
     [ ["characters",uiText("الشخصيات","Characters")],["works",uiText("حسب العمل","By work")] ].forEach(function(entry){
-      var modeButton=el("button",{type:"button",role:"tab","aria-selected":entry[0]===pickerMode?"true":"false",text:entry[1]});
-      modeButton.addEventListener("click",function(){pickerMode=entry[0];++nameSearchEpoch;clearTimeout(nameSearchTimer);clearTimeout(search.__renderTimer);nameSearchBusy=false;activeWorkId="";loadingWorkId="";search.value="";Array.from(modes.children).forEach(function(b){b.setAttribute("aria-selected",String(b===modeButton));});search.placeholder=pickerMode==="works"?uiText("ابحث عن عمل","Search works"):uiText("ابحث عن شخصية","Search characters");search.setAttribute("aria-label",search.placeholder);render();search.focus();});modes.appendChild(modeButton);
+      var modeButton=el("button",{type:"button",role:"tab",tabindex:entry[0]===pickerMode?"0":"-1","aria-selected":entry[0]===pickerMode?"true":"false",text:entry[1]});
+      modeButton.addEventListener("click",function(){pickerMode=entry[0];++nameSearchEpoch;clearTimeout(nameSearchTimer);clearTimeout(search.__renderTimer);nameSearchBusy=false;nameSearchFailed=false;activeWorkId="";loadingWorkId="";search.value="";Array.from(modes.children).forEach(function(b){b.setAttribute("aria-selected",String(b===modeButton));b.setAttribute("tabindex",b===modeButton?"0":"-1");});search.placeholder=pickerMode==="works"?uiText("ابحث عن عمل","Search works"):uiText("ابحث عن شخصية","Search characters");search.setAttribute("aria-label",search.placeholder);render();search.focus();});modes.appendChild(modeButton);
+    });
+    modes.addEventListener("keydown",function(event){
+      var buttons=Array.from(modes.children),index=buttons.indexOf(event.target),next=index,rtl=uiText("rtl","ltr")==="rtl";
+      if(index<0)return;
+      if(event.key==="Home")next=0;
+      else if(event.key==="End")next=buttons.length-1;
+      else if(event.key===(rtl?"ArrowLeft":"ArrowRight"))next=(index+1)%buttons.length;
+      else if(event.key===(rtl?"ArrowRight":"ArrowLeft"))next=(index+buttons.length-1)%buttons.length;
+      else return;
+      event.preventDefault();buttons[next].click();buttons[next].focus();
     });
     search.placeholder=uiText("ابحث عن شخصية","Search characters");search.setAttribute("aria-label",search.placeholder);
     var workResults = el("div", { class: "lf-top-characters-editor-work-results", hidden: "" });
@@ -4288,7 +4298,7 @@
       } else {
         currentWork.hidden = true;
         headingTitle.textContent = query ? uiText("الشخصيات المطابقة", "Matching characters") : uiText("الشخصيات التي قيّمتها", "Characters you rated");
-        headingMeta.textContent = query ? (nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : pickerMode==="works" ? uiText("يمكنك أيضاً اختيار عمل من نتائج البحث", "You can also select a work from search results") : "") : uiText("أو ابحث عن أي عمل لإظهار شخصياته", "Or search for a work to see its characters");
+        headingMeta.textContent = query ? (nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : pickerMode==="works" ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته", "Select a work to see its characters") : "") : pickerMode==="works" ? uiText("ابحث باسم العمل لإظهار شخصياته", "Search by work title to see its characters") : uiText("ابحث باسم شخصية، أو اختر «حسب العمل»", "Search by character name, or select By work");
       }
       renderWorkResults(query);
       candidates.textContent = "";
@@ -4301,8 +4311,8 @@
           : activeWorkId
             ? uiText("لم نجد شخصيات موثقة لهذا العمل. جرّب عملاً آخر.", "No verified characters found for this work. Try another work.")
             : query
-              ? (pickerMode==="works" && !workResults.hidden ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته.", "Select a work from search results to see its characters.") : uiText("لا توجد شخصيات أو أعمال مطابقة. جرّب اسماً آخر.","No matching characters or works. Try another name."))
-              : uiText("ابحث باسم أي عمل، ثم اختر الشخصيات المفضلة لديك.", "Search for a work, then choose your favorite characters.");
+              ? (pickerMode==="works" ? (!workResults.hidden ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته.", "Select a work from search results to see its characters.") : uiText("لا توجد أعمال مطابقة. جرّب عنواناً آخر.", "No matching works. Try another title.")) : uiText("لا توجد شخصيات مطابقة. جرّب اسماً آخر.", "No matching characters. Try another name."))
+              : pickerMode==="works" ? uiText("ابحث باسم العمل، ثم اختر شخصياتك المفضلة.", "Search by work title, then choose your favorite characters.") : uiText("ابحث باسم شخصية لإضافتها إلى المفضلة.", "Search by character name to add a favorite.");
         candidates.appendChild(el("p", { class: "lf-profile-rated-characters-empty", role: "status", text: emptyText }));
       } else {
         rows.forEach(function (item) {

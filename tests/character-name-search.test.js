@@ -16,6 +16,32 @@ test('character-name search returns verified work-scoped characters through the 
  assert.equal(h.api.cachedCharacterMatches('Killua',[]).length,0);
 });
 test('empty or short queries do not make a remote request',async()=>{const h=setup();assert.equal((await h.api.searchCharacters('K',[h.work])).length,0);assert.equal(h.requests(),0);});
+
+for (const [label, makeCache] of [
+ ['string root', () => 'broken'],
+ ['array root', () => []],
+ ['string cast', id => ({[id]:{cast:'broken'}})],
+ ['object cast', id => ({[id]:{cast:{name:'Killua'}}})],
+ ['null character', id => ({[id]:{cast:[null]}})],
+ ['null entry', id => ({[id]:null})]
+]) test('character search recovers from a malformed persisted cache: '+label,async()=>{
+ const h=setup();
+ h.values.set('lorefy.characterCastCache.v20',JSON.stringify(makeCache(h.work.id)));
+ assert.equal(h.api.cachedCharacterMatches('Killua',[h.work]).length,0);
+ const rows=await h.api.searchCharacters('Killua',[h.work]);
+ assert.equal(rows[0].workId,h.work.id);assert.equal(h.requests(),1);
+ assert.equal(h.values.get('lorefy.user.profileTopCharacters.v1'),'unchanged');
+ const cache=JSON.parse(h.values.get('lorefy.characterCastCache.v20'));
+ assert.equal(Array.isArray(cache),false);
+ assert.equal(cache[h.work.id].cast[0].name,'Killua Zoldyck');
+});
+
+test('repairing a malformed character cache keeps other valid work entries',async()=>{
+ const h=setup(),other={cast:[{name:'Other hero'}],source:'catalog',complete:true,completionVersion:1,ts:Date.now()};
+ h.values.set('lorefy.characterCastCache.v20',JSON.stringify({[h.work.id]:{cast:'broken'},other}));
+ await h.api.searchCharacters('Killua',[h.work]);
+ assert.deepEqual(JSON.parse(h.values.get('lorefy.characterCastCache.v20')).other,other);
+});
 test('all editable inputs have a shared iOS-safe font rule without locking user zoom',()=>{
  const css=fs.readFileSync('styles/lorefy-design-system.css','utf8');assert.match(css,/html:root:root:root:root:root :is\(input[^\n]+font-size:16px!important/);
  const html=fs.readFileSync('index.html','utf8');assert.doesNotMatch(html,/user-scalable=no|maximum-scale=1(?:[",; ])/);

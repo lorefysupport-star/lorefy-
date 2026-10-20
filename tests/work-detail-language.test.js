@@ -26,6 +26,11 @@ function render(lang, options = {}) {
       LorefyWorkRelations:{Section:() => null}, LorefyDesignSystem:{subtitle:() => ''},
       LorefyWorkIdentity:() => null, LorefySavedReviewDraft:() => ({rating:3,text:'keep',moment:'moment'})},
     React:{createElement:(type,props,...children) => ({type,props:props || {},children})}};
+  Object.assign(scope.React,{useState:()=>[false,()=>{}],useRef:()=>({current:null}),useId:()=>':story:',useLayoutEffect:()=>{}});
+  scope.URL=URL;
+  vm.runInNewContext(app.slice(app.indexOf('function LorefyWorkStory('),app.indexOf('function LorefyStableInline(')),scope);
+  const createElement=scope.React.createElement;
+  scope.React.createElement=(type,props,...children)=>type===scope.LorefyWorkStory?type(props):createElement(type,props,...children);
   for (const icon of ['ChevronRight','ChevronLeft','Share2','Bell','BookOpen','ImageIcon','Users','Globe','BookMarked','SBadge','PBar','Av','Stars']) scope[icon] = icon;
   scope.progressSummary = helper('progressSummary','completedProgressFor',scope);
   const guard=app.indexOf('function lorefyReviewRequestScope(');
@@ -43,7 +48,7 @@ test('work commands and accessibility labels render in English without a DOM tra
   const {nodes,text} = render('en', {tab:'reviews'});
   assert.ok(text.includes('Write a review'),text);
   assert.ok(text.includes('Add to library'));
-  assert.ok(text.includes('No reviews yet'));
+  assert.ok(text.includes('No reviews yet. Share your thoughts on this work.'));
   assert.ok(text.includes('Story'));
   assert.ok(nodes.some(node => node.props['aria-label'] === 'Share work'));
   assert.ok(nodes.some(node => node.props.title === 'Change cover'));
@@ -57,6 +62,7 @@ test('Arabic labels and source prose survive an English to Arabic render transit
   assert.ok(render('en').text.includes('نص المصدر العربي'));
   const {text,nodes} = render('ar');
   assert.ok(text.includes('اكتب مراجعة'));
+  assert.ok(render('ar',{tab:'reviews'}).text.includes('ما فيه مراجعات للحين. شارك رأيك في العمل.'));
   assert.ok(text.includes('قارئ عربي'));
   assert.ok(nodes.some(node => node.props['aria-label'] === 'مشاركة العمل'));
 });
@@ -131,4 +137,17 @@ test('localized search keeps library add and pagination actions intact', () => {
   assert.equal(calls[0],'0');
   assert.equal(calls[1](1),121);
   assert.ok(search('ar',true,0).text.includes('لا توجد نتائج'));
+});
+for(const language of ['ar','en'])test('reader filters name the group and expose only the active choice in '+language,()=>{
+ for(const active of ['friends','completed','reading','reviews']){
+  const {nodes,calls}=render(language,{tab:active});
+  const group=nodes.find(n=>n.props.className==='lf-work-reader-tabs');
+  assert.equal(group.props.role,'group');
+  assert.equal(group.props['aria-label'],language==='ar'?'عرض القراء والمراجعات':'Readers and reviews');
+  const buttons=group.children.flat(Infinity).filter(n=>n&&n.type==='button');
+  assert.equal(buttons.filter(n=>n.props['aria-pressed']===true).length,1);
+  assert.equal(buttons[['friends','completed','reading','reviews'].indexOf(active)].props['aria-pressed'],true);
+  for(const button of buttons){assert.equal(button.props.type,'button');button.props.onClick();}
+  assert.deepEqual(calls,['friends','completed','reading','reviews']);
+ }
 });

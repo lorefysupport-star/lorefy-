@@ -94,7 +94,15 @@
 
   function readCache() {
     try {
-      return safeJson(global.localStorage && global.localStorage.getItem(CACHE_KEY), {});
+      var cache = safeJson(global.localStorage && global.localStorage.getItem(CACHE_KEY), {});
+      if (typeof cache !== "object" || Array.isArray(cache)) return {};
+      Object.keys(cache).forEach(function (id) {
+        var entry = cache[id];
+        if (!entry || !Array.isArray(entry.cast) || entry.cast.some(function (character) {
+          return !character || typeof character !== "object" || Array.isArray(character);
+        })) delete cache[id];
+      });
+      return cache;
     } catch (e) {
       return {};
     }

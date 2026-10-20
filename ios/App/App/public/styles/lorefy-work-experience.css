@@ -23,17 +23,36 @@ html[lang=en] .lf-app .lf-work-title-line h1{text-align:left!important}
 .lf-work-action-slot .lf-chapter-quick-actions svg{width:18px;height:18px;flex:none;pointer-events:none}
 .lf-work-action-slot .lf-chapter-more-menu{top:calc(100% + 6px)}
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-facts{display:flex;flex-wrap:wrap;gap:6px 14px;padding-block:12px;border-color:var(--ui-line);font-size:11px;line-height:1.6}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-facts:empty{display:none}
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-section-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;border-bottom:1px solid var(--ui-line);margin:0}
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-section-nav button{min-width:0;min-height:48px;padding:8px 4px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ui-muted);font:inherit;font-size:13px;line-height:1.5}
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-section-nav button[aria-selected=true]{color:var(--ui-action);border-bottom-color:var(--ui-action);font-weight:600}
 .lf-detail-content[data-work-tab='reviews']>:not(.lf-work-identity):not(.lf-work-reader-tabs):not(.lf-work-reader-tabs+div){display:none!important}
 .lf-detail-content[data-work-tab='reviews']>.lf-work-reader-tabs{order:1;margin-top:0!important}
 .lf-detail-content[data-work-tab='reviews']>.lf-work-reader-tabs+div{order:2;min-height:120px}
-.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-story>p{font-size:14px!important;line-height:1.8!important;text-align:start}
+/* Story disclosure uses measured content, with shared theme and typography tokens. */
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-story-heading{margin:0 0 8px;font-size:15px;font-weight:700;line-height:1.6;color:var(--ui-ink)}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-story>.lf-story-copy{font-size:16px!important;font-weight:400!important;line-height:1.8!important;text-align:start;color:var(--ui-ink)!important;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-story>.lf-story-copy[data-expanded=true]{display:block;-webkit-line-clamp:unset;overflow:visible}
+.lf-story-tools{display:flex;flex-wrap:wrap;align-items:center;gap:0 16px}
+.lf-app.lf-app.lf-app .lf-story-tools .lf-story-toggle{display:inline-flex;align-items:center;min-height:44px;min-width:44px;box-sizing:border-box;margin:0;padding:6px 0;border:0;background:none;font:inherit;font-size:13px;line-height:1.6;color:var(--ui-action);text-align:start;cursor:pointer}
+.lf-story-tools button:focus-visible{outline:2px solid var(--ui-action);outline-offset:4px;border-radius:3px}
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-reader-tabs{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border:1px solid var(--ui-line);border-radius:8px;background:var(--ui-fill)}
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-reader-tabs>button{flex:1;min-width:60px;min-height:44px;border-radius:5px;font-size:12px!important;white-space:normal}
+/* Filter appearance follows React state, rather than legacy inline-style selectors. */
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-reader-tabs>button[aria-pressed]{border:0!important;border-bottom:2px solid transparent!important;background:transparent!important;color:var(--ui-muted)!important;line-height:1.6;overflow-wrap:anywhere}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-reader-tabs>button[aria-pressed=true]{background:var(--ui-surface)!important;color:var(--ui-ink)!important;border-bottom-color:var(--ui-action)!important;font-weight:600!important}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-work-reader-tabs>button[aria-pressed]:focus-visible{outline:2px solid var(--ui-action)!important;outline-offset:2px}
+
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-heading h2{font-size:20px}
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-copy{transform:none;padding-block-end:38px}
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R5 V3 */
+/* Hallmark · component: chapter title · genre: modern-minimal · theme: Lorefy
+ * states: ready · loading · missing; existing row interactions are preserved. */
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-row[data-title-state]:not([data-title-state=ready]) .lf-chapter-number{font-size:16px;font-weight:700;color:var(--ui-ink);line-height:1.5}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-row[data-title-state=loading] .lf-chapter-title{font-size:12px;font-weight:400;color:var(--ui-muted);line-height:1.6}
+.lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-title[hidden]{display:none!important}
+
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-reading{margin-block:0 12px!important;padding:12px!important;background:var(--ui-fill);border-radius:8px}
 .lf-app.lf-app.lf-app .lf-detail-content[data-work-tab] .lf-chapter-reading-copy{min-width:0}
 
