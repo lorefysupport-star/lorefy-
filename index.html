@@ -2,13 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
+<script src="modules/lorefy-storage-budget.js?v=20261021-save-quota"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lorefy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/lorefy-ui.css?v=20260619-v2">
-<link rel="stylesheet" href="styles/lorefy-system.css?v=20260925-ui-coherence-v1">
+<link rel="stylesheet" href="styles/lorefy-system.css?v=20261021-sticky-home-tabs">
 <link rel="stylesheet" href="styles/lorefy-redesign.css?v=20260925-ui-coherence-v1">
 <link rel="stylesheet" href="styles/lorefy-apple-ui.css?v=20260925-ui-coherence-v1">
 <link rel="stylesheet" href="styles/lorefy-share-studio.css?v=20261007-discord-followup-v1">
@@ -16,8 +17,8 @@
 <link rel="stylesheet" href="styles/lorefy-reading-diary.css?v=20261018-runtime-cleanup-v1">
   <link rel="stylesheet" href="styles/lorefy-cinema-ui.css?v=20261003-appearance-feather-v2">
   <link rel="stylesheet" href="styles/lorefy-native-layout-fix.css?v=20260921-product-remediation-v1">
-  <link rel="stylesheet" href="styles/lorefy-review-social.css?v=20261015-editor-locale-v1">
-  <link rel="stylesheet" href="styles/lorefy-community.css?v=20261009-public-appearance-v4">
+  <link rel="stylesheet" href="styles/lorefy-review-social.css?v=20261021-stable-rendering">
+  <link rel="stylesheet" href="styles/lorefy-community.css?v=20261021-sticky-home-tabs">
   <link rel="stylesheet" href="styles/lorefy-comics-search.css?v=20260923-comics-identity-v2">
   <link rel="stylesheet" href="styles/lorefy-auth-flow.css?v=20261018-minimal-entry-v1">
   <link rel="stylesheet" href="styles/lorefy-page-refresh.css?v=20261019-page-refresh-v1">
@@ -132,7 +133,7 @@
   html[data-lorefy-adaptive-shell="true"] #statusbar,
   html[data-lorefy-adaptive-shell="true"] .hint{display:none;}
 </style>
-<link rel="stylesheet" href="styles/lorefy-customize.css?v=20261013-final">
+<link rel="stylesheet" href="styles/lorefy-customize.css?v=20261021-local-review">
 <link rel="stylesheet" href="styles/lorefy-work-layout.css?v=20261013-final">
 <link rel="stylesheet" href="styles/lorefy-work-experience.css?v=20261021-chapter-title-hierarchy-v1">
 </head>
@@ -303,7 +304,7 @@
     })();
   </script>
   <script defer src="modules/lorefy-catalog-map-loader.js?v=20261018-runtime-cleanup-v1"></script>
-  <script defer src="modules/lorefy-catalog-loader.js?v=20261019-search-authors-v1"></script>
+  <script defer src="modules/lorefy-catalog-loader.js?v=20261021-search-audit"></script>
   <script defer src="uploads/lorefy-chapter-overrides.js?v=20260616-v23"></script>
   <script defer src="uploads/lorefy-catalog-aliases.js?v=20260622-audit1"></script>
 
@@ -375,7 +376,7 @@
   <link rel="stylesheet" href="styles/lorefy-character-atlas.css?v=20261007-character-atlas-v1">
   <link rel="stylesheet" href="styles/lorefy-work-relations.css?v=20261007-work-relations-v3">
   <link rel="stylesheet" href="styles/lorefy-interface-settings.css?v=20261009-custom-appearance-v1">
-  <link rel="stylesheet" href="styles/lorefy-explore-studio.css?v=20261020-carousel-control-v1">
+  <link rel="stylesheet" href="styles/lorefy-explore-studio.css?v=20261021-explore-refine-v2">
   <link rel="stylesheet" href="styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3">
   <script defer src="modules/lorefy-profile-layout.js?v=20261008-profile-layout-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-profile-shop.css?v=20261013-all-profile-frames-v6">
@@ -399,18 +400,19 @@
   <script defer src="modules/lorefy-work-relations.js?v=20261007-work-relations-v3"></script>
   <script defer src="modules/lorefy-library-view.js?v=20261011-public-profile-layout-v4"></script>
   <script defer src="modules/lorefy-interface-settings.js?v=20261009-custom-appearance-v1"></script>
-  <script defer src="modules/lorefy-explore-studio.js?v=20261020-carousel-control-v1"></script>
+  <script defer src="modules/lorefy-explore-studio.js?v=20261021-search-audit"></script>
   <script defer src="modules/lorefy-preview-readers.js?v=20261011-profile-sections-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-user-experience.css?v=20261015-connection-avatar-v1">
   <script defer src="modules/lorefy-user-experience.js?v=20261015-connection-avatar-v1"></script>
-  <script defer src="modules/lorefy-friend-activity.js?v=20261019-page-refresh-v1"></script>
+  <script defer src="modules/lorefy-friend-activity.js?v=20261021-trim-explore"></script>
   <script defer src="modules/lorefy-page-refresh.js?v=20261019-page-refresh-v1"></script>
-  <script defer src="uploads/files/lorefy-app.js?v=20261021-reader-filter-polish-v1"></script>
+  <script defer src="modules/lorefy-photo-framer.js?v=20261021-local-review"></script>
+  <script defer src="uploads/files/lorefy-app.js?v=20261021-like-stability"></script>
   <script defer src="modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1"></script>
-  <script defer src="modules/lorefy-growth-features.js?v=20261020-character-editor-recovery-v2"></script>
-  <script defer src="modules/lorefy-community.js?v=20261019-page-refresh-v1"></script>
+  <script defer src="modules/lorefy-growth-features.js?v=20261021-like-stability"></script>
+  <script defer src="modules/lorefy-community.js?v=20261021-like-stability"></script>
   <link rel="stylesheet" href="styles/lorefy-profile-sections.css?v=20261018-list-removal-v1">
-  <script defer src="modules/lorefy-profile-sections.js?v=20261018-list-removal-v1"></script>
+  <script defer src="modules/lorefy-profile-sections.js?v=20261021-stable-rendering"></script>
   <script defer src="modules/lorefy-scroll-memory.js?v=20261003-home-social-v2"></script>
   <script defer src="modules/lorefy-share-studio.js?v=20261007-quarter-ratings-v1"></script>
   <script defer src="modules/lorefy-product-core.js?v=20261015-privacy-safety-v1"></script>
@@ -421,7 +423,7 @@
   <script>
   window.LOREFY_DEFERRED_ASSETS = [
       "uploads/lorefy-ar-enrichment.js?v=20260707-lazy-v1",
-      "modules/lorefy-api-catalog.js?v=20261008-arabic-breadth-v4"
+      "modules/lorefy-api-catalog.js?v=20261021-search-audit"
     ];
   </script>
 
@@ -645,7 +647,7 @@
           window.__lorefyGrowthRetryCount = (window.__lorefyGrowthRetryCount || 0) + 1;
           if (window.__lorefyGrowthRetryCount > 3) return;
           var script = document.createElement('script');
-      script.src = 'modules/lorefy-growth-features.js?v=20261017-import-csv-v1' + window.__lorefyGrowthRetryCount + '-' + Date.now();
+      script.src = 'modules/lorefy-growth-features.js?v=20261021-like-stability' + window.__lorefyGrowthRetryCount + '-' + Date.now();
           script.async = false;
           document.head.appendChild(script);
         }, 400);

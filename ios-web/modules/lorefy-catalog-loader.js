@@ -584,6 +584,8 @@
   doc.addEventListener("input", function (event) {
     var target = event && event.target;
     if (!target || target.tagName !== "INPUT" || !target.closest || !target.closest(".lf-search-box")) return;
+    var scopedHost = target.closest("[data-lorefy-search-local], [data-lorefy-catalog-search]");
+    if (scopedHost && scopedHost.getAttribute && (scopedHost.getAttribute("data-lorefy-search-local") != null || scopedHost.getAttribute("data-lorefy-catalog-search") != null)) return;
     var query = target.value;
     // Let controlled inputs consume the event before a parent refresh can
     // restore their previous value. A detached field must not restart a query.
@@ -617,6 +619,16 @@
       return requestSearchResult(query,'',false).then(function (result) {
         return enqueue(result.matches.map(function (match) { return match.part; }),{gapMs:40,shouldContinue:active});
       });
+    },
+    // Each opened collection owns a cursor; closing it cancels queued follow-up work.
+    createCollectionPager: function(type){
+      var parts=/^(all|الكل)$/i.test(String(type||''))?planner.allCatalogParts(manifest):planner.typeParts(manifest,type),cursor=0;
+      function skip(){while(cursor<parts.length&&loaded.has(parts[cursor]))cursor++;}
+      return {hasMore:function(){skip();return cursor<parts.length;},next:async function(active){
+        skip();if(cursor>=parts.length||!active())return;
+        var part=parts[cursor];await enqueue([part],{gapMs:40,shouldContinue:active});
+        if(active()){if(!loaded.has(part))throw new Error("Collection page failed to load");cursor++;}
+      }};
     },
     loadMore: loadMore,
     retrySearch: function () {

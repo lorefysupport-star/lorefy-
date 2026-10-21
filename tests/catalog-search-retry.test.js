@@ -107,3 +107,16 @@ test('worker failure falls back to the index and remains retryable if both fail'
   assert.equal(posts,2);assert.equal(h.fetches.length,2);assert.equal(h.loader.state().searchError,false);
   assert.deepEqual(h.scripts,[2,3,4]);
 });
+
+test('collection pagers do not load until next is requested and keep independent type cursors',async()=>{
+ const h=harness(),manga=h.loader.createCollectionPager('Manga'),novel=h.loader.createCollectionPager('Novel');
+ await h.settle();assert.deepEqual(h.scripts,[]);
+ assert.equal(manga.hasMore(),true);await manga.next(()=>true);assert.deepEqual(h.scripts,[2]);
+ await novel.next(()=>true);assert.deepEqual(h.scripts,[2,4]);
+ await manga.next(()=>true);assert.deepEqual(h.scripts,[2,4,3]);assert.equal(manga.hasMore(),false);
+});
+test('closed collection cancels queued loading and later calls can retry',async()=>{
+ const h=harness(),pager=h.loader.createCollectionPager('Manga');
+ await pager.next(()=>false);assert.deepEqual(h.scripts,[]);assert.equal(pager.hasMore(),true);
+ await pager.next(()=>true);assert.deepEqual(h.scripts,[2]);
+});

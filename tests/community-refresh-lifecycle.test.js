@@ -48,16 +48,25 @@ test('review refresh times out, permits a retry and discards an old result',asyn
  h.resolve();await h.settle();assert.equal(h.values.reviews.length,0);
  assert.equal(await h.registered.get('community-reviews')(),true);assert.equal(h.reads(),2);h.cleanup();
 });
-test('identical post feed state does not replace DOM cards again',()=>{
- let replacements=0,now=0;const list={set textContent(v){replacements++;},appendChild(){}};
- const host={querySelector:selector=>selector.includes('post-list')?list:{}};
- const scope={Date:{now:()=>now},doc:{documentElement:{lang:'en'},querySelector:()=>host},state:{filter:'all',posts:[]},
-  visibleCommunityPosts:()=>[],uiText:(ar,en)=>en,el:()=>({}),icon(){},orderCommunityFeed(){},hydrateIcons(){}};
+test('feed keeps unchanged cards through loading, pagination and other-post updates',()=>{
+ const Node=require('./helpers/render-dom'),list=new Node(),status=new Node();
+ let now=0,created=0,viewer='owner';const one={id:'one',created_at:'2026-10-21'},two={id:'two',created_at:'2026-10-20'};
+ const state={filter:'all',posts:[one,two]},host={querySelector:s=>s.includes('post-list')?list:status};
+ const scope={Date:{now:()=>now,parse:Date.parse},doc:{documentElement:{lang:'en'},querySelector:()=>host},state,
+  identity:()=>({id:viewer}),savedPosts:()=>({}),visibleCommunityPosts:()=>state.posts,uiText:(ar,en)=>en,
+  el:(...args)=>new Node(...args),icon:()=>new Node('i'),timeLabel:()=>String(now),postCard:()=>{created++;const card=new Node('article'),time=new Node('small');card.appendChild(time);card.querySelector=()=>time;return card;},
+  orderCommunityFeed(){},hydrateIcons(){}};
  const start=source.indexOf('  function renderPostFeed()'),end=source.indexOf('  function orderCommunityFeed()',start);
- vm.runInNewContext(source.slice(start,end)+'\nrenderPostFeed();renderPostFeed();',scope);
- assert.equal(replacements,1);
- now=60000;vm.runInNewContext(source.slice(start,end)+'\nrenderPostFeed();',scope);
- assert.equal(replacements,2,'a later refresh must update relative timestamps');
+ vm.runInNewContext(source.slice(start,end),scope);scope.renderPostFeed();const original=list.children.slice();
+ scope.renderPostFeed();assert.equal(created,2);
+ state.loading=true;state.hasMore=true;scope.renderPostFeed();assert.equal(list.children[0],original[0]);assert.equal(list.children[1],original[1]);assert.equal(created,2);
+ state.posts.push({id:'three'});scope.renderPostFeed();assert.equal(created,3);assert.equal(list.children[0],original[0]);
+ one.replyCount=1;one.reactions={like:1,dislike:0,mine:{like:true,dislike:false}};scope.renderPostFeed();assert.equal(created,3);assert.equal(list.children[1],original[1]);assert.equal(list.children[0],original[0]);
+ state.posts=state.posts.map(post=>({...post}));scope.renderPostFeed();assert.equal(created,3,'equivalent realtime objects retain cards and handlers');assert.equal(state.posts[0],one);
+ one.body='edited';scope.renderPostFeed();assert.equal(created,4);assert.notEqual(list.children[0],original[0]);
+ state.posts=[two,one];scope.renderPostFeed();assert.equal(created,4);assert.equal(list.children[0],original[1]);assert.equal(host.__lorefyPostCards.size,2);
+ now=60000;scope.renderPostFeed();assert.equal(created,4,'timestamp updates keep the post cards');assert.match(list.children[0].children[0].textContent,/60000/);
+ viewer='other';scope.renderPostFeed();assert.equal(created,6,'viewer-specific handlers are replaced');
 });
 
 function postLoader(){

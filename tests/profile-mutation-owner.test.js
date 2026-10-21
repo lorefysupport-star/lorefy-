@@ -98,3 +98,10 @@ test('a profile mutation with no opening owner fails before contacting the cloud
   h.api.client.auth.getUser = async () => { throw Error('must not query'); };
   await assert.rejects(h.api.saveProfile(draft), stale); assert.equal(h.calls.rpc.length, 0);
 });
+
+test('explicitly clearing profile media does not restore the previous storage path',()=>{
+ const h=harness();
+ assert.equal(h.api._profileMediaPath('a','banner','','a/banner.jpg'),'');
+ assert.equal(h.api._profileMediaPath('a','avatar','','a/avatar.jpg'),'');
+ assert.equal(h.api._profileMediaPath('a','banner',undefined,'a/banner.jpg'),'a/banner.jpg');
+});

@@ -6,15 +6,12 @@ const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname,'../modules/lorefy-community.js'),'utf8');
 function render(lang, filter, options = {}) {
   const nodes = [], calls = [];
-  function el(tag, attrs = {}, children = []) {
-    const node = {tag,attrs,children,addEventListener(event, callback){this.callback = callback;},
-      appendChild(child){this.children.push(child);},querySelector(){return nodes.find(n => n.attrs.class === 'lf-community-post-empty');}};
-    nodes.push(node); return node;
-  }
+  const RenderNode=require('./helpers/render-dom');
+  function el(tag,attrs={},children=[]){const n=new RenderNode(tag,attrs,children);nodes.push(n);return n;}
   const list = el('div'), status = {};
   const host = {querySelector:selector => selector.includes('post-list') ? list : status};
   const scope = {doc:{documentElement:{lang},querySelector:() => host},state:{filter,...options},
-    uiText:(ar,en) => lang === 'en' ? en : ar,el,icon:() => el('i'),visibleCommunityPosts:() => [],
+    identity:()=>({id:'owner'}),savedPosts:()=>({}),uiText:(ar,en) => lang === 'en' ? en : ar,el,icon:() => el('i'),visibleCommunityPosts:() => [],
     orderCommunityFeed(){},hydrateIcons(){},loadPosts:(...args) => calls.push(args),
     global:{dispatchEvent:() => calls.push('find-readers')},CustomEvent:class {}};
   const start = source.indexOf('  function renderPostFeed()'), end = source.indexOf('  function orderCommunityFeed()',start);
@@ -27,7 +24,7 @@ test('Following empty feed renders entirely in English on creation and reader di
   assert.ok(labels.includes('Follow new readers to see their posts here.'));
   assert.doesNotMatch(labels,/[\u0600-\u06ff]/);
   assert.equal(status.textContent,'Following');
-  nodes.find(n => n.attrs.text === 'Find readers').callback();
+  nodes.find(n => n.attrs.text === 'Find readers').click();
   assert.deepEqual(calls,['find-readers']);
 });
 test('Arabic feed messages and stable filter keys remain unchanged', () => {
@@ -38,9 +35,9 @@ test('Arabic feed messages and stable filter keys remain unchanged', () => {
 test('English retry and pagination retain disabled loading state and their actions', () => {
   const {nodes,calls} = render('en','all',{error:true,hasMore:true});
   const retry = nodes.find(n => n.attrs.text === 'Could not load posts · Retry');
-  assert.ok(retry); retry.callback();
+  assert.ok(retry); retry.click();
   const more = nodes.find(n => n.attrs.text === 'Older posts');
-  assert.ok(more); more.callback();
+  assert.ok(more); more.click();
   assert.deepEqual(calls,[[true],[true,true]]);
   const loading = render('en','all',{hasMore:true,loading:true}).nodes.find(n => n.attrs.text === 'Loading...');
   assert.equal(loading.disabled,true);

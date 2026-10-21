@@ -340,38 +340,45 @@
     const workLabel = node('div',{class:'lf-profile-list-work-label'});
     let activeWork = null, cast = [], castBusy = false, generation = 0;
     function isEditing() { return current(state) && form.isConnected && editOwner === account(root.localStorage); }
+    const selectedNodes=new Map();
+    let resultUpdates=[];
+    function updateResultSelection(){resultUpdates.forEach(update=>update());}
     function selectedRows(focusIndex, action) {
-      selected.replaceChildren();
+      const retained=new Set(draft.items);
+      selectedNodes.forEach((entry,item)=>{if(!retained.has(item)){entry.row.remove();selectedNodes.delete(item);}});
       draft.items.forEach((item,index) => {
-        function move(delta) {
-          draft.items=moveItem(draft.items,index,delta);
-          selectedRows(index+delta,delta<0?0:1);
-          status.textContent=item.name+' · '+t.position+' '+(index+delta+1)+' / '+draft.items.length;
+        let entry=selectedNodes.get(item);
+        if(!entry){
+          function move(delta) {
+            const from=draft.items.indexOf(item);if(from<0)return;
+            draft.items=moveItem(draft.items,from,delta);
+            selectedRows(from+delta,delta<0?0:1);
+            status.textContent=item.name+' · '+t.position+' '+(from+delta+1)+' / '+draft.items.length;
+          }
+          const up=button(t.up+' · '+item.name,'arrow-up',()=>move(-1),'is-icon');
+          const down=button(t.down+' · '+item.name,'arrow-down',()=>move(1),'is-icon');
+          const rank=node('span',{class:'lf-profile-list-rank'});
+          const row=node('li',{},[rank,image(item),node('strong',{'data-no-translate':'true',dir:'auto',text:item.name}),
+            node('div',{class:'lf-profile-rank-tools'},[up,down,button(t.removeItem+' · '+item.name,'x',()=>{
+              const at=draft.items.indexOf(item);if(at<0)return;
+              draft.items.splice(at,1);selectedRows(Math.min(at,draft.items.length-1),2);updateResultSelection();
+            },'is-icon')])]);
+          entry={row,rank,up,down};selectedNodes.set(item,entry);hydrate(row);
         }
-        const up = button(t.up+' · '+item.name,'arrow-up',() => move(-1),'is-icon');
-        const down = button(t.down+' · '+item.name,'arrow-down',() => move(1),'is-icon');
-        up.disabled = index===0; down.disabled = index===draft.items.length-1;
-        selected.appendChild(node('li',{},[node('span',{class:'lf-profile-list-rank',text:String(index+1)}),image(item),
-          node('strong',{'data-no-translate':'true',dir:'auto',text:item.name}),
-          node('div',{class:'lf-profile-rank-tools'},[up,down,button(t.removeItem+' · '+item.name,'x',() => {
-            draft.items.splice(index,1); kind.disabled=draft.items.length>0;
-            selectedRows(Math.min(index,draft.items.length-1),2); searchResults();
-          },'is-icon')])
-        ]));
+        entry.rank.textContent=String(index+1);entry.up.disabled=index===0;entry.down.disabled=index===draft.items.length-1;
+        if(selected.children[index]!==entry.row)selected.insertBefore(entry.row,selected.children[index]||null);
       });
-      kind.disabled = draft.items.length>0;
-      status.textContent = draft.items.length+' / 50';
-      hydrate(selected);
-      if (action != null) {
-        const row=selected.children[focusIndex], controls=row && row.querySelectorAll('button');
-        const control=controls && (controls[action].disabled ? controls[action===0?1:0] : controls[action]);
-        (control || search).focus();
+      kind.disabled=draft.items.length>0;status.textContent=draft.items.length+' / 50';
+      if(action!=null){
+        const row=selected.children[focusIndex],controls=row&&row.querySelectorAll('button');
+        const control=controls&&(controls[action].disabled?controls[action===0?1:0]:controls[action]);
+        (control||search).focus();
       }
     }
     function add(item) {
-      if (draft.items.length >= 50) { status.textContent=t.limit; return; }
-      if (!draft.items.some(row => row.id===item.id && row.workId===item.workId)) draft.items.push(item);
-      selectedRows(); searchResults();
+      if(draft.items.length>=50){status.textContent=t.limit;return;}
+      if(draft.items.some(row=>row.id===item.id&&row.workId===item.workId))return;
+      draft.items.push(item);selectedRows();updateResultSelection();
     }
     async function chooseWork(work) {
       activeWork=work; cast=[]; castBusy=true; const request=++generation;
@@ -395,6 +402,7 @@
       }
     }
     function searchResults() {
+      resultUpdates=[];
       results.replaceChildren();
       const q=search.value.trim().toLowerCase();
       if (activeWork && draft.kind==='characters') {
@@ -405,7 +413,9 @@
           const chosen=draft.items.some(item=>item.id===entry.id && item.workId===entry.workId);
           const result=button(entry.name,chosen?'check':'plus',() => add(entry),'is-result');
           result.setAttribute('data-no-translate','true'); result.disabled=chosen;
-          result.prepend(image(entry)); results.appendChild(result);
+          resultUpdates.push(()=>{const selected=draft.items.some(item=>item.id===entry.id&&item.workId===entry.workId);result.disabled=selected;
+            if(result.dataset.selected!==String(selected)){result.dataset.selected=String(selected);const symbol=result.querySelector('i,svg');if(symbol)symbol.replaceWith(icon(selected?'check':'plus'));hydrate(result);}});
+          result.dataset.selected=String(chosen);result.prepend(image(entry)); results.appendChild(result);
         });
         if (castBusy) results.appendChild(node('p',{text:t.loading,role:'status'}));
         else if (!matches.length) results.appendChild(node('p',{text:t.noResults}));
@@ -420,7 +430,9 @@
           const result=button(entry.name,chosen?'check':draft.kind==='characters'?'chevron-left':'plus',
             () => draft.kind==='characters'?chooseWork(work):add(entry),'is-result');
           result.setAttribute('data-no-translate','true'); result.disabled=chosen;
-          result.prepend(image(entry)); results.appendChild(result);
+          resultUpdates.push(()=>{const selected=draft.kind==='works'&&draft.items.some(item=>item.id===entry.id);result.disabled=selected;
+            if(result.dataset.selected!==String(selected)){result.dataset.selected=String(selected);const symbol=result.querySelector('i,svg');if(symbol)symbol.replaceWith(icon(selected?'check':draft.kind==='characters'?'chevron-left':'plus'));hydrate(result);}});
+          result.dataset.selected=String(chosen);result.prepend(image(entry)); results.appendChild(result);
         });
         if (!matches.length) results.appendChild(node('p',{text:q?t.noResults:t.chooseWork}));
       }

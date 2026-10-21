@@ -11,7 +11,10 @@ class Element {
     this.classList = { contains: name => (this.attrs.class || '').split(' ').includes(name) };
     children.filter(Boolean).forEach(child => this.appendChild(child));
   }
-  appendChild(child) { this.children.push(child); return child; }
+  appendChild(child) { child.remove();this.children.push(child);child.parentNode=this;return child; }
+  remove(){if(this.parentNode){const p=this.parentNode;p.children.splice(p.children.indexOf(this),1);this.parentNode=null;}}
+  insertBefore(child,before){if(child===before)return;child.remove();const i=before?this.children.indexOf(before):this.children.length;this.children.splice(i,0,child);child.parentNode=this;}
+  replaceChild(child,old){this.insertBefore(child,old);old.remove();}
   replaceChildren(...children) { this.children = children; this._text = ''; }
   set textContent(value) { this._text = String(value); this.children = []; }
   get textContent() { return this._text + this.children.map(child => child.textContent).join(' '); }
@@ -152,7 +155,7 @@ test('a stale character editor cannot save into the next account', () => {
 });
 
 test('stale candidate selection and removal cannot overwrite the next account', () => {
-  for (const action of ['lf-top-characters-editor-candidate', 'lf-top-characters-editor-remove']) {
+  for (const action of ['lf-top-characters-editor-candidate', 'lf-top-characters-editor-slot-remove']) {
     const h = harness(), ov = h.open(action.endsWith('remove') ? [{ characterKey: 'hero' }] : []);
     const button = find(ov.page, action); assert.ok(button); h.setOwner('account-b'); button.click();
     assert.equal(h.writes.length, 0, action); assert.equal(ov.page.inert, true);
@@ -200,7 +203,7 @@ test('a rejected old search neither repaints nor reports failure in the next acc
 test('the active owner can select, remove and save favorites normally', () => {
   const h = harness(), ov = h.open();
   find(ov.page, 'lf-top-characters-editor-candidate').click();
-  find(ov.page, 'lf-top-characters-editor-remove').click();
+  find(ov.page, 'lf-top-characters-editor-slot-remove').click();
   find(ov.page, 'lf-top-characters-editor-save').click();
   assert.equal(h.writes.length, 3); assert.ok(h.writes.every(row => row.owner === 'account-a'));
   assert.equal(h.messages.length, 1); assert.equal(ov.page.inert, true);
@@ -270,7 +273,7 @@ test('English character editor chrome and accessibility labels are English on fi
   const h = harness(), ov = h.open();
   assert.equal(ov.page.attrs['aria-label'], 'Favorites');
   assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'Save favorites');
-  assert.match(ov.body.textContent, /You choose the characters and their order/);
+  assert.doesNotMatch(ov.body.textContent, /You choose the characters and their order/);
   for (const node of all(ov.page)) {
     assert.doesNotMatch(node._text + (node.attrs['aria-label'] || ''), /[\u0600-\u06ff]/);
   }
@@ -279,7 +282,7 @@ test('English character editor chrome and accessibility labels are English on fi
 test('filled English editor controls and confirmation stay localized without changing user names', () => {
   const h = harness({ name: 'شخصية مخصصة', workTitle: 'عمل مخصص' }), ov = h.open();
   find(ov.page, 'lf-top-characters-editor-candidate').click();
-  assert.equal(find(ov.page, 'lf-top-characters-editor-remove').textContent, 'Remove from this slot');
+  assert.match(find(ov.page,'lf-top-characters-editor-slot-remove').attrs['aria-label'],/Remove شخصية مخصصة from slot 1/);
   const active = find(ov.page, 'lf-top-characters-editor-slot');
   assert.equal(active.attrs['aria-label'], 'Select slot 1, شخصية مخصصة');
   assert.match(ov.body.textContent, /شخصية مخصصة/); assert.match(ov.body.textContent, /عمل مخصص/);
@@ -291,7 +294,7 @@ test('Arabic editor controls remain Arabic', () => {
   const h = harness({ lang: 'ar' }), ov = h.open();
   assert.equal(ov.page.attrs['aria-label'], 'المفضلة');
   assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'حفظ المفضلة');
-  assert.match(ov.body.textContent, /أنت تحدد الشخصيات وترتيبها/);
+  assert.doesNotMatch(ov.body.textContent, /أنت تحدد الشخصيات وترتيبها/);
 });
 
 test('shared overlay back labels follow the selected language', () => {
@@ -312,4 +315,39 @@ test('candidate action fits its grid track in either direction', () => {
   const track = Number(row.match(/grid-template-columns:[^;]* (\d+)px;/)[1]);
   const width = Number(action.match(/\bwidth:\s*(\d+)px;/)[1]);
   assert.ok(track >= width, `Action ${width}px exceeds its ${track}px track`);
+});
+
+test('slot selection preserves portraits and rows and uses removal instead of a checkmark',()=>{
+ const h=harness(),ov=h.open();
+ const slots=()=>all(ov.page).filter(n=>(n.attrs.class||'').split(' ').includes('lf-top-characters-editor-slot'));
+ assert.equal(all(ov.page).filter(n=>n.attrs.class==='lf-top-characters-editor-slot-check').length,0);
+ assert.equal(find(ov.page,'lf-top-characters-editor-slot-remove'),undefined);
+ const originalSlots=slots(),originalCandidate=find(ov.page,'lf-top-characters-editor-candidate');
+ slots()[1].click();assert.equal(slots()[1].attrs['aria-pressed'],'true');assert.equal(slots()[0],originalSlots[0]);assert.equal(find(ov.page,'lf-top-characters-editor-candidate'),originalCandidate);assert.equal(find(slots()[1],'lf-top-characters-editor-slot-check'),undefined);
+ assert.doesNotMatch(ov.body.textContent,/Replace slot 2|You choose the characters|Select a slot, then/);
+ find(ov.page,'lf-top-characters-editor-candidate').click();
+ const remove=find(ov.page,'lf-top-characters-editor-slot-remove');assert.match(remove.attrs['aria-label'],/from slot 2/);
+ remove.click();assert.equal(find(ov.page,'lf-top-characters-editor-slot-remove'),undefined);
+ const classes=ov.body.children.map(n=>n.attrs.class);
+ assert.ok(classes.indexOf('lf-top-characters-editor-search-box')<classes.indexOf('lf-character-picker-modes'));
+});
+
+test('selecting a character and refreshing its data keep unchanged candidate portraits and empty slots',()=>{
+ const h=harness(),ov=h.open(),candidate=find(ov.page,'lf-top-characters-editor-candidate'),slots=find(ov.page,'lf-top-characters-editor-slots'),last=slots.children[3];
+ candidate.click();assert.equal(find(ov.page,'lf-top-characters-editor-candidate'),candidate);assert.equal(slots.children[3],last);
+ h.scope.profileTopCharacterEditor.refresh();assert.equal(find(ov.page,'lf-top-characters-editor-candidate'),candidate);assert.equal(slots.children[3],last);
+ find(ov.page,'lf-top-characters-editor-slot-remove').click();assert.equal(find(ov.page,'lf-top-characters-editor-candidate'),candidate);
+});
+test('a failed favorite save keeps the draft open instead of reporting success',()=>{
+ const h=harness(),ov=h.open();h.scope.setProfileTopCharacterSelection=()=>false;
+ find(ov.page,'lf-top-characters-editor-save').click();assert.equal(ov.page.isConnected,true);assert.match(h.messages[0],/Could not save/);assert.ok(!h.messages.includes('Favorites saved'));
+});
+test('real favorite serializer keeps slot 2 across Save and reopening',()=>{
+ const h=harness();let saved='[null,null,null,null]';
+ Object.assign(h.scope,{K_PROFILE_TOP_CHARACTERS:'favorites',read:()=>JSON.parse(saved),write:(k,value)=>{saved=JSON.stringify(value);return true;},profileWorkTitle:()=> 'Work',isSupportedDisplayTitle:()=>true});
+ const start=source.indexOf('  function profileTopCharacterSelection()'),end=source.indexOf('  function profileTopCharacterRef(',start);vm.runInNewContext(source.slice(start,end),h.scope);
+ h.scope.profileTopCharacterRef=item=>({workId:'work',characterKey:item.character.key,character:item.character});
+ let ov=h.open();find(ov.page,'lf-top-characters-editor-slots').children[1].children[0].click();find(ov.page,'lf-top-characters-editor-candidate').click();find(ov.page,'lf-top-characters-editor-save').click();
+ assert.equal(JSON.parse(saved)[1].character.name,'Hero');assert.equal(JSON.parse(saved)[0],null);
+ ov=h.open();assert.match(find(ov.page,'lf-top-characters-editor-slots').children[1].textContent,/Hero/);
 });

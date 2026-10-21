@@ -886,6 +886,7 @@
     },
 
     _profileMediaPath: function(userId, kind, value, fallback){
+      if (value === "") return "";
       var fromUrl = storagePathFromUrl(value, PROFILE_MEDIA_BUCKET);
       if (fromUrl) return fromUrl;
       value = String(value || "");
@@ -1080,8 +1081,9 @@
         name:profile.name || identity.name || "",
         un:profile.username || identity.un || "",
         bio:profile.bio || "",
-        avatar:urls[0] || identity.avatar || "",
-        banner:urls[1] || identity.banner || "",
+        // A cleared or unresolved server image must not resurrect cached artwork.
+        avatar:urls[0] || "",
+        banner:urls[1] || "",
         avatarStoragePath:profile.avatar || "",
         bannerStoragePath:profile.banner || "",
         genres:Array.isArray(profile.genres) ? profile.genres : (identity.genres || []),

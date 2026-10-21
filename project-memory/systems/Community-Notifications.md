@@ -90,3 +90,9 @@ No notification, publication, relationship or stored-rating behavior changed.
 - [[bugs/LF-040-Session-Teardown-Owner]]: منع تنظيف مفاتيح/monitoring/emit بعمل جلسة قديمة، مع إغلاق قناة التنبيه وflag حسب السياق؛ [[sessions/2026-10-17-Session-Teardown-Owner]]. تكامل تخزين SDK منفصل.
 
 - [[bugs/LF-042-Feed-Read-Session]]: قراءات المراجعات والمنشورات والأصدقاء والفصول ومرفقاتها تُرفض بعد تغير السياق؛ [[sessions/2026-10-17-Feed-Read-Session]]. الرؤية الحية والجهاز منفصلان.
+
+[[sessions/2026-10-21-Sticky-Home-Filters]]: For You/Following moved into sticky Home header above Continue reading; local review only.
+
+Unnecessary card rebuilding audit and fixes preserve unchanged editor/feed nodes; see [[sessions/2026-10-21-Stable-Rendering]].
+
+Home review Like stability: aligned declarative/enhanced Like and Dislike controls, immediate guarded Like updates, and retained cards across equivalent realtime responses. 549 focused checks and browser node-identity evidence; [[sessions/2026-10-21-Home-Like-Stability]].

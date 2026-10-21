@@ -90,3 +90,5 @@ aliases: ["ذاكرة Lorefy", "ذاكرة المشروع"]
 
 [عقد عمل الوكيل](../AGENTS.md) | [المصدر](../README.md)
 [خريطة مجلدات التطبيق](../PROJECT_MAP.md)
+
+- [[sessions/2026-10-19-DeviceHub-Sync|Local Device Hub source sync, 19 October 2026]]

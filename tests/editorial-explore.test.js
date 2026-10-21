@@ -10,7 +10,8 @@ test('reviewed launch selections cover previously empty formats without invented
   const works=rows.filter(w=>w.type===type&&policy.isDiscoveryEligible(w));
   assert.ok(works.length>=10,type);assert.ok(new Set(works.map(w=>w.auth)).size>=8,type);
   const shelves=studio.buildShelves(works,{}, {},[],'ar',type);
-  assert.ok(shelves.length>=3,type+' shelves '+shelves.length);
+  assert.ok(shelves.some(s=>s.key==='for-you'),type+' personalized shelf');
+  assert.ok(shelves.every(s=>s.key==='for-you'||s.key==='short'));
   assert.ok(shelves.every(s=>new Set(s.items.map(w=>w.auth)).size===s.items.length));
   assert.ok(shelves.every(s=>!s.key.startsWith('author-')));
   const ids=shelves.flatMap(s=>s.items.map(w=>w.id));assert.equal(ids.length,new Set(ids).size);

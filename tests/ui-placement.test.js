@@ -246,8 +246,9 @@ test('best-four character editor explicitly targets a slot and replaces a full s
 
   assert.match(editor, /var activeSlot = 0/);
   assert.match(editor, /draft\[activeSlot\] = ref/);
-  assert.match(editor, /text: uiText\("استبدال الخانة ", "Replace slot "\) \+ String\(activeSlot \+ 1\)/);
-  assert.match(editor, /text: uiText\("إزالة الشخصية من هذه الخانة", "Remove from this slot"\)/);
+  assert.match(editor, /selectSlot\(slotIndex\)/);
+  assert.match(editor, /lf-top-characters-editor-slot-remove/);
+  assert.doesNotMatch(editor, /text: uiText\("إزالة الشخصية من هذه الخانة", "Remove from this slot"\)/);
   assert.doesNotMatch(editor, /else if \(draft\.length < 4\)/);
   assert.doesNotMatch(editor, /draft\.push\(ref\)/);
 });

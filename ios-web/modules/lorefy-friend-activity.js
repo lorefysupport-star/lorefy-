@@ -82,7 +82,7 @@
     function section(kind,title,rows) {
       var items=rows.map(function (row) { return {row:row,work:p.getWork(row.mid)}; }).filter(function (item) { return eligible(item.work,root.LorefyCatalogPolicy); });
       return h('section',{className:'lf-friend-section','aria-label':title},
-        h('header',null,h('h2',null,title),items.length>8 && h('button',{type:'button','aria-expanded':!!expanded[kind],onClick:function () { expand(function (old) { return Object.assign({},old,{[kind]:!old[kind]}); }); }},expanded[kind] ? en?'Less':'أقل' : en?'See all':'عرض الكل')),
+        h('header',null,h('h2',null,title),(p.onSeeAll ? items.length>0 : items.length>8) && h('button',{type:'button','aria-expanded':!!expanded[kind],onClick:function () { if(p.onSeeAll){p.onSeeAll(title,items.map(function(item){return item.work;}));return;}expand(function (old) { return Object.assign({},old,{[kind]:!old[kind]}); }); }},expanded[kind] ? en?'Less':'أقل' : en?'See all':'عرض الكل')),
         loading ? h('p',{className:'lf-friend-empty',role:'status'},en?'Loading friends’ ratings…':'جارٍ تحميل تقييمات الأصدقاء…') : error ? h('div',{className:'lf-friend-empty',role:'status'},h('p',null,en?'Could not load friends’ ratings.':'تعذر تحميل تقييمات الأصدقاء.'),h('button',{type:'button',onClick:function () { update(function (n) { return n+1; }); }},en?'Try again':'إعادة المحاولة'))
         : !items.length ? h('p',{className:'lf-friend-empty'},en?'Your friends’ ratings will appear here.':'ستظهر هنا تقييمات الحسابات التي تتابعها.')
         : h('div',{className:'lf-friend-rail'+(expanded[kind]?' is-expanded':''),role:'list'},items.slice(0,expanded[kind]?80:12).map(function (item) {
@@ -97,7 +97,7 @@
             kind==='popular' && !p.compact && h('small',null,en?row.count+' friend'+(row.count===1?'':'s'):row.count+' من الأصدقاء'));
         })));
     }
-    return h('div',{className:'lf-friend-activity'+(p.compact?' is-compact':''),dir:en?'ltr':'rtl'},section('recent',en?'New from friends':'جديد تقييمات الأصدقاء',data.recent),section('popular',en?'Popular with friends':'شائع بين أصدقائك',data.popular),live && result.limited && h('small',{className:'lf-friend-sample'},en?'Based on recent ratings from accounts you follow.':'حسب أحدث تقييمات الحسابات التي تتابعها.'));
+    return h('div',{className:'lf-friend-activity'+(p.compact?' is-compact':''),dir:en?'ltr':'rtl'},p.showRecent!==false && section('recent',en?'New from friends':'جديد تقييمات الأصدقاء',data.recent),p.showPopular!==false && section('popular',en?'Popular with friends':'شائع بين أصدقائك',data.popular),live && result.limited && h('small',{className:'lf-friend-sample'},en?'Based on recent ratings from accounts you follow.':'حسب أحدث تقييمات الحسابات التي تتابعها.'));
   }
   var api={canonical:canonical,derive:derive,eligible:eligible,Rails:Rails};
   root.LorefyFriendActivity=api;

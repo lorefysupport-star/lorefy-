@@ -16,6 +16,8 @@ function harness(lang = 'en') {
     }
     get isConnected() { return this === panel || !!this.parent?.isConnected; }
     appendChild(child) { child.parent = this; this.children.push(child); return child; }
+    remove(){if(this.parent){const p=this.parent;p.children.splice(p.children.indexOf(this),1);this.parent=null;}}
+    insertBefore(child,before){if(child===before)return;child.remove();const i=before?this.children.indexOf(before):this.children.length;child.parent=this;this.children.splice(i,0,child);}
     append(...children) { children.forEach(child => this.appendChild(child)); }
     replaceChildren(...children) {
       if (this.contains(doc.activeElement)) doc.activeElement = null;
@@ -120,4 +122,11 @@ test('cancelling a reordered draft leaves the saved name and order untouched', (
   const saved = api.foldersFor({}, true, h.storage)[0];
   assert.equal(saved.name, 'Favorites');
   assert.deepEqual(saved.items.map(item => item.name), ['Alpha','Beta','Gamma']);
+});
+
+test('rank moves and removal retain unaffected row and portrait nodes',()=>{
+ const h=harness(),original=h.rows().slice(),portraits=original.map(row=>row.children[1]);
+ h.tools(0)[1].click();assert.equal(h.rows()[1],original[0]);assert.equal(h.rows()[0],original[1]);
+ h.tools(1)[2].click();assert.equal(h.rows()[0],original[1]);assert.equal(h.rows()[1],original[2]);
+ assert.equal(h.rows()[0].children[1],portraits[1]);assert.equal(h.rows()[1].children[1],portraits[2]);
 });

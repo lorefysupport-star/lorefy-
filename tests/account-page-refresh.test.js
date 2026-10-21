@@ -39,3 +39,22 @@ test('remote profile hydration during refresh does not stage an automatic cloud 
  assert.equal(scheduled,0);assert.equal(Object.hasOwn(JSON.parse(h.values.get(pending)),'lorefy.identity.v1'),false);
  assert.equal(JSON.parse(h.values.get('lorefy.identity.v1')).name,'Cloud reader');
 });
+
+for (const kind of ['avatar','banner']) {
+ test('profile hydration clears removed '+kind+' instead of restoring stale cached artwork',async()=>{
+  const h=harness(); h.values.delete(pending);
+  h.values.set('lorefy.identity.v1',JSON.stringify({[kind]:'old-image',[kind+'StoragePath']:'a/old.jpg'}));
+  h.api._hydrateProfile=h.hydrate;h.api._profileMediaUrl=async value=>value||'';
+  h.api.client.from=()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:{[kind]:null}})})})});
+  await h.api._hydrateProfile('a');
+  assert.equal(JSON.parse(h.values.get('lorefy.identity.v1'))[kind],'');
+ });
+ test('profile hydration never pairs a failed new '+kind+' URL with the previous image',async()=>{
+  const h=harness(); h.values.delete(pending);
+  h.values.set('lorefy.identity.v1',JSON.stringify({[kind]:'old-image',[kind+'StoragePath']:'a/old.jpg'}));
+  h.api._hydrateProfile=h.hydrate;h.api._profileMediaUrl=async()=>'';
+  h.api.client.from=()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:{[kind]:'a/new.jpg'}})})})});
+  await h.api._hydrateProfile('a');
+  assert.equal(JSON.parse(h.values.get('lorefy.identity.v1'))[kind],'');
+ });
+}

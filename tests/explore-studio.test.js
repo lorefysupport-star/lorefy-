@@ -33,7 +33,7 @@ test('shelves adapt to ranked account taste, keep bounded cards, and do not dupl
   for(const shelves of [a,b]) {
     const ids=shelves.flatMap(s=>s.items.map(w=>w.id));
     assert.equal(ids.length,new Set(ids).size);
-    assert.ok(shelves.every(s=>s.items.length<=12 && s.items.length>0));
+    assert.ok(shelves.every(s=>s.items.length<=12 && (s.items.length>0 || s.key==='short')));
   }
 });
 test('empty catalog and absent preferences are valid; fake lists and unsafe works are never invented',()=>{
@@ -54,7 +54,7 @@ test('general shelves limit repeated authors and separate genuine genre explorat
   for(const shelf of shelves.filter(s=>!s.key.startsWith('author-'))) {
     assert.ok(shelf.items.filter(w=>w.auth==='Same writer').length<=2);
   }
-  assert.ok(shelves.find(s=>s.key==='beyond').items.every(w=>!w.genres.includes('Fantasy')));
+  assert.ok(shelves.every(s=>s.key==='for-you'||s.key.startsWith('genre-')||s.key==='short'));
 });
 test('active reading excludes finished and paused works but includes zero checkpoints',()=>{
   const works=[{id:'one',type:'Book',pages:100},{id:'two'},{id:'three'}];
@@ -91,4 +91,35 @@ test('Arabic genre preferences match English provider genres in personalized she
   const shelves = studio.buildShelves(works,{genres:['خيال']},{},[],'ar');
   assert.equal(shelves.find(s=>s.key==='genre-0').items.length,4);
   assert.equal(shelves.some(s=>s.key==='beyond'),false);
+});
+
+test('full shelf candidates extend beyond six-card previews without repeating library works',()=>{
+ const rows=Array.from({length:100},(_,i)=>({id:'w'+i,type:'Manga',auth:'author'+i,genres:['Fantasy']}));
+ const shelves=core.buildShelves(rows,{genres:['Fantasy']},{w0:'Reading'},[],'en');
+ const shelf=shelves.find(row=>row.key==='for-you');assert.equal(shelf.items.length,6);const full=core.sectionWorks('for-you',rows,{}, {w0:'Reading'},[]);assert.equal(full.length,99);assert.ok(!full.some(w=>w.id==='w0'));
+});
+test('type filters combine genre, completion and sourced minimum rating',()=>{
+ const work={genres:['Fantasy'],st:'Completed',r:4.5,rSrc:'MAL'};
+ assert.equal(core.matchesFilters(work,{genres:['خيال'],status:'completed',rating:4}),true);
+ assert.equal(core.matchesFilters(work,{genres:['Romance'],status:'completed',rating:4}),false);
+ assert.equal(core.matchesFilters(work,{genres:[],status:'ongoing',rating:4}),false);
+ assert.equal(core.matchesFilters({...work,rSrc:''},{genres:[],status:'all',rating:4}),false);
+});
+
+for(const key of ['collection-manga-worlds','collection-manga-mystery','collection-manga-life','genre-0','short','finished','new-voices','beyond'])test('opened '+key+' uses full matching catalog rather than six-card previews',()=>{
+ const rows=Array.from({length:150},(_,i)=>({id:'long'+i,type:'Manga',genres:['Fantasy','Mystery','Drama'],auth:'Author '+i,ch:20,st:'Completed'}));
+ const prefs={genres:[key==='beyond'?'Romance':'Fantasy']};
+ const results=core.sectionWorks(key,rows,prefs,{},[]);
+ assert.equal(results.length,150);
+});
+test('section collections retain format, library and safety boundaries',()=>{
+ const rows=[{id:'owned',type:'Manga',genres:['Fantasy']},{id:'bad',type:'Manga',genres:['Fantasy'],_discoveryEligible:false},{id:'novel',type:'Novel',genres:['Fantasy']},{id:'good',type:'Manga',genres:['Fantasy']}];
+ assert.deepEqual(core.sectionWorks('collection-manga-worlds',rows,{}, {owned:'Reading'},[]).map(w=>w.id),['good']);
+});
+
+test('Explore keeps the chosen rows, merges bilingual duplicate genres and deduplicates preview works',()=>{
+ const works=Array.from({length:80},(_,i)=>({id:String(i),auth:'Author '+i,genres:['Fantasy'],ch:20,st:'Completed'}));
+ const shelves=core.buildShelves(works,{genres:['Fantasy','خيال','Fantasy']},{},[],'en');
+ assert.deepEqual(shelves.map(s=>s.key),['for-you','genre-0','short']);
+ const ids=shelves.flatMap(s=>s.items.map(w=>w.id));assert.equal(ids.length,new Set(ids).size);
 });

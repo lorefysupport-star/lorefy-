@@ -8,7 +8,7 @@ function harness(options={}) {
   const writes=[],toasts=[],readers=[],images=[],canvases=[],queued=[],calls=[];
   const backend={mode:'live',user:{id:'a'},_communityEpoch:1,saveProfile(body){let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});calls.push({body,resolve,reject});return promise;}};
   const React={createElement:(type,props,...children)=>({type,props:props||{},children:children.flat(Infinity)})};
-  const scope={window:{...clock,LorefyBackend:backend,LorefyProfileLayout:{normalize:v=>v,Picker(){}},LorefyProfileShop:{Entry(){}},LorefyCustomizeCamera(){},LorefyInterfaceSettings(){},
+  const scope={window:{...clock,LorefyBackend:backend,LorefyProfileLayout:{normalize:v=>v,Picker(){}},LorefyProfileShop:{Entry(){}},LorefyCustomizeCamera(){},LorefyInterfaceSettings(){},LorefyPhotoFramer:{open(config){scope.crop=config;if(!options.manualCrop)config.onApply(config.src);return()=>config.onCancel();}},
     localStorage:{getItem:k=>values.get(k)||null,setItem(k,v){writes.push(['storage',k]);values.set(k,v);}},dispatchEvent(){writes.push(['event']);}},localStorage:null,
     React,profileEditor:{current:null},profileSaveBusy:{current:false},profileSaving:false,yn:false,
     profileLayout:'normal',profileLayoutDraft:'normal',J:'Reader A',Y:'reader_a',_e:'bio',Z:'avatar-original',mt:'banner-original',So:50,mn:50,bt:{},me:{},
@@ -76,3 +76,29 @@ test('the profile deadline covers reading and decoding together',()=>{const h=ha
 test('an expired old selection cannot release the newer avatar request',()=>{const h=harness();h.upload();h.advance(10000);h.upload();const request=h.scope.profileEditor.current.pending.avatar;h.advance(20000);assert.equal(h.scope.profileEditor.current.pending.avatar,request);assert.equal(h.toasts.length,0);h.advance(10000);assert.equal(h.toasts.length,1);assert.equal(h.scope.profileEditor.current.pending.avatar,0);});
 for(const transition of ['close','reopen','account'])test('profile timeout is silent after '+transition,()=>{const h=harness();h.upload();if(transition==='close')h.close();else if(transition==='reopen')h.open();else h.switchAccount();h.writes.length=0;h.advance(30000);assert.equal(h.toasts.length,0);assert.equal(h.writes.length,0);assert.equal(h.timers.size,0);});
 test('avatar timeout does not clear the newer banner preparation',()=>{const h=harness();h.upload('avatar');h.advance(10000);h.upload('banner');h.advance(20000);assert.equal(h.scope.profileEditor.current.pending.avatar,0);assert.ok(h.scope.profileEditor.current.pending.banner);h.read();h.decode();assert.equal(h.scope.profileEditor.current.pending.banner,0);assert.match(h.scope.wt,/prepared/);});
+
+test('removing banner supersedes pending decoding and clears saved storage reference',async()=>{
+ const h=harness();h.values.set('lorefy.identity.v1',JSON.stringify({bannerStoragePath:'a/banner.jpg'}));
+ h.upload('banner');h.read();
+ const button=h.nodes(h.tree()).find(n=>n.children.includes('Remove banner'));assert.ok(button);
+ button.props.onClick();h.decode();assert.equal(h.scope.wt,'');
+ const job=h.save();assert.equal(h.calls[0].body.banner,'');
+ h.calls[0].resolve({banner:'',bannerStoragePath:''});await job;
+ const saved=JSON.parse(h.values.get('lorefy.identity.v1'));assert.equal(saved.banner,'');assert.equal(saved.bannerStoragePath,'');
+});
+
+test('imported banner awaits explicit framing and save never uploads an unconfirmed crop',async()=>{
+ const h=harness({manualCrop:true});h.upload('banner');h.read();h.decode();
+ assert.equal(h.scope.wt,'banner-original');assert.ok(h.scope.profileEditor.current.pending.banner);
+ await h.save();assert.equal(h.calls.length,0);
+ h.scope.crop.onApply('data:image/jpeg;base64,user-framed');assert.equal(h.scope.wt,'data:image/jpeg;base64,user-framed');
+ const job=h.save();assert.equal(h.calls[0].body.banner,'data:image/jpeg;base64,user-framed');h.calls[0].resolve({});await job;
+});
+test('cancelled avatar framing preserves the existing photo and releases save',()=>{
+ const h=harness({manualCrop:true});h.upload();h.read();h.decode();h.scope.crop.onCancel();
+ assert.equal(h.scope.xt,'avatar-original');assert.equal(h.scope.profileEditor.current.pending.avatar,0);
+});
+test('framing result from a previous account cannot change the current draft',()=>{
+ const h=harness({manualCrop:true});h.upload();h.read();h.decode();h.switchAccount();h.writes.length=0;
+ h.scope.crop.onApply('data:image/jpeg;base64,old');assert.equal(h.writes.length,0);
+});

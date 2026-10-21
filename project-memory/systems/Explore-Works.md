@@ -117,3 +117,14 @@ historical Discord records and future device/provider verification.
 
 
 - [[sessions/2026-10-21-Hallmark-Chapter-Hierarchy]]: Hallmark لتسلسل عنوان الفصل: رقم أوضح عند غياب الاسم، تحميل هادئ، والعنوان الحقيقي محفوظ، مع الاحتفاظ بالمخزن المعروف عند فشل الطلب.2348اختبارًا و16حالة متصفح وحالتاQA معزولتان؛ لا تغيير للنبذات أو المصدر أو الحفظ.
+
+[[sessions/2026-10-21-Local-UI-Review]]: six local UI changes for owner testing; direct drag/pinch photo framing supersedes sliders. Explicitly uncommitted.
+
+[[sessions/2026-10-21-Explore-Refinement]] supersedes the initial local review section paging/filter layout: centered type labels, on-demand independent section pages and compact filters. Uncommitted.
+
+[[sessions/2026-10-21-Trim-Explore]]: owner-selected smaller Explore row set; short reads retained, overlapping themed rows removed. Local review.
+
+Type-page search now connects its selected format to the existing debounced online lookup and tracks pending/error states. Golden Son by Pierce Brown verified through Novel search and work detail; 53 focused checks. [[sessions/2026-10-21-Format-Search-Online]].
+
+
+2026-10-21: [[sessions/2026-10-21-Search-Audit]] repairs main All-format online lookup and isolates People/Lists from catalog listeners; 234 focused checks, browser result evidence, and five matching installed simulator assets. Live directory/provider coverage remains separate. No commit or push.

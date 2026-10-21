@@ -97,3 +97,13 @@ geometry. Count-only accessible names in legacy review actions remain separate.
 - [[bugs/LF-062-Profile-Image-Editor]]: صور البروفايل والحفظ مرتبطان بمالك ونسخة المحرر وأحدث اختيار؛ فشل التجهيز ظاهر ولا تسقط النتائج القديمة على مسودة/حساب جديد؛37حالة جديدة،304مرتبطة،2037كاملة و5حالات Chrome؛ [[sessions/2026-10-18-Profile-Image-Editor]]. لا إلغاء أو اعتماد لكتابة خدمة حية.
 
 - [[bugs/LF-064-Image-Preparation-Deadline]]: مهلة إجمالية 30 ثانية لتجهيز صور البروفايل ومرفقات المراجعة،مع رسالة AR/EN وحماية الصورة والنص السابقين ومنع النتائج المتأخرة؛ 28 حالة جديدة،343 مرتبطة،2076 كاملة و7 حالات Chrome منها مؤقت حقيقي؛ [[sessions/2026-10-18-Image-Preparation-Deadline]]. Photos والرفع والجهاز والخدمة مستقلة.
+
+[[sessions/2026-10-21-Local-UI-Review]]: six local UI changes for owner testing; direct drag/pinch photo framing supersedes sliders. Explicitly uncommitted.
+
+[[sessions/2026-10-21-Favorite-Slot-Checkmark]]: owner-selected outline/check selection replaces the large slot instruction box. Local review.
+
+[[sessions/2026-10-21-Clean-Favorite-Controls]]: × removal on filled cards, no intro or shifting action row; search precedes mode tabs. Local review.
+
+Unnecessary card rebuilding audit and fixes preserve unchanged editor/feed nodes; see [[sessions/2026-10-21-Stable-Rendering]].
+
+Favorite slot save investigation: bounded downloaded catalog cache, quota-only safe cache reclaim, and honest failed-save feedback; 82 focused checks plus save/reopen/reload in isolated demo. Device Hub storage pressure removed without changing saved favorites. [[sessions/2026-10-21-Favorite-Save-Quota]].

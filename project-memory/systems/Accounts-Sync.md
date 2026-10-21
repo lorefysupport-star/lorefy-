@@ -92,3 +92,7 @@ or matching-device verification. No build or service changes.
 - [[bugs/LF-044-Import-Request-Session]]: معاينة الاستيراد وتأكيده تخص حساب الفتح والمحاولة الأحدث؛ [[sessions/2026-10-17-Import-Request-Session]]. فشل الحفظ المحلي والخادم والجهاز مستقلون.
 
 - [[bugs/LF-045-Import-Save-Failure]]: فشل الكتابة لا يعلن نجاح الاستيراد، مع تراجع متحقق وإعادة محاولة أو توضيح الحفظ الجزئي؛ [[sessions/2026-10-17-Import-Save-Failure]]. المزامنة والجهاز منفصلان.
+
+[[sessions/2026-10-19-Banner-Clear]] records explicit media removal and stale-cache fixes; historical upload cause remains unproven.
+
+Favorite slot save investigation: bounded downloaded catalog cache, quota-only safe cache reclaim, and honest failed-save feedback; 82 focused checks plus save/reopen/reload in isolated demo. Device Hub storage pressure removed without changing saved favorites. [[sessions/2026-10-21-Favorite-Save-Quota]].

@@ -9,6 +9,7 @@
   var DEFAULT_EXPANSION_TARGET = 500;
   var DEFAULT_EXPANSION_PAGE_SIZE = 100;
   var MAX_CACHED_WORKS = 6000;
+  var MAX_CACHE_CHARS = 512 * 1024; // At most 1 MiB of UTF-16 storage; reserve space for user data.
   var SEARCH_DEBOUNCE_MS = 650;
 
   var TYPES = {
@@ -389,6 +390,15 @@
     }, "AniList", media.id);
   }
 
+  function generalBookType(subjects) {
+    var text = (Array.isArray(subjects) ? subjects : []).join(" ").toLowerCase();
+    if (/light novel/.test(text)) return TYPES.lightNovel;
+    if (/web novel|web fiction/.test(text)) return TYPES.webNovel;
+    if (/comic|graphic novel|manga/.test(text)) return TYPES.comics;
+    if (/fiction|novel/.test(text) && !/non[ -]?fiction/.test(text)) return TYPES.novel;
+    return TYPES.book;
+  }
+
   function mapOpenLibrary(doc, requestedType) {
     if (!doc || !doc.key || !doc.title) return null;
     var title = firstSupportedTitle(doc.title);
@@ -397,7 +407,7 @@
     var subtitle = normalizeSpaces(doc.subtitle);
     if (subtitle && title.toLowerCase().indexOf(subtitle.toLowerCase()) < 0) title += ': ' + subtitle;
     var olid = String(doc.key).split("/").pop();
-    var type = normalizeType(requestedType || TYPES.book);
+    var type = requestedType === "All" ? generalBookType(doc.subject) : normalizeType(requestedType || TYPES.book);
     var cover = doc.cover_i ? "https://covers.openlibrary.org/b/id/" + doc.cover_i + "-L.jpg" : "";
     var subjects = Array.isArray(doc.subject) ? doc.subject : [];
     var rating = Number(doc.ratings_average) > 0 ? clampRating(doc.ratings_average) : 0;
@@ -436,7 +446,7 @@
     var info = item.volumeInfo;
     var title = firstSupportedTitle(info.title);
     if (!title) return null;
-    var type = normalizeType(requestedType || TYPES.book);
+    var type = requestedType === "All" ? generalBookType(info.categories) : normalizeType(requestedType || TYPES.book);
     var image = info.imageLinks && (info.imageLinks.extraLarge || info.imageLinks.large || info.imageLinks.medium || info.imageLinks.thumbnail || info.imageLinks.smallThumbnail);
     var year = String(info.publishedDate || "").match(/\d{4}/);
     var rating = clampRating(info.averageRating);
@@ -532,6 +542,7 @@
       return work && !(global.LorefyCatalogPolicy && (global.LorefyCatalogPolicy.isExcludedWork(work) || global.LorefyCatalogPolicy.isExplicitWork(work) || global.LorefyCatalogPolicy.isAiGeneratedWork(work)));
     });
     cached.batches = cached.batches && typeof cached.batches === "object" ? cached.batches : {};
+    if(JSON.stringify(cached).length>MAX_CACHE_CHARS)saveCache(cached);
     return cached;
   }
 
@@ -540,6 +551,17 @@
     var max = Number(cfg.maxCachedWorks) || MAX_CACHED_WORKS;
     cached.works = uniqueWorks(cached.works).slice(-max);
     cached.updatedAt = nowIso();
+    var keys=Object.keys(cached.batches||{}).filter(function(key){var batch=cached.batches[key];return batch&&typeof batch==="object"&&Array.isArray(batch.ids);}).sort(function(a,b){return Date.parse(cached.batches[b].at||0)-Date.parse(cached.batches[a].at||0);}).slice(0,128);
+    var batches={};keys.forEach(function(key){batches[key]=cached.batches[key];});cached.batches=batches;
+    while(JSON.stringify(cached).length>MAX_CACHE_CHARS && cached.works.length){
+      cached.works=cached.works.slice(Math.max(1,Math.ceil(cached.works.length/4)));
+      var retained=new Set(cached.works.map(function(work){return String(work.id);}));
+      Object.keys(cached.batches).forEach(function(key){
+        var batch=cached.batches[key];batch.ids=(batch.ids||[]).filter(function(id){return retained.has(String(id));});
+        if(!batch.ids.length)delete cached.batches[key];
+      });
+    }
+    while(JSON.stringify(cached).length>MAX_CACHE_CHARS && Object.keys(cached.batches).length)delete cached.batches[Object.keys(cached.batches).pop()];
     write(CACHE_KEY, cached);
   }
 
@@ -672,7 +694,7 @@
     });
   }
 
-  function fetchOpenLibrary(query, type, page, perPage) {
+  function fetchOpenLibrary(query, type, page, perPage, options) {
     if (!enabledProvider("openLibrary")) return Promise.resolve([]);
     var q = query || (typeConfig(type).seeds || ["fiction"])[0];
     var params = new URLSearchParams();
@@ -681,11 +703,11 @@
     params.set("limit", String(Math.min(100, perPage || config().perPage || DEFAULT_PER_PAGE)));
     params.set("fields", "key,title,subtitle,language,author_name,first_publish_year,cover_i,subject,ratings_average,ratings_count,want_to_read_count,edition_count,number_of_pages_median");
     return fetchJson(providerUrl("openlibrary", "https://openlibrary.org/search.json", params)).then(function (json) {
-      return (json && json.docs || []).map(function (doc) { return mapOpenLibrary(doc, type); }).filter(Boolean);
+      return (json && json.docs || []).map(function (doc) { return mapOpenLibrary(doc, options && options.generalSearch ? "All" : type); }).filter(Boolean);
     });
   }
 
-  function fetchGoogleBooks(query, type, page, perPage) {
+  function fetchGoogleBooks(query, type, page, perPage, options) {
     if (!enabledProvider("googleBooks")) return Promise.resolve([]);
     var cfg = config();
     var q = query || (typeConfig(type).seeds || ["books"])[0];
@@ -697,7 +719,7 @@
     params.set("projection", "lite");
     if (cfg.googleBooksApiKey) params.set("key", cfg.googleBooksApiKey);
     return fetchJson(providerUrl("googlebooks", "https://www.googleapis.com/books/v1/volumes", params)).then(function (json) {
-      return (json && json.items || []).map(function (item) { return mapGoogleBook(item, type); }).filter(Boolean);
+      return (json && json.items || []).map(function (item) { return mapGoogleBook(item, options && options.generalSearch ? "All" : type); }).filter(Boolean);
     });
   }
 
@@ -746,7 +768,7 @@
     }
     write(STATE_KEY, Object.assign({}, state(), { status: "checking", checkedAt: nowIso(), lastType: type, lastQuery: query || "" }));
     return Promise.all(providers.map(function (provider) {
-      return PROVIDERS[provider](query, type, page, options.perPage).catch(function (error) {
+      return PROVIDERS[provider](query, type, page, options.perPage, options).catch(function (error) {
         return [{ _providerError: provider, error: error && error.message || String(error) }];
       });
     })).then(function (groups) {
@@ -774,6 +796,22 @@
   function search(query, type, options) {
     query = normalizeSpaces(query);
     if (!query || query.length < 2) return Promise.resolve({ added: 0, works: [], skipped: "short-query" });
+    if (/^(all|الكل)$/i.test(String(type || "").trim())) {
+      // Search only on demand, with at most two format jobs running together.
+      var types = [TYPES.manga,TYPES.manhwa,TYPES.manhua,TYPES.book,TYPES.lightNovel,TYPES.webNovel], next = 0, results = [];
+      function worker() {
+        if (next >= types.length || options && options.isCurrent && !options.isCurrent()) return Promise.resolve();
+        var selected = types[next++];
+        var jobOptions=Object.assign({},options,{generalSearch:true,providers:selected===TYPES.lightNovel||selected===TYPES.webNovel?["anilist"]:undefined});
+        return runProviders("search-all", query, selected, jobOptions).then(function(result){results.push(result);return worker();});
+      }
+      return Promise.all([worker(),worker()]).then(function(){
+        return {type:type,works:uniqueWorks([].concat.apply([],results.map(function(r){return r.works||[];}))),
+          providers:[].concat.apply([],results.map(function(r){return r.providers||[];})),
+          providerErrors:[].concat.apply([],results.map(function(r){return r.providerErrors||[];})),
+          error:results.length && results.every(function(r){return r.error;}) ? "Search providers unavailable" : undefined};
+      });
+    }
     return runProviders("search", query, type, options);
   }
 
@@ -930,7 +968,8 @@
 
   function readRouteType() {
     try {
-      return normalizeType(new URLSearchParams(global.location && global.location.search || "").get("type") || "");
+      var raw = new URLSearchParams(global.location && global.location.search || "").get("type");
+      return !raw || /^(all|الكل)$/i.test(raw.trim()) ? "All" : normalizeType(raw);
     } catch (e) {
       return TYPES.manga;
     }
@@ -949,6 +988,9 @@
     global.clearTimeout(inputTimer);
     inputTimer = null;
   }
+  function notifyInputSearch(query,type,status){
+    if(global.dispatchEvent&&global.CustomEvent)global.dispatchEvent(new global.CustomEvent("lorefy:catalog-remote-search",{detail:{query:query,type:type,status:status}}));
+  }
   function bindSearchInputs() {
     if (!global.document || !global.document.addEventListener) return;
     if (global.addEventListener) {
@@ -964,13 +1006,21 @@
       if (!target || target.tagName !== "INPUT" || !target.closest ||
           !target.closest(".lf-search-box, [data-lorefy-catalog-search]")) return;
       cancelInputSearch();
+      if(target.closest("[data-lorefy-search-local]"))return;
       var value = normalizeSpaces(target.value || "");
       if (value.length < 3) return;
-      var type = readRouteType();
+      var host=target.closest("[data-lorefy-catalog-search]"), explicitType=host&&host.getAttribute&&host.getAttribute("data-lorefy-catalog-search");
+      var type = explicitType ? (/^(all|الكل)$/i.test(explicitType) ? "All" : normalizeType(explicitType)) : readRouteType();
+      function current(){return !target.closest("[data-lorefy-search-local]")&&target.isConnected&&normalizeSpaces(target.value||"")===value&&(explicitType?host.getAttribute("data-lorefy-catalog-search")===explicitType:type===readRouteType());}
+      notifyInputSearch(value,type,"searching");
       inputTimer = global.setTimeout(function () {
         inputTimer = null;
-        if (!target.isConnected || normalizeSpaces(target.value || "") !== value || type !== readRouteType()) return;
-        search(value, type).catch(function () {});
+        if (!current()) return;
+        search(value, type, {isCurrent:current}).then(function(result){
+          if(!current())return;
+          var failed=result&&(result.error||result.providerErrors&&result.providers&&result.providers.length&&result.providerErrors.length===result.providers.length);
+          notifyInputSearch(value,type,failed?"error":"ready");
+        }).catch(function(){if(current())notifyInputSearch(value,type,"error");});
       }, SEARCH_DEBOUNCE_MS);
     }, true);
   }

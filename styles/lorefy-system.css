@@ -5306,12 +5306,12 @@ body.lf-pref-hub-open .lf-pref-board-hub {
 .lf-review-card:active { transform: scale(0.985); }
 
 /* ── community tabs → iOS pill segmented bar ─────────────────────── */
-.lf-community-page > div:first-child {
+.lf-community-page > .lf-community-tabs {
   border-bottom: none !important;
   gap: 8px !important;
   padding: 2px 0 10px !important;
 }
-.lf-community-page > div:first-child > button {
+.lf-community-page > .lf-community-tabs > button {
   border-bottom: none !important;
   padding: 8px 16px !important;
   border-radius: 999px !important;
@@ -5322,13 +5322,13 @@ body.lf-pref-hub-open .lf-pref-board-hub {
   min-height: 36px;
   transition: background var(--lf-motion-fast) ease, color var(--lf-motion-fast) ease;
 }
-.lf-community-page > div:first-child > button:not([style*="transparent"]) {
+.lf-community-page > .lf-community-tabs > button:not([style*="transparent"]) {
   background: var(--lf-purple) !important;
   color: #ffffff !important;
   font-weight: 800 !important;
   box-shadow: 0 4px 12px color-mix(in srgb, var(--lf-purple) 32%, transparent);
 }
-.lf-app.is-dark .lf-community-page > div:first-child > button:not([style*="transparent"]) {
+.lf-app.is-dark .lf-community-page > .lf-community-tabs > button:not([style*="transparent"]) {
   color: #1c1024 !important;
 }
 

@@ -710,11 +710,10 @@
     post.reactions.mine = post.reactions.mine || { like:false, dislike:false };
     var active = !post.reactions.mine[kind];
     var other = kind === "like" ? "dislike" : "like";
-    var otherWasActive = !!post.reactions.mine[other];
     var finish = function () {
-      post.reactions[kind] = Math.max(0, Number(post.reactions[kind] || 0) + (active ? 1 : -1));
+      if(!!post.reactions.mine[kind]!==active)post.reactions[kind] = Math.max(0, Number(post.reactions[kind] || 0) + (active ? 1 : -1));
       post.reactions.mine[kind] = active;
-      if (active && otherWasActive) {
+      if (active && post.reactions.mine[other]) {
         post.reactions[other] = Math.max(0, Number(post.reactions[other] || 0) - 1);
         post.reactions.mine[other] = false;
       }
@@ -799,7 +798,7 @@
     if (hasQuote) card.appendChild(renderAttachmentPreview(post.attachment, false));
     else if (post.attachment && Array.isArray(post.attachment.items)) card.appendChild(renderAttachmentPreview(Object.assign({ kind:post.kind }, post.attachment), false));
     var mine = post.reactions && post.reactions.mine || {};
-    var reply = el("button", { type:"button", "aria-label":compact ? "الرد على الرد" : "فتح الردود" }, [icon("message-circle", 18), el("span", { text:String(post.replyCount || 0) })]);
+    var reply = el("button", { type:"button", class:"lf-community-post-replies", "aria-label":compact ? "الرد على الرد" : "فتح الردود" }, [icon("message-circle", 18), el("span", { text:String(post.replyCount || 0) })]);
     var like = el("button", { type:"button", class:"lf-community-post-like" + (mine.like ? " is-active" : ""), "aria-label":"إعجاب", "aria-pressed":mine.like ? "true" : "false" }, [icon("heart", 18), el("span", { text:String(post.reactions && post.reactions.like || 0) })]);
     var dislike = el("button", { type:"button", class:"lf-community-post-dislike" + (mine.dislike ? " is-active" : ""), "aria-label":"عدم إعجاب", "aria-pressed":mine.dislike ? "true" : "false" }, [icon("thumbs-down", 18), el("span", { text:String(post.reactions && post.reactions.dislike || 0) })]);
     var share = el("button", { type:"button", "aria-label":"مشاركة" }, [icon("share-2", 18)]);
@@ -985,38 +984,62 @@
     if (!host) return;
     var list = host.querySelector(".lf-community-post-list");
     if (!list) return;
-    var posts = visibleCommunityPosts();
-    var signature = JSON.stringify([posts, state.filter, !!state.error, !!state.loading,
+    var posts = visibleCommunityPosts(), viewer=identity(), saved=savedPosts();
+    var cardContext=JSON.stringify([viewer.id,viewer.username,doc.documentElement.lang]);
+    function postFingerprint(post){var content=Object.assign({},post);delete content.reactions;delete content.replyCount;return JSON.stringify([content,cardContext,!!saved[post.id]]);}
+    // Normalize fresh response objects before the unchanged-feed early return.
+    var canonical=new Map(), cachedCards=host.__lorefyPostCards;
+    if(cachedCards){
+      posts=posts.map(function(post){var previous=cachedCards.get(String(post.id));
+        if(previous&&previous.fingerprint===postFingerprint(post)&&previous.post!==post){Object.assign(previous.post,post);canonical.set(post,previous.post);return previous.post;}return post;
+      });
+      if(canonical.size)state.posts=state.posts.map(function(post){return canonical.get(post)||post;});
+    }
+    var signature = JSON.stringify([cardContext, saved, posts, state.filter, !!state.error, !!state.loading,
       !!state.hasMore, state.reviewFeed || {}, doc.documentElement.lang, Math.floor(Date.now() / 60000)]);
     if (host.__lorefyFeedSignature === signature && host.__lorefyFeedList === list) return;
     host.__lorefyFeedSignature = signature;
     host.__lorefyFeedList = list;
-    list.textContent = "";
+    var desired=[], previousCards=host.__lorefyPostCards || new Map(), nextCards=new Map();
+    function append(node){desired.push(node);return node;}
+
     if (state.error) {
       var retry = el('button', { type:'button', class:'lf-community-retry', text:uiText('تعذر تحميل المنشورات · إعادة المحاولة', 'Could not load posts · Retry') });
       retry.disabled = state.loading;
-      retry.addEventListener('click', function () { loadPosts(true); }); list.appendChild(retry);
+      retry.addEventListener('click', function () { loadPosts(true); }); append(retry);
     }
     var status = host.querySelector(":scope > header > span");
     if (status) status.textContent = state.filter === "friends" ? uiText('المتابَعون', 'Following') : state.filter === "mine" ? uiText('محتواك', 'Your posts') : state.filter === "popular" ? uiText('الأكثر تفاعلاً', 'Popular') : uiText('الأحدث', 'Latest');
     if (!posts.length && !state.error) {
       var emptyTitle = state.filter === "friends" ? uiText('لا توجد منشورات من الحسابات التي تتابعها', 'No posts from people you follow yet') : state.filter === "mine" ? uiText('لا توجد منشورات لك بعد', 'You have not posted yet') : uiText('ابدأ أول محادثة', 'Start the first conversation');
       var emptyBody = state.filter === "friends" ? uiText('تابع قرّاء جدد لتظهر منشوراتهم هنا.', 'Follow new readers to see their posts here.') : uiText('اكتب فكرة أو شارك قائمة من حسابك.', 'Share a thought or a list from your profile.');
-      list.appendChild(el("div", { class:"lf-community-post-empty" }, [icon("messages-square", 26), el("strong", { text:emptyTitle }), el("p", { text:emptyBody })]));
+      append(el("div", { class:"lf-community-post-empty" }, [icon("messages-square", 26), el("strong", { text:emptyTitle }), el("p", { text:emptyBody })]));
       if(state.filter==="friends"){
         var findReaders=el('button',{type:'button',class:'lf-community-load-more',text:doc.documentElement.lang==='en'?'Find readers':'اكتشف قرّاء'});
         findReaders.addEventListener('click',function(){global.dispatchEvent(new CustomEvent('lorefy:find-readers'));});
-        list.querySelector('.lf-community-post-empty').appendChild(findReaders);
+        desired[desired.length-1].appendChild(findReaders);
       }
     }
     posts.forEach(function (post) {
-      var card = postCard(post, false);
+      var fingerprint=postFingerprint(post), previous=previousCards.get(String(post.id)),card;
+      if(previous&&previous.fingerprint===fingerprint){
+        card=previous.card;
+      }else card=postCard(post,false);
+      [ ["like",".lf-community-post-like"],["dislike",".lf-community-post-dislike"] ].forEach(function(entry){
+        var button=card.querySelector(entry[1]);if(!button)return;
+        var reactions=post.reactions||{},mine=reactions.mine||{},active=!!mine[entry[0]],count=button.querySelector("span"),value=String(reactions[entry[0]]||0);
+        button.classList.toggle("is-active",active);button.setAttribute("aria-pressed",String(active));if(count&&count.textContent!==value)count.textContent=value;
+      });
+      var replies=card.querySelector(".lf-community-post-replies span");if(replies&&replies.textContent!==String(post.replyCount||0))replies.textContent=String(post.replyCount||0);
+      nextCards.set(String(post.id),{post:post,fingerprint:fingerprint,card:card});
+      var timestamp=card.querySelector(".lf-community-post-author small");
+      if(timestamp){var label="@"+String(post.profile&&post.profile.username||"lorefy_reader")+" · "+timeLabel(post.created_at);if(timestamp.textContent!==label)timestamp.textContent=label;}
       card.dataset.postTimestamp = String(Date.parse(post.created_at) || 0);
-      list.appendChild(card);
+      append(card);
     });
     if (state.hasMore) {
       var more = el('button', { type:'button', class:'lf-community-load-more', text:state.loading ? uiText('جارٍ التحميل…', 'Loading...') : uiText('عرض منشورات أقدم', 'Older posts') });
-      more.disabled = state.loading; more.addEventListener('click', function () { loadPosts(true, true); }); list.appendChild(more);
+      more.disabled = state.loading; more.addEventListener('click', function () { loadPosts(true, true); }); append(more);
     }
     var reviewFeed = state.reviewFeed || {};
     if (reviewFeed.hasMore || reviewFeed.error) {
@@ -1026,8 +1049,12 @@
       reviewMore.addEventListener('click', function () {
         global.dispatchEvent(new global.CustomEvent(reviewFeed.error ? 'lorefy:community-refresh' : 'lorefy:load-more-reviews'));
       });
-      list.appendChild(reviewMore);
+      append(reviewMore);
     }
+    var wanted=new Set(desired);
+    Array.prototype.slice.call(list.children).forEach(function(node){if(!wanted.has(node))node.remove();});
+    desired.forEach(function(node,index){if(list.children[index]!==node)list.insertBefore(node,list.children[index]||null);});
+    host.__lorefyPostCards=nextCards;
     orderCommunityFeed();
     hydrateIcons(list);
   }
@@ -1219,6 +1246,8 @@
   }
 
   function communityFilterTabs(page) {
+    var home=page.closest('.lf-home-screen'), pinned=home&&home.querySelector('.lf-home-feed-tabs');
+    if(pinned)return pinned;
     return Array.prototype.find.call(page.children, function (child) {
       var buttons = child.querySelectorAll(":scope > button");
       return buttons.length === 2 && buttons[0].dataset.communityFilter === 'all' && buttons[1].dataset.communityFilter === 'friends';
@@ -1236,7 +1265,8 @@
     }
     if (state.page !== page) {
       state.feedRequest = (state.feedRequest || 0) + 1; state.loading = false; state.hasMore = false; state.error = false; state.page = page; state.loaded = false; state.posts = [];
-      var selectedTab = page.querySelector('[data-community-filter][aria-selected="true"]');
+      var openingTabs=communityFilterTabs(page);
+      var selectedTab = openingTabs&&openingTabs.querySelector('[data-community-filter][aria-selected="true"]');
       state.filter = selectedTab ? filterForCommunityTab(selectedTab) : "all";
       state.followedIds = []; state.followsLoaded = false; state.legacySeedAttempted = false;
     }
@@ -1251,7 +1281,7 @@
     else if (fab.parentElement !== host) host.appendChild(fab);
     var feed = page.querySelector(":scope > .lf-community-post-feed");
     var activity = page.querySelector(":scope > .lf-friend-activity");
-    var feedAnchor = activity || tabs;
+    var feedAnchor = activity || (tabs&&tabs.parentElement===page ? tabs : null);
     if (!feed) {
       feed = createPostFeed();
       feed.id = "lf-community-post-feed";

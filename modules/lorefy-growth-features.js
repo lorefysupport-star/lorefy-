@@ -44,7 +44,7 @@
     return node;
   }
   function read(key, fallback) { try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; } }
-  function write(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch (e) { return false; } }
+  function write(key, val) { try { var serialized=JSON.stringify(val); if(global.LorefyStorageBudget)return global.LorefyStorageBudget.write(localStorage,key,serialized);localStorage.setItem(key,serialized);return true; } catch (e) { return false; } }
   global.addEventListener('lorefy:image-error', function (event) {
     toastSafe(event.detail && event.detail.message || 'تعذر قراءة الصورة');
   });
@@ -2158,19 +2158,31 @@
           });
           slot.appendChild(editImg);
         }
-        if (ch) slot.addEventListener("click", function () { list.chars.splice(ix, 1); persist(); paintChosen(); paintCast(); refreshHead(); });
+        if (ch) slot.addEventListener("click", function () { list.chars.splice(ix, 1); persist(); paintChosen(); updateCastSelection(); refreshHead(); });
         return slot;
       }
+      var chosenPodium=null, chosenRest=null, chosenHint=null, chosenSlotNodes=[];
       function paintChosen() {
-        chosen.textContent = "";
-        chosen.appendChild(el("div", { class: "lf-clx-podium" }, [slotEl(1, "md"), slotEl(0, "lg"), slotEl(2, "md")]));
-        var rest = el("div", { class: "lf-clx-rest" });
-        for (var ri = 3; ri < 10; ri++) rest.appendChild(slotEl(ri, "sm"));
-        chosen.appendChild(rest);
-        chosen.appendChild(el("p", { class: "lf-clx-hint", text: (list.chars || []).length ? "اضغط على شخصية مُرتّبة لإزالتها" : "اضغط على الشخصيات بالأسفل — أول اختيار يأخذ المركز الأول" }));
+        if(!chosenPodium){
+          chosenPodium=el("div",{class:"lf-clx-podium"});chosenRest=el("div",{class:"lf-clx-rest"});chosenHint=el("p",{class:"lf-clx-hint"});
+          chosen.appendChild(chosenPodium);chosen.appendChild(chosenRest);chosen.appendChild(chosenHint);
+        }
+        function updateSlot(index,size,host){
+          var key=JSON.stringify([list.chars[index]||null,size]),previous=chosenSlotNodes[index];
+          if(previous&&previous.key===key)return;
+          var node=slotEl(index,size);
+          if(previous)host.replaceChild(node,previous.node);else host.appendChild(node);
+          chosenSlotNodes[index]={key:key,node:node};
+        }
+        updateSlot(1,"md",chosenPodium);updateSlot(0,"lg",chosenPodium);updateSlot(2,"md",chosenPodium);
+        for(var ri=3;ri<10;ri++)updateSlot(ri,"sm",chosenRest);
+        chosenHint.textContent=(list.chars||[]).length?"اضغط على شخصية مُرتّبة لإزالتها":"اضغط على الشخصيات بالأسفل — أول اختيار يأخذ المركز الأول";
       }
       var castData = null;
+      var castSelectionUpdates=[];
+      function updateCastSelection(){castSelectionUpdates.forEach(function(update){update();});}
       function paintCast() {
+        castSelectionUpdates=[];
         castHost.textContent = "";
         if (castData === null) {
           castMeta.textContent = "";
@@ -2196,11 +2208,15 @@
             el("span", { class: "lf-clx-cast-name", text: ch.name }),
             at >= 0 ? el("span", { class: "lf-clx-cast-badge", text: String(at + 1) }) : null
           ]);
+          var badge=item.querySelector(".lf-clx-cast-badge") || el("span",{class:"lf-clx-cast-badge"});
+          if(!badge.parentNode)item.appendChild(badge);
+          function updateSelection(){var rank=inList(ch);item.setAttribute("class","lf-clx-cast-item"+(rank>=0?" is-in":""));badge.hidden=rank<0;badge.textContent=rank>=0?String(rank+1):"";}
+          castSelectionUpdates.push(updateSelection);updateSelection();
           item.addEventListener("click", function () {
             var ix = inList(ch);
             if (ix >= 0) list.chars.splice(ix, 1);
             else { if (list.chars.length >= 10) { toastSafe("الحد ١٠ شخصيات"); return; } list.chars.push(ch); }
-            persist(); paintChosen(); paintCast(); refreshHead();
+            persist(); paintChosen(); updateCastSelection(); refreshHead();
           });
           castHost.appendChild(item);
         });
@@ -3891,7 +3907,7 @@
     }
     [["rating", uiText("حسب التقييم", "By rating"), "feather"], ["work", uiText("حسب العمل", "By work"), "book-open"]].forEach(function (option) {
       var button = el("button", { type: "button", role: "tab", "data-mode": option[0], "aria-controls": "lf-character-atlas-gallery" }, [el("i", { "data-lucide": option[2], "aria-hidden": "true" }), el("span", { text: option[1] })]);
-      button.addEventListener("click", function () { mode = option[0]; limit = 60; render(true); }); buttons.push(button); modes.appendChild(button);
+      button.addEventListener("click", function () { if(mode===option[0])return;mode = option[0]; limit = 60; render(true); }); buttons.push(button); modes.appendChild(button);
       button.addEventListener("keydown", function (event) {
         if (["ArrowLeft", "ArrowRight", "Home", "End"].indexOf(event.key) === -1) return;
         event.preventDefault();
@@ -4028,7 +4044,7 @@
     return selection;
   }
   function setProfileTopCharacterSelection(selection) {
-    write(K_PROFILE_TOP_CHARACTERS, (selection || []).slice(0, 4).map(function (ref) {
+    return write(K_PROFILE_TOP_CHARACTERS, (selection || []).slice(0, 4).map(function (ref) {
       if (!ref) return null;
       return {
         workId: String(ref.workId),
@@ -4099,12 +4115,7 @@
       return false;
     }
     profileTopCharacterEditor = { active: editorActive, refresh: render };
-    var intro = el("section", { class: "lf-top-characters-editor-intro" }, [
-      el("strong", { text: uiText("أنت تحدد الشخصيات وترتيبها", "You choose the characters and their order") }),
-      el("p", { text: uiText("اختر الخانة أولاً، ثم اضغط شخصية لاستبدالها مباشرة. ترتيب الخانات هو ترتيب ظهورها في ملفك.", "Select a slot, then choose its character. Slot order matches your profile.") })
-    ]);
     var slots = el("div", { class: "lf-top-characters-editor-slots" });
-    var activeSlotCard = el("section", { class: "lf-top-characters-editor-active-slot", "aria-live": "polite" });
     var search = el("input", {
       type: "search",
       class: "lf-top-characters-editor-search",
@@ -4123,7 +4134,7 @@
     var modes=el("div",{class:"lf-character-picker-modes",role:"tablist","aria-label":uiText("طريقة البحث","Search method")});
     [ ["characters",uiText("الشخصيات","Characters")],["works",uiText("حسب العمل","By work")] ].forEach(function(entry){
       var modeButton=el("button",{type:"button",role:"tab",tabindex:entry[0]===pickerMode?"0":"-1","aria-selected":entry[0]===pickerMode?"true":"false",text:entry[1]});
-      modeButton.addEventListener("click",function(){pickerMode=entry[0];++nameSearchEpoch;clearTimeout(nameSearchTimer);clearTimeout(search.__renderTimer);nameSearchBusy=false;nameSearchFailed=false;activeWorkId="";loadingWorkId="";search.value="";Array.from(modes.children).forEach(function(b){b.setAttribute("aria-selected",String(b===modeButton));b.setAttribute("tabindex",b===modeButton?"0":"-1");});search.placeholder=pickerMode==="works"?uiText("ابحث عن عمل","Search works"):uiText("ابحث عن شخصية","Search characters");search.setAttribute("aria-label",search.placeholder);render();search.focus();});modes.appendChild(modeButton);
+      modeButton.addEventListener("click",function(){if(pickerMode===entry[0])return;pickerMode=entry[0];++nameSearchEpoch;clearTimeout(nameSearchTimer);clearTimeout(search.__renderTimer);nameSearchBusy=false;nameSearchFailed=false;activeWorkId="";loadingWorkId="";search.value="";Array.from(modes.children).forEach(function(b){b.setAttribute("aria-selected",String(b===modeButton));b.setAttribute("tabindex",b===modeButton?"0":"-1");});search.placeholder=pickerMode==="works"?uiText("ابحث عن عمل","Search works"):uiText("ابحث عن شخصية","Search characters");search.setAttribute("aria-label",search.placeholder);render();search.focus();});modes.appendChild(modeButton);
     });
     modes.addEventListener("keydown",function(event){
       var buttons=Array.from(modes.children),index=buttons.indexOf(event.target),next=index,rtl=uiText("rtl","ltr")==="rtl";
@@ -4224,8 +4235,15 @@
         workResults.appendChild(button);
       });
     }
+    var selectionUpdates = [], slotNodes=[], candidateNodes=new Map();
+    function selectSlot(index) {
+      if (!editorActive() || index === activeSlot) return;
+      activeSlot = index;
+      selectionUpdates.forEach(function(update){update();});
+    }
     function render() {
       if (!editorActive()) return;
+      selectionUpdates = [];
       var data = dataNow(), selected = {}, query = profileTopCharacterSearchText(search.value);
       var missingWorkIds = data.missing.slice();
       if (activeWorkId && !profileRatedCharacterCache[activeWorkId] && missingWorkIds.indexOf(activeWorkId) < 0) missingWorkIds.push(activeWorkId);
@@ -4233,10 +4251,12 @@
       var castLoading = missingWorkIds.some(function (id) { return !profileRatedCharacterFailures[id]; });
       draft.forEach(function (ref, index) { if (ref) selected[profileTopCharacterRefKey(ref)] = index + 1; });
       clearSearch.hidden = !search.value;
-      slots.textContent = "";
+
       for (var slot = 0; slot < 4; slot++) {
         (function (slotIndex) {
           var ref = draft[slotIndex], item = ref && profileTopCharacterFromRef(ref, data.entries);
+          var slotKey=JSON.stringify([ref,item&&item.character,uiText("ar","en")]),previous=slotNodes[slotIndex];
+          if(previous&&previous.key===slotKey){selectionUpdates.push(previous.update);previous.update();return;}
           var button = el("button", {
             type: "button",
             class: "lf-top-characters-editor-slot" + (item ? " is-filled" : " is-empty") + (slotIndex === activeSlot ? " is-active" : ""),
@@ -4253,28 +4273,22 @@
             button.appendChild(el("span", { text: "+" }));
             button.appendChild(el("small", { text: uiText("الخانة ", "Slot ") + (slotIndex + 1) }));
           }
-          button.addEventListener("click", function () { activeSlot = slotIndex; render(); });
-          slots.appendChild(button);
+          button.addEventListener("click", function () { selectSlot(slotIndex); });
+          var remove=null;
+          function updateSlot(){button.setAttribute("class","lf-top-characters-editor-slot"+(item?" is-filled":" is-empty")+(slotIndex===activeSlot?" is-active":""));button.setAttribute("aria-pressed",String(slotIndex===activeSlot));if(remove)remove.hidden=slotIndex!==activeSlot;}
+          selectionUpdates.push(updateSlot);
+          var slotCell=el("div",{class:"lf-top-characters-editor-slot-cell"+(item?" is-filled":"")});
+          slotCell.appendChild(button);
+          if(item){
+            remove=el("button",{type:"button",class:"lf-top-characters-editor-slot-remove","aria-label":uiText("إزالة ","Remove ")+(item.character.name||item.character.latin||uiText("الشخصية","character"))+uiText(" من الخانة "," from slot ")+(slotIndex+1)},[el("span",{"aria-hidden":"true",text:"×"})]);
+            remove.addEventListener("click",function(event){if(event)event.stopPropagation();if(!editorActive())return;draft[slotIndex]=null;setProfileTopCharacterSelection(draft);syncProfileTopCharacters();render();});
+            remove.hidden=slotIndex!==activeSlot;
+
+            slotCell.appendChild(remove);
+          }
+          if(previous)slots.replaceChild(slotCell,previous.cell);else slots.appendChild(slotCell);
+          slotNodes[slotIndex]={key:slotKey,cell:slotCell,update:updateSlot};
         })(slot);
-      }
-      activeSlotCard.textContent = "";
-      var activeRef = draft[activeSlot], activeItem = activeRef && profileTopCharacterFromRef(activeRef, data.entries);
-      activeSlotCard.appendChild(el("div", { class: "lf-top-characters-editor-active-copy" }, [
-        el("strong", { text: uiText("استبدال الخانة ", "Replace slot ") + String(activeSlot + 1) }),
-        el("small", { text: activeItem
-          ? uiText("اختر شخصية من القائمة أو أزل ", "Choose a character or remove ") + (activeItem.character.name || activeItem.character.latin || uiText("الشخصية", "this character"))
-          : uiText("اختر شخصية من القائمة لإضافتها هنا", "Choose a character to add here") })
-      ]));
-      if (activeItem) {
-        var remove = el("button", { type: "button", class: "lf-top-characters-editor-remove", text: uiText("إزالة الشخصية من هذه الخانة", "Remove from this slot") });
-        remove.addEventListener("click", function () {
-          if (!editorActive()) return;
-          draft[activeSlot] = null;
-          setProfileTopCharacterSelection(draft);
-          syncProfileTopCharacters();
-          render();
-        });
-        activeSlotCard.appendChild(remove);
       }
       currentWork.textContent = "";
       if (activeWorkId) {
@@ -4301,7 +4315,7 @@
         headingMeta.textContent = query ? (nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : pickerMode==="works" ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته", "Select a work to see its characters") : "") : pickerMode==="works" ? uiText("ابحث باسم العمل لإظهار شخصياته", "Search by work title to see its characters") : uiText("ابحث باسم شخصية، أو اختر «حسب العمل»", "Search by character name, or select By work");
       }
       renderWorkResults(query);
-      candidates.textContent = "";
+      var desiredCandidates=[], nextCandidates=new Map();
       var rows = candidateRows(data, query);
       if (!rows.length) {
         var emptyText = nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : nameSearchFailed ? uiText("تعذر البحث الآن. جرّب مرة أخرى أو ابحث باسم العمل.","Character search unavailable. Try again or search by work title.") : failedWorkIds.length
@@ -4313,10 +4327,12 @@
             : query
               ? (pickerMode==="works" ? (!workResults.hidden ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته.", "Select a work from search results to see its characters.") : uiText("لا توجد أعمال مطابقة. جرّب عنواناً آخر.", "No matching works. Try another title.")) : uiText("لا توجد شخصيات مطابقة. جرّب اسماً آخر.", "No matching characters. Try another name."))
               : pickerMode==="works" ? uiText("ابحث باسم العمل، ثم اختر شخصياتك المفضلة.", "Search by work title, then choose your favorite characters.") : uiText("ابحث باسم شخصية لإضافتها إلى المفضلة.", "Search by character name to add a favorite.");
-        candidates.appendChild(el("p", { class: "lf-profile-rated-characters-empty", role: "status", text: emptyText }));
+        desiredCandidates.push(el("p", { class: "lf-profile-rated-characters-empty", role: "status", text: emptyText }));
       } else {
         rows.forEach(function (item) {
           var ref = profileTopCharacterRef(item), key = profileTopCharacterRefKey(ref), rank = selected[key] || 0;
+          var fingerprint=JSON.stringify([item.character,item.score,item.workTitle,uiText("ar","en")]),cached=candidateNodes.get(key);
+          if(cached&&cached.fingerprint===fingerprint){cached.update();selectionUpdates.push(cached.update);desiredCandidates.push(cached.node);nextCandidates.set(key,cached);return;}
           var isActiveSelection = rank === activeSlot + 1;
           var rating = item.score
             ? profileRatedCharacterStars(item)
@@ -4339,19 +4355,31 @@
           button.addEventListener("click", function () {
             chooseCandidate(ref);
           });
-          candidates.appendChild(button);
+          var action=button.children[2];
+          function updateCandidate(){
+            var rank=selectionIndex(ref)+1,active=rank===activeSlot+1;
+            button.setAttribute("class","lf-top-characters-editor-candidate"+(rank?" is-selected":"")+(active?" is-active":""));
+            button.setAttribute("aria-label",active ? (item.character.name||item.character.latin||uiText("شخصية","Character"))+uiText(" محددة في الخانة "," selected in slot ")+(activeSlot+1) : uiText("استبدال الخانة ","Replace slot ")+(activeSlot+1)+uiText(" بـ "," with ")+(item.character.name||item.character.latin||uiText("شخصية","Character")));
+            action.textContent=active?"✓":uiText("تبديل","Replace");
+          }
+          selectionUpdates.push(updateCandidate);nextCandidates.set(key,{fingerprint:fingerprint,node:button,update:updateCandidate});
+          desiredCandidates.push(button);
         });
       }
       if (failedWorkIds.length) {
-        if (rows.length) candidates.appendChild(el("p", { class: "lf-profile-rated-characters-empty", text: uiText("تعذر تحميل بعض الشخصيات.", "Some characters could not be loaded.") }));
+        if (rows.length) desiredCandidates.push(el("p", { class: "lf-profile-rated-characters-empty", text: uiText("تعذر تحميل بعض الشخصيات.", "Some characters could not be loaded.") }));
         var retryCast = el("button", { type: "button", class: "lf-top-characters-editor-retry lf-character-atlas-more", text: uiText("إعادة المحاولة", "Retry") });
         retryCast.addEventListener("click", function () {
           if (!editorActive()) return;
           failedWorkIds.forEach(function (id) { delete profileRatedCharacterFailures[id]; });
           render();
         });
-        candidates.appendChild(retryCast);
+        desiredCandidates.push(retryCast);
       }
+      var wantedCandidates=new Set(desiredCandidates);
+      Array.from(candidates.children).forEach(function(node){if(!wantedCandidates.has(node))node.remove();});
+      desiredCandidates.forEach(function(node,index){if(candidates.children[index]!==node)candidates.insertBefore(node,candidates.children[index]||null);});
+      candidateNodes=nextCandidates;
       missingWorkIds.forEach(function (workId) { hydrateProfileRatedCharacters(workId); });
     }
     search.addEventListener("input",function(){
@@ -4374,16 +4402,17 @@
     clearSearch.addEventListener("click", function () { nameSearchEpoch++;clearTimeout(nameSearchTimer);clearTimeout(search.__renderTimer);nameSearchBusy=false;nameSearchFailed=false;search.value = ""; render(); search.focus(); });
     save.addEventListener("click", function () {
       if (!editorActive()) return;
-      setProfileTopCharacterSelection(draft);
+      if(setProfileTopCharacterSelection(draft)===false){
+        toastSafe(uiText("تعذر حفظ المفضلة على الجهاز. أعد المحاولة.","Could not save favorites on this device. Please try again."));
+        return;
+      }
       syncProfileTopCharacters();
       ov.close();
       toastSafe(uiText("تم حفظ المفضلة", "Favorites saved"));
     });
-    ov.body.appendChild(intro);
     ov.body.appendChild(slots);
-    ov.body.appendChild(activeSlotCard);
-    ov.body.appendChild(modes);
     ov.body.appendChild(searchBox);
+    ov.body.appendChild(modes);
     ov.body.appendChild(workResults);
     ov.body.appendChild(currentWork);
     ov.body.appendChild(el("header", { class: "lf-top-characters-editor-heading" }, [headingTitle, headingMeta]));
@@ -4485,11 +4514,15 @@
       global.dispatchEvent(new CustomEvent("lorefy:stored-state", { detail: { key: "lorefy.user.favorites.v2" } }));
       render();
     }
+    var slotUpdates = [], slotNodes=[], resultNodes=new Map();
     function render() {
+      slotUpdates = [];
       var query = profileTopCharacterSearchText(search.value);
-      slots.textContent = "";
+
       draft.forEach(function (id, index) {
-        var work = id && workFor(id);
+        var work = id && workFor(id), slotKey=JSON.stringify([id,titleFor(id),coverFor(work),!!work]);
+        var previous=slotNodes[index];
+        if(previous&&previous.key===slotKey){slotUpdates.push(previous.update);previous.update();return;}
         var button = el("button", {
           type: "button",
           class: "lf-top-works-editor-slot" + (work ? " is-filled" : " is-empty") + (index === activeSlot ? " is-active" : ""),
@@ -4508,10 +4541,24 @@
           button.appendChild(el("span", { class: "lf-top-works-editor-empty-mark", text: "+", "aria-hidden": "true" }));
           button.appendChild(el("small", { text: uiText("الخانة ", "Slot ") + (index + 1) }));
         }
-        button.addEventListener("click", function () { activeSlot = index; render(); });
-        slots.appendChild(button);
+        var update=function(){
+          button.setAttribute("class","lf-top-works-editor-slot"+(work?" is-filled":" is-empty")+(index===activeSlot?" is-active":""));
+          button.setAttribute("aria-pressed",String(index===activeSlot));
+        };slotUpdates.push(update);
+        button.addEventListener("click", function () {
+          if (!ov.page.isConnected || ov.page.inert || activeSlot===index) return;
+          activeSlot=index;slotUpdates.forEach(function(update){update();});
+        });
+        if(previous)slots.replaceChild(button,previous.button);else slots.appendChild(button);
+        slotNodes[index]={key:slotKey,button:button,update:update};
       });
-      results.textContent = "";
+      var desired=[],nextResults=new Map();
+      function commitResults(){
+        var wanted=new Set(desired);
+        Array.from(results.children).forEach(function(node){if(!wanted.has(node))node.remove();});
+        desired.forEach(function(node,index){if(results.children[index]!==node)results.insertBefore(node,results.children[index]||null);});
+        resultNodes=nextResults;
+      }
       var matches = [];
       var catalog = mlWorks();
       for (var workIndex = 0; workIndex < catalog.length && matches.length <= visibleLimit; workIndex++) {
@@ -4521,13 +4568,15 @@
       var hasMore = matches.length > visibleLimit;
       var works = matches.slice(0, visibleLimit);
       if (!works.length) {
-        results.appendChild(el("p", { class: "lf-top-works-editor-empty", text: uiText("لا توجد أعمال مطابقة.", "No matching works.") }));
-        return;
+        desired.push(el("p", { class: "lf-top-works-editor-empty", text: uiText("لا توجد أعمال مطابقة.", "No matching works.") }));
+        commitResults();return;
       }
       works.forEach(function (work) {
         var id = String(work && work.id || "");
         if (!id) return;
-        var rank = draft.indexOf(id);
+        var rank = draft.indexOf(id), key=JSON.stringify([id,rank,titleFor(id),coverFor(work),work.type,work.auth,work.author,doc.documentElement.lang]);
+        var cached=resultNodes.get(id);
+        if(cached&&cached.key===key){desired.push(cached.node);nextResults.set(id,cached);return;}
         var cover = el("span", { class: "lf-top-works-editor-cover" });
         drawCover(cover, work);
         var button = el("button", {
@@ -4543,7 +4592,7 @@
           el("span", { class: "lf-top-works-editor-result-action", text: rank >= 0 ? String(rank + 1) : uiText("اختيار", "Select") })
         ]);
         button.addEventListener("click", function () { selectWork(id); });
-        results.appendChild(button);
+        desired.push(button);nextResults.set(id,{key:key,node:button});
       });
       if (hasMore) {
         var more = el("button", { type: "button", class: "lf-top-works-editor-more", text: "عرض المزيد" });
@@ -4551,8 +4600,9 @@
           visibleLimit += 12;
           render();
         });
-        results.appendChild(more);
+        desired.push(more);
       }
+      commitResults();
     }
     function refreshCatalog() {
       if (ov.page.isConnected) render();
@@ -4579,7 +4629,7 @@
     ov.body.appendChild(slots);
     ov.body.appendChild(search);
     ov.body.appendChild(results);
-    ov.body.appendChild(save);
+    ov.page.appendChild(save);
     render();
     return true;
   }
@@ -5074,11 +5124,17 @@
       var c = sec.querySelector("[data-top4-count]");
       if (c) { c.textContent = n + "/4"; c.classList.toggle("is-done", n >= 4); }
     }
+    var slotNodes=[];
+    function putSlot(node,index,key){
+      var previous=slotNodes[index];
+      if(previous)slots.replaceChild(node,previous.node);else slots.appendChild(node);
+      slotNodes[index]={node:node,key:key};
+    }
     function paintSlots() {
-      slots.textContent = "";
       var cur = top4Get(mid);
       for (var i = 0; i < 4; i++) (function (i) {
-        var item = cur[i];
+        var item = cur[i], key=JSON.stringify(item||null);
+        if(slotNodes[i]&&slotNodes[i].key===key)return;
         if (item) {
           var chip = top4el("div", { class: "lf-top4-slot is-filled" }, [
             top4Portrait(item),
@@ -5089,21 +5145,24 @@
           rm.addEventListener("click", function (e) {
             e.stopPropagation();
             var l = top4Get(mid); l.splice(i, 1); top4Set(mid, l);
-            paintSlots(); paintCount(); paintList();
+            paintSlots(); paintCount(); updateCandidates();
           });
           chip.appendChild(rm);
-          slots.appendChild(chip);
+          putSlot(chip,i,key);
         } else {
           var empty = top4el("button", { type: "button", class: "lf-top4-slot is-empty", "aria-label": "إضافة شخصية" }, [
             top4el("span", { class: "lf-top4-plus", text: "+" }),
             top4el("span", { class: "lf-top4-slot-name", text: "شخصية " + (i + 1) })
           ]);
           empty.addEventListener("click", function () { openPicker(); });
-          slots.appendChild(empty);
+          putSlot(empty,i,key);
         }
       })(i);
     }
+    var candidateUpdates = [];
+    function updateCandidates(){candidateUpdates.forEach(function(update){update();});}
     function paintList() {
+      candidateUpdates = [];
       if (!castData) return;
       var q = (search.value || "").trim().toLowerCase();
       var chosen = top4Get(mid).map(function (x) { return x.name; });
@@ -5121,13 +5180,18 @@
           top4el("span", { class: "lf-top4-cand-name", text: nm }),
           top4el("span", { class: "lf-top4-cand-add", text: taken ? "✓" : "إضافة" })
         ]);
+        candidateUpdates.push(function(){
+          var selected=top4Get(mid).some(function(item){return item.name===nm;});
+          row.setAttribute("class","lf-top4-cand"+(selected?" is-taken":""));
+          row.children[2].textContent=selected?"✓":(language==="en"?"Add":"إضافة");
+        });
         row.addEventListener("click", function () {
           var l = top4Get(mid);
           var at = l.findIndex(function (x) { return x.name === nm; });
           if (at >= 0) l.splice(at, 1);
           else { if (l.length >= 4) return; l.push({ name: nm, img: c.img || c.image || "" }); }
           top4Set(mid, l);
-          paintSlots(); paintCount(); paintList();
+          paintSlots(); paintCount(); updateCandidates();
           if (top4Get(mid).length >= 4) picker.hidden = true;
         });
         list.appendChild(row);
@@ -5798,10 +5862,8 @@
       var likes = read(K_COMMUNITY_MY_LIKES, {});
       var likeCounts = read(K_COMMUNITY_LIKES, {});
       var adding = !likes[key];
-      var synced = await persistReviewReaction(card, "like", adding);
-      if (adding && read(K_COMMUNITY_MY_DISLIKES, {})[key]) {
-        synced = (await persistReviewReaction(card, "dislike", false)) && synced;
-      }
+      btn.dataset.lfReactionSync="1";
+      var hadDislike=!!read(K_COMMUNITY_MY_DISLIKES,{})[key];
       if (adding) likes[key] = true; else delete likes[key];
       likeCounts[key] = Math.max(0, (parseInt(likeCounts[key] || 0, 10) || 0) + (adding ? 1 : -1));
       write(K_COMMUNITY_MY_LIKES, likes);
@@ -5818,7 +5880,11 @@
         }
       }
       syncCommunityReactionViews(key);
-      if (!synced) toastSafe("حُفظ تفاعلك محلياً وسيُزامن عند عودة الاتصال");
+      try{
+        var synced = await persistReviewReaction(card, "like", adding);
+        if(adding&&hadDislike)synced=(await persistReviewReaction(card,"dislike",false))&&synced;
+        if (!synced) toastSafe("حُفظ تفاعلك محلياً وسيُزامن عند عودة الاتصال");
+      }finally{btn.dataset.lfReactionSync="0";}
     }, true);
   }
   function wireCommunityDislike(btn, card) {
@@ -6212,8 +6278,9 @@
     var page = doc.querySelector(".lf-community-page");
     if (!page) return false;
     page.classList.add("lf-community-enhanced");
-    var tabs = page.querySelector(":scope > div:first-child");
-    if (tabs && tabs.querySelectorAll && tabs.querySelectorAll("button").length >= 3) tabs.classList.add("lf-community-tabs");
+    var home=page.closest(".lf-home-screen");
+    var tabs=home&&home.querySelector(".lf-home-feed-tabs")||page.querySelector(":scope > .lf-community-tabs");
+    if(tabs)tabs.classList.add("lf-community-tabs");
     var hero = page.querySelector(".lf-community-hero");
     if (hero) hero.remove();
     Array.prototype.forEach.call(page.querySelectorAll(".lf-community-feed-label"), function (label) { label.remove(); });

@@ -27,21 +27,21 @@ test('updated UI assets use fresh cache keys', () => {
   const html = read('index.html');
   assert.match(html, /lorefy-apple-ui\.css\?v=20260925-ui-coherence-v1/);
   assert.match(html, /lorefy-cinema-ui\.css\?v=20261003-appearance-feather-v2/);
-  assert.match(html, /lorefy-community\.css\?v=20261009-public-appearance-v4/);
+  assert.match(html, /lorefy-community\.css\?v=20261021-sticky-home-tabs/);
   for (const asset of ['modules/lorefy-growth-features.js', 'modules/lorefy-i18n.js',
     'modules/lorefy-v2.js', 'modules/lorefy-public-profile.js', 'uploads/files/lorefy-app.js',
     'modules/lorefy-catalog-loader.js', 'modules/lorefy-explore-studio.js', 'styles/lorefy-explore-studio.css']) {
     const versions = {
-      'modules/lorefy-growth-features.js':'20261020-character-editor-recovery-v2',
+      'modules/lorefy-growth-features.js':'20261021-like-stability',
       'modules/lorefy-public-profile.js':'20261019-page-refresh-v1',
       'modules/lorefy-i18n.js':'20261019-read-intent-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',
-      'uploads/files/lorefy-app.js':'20261021-reader-filter-polish-v1',
-      'modules/lorefy-catalog-loader.js':'20261019-search-authors-v1',
+      'uploads/files/lorefy-app.js':'20261021-like-stability',
+      'modules/lorefy-catalog-loader.js':'20261021-search-audit',
       'modules/lorefy-catalog-map-loader.js':'20261018-runtime-cleanup-v1',
       'uploads/lorefy-catalog-summary.js':'20261018-runtime-cleanup-v1',
-      'modules/lorefy-explore-studio.js':'20261020-carousel-control-v1',
-      'styles/lorefy-explore-studio.css':'20261020-carousel-control-v1'
+      'modules/lorefy-explore-studio.js':'20261021-search-audit',
+      'styles/lorefy-explore-studio.css':'20261021-explore-refine-v2'
     };
     const version = versions[asset];
     const versioned = asset + '?v=' + version;

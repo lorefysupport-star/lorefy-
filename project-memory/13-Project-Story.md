@@ -449,3 +449,36 @@ script أو نقل عنصر يملكه React قد يكسر حالة أو حدث�
 
 
 - [[sessions/2026-10-21-GitHub-Skills-Handoff]]: طلب المالك رفع مجموعة تحسينات السكيلز إلى origin/main بتاريخ21أكتوبر. فحص قبل الرفع2348اختبارًا دون إخفاق؛ المجموعة تشمل المصدر واختباراته وتوثيقه والأصول المتتبعة. لا بناء أو رفعApple. إثبات الشبكة منفصل بتطابق SHA.
+
+[[sessions/2026-10-19-Banner-Clear]] records explicit media removal and stale-cache fixes; historical upload cause remains unproven.
+
+[[sessions/2026-10-21-DeviceHub-Sync]]: latest main 79928a7 synchronized to the existing simulator with local banner fixes retained.
+
+[[sessions/2026-10-21-Local-UI-Review]]: six local UI changes for owner testing; direct drag/pinch photo framing supersedes sliders. Explicitly uncommitted.
+
+[[sessions/2026-10-21-Explore-Refinement]] supersedes the initial local review section paging/filter layout: centered type labels, on-demand independent section pages and compact filters. Uncommitted.
+
+[[sessions/2026-10-21-Sticky-Home-Filters]]: For You/Following moved into sticky Home header above Continue reading; local review only.
+
+[[sessions/2026-10-21-Trim-Explore]]: owner-selected smaller Explore row set; short reads retained, overlapping themed rows removed. Local review.
+
+[[sessions/2026-10-21-Favorite-Slot-Checkmark]]: owner-selected outline/check selection replaces the large slot instruction box. Local review.
+
+[[sessions/2026-10-21-Clean-Favorite-Controls]]: × removal on filled cards, no intro or shifting action row; search precedes mode tabs. Local review.
+
+Favorite editor refinement: selected red ×, stable portrait nodes on slot changes, and uniform search background; see [[sessions/2026-10-21-Clean-Favorite-Controls]].
+
+Favorite removal badge refined to a small dark corner badge with centered muted-red strokes; [[sessions/2026-10-21-Clean-Favorite-Controls]].
+
+Unnecessary card rebuilding audit and fixes: favorite pickers, ranking/review picks, custom-list editing and community updates preserve unchanged nodes; see [[sessions/2026-10-21-Stable-Rendering]].
+
+Favorite slot save investigation: bounded downloaded catalog cache, quota-only safe cache reclaim, and honest failed-save feedback; 82 focused checks plus save/reopen/reload in isolated demo. Device Hub storage pressure removed without changing saved favorites. [[sessions/2026-10-21-Favorite-Save-Quota]].
+
+Home review Like stability: aligned declarative/enhanced Like and Dislike controls, immediate guarded Like updates, and retained cards across equivalent realtime responses. 549 focused checks and browser node-identity evidence; [[sessions/2026-10-21-Home-Like-Stability]].
+
+Type-page search now connects its selected format to the existing debounced online lookup and tracks pending/error states. Golden Son by Pierce Brown verified through Novel search and work detail; 53 focused checks. [[sessions/2026-10-21-Format-Search-Online]].
+
+
+2026-10-21: [[sessions/2026-10-21-Search-Audit]] repairs main All-format online lookup and isolates People/Lists from catalog listeners; 234 focused checks, browser result evidence, and five matching installed simulator assets. Live directory/provider coverage remains separate. No commit or push.
+
+2026-10-21: Owner authorized committing/pushing accumulated local repairs; [[sessions/2026-10-21-GitHub-Sync]] records 2370 passing full-suite checks and six missing-dependency failures, plus 234/234 focused search checks. No release upload.
