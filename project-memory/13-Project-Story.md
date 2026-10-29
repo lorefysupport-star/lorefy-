@@ -6,6 +6,12 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-10-30 owner requests each verified source repair pushed immediately.
+Private signing repair pushed `b322afd`. [[sessions/2026-10-30-Inbox-Reconnect]]
+adds UPDATE/read synchronization, reconnect/native resume/online catch-up,
+coalesced refresh and monotonic duplicate read state.3014 tests/84 UI fixtures;
+no build or production configuration changed. Installed-device acceptance open.
+
 2026-10-30: [[sessions/2026-10-30-Supabase-Pro-Adoption]] verifies Pro/Spend Cap,
 usage and actual backups read-only. Private image signing coalesced/reused in
 bounded account-scoped memory locally; no production write, GitHub or build.

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-29T21:46:17.222Z
-Source commit: 5933fdc1783b9cf6f5ed267de93587c8dc7e16d1
+Observed: 2026-10-29T21:57:32.975Z
+Source commit: b322afdd6c1936a74a2af9b47dc269712f278ca4
 
 # Docs Source Inventory
 
@@ -91,7 +91,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/SOL6_FULL_AUDIT_2026-09-23.md](../../docs/SOL6_FULL_AUDIT_2026-09-23.md) (3887 bytes)
 - [docs/SOURCE_CHECKPOINT_2026-10-29.md](../../docs/SOURCE_CHECKPOINT_2026-10-29.md) (2461 bytes)
 - [docs/STATE_RECOVERY_FIX_2026-10-03.md](../../docs/STATE_RECOVERY_FIX_2026-10-03.md) (2927 bytes)
-- [docs/SUPABASE_PRO_ADOPTION_2026-10-30.md](../../docs/SUPABASE_PRO_ADOPTION_2026-10-30.md) (17353 bytes)
+- [docs/SUPABASE_PRO_ADOPTION_2026-10-30.md](../../docs/SUPABASE_PRO_ADOPTION_2026-10-30.md) (18102 bytes)
 - [docs/SUPABASE_PRO_OPTIMIZATION_2026-10-29.md](../../docs/SUPABASE_PRO_OPTIMIZATION_2026-10-29.md) (7886 bytes)
 - [docs/TESTER_LAB_LANGUAGE_AUDIT_2026-10-09.md](../../docs/TESTER_LAB_LANGUAGE_AUDIT_2026-10-09.md) (4684 bytes)
 - [docs/UGC_MODERATION_RUNBOOK.md](../../docs/UGC_MODERATION_RUNBOOK.md) (1633 bytes)

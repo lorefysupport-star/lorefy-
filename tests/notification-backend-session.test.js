@@ -17,7 +17,7 @@ function harness() {
     return { rpc: async (name, args) => { calls.push({ name, args, client: label }); return hooks.write(name); },
       from: table => { const filters = {}; return { select() { return this; }, eq(k, v) { filters[k] = v; return this; }, order() { return this; },
         limit: async limit => { calls.push({ name: 'query', table, filters, limit, client: label }); return hooks.write('query'); } }; },
-      channel: name => { const channel = { name, client: label, on(event, filter, listener) { this.filter = filter; this.listener = listener; return this; }, subscribe() { channels.push(this); return this; } }; return channel; },
+      channel: name => { const channel = { name, client: label, handlers: {}, on(event, filter, listener) { this.handlers[filter.event] = {filter,listener}; if(filter.event==='INSERT'){this.filter = filter; this.listener = listener;} return this; }, subscribe(state) { this.state = state; channels.push(this); return this; } }; return channel; },
       removeChannel: async channel => { removed.push({ channel, client: label }); return hooks.remove(); } };
   }
   Object.assign(api, { mode: 'live', user: { id: 'a' }, _communityEpoch: 1, getSession: () => hooks.session(), client: client('first') });
@@ -143,4 +143,25 @@ test('non-live notification operations retain their local no-op contracts', asyn
   assert.equal(await actions.register(h), false); assert.equal(await actions.unregister(h), false);
   assert.deepEqual(Array.from(await actions.list(h)), []); assert.equal(await actions.read(h), 0);
   assert.equal(typeof await h.api.subscribeNotifications(() => {}), 'function'); assert.equal(h.calls.length, 0);
+});
+
+test('notification read updates retain the owner filter and carry an UPDATE discriminator', async () => {
+  const h = harness(), received = [];
+  await h.api.subscribeNotifications((row, change) => received.push({ row, change }));
+  const update = h.channels[0].handlers.UPDATE;
+  assert.ok(update, 'subscribe to read-state changes, not only inserts');
+  assert.equal(update.filter.filter, 'user_id=eq.a');
+  update.listener({ new: { id, user_id:'a', actor_id:'reader', read_at:'2026-10-30T00:00:00Z' } });
+  assert.equal(received[0].change.event, 'UPDATE');
+  assert.equal(received[0].row.id, id);
+});
+
+test('subscription state callbacks stop on account change, replacement and unsubscribe', async () => {
+  const h = harness(), states = [];
+  const stop = await h.api.subscribeNotifications(() => {}, status => states.push(status));
+  const channel = h.channels[0];
+  assert.equal(typeof channel.state, 'function');
+  channel.state('SUBSCRIBED');
+  h.transition(); channel.state('SUBSCRIBED'); stop(); channel.state('SUBSCRIBED');
+  assert.deepEqual(states, ['SUBSCRIBED']);
 });

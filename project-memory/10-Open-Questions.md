@@ -6,6 +6,11 @@ aliases: ["المشكلات", "النواقص", "المتبقي", "blockers"]
 ---
 # أمور لا تُغلق بالافتراض
 
+[[sessions/2026-10-30-Inbox-Reconnect]] closes reproducible source reconnect,
+parallel refresh and read-state regressions, not real two-device service delivery
+or a new installed version. Source push is authorized; server data/billing and
+native distribution remain unchanged. Broader Pro adoption stages stay open.
+
 [[sessions/2026-10-30-Supabase-Pro-Adoption]] confirms Pro and available backups
 without restoring production. Private signing cache is local, not a live CDN
 benchmark. Responsive transformations, Storage-byte backup destination, isolated

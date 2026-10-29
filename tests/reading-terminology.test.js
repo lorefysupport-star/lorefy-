@@ -54,7 +54,7 @@ test('visitor library status also uses the shared reading formatter',()=>{
 });
 test('reading vocabulary consumers use current runtime cache keys',()=>{
   for(const entry of ['index.html','sw.js'])for(const asset of ['uploads/files/lorefy-app.js','modules/lorefy-i18n.js','modules/lorefy-work-panels.js','modules/lorefy-growth-features.js','modules/lorefy-public-profile.js'])assert.ok(fs.readFileSync(entry,'utf8').includes(asset+'?v='+(asset==='modules/lorefy-work-panels.js'?'20261029-cover-editions-v1':asset==='modules/lorefy-growth-features.js'?'20261029-rated-profile-media-v1':asset==='uploads/files/lorefy-app.js'?'20261029-cover-editions-v1':['uploads/files/lorefy-app.js','modules/lorefy-public-profile.js'].includes(asset)?'20261029-library-media-v1':'20261028-reading-terms-v1')),asset);
-  assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v639-storage-reuse/);
+  assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v640-inbox-reconnect/);
 });
 test('profile reading results are named keyboard buttons rather than unnamed clickable containers',()=>{
   assert.ok(source.includes('React.createElement("button",{key:d.id,type:"button","data-reading-work-id":d.id,"aria-label":uiText(W,"فتح "+d.title,"Open "+d.title),onClick:()=>T(d)'));

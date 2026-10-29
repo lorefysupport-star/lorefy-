@@ -2,8 +2,8 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const source=fs.readFileSync('backend/lorefy-native-runtime.js','utf8');
 const A='11111111-1111-4111-8111-111111111111',B='22222222-2222-4222-8222-222222222222',P='33333333-3333-4333-8333-333333333333';
 function harness(native=false,values=new Map()){
- let window,callback,rows=[],user=A,page=null,mutated;
- const listeners={};
+ let window,callback,statusCallback,rows=[],user=A,page=null,mutated;
+ const listeners={},globalListeners={},appListeners={};
  class Element {
   constructor(tag){this.tagName=tag.toUpperCase();this.children=[];this.attrs={};this.listeners={};this.textContent='';this.className='';}
   appendChild(e){this.children.push(e);e.parent=this;return e;}
@@ -16,9 +16,9 @@ function harness(native=false,values=new Map()){
  const body=new Element('body'),head=new Element('head'),bell=new Element('button');
  const doc={body,head,hidden:false,documentElement:{lang:'en'},readyState:'loading',createElement:tag=>new Element(tag),getElementById:()=>null,addEventListener:(name,fn)=>listeners[name]=fn,querySelector:s=>s==='.lf-notification-banner'?body.querySelector(s):s==='.lf-notifications-page'?page:null,querySelectorAll:s=>s.includes('Notifications')?[bell]:[]};
  const intervals=[],timers=[];
- window={document:null,localStorage:{getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,v)},crypto:{randomUUID:()=>P},location:{href:'http://localhost/index.html',search:'',assign:()=>{}},setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout:()=>{},setInterval:fn=>{intervals.push(fn);return intervals.length;},clearInterval:()=>{},CustomEvent:class{constructor(type,opts){this.type=type;this.detail=opts.detail;}},dispatchEvent:()=>{},Capacitor:{isNativePlatform:()=>native,Plugins:{}},LorefyBackend:{getSession:async()=>user?{userId:user}:null,listNotifications:async()=>rows,subscribeNotifications:async fn=>{callback=fn;return ()=>{};},registerPushDevice:async()=>true,unregisterPushDevice:async()=>true}};
+ window={document:null,localStorage:{getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,v)},crypto:{randomUUID:()=>P},location:{href:'http://localhost/index.html',search:'',assign:()=>{}},setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout:()=>{},setInterval:fn=>{intervals.push(fn);return intervals.length;},clearInterval:()=>{},CustomEvent:class{constructor(type,opts){this.type=type;this.detail=opts.detail;}},dispatchEvent:()=>{},addEventListener:(name,fn)=>globalListeners[name]=fn,Capacitor:{isNativePlatform:()=>native,Plugins:{App:{addListener:(name,fn)=>appListeners[name]=fn}}},LorefyBackend:{getSession:async()=>user?{userId:user}:null,listNotifications:async()=>rows,subscribeNotifications:async(fn,state)=>{callback=fn;statusCallback=state;return ()=>{};},registerPushDevice:async()=>true,unregisterPushDevice:async()=>true}};
  vm.runInNewContext(source,{window,URL,URLSearchParams,Set,Date,CustomEvent:window.CustomEvent,MutationObserver:class{constructor(fn){mutated=fn;}observe(){}}});window.document=doc;
- return {window,doc,body,bell,values,intervals,listeners,api:window.LorefyNativeRuntime,setRows:r=>rows=r,setUser:u=>user=u,receive:item=>callback(item),
+ return {window,doc,body,bell,values,intervals,listeners,globalListeners,appListeners,api:window.LorefyNativeRuntime,setRows:r=>rows=r,setUser:u=>user=u,receive:(item,change)=>callback(item,change),status:state=>statusCallback?.(state),getStatus:()=>statusCallback,
    mountInbox(){page=new Element('div');page.className='lf-notifications-page';const empty=new Element('p');empty.textContent='No notifications';page.appendChild(empty);mutated?.();return page;},
    unmountInbox(){page=null;}
  };
@@ -187,4 +187,74 @@ test('late opt-out cleanup does not unregister the newer native opt-in',async()=
  const off=h.api.setPushEnabled(false);assert.equal(await h.api.setPushEnabled(true),true);
  resolveCleanup(true);assert.equal(await off,false);assert.equal(unregistered,0);
  assert.equal(h.values.get('lorefy.native.push.enabled.v1'),'true');
+});
+
+const settle=()=>new Promise(r=>setImmediate(r));
+
+test('parallel inbox refreshes share one request instead of invalidating each other',async()=>{
+ const h=harness();await h.api.connectCloudNotifications();let resolve,calls=0;
+ h.window.LorefyBackend.listNotifications=()=>{calls++;return new Promise(r=>resolve=r);};
+ const jobs=Array.from({length:10},()=>h.api.refreshCloudNotifications());await settle();
+ assert.equal(calls,1);resolve([notification()]);
+ const results=await Promise.all(jobs);assert.ok(results.every(rows=>rows.length===1));
+});
+
+test('realtime reconnect catches missed notifications without waiting for the poll interval',async()=>{
+ const h=harness();await h.api.connectCloudNotifications();h.setRows([notification()]);
+ h.status('SUBSCRIBED');await settle();
+ assert.equal(h.bell.children[0]?.textContent,'1');
+ assert.equal(h.body.querySelector('.lf-notification-banner')?.children[0].children[1].textContent,notification().body);
+});
+
+test('reconnect during an existing fetch schedules one non-overlapping catch-up fetch',async()=>{
+ const h=harness();await h.api.connectCloudNotifications();let resolve,calls=0,inFlight=0,peak=0;
+ h.window.LorefyBackend.listNotifications=async()=>{
+  calls++;inFlight++;peak=Math.max(peak,inFlight);
+  const result=calls===1?await new Promise(r=>resolve=r):[notification()];inFlight--;return result;
+ };
+ const pending=h.api.refreshCloudNotifications();await settle();
+ h.status('SUBSCRIBED');h.status('SUBSCRIBED');await settle();
+ assert.equal(calls,1);resolve([]);await pending;await settle();
+ assert.equal(calls,2);assert.equal(peak,1);assert.equal(h.bell.children[0]?.textContent,'1');
+});
+
+test('a read update from another device clears the badge but keeps history without a toast',async()=>{
+ const h=harness();h.api.start();h.listeners.DOMContentLoaded();h.setRows([notification()]);await h.api.connectCloudNotifications();
+ const page=h.mountInbox();
+ h.receive({...notification(),read_at:'2026-10-30T01:00:00Z'},{event:'UPDATE'});
+ assert.equal(h.bell.children.length,0);
+ assert.equal(page.querySelector('.lf-cloud-notifications').children.length,1);
+ assert.equal(h.body.querySelector('.lf-notification-banner'),null);
+});
+
+test('a stale unread snapshot or duplicate insert cannot undo a realtime read update',async()=>{
+ const h=harness();h.setRows([notification()]);await h.api.connectCloudNotifications();let resolve;
+ h.window.LorefyBackend.listNotifications=()=>new Promise(r=>resolve=r);
+ const pending=h.api.refreshCloudNotifications();await settle();
+ h.receive({...notification(),read_at:'2026-10-30T01:00:00Z'},{event:'UPDATE'});
+ resolve([notification()]);const rows=await pending;
+ assert.ok(rows[0].read_at);
+ h.receive(notification());assert.equal(h.bell.children.length,0);
+ assert.equal(h.body.querySelector('.lf-notification-banner'),null);
+});
+
+test('a stale subscription status cannot fetch or announce for the next account',async()=>{
+ const h=harness();await h.api.connectCloudNotifications();const old=h.getStatus();
+ assert.equal(typeof old,'function');
+ h.setUser(B);await h.api.connectCloudNotifications();let calls=0;
+ h.window.LorefyBackend.listNotifications=async()=>{calls++;return [];};
+ old('SUBSCRIBED');await settle();assert.equal(calls,0);assert.equal(h.bell.children.length,0);
+});
+
+test('returning online refreshes the authenticated inbox immediately',async()=>{
+ const h=harness();h.api.start();h.listeners.DOMContentLoaded();await h.api.connectCloudNotifications();h.setRows([notification()]);
+ assert.equal(typeof h.globalListeners.online,'function');h.globalListeners.online();await settle();
+ assert.equal(h.bell.children[0]?.textContent,'1');
+});
+
+test('native resume refreshes even when no push plugin or permission is available',async()=>{
+ const h=harness(true);h.api.start();h.listeners.DOMContentLoaded();await h.api.connectCloudNotifications();h.setRows([notification()]);
+ assert.equal(typeof h.appListeners.appStateChange,'function');
+ h.appListeners.appStateChange({isActive:false});await settle();assert.equal(h.bell.children.length,0);
+ h.appListeners.appStateChange({isActive:true});await settle();assert.equal(h.bell.children[0]?.textContent,'1');
 });

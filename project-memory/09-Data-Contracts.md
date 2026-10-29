@@ -34,6 +34,12 @@ Backend/Merge → استجابة سحابية تخص الحساب الذي طل�
 
 ## حدود المصادر
 
+Inbox reconnect: [[sessions/2026-10-30-Inbox-Reconnect]]. INSERT may announce;
+UPDATE merges read state in place without a toast. Read_at cannot be undone by
+duplicate inserts or older snapshots. Concurrent refresh consumers share one
+owner/connection/backend job; reconnect may queue one non-overlapping catch-up.
+Replaced clients/accounts must never apply prior snapshot or status callbacks.
+
 Reading-state labels: [[sessions/2026-10-28-UI-Foundation-Phase-Nine]]. Shared
 display functions must not rewrite saved statuses or parse publication metadata.
 Callbacks keep original choice values; label changes never imply progress,

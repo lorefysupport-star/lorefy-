@@ -19,6 +19,7 @@
   var pushPreferenceEpoch = 0;
   var pendingToken = '';
   var connectionEpoch = 0, refreshEpoch = 0, activeAccount = '';
+  var refreshJob = null;
   var shownNotifications = new Set(), bannerTimer = null;
   var INBOX_CACHE_PREFIX='lorefy.notifications.inbox.v1:';
   var pendingReads=new Set(),readJob=null,inboxState='ready';
@@ -221,6 +222,9 @@
     var App = plugins && plugins.App;
     var Push = plugins && plugins.PushNotifications;
     if (App) {
+      App.addListener("appStateChange", function (event) {
+        if (event && event.isActive) refreshCloudNotifications(true, true);
+      });
       App.addListener("appUrlOpen", function (event) {
         var route = parseAppLink(event && event.url);
         if (route) openRoute(route);
@@ -386,15 +390,24 @@
     bannerTimer=root.setTimeout(dismissBanner,7000);
   }
 
-  async function refreshCloudNotifications(announce) {
-    var backend=root.LorefyBackend, epoch=connectionEpoch, request=++refreshEpoch;
+  async function refreshCloudNotifications(announce, catchUp) {
+    var backend=root.LorefyBackend, epoch=connectionEpoch, owner=activeAccount;
     if (!backend || typeof backend.listNotifications !== 'function' || !activeAccount) return [];
-    try {
+    if(refreshJob && refreshJob.epoch===epoch && refreshJob.backend===backend){
+      refreshJob.announce=refreshJob.announce||!!announce;
+      refreshJob.catchUp=refreshJob.catchUp||!!catchUp;
+      return refreshJob.promise;
+    }
+    var request=++refreshEpoch,job={epoch:epoch,backend:backend,announce:!!announce,catchUp:false};
+    var current=function(){return epoch===connectionEpoch && request===refreshEpoch && owner===activeAccount && backend===root.LorefyBackend;};
+    refreshJob=job;
+    job.promise=(async function(){
+     try {
       await flushReadReceipts();
-      if(epoch!==connectionEpoch || request!==refreshEpoch)return [];
+      if(!current())return [];
       var initialIds=new Set(cloudNotifications.map(function(item){return item.id;}));
       var rows=await backend.listNotifications(60);
-      if(epoch!==connectionEpoch || request!==refreshEpoch)return [];
+      if(!current())return [];
       rows=cleanInbox(rows,activeAccount).map(function(row){
         var old=cloudNotifications.find(function(item){return item.id===row.id;});
         if(old&&old.read_at)row.read_at=row.read_at||old.read_at;
@@ -405,16 +418,24 @@
       cloudNotifications=fresh.concat(rows).slice(0,60);
       inboxState='ready';saveInbox();
       renderCloudNotifications();
-      if(announce) rows.filter(function(item){return !existing.has(item.id);}).reverse().forEach(announceNotification);
+      if(job.announce) rows.filter(function(item){return !existing.has(item.id);}).reverse().forEach(announceNotification);
     } catch(error) {
-      if(epoch===connectionEpoch && request===refreshEpoch){inboxState='offline';renderCloudNotifications();}
+      if(current()){inboxState='offline';renderCloudNotifications();}
+    } finally {
+      if(refreshJob===job)refreshJob=null;
     }
+    if(!current())return [];
+    // A reconnect may happen after the server took the in-flight snapshot.
+    if(job.catchUp)return refreshCloudNotifications(job.announce);
     return cloudNotifications;
+    })();
+    return job.promise;
   }
 
   async function connectCloudNotifications() {
     var backend=root.LorefyBackend, epoch=++connectionEpoch;
     refreshEpoch++;
+    refreshJob=null;
     if(cloudUnsubscribe){cloudUnsubscribe();cloudUnsubscribe=null;}
     activeAccount='';cloudNotifications=[];pendingReads=new Set();readJob=null;inboxState='loading';shownNotifications.clear();dismissBanner();renderCloudNotifications();
     if(!backend || !backend.getSession)return;
@@ -427,12 +448,21 @@
     // Subscribe before fetching so new inserts cannot fall into a startup gap.
     if(typeof backend.subscribeNotifications==='function') {
       try {
-        var unsubscribe=await backend.subscribeNotifications(function(item){
-          if(epoch!==connectionEpoch || !item || item.actor_id===activeAccount || (item.user_id && item.user_id!==activeAccount))return;
-          cloudNotifications=cleanInbox([item].concat(cloudNotifications.filter(function(row){return row.id!==item.id;})),activeAccount);
+        var unsubscribe=await backend.subscribeNotifications(function(item, change){
+          if(epoch!==connectionEpoch || backend!==root.LorefyBackend || !item || item.actor_id===activeAccount || (item.user_id && item.user_id!==activeAccount))return;
+          var old=cloudNotifications.find(function(row){return row.id===item.id;});
+          var next=Object.assign({},item,{read_at:item.read_at || old && old.read_at || null});
+          if(change && change.event==='UPDATE'){
+            if(!old){refreshCloudNotifications(false,true);return;}
+            cloudNotifications=cleanInbox(cloudNotifications.map(function(row){return row.id===item.id?next:row;}),activeAccount);
+            saveInbox();renderCloudNotifications();return;
+          }
+          cloudNotifications=cleanInbox([next].concat(cloudNotifications.filter(function(row){return row.id!==item.id;})),activeAccount);
           saveInbox();
-          renderCloudNotifications();announceNotification(item);
+          renderCloudNotifications();announceNotification(next);
           if(item.kind==='follow' && root.dispatchEvent && root.CustomEvent)root.dispatchEvent(new root.CustomEvent('lorefy:profile-follow-changed',{detail:item}));
+        }, function(status){
+          if(epoch===connectionEpoch && backend===root.LorefyBackend && status==='SUBSCRIBED')refreshCloudNotifications(true,true);
         });
         if(epoch!==connectionEpoch){unsubscribe();return;}cloudUnsubscribe=unsubscribe;
       }catch(error){}
@@ -484,6 +514,7 @@
     injectStyles();
     openPendingScreen();
     root.document.addEventListener('visibilitychange',function(){if(!root.document.hidden)refreshCloudNotifications(true);});
+    if(root.addEventListener)root.addEventListener('online',function(){refreshCloudNotifications(true,true);});
     root.setInterval(function(){if(!root.document.hidden && activeAccount)refreshCloudNotifications(true);},30000);
     root.document.addEventListener("click", function (event) {
       var target = event.target && event.target.closest && event.target.closest("button");

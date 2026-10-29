@@ -2044,7 +2044,7 @@
       if (result.error) throw result.error;
       return Number(result.data) || 0;
     },
-    subscribeNotifications: async function(callback){
+    subscribeNotifications: async function(callback, onState){
       if (this.mode !== "live" || typeof callback !== "function") return function(){};
       var request = mediaRequestScope(this);
       var attempt = (this._notificationAttempt || 0) + 1;
@@ -2065,17 +2065,25 @@
         if (this._notificationAttempt !== attempt) return function(){};
       }
       var self = this;
+      var notify = function(event, payload){
+        if (!mediaRequestCurrent(self, request) || self._notificationChannel !== channel) return;
+        var notification = payload && payload.new;
+        if (notification && notification.actor_id !== session.userId &&
+            (!notification.user_id || notification.user_id === session.userId)) callback(notification, {event:event});
+      };
       var channel = client.channel("notifications:" + session.userId)
         .on("postgres_changes", {
           event:"INSERT", schema:"public", table:"notifications", filter:"user_id=eq." + session.userId
-        }, function(payload){
-          if (!mediaRequestCurrent(self, request) || self._notificationChannel !== channel) return;
-          var notification = payload && payload.new;
-          if (notification && notification.actor_id !== session.userId) callback(notification);
-        })
-        .subscribe();
+        }, function(payload){ notify("INSERT", payload); })
+        .on("postgres_changes", {
+          event:"UPDATE", schema:"public", table:"notifications", filter:"user_id=eq." + session.userId
+        }, function(payload){ notify("UPDATE", payload); });
       this._notificationChannel = channel;
       this._notificationChannelClient = client;
+      channel.subscribe(function(status){
+        if (!mediaRequestCurrent(self, request) || self._notificationChannel !== channel) return;
+        if (typeof onState === "function") onState(status);
+      });
       return function(){
         if (self._notificationChannel === channel) {
           self._notificationChannel = null;

@@ -6,6 +6,12 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-10-30-Inbox-Reconnect]]: owner-filtered UPDATE events synchronize
+read state without removing history or emitting toasts. Shared refresh closes
+reconnect/resume/online gaps with one trailing catch-up when necessary; duplicate
+inserts retain read_at.3014 source tests,84 isolated real-UI checks. No live
+messages or deployment; actual two-device delivery remains separate.
+
 [[sessions/2026-10-29-UI-Foundation-Phase-Seventeen]] adopts Review Editor mini
 cover and draft attachment display only. Original removal, upload, publish,
 account ownership and stale-editor guards remain; fixtures never publish.

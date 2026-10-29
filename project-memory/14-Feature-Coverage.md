@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+F15 follow-up: [[sessions/2026-10-30-Inbox-Reconnect]] verifies local reconnect,
+read updates, duplicate safety, parallel refresh, online and native-resume callback
+handling.3014 source tests/84 UI fixture checks; no live devices or service write.
+Broader inbox pagination and real delivery are not marked complete.
+
 Supabase Pro: [[sessions/2026-10-30-Supabase-Pro-Adoption]]. Plan, spend cap,
 usage, backups and private buckets verified read-only; bounded shared signing
 cache implemented locally with14 regressions. No image transformations, queue,
