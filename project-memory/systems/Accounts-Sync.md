@@ -98,3 +98,9 @@ or matching-device verification. No build or service changes.
 Favorite slot save investigation: bounded downloaded catalog cache, quota-only safe cache reclaim, and honest failed-save feedback; 82 focused checks plus save/reopen/reload in isolated demo. Device Hub storage pressure removed without changing saved favorites. [[sessions/2026-10-21-Favorite-Save-Quota]].
 
 2026-10-29: [[sessions/2026-10-29-Supabase-Pro-Optimization]] verifies Pro and ACTIVE_HEALTHY and records applied migration 20261029194223: five indexes and two equivalent chapter-review RLS InitPlans. No user data/grant changes. 23 isolated SQL assertions and 63 focused source checks pass; hardware sign-in, two-account service isolation and Apple configuration remain open.
+
+Same-day integration: the server optimization's initial Jikan failure/inference
+is superseded by [[sessions/2026-10-29-Jikan-Retirement]], and its separate search
+latency follow-up has source/browser evidence in [[sessions/2026-10-29-Search-Performance]].
+Apple server configuration, physical-device acceptance and installed-client
+release delivery remain open. Applied SQL history is preserved, not replayed.

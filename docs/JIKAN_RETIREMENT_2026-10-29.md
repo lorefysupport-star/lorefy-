@@ -88,3 +88,7 @@ Jikan is used mainly for character, cover and chapter enrichment. Main work
 search uses other providers. Its batch aggregation, outdated requests and time
 to first useful result need separate source/device measurements and repair;
 this provider migration does not close the search-performance complaint.
+
+Later same-day follow-up: the [search performance repair](SEARCH_PERFORMANCE_2026-10-29.md)
+now supplies separate source/browser measurements and repairs for those delays.
+Physical-device and installed-client release delivery remain unverified.

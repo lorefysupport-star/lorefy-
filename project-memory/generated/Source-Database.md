@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-29T20:36:26.152Z
-Source commit: 91c71ecf9649e24088f21a035a1b08af72a3471e
+Observed: 2026-10-29T20:38:47.197Z
+Source commit: bcb185c957aa935fd6b9e3589894ab04703287ea
 
 # Database Source Inventory
 
@@ -62,8 +62,10 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [supabase/migrations/20261011134708_profile_public_lists.sql](../../supabase/migrations/20261011134708_profile_public_lists.sql) (2202 bytes)
 - [supabase/migrations/20261011181942_free_current_profile_bundles.sql](../../supabase/migrations/20261011181942_free_current_profile_bundles.sql) (1016 bytes)
 - [supabase/migrations/20261023193458_reader_profile_layout.sql](../../supabase/migrations/20261023193458_reader_profile_layout.sql) (849 bytes)
+- [supabase/migrations/20261029194223_optimize_feed_and_foreign_keys.sql](../../supabase/migrations/20261029194223_optimize_feed_and_foreign_keys.sql) (2510 bytes)
 - [supabase/tests/profile_username_changes.sql](../../supabase/tests/profile_username_changes.sql) (3061 bytes)
 - [supabase/tests/quarter_ratings.sql](../../supabase/tests/quarter_ratings.sql) (1999 bytes)
 - [supabase/tests/review_account_privacy.sql](../../supabase/tests/review_account_privacy.sql) (2828 bytes)
+- [supabase/tests/server-optimization.mjs](../../supabase/tests/server-optimization.mjs) (6117 bytes)
 
 [[07-Source-Atlas]] | [[00-Home]]

@@ -42,6 +42,8 @@ change, production schema change or deployment occurs in this repair.
 
 ## Fresh measurements
 
+[Before CPU receipt](../qa/search-cpu-before-20261029.json) and
+[after CPU receipt](../qa/search-cpu-after-20261029.json) retain the raw results.
 The same Node pure-function benchmark, `node tools/benchmark-explore-performance.cjs`,
 ran against all **121,920 bundled records** before and after the repair:
 
@@ -74,11 +76,12 @@ bundled-catalog benchmark count. [Browser image](../qa/search-performance-englis
 
 ## Tests and remaining limits
 
-Four startup regressions and six responsiveness regressions failed before the
+Three startup regressions and six responsiveness regressions failed before the
 fix. Additional checks cover HTTP abortion, queued-job cancellation, open-source
 adapters, late JSON, same-query response races, and duplicate cached ingestion.
 Focused startup/search/identity/ranking checks passed; the final full suite is
 **2990/2990 passed**, exit 0 (`node --test --test-concurrency=1 tests/*.test.js`).
+[Full test receipt](../qa/search-performance-tests-20261029.txt).
 The first full attempt had one missing dependency fixture in the isolated
 checkout; reusing the original installed dependencies fixed that environment
 issue, and the complete rerun passed. No package or lockfile changes.

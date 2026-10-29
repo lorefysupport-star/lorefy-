@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-29T20:36:26.152Z
-Source commit: 91c71ecf9649e24088f21a035a1b08af72a3471e
+Observed: 2026-10-29T20:38:47.197Z
+Source commit: bcb185c957aa935fd6b9e3589894ab04703287ea
 
 # Docs Source Inventory
 
@@ -59,7 +59,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/FULL_COLOR_THEME_2026-10-09.md](../../docs/FULL_COLOR_THEME_2026-10-09.md) (2114 bytes)
 - [docs/HOME_CINEMA_QA.md](../../docs/HOME_CINEMA_QA.md) (3479 bytes)
 - [docs/INTERFACE_PERSONALIZATION_VERIFICATION_2026-10-07.md](../../docs/INTERFACE_PERSONALIZATION_VERIFICATION_2026-10-07.md) (3070 bytes)
-- [docs/JIKAN_RETIREMENT_2026-10-29.md](../../docs/JIKAN_RETIREMENT_2026-10-29.md) (5816 bytes)
+- [docs/JIKAN_RETIREMENT_2026-10-29.md](../../docs/JIKAN_RETIREMENT_2026-10-29.md) (6062 bytes)
 - [docs/LIBRARIES_DEV_REVIEW_2026-10-18.md](../../docs/LIBRARIES_DEV_REVIEW_2026-10-18.md) (4757 bytes)
 - [docs/LIBRARY_CINEMA_QA.md](../../docs/LIBRARY_CINEMA_QA.md) (2493 bytes)
 - [docs/LIBRARY_EXPANSION_2026-10-03.md](../../docs/LIBRARY_EXPANSION_2026-10-03.md) (4656 bytes)
@@ -86,11 +86,12 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/RELEASE_OWNER_ACTIONS.md](../../docs/RELEASE_OWNER_ACTIONS.md) (6116 bytes)
 - [docs/REMAINING_BETA_PROGRESS_2026-10-04.md](../../docs/REMAINING_BETA_PROGRESS_2026-10-04.md) (2824 bytes)
 - [docs/RUNTIME_CLEANUP_2026-10-18.md](../../docs/RUNTIME_CLEANUP_2026-10-18.md) (5752 bytes)
-- [docs/SEARCH_PERFORMANCE_2026-10-29.md](../../docs/SEARCH_PERFORMANCE_2026-10-29.md) (5712 bytes)
+- [docs/SEARCH_PERFORMANCE_2026-10-29.md](../../docs/SEARCH_PERFORMANCE_2026-10-29.md) (5925 bytes)
 - [docs/SOCIAL_ARTWORK_CHAPTERS_2026-10-03.md](../../docs/SOCIAL_ARTWORK_CHAPTERS_2026-10-03.md) (2564 bytes)
 - [docs/SOL6_FULL_AUDIT_2026-09-23.md](../../docs/SOL6_FULL_AUDIT_2026-09-23.md) (3853 bytes)
 - [docs/SOURCE_CHECKPOINT_2026-10-29.md](../../docs/SOURCE_CHECKPOINT_2026-10-29.md) (2461 bytes)
 - [docs/STATE_RECOVERY_FIX_2026-10-03.md](../../docs/STATE_RECOVERY_FIX_2026-10-03.md) (2874 bytes)
+- [docs/SUPABASE_PRO_OPTIMIZATION_2026-10-29.md](../../docs/SUPABASE_PRO_OPTIMIZATION_2026-10-29.md) (7761 bytes)
 - [docs/TESTER_LAB_LANGUAGE_AUDIT_2026-10-09.md](../../docs/TESTER_LAB_LANGUAGE_AUDIT_2026-10-09.md) (4603 bytes)
 - [docs/UGC_MODERATION_RUNBOOK.md](../../docs/UGC_MODERATION_RUNBOOK.md) (1598 bytes)
 - [docs/UI_AUDIT_2026-09-25.md](../../docs/UI_AUDIT_2026-09-25.md) (2371 bytes)

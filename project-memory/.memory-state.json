@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "head": "91c71ecf9649e24088f21a035a1b08af72a3471e",
+  "head": "bcb185c957aa935fd6b9e3589894ab04703287ea",
   "branch": "codex/jikan-retirement",
   "fingerprints": {
     "package.json": "9d2e855017f1e9c670586f140dad13496d1346c861d7ac33609216f9914e1189",
@@ -15,23 +15,7 @@
     "tools/prepare-ios-web.mjs": "147121858c2c2125feffb358189e70e21cbf8deabe99b74d7c5e971047f238c7",
     "tools/project-memory.mjs": "f2886f78e1c101ffe20b968a1a2ee7e5aaa4180a2509c121a12cc5a19f359081"
   },
-  "changes": {
-    "modules/lorefy-api-catalog.js": "5b5919984c4f349c74b3f51339633c3f1b141c88c1abad2084625128bfaf59e0",
-    "modules/lorefy-catalog-data.js": "5fdf3cc156f8bf4bad75a65a29a55baffee015880e944b1607e5881849c0d91a",
-    "modules/lorefy-catalog-loader.js": "915bced10803c1854a06828b3a2eb6d77a020082f9ebac99bdbbe161337e3c24",
-    "modules/lorefy-catalog-search-worker.js": "1577db3d40e9890ad3d88f4e91decac1bf88c3b96d4c21761bc23e9a8acbd22c",
-    "modules/lorefy-catalog-worker.js": "b6edd83bc96e3149f6f8c8cca2e3c9c1cc2545353d5973eca0953c904473b194",
-    "tests/catalog-input-privacy.test.js": "4b1f236645f9be47d2b08e3975d2da05b5cfe9d4caa12354c56039ecc1590d04",
-    "tests/catalog-open-routing.test.js": "d86394ae9d912e664e8ce7de60151789bac5f33b2324f86616d4c0d3ff04ce23",
-    "tests/community-copy.test.js": "4d3543b89ab7e3d69cfb44ecbdc1cfc9a00aee86f0d94349c9d4c3512a48def7",
-    "tests/cover-media.test.js": "db0d3682d443b4bed72ca1be039c15c54718933145ab318f750da7b19011d6a1",
-    "tests/data-studio.test.js": "5ad55dd2a487805e1c6b207ad11a58b0e90d845cb2f12c20d864e6fcf99665b9",
-    "tests/legal-studio.test.js": "5bce135cf55e39bea6c472284f49ca9be396b0e18d3cac4ffe7f824cd2ec98ad",
-    "tests/reading-terminology.test.js": "43b584244d8864ed8121fc61d2f16e71bfb19893e5a0b56d37562f2df3e594b9",
-    "tests/reading-typography.test.js": "a85ba30c8badfd5ca55607a319b34aa0e5e3b76b6141da5d319b27e829cc8f46",
-    "tests/report-studio.test.js": "2c74362f2e89e16c5477e02b3d792ac5d613a99cda7f776c7acd2baa136fe2fe",
-    "tests/work-byline-typography.test.js": "519a66f522906391221b699c6082c6b95813eb746531e9eac13ebee1e58ffea3"
-  },
+  "changes": {},
   "inventory": [
     {
       "path": "AGENTS.md",
@@ -414,8 +398,8 @@
     {
       "path": "docs/JIKAN_RETIREMENT_2026-10-29.md",
       "area": "Docs",
-      "bytes": 5816,
-      "sha256": "043259a32847462a57215398613894fabfb2afef46c35398dd48f35304b40405"
+      "bytes": 6062,
+      "sha256": "e1c9b3fe16ae935efc5d447968cde5fc5ae945047c128b9a9ac52283521eef45"
     },
     {
       "path": "docs/LIBRARIES_DEV_REVIEW_2026-10-18.md",
@@ -576,8 +560,8 @@
     {
       "path": "docs/SEARCH_PERFORMANCE_2026-10-29.md",
       "area": "Docs",
-      "bytes": 5712,
-      "sha256": "9156380b19ad328d27fe69b57548e2c85f284c0ccfa588794b52a4aa08249b43"
+      "bytes": 5925,
+      "sha256": "513f6c0e11f68a2db18fcade7ed9f24116d827fcbcfcf864fd349a3a0a39df1a"
     },
     {
       "path": "docs/SOCIAL_ARTWORK_CHAPTERS_2026-10-03.md",
@@ -602,6 +586,12 @@
       "area": "Docs",
       "bytes": 2874,
       "sha256": "6c591d9576aae5fa5d7bf838cad91339c393b501eb576d3826cd4c85cc716501"
+    },
+    {
+      "path": "docs/SUPABASE_PRO_OPTIMIZATION_2026-10-29.md",
+      "area": "Docs",
+      "bytes": 7761,
+      "sha256": "5bb30d84c110381c001ccca8a86d5a560ab2e6ebdf8c31e6e2662e188b023e3f"
     },
     {
       "path": "docs/TESTER_LAB_LANGUAGE_AUDIT_2026-10-09.md",
@@ -2134,6 +2124,12 @@
       "sha256": "41f65534ccfb41968b74721a31d39c75a796aa8ab855a7c17249981b38f0e7ba"
     },
     {
+      "path": "supabase/migrations/20261029194223_optimize_feed_and_foreign_keys.sql",
+      "area": "Database",
+      "bytes": 2510,
+      "sha256": "dc82d4825273243a9e66101c053eb404d5c3e10f5fd28ea190cb06ca5909d039"
+    },
+    {
       "path": "supabase/tests/profile_username_changes.sql",
       "area": "Database",
       "bytes": 3061,
@@ -2150,6 +2146,12 @@
       "area": "Database",
       "bytes": 2828,
       "sha256": "e1f4f6f9ba7295f98024133a08fdc87fd59b898d8a40ad3156314ff97850d988"
+    },
+    {
+      "path": "supabase/tests/server-optimization.mjs",
+      "area": "Database",
+      "bytes": 6117,
+      "sha256": "8a187be7d5b10960e935a15dc100ce453d4d4066a750ddb58b85bd7b8a34deef"
     },
     {
       "path": "sw.js",
@@ -4681,19 +4683,19 @@
     "apple:audit",
     "apple:audit:strict"
   ],
-  "verifiedAt": "2026-10-29T20:36:26.152Z",
+  "verifiedAt": "2026-10-29T20:38:47.197Z",
   "artifacts": {
-    "04-Current-State.md": "5458476fea1d5a9792bbd08767a34660e534f38c568b782226863468ee3da936",
-    "07-Source-Atlas.md": "fb34e523adc1c32430601204b7aa530e9dc9be819e713fbfa89afde685425db7",
-    "generated/Source-Modules.md": "8da78e4c6cee7b81e3c4eb28ab3fb5df40a282b735ec2c7c15277af24395ec4c",
-    "generated/Source-Styles.md": "12a00c692de7e853ef31d22672eeaf4a3e253d66d2b90f3bef67a9c2b5e3f63f",
-    "generated/Source-Backend.md": "2798a670e8d759bd44f434df33a1f3c4bdc160645914e66349b35ed9a284c3c6",
-    "generated/Source-Tooling.md": "cbdddd29557ea6b4883045bd209a9a61600fc7e23041167c820adebbb146bda2",
-    "generated/Source-Tests.md": "ecfa1f008464f286ee334c450c871e8f49b8ba26a9be6adc92e5459a42787b2f",
-    "generated/Source-Docs.md": "55eb0b18a42003ef9c314ad7c42126544c6302458b0d4e9a1e5b571344274493",
-    "generated/Source-Database.md": "f1f36907bdc56056cf99d5da8d8c942b9c5c17f5c10c8396d84ee238b0e7979f",
-    "generated/Source-Native.md": "5aa8ff3811d860f7c05b8780df5fd32c849377042e387ac4cce45f6474ae8ed6",
-    "generated/Source-Shell.md": "0493f68bca4efc141560a17ab37d578584d08eeffa08b01dc274ade529497bd2",
+    "04-Current-State.md": "9a4a839e09989ebcd0ea3d3fa3dfaa55269067adb18d761366c308c1324953e7",
+    "07-Source-Atlas.md": "5caaa9881dcd59f75ea38dc984ec149e0591d5fc83334060c6c5fbff6fae2271",
+    "generated/Source-Modules.md": "93d0c3f0047ee60114537ec60710f0c15b6d5c0d0193324755a4f5198930c2e8",
+    "generated/Source-Styles.md": "f63b2fdf87844df17a534479d6e627f629e4a1967aac64d0bf79e98ebe8194cd",
+    "generated/Source-Backend.md": "84a26a6c56ab6c575adaa864bb678b31cc44f1d9e0cb593c7d408745c0cc1150",
+    "generated/Source-Tooling.md": "d1bbfd2e012ec0130a59f857503adb99839f13da7f4e015c8bb77d53af80dbd0",
+    "generated/Source-Tests.md": "738f896a058a2e7bcaa1634f0d691df1bf9d0ffa5d81bb1cd098530022f581a2",
+    "generated/Source-Docs.md": "9c229066c2cccdfd94ecfea6b96c4e6b344c45119e6cbd4e894061144784a4b6",
+    "generated/Source-Database.md": "41b155bfe2b0654b8aea1c337a912930fa874120fd2bc53b3b9d412011129224",
+    "generated/Source-Native.md": "e1003361a61836868ddee433aa075902fc3542da51fe8acd3874474e63a87c38",
+    "generated/Source-Shell.md": "9e829d4920bbccf7035c60c8522f346f76e7ce955d2a804766dd46c43e65e41c",
     "generated/Project-Brain.canvas": "3955aeb46974f461d4321dc37f303afcaa8e59281d1038629295e32ef4cbc3f1",
     "brain-map.json": "ccbcdcec84c2f2c7b53a06cdfd6a1d420de0601d2103e8f7a6945236e6d0399a"
   }

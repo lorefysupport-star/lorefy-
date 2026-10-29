@@ -856,3 +856,9 @@ separate future phases. Full suite: 2523 passed. Local only, no build or push.
 2026-10-29: [[sessions/2026-10-29-Search-Performance]] follows latest GitHub checkpoint74fbee4 and owner authorization for direct push. Removes11.1s fallback search-start timers, publishes providers progressively, aborts obsolete requests and halves cold query CPU time.2990 source tests and local AR/EN browser evidence pass; native delivery and physical-device latency remain separate.
 
 2026-10-29: [[sessions/2026-10-29-Supabase-Pro-Optimization]] confirms Pro and ACTIVE_HEALTHY, then applies five indexes and two equivalent chapter-review identity InitPlans. One live feed query improves from 80.915 ms to 23.905 ms; 23 isolated SQL checks and 63 focused source checks pass. Jikan, Apple server configuration and broader device/service evidence remain open. No Edge deployment or native build.
+
+Same-day integration: the server optimization's initial Jikan failure/inference
+is superseded by [[sessions/2026-10-29-Jikan-Retirement]], and its separate search
+latency follow-up has source/browser evidence in [[sessions/2026-10-29-Search-Performance]].
+Apple server configuration, physical-device acceptance and installed-client
+release delivery remain open. Applied SQL history is preserved, not replayed.

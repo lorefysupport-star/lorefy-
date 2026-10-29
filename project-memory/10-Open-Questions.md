@@ -216,3 +216,9 @@ force-quit أو المزامنة بين جهازين حقيقيين، ولا ي�
 2026-10-29: [[sessions/2026-10-29-Search-Performance]] repairs and measures search startup/provider/CPU bottlenecks in source and local browser, superseding the previous unmeasured first-result status. Real-user latency distribution, provider peak-load and physical iPhone acceptance remain open; committing source does not update installed builds.
 
 2026-10-29 service follow-up: [[sessions/2026-10-29-Supabase-Pro-Optimization]] confirms the Pro upgrade and healthy project, with targeted SQL optimization deployed and verified. Jikan upstream/connectivity failures, Apple authorization missing configuration, Google Books rate limits, full authenticated isolation and backup/restore evidence remain open. Historic billing 402 errors are followed by catalog 200 responses; no native release was created.
+
+Same-day integration: the server optimization's initial Jikan failure/inference
+is superseded by [[sessions/2026-10-29-Jikan-Retirement]], and its separate search
+latency follow-up has source/browser evidence in [[sessions/2026-10-29-Search-Performance]].
+Apple server configuration, physical-device acceptance and installed-client
+release delivery remain open. Applied SQL history is preserved, not replayed.

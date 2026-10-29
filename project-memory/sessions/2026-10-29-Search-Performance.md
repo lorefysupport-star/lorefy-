@@ -24,7 +24,7 @@ multilingual fields are reused. Identity, aliases, editions, artwork and account
 persistence remain unchanged. Workers, cache v638 and seven selective web copies
 are synchronized without a native compile.
 
-Fresh full suite:2990 passed,0 failed, exit0. Four startup and six responsiveness
+Fresh full suite:2990 passed,0 failed, exit0. Three startup and six responsiveness
 checks reproduced failures before repair. Additional cancellation/race checks
 pass. The dependency-fixture-only initial failure was resolved by reusing the
 original checkout's installed dependencies; no dependency manifest change.
@@ -37,3 +37,11 @@ open. Earlier service reports retain their separate evidence boundaries.
 
 [[systems/Catalog-Search]] | [[13-Project-Story]] | [[14-Feature-Coverage]] |
 [[15-Work-Control]] | [[10-Open-Questions]]
+
+GitHub handoff integrates performance commit13b9d6b with the already-verified
+server optimization (cherry-picked as bcb185c). Append-only memory conflicts were
+resolved by preserving both histories; no application source conflict. SQL is
+retained as applied history, not executed again against production.
+
+Fresh integration verification: isolated SQL harness23/23 passed, exit0, with
+no network or production writes; memory audit327 notes/773 sources, no issues.

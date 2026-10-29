@@ -163,3 +163,9 @@ path:bugs [status:open OR needs-device OR needs-service]
 2026-10-29 owner priority: [[sessions/2026-10-29-Search-Performance]] supersedes the earlier checkpoint-only pause for the authorized performance/GitHub repair.2990 tests and local AR/EN browser checks pass; first-result and CPU improvements are measured. Native delivery/device timing remain open and need separate release authorization.
 
 - [[sessions/2026-10-29-Supabase-Pro-Optimization]]: deployed targeted Pro database optimization, verified query plans and cleared four missing-FK/two identity-initplan findings. Follow up Jikan 502, Apple authorization 503 configuration, Google Books 429 and Auth pool strategy if compute changes; existing security patch stays local.
+
+Same-day integration: the server optimization's initial Jikan failure/inference
+is superseded by [[sessions/2026-10-29-Jikan-Retirement]], and its separate search
+latency follow-up has source/browser evidence in [[sessions/2026-10-29-Search-Performance]].
+Apple server configuration, physical-device acceptance and installed-client
+release delivery remain open. Applied SQL history is preserved, not replayed.

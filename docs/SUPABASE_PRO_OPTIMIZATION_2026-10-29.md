@@ -108,3 +108,18 @@ If rollback is needed, inspect the current policies first, restore the two origi
 predicates shown in the migration's drift guard, and remove only these five new
 indexes through a separately recorded migration. Do not replay this migration or
 rewrite its applied history.
+
+## Later same-day resolution and source integration
+
+The initial Jikan connectivity inference above is superseded by the verified
+[retirement repair](JIKAN_RETIREMENT_2026-10-29.md). The public Jikan service had
+closed; Tenrai-compatible replacement and the narrowly updated gateway restore
+those routes. The separate [search performance repair](SEARCH_PERFORMANCE_2026-10-29.md)
+measures and fixes startup/provider/CPU delays. Historical service measurements
+above retain their original scope; Apple configuration, rate limits, physical
+device acceptance and release delivery are not closed by these later changes.
+
+The existing server optimization commit is integrated with latest main and the
+client repairs for the owner's direct GitHub handoff. Its already-applied
+migration is preserved as source history and **is not reapplied**. No additional
+production database or Edge operation occurs during this integration.

@@ -1,0 +1,32 @@
+{
+  "catalogCount": 121920,
+  "cases": [
+    {
+      "name": "all popular",
+      "count": 121920,
+      "coldMs": 153.59,
+      "warmMedianMs": 117.13
+    },
+    {
+      "name": "manga top rated",
+      "count": 11476,
+      "coldMs": 37.03,
+      "warmMedianMs": 33.17
+    },
+    {
+      "name": "Naruto name search",
+      "count": 60,
+      "coldMs": 789.07,
+      "warmMedianMs": 65.84
+    }
+  ],
+  "ratingScoreCalls": 68856,
+  "workerPreparationMs": 753.56,
+  "preparedSearch": {
+    "name": "Naruto search with worker-prepared indexes",
+    "count": 60,
+    "coldMs": 63.03,
+    "warmMedianMs": 61.25
+  },
+  "notes": "Node pure-function benchmark; not iPhone frame rate. Six passes per case, no network."
+}

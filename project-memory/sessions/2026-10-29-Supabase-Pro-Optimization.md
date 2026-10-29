@@ -36,3 +36,10 @@ change. No build, native synchronization or Apple release action.
 
 [[systems/Accounts-Sync]] | [[13-Project-Story]] |
 [[14-Feature-Coverage]] | [[10-Open-Questions]]
+
+Later same-day resolution: [[sessions/2026-10-29-Jikan-Retirement]] supersedes
+the initial temporary-connectivity inference above; the public endpoint was
+retired and its replacement is verified. [[sessions/2026-10-29-Search-Performance]]
+repairs client latency separately. The existing optimization source is integrated
+with latest main for the authorized direct GitHub handoff; no migration replay or
+additional production operation occurs. Apple configuration/device limits remain.

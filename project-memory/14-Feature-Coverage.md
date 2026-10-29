@@ -675,3 +675,9 @@ cross-account visibility remain separate unverified gates.
 2026-10-29 search performance: [[sessions/2026-10-29-Search-Performance]] covers startup, progressive provider ingestion, first-pair book search, all-adapter abortion, same-query epochs, cache no-op and multilingual normalization. Source/full2990 and local browser verified; no physical-device or peak-load certification.
 
 2026-10-29 server evidence: [[sessions/2026-10-29-Supabase-Pro-Optimization]]; Pro/healthy project, five valid indexes, two cached chapter-review identity lookups, same ordered feed results; 23 isolated SQL assertions and 63 focused source checks passed. Billing-denied catalog requests recovered; Jikan and Apple configuration errors remain separate. No device or two-account Auth certification.
+
+Same-day integration: the server optimization's initial Jikan failure/inference
+is superseded by [[sessions/2026-10-29-Jikan-Retirement]], and its separate search
+latency follow-up has source/browser evidence in [[sessions/2026-10-29-Search-Performance]].
+Apple server configuration, physical-device acceptance and installed-client
+release delivery remain open. Applied SQL history is preserved, not replayed.
