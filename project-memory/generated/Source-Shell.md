@@ -3,28 +3,28 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-29T20:38:47.197Z
-Source commit: bcb185c957aa935fd6b9e3589894ab04703287ea
+Observed: 2026-10-29T21:46:17.222Z
+Source commit: 5933fdc1783b9cf6f5ed267de93587c8dc7e16d1
 
 # Shell Source Inventory
 
 Paths and sizes only. Inclusion does not mean the file was semantically reviewed or the feature was tested.
 
-- [AGENTS.md](../../AGENTS.md) (6390 bytes)
-- [app.json](../../app.json) (957 bytes)
-- [capacitor.config.json](../../capacitor.config.json) (378 bytes)
-- [config/lorefy-config.js](../../config/lorefy-config.js) (7037 bytes)
-- [config/lorefy-runtime.js](../../config/lorefy-runtime.js) (5068 bytes)
-- [eas.json](../../eas.json) (515 bytes)
-- [index.html](../../index.html) (51535 bytes)
-- [ios/App/App.xcodeproj/project.pbxproj](../../ios/App/App.xcodeproj/project.pbxproj) (16715 bytes)
-- [package-lock.json](../../package-lock.json) (46471 bytes)
-- [package.json](../../package.json) (1865 bytes)
-- [phone-preview.html](../../phone-preview.html) (1696 bytes)
-- [README.md](../../README.md) (8678 bytes)
-- [Start-Lorefy.ps1](../../Start-Lorefy.ps1) (1236 bytes)
-- [sw.js](../../sw.js) (15725 bytes)
-- [uploads/files/lorefy-app.js](../../uploads/files/lorefy-app.js) (350223 bytes)
-- [uploads/files/lorefy-enrich.js](../../uploads/files/lorefy-enrich.js) (7298 bytes)
+- [AGENTS.md](../../AGENTS.md) (6435 bytes)
+- [app.json](../../app.json) (994 bytes)
+- [capacitor.config.json](../../capacitor.config.json) (399 bytes)
+- [config/lorefy-config.js](../../config/lorefy-config.js) (7179 bytes)
+- [config/lorefy-runtime.js](../../config/lorefy-runtime.js) (5188 bytes)
+- [eas.json](../../eas.json) (542 bytes)
+- [index.html](../../index.html) (52402 bytes)
+- [ios/App/App.xcodeproj/project.pbxproj](../../ios/App/App.xcodeproj/project.pbxproj) (17113 bytes)
+- [package-lock.json](../../package-lock.json) (47791 bytes)
+- [package.json](../../package.json) (1908 bytes)
+- [phone-preview.html](../../phone-preview.html) (1731 bytes)
+- [README.md](../../README.md) (8763 bytes)
+- [Start-Lorefy.ps1](../../Start-Lorefy.ps1) (1268 bytes)
+- [sw.js](../../sw.js) (16024 bytes)
+- [uploads/files/lorefy-app.js](../../uploads/files/lorefy-app.js) (350806 bytes)
+- [uploads/files/lorefy-enrich.js](../../uploads/files/lorefy-enrich.js) (7308 bytes)
 
 [[07-Source-Atlas]] | [[00-Home]]

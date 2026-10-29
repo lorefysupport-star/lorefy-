@@ -373,6 +373,7 @@
       this.stopSync();
       assertSessionRead(this, request);
       this._communityEpoch += 1;
+      this._mediaUrlCache = null;
       request.epoch = this._communityEpoch;
       await this._stopCommunitySubscription();
       assertSessionRead(this, request);
@@ -747,6 +748,7 @@
       this.stopSync();
       assertSessionRead(this, request);
       this._communityEpoch += 1;
+      this._mediaUrlCache = null;
       request.epoch = this._communityEpoch;
       await this._stopCommunitySubscription();
       assertSessionRead(this, request);
@@ -940,6 +942,7 @@
       assertMediaRequest(this, request);
       headers["cache-control"] = "max-age=0";
       headers["x-upsert"] = "true";
+      this._mediaUrlCache = null;
       var response = await fetch(this._storageObjectUrl("", path, PROFILE_MEDIA_BUCKET), {
         method:"POST",
         headers:headers,
@@ -951,6 +954,7 @@
         try{ problem = await response.json(); }catch(e){}
         throw new Error(problem && (problem.message || problem.error) || "تعذّر رفع الصورة.");
       }
+      this._mediaUrlCache = null;
       return path;
     },
     _storageMediaUrl: async function(bucket, value, ttl){
@@ -963,17 +967,43 @@
       var request = mediaRequestScope(this);
       var headers = await this._storageHeaders("application/json", request.owner);
       assertMediaRequest(this, request);
-      var response = await fetch(this._storageObjectUrl("sign", value, bucket), {
-        method:"POST",
-        headers:headers,
-        body:JSON.stringify({ expiresIn:ttl || PROFILE_MEDIA_TTL })
-      });
+      var base = global.LOREFY_SUPABASE.url, lifetime = ttl || PROFILE_MEDIA_TTL;
+      var cache = this._mediaUrlCache;
+      if (!cache || cache.owner !== request.owner || cache.active !== request.active ||
+          cache.client !== request.client || cache.epoch !== request.epoch || cache.base !== base){
+        cache = this._mediaUrlCache = {owner:request.owner, active:request.active,
+          client:request.client, epoch:request.epoch, base:base, entries:new Map()};
+      }
+      var key = JSON.stringify([bucket, value, lifetime]), now = Date.now();
+      var entry = cache.entries.get(key), self = this;
+      if (!entry || !entry.pending && entry.expires <= now){
+        cache.entries.delete(key);
+        while (cache.entries.size >= 256) cache.entries.delete(cache.entries.keys().next().value);
+        // Reuse exact tokens for Smart CDN, without persisting them or extending their lifetime.
+        entry = {pending:true, expires:now + Math.max(0, Math.min(60000, lifetime * 1000 - 5000))};
+        cache.entries.set(key, entry);
+        entry.promise = (async function(){
+          try {
+            var response = await fetch(self._storageObjectUrl("sign", value, bucket), {
+              method:"POST", headers:headers, body:JSON.stringify({ expiresIn:lifetime })
+            });
+            assertMediaRequest(self, request);
+            var data = null;
+            try{ data = await response.json(); }catch(e){}
+            assertMediaRequest(self, request);
+            if (!response.ok) throw new Error(data && (data.message || data.error) || "تعذّر تحميل الصورة.");
+            var url = data && data.signedURL ? base + "/storage/v1" + data.signedURL : "";
+            if (!url && cache.entries.get(key) === entry) cache.entries.delete(key);
+            return url;
+          } catch(e) {
+            if (cache.entries.get(key) === entry) cache.entries.delete(key);
+            throw e;
+          } finally { entry.pending = false; }
+        })();
+      }
+      var result = await entry.promise;
       assertMediaRequest(this, request);
-      var data = null;
-      try{ data = await response.json(); }catch(e){}
-      assertMediaRequest(this, request);
-      if (!response.ok) throw new Error(data && (data.message || data.error) || "تعذّر تحميل الصورة.");
-      return data && data.signedURL ? global.LOREFY_SUPABASE.url + "/storage/v1" + data.signedURL : "";
+      return result;
     },
     _profileMediaUrl: async function(value){
       return this._storageMediaUrl(PROFILE_MEDIA_BUCKET, value, PROFILE_MEDIA_TTL);
@@ -1044,6 +1074,7 @@
       var request = mediaRequestScope(this);
       var headers = await this._storageHeaders("application/json", request.owner);
       assertMediaRequest(this, request);
+      this._mediaUrlCache = null;
       var response = await fetch(global.LOREFY_SUPABASE.url + "/storage/v1/object/" + REVIEW_MEDIA_BUCKET, {
         method:"DELETE", headers:headers, body:JSON.stringify({ prefixes:paths })
       });
@@ -1053,6 +1084,7 @@
         try{ problem = await response.json(); }catch(e){}
         throw new Error(problem && (problem.message || problem.error) || "Review image deletion failed.");
       }
+      this._mediaUrlCache = null;
       return true;
     },
     _hydrateProfile: async function(userId, options){

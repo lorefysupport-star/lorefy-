@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v638-search-responsiveness';
+const CACHE = 'lorefy-v639-storage-reuse';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -119,7 +119,7 @@ const CORE = [
   './config/lorefy-config.js?v=20260924-catalog-v1',
   './backend/lorefy-secure-storage.js?v=20260824-keychain-v2',
   './modules/lorefy-storage-budget.js?v=20261021-save-quota',
-  './backend/lorefy-backend.js?v=20261028-share-composer-v3',
+  './backend/lorefy-backend.js?v=20261030-storage-reuse-v1',
   './backend/lorefy-custom-artwork.js?v=20261019-artwork-quota-v1',
   './backend/lorefy-native-crypto.js?v=20261001-auth-recovery-v1',
   './modules/lorefy-subscriptions.js?v=20260722-billing-guard-v1',

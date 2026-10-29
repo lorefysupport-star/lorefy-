@@ -6,6 +6,12 @@ aliases: ["حساب", "دخول", "مزامنة", "ضياع", "auth", "offline",
 ---
 # الحسابات والمزامنة
 
+[[sessions/2026-10-30-Supabase-Pro-Adoption]] adds bounded in-memory private
+image signature reuse. Auth still checked per caller; owner/active/client/epoch/
+project isolation and post-await guards retained. No persistent signed tokens,
+public buckets or modified RLS. Invalid session/logout and mutable media writes
+invalidate reuse. Live privacy/CDN/device acceptance remains separate.
+
 [[bugs/LF-075-Pull-Refresh-Lifecycle]] adds read-only account refresh through
 the existing reconciler with strict errors and owner/client/epoch/editor guards.
 Pending local edits stay pending; changed fields update the mounted UI.

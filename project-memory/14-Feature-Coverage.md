@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Supabase Pro: [[sessions/2026-10-30-Supabase-Pro-Adoption]]. Plan, spend cap,
+usage, backups and private buckets verified read-only; bounded shared signing
+cache implemented locally with14 regressions. No image transformations, queue,
+Cron, paid add-ons or service mutation enabled. Device/CDN acceptance remains.
+
 F13: [[sessions/2026-10-29-Cover-Edition-Choice]]. Provider metadata retained
 through cache/normalization/proxy rewriting to each choice and preview. Known
 edition/volume separated from image source; unknown/conflicting data not guessed.

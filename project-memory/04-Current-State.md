@@ -5,12 +5,12 @@ status: generated
 <!-- project-memory:generated -->
 # Current Source Snapshot
 
-Observed: 2026-10-29T20:38:47.197Z
-Source commit: bcb185c957aa935fd6b9e3589894ab04703287ea
-Branch: codex/jikan-retirement
+Observed: 2026-10-29T21:46:17.222Z
+Source commit: 5933fdc1783b9cf6f5ed267de93587c8dc7e16d1
+Branch: main
 
 This is a source fingerprint, not proof of a successful test run, deployment or device certification.
-Indexed source files: 773. Freshness includes untracked source additions, edits and removals within the allowlist.
+Indexed source files: 775. Freshness includes untracked source additions, edits and removals within the allowlist.
 Bulk catalogs, media, secrets, vendor packages, frozen archives and generated native web copies are not indexed. Verify them separately.
 
 ## Current Capacitor Packages

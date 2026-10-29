@@ -6,6 +6,12 @@ aliases: ["المشكلات", "النواقص", "المتبقي", "blockers"]
 ---
 # أمور لا تُغلق بالافتراض
 
+[[sessions/2026-10-30-Supabase-Pro-Adoption]] confirms Pro and available backups
+without restoring production. Private signing cache is local, not a live CDN
+benchmark. Responsive transformations, Storage-byte backup destination, isolated
+restore drill, realtime reconnect/two-account acceptance and Apple503 diagnosis
+remain open. No automatic resource purchases, SQL replay or secret changes.
+
 [[sessions/2026-10-29-Cover-Edition-Choice]] closes local F13 preview/apply,
 identity and persistence acceptance, not live metadata completeness or physical
 photo/cloud permissions.2973 source tests and108 local browser checks. Owner

@@ -8,6 +8,12 @@ aliases: ["تدفق البيانات", "الحفظ", "storage", "ownership"]
 
 ## الحفظ المحلي والمزامنة
 
+Private media URLs: [[sessions/2026-10-30-Supabase-Pro-Adoption]]. Durable
+bucket/path references remain the stored contract. Signed URLs may be reused
+only in bounded memory under the same viewer/client/epoch/project, with Auth
+checked for every consumer. Never persist tokens as a replacement for references;
+existing signing lifetime/Storage policies and mutable upload cache-control stay.
+
 تفاعل القارئ → حالة التطبيق ومفاتيح محلية → سجل التغييرات المعلقة →
 Backend/Merge → استجابة سحابية تخص الحساب الذي طلبها → الحالة المحلية والواجهة.
 هذه خريطة مفاهيمية للعقد، وليست وصفًا لكل استدعاء. المصدر والاختبارات يحكمان.

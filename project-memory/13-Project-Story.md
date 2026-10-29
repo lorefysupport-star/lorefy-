@@ -6,6 +6,12 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-10-30: [[sessions/2026-10-30-Supabase-Pro-Adoption]] verifies Pro/Spend Cap,
+usage and actual backups read-only. Private image signing coalesced/reused in
+bounded account-scoped memory locally; no production write, GitHub or build.
+The adoption report separates automatic plan benefits from pending code/service
+work and paid add-ons. Prior29 October query optimization is not reapplied.
+
 2026-10-29 source checkpoint authorized for GitHub after local-only development.
 [[sessions/2026-10-29-Cover-Edition-Choice]] completes bounded F13: metadata
 retained without extra provider calls; preview/save/reload/restore keep exact
