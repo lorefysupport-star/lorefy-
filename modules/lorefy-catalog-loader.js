@@ -10,7 +10,7 @@
   var loading = new Map();
   var activeQueue = Promise.resolve();
   var version = "20261013-discover-reviewed-v2";
-  var workerVersion = "20261019-search-authors-v1";
+  var workerVersion = "20261019-search-authors-v1-fast-search-v1";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
@@ -448,7 +448,7 @@
         console.warn("[Lorefy] local catalog search:", error);
         refreshSearchStatus();
       });
-    }, 450);
+    }, 150);
   }
 
   function loadMore() {

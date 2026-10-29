@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-29T20:07:46.855Z
-Source commit: 74fbee4d4c9f907c9d2de30db589cef8bb5720af
+Observed: 2026-10-29T20:36:26.152Z
+Source commit: 91c71ecf9649e24088f21a035a1b08af72a3471e
 
 # Docs Source Inventory
 
@@ -86,6 +86,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/RELEASE_OWNER_ACTIONS.md](../../docs/RELEASE_OWNER_ACTIONS.md) (6116 bytes)
 - [docs/REMAINING_BETA_PROGRESS_2026-10-04.md](../../docs/REMAINING_BETA_PROGRESS_2026-10-04.md) (2824 bytes)
 - [docs/RUNTIME_CLEANUP_2026-10-18.md](../../docs/RUNTIME_CLEANUP_2026-10-18.md) (5752 bytes)
+- [docs/SEARCH_PERFORMANCE_2026-10-29.md](../../docs/SEARCH_PERFORMANCE_2026-10-29.md) (5712 bytes)
 - [docs/SOCIAL_ARTWORK_CHAPTERS_2026-10-03.md](../../docs/SOCIAL_ARTWORK_CHAPTERS_2026-10-03.md) (2564 bytes)
 - [docs/SOL6_FULL_AUDIT_2026-09-23.md](../../docs/SOL6_FULL_AUDIT_2026-09-23.md) (3853 bytes)
 - [docs/SOURCE_CHECKPOINT_2026-10-29.md](../../docs/SOURCE_CHECKPOINT_2026-10-29.md) (2461 bytes)

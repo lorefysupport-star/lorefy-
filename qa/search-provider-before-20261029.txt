@@ -1,0 +1,8 @@
+{
+  "mode": "before",
+  "firstResultMs": 1416,
+  "complete": true,
+  "titles": [
+    "Performance fixture"
+  ]
+}

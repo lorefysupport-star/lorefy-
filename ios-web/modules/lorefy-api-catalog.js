@@ -10,7 +10,7 @@
   var DEFAULT_EXPANSION_PAGE_SIZE = 100;
   var MAX_CACHED_WORKS = 6000;
   var MAX_CACHE_CHARS = 512 * 1024; // At most 1 MiB of UTF-16 storage; reserve space for user data.
-  var SEARCH_DEBOUNCE_MS = 650;
+  var SEARCH_DEBOUNCE_MS = 250;
 
   var TYPES = {
     manga: "مانجا",
@@ -606,7 +606,9 @@
       if (global.LorefyComicsTaxonomy && typeof global.LorefyComicsTaxonomy.apply === "function") global.LorefyComicsTaxonomy.apply(candidates);
     } catch (e) {}
     var summary;
-    if (global.LorefyCatalogUpdater && typeof global.LorefyCatalogUpdater.applyDelta === "function") {
+    if (!candidates.length) {
+      summary = { added: 0, updatedWorks: 0, removed: 0, aliases: 0 };
+    } else if (global.LorefyCatalogUpdater && typeof global.LorefyCatalogUpdater.applyDelta === "function") {
       summary = global.LorefyCatalogUpdater.applyDelta({
         schema: 1,
         version: "api-" + Date.now(),
@@ -636,13 +638,29 @@
   }
 
   function fetchJson(url, options) {
-    var controller=global.AbortController?new global.AbortController():null;
-    var timeout=Math.max(20,Math.min(20000,Number(config().requestTimeoutMs)||18000)),timer;
-    var deadline=new Promise(function(_resolve,reject){timer=global.setTimeout(function(){if(controller)controller.abort();reject(new Error('Catalog source timeout'));},timeout);});
-    var request=Promise.resolve().then(function(){return global.fetch(url,Object.assign({cache:'no-store',headers:headers()},options||{},controller?{signal:controller.signal}:{}));}).then(function(response){
-      if(!response.ok)throw new Error('api catalog fetch '+response.status);return response.json();
+    options = options || {};
+    var controller = global.AbortController ? new global.AbortController() : null;
+    var parent = options.signal, timer, cancel;
+    function aborted() { var error = new Error('Catalog search cancelled'); error.name = 'AbortError'; return error; }
+    var timeout = Math.max(20, Math.min(20000, Number(config().requestTimeoutMs) || 18000));
+    var deadline = new Promise(function (_resolve, reject) {
+      timer = global.setTimeout(function () { if (controller) controller.abort(); reject(new Error('Catalog source timeout')); }, timeout);
     });
-    return Promise.race([request,deadline]).finally(function(){global.clearTimeout(timer);});
+    var cancellation = new Promise(function (_resolve, reject) {
+      cancel = function () { if (controller) controller.abort(); reject(aborted()); };
+      if (parent) { if (parent.aborted) cancel(); else parent.addEventListener('abort', cancel, { once: true }); }
+    });
+    var request = Promise.resolve().then(function () {
+      if (parent && parent.aborted) throw aborted();
+      return global.fetch(url, Object.assign({ cache: 'no-store', headers: headers() }, options, controller ? { signal: controller.signal } : {}));
+    }).then(function (response) {
+      if (!response.ok) throw new Error('api catalog fetch ' + response.status);
+      return response.json();
+    });
+    return Promise.race([request, deadline, cancellation]).finally(function () {
+      global.clearTimeout(timer);
+      if (parent) parent.removeEventListener('abort', cancel);
+    });
   }
 
   function enabledProvider(name) {
@@ -682,7 +700,7 @@
     return base ? base + "/" + provider : directUrl;
   }
 
-  function fetchAniList(query, type, page, perPage) {
+  function fetchAniList(query, type, page, perPage, options) {
     if (!enabledProvider("anilist")) return Promise.resolve([]);
     var cfg = typeConfig(type).anilist || {};
     var variables = {
@@ -703,7 +721,8 @@
     return fetchJson(providerPostUrl("anilist", "https://graphql.anilist.co"), {
       method: "POST",
       headers: Object.assign(headers(), { "Content-Type": "application/json" }),
-      body: JSON.stringify({ query: queryText, variables: variables })
+      body: JSON.stringify({ query: queryText, variables: variables }),
+      signal: options && options.signal
     }).then(function (json) {
       var media = json && json.data && json.data.Page && json.data.Page.media || [];
       return media.map(function (item) { return mapAniList(item, type); }).filter(Boolean);
@@ -718,7 +737,7 @@
     params.set("page", String(page || 1));
     params.set("limit", String(Math.min(100, perPage || config().perPage || DEFAULT_PER_PAGE)));
     params.set("fields", "key,title,subtitle,language,author_name,first_publish_year,cover_i,subject,ratings_average,ratings_count,want_to_read_count,edition_count,number_of_pages_median");
-    return fetchJson(providerUrl("openlibrary", "https://openlibrary.org/search.json", params)).then(function (json) {
+    return fetchJson(providerUrl("openlibrary", "https://openlibrary.org/search.json", params), {signal: options && options.signal}).then(function (json) {
       return (json && json.docs || []).map(function (doc) { return mapOpenLibrary(doc, options && options.generalSearch ? "All" : type); }).filter(Boolean);
     });
   }
@@ -734,12 +753,12 @@
     params.set("printType", type === TYPES.comics ? "all" : "books");
     params.set("projection", "lite");
     if (cfg.googleBooksApiKey) params.set("key", cfg.googleBooksApiKey);
-    return fetchJson(providerUrl("googlebooks", "https://www.googleapis.com/books/v1/volumes", params)).then(function (json) {
+    return fetchJson(providerUrl("googlebooks", "https://www.googleapis.com/books/v1/volumes", params), {signal: options && options.signal}).then(function (json) {
       return (json && json.items || []).map(function (item) { return mapGoogleBook(item, options && options.generalSearch ? "All" : type); }).filter(Boolean);
     });
   }
 
-  function fetchMangaDex(query, type, page, perPage) {
+  function fetchMangaDex(query, type, page, perPage, options) {
     if (!enabledProvider("mangaDex")) return Promise.resolve([]);
     var cfg = typeConfig(type).mangaDex || {};
     var limit = Math.min(50, perPage || config().perPage || DEFAULT_PER_PAGE);
@@ -752,7 +771,7 @@
     if (query) params.set("title", query);
     else params.set("order[followedCount]", "desc");
     (cfg.originalLanguages || []).forEach(function (lang) { params.append("originalLanguage[]", lang); });
-    return fetchJson(providerUrl("mangadex", "https://api.mangadex.org/manga", params)).then(function (json) {
+    return fetchJson(providerUrl("mangadex", "https://api.mangadex.org/manga", params), {signal: options && options.signal}).then(function (json) {
       return (json && json.data || []).map(function (item) { return mapMangaDex(item, type); }).filter(Boolean);
     });
   }
@@ -762,13 +781,14 @@
     openLibrary: fetchOpenLibrary,
     googleBooks: fetchGoogleBooks,
     mangaDex: fetchMangaDex,
-    bookBrainz: function(q,t,p,n,o){return openClient().bookBrainz(q,o&&o.generalSearch?'All':t,p,n);},
-    wikidata: function(q,t,p,n,o){return openClient().wikidata(q,o&&o.generalSearch?'All':t,p,n);},
-    gcd: function(q,t,p,n,o){return openClient().gcd(q,o&&o.generalSearch?'All':t,p,n);}
+    bookBrainz: function(q,t,p,n,o){return openClient(o).bookBrainz(q,o&&o.generalSearch?'All':t,p,n);},
+    wikidata: function(q,t,p,n,o){return openClient(o).wikidata(q,o&&o.generalSearch?'All':t,p,n);},
+    gcd: function(q,t,p,n,o){return openClient(o).gcd(q,o&&o.generalSearch?'All':t,p,n);}
   };
   var openCatalogClient;
-  function openClient(){
-    if(!openCatalogClient)openCatalogClient=global.LorefyOpenCatalog.create({fetchJson:fetchJson,urlFor:function(provider,url){
+  function openClient(options){
+    if(openCatalogClient && !(options && options.signal))return openCatalogClient;
+    var client=global.LorefyOpenCatalog.create({fetchJson:function(url,init){return fetchJson(url,Object.assign({},init,options && options.signal ? {signal:options.signal} : {}));},urlFor:function(provider,url){
       if(config().openSourcesEnabled&&config().openSourcesProxyUrl){
         var parsed=new URL(url),params=new URLSearchParams(parsed.search);
         if(provider==='bookbrainz')params.set('path',parsed.pathname);
@@ -776,7 +796,7 @@
         return String(config().openSourcesProxyUrl).replace(/\/$/,'')+'/'+provider+'?'+params;
       }
       return providerUrl(provider,url.split('?')[0],new URLSearchParams(new URL(url).search));
-    }});return openCatalogClient;
+    }});if(!(options && options.signal))openCatalogClient=client;return client;
   }
 
   function chooseProviders(type, requestedProviders) {
@@ -790,7 +810,7 @@
     if (cfg.enabled === false || !global.fetch) return Promise.resolve({ added: 0, works: [], skipped: "disabled" });
     type = normalizeType(type || readRouteType() || TYPES.manga);
     var providers = chooseProviders(type, options.providers);
-    if(options.isCurrent&&!options.isCurrent())return Promise.resolve({works:[],providers:providers,cancelled:true});
+    if(options.signal&&options.signal.aborted || options.isCurrent&&!options.isCurrent())return Promise.resolve({works:[],providers:providers,cancelled:true});
     if(!providers.length)return Promise.resolve({works:[],providers:[],skipped:'no-providers'});
     var page = Number(options.page) || 1;
     var key = batchKey(kind, type, query, providers, page);
@@ -800,30 +820,44 @@
       return Promise.resolve(Object.assign(cachedSummary, { cached: true, providers: providers, type: type }));
     }
     write(STATE_KEY, Object.assign({}, state(), { status: "checking", checkedAt: nowIso(), lastType: type, lastQuery: query || "" }));
+    var published = [], summaries = [];
+    function current() { return !(options.signal && options.signal.aborted) && (!options.isCurrent || options.isCurrent()); }
     return Promise.all(providers.map(function (provider) {
-      return PROVIDERS[provider](query, type, page, options.perPage, options).catch(function (error) {
-        return [{ _providerError: provider, error: error && error.message || String(error) }];
+      return Promise.resolve().then(function () {
+        if (!current()) return [];
+        return PROVIDERS[provider](query, type, page, options.perPage, options);
+      }).then(function (works) {
+        if (!current()) return [];
+        // Publish each source immediately. A slow source may enrich this batch
+        // later, but it cannot hold already verified results behind Promise.all.
+        if (works.length) {
+          var summary = applyWorks(works, {type:type, query:query});
+          summaries.push(summary);
+          published = published.concat(summary.works || []);
+        }
+        return works;
+      }).catch(function (error) {
+        return [{_providerError:provider, error:error && error.message || String(error)}];
       });
     })).then(function (groups) {
-      if(options.isCurrent&&!options.isCurrent())return {works:[],providers:providers,cancelled:true};
-      var errors = [];
-      var works = [];
-      groups.forEach(function (group) {
-        group.forEach(function (item) {
-          if (item && item._providerError) errors.push(item);
-          else works.push(item);
-        });
-      });
+      if (!current()) return {works:[], providers:providers, cancelled:true};
+      var errors = [], works = [];
+      groups.forEach(function (group) { group.forEach(function (item) {
+        if (item && item._providerError) errors.push(item); else works.push(item);
+      }); });
       works = uniqueWorks(works);
-      if (works.length || !errors.length) rememberBatch(key, works, errors.length>0);
-      var summary = applyWorks(works, { type: type, query: query });
-      if (errors.length) {
-        write(STATE_KEY, Object.assign({}, state(), { status: "partial", errors: errors }));
-      }
-      return Object.assign(summary, { providers: providers, providerErrors: errors, type: type, fetched: true });
+      if (works.length || !errors.length) rememberBatch(key, works, errors.length > 0);
+      if (!summaries.length) applyWorks([], {type:type, query:query});
+      if (errors.length) write(STATE_KEY, Object.assign({}, state(), {status:'partial', errors:errors}));
+      return {added:summaries.reduce(function(total,s){return total+(s.added||0);},0), works:uniqueWorks(published),
+        updatedWorks:summaries.reduce(function(total,s){return total+(s.updatedWorks||0);},0),
+        removed:summaries.reduce(function(total,s){return total+(s.removed||0);},0),
+        aliases:summaries.reduce(function(total,s){return total+(s.aliases||0);},0),
+        providers:providers, providerErrors:errors, type:type, fetched:true};
     }).catch(function (error) {
-      write(STATE_KEY, Object.assign({}, state(), { status: "error", checkedAt: nowIso(), error: error && error.message || String(error) }));
-      return { added: 0, works: [], error: error && error.message || String(error), type: type };
+      if (!current()) return {works:[], providers:providers, cancelled:true};
+      write(STATE_KEY, Object.assign({}, state(), {status:'error', checkedAt:nowIso(), error:error && error.message || String(error)}));
+      return {added:0, works:[], error:error && error.message || String(error), type:type};
     });
   }
 
@@ -832,15 +866,16 @@
     if (!query || query.length < 2) return Promise.resolve({ added: 0, works: [], skipped: "short-query" });
     if (/^(all|الكل)$/i.test(String(type || "").trim())) {
       // Search only on demand, with at most two format jobs running together.
-      var types = [TYPES.manga,TYPES.manhwa,TYPES.manhua,TYPES.book,TYPES.lightNovel,TYPES.webNovel], next = 0, results = [];
+      var types = [TYPES.manga,TYPES.book,TYPES.manhwa,TYPES.manhua,TYPES.lightNovel,TYPES.webNovel], next = 0, results = [];
       function worker() {
-        if (next >= types.length || options && options.isCurrent && !options.isCurrent()) return Promise.resolve();
+        if (next >= types.length || options && (options.signal && options.signal.aborted || options.isCurrent && !options.isCurrent())) return Promise.resolve();
         var selected = types[next++];
         var jobOptions=Object.assign({},options,{generalSearch:true,providers:selected===TYPES.lightNovel||selected===TYPES.webNovel?["anilist"]:undefined});
         if(selected===TYPES.book&&typeof global!=='undefined'&&global.LorefyOpenCatalog)jobOptions.providers=['openLibrary','googleBooks','bookBrainz','wikidata','gcd'];
         return runProviders("search-all", query, selected, jobOptions).then(function(result){results.push(result);return worker();});
       }
       return Promise.all([worker(),worker()]).then(function(){
+        if(options && (options.signal && options.signal.aborted || options.isCurrent && !options.isCurrent()))return {type:type,works:[],providers:[],cancelled:true};
         return {type:type,works:uniqueWorks([].concat.apply([],results.map(function(r){return r.works||[];}))),
           providers:[].concat.apply([],results.map(function(r){return r.providers||[];})),
           providerErrors:[].concat.apply([],results.map(function(r){return r.providerErrors||[];})),
@@ -1019,9 +1054,14 @@
   }
 
   var inputTimer = null;
+  var inputController = null;
+  var inputEpoch = 0;
   function cancelInputSearch() {
     global.clearTimeout(inputTimer);
     inputTimer = null;
+    inputEpoch++;
+    if (inputController) inputController.abort();
+    inputController = null;
   }
   function notifyInputSearch(query,type,status){
     if(global.dispatchEvent&&global.CustomEvent)global.dispatchEvent(new global.CustomEvent("lorefy:catalog-remote-search",{detail:{query:query,type:type,status:status}}));
@@ -1046,12 +1086,14 @@
       if (value.length < 3) return;
       var host=target.closest("[data-lorefy-catalog-search]"), explicitType=host&&host.getAttribute&&host.getAttribute("data-lorefy-catalog-search");
       var type = explicitType ? (/^(all|الكل)$/i.test(explicitType) ? "All" : normalizeType(explicitType)) : readRouteType();
-      function current(){return !target.closest("[data-lorefy-search-local]")&&target.isConnected&&normalizeSpaces(target.value||"")===value&&(explicitType?host.getAttribute("data-lorefy-catalog-search")===explicitType:type===readRouteType());}
+      var epoch = inputEpoch;
+      function current(){return epoch === inputEpoch && !target.closest("[data-lorefy-search-local]")&&target.isConnected&&normalizeSpaces(target.value||"")===value&&(explicitType?host.getAttribute("data-lorefy-catalog-search")===explicitType:type===readRouteType());}
       notifyInputSearch(value,type,"searching");
       inputTimer = global.setTimeout(function () {
         inputTimer = null;
         if (!current()) return;
-        search(value, type, {isCurrent:current}).then(function(result){
+        inputController = global.AbortController ? new global.AbortController() : null;
+        search(value, type, {isCurrent:current, signal:inputController && inputController.signal}).then(function(result){
           if(!current())return;
           var failed=result&&(result.error||result.providerErrors&&result.providers&&result.providers.length&&result.providerErrors.length===result.providers.length);
           notifyInputSearch(value,type,failed?"error":"ready");

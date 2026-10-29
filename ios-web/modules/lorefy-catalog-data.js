@@ -68,12 +68,13 @@
       return String(value == null ? '' : value);
     }).join('\u0000');
     var fields = signature.split('\u0000').map(queryText);
-    var author = queryText(record.auth || record.author);
+    var author = fields[2] || fields[3];
+    var title = fields[0], arabicTitle = fields[1];
     authorNames.forEach(function(group){
       if (group.indexOf(author) !== -1) fields = fields.concat(group);
     });
     workNames.forEach(function(group){
-      if (group.indexOf(queryText(record.title)) !== -1 || group.indexOf(queryText(record.ar)) !== -1) fields=fields.concat(group);
+      if (group.indexOf(title) !== -1 || group.indexOf(arabicTitle) !== -1) fields=fields.concat(group);
     });
     return {signature:signature,text:fields.join(' '),fields:fields,
       title:record.title,ar:record.ar,auth:record.auth,author:record.author,

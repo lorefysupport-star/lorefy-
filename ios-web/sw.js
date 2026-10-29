@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v637-mal-provider-tenrai';
+const CACHE = 'lorefy-v638-search-responsiveness';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -81,12 +81,12 @@ const CORE = [
   './modules/lorefy-cover-api.js?v=20261029-cover-editions-v1-tenrai-v1',
   './modules/lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4',
   './modules/lorefy-catalog-plan.js?v=20261019-search-authors-v1',
-  './modules/lorefy-catalog-loader.js?v=20261021-search-audit',
-  './modules/lorefy-catalog-search-worker.js?v=20261019-search-authors-v1',
+  './modules/lorefy-catalog-loader.js?v=20261021-search-audit-fast-search-v1',
+  './modules/lorefy-catalog-search-worker.js?v=20261019-search-authors-v1-fast-search-v1',
   './modules/lorefy-catalog-identity.js?v=20261010-identity-batch-v1',
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
-  './modules/lorefy-catalog-worker.js?v=20261019-search-authors-v1',
-  './modules/lorefy-catalog-data.js?v=20261017-search-alias-v1',
+  './modules/lorefy-catalog-worker.js?v=20261019-search-authors-v1-fast-search-v1',
+  './modules/lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1',
   './modules/lorefy-reading-metrics.js?v=20261027-durable-inbox-v1',
   './modules/lorefy-reading-diary-core.js?v=20261016-diary-position-v1',
   './modules/lorefy-reading-diary.js?v=20261018-runtime-cleanup-v1',
@@ -174,7 +174,7 @@ const CORE = [
   './uploads/files/lorefy-app.js?v=20261029-cover-editions-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog',
-  './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1',
+  './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
   './modules/lorefy-growth-features.js?v=20261029-rated-profile-media-v1-tenrai-v1',
   './modules/lorefy-share-studio.js?v=20261028-share-composer-v3',

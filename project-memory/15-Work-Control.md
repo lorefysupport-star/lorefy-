@@ -159,3 +159,5 @@ path:bugs [status:open OR needs-device OR needs-service]
 - [[bugs/LF-065-Runtime-Cleanup]]: ملخص كتالوج2,991 بايت وتحميل فهرس المعرّفات عند الحاجة،مع إزالة كود اختصار متقاعد وتنسيقاته وتوثيق المسؤوليات؛موارد بداية الرئيسية أقل29.06% في Chrome المعزول؛15 اختبارًا جديدًا،180مرتبطة و2091كاملة؛ [[sessions/2026-10-18-Runtime-Cleanup]]. حجم التثبيت وFPS والجهاز والخدمة مستقلان.
 
 - [[sessions/2026-10-29-Jikan-Retirement]]: Jikan retirement repaired in source and compatibility Edge route; installed-app delivery and progressive search latency remain open. No native release or production-data writes.
+
+2026-10-29 owner priority: [[sessions/2026-10-29-Search-Performance]] supersedes the earlier checkpoint-only pause for the authorized performance/GitHub repair.2990 tests and local AR/EN browser checks pass; first-result and CPU improvements are measured. Native delivery/device timing remain open and need separate release authorization.

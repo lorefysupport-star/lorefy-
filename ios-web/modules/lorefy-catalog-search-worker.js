@@ -2,7 +2,7 @@
 
 self.window = self;
 importScripts(
-  "lorefy-catalog-data.js?v=20261017-search-alias-v1",
+  "lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1",
   "lorefy-catalog-plan.js?v=20261019-search-authors-v1"
 );
 

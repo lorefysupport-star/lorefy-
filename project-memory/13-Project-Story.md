@@ -852,3 +852,5 @@ separate future phases. Full suite: 2523 passed. Local only, no build or push.
 
 
 2026-10-29: [[sessions/2026-10-29-Jikan-Retirement]] replaces the discontinued public Jikan endpoint with verified Tenrai-compatible MAL lookups. Three failing regressions become green; 365 focused checks and browser retrieval pass. Public compatibility function v14 is live. Installed native clients still require a separately authorized release; general search latency remains open.
+
+2026-10-29: [[sessions/2026-10-29-Search-Performance]] follows latest GitHub checkpoint74fbee4 and owner authorization for direct push. Removes11.1s fallback search-start timers, publishes providers progressively, aborts obsolete requests and halves cold query CPU time.2990 source tests and local AR/EN browser evidence pass; native delivery and physical-device latency remain separate.

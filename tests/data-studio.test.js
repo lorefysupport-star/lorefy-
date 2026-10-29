@@ -78,7 +78,7 @@ test('data studio assets and source use fresh offline versions', () => {
     const text = fs.readFileSync(file, 'utf8');
     for (const asset of ['modules/lorefy-product-tools.js', 'styles/lorefy-data-studio.css', 'styles/lorefy-glass-materials.css']) assert.ok(text.includes(asset + '?v=' + (asset.endsWith('.js') ? '20261028-report-studio-v1' : '20261028-trust-studio-v2')), asset);
   }
-  assert.match(fs.readFileSync('sw.js', 'utf8'), /lorefy-v637-mal-provider-tenrai/);
+  assert.match(fs.readFileSync('sw.js', 'utf8'), /lorefy-v638-search-responsiveness/);
 });
 
 test('layered data row layout and narrow stacking override unlayered legacy flex/grid rules', () => {

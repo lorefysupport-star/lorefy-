@@ -3,28 +3,28 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-29T20:07:46.855Z
-Source commit: 74fbee4d4c9f907c9d2de30db589cef8bb5720af
+Observed: 2026-10-29T20:36:26.152Z
+Source commit: 91c71ecf9649e24088f21a035a1b08af72a3471e
 
 # Modules Source Inventory
 
 Paths and sizes only. Inclusion does not mean the file was semantically reviewed or the feature was tested.
 
-- [modules/lorefy-api-catalog.js](../../modules/lorefy-api-catalog.js) (51954 bytes)
+- [modules/lorefy-api-catalog.js](../../modules/lorefy-api-catalog.js) (54785 bytes)
 - [modules/lorefy-avatar-rig.js](../../modules/lorefy-avatar-rig.js) (8364 bytes)
 - [modules/lorefy-bibliographic-overrides.js](../../modules/lorefy-bibliographic-overrides.js) (16321 bytes)
 - [modules/lorefy-bitmap-rig.js](../../modules/lorefy-bitmap-rig.js) (4365 bytes)
-- [modules/lorefy-catalog-data.js](../../modules/lorefy-catalog-data.js) (11855 bytes)
+- [modules/lorefy-catalog-data.js](../../modules/lorefy-catalog-data.js) (11863 bytes)
 - [modules/lorefy-catalog-detail-cache.js](../../modules/lorefy-catalog-detail-cache.js) (1044 bytes)
 - [modules/lorefy-catalog-identity.js](../../modules/lorefy-catalog-identity.js) (25356 bytes)
-- [modules/lorefy-catalog-loader.js](../../modules/lorefy-catalog-loader.js) (29607 bytes)
+- [modules/lorefy-catalog-loader.js](../../modules/lorefy-catalog-loader.js) (29622 bytes)
 - [modules/lorefy-catalog-map-loader.js](../../modules/lorefy-catalog-map-loader.js) (1793 bytes)
 - [modules/lorefy-catalog-plan.js](../../modules/lorefy-catalog-plan.js) (9439 bytes)
 - [modules/lorefy-catalog-policy.js](../../modules/lorefy-catalog-policy.js) (5147 bytes)
 - [modules/lorefy-catalog-requests.js](../../modules/lorefy-catalog-requests.js) (2284 bytes)
-- [modules/lorefy-catalog-search-worker.js](../../modules/lorefy-catalog-search-worker.js) (1741 bytes)
+- [modules/lorefy-catalog-search-worker.js](../../modules/lorefy-catalog-search-worker.js) (1756 bytes)
 - [modules/lorefy-catalog-updater.js](../../modules/lorefy-catalog-updater.js) (13125 bytes)
-- [modules/lorefy-catalog-worker.js](../../modules/lorefy-catalog-worker.js) (3261 bytes)
+- [modules/lorefy-catalog-worker.js](../../modules/lorefy-catalog-worker.js) (3276 bytes)
 - [modules/lorefy-chapter-detail-core.js](../../modules/lorefy-chapter-detail-core.js) (4973 bytes)
 - [modules/lorefy-chapter-detail.js](../../modules/lorefy-chapter-detail.js) (50343 bytes)
 - [modules/lorefy-chapter-metadata.js](../../modules/lorefy-chapter-metadata.js) (12899 bytes)

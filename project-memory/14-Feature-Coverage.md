@@ -671,3 +671,5 @@ cross-account visibility remain separate unverified gates.
 
 
 2026-10-29 provider repair: [[sessions/2026-10-29-Jikan-Retirement]] verifies six MAL-compatible routes, stable character/work IDs, public gateway responses and seven mirrored assets. 365 focused checks pass; no native build or complete search/device certification.
+
+2026-10-29 search performance: [[sessions/2026-10-29-Search-Performance]] covers startup, progressive provider ingestion, first-pair book search, all-adapter abortion, same-query epochs, cache no-op and multilingual normalization. Source/full2990 and local browser verified; no physical-device or peak-load certification.

@@ -7,9 +7,10 @@ function harness(result) {
   const source = fs.readFileSync('modules/lorefy-api-catalog.js', 'utf8');
   const begin = source.indexOf('  var inputTimer = null;');
   const end = source.indexOf('  function hookHistory()', begin);
-  const events = {}, timers = new Map(), calls = [],statuses=[];
+  const events = {}, timers = new Map(), calls = [],statuses=[],options=[];
   const scope = {
     global: {
+      AbortController,
       addEventListener(name, fn) { events[name] = fn; },
       CustomEvent:class{constructor(type,options){this.type=type;this.detail=options.detail;}},dispatchEvent(event){statuses.push(event.detail);},
       document: {addEventListener(name, fn) { events[name] = fn; }},
@@ -18,10 +19,10 @@ function harness(result) {
     },
     config: () => ({autoSearch: true}), normalizeSpaces: s => s.trim(),normalizeType:s=>s,
     readRouteType: () => 'Manga', SEARCH_DEBOUNCE_MS: 650,
-    search(q, type) { calls.push({q, type}); return Promise.resolve(result||{}); }
+    search(q, type, requestOptions) { calls.push({q, type}); options.push(requestOptions); return typeof result==='function'?result():Promise.resolve(result||{}); }
   };
   vm.runInNewContext(source.slice(begin, end) + '\nbindSearchInputs();', scope);
-  return {events, calls,statuses, flush() { const pending = [...timers.values()]; timers.clear(); pending.forEach(fn => fn()); }};
+  return {events, calls,statuses,options, flush() { const pending = [...timers.values()]; timers.clear(); pending.forEach(fn => fn()); }};
 }
 function field(value, allowed = false, tagName = 'INPUT') {
   return {value, tagName, isConnected: true, closest: selector => allowed && selector!=="[data-lorefy-search-local]" ? {} : null};
@@ -81,4 +82,18 @@ for(const type of ['Manga','Manhwa','Manhua','Comics','Novel','Book','Light Nove
  const h=harness(),host={getAttribute:()=>type},target=field('Public title',true);
  target.closest=selector=>selector==='[data-lorefy-search-local]'?null:host;
  h.events.input({target});h.flush();assert.equal(h.calls[0].type,type);
+});
+
+test('editing and navigating abort the active HTTP operation, not just its queued timer',()=>{
+ const h=harness(()=>new Promise(()=>{})),target=field('Hunter',true);
+ h.events.input({target});h.flush();const first=h.options[0];assert.equal(first.signal.aborted,false);
+ target.value='Berserk';h.events.input({target});assert.equal(first.signal.aborted,true);h.flush();
+ h.events['lorefy:route-change']();assert.equal(h.options[1].signal.aborted,true);
+});
+test('returning to the same query cannot revive an older response or finish its newer busy state',async()=>{
+ const completions=[],h=harness(()=>new Promise(resolve=>completions.push(resolve))),target=field('Hunter',true);
+ h.events.input({target});h.flush();target.value='Berserk';h.events.input({target});h.flush();
+ target.value='Hunter';h.events.input({target});h.flush();assert.equal(h.options[0].isCurrent(),false);
+ completions[0]({});await Promise.resolve();await Promise.resolve();assert.equal(h.statuses.at(-1).status,'searching');
+ completions[2]({});await Promise.resolve();await Promise.resolve();assert.equal(h.statuses.at(-1).status,'ready');
 });

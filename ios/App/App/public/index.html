@@ -307,7 +307,7 @@
     })();
   </script>
   <script defer src="modules/lorefy-catalog-map-loader.js?v=20261018-runtime-cleanup-v1"></script>
-  <script defer src="modules/lorefy-catalog-loader.js?v=20261021-search-audit"></script>
+  <script defer src="modules/lorefy-catalog-loader.js?v=20261021-search-audit-fast-search-v1"></script>
   <script defer src="uploads/lorefy-chapter-overrides.js?v=20260616-v23"></script>
   <script defer src="uploads/lorefy-catalog-aliases.js?v=20260622-audit1"></script>
 
@@ -335,7 +335,7 @@
   <!-- Weekly catalog delta updater (applies cached updates before app boot) -->
   <script defer src="modules/lorefy-catalog-updater.js?v=20260726-catalog-safety-v4"></script>
   <!-- Curated Arabic titles are local so search remains useful without a network request. -->
-  <script defer src="modules/lorefy-catalog-data.js?v=20261017-search-alias-v1"></script>
+  <script defer src="modules/lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1"></script>
   <script defer src="modules/lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4"></script>
   <script defer src="uploads/lorefy-arabic-library.js?v=20261008-arabic-breadth-v4"></script>
   <script defer src="uploads/lorefy-booktok-library.js?v=20260830-booktok-library-v1"></script>
@@ -461,7 +461,7 @@
   window.LOREFY_DEFERRED_ASSETS = [
       "uploads/lorefy-ar-enrichment.js?v=20260707-lazy-v1",
       "modules/lorefy-open-catalog.js?v=20261025-open-catalog",
-      "modules/lorefy-api-catalog.js?v=20261029-search-editions-v1"
+      "modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1"
     ];
   </script>
 
@@ -696,35 +696,50 @@
       function scheduleDeferredLorefyAssets(){
         if (deferredLorefyAssetsStarted) return;
         deferredLorefyAssetsStarted = true;
-        var queue = (window.LOREFY_DEFERRED_ASSETS || []).slice();
-        function idle(callback, timeout){
-          if ('requestIdleCallback' in window) requestIdleCallback(callback, { timeout: timeout || 4000 });
-          else setTimeout(callback, 900);
-        }
+        var assets = (window.LOREFY_DEFERRED_ASSETS || []).slice();
+        var searchAssets = assets.filter(function(src){ return /lorefy-(open|api)-catalog\.js/.test(src); });
+        var backgroundAssets = assets.filter(function(src){ return searchAssets.indexOf(src) < 0; });
+        var searchReady = null;
+        var loaded = {};
         function loadScript(src){
-          return new Promise(function(resolve){
+          if (loaded[src]) return Promise.resolve();
+          return new Promise(function(resolve, reject){
             var script = document.createElement('script');
             script.src = src;
             script.async = false;
-            script.onload = script.onerror = function(){ resolve(); };
+            script.onload = function(){ loaded[src] = true; resolve(); };
+            script.onerror = function(){ script.remove(); reject(new Error('Could not load catalog helper')); };
             document.head.appendChild(script);
           });
         }
-        function refreshCatalog(){
-          try { if (window.__lorefyIngest) window.__lorefyIngest(); }
-          catch(e){}
-          try { if (window.__lorefyRefresh) window.__lorefyRefresh(); }
-          catch(e){}
+        function ensureSearch(){
+          if (searchReady) return searchReady;
+          // Keep adapter execution ordered; a failed helper can retry on focus.
+          // Arabic enrichment has its own schedule and cannot delay this chain.
+          searchReady = searchAssets.reduce(function(promise, src){
+            return promise.then(function(){ return loadScript(src); });
+          }, Promise.resolve()).catch(function(){ searchReady = null; });
+          return searchReady;
         }
-        function next(){
-          var src = queue.shift();
-          if (!src) { refreshCatalog(); return; }
-          loadScript(src).then(function(){
-            refreshCatalog();
-            setTimeout(function(){ idle(next, 5000); }, 1400);
-          });
+        function onSearchIntent(event){
+          var target = event && event.target;
+          if (!target || target.tagName !== 'INPUT' || !target.closest ||
+              target.closest('[data-lorefy-search-local]') ||
+              !target.closest('.lf-search-box, [data-lorefy-catalog-search]')) return;
+          ensureSearch();
         }
-        setTimeout(next, 6500);
+        document.addEventListener('focusin', onSearchIntent, true);
+        document.addEventListener('input', onSearchIntent, true);
+        if ('requestIdleCallback' in window) window.requestIdleCallback(ensureSearch, { timeout: 600 });
+        else setTimeout(ensureSearch, 200);
+        setTimeout(function(){
+          backgroundAssets.reduce(function(promise, src){
+            return promise.then(function(){ return loadScript(src).then(function(){
+              try { if (window.__lorefyIngest) window.__lorefyIngest(); } catch(e){}
+              try { if (window.__lorefyRefresh) window.__lorefyRefresh(); } catch(e){}
+            }).catch(function(){}); });
+          }, Promise.resolve());
+        }, 6500);
       }
       function localIdentity(){ try{ return JSON.parse(localStorage.getItem('lorefy.identity.v1')||'null'); }catch(e){ return null; } }
       function localPreferences(){

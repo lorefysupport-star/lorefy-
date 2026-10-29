@@ -41,7 +41,7 @@ test('late-loaded search module resumes an already populated opted-in media inpu
  const code=source.slice(source.indexOf('  function bindSearchInputs()'),source.indexOf('  function hookHistory()'));
  let queued=0;const host={getAttribute:()=> 'All'},input={tagName:'INPUT',value:'Watchmen',isConnected:true,closest:s=>s.includes('search-local')?null:host};
  const global={document:{addEventListener(){},querySelector:()=>input},setTimeout(){queued++;return 1;},clearTimeout(){}};
- vm.runInNewContext(code+';bindSearchInputs();',{global,config:()=>({autoSearch:true}),cancelInputSearch(){},normalizeSpaces:s=>s,notifyInputSearch(){},SEARCH_DEBOUNCE_MS:1});
+ vm.runInNewContext(code+';bindSearchInputs();',{global,config:()=>({autoSearch:true}),cancelInputSearch(){},normalizeSpaces:s=>s,notifyInputSearch(){},SEARCH_DEBOUNCE_MS:1,inputEpoch:0,inputController:null});
  assert.equal(queued,1);
 });
 test('catalog bootstrap warming cannot cancel a populated media search',()=>{

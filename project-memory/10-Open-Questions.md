@@ -212,3 +212,5 @@ force-quit أو المزامنة بين جهازين حقيقيين، ولا ي�
 - [[sessions/2026-10-21-GitHub-Skills-Handoff]]: أذن المالك بنشر هذه التغييرات على GitHub، فيُستبدل قيد محلي فقط لهذا التسليم. لا يغيّر ذلك حدود الجهاز وVoiceOver أوالخدمات أوإصدارiOS.
 
 2026-10-29: [[sessions/2026-10-29-Jikan-Retirement]] supersedes the temporary Jikan-outage diagnosis with confirmed service retirement and a verified replacement. Native delivery, provider peak-load behavior and search first-result latency remain open; no app-wide speed claim.
+
+2026-10-29: [[sessions/2026-10-29-Search-Performance]] repairs and measures search startup/provider/CPU bottlenecks in source and local browser, superseding the previous unmeasured first-result status. Real-user latency distribution, provider peak-load and physical iPhone acceptance remain open; committing source does not update installed builds.

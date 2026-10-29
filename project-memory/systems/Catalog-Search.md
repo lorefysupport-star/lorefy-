@@ -6,6 +6,14 @@ aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 ---
 # الكتالوج والبحث
 
+[[sessions/2026-10-29-Search-Performance]] removes the delayed search-helper
+chain and slowest-provider publication barrier, aborts obsolete input requests,
+prioritizes early book coverage and reuses multilingual normalized fields.
+2990 tests and local AR/EN browser checks pass.121920-record cold search
+1696.33→789.07ms; controlled first-result1416→85ms. Worker/cache/native-web
+asset versions are synchronized; installed native delivery and device timing
+remain separate. This supersedes the prior unmeasured search-performance status.
+
 [[sessions/2026-10-29-Search-Edition-Groups]] adds search-only display groups,
 not identity merges. Retain Google subtitle/publisher/language/publicationDate;
 old records without known subtitle stay separate. Exact literary type/title/
