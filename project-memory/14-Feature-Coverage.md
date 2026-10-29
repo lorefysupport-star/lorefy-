@@ -673,3 +673,5 @@ cross-account visibility remain separate unverified gates.
 2026-10-29 provider repair: [[sessions/2026-10-29-Jikan-Retirement]] verifies six MAL-compatible routes, stable character/work IDs, public gateway responses and seven mirrored assets. 365 focused checks pass; no native build or complete search/device certification.
 
 2026-10-29 search performance: [[sessions/2026-10-29-Search-Performance]] covers startup, progressive provider ingestion, first-pair book search, all-adapter abortion, same-query epochs, cache no-op and multilingual normalization. Source/full2990 and local browser verified; no physical-device or peak-load certification.
+
+2026-10-29 server evidence: [[sessions/2026-10-29-Supabase-Pro-Optimization]]; Pro/healthy project, five valid indexes, two cached chapter-review identity lookups, same ordered feed results; 23 isolated SQL assertions and 63 focused source checks passed. Billing-denied catalog requests recovered; Jikan and Apple configuration errors remain separate. No device or two-account Auth certification.

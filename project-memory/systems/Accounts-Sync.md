@@ -96,3 +96,5 @@ or matching-device verification. No build or service changes.
 [[sessions/2026-10-19-Banner-Clear]] records explicit media removal and stale-cache fixes; historical upload cause remains unproven.
 
 Favorite slot save investigation: bounded downloaded catalog cache, quota-only safe cache reclaim, and honest failed-save feedback; 82 focused checks plus save/reopen/reload in isolated demo. Device Hub storage pressure removed without changing saved favorites. [[sessions/2026-10-21-Favorite-Save-Quota]].
+
+2026-10-29: [[sessions/2026-10-29-Supabase-Pro-Optimization]] verifies Pro and ACTIVE_HEALTHY and records applied migration 20261029194223: five indexes and two equivalent chapter-review RLS InitPlans. No user data/grant changes. 23 isolated SQL assertions and 63 focused source checks pass; hardware sign-in, two-account service isolation and Apple configuration remain open.

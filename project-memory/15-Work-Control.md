@@ -161,3 +161,5 @@ path:bugs [status:open OR needs-device OR needs-service]
 - [[sessions/2026-10-29-Jikan-Retirement]]: Jikan retirement repaired in source and compatibility Edge route; installed-app delivery and progressive search latency remain open. No native release or production-data writes.
 
 2026-10-29 owner priority: [[sessions/2026-10-29-Search-Performance]] supersedes the earlier checkpoint-only pause for the authorized performance/GitHub repair.2990 tests and local AR/EN browser checks pass; first-result and CPU improvements are measured. Native delivery/device timing remain open and need separate release authorization.
+
+- [[sessions/2026-10-29-Supabase-Pro-Optimization]]: deployed targeted Pro database optimization, verified query plans and cleared four missing-FK/two identity-initplan findings. Follow up Jikan 502, Apple authorization 503 configuration, Google Books 429 and Auth pool strategy if compute changes; existing security patch stays local.
