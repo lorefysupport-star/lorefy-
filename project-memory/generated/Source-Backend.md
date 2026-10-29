@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-29T21:57:32.975Z
-Source commit: b322afdd6c1936a74a2af9b47dc269712f278ca4
+Observed: 2026-10-29T22:00:51.881Z
+Source commit: 0df808746f64a0e007a85a05380066b7f31d1c25
 
 # Backend Source Inventory
 
@@ -17,7 +17,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [backend/lorefy-ios-oauth.js](../../backend/lorefy-ios-oauth.js) (8887 bytes)
 - [backend/lorefy-native-crypto.js](../../backend/lorefy-native-crypto.js) (990 bytes)
 - [backend/lorefy-native-photos.js](../../backend/lorefy-native-photos.js) (2129 bytes)
-- [backend/lorefy-native-runtime.js](../../backend/lorefy-native-runtime.js) (32237 bytes)
+- [backend/lorefy-native-runtime.js](../../backend/lorefy-native-runtime.js) (32356 bytes)
 - [backend/lorefy-secure-storage.js](../../backend/lorefy-secure-storage.js) (4510 bytes)
 - [monitoring/lorefy-sentry.js](../../monitoring/lorefy-sentry.js) (6027 bytes)
 

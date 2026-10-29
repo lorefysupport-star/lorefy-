@@ -258,3 +258,13 @@ test('native resume refreshes even when no push plugin or permission is availabl
  h.appListeners.appStateChange({isActive:false});await settle();assert.equal(h.bell.children.length,0);
  h.appListeners.appStateChange({isActive:true});await settle();assert.equal(h.bell.children[0]?.textContent,'1');
 });
+
+for(const transition of ['account','logout','backend'])test('queued read receipts do not dispatch after '+transition+' changes',async()=>{
+ const h=harness();h.api.start();h.listeners.DOMContentLoaded();h.setRows([notification()]);
+ await h.api.connectCloudNotifications();const page=h.mountInbox();let calls=0;
+ h.window.LorefyBackend.markNotificationsRead=async()=>{calls++;return 1;};
+ page.querySelector('.lf-cloud-notifications').children[0].listeners.click();
+ if(transition==='backend')h.window.LorefyBackend={...h.window.LorefyBackend};
+ else {h.setUser(transition==='logout'?null:B);await h.api.connectCloudNotifications();}
+ await settle();assert.equal(calls,0);
+});

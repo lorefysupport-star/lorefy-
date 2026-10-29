@@ -54,7 +54,10 @@
     if(!owner || !pendingReads.size || !backend || !backend.markNotificationsRead)return;
     if(readJob && readJob.epoch===epoch)return readJob.promise;
     var ids=Array.from(pendingReads),job={epoch:epoch,promise:null};readJob=job;
-    job.promise=Promise.resolve().then(function(){return backend.markNotificationsRead(ids);}).then(function(result){
+    job.promise=Promise.resolve().then(function(){
+      if(epoch!==connectionEpoch || owner!==activeAccount || backend!==root.LorefyBackend)return false;
+      return backend.markNotificationsRead(ids);
+    }).then(function(result){
       if(epoch!==connectionEpoch || owner!==activeAccount || backend!==root.LorefyBackend || result===false)return;
       ids.forEach(function(id){pendingReads.delete(id);});saveInbox();
     }).catch(function(){ /* Retry these receipts on the next authenticated refresh. */ }).finally(function(){if(readJob===job)readJob=null;});

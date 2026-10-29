@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v640-inbox-reconnect';
+const CACHE = 'lorefy-v641-inbox-receipt-scope';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -125,7 +125,7 @@ const CORE = [
   './modules/lorefy-subscriptions.js?v=20260722-billing-guard-v1',
   './backend/lorefy-ios-bridge.js?v=20261001-auth-recovery-v1',
   './backend/lorefy-ios-oauth.js?v=20261003-beta-final-v1',
-  './backend/lorefy-native-runtime.js?v=20261030-inbox-reconnect-v1',
+  './backend/lorefy-native-runtime.js?v=20261030-inbox-receipt-scope-v1',
   './backend/lorefy-native-photos.js?v=20261001-build33',
 './auth/lorefy-auth.js?v=20261007-review-identity-v1',
   './modules/lorefy-catalog-updater.js?v=20260726-catalog-safety-v4',

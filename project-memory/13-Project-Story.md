@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-10-30 [[sessions/2026-10-30-Inbox-Receipt-Scope]] follows the pushed
+reconnect repair `0df8087`: queued read acknowledgments are discarded before
+dispatch when account/logout/backend changes. No production data mutation or
+new native build. Remaining Pro adoption stages and device acceptance stay open.
+
 2026-10-30 owner requests each verified source repair pushed immediately.
 Private signing repair pushed `b322afd`. [[sessions/2026-10-30-Inbox-Reconnect]]
 adds UPDATE/read synchronization, reconnect/native resume/online catch-up,

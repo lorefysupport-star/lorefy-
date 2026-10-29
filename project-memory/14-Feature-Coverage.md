@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+F15 queued read receipt race: [[sessions/2026-10-30-Inbox-Receipt-Scope]]. Three
+new regressions for account/logout/backend transition before microtask dispatch;
+74 focused notifications tests and84 real-UI fixture checks. This is distinct
+from notification delivery/production RLS certification or a native release.
+
 F15 follow-up: [[sessions/2026-10-30-Inbox-Reconnect]] verifies local reconnect,
 read updates, duplicate safety, parallel refresh, online and native-resume callback
 handling.3014 source tests/84 UI fixture checks; no live devices or service write.

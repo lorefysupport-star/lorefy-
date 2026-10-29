@@ -6,6 +6,11 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-10-30-Inbox-Receipt-Scope]] guards queued read receipts before
+dispatch, not only after response. Account/logout/backend changes cancel the old
+microtask before it can call the next context. Original owner pending receipts
+and normal retry remain; three failing regressions reproduced this race.
+
 [[sessions/2026-10-30-Inbox-Reconnect]]: owner-filtered UPDATE events synchronize
 read state without removing history or emitting toasts. Shared refresh closes
 reconnect/resume/online gaps with one trailing catch-up when necessary; duplicate

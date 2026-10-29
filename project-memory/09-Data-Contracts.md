@@ -39,6 +39,8 @@ UPDATE merges read state in place without a toast. Read_at cannot be undone by
 duplicate inserts or older snapshots. Concurrent refresh consumers share one
 owner/connection/backend job; reconnect may queue one non-overlapping catch-up.
 Replaced clients/accounts must never apply prior snapshot or status callbacks.
+[[sessions/2026-10-30-Inbox-Receipt-Scope]] also gates deferred read-receipt
+invocation before dispatch; stale queued work must not begin under a new owner.
 
 Reading-state labels: [[sessions/2026-10-28-UI-Foundation-Phase-Nine]]. Shared
 display functions must not rewrite saved statuses or parse publication metadata.
