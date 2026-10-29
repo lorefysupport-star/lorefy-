@@ -33,12 +33,12 @@ test("all runtime AniList requests use the shared Supabase catalog proxy", () =>
     "https://example.supabase.co/functions/v1/lorefy-public/catalog-anilist"
   );
   assert.equal(
-    sandbox.window.LorefyDataProxy.catalogUrl("jikan", "https://api.jikan.moe/v4/manga/136/pictures"),
-    "https://api.jikan.moe/v4/manga/136/pictures"
+    sandbox.window.LorefyDataProxy.catalogUrl("jikan", "https://api.tenrai.org/v1/manga/136/pictures"),
+    "https://api.tenrai.org/v1/manga/136/pictures"
   );
   assert.equal(
-    sandbox.window.LorefyDataProxy.catalogUrl("jikan", "https://api.jikan.moe/v4/manga/136/characters"),
-    "https://api.jikan.moe/v4/manga/136/characters"
+    sandbox.window.LorefyDataProxy.catalogUrl("jikan", "https://api.tenrai.org/v1/manga/136/characters"),
+    "https://api.tenrai.org/v1/manga/136/characters"
   );
   assert.equal(
     sandbox.window.LorefyDataProxy.catalogUrl("wikipedia", "https://en.wikipedia.org/w/api.php?action=query"),
@@ -138,5 +138,5 @@ test("the native character cache trusts provider pagination instead of a row thr
   assert.match(characters, /function jikanEndpoint\(path\)/);
   assert.match(characters, /kitsuCastForWork\(keys\)/);
   assert.doesNotMatch(characters, /complete = kitsu\.length > 25/);
-  assert.match(growth, /growthCatalogUrl\("jikan", "https:\/\/api\.jikan\.moe/);
+  assert.match(growth, /growthCatalogUrl\("jikan", "https:\/\/api\.tenrai\.org/);
 });

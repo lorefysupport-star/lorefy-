@@ -312,14 +312,14 @@
   <script defer src="uploads/lorefy-catalog-aliases.js?v=20260622-audit1"></script>
 
   <!-- Host feature modules (stats + cover picker) — must load BEFORE the app -->
-  <script defer src="modules/lorefy-cover-api.js?v=20261029-cover-editions-v1"></script>
+  <script defer src="modules/lorefy-cover-api.js?v=20261029-cover-editions-v1-tenrai-v1"></script>
   <script defer src="modules/lorefy-v2.js?v=20261016-statistics-activity-v1"></script>
   <script defer src="modules/lorefy-ui-runtime.js?v=20261019-render-recovery-v1"></script>
 
   <!-- Accounts: config + backend (Supabase sync) + auth gate -->
   <script defer src="config/lorefy-runtime.js?v=20260930-character-share-v1"></script>
   <script defer src="config/lorefy-config.js?v=20260924-catalog-v1"></script>
-  <script defer src="modules/lorefy-data-proxy.js?v=20260909-full-catalog-v1"></script>
+  <script defer src="modules/lorefy-data-proxy.js?v=20260909-full-catalog-v1-tenrai-v1"></script>
   <script defer src="monitoring/lorefy-sentry.js"></script>
     <script defer src="backend/lorefy-secure-storage.js?v=20260824-keychain-v2"></script>
     <script defer src="backend/lorefy-native-crypto.js?v=20261001-auth-recovery-v1"></script>
@@ -372,7 +372,7 @@
       comics: "uploads/lorefy-comics-character-catalog.js?v=20260831-comic-images-v2"
     };
   </script>
-  <script defer src="modules/lorefy-character-system.js?v=20261028-image-picker-lifecycle-v2"></script>
+  <script defer src="modules/lorefy-character-system.js?v=20261028-image-picker-lifecycle-v2-tenrai-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-public-profile.css?v=20261011-public-profile-layout-v4">
   <link rel="stylesheet" href="styles/lorefy-visual-polish.css?v=20260930-reference-v2">
   <link rel="stylesheet" href="styles/lorefy-work-surface.css?v=20261011-work-lists-v1">
@@ -407,7 +407,7 @@
   <script defer src="modules/lorefy-reading-metrics.js?v=20261027-durable-inbox-v1"></script>
   <script defer src="modules/lorefy-reading-diary-core.js?v=20261016-diary-position-v1"></script>
   <script defer src="modules/lorefy-chapter-detail-core.js?v=20261015-reading-owner-v1"></script>
-  <script defer src="modules/lorefy-chapter-metadata.js?v=20261003-beta-final-v1"></script>
+  <script defer src="modules/lorefy-chapter-metadata.js?v=20261003-beta-final-v1-tenrai-v1"></script>
   <script defer src="modules/lorefy-design-system.js?v=20261027-glass-depth-v3"></script>
   <script defer src="modules/lorefy-i18n.js?v=20261028-reading-terms-v1"></script>
   <script defer src="modules/lorefy-cover-media.js?v=20261029-category-board-v1"></script>
@@ -444,7 +444,7 @@
   <script defer src="modules/lorefy-work-panels.js?v=20261029-cover-editions-v1"></script>
   <script defer src="uploads/files/lorefy-app.js?v=20261029-cover-editions-v1"></script>
   <script defer src="modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1"></script>
-  <script defer src="modules/lorefy-growth-features.js?v=20261029-rated-profile-media-v1"></script>
+  <script defer src="modules/lorefy-growth-features.js?v=20261029-rated-profile-media-v1-tenrai-v1"></script>
   <script defer src="modules/lorefy-community.js?v=20261028-community-copy-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-profile-sections.css?v=20261018-list-removal-v1">
   <script defer src="modules/lorefy-profile-sections.js?v=20261029-profile-list-media-v1"></script>
@@ -686,7 +686,7 @@
           window.__lorefyGrowthRetryCount = (window.__lorefyGrowthRetryCount || 0) + 1;
           if (window.__lorefyGrowthRetryCount > 3) return;
           var script = document.createElement('script');
-      script.src = 'modules/lorefy-growth-features.js?v=20261029-rated-profile-media-v1' + window.__lorefyGrowthRetryCount + '-' + Date.now();
+      script.src = 'modules/lorefy-growth-features.js?v=20261029-rated-profile-media-v1-tenrai-v1' + window.__lorefyGrowthRetryCount + '-' + Date.now();
           script.async = false;
           document.head.appendChild(script);
         }, 400);

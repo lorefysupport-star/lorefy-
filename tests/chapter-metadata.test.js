@@ -87,7 +87,7 @@ test('ongoing chapter catalogs traverse every API page and exclude extras and ot
 
 test('missing chapter totals can use the exact MAL identity without inventing ongoing totals', async () => {
   const unknown = await metadata.loadCatalog('mal-manga-999999-test', async url => {
-    assert.equal(url, 'https://api.jikan.moe/v4/manga/999999');
+    assert.equal(url, 'https://api.tenrai.org/v1/manga/999999');
     return { ok: true, json: async () => ({ data: { mal_id: 999999, chapters: null } }) };
   });
   assert.equal(unknown.total, 0);

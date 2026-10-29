@@ -211,7 +211,7 @@
           role: roleLabel(row && row.role),
           note: row && row.favorites ? String(row.favorites) + " favorites" : "",
           image: image,
-          source: "Jikan"
+          source: "Tenrai"
         };
       })
       .filter(function (c) { return c.latin || c.name; });
@@ -537,7 +537,7 @@
   }
 
   function jikanEndpoint(path) {
-    var direct = "https://api.jikan.moe/v4/" + String(path || "").replace(/^\/+/, "");
+    var direct = "https://api.tenrai.org/v1/" + String(path || "").replace(/^\/+/, "");
     try {
       if (global.LorefyDataProxy && typeof global.LorefyDataProxy.catalogUrl === "function") {
         return global.LorefyDataProxy.catalogUrl("jikan", direct);

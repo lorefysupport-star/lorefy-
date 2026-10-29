@@ -210,3 +210,5 @@ force-quit أو المزامنة بين جهازين حقيقيين، ولا ي�
 
 
 - [[sessions/2026-10-21-GitHub-Skills-Handoff]]: أذن المالك بنشر هذه التغييرات على GitHub، فيُستبدل قيد محلي فقط لهذا التسليم. لا يغيّر ذلك حدود الجهاز وVoiceOver أوالخدمات أوإصدارiOS.
+
+2026-10-29: [[sessions/2026-10-29-Jikan-Retirement]] supersedes the temporary Jikan-outage diagnosis with confirmed service retirement and a verified replacement. Native delivery, provider peak-load behavior and search first-result latency remain open; no app-wide speed claim.

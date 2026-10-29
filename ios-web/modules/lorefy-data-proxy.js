@@ -1,7 +1,7 @@
 /* Lorefy public data gateway.
    Providers with unstable browser CORS are routed through the bounded public
-   gateway. Jikan publishes CORS support, and its edge origin currently times
-   out from Supabase, so Jikan remains a direct anonymous fallback. */
+   gateway. Tenrai's Jikan-compatible MAL API is a direct anonymous fallback.
+   The public api.jikan.moe service was discontinued on 2026-10-01. */
 (function (global) {
   "use strict";
 
@@ -35,9 +35,14 @@
       if(provider==='gcd'){var match=parsed.pathname.match(/\/series\/name\/([^/]+)\//);if(!match)return targetUrl;params.set('q',decodeURIComponent(match[1]));}
       return '/api/catalog/'+provider+'?'+params;
     }
-    // Do not make all character and alternate-cover retrieval depend on a
-    // single Edge egress path. These requests carry no session or user data.
-    if (provider === "jikan") return targetUrl;
+    // Keep the legacy provider key for existing callers and cached identities.
+    // This route carries public MAL resource IDs/queries, never account state.
+    if (provider === "jikan") {
+      if (parsed.origin === "https://api.jikan.moe" && parsed.pathname.indexOf("/v4/") === 0) {
+        return "https://api.tenrai.org/v1" + parsed.pathname.slice(3) + parsed.search;
+      }
+      return targetUrl;
+    }
     var route = "catalog-" + encodeURIComponent(provider);
     var publicGateway = publicBase();
     if (publicGateway) {

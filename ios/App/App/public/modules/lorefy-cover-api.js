@@ -591,7 +591,7 @@
     var list = [];
     var q = titleCandidates(work)[0];
     if (!q) return list;
-    var data = await fetchJson(catalogProxyUrl("jikan", paramsUrl("https://api.jikan.moe/v4/manga", [
+    var data = await fetchJson(catalogProxyUrl("jikan", paramsUrl("https://api.tenrai.org/v1/manga", [
       ["q", q],
       ["limit", "8"],
       ["sfw", "true"]
@@ -607,7 +607,7 @@
     var list = [];
     var id = malMangaId(work);
     if (!id) return list;
-    var data = await fetchJson(catalogProxyUrl("jikan", "https://api.jikan.moe/v4/manga/" + encodeURIComponent(id)));
+    var data = await fetchJson(catalogProxyUrl("jikan", "https://api.tenrai.org/v1/manga/" + encodeURIComponent(id)));
     addImageObject(list, data && data.data && data.data.images);
     return list;
   }
@@ -616,7 +616,7 @@
     var list = [];
     var id = malMangaId(work);
     if (!id) return list;
-    var data = await fetchJson(catalogProxyUrl("jikan", "https://api.jikan.moe/v4/manga/" + encodeURIComponent(id) + "/pictures"));
+    var data = await fetchJson(catalogProxyUrl("jikan", "https://api.tenrai.org/v1/manga/" + encodeURIComponent(id) + "/pictures"));
     ((data && data.data) || []).forEach(function (row) {
       addImageObject(list, row);
     });

@@ -112,7 +112,7 @@ test('MAL works merge a bundled preview with every completed remote page', async
   const system = loadSystem(async (request) => {
     const url = String(request);
     requests.push(url);
-    if (url.includes('api.jikan.moe')) return { ok: false, status: 429, json: async () => ({}) };
+    if (url.includes('api.tenrai.org')) return { ok: false, status: 429, json: async () => ({}) };
     if (url.includes('graphql.anilist.co')) {
       return { ok: true, json: async () => ({ data: { Media: { title: { romaji: 'Example' }, characters: { edges } } } }) };
     }
@@ -261,7 +261,7 @@ test('MAL fallback walks every AniList character page when Jikan is unavailable'
   const requestedPageSizes = [];
   const system = loadSystem(async (request, options) => {
     const url = String(request);
-    if (url.includes('api.jikan.moe')) return { ok: false, status: 504, json: async () => ({}) };
+    if (url.includes('api.tenrai.org')) return { ok: false, status: 504, json: async () => ({}) };
     if (url.includes('graphql.anilist.co')) {
       const body = JSON.parse(options.body);
       const page = Number(body.variables.page || 1);
@@ -471,7 +471,7 @@ test('literary image options never fall back to an unrelated Jikan name search',
     image: 'https://images.example/jon.jpg'
   });
   assert.deepEqual(Array.from(options), ['https://images.example/jon.jpg']);
-  assert.equal(requested.includes('api.jikan.moe'), false);
+  assert.equal(requested.includes('api.tenrai.org'), false);
 });
 
 test('comic image options use the character gallery and reject people and cosplay results', async () => {
@@ -523,7 +523,7 @@ test('comic image options use the character gallery and reject people and cospla
     'https://static.wikia.nocookie.net/marveldatabase/images/peter-comic.jpg'
   ]);
   assert.equal(requests.some((url) => url.includes('commons.wikimedia.org')), false);
-  assert.equal(requests.some((url) => url.includes('api.jikan.moe')), false);
+  assert.equal(requests.some((url) => url.includes('api.tenrai.org')), false);
 });
 
 test('DC image options prefer the canonical Prime Earth gallery over side-universe search results', async () => {

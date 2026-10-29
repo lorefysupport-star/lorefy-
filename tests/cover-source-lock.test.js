@@ -104,9 +104,9 @@ test('MAL works keep their exact source but also try a title-verified volume pro
     sourceCoverUrl: 'https://cdn.myanimelist.net/images/manga/3/123.jpg'
   });
   assert.equal(requests.some((url) => url.includes('api.mangadex.org/manga')), true);
-  assert.equal(requests.some((url) => url.includes('api.jikan.moe/v4/manga/26/pictures')), true);
-  assert.equal(requests.some((url) => url.includes('api.jikan.moe/v4/manga?')), false);
-  assert.equal(requests.some((url) => url.includes('api.jikan.moe/v4/manga/26')), true);
+  assert.equal(requests.some((url) => url.includes('api.tenrai.org/v1/manga/26/pictures')), true);
+  assert.equal(requests.some((url) => url.includes('api.tenrai.org/v1/manga?')), false);
+  assert.equal(requests.some((url) => url.includes('api.tenrai.org/v1/manga/26')), true);
   assert.equal(requests.some((url) => url.includes('googleapis.com/books')), true);
 });
 
@@ -349,7 +349,7 @@ test('Open Library comics use only exact-work editions instead of broad manga an
 
   assert.equal(requests.some((url) => url.includes('/works/OL2897798W/editions.json')), true);
   assert.equal(requests.some((url) => url.includes('api.mangadex.org')), false);
-  assert.equal(requests.some((url) => url.includes('api.jikan.moe')), false);
+  assert.equal(requests.some((url) => url.includes('api.tenrai.org')), false);
   assert.equal(requests.some((url) => url.includes('googleapis.com/books')), false);
   assert.deepEqual(Array.from(covers), [101, 102, 103].map((id) => `https://covers.openlibrary.org/b/id/${id}-L.jpg`));
 });

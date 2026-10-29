@@ -668,3 +668,6 @@ Type-page search now connects its selected format to the existing debounced onli
 packs to renderer/catalog/gate tests and36 public-profile geometry cases. Actual
 demo apply/restore preserved media. Physical-device FPS, native release and live
 cross-account visibility remain separate unverified gates.
+
+
+2026-10-29 provider repair: [[sessions/2026-10-29-Jikan-Retirement]] verifies six MAL-compatible routes, stable character/work IDs, public gateway responses and seven mirrored assets. 365 focused checks pass; no native build or complete search/device certification.

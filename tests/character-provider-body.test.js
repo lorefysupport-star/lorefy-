@@ -47,7 +47,7 @@ test('provider JSON parsing failure releases timers and remains a failure',async
  await assert.rejects(h.api.jikanCast(26),/Bad JSON/);assert.equal(h.timers.size,0);
 });
 test('one stalled provider cannot hold the combined cast forever or mark a seed complete',async()=>{
- const h=harness(async url=>url.includes('api.jikan.moe')?stalled():{ok:false,status:503,json:async()=>({})});
+ const h=harness(async url=>url.includes('api.tenrai.org')?stalled():{ok:false,status:503,json:async()=>({})});
  const manga={id:'mal-manga-26-fixture',title:'Fixture',type:'Manga'};
  h.window.LorefyCharacterCatalog={[manga.id]:[{id:'seed',name:'Verified Seed',image:'https://example.com/seed.jpg'}]};
  const result=observe(h.api.loadCast(manga));await h.advance(60000);

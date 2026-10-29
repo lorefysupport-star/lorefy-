@@ -117,7 +117,7 @@
       }
       task = page('');
     } else {
-      task = requestJson('https://api.jikan.moe/v4/manga/' + malId[1], fetcher).then(function (body) {
+      task = requestJson('https://api.tenrai.org/v1/manga/' + malId[1], fetcher).then(function (body) {
         var data = body.data;
         var count = data && Number(data.mal_id) === Number(malId[1]) ? Number(data.chapters) : 0;
         return { total: Number.isSafeInteger(count) && count > 0 && count <= 100000 ? count : 0,

@@ -849,3 +849,6 @@ preserved avatar/banner. No GitHub push, native build or live service changes.
 Apple/Glassy direction on Home only. Actual reading data and existing feed are
 retained; Dislike gets immediate guarded updates. Library/Explore/Profile remain
 separate future phases. Full suite: 2523 passed. Local only, no build or push.
+
+
+2026-10-29: [[sessions/2026-10-29-Jikan-Retirement]] replaces the discontinued public Jikan endpoint with verified Tenrai-compatible MAL lookups. Three failing regressions become green; 365 focused checks and browser retrieval pass. Public compatibility function v14 is live. Installed native clients still require a separately authorized release; general search latency remains open.

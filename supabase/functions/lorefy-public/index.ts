@@ -15,7 +15,7 @@ const CATALOG_TARGETS: Record<string, string> = {
   "catalog-openlibrary": "https://openlibrary.org/search.json",
   "catalog-openlibrary-editions": "https://openlibrary.org/works",
   "catalog-googlebooks": "https://www.googleapis.com/books/v1/volumes",
-  "catalog-jikan": "https://api.jikan.moe/v4",
+  "catalog-jikan": "https://api.tenrai.org/v1",
   "catalog-anilist": "https://graphql.anilist.co",
   "catalog-wikipedia": "https://en.wikipedia.org/w/api.php",
   "catalog-wikidata": "https://www.wikidata.org/w/api.php",

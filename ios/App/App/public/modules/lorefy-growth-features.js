@@ -793,7 +793,7 @@
   }
   function jikanCast(mal) {
     if (!mal) return Promise.reject(new Error("no mal"));
-    return withTimeout(fetch(growthCatalogUrl("jikan", "https://api.jikan.moe/v4/manga/" + mal + "/characters"), { headers: { Accept: "application/json" } }), 7000)
+    return withTimeout(fetch(growthCatalogUrl("jikan", "https://api.tenrai.org/v1/manga/" + mal + "/characters"), { headers: { Accept: "application/json" } }), 7000)
       .then(function (r) { if (!r.ok) throw new Error("jikan " + r.status); return r.json(); })
       .then(function (j) {
         var rows = (j && j.data) || [];
@@ -1275,7 +1275,7 @@
     if (c.image || c.img) return Promise.resolve(c.image || c.img);
     var name = c.latin || c.name;
     if (!name) return Promise.resolve("");
-    var jikanImage = withTimeout(fetch(growthCatalogUrl("jikan", "https://api.jikan.moe/v4/characters?q=" + encodeURIComponent(name) + "&limit=1&order_by=favorites&sort=desc"), { headers: { Accept: "application/json" } }), 7000)
+    var jikanImage = withTimeout(fetch(growthCatalogUrl("jikan", "https://api.tenrai.org/v1/characters?q=" + encodeURIComponent(name) + "&limit=1&order_by=favorites&sort=desc"), { headers: { Accept: "application/json" } }), 7000)
       .then(function (r) { if (!r.ok) throw new Error("jikan " + r.status); return r.json(); })
       .then(function (j) {
         var d = (j && j.data || []).find(function(row){

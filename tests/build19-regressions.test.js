@@ -69,7 +69,7 @@ test("MAL manga merge the paginated Kitsu cast when AniList is unavailable", asy
     const url = String(request);
     requests.push(url);
     if (url.includes("catalog-anilist") || url.includes("graphql.anilist.co")) return response(403, {});
-    if (url.includes("api.jikan.moe")) {
+    if (url.includes("api.tenrai.org")) {
       return response(200, { data: Array.from({ length: 25 }, (_, index) => ({
         role: "Supporting",
         character: { mal_id: index + 1, name: `Jikan Character ${index + 1}`, images: { jpg: { image_url: "" } } }
@@ -125,7 +125,7 @@ test("Demon Slayer merges every paginated Fandom category character when tracker
     const url = String(request);
     calls.push(url);
     if (url.includes('anilist')) return response(403, {});
-    if (url.includes('api.jikan.moe')) return response(504, {});
+    if (url.includes('api.tenrai.org')) return response(504, {});
     if (url.includes('kitsu.io/api/edge/manga?')) {
       return response(200, {data:[{id:'ds-manga',attributes:{canonicalTitle:'Demon Slayer: Kimetsu no Yaiba'}}]});
     }
@@ -154,7 +154,7 @@ test("Dr. Stone loads the complete work-scoped character category instead of a s
   const system = loadCharacterSystem(async request => {
     const url = String(request);
     if (url.includes('anilist')) return response(403, {});
-    if (url.includes('api.jikan.moe')) return response(504, {});
+    if (url.includes('api.tenrai.org')) return response(504, {});
     if (url.includes('kitsu.io/api/edge/manga?')) {
       return response(200, {data:[{id:'dr-stone',attributes:{canonicalTitle:'Dr. Stone'}}]});
     }
@@ -183,7 +183,7 @@ test("a short tracker cast stays retryable when the work-scoped character source
   const system = loadCharacterSystem(async request => {
     const url = String(request);
     if (url.includes('anilist')) return response(403, {});
-    if (url.includes('api.jikan.moe')) {
+    if (url.includes('api.tenrai.org')) {
       jikanRequests += 1;
       return response(200, {data:Array.from({length:25},(_,index)=>({
         role:'Supporting',

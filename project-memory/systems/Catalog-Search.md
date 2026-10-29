@@ -144,3 +144,5 @@ Type-page search now connects its selected format to the existing debounced onli
 
 
 2026-10-21: [[sessions/2026-10-21-Search-Audit]] repairs main All-format online lookup and isolates People/Lists from catalog listeners; 234 focused checks, browser result evidence, and five matching installed simulator assets. Live directory/provider coverage remains separate. No commit or push.
+
+[[sessions/2026-10-29-Jikan-Retirement]]: the maintainer confirms public Jikan shutdown on October 1. Tenrai-compatible source routing and legacy gateway v14 replace dead lookups while preserving MAL IDs; 365 focused checks and real browser cast retrieval pass. This enriches characters/covers/chapters; main search aggregation remains separate.
