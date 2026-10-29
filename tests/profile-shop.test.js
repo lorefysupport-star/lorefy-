@@ -96,8 +96,8 @@ test('effects are bounded, noninteractive and respect both motion preferences', 
 
 test('rendered catalog actions and part selection never change account state', () => {
   const nodes = [], calls = [];
-  let mood = 'all';
-  const window = {React:{useState:initial=>[mood,value=>{mood=value;}],useRef:()=>({current:null}),useEffect:()=>{},createElement:(type, props, ...children) => {
+  let filters = {collection:'all',query:'',sort:'newest',freeOnly:false};
+  const window = {React:{useState:initial=>[filters,value=>{filters=value;}],useRef:()=>({current:null}),useEffect:()=>{},createElement:(type, props, ...children) => {
     const node = {type,props:props || {},children:children.flat(Infinity)}; nodes.push(node); return node;
   }}, NenIcons:{}};
   vm.runInNewContext(read('modules/lorefy-profile-shop.js'), {window, URLSearchParams});
@@ -107,7 +107,7 @@ test('rendered catalog actions and part selection never change account state', (
   assert.ok(preview); preview.props.onClick();
   assert.deepEqual(calls, ['observatory']);
   assert.equal(nodes.some(node => node.props['aria-label'] === 'Buy'), false);
-  nodes.find(node=>node.type==='button'&&node.children.includes('Nature')).props.onClick();
+  nodes.find(node=>node.type==='input'&&node.props.type==='search').props.onChange({target:{value:'Spring'}});
   nodes.length=0;
   shop.Catalog({lang:'en',profile:{name:'Reader'},wishlist:[],onSelect:id=>calls.push(id),onWishlist:()=>{}});
   assert.ok(nodes.some(node=>node.props['aria-label']==='Preview Spring Letters'));

@@ -6,6 +6,12 @@ aliases: ["آيفون", "بيلد", "تست فلاي", "ios", "TestFlight", "saf
 ---
 # غلاف iOS والتحزيم
 
+[[sessions/2026-10-21-Private-TestFlight-Candidate]] records the owner-authorized
+private candidate 36 from 3894356. Apple processed it as Missing Compliance;
+the loaded build detail confirms zero groups and zero individual testers.
+Before enabling testing, review pre-existing automatic internal access so it
+cannot violate the owner's zero-tester constraint. Privacy/rights remain unverified.
+
 المنتج الحالي HTML/CSS/JavaScript داخل Capacitor/Swift، وليس إعادة كتابة
 Expo React Native. EAS للبناء والتقديم. لا تستنتج حالة Apple الحية من
 ملف version أو من نجاح أمر محلي.

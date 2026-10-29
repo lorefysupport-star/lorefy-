@@ -14,7 +14,8 @@ test('legacy Paused stays valid while Dropped is a separate persisted status',()
 });
 test('library and profile expose separate Dropped filters',()=>{
   assert.match(source(),/\[STATUS_DROPPED,/);
-  assert.match(source(),/\{k:STATUS_DROPPED,l:/);
+  assert.match(source(),/STATUS_OPTIONS\.map\(k=>\(\{k\}\)\)\.map\(n=>/);
+  assert.match(source(),/lorefyReadingStatusLabel\(n\.k,W\)/);
 });
 test('dropped works are a negative taste signal rather than a positive fallback',()=>{
   assert.ok(source().includes('u===STATUS_DROPPED?-70'));

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lorefy Profile Header QA</title>
+<base href="../">
+<link rel="stylesheet" href="../styles/lorefy-ui.css">
+<link rel="stylesheet" href="../styles/lorefy-system.css">
+<link rel="stylesheet" href="../styles/lorefy-apple-ui.css">
+<link rel="stylesheet" href="../styles/lorefy-design-system.css">
+<link rel="stylesheet" href="../styles/lorefy-public-profile.css">
+<link rel="stylesheet" href="../styles/lorefy-profile-layout.css">
+<link rel="stylesheet" href="../styles/lorefy-reader-layout.css">
+<link rel="stylesheet" href="../styles/lorefy-profile-shop.css">
+<link rel="stylesheet" href="../styles/lorefy-frame-motion.css">
+<link rel="stylesheet" href="../styles/lorefy-profile-header.css">
+<style>:root{--nc-top:0px;--nc-bottom:0px}body{margin:0}.lf-app{max-width:560px;margin:auto;height:100dvh}#root{height:100%}</style>
+</head><body><div class="lf-app"><div id="root"></div></div>
+<script src="../vendor/react.production.min.js"></script>
+<script src="../vendor/react-dom.production.min.js"></script>
+<script>window.NenIcons={};window.LorefyBackend={mode:'demo',user:{id:'header-fixture-viewer'}};window.LOREFY_RELEASE={betaProfileDecorations:true};</script>
+<script src="../modules/lorefy-design-system.js"></script>
+<script src="../modules/lorefy-public-appearance.js"></script>
+<script src="../modules/lorefy-profile-layout.js"></script>
+<script src="../modules/lorefy-reader-layout.js"></script>
+<script src="../modules/lorefy-public-profile.js"></script>
+<script src="../modules/lorefy-frame-motion.js"></script>
+<script src="../modules/lorefy-bitmap-rig.js"></script>
+<script src="../modules/lorefy-frame-restoration.js"></script>
+<script src="../modules/lorefy-original-illustrated.js"></script>
+<script src="../modules/lorefy-original-autumn.js"></script>
+<script src="../modules/lorefy-original-original.js"></script>
+<script src="../modules/lorefy-avatar-rig.js"></script>
+<script src="../modules/lorefy-motion-atelier.js"></script>
+<script src="../modules/lorefy-elven-motion.js"></script>
+<script src="../modules/lorefy-profile-shop.js"></script>
+<script src="../modules/lorefy-profile-header.js"></script>
+<script>
+const params=new URLSearchParams(location.search);
+if(params.get('motion')==='reduced')document.documentElement.setAttribute('data-lorefy-motion','reduced');
+const layout=LorefyProfileLayout.normalize(params.get('layout'));
+if(params.get('lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';}
+const theme=params.get('theme')==='dark'?'dark':'light';
+const art=new URL('../launch/brand/lorefy-reading-scene.jpg',location.href).href;
+const headerRoot=ReactDOM.createRoot(document.getElementById('root'));
+const render=()=>headerRoot.render(React.createElement(LorefyPublicProfile,{
+ profile:{id:'header-fixture',name:params.has('long')?'A reader with a deliberately long display name for wrapping':'Header reader',username:'header_reader',banner:art,avatar:art,theme,
+ profile_layout:layout,profile_decoration:params.has('pack')?{frame:params.get('pack'),page:params.get('pack')}:null,
+ bio:'Stories worth keeping.',favorite_work_ids:[],favorite_character_ids:[]},
+ reviews:[],workById:()=>null,cover:()=>'',onBack(){},onWork(){}
+}));
+render();
+window.addEventListener('lorefy:profile-shop-catalog-ready',render,{once:true});
+</script></body></html>

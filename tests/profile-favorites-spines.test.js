@@ -29,6 +29,25 @@ function fixture(titles) {
   return { doc, favorites };
 }
 
+test('presentation limits retain all seven React cards when switching favorites views', () => {
+  assert.equal(views.favoriteLimit('showcase'),3);
+  assert.equal(views.favoriteLimit('spines'),7);
+  assert.equal(views.favoriteLimit('grid'),4);
+  const {doc,favorites}=fixture(['a','b','c','d','e','f','g']);
+  const cards=favorites.children.slice();
+  views.syncProfileFavorites(doc,'grid');
+  assert.equal(cards.filter(c=>!c.classList.contains('lf-favorite-overflow')).length,4);
+  views.syncProfileFavorites(doc,'spines');
+  assert.equal(cards.filter(c=>!c.classList.contains('lf-favorite-overflow')).length,7);
+  assert.deepEqual(favorites.children,cards);
+});
+
+test('legacy React favorites picker cannot truncate the seven saved choices', () => {
+  const source=fs.readFileSync(path.join(__dirname,'..','uploads/files/lorefy-app.js'),'utf8');
+  assert.ok(source.includes('return n?d:[o.id,...d].slice(0,7)'));
+  assert.ok(source.includes('r=Ie.map(n=>workById(n)).filter(Boolean).slice(0,7)'));
+});
+
 test('favorite works adopt the saved spine view without changing slots or images', () => {
   const { doc, favorites } = fixture(['Pride and Prejudice', 'كتاب عربي', '', '']);
   const slots = favorites.children.slice();
@@ -60,6 +79,15 @@ test('an empty favorites section retains its existing single add action', () => 
   views.syncProfileFavorites(doc, 'spines');
   assert.equal(favorites.classList.contains('is-spine-view'), false);
   assert.equal(favorites.children[0].cover.children.length, 0);
+});
+
+test('a managed missing cover is not treated as an empty favorite slot on the shelf',()=>{
+ const {doc,favorites}=fixture(['','','','']),slot=favorites.children[0],cover=slot.cover;
+ slot.setAttribute('data-work-title','Missing cover');slot.querySelector=s=>s==='[data-lorefy-book-cover]'?cover:null;
+ favorites.querySelector=s=>s==='[data-lorefy-book-cover]'?cover:null;
+ views.syncProfileFavorites(doc,'spines');
+ assert.equal(favorites.classList.contains('is-spine-view'),true);assert.equal(slot.classList.contains('is-empty-spine'),false);
+ assert.equal(cover.children[0].textContent,'Missing cover');assert.equal(favorites.children[1].classList.contains('is-empty-spine'),true);
 });
 
 test('cover mode fits four dimensional books without inheriting spine geometry', () => {

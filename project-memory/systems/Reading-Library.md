@@ -6,6 +6,54 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-10-29-Library-Shelf-Acceptance]] verifies Library counts through15,
+seven spines per row and triplet Showcase rows without a total Library cap.
+Decorative managed spine titles no longer intercept the native Open button.
+Original wood/supports, progress, IDs and cover choices unchanged. F12 local
+acceptance is not full filter/sort/search or physical-device certification.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Fifteen]] adopts Home Continue reading
+artwork states without changing checkpoint summaries, known-total logic or the
+four-work selection limit. Failed thumbnails still select their work. Explicit
+poster/background retry preserves progress and source, with no automatic loop.
+Actual Home-to-work navigation verified in2 isolated browser fixtures.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Fourteen]] adds managed cover states
+to the main Library and Reader current-reading rows. Card geometry/progress,
+completion badges, source strings and all Library items are retained. Native
+Retry/Open are separate; missing art is not an empty library/favorite entry.
+2887 full tests,53 browser cases and26 geometry comparisons; no saved-state write.
+
+[[sessions/2026-10-28-UI-Foundation-Phase-Ten]] adds display-only title direction,
+two-line slots and growing tracks/captions across Home, Library and profiles.
+Progress metadata follows app language separately from source titles. Showcase
+captions update on source title changes, coalesced in one animation frame.
+Saved titles/checkpoints, calculations and total Library counts remain unchanged.
+2833 source tests,72 local browser cases; physical text scaling remains open.
+
+Display vocabulary is owned by `LorefyI18n.readingStatusLabel` and
+`readingStatusEmpty`; see [[sessions/2026-10-28-UI-Foundation-Phase-Nine]].
+Keep historical saved keys, selection/filter callbacks and completion/progress
+algorithms unchanged. Publication metadata is separate.22 new tests,2814 full
+suite,51 browser cases; no real import or hardware check.
+
+[[sessions/2026-10-28-UI-Foundation-Phase-Three]] refines import presentation,
+visible validation and recovery while retaining draft inputs, source matching,
+stored status values, confirmation and `imApply` rollback/session guards.
+2705 full tests,20 local browser cases without confirming a real import.
+Live fetch/save durability and native file access remain independent gates.
+
+[[sessions/2026-10-27-Home-Library-Profile-Refinement]] adds contextual empty-search
+recovery, readable checkpoints,320px toolbar/shelf fixes and whole-Library refresh.
+No decorative cover background or data migration. All four views preserved;
+Home reuses saved-unit/known-total formatting without an invented denominator.
+
+[[sessions/2026-10-24-Wooden-Shelf]] adds realistic mounted wood and seven books
+per library shelf row without limiting the library's total items.
+
+[[sessions/2026-10-24-Book-Showcase]] adds the local ranked three-book view
+alongside Covers/Bookshelf/List without changing status, progress or saved work order.
+
 [[bugs/LF-072-Reading-Intent-Label]] changes only the picker display to
 `أرغب بالقراءة` / `Want to read`. The persisted wish key and click/save identity
 are untouched; no migration, automatic save or metric change.
@@ -48,6 +96,12 @@ Arabic demo opened with the previous Completed choice unchanged.
 ولا تكتب عملية عرض الرسم تاريخًا أو تقدمًا جديدًا.
 
 ## العقد
+
+2026-10-27 superseding publication policy:
+[[sessions/2026-10-27-Durable-Inbox-Review-Credit]]. Successful publication earns
+a saved review completion snapshot without changing any library status or manual
+checkpoint. Totals take a per-unit maximum, never double-count. The18 October
+automatic Completed-status policy below is historical; public SQL parity open.
 
 - عند إكمال عمل، يلتقط `completionCheckpoint` إجماليًا متاحًا في تلك اللحظة.
 - rendering لا يرفع تقدم القارئ كلما تغيّر إجمالي provider.

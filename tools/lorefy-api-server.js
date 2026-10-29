@@ -8,6 +8,7 @@ const workspaceRoot = path.resolve(__dirname, "..", "outputs", "lorefy-local");
 const root = fs.existsSync(path.join(packageRoot, "index.html")) ? packageRoot : workspaceRoot;
 const port = Number(process.env.PORT || process.argv[2] || 8792);
 const host = process.env.HOST || "127.0.0.1";
+const catalogGateway=require('./catalog-provider-gateway.js').create({env:process.env,allowAnonymousGcd:['127.0.0.1','localhost','::1'].includes(host)});
 const expansionRoot = path.join(root, "output", "api-catalog");
 const expansionCache = new Map();
 const MAX_JSON_BODY_BYTES = 256 * 1024;
@@ -301,6 +302,11 @@ function serveExpandedCatalog(res, url) {
 
 async function handleApi(req, res, url) {
   if (req.method === "OPTIONS") return send(res, 204, "");
+  const boundedProvider=url.pathname.match(/^\/api\/catalog\/(openlibrary|googlebooks|wikidata|bookbrainz|gcd)$/);
+  if(boundedProvider){
+    if(req.method!=='GET')return send(res,405,JSON.stringify({error:'GET required'}));
+    const answer=await catalogGateway.request(boundedProvider[1],url.searchParams);return send(res,answer.status,answer.body,answer.headers);
+  }
   if (url.pathname === "/api/media") {
     return proxyMedia(req, res, url.searchParams.get("url"));
   }

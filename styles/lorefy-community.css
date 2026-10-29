@@ -874,6 +874,9 @@
 .lf-community-compose-submit { justify-self: end; min-width: 64px; min-height: 38px; border-radius: 8px; font-size: 14px; }
 .lf-community-compose-sheet .lf-community-composer-main { flex: 1; grid-template-columns: 42px minmax(0, 1fr); align-content: start; gap: 12px; padding: 24px 18px 12px; overflow-y: auto; }
 .lf-community-compose-sheet .lf-community-composer-copy { display: flex; min-height: 0; flex-direction: column; }
+.lf-community-compose-glass .lf-community-composer-main { display:flex;flex-direction:column; }
+.lf-community-composer-author { display:flex;align-items:center;gap:12px;min-width:0; }
+.lf-community-composer-byline { min-width:0; }
 .lf-community-composer-identity { display: flex; align-items: baseline; gap: 7px; text-align: start; }
 .lf-community-composer-identity strong { color: var(--lf-text, #171521); font-size: 14px; }
 .lf-community-composer-identity small { color: var(--lf-sub, #918c9d); font-size: 11px; }
@@ -1025,6 +1028,22 @@
 .lf-community-post-author { flex: 1 1 180px; min-width: 0; text-align: start; }
 .lf-community-post-author > span:last-child { min-width: 0; }
 .lf-community-post-author strong, .lf-community-post-author small { overflow-wrap: anywhere; }
+
+.lf-community-post-author strong {
+  unicode-bidi: isolate;
+  text-align: start;
+}
+.lf-community-post-author small {
+  font-size: 12px;
+  text-align: start;
+  unicode-bidi: isolate;
+}
+.lf-community-post-actions button > span {
+  font-variant-numeric: tabular-nums;
+  unicode-bidi: isolate;
+  font-size: 12px;
+  line-height: 1.5;
+}
 .lf-community-post-body { white-space: pre-wrap; overflow-wrap: anywhere; unicode-bidi: plaintext; }
 .lf-community-thread-rail { right: auto; inset-inline-start: 36px; }
 .lf-community-thread-reply .lf-community-post-card { padding-inline-start: 16px; }

@@ -11,6 +11,7 @@ function render(profile, overrides = {}) {
     useEffect: () => {}
   };
   const window = { React, NenIcons: {}, LorefyBackend: null, LorefyPublicAppearance:require('../modules/lorefy-public-appearance.js'), LorefyLibraryView:require('../modules/lorefy-library-view.js') };
+  window.LorefyI18n = require('../modules/lorefy-i18n'); window.document = {documentElement:{lang:'ar'}};
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../modules/lorefy-profile-shop.js'), 'utf8'), { window, URLSearchParams });
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../modules/lorefy-public-profile.js'), 'utf8'), { window, URL });
   return window.LorefyPublicProfile({
@@ -47,14 +48,27 @@ test('visitor keeps its own theme and shelf without inheriting viewer preference
   assert.ok(!nodes(render({id:'plain-owner',library_view:'grid',favorite_work_ids:['book-b']})).some(n=>String(n.props.className).includes('is-spine-view')));
 });
 
-test('all four public favorites remain independently clickable after separating shelf geometry',()=>{
+test('all seven public shelf favorites remain independently clickable',()=>{
   const opened=[];
-  const shelf=nodes(render({id:'reader-a',library_view:'spines',favorite_work_ids:['a','b','c','d']},{onWork:work=>opened.push(work.id)}))
+  const shelf=nodes(render({id:'reader-a',library_view:'spines',favorite_work_ids:['a','b','c','d','e','f','g','h']},{onWork:work=>opened.push(work.id)}))
     .find(n=>n.props['data-profile-shelf']==='works');
   const cards=nodes(shelf).filter(n=>n.type==='button');
-  assert.equal(cards.length,4);
+  assert.equal(cards.length,7);
   cards.forEach(card=>card.props.onClick());
-  assert.deepEqual(opened,['a','b','c','d']);
+  assert.deepEqual(opened,['a','b','c','d','e','f','g']);
+});
+
+test('owner showcase reaches both public favorites and library without dropping work actions',()=>{
+  const opened=[];
+  const tree=render({id:'showcase-owner',theme:'light',library_view:'showcase',favorite_work_ids:['a','b','c','d'],library_entries:{a:'reading',b:'completed'}},{onWork:work=>opened.push(work.id)});
+  assert.equal(tree.props['data-owner-library-view'],'showcase');
+  const all=nodes(tree);
+  const shelf=all.find(n=>n.props.className==='lf-reader-shelf-rail is-showcase-view');
+  const cards=nodes(shelf).filter(n=>n.type==='button');
+  assert.equal(cards.length,3);cards.forEach(n=>n.props.onClick());
+  assert.deepEqual(opened,['a','b','c']);
+  assert.ok(all.some(n=>n.props.className==='lf-reader-library-grid is-showcase-view'));
+  assert.ok(!nodes(render({id:'grid-owner',library_view:'grid',favorite_work_ids:['a']})).some(n=>String(n.props.className).includes('showcase')));
 });
 
 test('visitor header follows the owner layout with a safe normal fallback', () => {

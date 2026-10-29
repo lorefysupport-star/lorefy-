@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const source=fs.readFileSync('backend/lorefy-native-runtime.js','utf8');
 const A='11111111-1111-4111-8111-111111111111',B='22222222-2222-4222-8222-222222222222',P='33333333-3333-4333-8333-333333333333';
-function harness(native=false){
+function harness(native=false,values=new Map()){
  let window,callback,rows=[],user=A,page=null,mutated;
  const listeners={};
  class Element {
@@ -15,7 +15,7 @@ function harness(native=false){
  }
  const body=new Element('body'),head=new Element('head'),bell=new Element('button');
  const doc={body,head,hidden:false,documentElement:{lang:'en'},readyState:'loading',createElement:tag=>new Element(tag),getElementById:()=>null,addEventListener:(name,fn)=>listeners[name]=fn,querySelector:s=>s==='.lf-notification-banner'?body.querySelector(s):s==='.lf-notifications-page'?page:null,querySelectorAll:s=>s.includes('Notifications')?[bell]:[]};
- const values=new Map(),intervals=[],timers=[];
+ const intervals=[],timers=[];
  window={document:null,localStorage:{getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,v)},crypto:{randomUUID:()=>P},location:{href:'http://localhost/index.html',search:'',assign:()=>{}},setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout:()=>{},setInterval:fn=>{intervals.push(fn);return intervals.length;},clearInterval:()=>{},CustomEvent:class{constructor(type,opts){this.type=type;this.detail=opts.detail;}},dispatchEvent:()=>{},Capacitor:{isNativePlatform:()=>native,Plugins:{}},LorefyBackend:{getSession:async()=>user?{userId:user}:null,listNotifications:async()=>rows,subscribeNotifications:async fn=>{callback=fn;return ()=>{};},registerPushDevice:async()=>true,unregisterPushDevice:async()=>true}};
  vm.runInNewContext(source,{window,URL,URLSearchParams,Set,Date,CustomEvent:window.CustomEvent,MutationObserver:class{constructor(fn){mutated=fn;}observe(){}}});window.document=doc;
  return {window,doc,body,bell,values,intervals,listeners,api:window.LorefyNativeRuntime,setRows:r=>rows=r,setUser:u=>user=u,receive:item=>callback(item),
@@ -55,7 +55,7 @@ test('notifications do not display self events or another account and clear imme
 });
 test('late inbox responses cannot restore the previous account after a switch',async()=>{
  const h=harness();await h.api.connectCloudNotifications();let resolve;
- h.window.LorefyBackend.listNotifications=()=>new Promise(r=>resolve=r);const stale=h.api.refreshCloudNotifications();
+ h.window.LorefyBackend.listNotifications=()=>new Promise(r=>resolve=r);const stale=h.api.refreshCloudNotifications();await new Promise(r=>setImmediate(r));
  h.setUser(B);h.window.LorefyBackend.listNotifications=async()=>[];await h.api.connectCloudNotifications();resolve([notification()]);await stale;
  assert.equal(h.bell.children.length,0);assert.equal(h.body.children.length,0);
 });
@@ -66,6 +66,48 @@ test('realtime inserts during inbox fetch survive the initial snapshot',async()=
 });
 test('temporary inbox failure preserves unread notifications',async()=>{
  const h=harness();h.setRows([notification()]);await h.api.connectCloudNotifications();h.window.LorefyBackend.listNotifications=async()=>{throw Error('offline');};await h.api.refreshCloudNotifications();assert.equal(h.bell.children[0].textContent,'1');
+});
+
+test('the inbox survives a restart offline without requiring push permission',async()=>{
+ const first=harness();first.values.set('lorefy.native.push.enabled.v1','false');first.setRows([notification()]);await first.api.connectCloudNotifications();
+ const reopened=harness(false,first.values);reopened.window.LorefyBackend.listNotifications=async()=>{throw Error('offline');};
+ await reopened.api.connectCloudNotifications();const rows=await reopened.api.refreshCloudNotifications();
+ assert.equal(rows.length,1);assert.equal(rows[0].id,'n1');assert.equal(reopened.bell.children[0].textContent,'1');
+});
+
+test('cached inbox is owner-scoped across account changes and logout',async()=>{
+ const first=harness();first.setRows([notification()]);await first.api.connectCloudNotifications();
+ const other=harness(false,first.values);other.setUser(B);other.window.LorefyBackend.listNotifications=async()=>{throw Error('offline');};
+ await other.api.connectCloudNotifications();assert.equal((await other.api.refreshCloudNotifications()).length,0);
+ first.setUser(null);await first.api.connectCloudNotifications();assert.equal(first.bell.children.length,0);
+});
+
+test('read notifications remain in offline history and failed read receipts retry',async()=>{
+ const first=harness();first.setRows([notification()]);let calls=0;
+ first.api.start();first.listeners.DOMContentLoaded();
+ first.window.LorefyBackend.markNotificationsRead=async()=>{calls++;throw Error('offline');};
+ await first.api.connectCloudNotifications();const page=first.mountInbox();
+ page.querySelector('.lf-cloud-notifications').children[0].listeners.click();await new Promise(r=>setImmediate(r));
+ const reopened=harness(false,first.values);reopened.setRows([notification()]);
+ reopened.window.LorefyBackend.markNotificationsRead=async ids=>{calls++;assert.deepEqual(Array.from(ids),['n1']);return 1;};
+ await reopened.api.connectCloudNotifications();const rows=await reopened.api.refreshCloudNotifications();
+ assert.equal(rows.length,1);assert.ok(rows[0].read_at);assert.equal(reopened.bell.children.length,0);assert.ok(calls>=2);
+});
+
+test('unchanged inbox refresh does not replace focused notification rows',async()=>{
+ const h=harness();h.api.start();h.listeners.DOMContentLoaded();h.setRows([notification()]);await h.api.connectCloudNotifications();const page=h.mountInbox();
+ const section=page.querySelector('.lf-cloud-notifications'),button=section.children[0];
+ await h.api.refreshCloudNotifications();assert.equal(page.querySelector('.lf-cloud-notifications').children[0],button);
+});
+
+test('opening an empty inbox offline shows retry rather than a misleading empty success',async()=>{
+ const h=harness();h.api.start();h.listeners.DOMContentLoaded();
+ h.window.LorefyBackend.listNotifications=async()=>{throw Error('offline');};
+ await h.api.connectCloudNotifications();const page=h.mountInbox();
+ const status=page.querySelector('.lf-inbox-status');
+ assert.ok(status);assert.equal(status.children[0].textContent,'Could not load notifications.');
+ assert.equal(status.children[1].hidden,false);
+ assert.equal(page.children.find(node=>node.tagName==='P').getAttribute('data-lf-core-empty'),'hidden');
 });
 test('push payload and inbox routes open the exact post and reject foreign links',()=>{
  const h=harness(),route=h.api.notificationRoute(notification());assert.equal(route.route,'community');assert.equal(route.post,P);

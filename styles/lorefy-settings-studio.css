@@ -1,0 +1,78 @@
+/* Settings owns its chrome and form layout, not account/privacy behavior. */
+@layer lorefy-glass-materials {
+:is(.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel) {
+  background:var(--glass-reflection),var(--glass-sheet) !important;
+  border-color:var(--glass-edge) !important;
+  color:var(--ui-ink) !important;
+  font-family:var(--glass-font) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+  overscroll-behavior:contain;
+}
+:is(.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel) :is(button,input,textarea,label,legend,p,span,strong,small,h2,h3,summary) {
+  font-family:var(--glass-font) !important;
+  letter-spacing:0 !important;
+  overflow-wrap:anywhere;
+}
+:is(.lf-settings-head,.lf-customize-sheet>div:first-child,.lf-interface-header) {
+  background:var(--glass-reflection),var(--glass-fill) !important;
+  border-color:var(--glass-edge) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+}
+:is(.lf-settings-head,.lf-customize-sheet>div:first-child)>span { color:var(--ui-glass-ink) !important; font-size:17px !important; font-weight:600 !important; line-height:1.5 !important; }
+:is(.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel) button { min-height:44px !important; font-size:14px !important; line-height:1.5 !important; }
+:is(.lf-settings-head,.lf-customize-sheet>div:first-child)>button { color:var(--ui-glass-action) !important; font-weight:600 !important; }
+.lf-customize-sheet>div:first-child>button:last-child {
+  background:var(--ui-action) !important;
+  color:var(--ui-on-action) !important;
+  border:1px solid var(--ui-action) !important;
+  border-radius:8px !important;
+  padding:8px 16px !important;
+}
+.lf-settings-sheet>.lf-settings-head+div { width:100%; max-width:720px; margin-inline:auto; box-sizing:border-box; padding:18px 20px calc(24px + env(safe-area-inset-bottom)) !important; }
+.lf-settings-sheet .lf-settings-group { margin-bottom:24px !important; }
+.lf-settings-sheet .lf-settings-group>p { font-size:13px !important; color:var(--ui-secondary) !important; line-height:1.5 !important; margin:0 0 8px !important; }
+.lf-settings-sheet .lf-settings-cells {
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+.lf-settings-sheet .lf-settings-row { gap:12px !important; min-height:60px; padding:12px 0 !important; border-bottom:1px solid var(--ui-line) !important; }
+.lf-settings-sheet .lf-settings-row>span { min-width:0; font-size:15px !important; line-height:1.6 !important; }
+.lf-settings-sheet .lf-settings-row>span:last-child:not(:nth-child(2)) { font-size:13px !important; }
+.lf-settings-sheet .lf-settings-row>svg { flex:none; }
+.lf-settings-sheet .lf-product-hub-title { color:var(--ui-ink) !important; font-size:17px !important; font-weight:600 !important; }
+.lf-settings-sheet .lf-product-hub-subtitle { color:var(--ui-secondary) !important; font-size:13px !important; line-height:1.6 !important; }
+:is(.lf-settings-sheet,.lf-customize-sheet) .lf-interface-entry { margin-bottom:12px !important; padding:14px 0 !important; }
+:is(.lf-settings-sheet,.lf-customize-sheet) .lf-interface-entry strong { color:var(--ui-ink) !important; font-size:15px !important; font-weight:600 !important; line-height:1.5 !important; }
+:is(.lf-settings-sheet,.lf-customize-sheet) .lf-interface-entry small { color:var(--ui-secondary) !important; font-size:13px !important; line-height:1.5 !important; }
+.lf-customize-tabs { background:var(--glass-reflection),var(--glass-fill) !important; border:1px solid var(--glass-edge) !important; border-radius:8px !important; }
+.lf-customize-tabs button { color:var(--ui-glass-secondary) !important; font-weight:500 !important; border-radius:6px !important; }
+.lf-customize-tabs button[aria-selected='true'] { background:var(--ui-selected) !important; color:var(--ui-action) !important; font-weight:600 !important; }
+.lf-customize-sheet :is(.lf-interface-preview,.lf-interface-section) { background:transparent !important; border-color:var(--ui-line) !important; }
+:is(.lf-customize-sheet,.lf-interface-panel) .lf-interface-body { width:100%; max-width:720px; margin-inline:auto; box-sizing:border-box; }
+:is(.lf-customize-sheet,.lf-interface-panel) :is(.lf-interface-section h3,.lf-interface-custom legend,.lf-interface-preview-head strong) { color:var(--ui-ink) !important; font-size:16px !important; font-weight:600 !important; line-height:1.5 !important; }
+:is(.lf-customize-sheet,.lf-interface-panel) .lf-interface-preview-head>span { color:var(--ui-secondary) !important; font-size:13px !important; }
+:is(.lf-customize-sheet,.lf-interface-panel) :is(.lf-interface-layouts,.lf-interface-color-base) { background:var(--glass-reflection),var(--glass-fill) !important; border:1px solid var(--glass-edge); border-radius:8px !important; }
+:is(.lf-customize-sheet,.lf-interface-panel) :is(.lf-interface-layouts,.lf-interface-color-base) button { color:var(--ui-glass-secondary) !important; border-radius:6px !important; }
+:is(.lf-customize-sheet,.lf-interface-panel) :is(.lf-interface-layouts,.lf-interface-color-base) button[aria-pressed='true'] { background:var(--ui-selected) !important; color:var(--ui-action) !important; }
+:is(.lf-customize-sheet,.lf-interface-panel) .lf-interface-color-row { display:grid !important; grid-template-columns:64px minmax(0,1fr); align-items:end !important; gap:12px !important; }
+.lf-interface-color-field { display:grid; min-width:0; gap:8px; color:var(--ui-ink); font-size:13px; line-height:1.5; }
+:is(.lf-customize-sheet,.lf-interface-panel) .lf-interface-color-row input { width:100% !important; background:var(--ui-fill) !important; color:var(--ui-ink) !important; border-color:var(--ui-line) !important; border-radius:8px !important; }
+.lf-interface-color-field input[type='text'] { font-size:16px !important; }
+.lf-interface-color-field input[type='color'] { min-height:46px; }
+.lf-interface-color-field input[aria-invalid='true'] { border-color:var(--ui-danger) !important; }
+:is(.lf-customize-sheet,.lf-interface-panel) .lf-interface-color-apply { background:var(--ui-action) !important; color:var(--ui-on-action) !important; border-radius:8px !important; }
+.lf-customize-profile-panel :is(input:not([type='file']),textarea) { background:var(--ui-fill) !important; color:var(--ui-ink) !important; border:1px solid var(--ui-line) !important; border-radius:8px !important; font-size:16px !important; line-height:1.5 !important; }
+:is(.lf-customize-sheet,.lf-interface-panel) .lf-interface-error { background:var(--ui-fill-soft); color:var(--ui-ink) !important; border-inline-start:3px solid var(--ui-danger); margin:16px 20px; padding:10px 12px; font-size:13px !important; line-height:1.6 !important; }
+:is(.lf-customize-sheet,.lf-interface-panel) .lf-interface-custom>.lf-interface-error { margin-inline:0; }
+:is(.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel) :is(button,input,textarea,summary,[role='radio']):focus-visible { outline:2px solid var(--ui-action) !important; outline-offset:3px !important; }
+:is(.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel) [hidden] { display:none !important; }
+@media (max-width:360px) {
+  .lf-settings-sheet>.lf-settings-head+div { padding-inline:16px !important; }
+  .lf-settings-sheet .lf-settings-row { gap:8px !important; }
+  :is(.lf-customize-sheet,.lf-interface-panel) .lf-interface-layouts { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+}
+}

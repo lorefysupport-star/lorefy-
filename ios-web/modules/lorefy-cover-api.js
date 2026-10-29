@@ -146,10 +146,32 @@
     }
   }
 
-  function addUrl(list, url) {
+  function mergeDetails(target, details) {
+    Object.keys(details || {}).forEach(function (key) {
+      var value = asText(details[key]).slice(0, 240);
+      if (!value || target[key] === null) return;
+      target[key] = target[key] && target[key] !== value ? null : value;
+    });
+    return target;
+  }
+
+  function describe(value) {
+    var url = normalizeUrl(value);
+    if (!url) return {};
+    if (/^data:image\//i.test(url)) return { source: 'local' };
+    var host = new URL(url).hostname.replace(/^www\./i, '').toLowerCase();
+    var names = {'covers.openlibrary.org':'Open Library','books.google.com':'Google Books','books.googleusercontent.com':'Google Books','uploads.mangadex.org':'MangaDex','cdn.myanimelist.net':'MyAnimeList','myanimelist.net':'MyAnimeList','s3.anilist.co':'AniList','s4.anilist.co':'AniList'};
+    return { source: names[host] || host };
+  }
+
+  function addUrl(list, url, details) {
     url = normalizeUrl(url);
     if (!url) return;
     var key = coverDedupeKey(url);
+    if (details) {
+      if (!list._details) list._details = new Map();
+      list._details.set(key, mergeDetails(list._details.get(key) || {}, details));
+    }
     if (list._seen && list._seen.has(key)) return;
     if (!list._seen) list._seen = new Set();
     list._seen.add(key);
@@ -173,7 +195,7 @@
     return list;
   }
 
-  function addImageObject(list, image) {
+  function addImageObject(list, image, details) {
     if (!image || typeof image !== "object") return;
     [
       image.extraLarge,
@@ -184,9 +206,9 @@
       image.image_url,
       image.large_image_url,
       image.medium_image_url
-    ].forEach(function (url) { addUrl(list, url); });
-    if (image.jpg) addImageObject(list, image.jpg);
-    if (image.webp) addImageObject(list, image.webp);
+    ].forEach(function (url) { addUrl(list, url, details); });
+    if (image.jpg) addImageObject(list, image.jpg, details);
+    if (image.webp) addImageObject(list, image.webp, details);
   }
 
   function addDirectCovers(list, work) {
@@ -659,7 +681,7 @@
         return rel && rel.type === "cover_art" && rel.attributes && rel.attributes.fileName;
       }) || {}).attributes;
       if (row.id && cover && cover.fileName) {
-        addUrl(list, "https://uploads.mangadex.org/covers/" + row.id + "/" + cover.fileName + ".512.jpg");
+        addUrl(list, "https://uploads.mangadex.org/covers/" + row.id + "/" + cover.fileName + ".512.jpg", {source:'MangaDex',volume:cover.volume,language:cover.locale});
       }
     });
     var first = rows.find(function (row) { return mangaDexCanonicalMatch(work, row); }) || rows[0];
@@ -675,7 +697,7 @@
         var rows = (coverData && coverData.data) || [];
         rows.forEach(function (coverRow) {
           var fileName = coverRow && coverRow.attributes && coverRow.attributes.fileName;
-          if (fileName) addUrl(list, "https://uploads.mangadex.org/covers/" + first.id + "/" + fileName + ".512.jpg");
+          if (fileName) addUrl(list, "https://uploads.mangadex.org/covers/" + first.id + "/" + fileName + ".512.jpg", {source:'MangaDex',volume:coverRow.attributes.volume,language:coverRow.attributes.locale});
         });
         if (rows.length < PAGE_LIMIT) break;
       }
@@ -691,13 +713,14 @@
       var data = await fetchJson(catalogProxyUrl("openlibrary-editions", "https://openlibrary.org/works/" + encodeURIComponent(workId) + "/editions.json?limit=" + PAGE_LIMIT + "&offset=" + offset));
       var entries = (data && data.entries) || [];
       entries.forEach(function (entry) {
+        var details = {source:'Open Library',edition:asText(entry.key).replace(/^\/books\//,''),publisher:(entry.publishers||[]).join(', '),published:entry.publish_date,language:(entry.languages||[]).map(function(language){return asText(language.key).replace(/^\/languages\//,'');}).join(', '),isbn:(entry.isbn_13||entry.isbn_10||[])[0]};
         (entry.covers || []).forEach(function (coverId) {
           if (coverId && Number(coverId) > 0) {
-            addUrl(list, "https://covers.openlibrary.org/b/id/" + coverId + "-L.jpg");
+            addUrl(list, "https://covers.openlibrary.org/b/id/" + coverId + "-L.jpg", details);
           }
         });
         (entry.isbn_13 || entry.isbn_10 || []).forEach(function (isbn) {
-          addUrl(list, "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-L.jpg");
+          addUrl(list, "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-L.jpg", details);
         });
       });
       if (entries.length < PAGE_LIMIT) break;
@@ -722,10 +745,11 @@
       var docs = (data && data.docs) || [];
       docs.forEach(function (doc) {
         if (!sourceMatchesWorkTitle(work, [doc && doc.title])) return;
-        if (doc.cover_i) addUrl(list, "https://covers.openlibrary.org/b/id/" + doc.cover_i + "-L.jpg");
-        if (doc.cover_edition_key) addUrl(list, "https://covers.openlibrary.org/b/olid/" + doc.cover_edition_key + "-L.jpg");
+        var details = {source:'Open Library',edition:doc.cover_edition_key};
+        if (doc.cover_i) addUrl(list, "https://covers.openlibrary.org/b/id/" + doc.cover_i + "-L.jpg", details);
+        if (doc.cover_edition_key) addUrl(list, "https://covers.openlibrary.org/b/olid/" + doc.cover_edition_key + "-L.jpg", details);
         (doc.isbn || []).slice(0, 2).forEach(function (isbn) {
-          addUrl(list, "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-L.jpg");
+          addUrl(list, "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-L.jpg", {source:'Open Library',isbn:isbn});
         });
       });
       if (docs.length < PAGE_LIMIT) break;
@@ -751,7 +775,8 @@
       items.forEach(function (item) {
         var info = (item && item.volumeInfo) || {};
         if (!googleBooksMatchesWork(work, info.title)) return;
-        addImageObject(list, info.imageLinks);
+        var isbn=(info.industryIdentifiers||[]).find(function(identifier){return identifier.type==='ISBN_13';})||(info.industryIdentifiers||[]).find(function(identifier){return identifier.type==='ISBN_10';});
+        addImageObject(list, info.imageLinks, {source:'Google Books',edition:item.id,publisher:info.publisher,published:info.publishedDate,language:info.language,isbn:isbn&&isbn.identifier});
       });
       if (items.length < GOOGLE_BOOKS_PAGE_SIZE || offset + items.length >= Number(data && data.totalItems || 0)) break;
     }
@@ -805,10 +830,10 @@
     ].map(asText).join("::").toLowerCase();
   }
 
-  async function alternates(work) {
-    if (!work) return [];
+  async function lookup(work) {
+    if (!work) return {urls:[],details:new Map()};
     var key = cacheKey(work);
-    if (cache.has(key)) return (await cache.get(key)).slice();
+    if (cache.has(key)) return await cache.get(key);
     var promise = (async function () {
       var list = [];
       addDirectCovers(list, work);
@@ -819,17 +844,31 @@
       results.forEach(function (result) {
         if (result.status !== "fulfilled") return;
         (Array.isArray(result.value) ? result.value : []).forEach(function (url) {
-          addUrl(list, url);
+          addUrl(list, url, result.value._details && result.value._details.get(coverDedupeKey(url)));
         });
       });
       delete list._seen;
-      return list.slice(0, MAX_COVERS);
+      return {urls:list.slice(0, MAX_COVERS),details:list._details||new Map()};
     })();
     cache.set(key, promise);
-    return (await promise).slice();
+    return await promise;
+  }
+
+  async function alternates(work) {
+    return (await lookup(work)).urls.slice();
+  }
+
+  async function choices(work) {
+    var result = await lookup(work);
+    return result.urls.map(function (url) {
+      var details=Object.assign({},describe(url),result.details.get(coverDedupeKey(url))||{});
+      Object.keys(details).forEach(function(key){if(details[key]===null)delete details[key];});
+      return {img:url,details:details};
+    });
   }
 
   async function resolve(work) {
+    if(work&&work.metadataOnly)return primary(work);
     var urls = await alternates(work);
     return urls[0] || "";
   }
@@ -844,6 +883,8 @@
     primary: primary,
     resolve: resolve,
     alternates: alternates,
+    choices: choices,
+    describe: describe,
     displayUrl: displayUrl,
     dedupeKey: coverDedupeKey,
     uniqueChoices: uniqueChoices,

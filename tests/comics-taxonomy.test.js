@@ -124,7 +124,7 @@ test('the comics remote catalog excludes MangaDex, which is reserved for manga f
 
   assert.ok(comicsConfig, 'missing Comics catalog configuration');
   assert.doesNotMatch(comicsConfig[1], /mangaDex/);
-  assert.match(comicsConfig[1], /providers:\s*\["openLibrary", "googleBooks"\]/);
+  assert.match(comicsConfig[1], /providers:\s*\["openLibrary", "googleBooks", "bookBrainz", "wikidata", "gcd"\]/);
 });
 
 test('persisted MangaDex rows are moved out of Comics when the catalog is normalized', () => {

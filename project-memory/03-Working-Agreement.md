@@ -11,7 +11,8 @@ instructions take precedence over this historical context.
 - Anchor to the active Lorefy checkout; preserve originals and unrelated work.
 - Read existing code before changing it; avoid replacing the application's stack.
 - For UI iteration, follow the selected reference and subsequent user refinements.
-- Keep all four favorites readable, align shelf baselines and avoid navigation overlap.
+- Preserve all seven saved favorites; Showcase displays three and Bookshelf seven.
+  Align shelf baselines and avoid navigation overlap. Library totals are not capped.
 - Preserve actual banners, avatars, books and data instead of replacing them with concept art.
 - Validate both owner and searched-reader profiles, Arabic/English and small phones.
 - Add a failing focused test before a risky fix, then verify source/native asset consistency.

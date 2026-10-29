@@ -6,6 +6,43 @@ aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مش�
 ---
 # الاستكشاف وتفاصيل الأعمال والشخصيات
 
+[[sessions/2026-10-29-Cover-Edition-Choice]] preserves provider edition/volume
+metadata through the actual cover picker. Choices share the legacy cached lookup;
+no new requests, identity remapping or reading-state writes. Unknown/conflicting
+edition fields stay unknown. Preview/cancel/apply/reload/restore locally accepted;
+live provider correctness, cloud durability and physical photo selection remain.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Twenty]] repairs category preference
+character-board media and picker ownership. Queued provider results may update
+only a connected current portrait and cannot override custom art. Source lookup,
+rate limiting, catalog choice and cache writes remain unchanged.2932 tests,
+131 local browser cases; profile/public images and live services remain separate.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Nineteen]] keeps legacy top-ten ranking
+and cast selection while separating Remove/Edit/Retry. Closed/replaced views
+reject late cast results before creating media. Category boards, profile-rated
+characters and picker choices are not adopted by this batch. No real score/photo
+saved;2925 tests and117 browser cases are local evidence only.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Eighteen]] adopts managed DOM portraits
+on the character rating page and current picker preview. Do not mount React
+roots into these imperative cards. Keep character source choice, scores, names,
+filters, custom-image precedence and guarded save behavior unchanged. Old rows
+release media before filtering; close cancels pending search and nested preview.
+2915 tests,119 browser cases; no image/score saved and no provider mutation.
+
+[[sessions/2026-10-26-Work-Studio]] supersedes the connected editors' color-only
+composition: status cards/checkpoints, three review views, real portrait gallery,
+cover preview/apply with honest failures and a viewport-bounded action palette.
+Original callbacks/ownership remain.2573 tests pass; browser AR/EN and short
+viewports pass locally. No native/device/service certification or GitHub push.
+
+[[sessions/2026-10-26-Work-Cinema]] adopts the approved dark/glass identity for
+the work and its reading, review, cover and character workflows. It also repairs
+work-sheet Escape and separates quick actions from chapter eligibility. A book
+with Comics in its source label is no longer treated as serialized comics.
+Local AR/EN browser checks pass; original data and account owners are preserved.
+
 [[sessions/2026-10-20-Carousel-Publisher]] يضيف زرإيقاف/تشغيل ظاهرًا معحفظ
 تقليل الحركة والتنقل اليدوي. يحل ملاحظةHallmark السابقة فيالمصدر والمتصفح؛
 لا اعتمادشامل للوصول أوالجهاز. صورةالغلاف والهويةالبصرية محفوظتان.

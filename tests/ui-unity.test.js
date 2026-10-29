@@ -27,20 +27,42 @@ test('updated UI assets use fresh cache keys', () => {
   const html = read('index.html');
   assert.match(html, /lorefy-apple-ui\.css\?v=20260925-ui-coherence-v1/);
   assert.match(html, /lorefy-cinema-ui\.css\?v=20261003-appearance-feather-v2/);
-  assert.match(html, /lorefy-community\.css\?v=20261021-sticky-home-tabs/);
+  assert.match(html, /lorefy-community\.css\?v=20261028-community-copy-v1/);
   for (const asset of ['modules/lorefy-growth-features.js', 'modules/lorefy-i18n.js',
     'modules/lorefy-v2.js', 'modules/lorefy-public-profile.js', 'uploads/files/lorefy-app.js',
-    'modules/lorefy-catalog-loader.js', 'modules/lorefy-explore-studio.js', 'styles/lorefy-explore-studio.css']) {
+    'modules/lorefy-catalog-loader.js', 'modules/lorefy-explore-studio.js', 'styles/lorefy-explore-studio.css',
+    'modules/lorefy-library-cinema.js','styles/lorefy-library-cinema.css','modules/lorefy-library-view.js','styles/lorefy-explore-cinema.css',
+    'styles/lorefy-work-cinema.css','styles/lorefy-home-cinema.css','styles/lorefy-community.css','modules/lorefy-chapter-detail.js','modules/lorefy-community.js',
+    'styles/lorefy-work-studio.css','modules/lorefy-work-panels.js','modules/lorefy-review-editor.js',
+    'backend/lorefy-native-runtime.js','modules/lorefy-reading-metrics.js','styles/lorefy-notification-center.css',
+    'backend/lorefy-backend.js','modules/lorefy-home-cinema.js']) {
     const versions = {
-      'modules/lorefy-growth-features.js':'20261021-like-stability',
-      'modules/lorefy-public-profile.js':'20261019-page-refresh-v1',
-      'modules/lorefy-i18n.js':'20261019-read-intent-v1',
+      'modules/lorefy-growth-features.js':'20261029-rated-profile-media-v1',
+      'modules/lorefy-community.js':'20261028-community-copy-v1',
+      'modules/lorefy-chapter-detail.js':'20261026-work-studio-v1',
+      'styles/lorefy-work-studio.css':'20261029-cover-editions-v1',
+      'modules/lorefy-work-panels.js':'20261029-cover-editions-v1',
+      'modules/lorefy-review-editor.js':'20261029-work-editor-media-v1',
+      'styles/lorefy-work-cinema.css':'20261028-byline-type-v1',
+      'styles/lorefy-home-cinema.css':'20261026-work-cinema-v1',
+      'styles/lorefy-community.css':'20261028-community-copy-v1',
+      'modules/lorefy-public-profile.js':'20261029-library-media-v1',
+      'modules/lorefy-i18n.js':'20261028-reading-terms-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',
-      'uploads/files/lorefy-app.js':'20261021-like-stability',
+      'uploads/files/lorefy-app.js':'20261029-cover-editions-v1',
+      'backend/lorefy-backend.js':'20261028-share-composer-v3',
+      'modules/lorefy-home-cinema.js':'20261029-home-media-v1',
+      'backend/lorefy-native-runtime.js':'20261027-durable-inbox-v1',
+      'modules/lorefy-reading-metrics.js':'20261027-durable-inbox-v1',
+      'styles/lorefy-notification-center.css':'20261027-inbox-durable-v1',
+      'modules/lorefy-library-cinema.js':'20261028-reading-terms-v1',
+      'styles/lorefy-library-cinema.css':'20261026-library-plain-v3',
+      'modules/lorefy-library-view.js':'20261029-library-media-v1',
       'modules/lorefy-catalog-loader.js':'20261021-search-audit',
       'modules/lorefy-catalog-map-loader.js':'20261018-runtime-cleanup-v1',
       'uploads/lorefy-catalog-summary.js':'20261018-runtime-cleanup-v1',
-      'modules/lorefy-explore-studio.js':'20261021-search-audit',
+      'modules/lorefy-explore-studio.js':'20261029-search-editions-v1',
+      'styles/lorefy-explore-cinema.css':'20261029-search-editions-v1',
       'styles/lorefy-explore-studio.css':'20261021-explore-refine-v2'
     };
     const version = versions[asset];

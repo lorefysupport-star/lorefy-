@@ -6,6 +6,60 @@ aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 ---
 # الكتالوج والبحث
 
+[[sessions/2026-10-29-Search-Edition-Groups]] adds search-only display groups,
+not identity merges. Retain Google subtitle/publisher/language/publicationDate;
+old records without known subtitle stay separate. Exact literary type/title/
+author/subtitle or explicit Open Library work linkage only, excluding ambiguous
+volumes/issues/adaptations. Frozen chooser retains original record IDs. Query/
+owner/filter context bounds stable group order and representative.2963 tests,
+99 local fixtures; live provider/native acceptance and F07 remain separate.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Seventeen]] adopts the Work hero image
+without changing source choice, gradient, crop or navigation. A missing image
+does not disable Work identity or review entry. No provider/catalog mutation;
+edition grouping and real-service acceptance stay open.6 unchanged geometry
+configurations,107 controlled browser cases across new and regression paths.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Sixteen]] adopts Explore featured
+artwork/poster and format art without changing source choice, ranking, filters
+or library edits. Missing art retains navigation; title clicks still choose
+formats. Late/cancelled artwork from an old pick cannot fail the next pick.
+2900 full tests,54 browser cases; no provider or edition-grouping acceptance.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Thirteen]] opts Explore result/rail/
+collection item covers into managed loading/error/missing display. Retry is a
+sibling of Open work and cannot accidentally navigate. Original IDs/queries/
+ranking/provider behavior remain unchanged.2874 full tests/43 browser cases;
+actual provider availability and edition grouping are not certified.
+
+[[sessions/2026-10-28-UI-Foundation-Phase-Twelve]] refines search/collection
+byline display only:12px/two relative lines, full tooltip and accessible
+title-plus-author/source label. Metadata-only attribution remains its catalog
+source, not an invented author. Ranking, query lifecycle, IDs, callbacks and
+provider logic unchanged.48 browser cases/2859 full tests; edition grouping and
+shared cover failure/retry remain separate.
+
+[[sessions/2026-10-26-Explore-Types-Search]] redesigns the eight format tiles and
+search in the selected glass identity. Exact/alias relevance, combined filters,
+36-result paging, explicit error states and private owner-scoped session history
+extend existing search; My lists remains owner-only. Local browser checks pass;
+production availability/quota and native performance remain separate gates.
+
+[[sessions/2026-10-26-Explore-Immersive-Reference]] follows the owner's selected
+image: backdrop behind Explore controls, real featured poster/Add and three
+recommendation previews, with full collections preserved.2541 source tests pass;
+AR/EN320/390/768 browser checks completed locally. No service or billing change.
+
+[[sessions/2026-10-26-Explore-Cinema]] applies the approved glass/cinematic design
+locally to Explore, preserving catalog/search contracts. It separates global and
+format input identity and fixes sheet/nav layering.30 responsive browser cases;
+full2537 source tests pass. Real backend search remains a separate service check.
+
+[[sessions/2026-10-26-Open-Catalog]] adds bounded BookBrainz/Wikidata/GCD to
+Open Library in existing search. Identity scopes and source/license attribution
+are retained; missing works use explicitly local drafts. Production gateway,
+accounts and authenticated submission remain gates. Local server:8796.
+
 [[sessions/2026-10-20-Publisher-Index]] يكمل58نبذة فيفهرس الناشر:
 29جديدة،منها27فيالمكتبةالعربية،فانخفض نقصنبذها1217إلى1190؛واثنتان
 فيشارد160المؤجل. لا تغييرIDs أوكتالوجخام أوبياناتالقارئ.1206سجلات

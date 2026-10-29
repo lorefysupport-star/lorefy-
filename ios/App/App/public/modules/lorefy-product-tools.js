@@ -40,6 +40,8 @@
     public: "عامة"
   };
 
+  function uiText(ar, en) { return doc.documentElement.lang === "en" ? en : ar; }
+
   function el(tag, attrs, children) {
     var node = doc.createElement(tag);
     Object.keys(attrs || {}).forEach(function (key) {
@@ -82,16 +84,24 @@
   }
 
   function closeSheet(overlay) {
+    if (!overlay || overlay.__closed) return;
+    overlay.__closed = true;
+    if (overlay.__releaseDialog) overlay.__releaseDialog();
     if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
     if (overlay && overlay.__returnFocus && overlay.__returnFocus.isConnected) overlay.__returnFocus.focus({ preventScroll: true });
   }
 
-  function openSheet(title, subtitle, build) {
+  function openSheet(title, subtitle, build, className) {
     var existing = host().querySelector(".lf-product-overlay");
-    if (existing) existing.remove();
+    var opener = doc.activeElement;
+    if (existing) {
+      if (existing.contains(opener)) opener = existing.__returnFocus;
+      closeSheet(existing);
+    }
     var overlay = el("div", { class: "lf-product-overlay", role: "presentation" });
-    overlay.__returnFocus = doc.activeElement;
-    var sheet = el("section", { class: "lf-product-sheet", role: "dialog", "aria-modal": "true", "aria-label": title });
+    overlay.__returnFocus = opener;
+    var parentDialog = opener && opener.closest && opener.closest('[role="dialog"]');
+    var sheet = el("section", { class: "lf-product-sheet" + (className ? " lf-product-studio " + className : ""), role: "dialog", "aria-modal": "true", "aria-label": title, dir: uiText("rtl", "ltr") });
     var close = el("button", { class: "lf-product-icon-button", type: "button", "aria-label": doc.documentElement.lang === 'en' ? 'Close' : 'إغلاق', onclick: function () { closeSheet(overlay); } }, icon(ICONS.close, 18));
     var heading = el("div", {}, [el("h2", { text: title }), subtitle ? el("p", { text: subtitle }) : null].filter(Boolean));
     var head = el("header", { class: "lf-product-sheet-head" }, [close, heading, el("span")]);
@@ -104,7 +114,7 @@
       if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); closeSheet(overlay); return; }
       if (event.key !== "Tab") return;
       var controls = Array.from(sheet.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],[tabindex="0"]'))
-        .filter(function (control) { return control.getClientRects().length && !control.hidden; });
+        .filter(function (control) { return !control.disabled && control.tabIndex >= 0 && control.getClientRects().length && !control.hidden; });
       var first = controls[0], last = controls[controls.length - 1];
       if (!first) { event.preventDefault(); return; }
       if (event.shiftKey && doc.activeElement === first) { event.preventDefault(); last.focus(); }
@@ -113,6 +123,22 @@
     overlay.addEventListener("click", function (event) { if (event.target === overlay) closeSheet(overlay); });
     build(body, function () { closeSheet(overlay); });
     host().appendChild(overlay);
+    var isolated = [], current = overlay;
+    // Only restore nodes this layer changed; an outer modal owns its existing isolation.
+    while (current && current !== doc.body && current.parentElement) {
+      Array.from(current.parentElement.children).forEach(function (sibling) {
+        if (sibling !== current && !sibling.inert) { isolated.push(sibling); sibling.inert = true; }
+      });
+      current = current.parentElement;
+    }
+    var lifecycle = new MutationObserver(function () {
+      if (!overlay.isConnected || (parentDialog && !parentDialog.isConnected)) closeSheet(overlay);
+    });
+    lifecycle.observe(doc.body, { childList: true, subtree: true });
+    overlay.__releaseDialog = function () {
+      lifecycle.disconnect();
+      isolated.forEach(function (node) { node.inert = false; });
+    };
     refreshIcons(overlay);
     var focusable = overlay.querySelector("button,select,input,textarea,a");
     if (focusable) focusable.focus({ preventScroll: true });
@@ -156,6 +182,11 @@
 
   async function runExport(event, prepare, message) {
     var control = event && event.currentTarget;
+    if (control && doc.activeElement === control) {
+      var sheet = control.closest('.lf-product-sheet');
+      var close = sheet && sheet.querySelector('.lf-product-icon-button');
+      if (close) close.focus({ preventScroll: true });
+    }
     if (control) { control.disabled = true; control.setAttribute("aria-busy", "true"); }
     try { await prepare(); toast(message); }
     catch (error) {
@@ -191,10 +222,10 @@
     var characterLists = safeRead("lorefy.charTopLists.v1", []);
     var sections = global.LorefyProfileSections;
     var profileLists = sections ? sections.foldersFor({}, true, global.localStorage).map(function (list) {
-      return { id: list.id, name: list.name, kind: list.kind === 'characters' ? 'شخصيات' : 'أعمال', profileList: true, isPublic: list.isPublic };
+      return { id: list.id, name: list.name, kind: list.kind === 'characters' ? uiText('شخصيات', 'Characters') : uiText('أعمال', 'Works'), profileList: true, isPublic: list.isPublic };
     }) : [];
-    return profileLists.concat(workLists.map(function (list) { return { id: list.id, name: list.name || "قائمة أعمال", kind: "أعمال" }; })
-      .concat(characterLists.map(function (list) { return { id: list.id, name: list.title || "قائمة شخصيات", kind: "شخصيات" }; })));
+    return profileLists.concat(workLists.map(function (list) { return { id: list.id, name: list.name || uiText("قائمة أعمال", "Work list"), kind: uiText("أعمال", "Works") }; })
+      .concat(characterLists.map(function (list) { return { id: list.id, name: list.title || uiText("قائمة شخصيات", "Character list"), kind: uiText("شخصيات", "Characters") }; })));
   }
 
   function accountStamp() {
@@ -208,14 +239,14 @@
     var stamp = accountStamp(), sections = global.LorefyProfileSections;
     var owner = sections && sections.account(global.localStorage);
     if (!lists.length) {
-      container.appendChild(el("div", { class: "lf-product-empty", text: "لا توجد قوائم مخصصة بعد. أي قائمة جديدة تبدأ كقائمة خاصة." }));
+      container.appendChild(el("div", { class: "lf-product-empty", text: uiText("لا توجد قوائم مخصصة بعد. ستظهر هنا خيارات رؤية قوائمك.", "No custom lists yet. Your list visibility options will appear here.") }));
       return;
     }
     lists.forEach(function (list) {
-      var select = el("select", { "aria-label": "خصوصية " + list.name });
+      var select = el("select", { "aria-label": uiText("خصوصية ", "Visibility for ") + list.name });
       var selected = list.profileList ? (list.isPublic ? 'public' : 'private') : core.privacy.getListVisibility(list.id);
       (list.profileList ? ["private", "public"] : ["private", "unlisted", "public"]).forEach(function (value) {
-        var option = el("option", { value: value, text: VISIBILITY_LABELS[value] });
+        var option = el("option", { value: value, text: uiText(VISIBILITY_LABELS[value], { private: "Private", unlisted: "Link only", public: "Public" }[value]) });
         if (selected === value) option.selected = true;
         select.appendChild(option);
       });
@@ -247,112 +278,198 @@
         }
       });
       container.appendChild(el("div", { class: "lf-product-list-row" }, [
-        el("div", { class: "lf-product-list-copy" }, [el("strong", { text: list.name }), el("small", { text: list.kind })]),
-        select
+        el("div", { class: "lf-product-list-copy" }, [el("strong", { text: list.name, dir: "auto", "data-no-translate": "" }), el("small", { text: list.kind })]),
+        el("label", { class: "lf-product-visibility-field" }, [el("span", { text: uiText("الرؤية", "Visibility") }), select])
       ]));
     });
   }
 
   function openDataCenter() {
-    openSheet("الخصوصية والبيانات", "تحكم واضح ببياناتك وقوائمك", function (body) {
-      var exports = section("نسخة من بياناتك", "صدّر مكتبتك وتقييماتك وقوائمك. لا يتضمن الملف بيانات الجلسة أو حالة Premium.");
+    openSheet(uiText("الخصوصية والبيانات", "Privacy and data"), uiText("بياناتك وقوائمك", "Your data and lists"), function (body) {
+      var exports = section(uiText("نسخة من بياناتك", "Your data copy"), uiText("صدّر مكتبتك وتقييماتك وقوائمك. لا يتضمن الملف بيانات الجلسة أو حالة Premium.", "Export your library, ratings and lists. Session data and Premium status are not included."));
       var exportButtons = el("div", { class: "lf-product-inline-actions" });
-      exportButtons.appendChild(button("تصدير JSON", "lf-product-secondary", function (event) {
+      exportButtons.appendChild(button(uiText("تصدير JSON", "Export JSON"), "lf-product-secondary", function (event) {
         var data = core.exportPortable(new Date());
-        return runExport(event, function () { return downloadFile("lorefy-data.json", JSON.stringify(data, null, 2), "application/json;charset=utf-8"); }, "تم تجهيز نسخة بياناتك");
+        return runExport(event, function () { return downloadFile("lorefy-data.json", JSON.stringify(data, null, 2), "application/json;charset=utf-8"); }, uiText("تم تجهيز نسخة بياناتك", "Your data copy is ready"));
       }, ICONS.file));
-      exportButtons.appendChild(button("المكتبة CSV", "lf-product-secondary", function (event) { return runExport(event, exportLibraryCsv, "تم تجهيز ملف المكتبة"); }, ICONS.table));
+      exportButtons.appendChild(button(uiText("المكتبة CSV", "Library CSV"), "lf-product-secondary", function (event) { return runExport(event, exportLibraryCsv, uiText("تم تجهيز ملف المكتبة", "Your library file is ready")); }, ICONS.table));
       exports.appendChild(exportButtons);
       if (global.LorefyMonitoring && global.LorefyMonitoring.getDiagnostics) {
-        exports.appendChild(button("تصدير تقرير التشخيص", "lf-product-secondary", function (event) {
-          return runExport(event, function () { return downloadFile("lorefy-diagnostics.json", JSON.stringify(global.LorefyMonitoring.getDiagnostics(), null, 2), "application/json;charset=utf-8"); }, "تم تجهيز تقرير التشخيص بدون بيانات الحساب");
+        exports.appendChild(button(uiText("تصدير تقرير التشخيص", "Export diagnostics"), "lf-product-secondary", function (event) {
+          return runExport(event, function () { return downloadFile("lorefy-diagnostics.json", JSON.stringify(global.LorefyMonitoring.getDiagnostics(), null, 2), "application/json;charset=utf-8"); }, uiText("تم تجهيز تقرير التشخيص بدون بيانات الحساب", "Diagnostics prepared without account data"));
         }, "activity"));
       }
       body.appendChild(exports);
 
-      var privacy = section("خصوصية القوائم", "القوائم الجديدة خاصة تلقائياً. اختر عامة فقط عندما تريد ظهورها للآخرين.");
+      var privacy = section(uiText("خصوصية القوائم", "List visibility"), uiText("العامة تظهر للآخرين، والخاصة لك فقط. بعض القوائم تدعم العرض برابط فقط.", "Public lists are visible to others; private lists are only for you. Some lists also support link-only access."));
       renderVisibilityRows(privacy);
       body.appendChild(privacy);
 
-      var legal = section("الثقة والدعم", "تفاصيل واضحة عن الخصوصية، استخدام البيانات، وكيفية طلب تصحيح.");
+      var legal = section(uiText("الثقة والدعم", "Trust and support"), uiText("سياسات الاستخدام والتواصل مع الدعم.", "Policies and ways to contact support."));
       legal.appendChild(el("div", { class: "lf-product-links" }, [
-        el("a", { href: "privacy-policy.html", text: "سياسة الخصوصية" }),
-        el("a", { href: "terms.html", text: "شروط الاستخدام" }),
-        el("a", { href: "support.html", text: "الدعم وجودة البيانات" })
+        el("a", { href: "privacy-policy.html", text: uiText("سياسة الخصوصية", "Privacy policy") }),
+        el("a", { href: "terms.html", text: uiText("شروط الاستخدام", "Terms of use") }),
+        el("a", { href: "support.html", text: uiText("الدعم وجودة البيانات", "Support and data quality") })
       ]));
       body.appendChild(legal);
-    });
+    }, "lf-data-studio");
+  }
+
+  function issueLabel(issue) {
+    return uiText(ISSUE_LABELS[issue] || "تصحيح بيانات", { cover: "Incorrect cover", characters: "Missing or incorrect characters", metadata: "Incorrect work details", duplicate: "Duplicate or wrong edition", translation: "Incorrect name or translation" }[issue] || "Catalog correction");
+  }
+
+  function correctionDate(value) {
+    var date = new Date(value);
+    return isNaN(date.getTime()) ? uiText("التاريخ غير متاح", "Date unavailable") : date.toLocaleDateString(uiText("ar-SA", "en-GB"));
   }
 
   function correctionRow(item) {
     return el("div", { class: "lf-product-list-row" }, [
       el("div", { class: "lf-product-list-copy" }, [
-        el("strong", { text: ISSUE_LABELS[item.issue] || item.issue }),
-        el("small", { text: item.workId + " · " + new Date(item.createdAt).toLocaleDateString("ar-SA") })
+        el("strong", { text: issueLabel(item.issue) }),
+        el("small", { text: item.workId, dir: "auto", "data-no-translate": "" }),
+        el("small", { text: correctionDate(item.createdAt) })
       ]),
-      el("span", { class: "lf-product-status", text: "قيد المراجعة" })
+      el("span", { class: "lf-product-status", text: uiText("محفوظ على الجهاز", "Saved on device") })
     ]);
   }
 
   function openCorrectionsCenter() {
-    openSheet("مركز التصحيحات", "تتبّع الملاحظات المرسلة على بيانات الأعمال", function (body) {
+    openSheet(uiText("مركز التصحيحات", "Correction center"), uiText("تصحيحات بيانات الأعمال", "Work detail corrections"), function (body) {
       var items = core.corrections.list();
-      var info = section("طلباتك", "التصحيح لا يغير بيانات العمل فوراً؛ يبقى في قائمة مراجعة لحماية المكتبة من التعديلات الخاطئة.");
-      if (!items.length) info.appendChild(el("div", { class: "lf-product-empty", text: "لم ترسل أي تصحيح بعد. افتح صفحة أي عمل واختر تصحيح البيانات." }));
+      var info = section(uiText("تصحيحاتك", "Your corrections"), uiText("هذه التصحيحات محفوظة على هذا الجهاز؛ لم تُرسل إلى الخادم ولا تغيّر بيانات الكتالوج.", "These corrections are saved on this device. They have not been sent to the server and do not change the catalog."));
+      if (!items.length) info.appendChild(el("div", { class: "lf-product-empty", text: uiText("لا توجد تصحيحات محفوظة. يمكنك إضافة تصحيح من صفحة العمل.", "No saved corrections. You can add one from a work page.") }));
       items.slice(0, 30).forEach(function (item) { info.appendChild(correctionRow(item)); });
       body.appendChild(info);
-    });
+      if(global.LorefyCatalogRequests)body.appendChild(button(uiText('طلبات الأعمال المفقودة','Missing work drafts'),'lf-product-secondary',openMissingRequests,'library-big'));
+    }, "lf-trust-studio lf-corrections-studio");
+  }
+
+  function requestOwner() {
+    return global.LorefyBackend&&global.LorefyBackend.user&&global.LorefyBackend.user.id||global.localStorage.getItem('lorefy.activeUser.v1')||safeRead('lorefy.session.v1',{}).userId||safeRead('lorefy.identity.v1',{}).id||
+      (new URLSearchParams(global.location.search).get('preview')==='demo'?'local-demo':null);
+  }
+  function openMissingRequests(query) {
+    var api=global.LorefyCatalogRequests;if(!api)return;
+    var en=doc.documentElement.lang==='en',owner=requestOwner(),stamp=accountStamp(),queue=api.create(global.localStorage,owner);
+    openSheet(en?'Missing works':'الأعمال المفقودة',en?'Saved on this device. Not sent or published.':'محفوظة على هذا الجهاز؛ لم تُرسل أو تُنشر.',function(body){
+      var form=el('form',{class:'lf-catalog-request-form',novalidate:''}),title=el('input',{required:'',maxlength:'180',value:typeof query==='string'?query:'',autocomplete:'off'}),
+        type=el('select',{}),url=el('input',{required:'',type:'url',inputmode:'url',autocomplete:'off',dir:'ltr'}),note=el('textarea',{maxlength:'1000',rows:'3'}),status=el('p',{class:'lf-request-feedback',role:'status',tabindex:'-1',hidden:''});
+      var typeLabels=['رواية','كتاب','كوميكس','مانجا','مانهوا','مانها','لايت نوفل','ويب نوفل'];
+      api.types.forEach(function(value,index){type.appendChild(el('option',{value:value,text:en?value:typeLabels[index]}));});
+      var fields=[['title',en?'Work title':'اسم العمل',title],['type',en?'Type':'النوع',type],['reference',en?'Reference link':'رابط مرجعي',url],['note',en?'Note (optional)':'ملاحظة (اختياري)',note]];
+      fields.forEach(function(field){
+        field[2].setAttribute('aria-label',field[1]);
+        field[3]=el('span',{id:'lf-request-'+field[0]+'-error',class:'lf-request-error',role:'alert',hidden:''});
+        field[2].addEventListener('input',function(){field[2].removeAttribute('aria-invalid');field[2].removeAttribute('aria-describedby');field[3].hidden=true;status.hidden=true;});
+        form.appendChild(el('label',{},[el('span',{text:field[1]}),field[2],field[3]]));
+      });
+      function fail(error){
+        var code=error&&error.message,field=fields.find(function(item){return item[0]===code;});
+        if(field){
+          field[3].textContent=code==='reference'?(en?'Enter a public web reference link.':'أدخل رابط ويب مرجعيًا عامًا.'):code==='title'?(en?'Enter a title with at least two characters.':'اكتب اسمًا من حرفين على الأقل.'):(en?'Choose a work type.':'اختر نوع العمل.');
+          field[3].hidden=false;field[2].setAttribute('aria-invalid','true');field[2].setAttribute('aria-describedby',field[3].getAttribute('id'));field[2].focus();
+        }else{
+          status.setAttribute('role','alert');status.textContent=code==='limit'?(en?'Up to 100 drafts can be saved. Remove a draft before adding another.':'يمكن حفظ100 طلب. احذف طلبًا قبل إضافة طلب جديد.'):(en?'Could not save. Check device storage and try again.':'تعذر الحفظ. تحقق من مساحة الجهاز وحاول مجددًا.');status.hidden=false;status.focus();
+        }
+      }
+      var save=button(en?'Save draft':'حفظ الطلب محليًا','lf-product-primary',function(){},'plus');save.type='submit';save.disabled=!owner;form.appendChild(save);form.appendChild(status);
+      form.addEventListener('submit',function(event){event.preventDefault();if(!form.isConnected||stamp!==accountStamp()||owner!==requestOwner()){save.disabled=true;return;}
+        fields.forEach(function(field){field[2].removeAttribute('aria-invalid');field[2].removeAttribute('aria-describedby');field[3].hidden=true;});status.hidden=true;
+        try{queue.save({title:title.value,type:type.value,url:url.value,note:note.value});status.setAttribute('role','status');status.textContent=en?'Draft saved on this device.':'تم حفظ الطلب على هذا الجهاز.';status.hidden=false;render();}
+        catch(error){fail(error);}
+      });
+      body.appendChild(form);var rows=el('section',{class:'lf-catalog-request-drafts'});body.appendChild(rows);
+      function render(){
+        rows.replaceChildren();rows.appendChild(el('h3',{text:en?'Saved drafts':'الطلبات المحفوظة'}));var drafts=queue.list();
+        if(!drafts.length)rows.appendChild(el('div',{class:'lf-product-empty',text:en?'No saved drafts.':'لا توجد طلبات محفوظة.'}));
+        drafts.forEach(function(item){
+          var remove=button('','lf-product-icon-button lf-catalog-draft-remove',function(){
+            if(!rows.isConnected||stamp!==accountStamp()||owner!==requestOwner())return;
+            try{queue.remove(item.id);title.focus();render();}catch(_){status.setAttribute('role','alert');status.textContent=en?'Could not remove the draft. Try again.':'تعذر حذف الطلب. حاول مجددًا.';status.hidden=false;status.focus();}
+          },'trash-2');
+          remove.setAttribute('aria-label',(en?'Delete draft: ':'حذف الطلب: ')+item.title);remove.setAttribute('title',en?'Delete draft':'حذف الطلب');
+          rows.appendChild(el('div',{class:'lf-product-list-row'},[
+            el('div',{class:'lf-product-list-copy'},[el('strong',{text:item.title,dir:'auto','data-no-translate':''}),el('small',{text:(en?item.type:typeLabels[api.types.indexOf(item.type)]||item.type)+' · '+(en?'Local draft':'طلب محلي')})]),remove]));
+        });refreshIcons(rows);
+      }
+      render();if(!owner){status.textContent=en?'Sign in to save a draft.':'سجّل الدخول لحفظ طلب.';status.hidden=false;}
+      body.appendChild(button(en?'Export drafts':'تصدير الطلبات','lf-product-secondary',function(event){if(stamp!==accountStamp()||owner!==requestOwner())return;runExport(event,function(){return downloadFile('lorefy-missing-works.json',JSON.stringify(queue.list(),null,2),'application/json');},en?'Export ready':'الملف جاهز');},'download'));
+    },'lf-trust-studio lf-request-studio');
   }
 
   function safetyUserRow(userId, kind) {
     var stamp = accountStamp();
+    var actionText = kind === "blocked" ? uiText("إلغاء الحظر", "Unblock") : uiText("إلغاء الكتم", "Unmute");
+    var feedback = el("p", { class: "lf-safety-feedback", role: "status", tabindex: "-1", hidden: "" });
     var remove = async function (event) {
       var control = event.currentTarget;
-      if (control.disabled) return;
+      if (control.disabled || !control.isConnected) return;
       if (stamp !== accountStamp()) { control.disabled = true; return; }
+      var sheet = control.closest('.lf-product-sheet');
+      if (doc.activeElement === control && sheet) sheet.querySelector('.lf-product-icon-button').focus({ preventScroll: true });
       control.disabled = true;
+      control.setAttribute("aria-busy", "true");
+      control.querySelector("span").textContent = uiText("جارٍ التحديث...", "Updating...");
+      feedback.setAttribute("role", "status"); feedback.textContent = uiText("جارٍ التحديث...", "Updating..."); feedback.hidden = false;
       try {
         if (kind === "blocked") await core.safety.unblockUser(userId); else core.safety.unmuteUser(userId);
         if (stamp !== accountStamp() || !control.isConnected) return;
         openSafetyCenter();
         toast(doc.documentElement.lang === 'en' ? (kind === 'blocked' ? 'User unblocked' : 'User unmuted') : (kind === "blocked" ? "تم إلغاء الحظر" : "تم إلغاء الكتم"));
       } catch (_) {
-        if (stamp === accountStamp() && control.isConnected) toast(doc.documentElement.lang === 'en' ? 'Could not update. Try again.' : 'تعذر التحديث. حاول مجددًا.');
+        if (stamp === accountStamp() && control.isConnected) {
+          feedback.setAttribute("role", "alert"); feedback.textContent = uiText("تعذر تأكيد التحديث. حاول مجددًا.", "Could not confirm the update. Try again."); feedback.hidden = false; feedback.focus();
+        }
       } finally {
-        if (stamp === accountStamp()) control.disabled = false;
+        if (stamp === accountStamp() && control.isConnected) {
+          control.disabled = false; control.removeAttribute("aria-busy"); control.querySelector("span").textContent = actionText;
+        }
       }
     };
+    var action = button(actionText, "lf-product-secondary lf-safety-remove", remove);
+    action.setAttribute("aria-label", (kind === "blocked" ? uiText("إلغاء حظر @", "Unblock @") : uiText("إلغاء كتم @", "Unmute @")) + userId);
     return el("div", { class: "lf-product-list-row" }, [
-      el("div", { class: "lf-product-list-copy" }, [el("strong", { text: "@" + userId }), el("small", { text: kind === "blocked" ? "محظور" : "مكتوم" })]),
-      button("إلغاء", "lf-product-icon-button", remove)
+      el("div", { class: "lf-product-list-copy" }, [el("strong", { text: "@" + userId, dir: "ltr", "data-no-translate": "" }), el("small", { text: kind === "blocked" ? uiText("محظور", "Blocked") : uiText("مكتوم", "Muted") })]),
+      action, feedback
     ]);
   }
 
+  function reportLabel(reason) {
+    return uiText(REPORT_LABELS[reason] || "بلاغ", { spam: "Spam or promotion", abuse: "Abuse or hate speech", harassment: "Harassment", spoiler: "Unmarked spoiler", misinformation: "Misleading information", copyright: "Copyright" }[reason] || "Report");
+  }
+
+  function reportStatus(status) {
+    return uiText({ pending: "محفوظ على الجهاز", open: "قيد المراجعة", resolved: "تمت المعالجة", closed: "مغلق" }[status] || "الحالة غير متاحة",
+      { pending: "Saved on device", open: "Awaiting review", resolved: "Resolved", closed: "Closed" }[status] || "Status unavailable");
+  }
+
   function openSafetyCenter() {
-    openSheet("السلامة والمحتوى", "إدارة البلاغات والحسابات التي لا تريد رؤيتها", function (body) {
+    openSheet(uiText("السلامة والمحتوى", "Safety and content"), uiText("البلاغات والحسابات المخفية", "Reports and hidden accounts"), function (body) {
       var reports = core.safety.getReports();
-      var reportSection = section("البلاغات المرسلة", "تُحفظ البلاغات في قائمة مراجعة، ولا يختفي المحتوى العام تلقائياً إلا إذا اخترت الكتم أو الحظر.");
-      if (!reports.length) reportSection.appendChild(el("div", { class: "lf-product-empty", text: "لا توجد بلاغات مرسلة." }));
+      var reportSection = section(uiText("سجل البلاغات", "Report activity"), uiText("سجل البلاغات المحفوظ على هذا الجهاز. البلاغ لا يخفي المحتوى تلقائيًا.", "Report activity saved on this device. A report does not automatically hide content."));
+      if (!reports.length) reportSection.appendChild(el("div", { class: "lf-product-empty", text: uiText("لا توجد بلاغات محفوظة.", "No saved reports.") }));
       reports.slice(0, 20).forEach(function (report) {
         reportSection.appendChild(el("div", { class: "lf-product-list-row" }, [
-          el("div", { class: "lf-product-list-copy" }, [el("strong", { text: REPORT_LABELS[report.reason] || report.reason }), el("small", { text: report.targetId })]),
-          el("span", { class: "lf-product-status", text: "قيد المراجعة" })
+          el("div", { class: "lf-product-list-copy" }, [el("strong", { text: reportLabel(report.reason) }), el("small", { text: report.targetId, dir: "auto", "data-no-translate": "" })]),
+          el("span", { class: "lf-product-status", text: reportStatus(report.status) })
         ]));
       });
       body.appendChild(reportSection);
 
-      var blocked = section("الحسابات المحظورة", "لن يظهر محتوى هذه الحسابات داخل المجتمع.");
+      var blocked = section(uiText("الحسابات المحظورة", "Blocked accounts"), uiText("حسابات أخفيت محتواها من المجتمع بالحظر.", "Accounts whose community content you have blocked."));
       var blockedUsers = core.safety.getBlockedUsers();
-      if (!blockedUsers.length) blocked.appendChild(el("div", { class: "lf-product-empty", text: "لا توجد حسابات محظورة." }));
+      if (!blockedUsers.length) blocked.appendChild(el("div", { class: "lf-product-empty", text: uiText("لا توجد حسابات محظورة.", "No blocked accounts.") }));
       blockedUsers.forEach(function (user) { blocked.appendChild(safetyUserRow(user, "blocked")); });
       body.appendChild(blocked);
 
-      var muted = section("الحسابات المكتومة", "يُخفى محتواها من الخلاصة بدون إشعارها.");
+      var muted = section(uiText("الحسابات المكتومة", "Muted accounts"), uiText("محتواها مخفي من خلاصتك دون إشعارها.", "Their content is hidden from your feed without notifying them."));
       var mutedUsers = core.safety.getMutedUsers();
-      if (!mutedUsers.length) muted.appendChild(el("div", { class: "lf-product-empty", text: "لا توجد حسابات مكتومة." }));
+      if (!mutedUsers.length) muted.appendChild(el("div", { class: "lf-product-empty", text: uiText("لا توجد حسابات مكتومة.", "No muted accounts.") }));
       mutedUsers.forEach(function (user) { muted.appendChild(safetyUserRow(user, "muted")); });
       body.appendChild(muted);
-    });
+    }, "lf-trust-studio lf-safety-studio");
   }
 
   function currentWork() {
@@ -364,23 +481,41 @@
 
   function openCorrectionForm(work) {
     work = work || currentWork();
-    openSheet("تصحيح بيانات العمل", work.title || work.ar || work.id, function (body, close) {
-      var form = section("ما الذي يحتاج إلى تصحيح؟", "أرسل وصفاً محدداً ومصدراً أو قيمة بديلة عندما تتوفر.");
+    var stamp = accountStamp();
+    openSheet(uiText("تصحيح بيانات العمل", "Correct work details"), work.title || work.ar || work.id, function (body, close) {
+      var form = el("form", { class: "lf-correction-form", novalidate: "" });
+      form.appendChild(section(uiText("ما الذي يحتاج إلى تصحيح؟", "What needs correcting?"), uiText("احفظ وصفًا ومصدرًا أو قيمة بديلة. يُحفظ التصحيح على هذا الجهاز فقط.", "Save a description and an optional source or replacement value. The correction stays on this device.")));
       var issue = el("select", { id: "lf-correction-issue" });
-      Object.keys(ISSUE_LABELS).forEach(function (value) { issue.appendChild(el("option", { value: value, text: ISSUE_LABELS[value] })); });
-      var note = el("textarea", { placeholder: "اشرح المشكلة بدقة...", maxlength: "1000" });
-      var proposed = el("input", { type: "url", placeholder: "رابط المصدر أو القيمة الصحيحة (اختياري)" });
-      form.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { for: "lf-correction-issue", text: "نوع المشكلة" }), issue]));
-      form.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { text: "التفاصيل" }), note]));
-      form.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { text: "المصدر أو البديل" }), proposed]));
-      form.appendChild(button("إرسال للمراجعة", "lf-product-primary", function () {
-        if (!String(note.value || "").trim()) { toast("اكتب وصفاً واضحاً للمشكلة"); return; }
-        core.corrections.submit({ workId: work.id, issue: issue.value, note: note.value, proposedValue: proposed.value });
-        close();
-        toast("تم إرسال التصحيح للمراجعة");
-      }));
+      Object.keys(ISSUE_LABELS).forEach(function (value) { issue.appendChild(el("option", { value: value, text: issueLabel(value) })); });
+      var note = el("textarea", { id: "lf-correction-note", maxlength: "1000", rows: "4" });
+      var proposed = el("input", { id: "lf-correction-proposed", type: "text", dir: "auto", maxlength: "1000" });
+      var status = el("p", { class: "lf-correction-feedback", id: "lf-correction-feedback", role: "alert", tabindex: "-1", hidden: "" });
+      form.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { for: "lf-correction-issue", text: uiText("نوع المشكلة", "Issue type") }), issue]));
+      form.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { for: "lf-correction-note", text: uiText("التفاصيل", "Details") }), note]));
+      form.appendChild(status);
+      form.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { for: "lf-correction-proposed", text: uiText("المصدر أو البديل (اختياري)", "Source or replacement (optional)") }), proposed]));
+      var save = button(uiText("حفظ التصحيح", "Save correction"), "lf-product-primary", function () {});
+      save.type = "submit";
+      form.appendChild(save);
+      note.addEventListener("input", function () {
+        note.removeAttribute("aria-invalid"); note.removeAttribute("aria-describedby"); status.hidden = true;
+      });
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (save.disabled || !form.isConnected || stamp !== accountStamp()) return;
+        if (!String(note.value || "").trim()) {
+          status.textContent = uiText("اكتب وصفًا للمشكلة قبل الحفظ.", "Describe the issue before saving."); status.hidden = false;
+          note.setAttribute("aria-invalid", "true"); note.setAttribute("aria-describedby", "lf-correction-feedback"); note.focus(); return;
+        }
+        try {
+          core.corrections.submit({ workId: work.id, issue: issue.value, note: note.value, proposedValue: proposed.value });
+          close(); toast(uiText("حُفظ التصحيح على هذا الجهاز", "Correction saved on this device"));
+        } catch (_) {
+          status.textContent = uiText("تعذر الحفظ. تحقق من مساحة الجهاز وحاول مجددًا.", "Could not save. Check device storage and try again."); status.hidden = false; status.focus();
+        }
+      });
       body.appendChild(form);
-    });
+    }, "lf-trust-studio lf-corrections-studio");
   }
 
   function hashText(text) {
@@ -415,40 +550,63 @@
   }
 
   function openReviewSafety(context) {
-    if (context.own) return;
-    openSheet("خيارات المراجعة", "إدارة هذا المحتوى أو إخفاء محتوى القارئ", function (body, close) {
-      var report = section("إرسال بلاغ", "اختر السبب الأقرب. يمكنك إضافة تفاصيل تساعد على المراجعة.");
+    if (!context || context.own) return;
+    var stamp = accountStamp(), backend = global.LorefyBackend;
+    var generation = backend && backend._pullGeneration, mode = backend && backend.mode, client = backend && backend.client, pending = false, overlay;
+    var remote = !!(backend && mode === 'live' && typeof backend.submitReport === 'function');
+    function current() {
+      return overlay && overlay.isConnected && !overlay.__closed && stamp === accountStamp() && global.LorefyBackend === backend &&
+        (!backend || backend.mode === mode && backend._pullGeneration === generation && backend.client === client) && (!context.card || context.card.isConnected);
+    }
+    overlay = openSheet(uiText("خيارات المراجعة", "Review options"), uiText("الإبلاغ والتحكم بالمحتوى", "Reporting and content controls"), function (body, close) {
+      var report = section(remote ? uiText("إرسال بلاغ", "Report this review") : uiText("بلاغ على هذا الجهاز", "Report on this device"),
+        remote ? uiText("اختر السبب وأضف التفاصيل إن أردت. البلاغ لا يخفي المحتوى تلقائيًا.", "Choose a reason and optional details. Reporting does not automatically hide content.") :
+          uiText("سيُحفظ البلاغ على هذا الجهاز فقط؛ لن يُرسل إلى الخادم في هذا الوضع.", "The report will be saved on this device only. It will not be sent to the server in this mode."));
+      var form = el("form", { class: "lf-report-form" });
       var reason = el("select", { id: "lf-report-reason" });
-      Object.keys(REPORT_LABELS).forEach(function (value) { reason.appendChild(el("option", { value: value, text: REPORT_LABELS[value] })); });
-      var note = el("textarea", { placeholder: "تفاصيل إضافية (اختياري)", maxlength: "800" });
-      report.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { for: "lf-report-reason", text: "سبب البلاغ" }), reason]));
-      report.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { text: "ملاحظة" }), note]));
-      report.appendChild(button("إرسال البلاغ", "lf-product-primary", async function () {
-        try {
-          await Promise.resolve(core.safety.report({ targetId: context.targetId, targetType: context.targetType, reason: reason.value, note: note.value }));
-        } catch (error) { toast(error && error.message || "Report submission failed"); return; }
-        close();
-        toast("تم إرسال البلاغ للمراجعة");
-      }));
-      body.appendChild(report);
-
-      var controls = section("التحكم بما تراه", "الكتم يخفي محتواه فقط. الحظر يخفي المحتوى ويمنع التفاعل المحلي معه.");
+      Object.keys(REPORT_LABELS).forEach(function (value) { reason.appendChild(el("option", { value: value, text: reportLabel(value) })); });
+      var note = el("textarea", { id: "lf-report-note", maxlength: "800", rows: "4" });
+      form.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { for: "lf-report-reason", text: uiText("سبب البلاغ", "Report reason") }), reason]));
+      form.appendChild(el("div", { class: "lf-product-form-row" }, [el("label", { for: "lf-report-note", text: uiText("تفاصيل إضافية (اختياري)", "Additional details (optional)") }), note]));
+      var send = button(remote ? uiText("إرسال البلاغ", "Send report") : uiText("حفظ البلاغ على الجهاز", "Save report on device"), "lf-product-primary", function () {});
+      send.type = "submit"; form.appendChild(send); report.appendChild(form); body.appendChild(report);
+      var feedback = el("p", { class: "lf-report-feedback", id: "lf-report-feedback", role: "status", tabindex: "-1", hidden: "" });
+      body.appendChild(feedback);
+      form.setAttribute("aria-describedby", "lf-report-feedback");
+      var controls = section(uiText("التحكم بما تراه", "Content controls"), uiText("الكتم والحظر إجراءان منفصلان عن البلاغ، ويخفيان محتوى القارئ من خلاصتك.", "Mute and block are separate from reporting. Both hide this reader's content from your feed."));
       var actions = el("div", { class: "lf-product-inline-actions" });
-      actions.appendChild(button("كتم القارئ", "lf-product-secondary", function () {
-        core.safety.muteUser(context.userId); hideCardsFor(context.userId); close(); toast("تم كتم القارئ");
-      }));
-      actions.appendChild(button("حظر القارئ", "lf-product-danger", async function () {
+      var mute = button(uiText("كتم القارئ", "Mute reader"), "lf-product-secondary lf-report-mute", function () { return run("mute", function () { return core.safety.muteUser(context.userId); }); });
+      var block = button(uiText("حظر القارئ", "Block reader"), "lf-product-danger lf-report-block", function () { return run("block", function () { return core.safety.blockUser(context.userId); }); });
+      actions.appendChild(mute); actions.appendChild(block); controls.appendChild(actions); body.appendChild(controls);
+      var inputs = [reason, note, send, mute, block];
+      async function run(kind, operation) {
+        if (pending || !current()) return;
+        pending = true;
+        overlay.querySelector('.lf-product-icon-button').focus({ preventScroll: true });
+        inputs.forEach(function (control) { control.disabled = true; });
+        form.setAttribute("aria-busy", "true");
+        feedback.setAttribute("role", "status"); feedback.textContent = uiText("جارٍ تنفيذ الإجراء...", "Working..."); feedback.hidden = false;
         try {
-          await Promise.resolve(core.safety.blockUser(context.userId));
-        } catch (error) {
-          toast(error && error.message || "Block request failed");
-          return;
+          var result = await operation();
+          if (!current()) return;
+          if (kind !== "report") hideCardsFor(context.userId);
+          close();
+          toast(kind === "report" ? (remote && result && result.id && result.status !== "pending" ? uiText("تم إرسال البلاغ للمراجعة", "Report sent for review") : uiText("حُفظ البلاغ على هذا الجهاز", "Report saved on this device")) :
+            kind === "mute" ? uiText("تم كتم القارئ", "Reader muted") : uiText("تم حظر القارئ", "Reader blocked"));
+        } catch (_) {
+          if (!current()) return;
+          feedback.setAttribute("role", "alert"); feedback.textContent = uiText("تعذر تأكيد الإجراء. احتفظنا بالتفاصيل؛ حاول مجددًا.", "Could not confirm the action. Your details are kept; try again."); feedback.hidden = false; feedback.focus();
+        } finally {
+          if (current()) {
+            pending = false; inputs.forEach(function (control) { control.disabled = false; }); form.removeAttribute("aria-busy");
+          }
         }
-        hideCardsFor(context.userId); close(); toast("تم حظر القارئ");
-      }));
-      controls.appendChild(actions);
-      body.appendChild(controls);
-    });
+      }
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        return run("report", function () { return core.safety.report({ targetId: context.targetId, targetType: context.targetType, reason: reason.value, note: note.value }); });
+      });
+    }, "lf-trust-studio lf-report-studio");
   }
 
   function profileAction(iconName, title, subtitle, handler) {
@@ -515,6 +673,10 @@
     if (feedback && feedback.value === "not_interested") less.classList.add("is-active");
     segment.appendChild(correction); segment.appendChild(more); segment.appendChild(less);
     toolbar.appendChild(segment);
+    var credits=(work.catalogAttributions||[]).concat(work.sourceUrl?[{source:work.source||work._apiSource,url:work.sourceUrl,license:work.sourceLicense}]:[]),seenCredits=new Set();
+    credits.forEach(function(credit){if(!credit||seenCredits.has(credit.url)||!/^https:\/\/(?:www\.)?(?:comics\.org|bookbrainz\.org|wikidata\.org|openlibrary\.org|books\.google\.[a-z.]+)\//i.test(credit.url))return;
+      seenCredits.add(credit.url);toolbar.appendChild(el('a',{href:credit.url,target:'_blank',rel:'noopener noreferrer',class:'lf-catalog-attribution',text:String(credit.source||'Source')+(credit.license?' · '+credit.license:'')}));
+    });
     enhanceAuthor(work,toolbar);
     content.appendChild(toolbar);
   }
@@ -569,7 +731,7 @@
       if (context.own) return;
       if (hidden.has(context.userId)) { card.style.display = "none"; return; }
       if (card.querySelector(":scope > .lf-product-review-menu")) return;
-      var menu = el("button", { class: "lf-product-review-menu", type: "button", "aria-label": "خيارات المراجعة", onclick: function (event) {
+      var menu = el("button", { class: "lf-product-review-menu", type: "button", "aria-label": uiText("خيارات المراجعة", "Review options"), onclick: function (event) {
         event.preventDefault(); event.stopPropagation(); openReviewSafety(context);
       } }, icon(ICONS.more, 18));
       card.insertBefore(menu, card.firstChild);
@@ -613,6 +775,7 @@
     openAuthor: openAuthor,
     openDataCenter: openDataCenter,
     openCorrectionsCenter: openCorrectionsCenter,
+    openMissingRequests: openMissingRequests,
     openSafetyCenter: openSafetyCenter,
     openCorrectionForm: openCorrectionForm,
     enhance: enhance

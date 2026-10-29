@@ -97,6 +97,7 @@
     const appearance = root.LorefyPublicAppearance ? root.LorefyPublicAppearance.normalize(profile) : {library_view:'grid',banner_position:50};
     const ownerStyle = root.LorefyPublicAppearance ? root.LorefyPublicAppearance.style(profile) : {};
     const spine = appearance.library_view === 'spines';
+    const showcase = appearance.library_view === 'showcase';
     React.useEffect(() => {
       if (!root.document) return;
       const page=root.document.querySelector('.lf-reader-full');
@@ -112,7 +113,8 @@
       return ()=>Object.entries(previous).forEach(([key,value])=>value?nav.style.setProperty(key,value):nav.style.removeProperty(key));
     },[profile.id,profile.theme]);
     const ownReviews = reviews.filter(review => review.userId === profile.id);
-    const works = (profile.favorite_work_ids || []).slice(0, 4).map(props.workById).filter(Boolean);
+    const favoriteLimit = root.LorefyLibraryView?.favoriteLimit(appearance.library_view) ?? (showcase ? 3 : spine ? 7 : 4);
+    const works = (profile.favorite_work_ids || []).slice(0, favoriteLimit).map(props.workById).filter(Boolean);
     const characters = (profile.favorite_character_ids || []).filter(Boolean).slice(0, 4);
     const library = Object.keys(profile.library_entries || {}).map(props.workById).filter(Boolean);
     const topWorks = (profile.top_work_ids || []).slice(0,10).map(props.workById).filter(Boolean);
@@ -153,7 +155,10 @@
     const spineHeight = work => root.LorefyLibraryView ? root.LorefyLibraryView.spineHeight(work.title) : 188;
     const profileSpineHeight = work => root.LorefyLibraryView && root.LorefyLibraryView.profileSpineHeight ? root.LorefyLibraryView.profileSpineHeight(work.title) : 188;
     const spineCover = work => h('span', {className:'lf-library-cover'}, image(ownerCover(work),work.title), h('span',{className:'lf-library-spine-title','data-no-translate':true,dir:'auto'},work.title));
-    const workCard = (work, extra, asSpine=spine) => h('button', { key:work.id, type:'button', className:'lf-reader-cover is-work', style:asSpine ? {'--spine-height':profileSpineHeight(work)+'px'} : undefined, onClick:() => props.onWork(work), 'aria-label':'فتح ' + work.title, ...(extra || {}) }, asSpine ? spineCover(work) : image(ownerCover(work), work.title));
+    const workCard = (work, extra, asSpine=spine) => {
+      const card=h('button', { key:work.id, type:'button', className:'lf-reader-cover is-work', style:asSpine ? {'--spine-height':profileSpineHeight(work)+'px'} : undefined, onClick:() => props.onWork(work), 'aria-label':(root.document.documentElement.lang==='en'?'Open ':'فتح ') + work.title, ...(extra || {}) }, asSpine ? spineCover(work) : image(ownerCover(work), work.title), root.LorefyProfileLayout?.forProfile(profile)==='reader' && h('span',{className:'lf-reader-layout-cover-title','data-no-translate':'1',dir:'auto',title:work.title},work.title));
+      return root.LorefyLibraryMedia ? root.LorefyLibraryMedia.card(card,{lang:root.document.documentElement.lang,src:ownerCover(work),workId:work.id,title:work.title,fit:asSpine?'cover':'contain'}) : card;
+    };
     const characterWork = ref => {
       const character = ref && (ref.character || ref) || {};
       const workId = ref && (ref.workId || ref.work_id) || character.workId || character.work_id || character.mediaId || character.media_id;
@@ -180,24 +185,26 @@
     function shelf(kind, items) {
       return h('section', { className:'lf-reader-shelf', 'data-profile-shelf':kind, 'aria-label':kind === 'works' ? 'الأعمال المفضلة' : 'الشخصيات المفضلة' },
         h('header', { className:'lf-reader-shelf-head' }, h('h2', null, kind === 'works' ? 'الأعمال المفضلة' : 'الشخصيات المفضلة')),
-        h('div', { className:'lf-reader-shelf-rail' + (kind==='works' && spine ? ' is-spine-view' : '') }, ...items, ...Array.from({ length:Math.max(0, 4 - items.length) }, (_, i) => h('div', {
+        h('div', { className:'lf-reader-shelf-rail' + (kind==='works' && spine ? ' is-spine-view' : kind==='works' && showcase ? ' is-showcase-view' : '') }, ...items, ...Array.from({ length:Math.max(0, (kind==='works' ? favoriteLimit : 4) - items.length) }, (_, i) => h('div', {
           key:'empty-' + i, className:'lf-reader-cover is-empty', 'data-empty-slot':true, 'aria-label':'خانة فارغة'
         })))
       );
     }
     function libraryCard(work, preview) {
       const status = (profile.library_entries || {})[work.id] || '';
-      return h('button', {
+      const card=h('button', {
         key:work.id,
         type:'button',
         className:'lf-reader-library-card' + (spine ? ' lf-library-card' : ''),
         style:spine ? {'--spine-height':spineHeight(work)+'px'} : undefined,
         'data-library-preview':preview || undefined,
         onClick:() => { setLibraryOpen(false); props.onWork(work); },
-        'aria-label':'فتح ' + work.title
-      }, spine ? spineCover(work) : h('span', { className:'lf-reader-library-cover' }, image(ownerCover(work), work.title)), h('span', { className:'lf-reader-library-copy' + (spine ? ' lf-library-copy' : '') }, h('strong', null, work.title), status && h('small', null, status)));
+        'aria-label':(root.document.documentElement.lang==='en'?'Open ':'فتح ') + work.title
+      }, spine ? spineCover(work) : h('span', { className:'lf-reader-library-cover' }, image(ownerCover(work), work.title)), h('span', { className:'lf-reader-library-copy' + (spine ? ' lf-library-copy' : '') }, h('strong', {dir:'auto',title:work.title,'data-no-translate':'1'}, work.title), status && h('small', null, root.LorefyI18n.readingStatusLabel(status, root.document.documentElement.lang))));
+      return root.LorefyLibraryMedia ? root.LorefyLibraryMedia.card(card,{lang:root.document.documentElement.lang,src:ownerCover(work),workId:work.id,title:work.title,fit:spine?'cover':'contain'}) : card;
     }
-    return h('div', { className:'lf-public-profile-page lf-profile-page lf-reader-full', 'data-profile-renderer':'full', 'aria-busy':loading,
+    const compose=root.LorefyReaderLayout?.composePublic || (page=>page);
+    return compose(h('div', { className:'lf-public-profile-page lf-profile-page lf-reader-full', 'data-profile-renderer':'full', 'aria-busy':loading,
       style:ownerStyle, 'data-owner-theme':appearance.theme, 'data-owner-library-view':appearance.library_view,
       'data-profile-decoration':JSON.stringify(root.LorefyProfileShop ? root.LorefyProfileShop.normalizeDecoration(profile.profile_decoration) : {}),
       'data-profile-layout':root.LorefyProfileLayout ? root.LorefyProfileLayout.forProfile(profile) : (profile.profile_layout === 'immersive' ? 'immersive' : 'normal'), 'data-lf-public-profile-id':profile.id },
@@ -253,17 +260,17 @@
             workCard(work,undefined,false), h('span', { className:'lf-reader-work-rank' }, index+1))))),
         library.length > 0 && h('section', { className:'lf-reader-shelf lf-reader-library-preview', 'aria-label':'المكتبة' },
           h('header', { className:'lf-reader-shelf-head' }, h('h2', null, 'المكتبة'), h('button', { type:'button', className:'lf-reader-view-all', 'data-library-view-all':true, onClick:() => setLibraryOpen(true) }, 'عرض الكل', h('span', null, library.length), icon(root.document?.documentElement?.lang === 'en' ? 'ChevronRight' : 'ChevronLeft', 15))),
-          h('div', { className:'lf-reader-library-grid' + (spine ? ' lf-library-grid is-spine-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.slice(0, 4).map(work => libraryCard(work, true)))),
+          h('div', { className:'lf-reader-library-grid' + (spine ? ' lf-library-grid is-spine-view' : showcase ? ' is-showcase-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.slice(0, 4).map(work => libraryCard(work, true)))),
         h('section', { className:'lf-public-profile-reviews' }, h('h2', null, 'المراجعات'), ownReviews.length ? ownReviews.map(props.renderReview) : ready && h('p', { className:'lf-reader-empty' }, 'لا مراجعات بعد'))),
       libraryOpen && h('div', { className:'lf-reader-modal', role:'dialog', 'aria-modal':true, 'aria-label':'مكتبة القارئ', onClick:() => setLibraryOpen(false) },
         h('section', { className:'lf-reader-library-dialog', onClick:event => event.stopPropagation() },
           h('header', null, h('div', null, h('h2', null, 'المكتبة'), h('p', null, library.length + ' عمل')), h('button', { type:'button', onClick:() => setLibraryOpen(false), 'aria-label':'إغلاق' }, icon('X'))),
-          h('div', { className:'lf-reader-library-grid is-full' + (spine ? ' lf-library-grid is-spine-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.map(work => libraryCard(work, false))))),
+          h('div', { className:'lf-reader-library-grid is-full' + (spine ? ' lf-library-grid is-spine-view' : showcase ? ' is-showcase-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.map(work => libraryCard(work, false))))),
       connections && connections.id === profile.id && h('div', { className:'lf-reader-modal', role:'dialog', 'aria-modal':true, 'aria-label':connections.kind === 'followers' ? 'المتابعون' : 'يتابع' },
         h('section', null, h('header', null, h('h2', null, connections.kind === 'followers' ? 'المتابعون' : 'يتابع'), h('button', { type:'button', onClick:() => setConnections(null), 'aria-label':'إغلاق' }, icon('X'))),
           connections.loading ? h('p', null, 'جارٍ التحميل...') : connections.error ? h('button', { type:'button', onClick:() => openConnections(connections.kind) }, 'إعادة المحاولة') : connections.rows.length ? connections.rows.map(reader => h('button', {
             key:reader.id, type:'button', className:'lf-reader-connection-row', onClick:() => { setConnections(null); root.dispatchEvent(new root.CustomEvent('lorefy:open-reader-profile', { detail:reader })); }
           }, image(safeImage(reader.avatar), reader.name), h('span', null, reader.name || reader.username), h('small', { dir:'ltr' }, '@' + reader.username))) : h('p', null, 'لا توجد حسابات بعد')))
-    );
+    ),{lang:root.document?.documentElement?.lang,onBack:props.onBack});
   };
 })(window);

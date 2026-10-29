@@ -11,7 +11,7 @@
     design=design||root.LorefyDesignSystem;
     profile=profile||{};
     var position=Number(profile.banner_position);
-    return {theme:design.normalizeMode(profile.theme),library_view:['spines','shelf'].includes(profile.library_view)?profile.library_view:'grid',
+    return {theme:design.normalizeMode(profile.theme),library_view:['spines','shelf','showcase'].includes(profile.library_view)?profile.library_view:'grid',
       banner_position:Number.isFinite(position)?Math.max(0,Math.min(100,position)):50,favorite_type:format(profile.favorite_type)};
   }
   function favoriteType(profile,workById){

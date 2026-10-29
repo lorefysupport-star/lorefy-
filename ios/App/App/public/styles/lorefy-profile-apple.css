@@ -1,0 +1,171 @@
+/* Shared detail layer; the original Normal/Panoramic/Reader layouts still own all geometry. */
+@layer lorefy-profile-apple {
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) {
+  --profile-apple-glass: var(--ui-surface);
+  --profile-apple-edge: var(--ui-line);
+  --profile-apple-sheen: linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.02) 48%,rgba(255,255,255,.07));
+  --profile-apple-selected: var(--ui-selected);
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif !important;
+  letter-spacing: 0 !important;
+  -webkit-font-smoothing: antialiased;
+}
+@supports (background:color-mix(in srgb,white,black)) {
+  :is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) {
+    --profile-apple-glass: color-mix(in srgb,var(--ui-fill) 72%,transparent);
+    --profile-apple-edge: color-mix(in srgb,var(--ui-line) 58%,var(--ui-ink) 42%);
+    --profile-apple-selected: color-mix(in srgb,var(--ui-selected) 84%,var(--ui-ink) 16%);
+  }
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(button,input,textarea,p,span,small,strong,h1,h2,h3,h4,a) {
+  font-family: inherit !important;
+  letter-spacing: 0 !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-name p,.lf-reader-identity h1) {
+  font-size: 27px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  overflow-wrap: anywhere;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-handle,.lf-reader-handle) {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: var(--ui-muted) !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-bio,.lf-reader-bio) {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.7 !important;
+  color: var(--ui-secondary) !important;
+  overflow-wrap: anywhere;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-banner button:not(.lf-profile-avatar),.lf-reader-layout-tools button,.lf-reader-back,.lf-profile-networks a,.lf-reader-socials a) {
+  background: var(--ui-surface) !important;
+  background: var(--profile-apple-sheen),var(--profile-apple-glass) !important;
+  border: 1px solid var(--profile-apple-edge) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.24),inset 0 -1px 0 rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.18) !important;
+  color: var(--ui-ink) !important;
+  backdrop-filter: blur(22px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(125%) !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-banner button:not(.lf-profile-avatar),.lf-reader-layout-tools button,.lf-reader-back) svg {
+  width: 21px !important;
+  height: 21px !important;
+  stroke: currentColor !important;
+  stroke-width: 1.75 !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-connections,.lf-reader-social-summary) :is(button,strong,span) {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  font-variant-numeric: tabular-nums;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-connections,.lf-reader-social-summary) svg {
+  stroke-width: 1.75 !important;
+  color: var(--ui-muted) !important;
+  stroke: currentColor !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-profile-reading-metrics :is(strong,p:first-of-type) {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  font-variant-numeric: tabular-nums;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-profile-reading-metrics :is(span,p:last-of-type) {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 1.45 !important;
+  color: var(--ui-muted) !important;
+  overflow-wrap: break-word !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-profile-reading-metrics svg {
+  stroke: var(--ui-secondary) !important;
+  stroke-width: 1.6 !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-profile-section-tabs {
+  background: var(--ui-surface) !important;
+  background: var(--profile-apple-sheen),var(--profile-apple-glass) !important;
+  border: 1px solid var(--profile-apple-edge) !important;
+  border-radius: 16px !important;
+  padding: 4px !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22),0 4px 16px rgba(0,0,0,.12) !important;
+  backdrop-filter: blur(22px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(125%) !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-profile-section-tabs button {
+  border: 1px solid transparent !important;
+  border-radius: 11px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--ui-muted) !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-profile-section-tabs button[aria-selected='true'] {
+  background: var(--profile-apple-sheen),var(--profile-apple-selected) !important;
+  border-color: var(--profile-apple-edge) !important;
+  color: var(--ui-ink) !important;
+  font-weight: 600 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28),0 2px 6px rgba(0,0,0,.14) !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-profile-section-tabs svg {
+  width: 18px !important;
+  height: 18px !important;
+  stroke-width: 1.75 !important;
+  color: inherit !important;
+}
+/* The public four-book preview must not inherit a seven-book board width. */
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-reader-library-preview .lf-reader-library-grid.is-spine-view {
+  container-type: inline-size;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-reader-library-preview .lf-library-card::before {
+  width: calc(400% + 64px) !important;
+  max-width: calc(100vw - 2 * var(--reader-inline)) !important;
+}
+@supports (width:1cqw) {
+  :is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) .lf-reader-library-preview .lf-library-card::before {
+    width: calc(100cqw + 40px) !important;
+  }
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-top-works-head,.lf-reader-shelf-head,.lf-profile-section-panel) :is(h2,h3) {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  color: var(--ui-ink) !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) button {
+  transition: background-color 140ms ease,border-color 140ms ease,box-shadow 140ms ease !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(button,a,input,textarea,select):focus-visible {
+  outline: 2px solid var(--ui-action) !important;
+  outline-offset: 3px !important;
+}
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) button:active:not(:disabled) { filter: brightness(.9); }
+:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) button:disabled { cursor: default; }
+.lf-app:has(.lf-profile-page:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader'])) .lf-bottom-nav {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif !important;
+  letter-spacing: 0 !important;
+  background: var(--ui-nav) !important;
+  background: linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.025) 50%,rgba(255,255,255,.075)),color-mix(in srgb,var(--ui-fill) 72%,transparent) !important;
+  border: 1px solid color-mix(in srgb,var(--ui-ink) 30%,transparent) !important;
+  border-radius: 26px !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25),inset 0 -1px 0 rgba(0,0,0,.1),0 8px 28px rgba(0,0,0,.18) !important;
+  backdrop-filter: blur(24px) saturate(130%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(130%) !important;
+}
+.lf-app:has(.lf-profile-page:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader'])) .lf-bottom-nav :is(button,span) { font-family: inherit !important; letter-spacing: 0 !important; }
+@media (hover:hover) {
+  :is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-section-tabs button,.lf-profile-banner button:not(.lf-profile-avatar),.lf-reader-layout-tools button,.lf-reader-back):hover:not(:disabled) { border-color: var(--ui-muted) !important; }
+}
+@media (prefers-reduced-motion:reduce) {
+  :is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) button { transition: none !important; }
+}
+@media (prefers-reduced-transparency:reduce) {
+  :is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-section-tabs,.lf-profile-banner button:not(.lf-profile-avatar),.lf-reader-layout-tools button,.lf-reader-back,.lf-profile-networks a,.lf-reader-socials a) { background: var(--ui-surface) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .lf-app:has(.lf-profile-page:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader'])) .lf-bottom-nav { background: var(--ui-surface) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  :is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader']) :is(.lf-profile-section-tabs,.lf-profile-banner button:not(.lf-profile-avatar),.lf-reader-layout-tools button,.lf-reader-back,.lf-profile-networks a,.lf-reader-socials a) { background: var(--ui-surface) !important; }
+  .lf-app:has(.lf-profile-page:is([data-profile-layout='normal'],[data-profile-layout='immersive'],[data-profile-layout='reader'])) .lf-bottom-nav { background: var(--ui-surface) !important; }
+}
+}

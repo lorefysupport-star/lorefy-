@@ -6,6 +6,363 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-10-29 source checkpoint authorized for GitHub after local-only development.
+[[sessions/2026-10-29-Cover-Edition-Choice]] completes bounded F13: metadata
+retained without extra provider calls; preview/save/reload/restore keep exact
+work identity and reading state.108 local browser checks;2973 source tests.
+`docs/SOURCE_CHECKPOINT_2026-10-29.md` describes included work and remaining
+acceptance. No new native build, Apple upload or production-service write.
+
+2026-10-29 F12 bounded Library/favorites acceptance:
+[[sessions/2026-10-29-Library-Shelf-Acceptance]]. Actual count matrix preserved
+wood,7/3 presentation and uncapped Library. Reader poster captions squeezed
+spines/duplicated Showcase; scope fixed. Decorative spine text intercepted native
+Open; pointer routing fixed.288 geometry cases,17 action cases,2966 source tests.
+Saved reading/favorite strings unchanged. Next F13; iPhone remains independent.
+
+2026-10-29 F08 bounded journey delivered:
+[[sessions/2026-10-29-Search-Edition-Groups]]. Conservative search-only edition
+groups and frozen chooser preserve exact IDs, query/filter/focus and late-result
+order. Google response metadata retained, no extra lookup or identity merge.
+2963 tests,99 controlled browser cases; real services/iPhone remain separate.
+[[19-UI-Execution-Control]] now points to F12 Library acceptance, not another
+image-consumer batch. F07 stays deferred as one task. Local only.
+
+2026-10-29 execution reset after the owner's repetition concern:
+[[19-UI-Execution-Control]] consolidates phases13–22 as partial F07, not ten
+independent product fixes. Original98-row backlog is a pre-execution snapshot.
+Current18-finding/27-section status and acceptance gaps are recorded without a
+completion percentage. Next bounded UI task is F08 edition grouping, preserving
+explicit IDs and stored data. No application code or release changed in this review.
+
+2026-10-29 rated-character profile strip/gallery:
+[[sessions/2026-10-29-UI-Foundation-Phase-Twenty-Two]]. Scoped managed image
+recovery and independent native Open/Retry. Nested dialogs pause rather than
+abandon the gallery; account mismatch still closes it. Initials/gallery-width
+regressions repaired.10 new tests,2950 full tests,86 browser cases;24 unchanged
+dimensions across6 configurations. Favorite/public portraits remain. Local only.
+
+2026-10-29 modern profile Lists media:
+[[sessions/2026-10-29-UI-Foundation-Phase-Twenty-One]]. Envelopes, detail, editor
+and candidates adopt scoped recovery. Independent native Retry/Add, stable
+draft rows and cleanup on Overview/account/page changes.8 new tests,2940 full
+tests,126 fixture browser cases;42 dimensions preserved across12 configurations.
+Other profile media remain. Local only; no real save, GitHub or native build.
+
+2026-10-29 category character-board media:
+[[sessions/2026-10-29-UI-Foundation-Phase-Twenty]]. Managed slot/candidate/current
+preview, original share metadata, custom-image precedence and originating picker
+guards. Narrow-track overlap/action crowding fixed.7 new tests,2932 full tests,
+131 browser cases,6 geometry configurations. Public/profile media remain. Local
+only; no real save, GitHub, service change or native build.
+
+2026-10-29 top-ten character lists:
+[[sessions/2026-10-29-UI-Foundation-Phase-Nineteen]]. Managed list faces and
+separate native Remove/Edit/Retry; hub preview has no nested control. Late cast
+cannot repaint a closed/replaced editor.10 new tests,2925 full tests,117 browser
+cases and6 geometry configurations. Existing category boards/public profile image
+owners remain. No real save, GitHub, native build or service change.
+
+2026-10-29 character rating-page portraits:
+[[sessions/2026-10-29-UI-Foundation-Phase-Eighteen]]. Separate DOM media owner
+for rating-page portraits/current picker preview, with deadline, explicit Retry,
+44px Edit and cleanup on search/close. No React roots inside legacy DOM.8 new
+tests,2915 full tests,119 browser cases,6 geometry configurations. Other character
+image owners/profile media remain. Local only; no save, GitHub, service or build.
+
+2026-10-29 Work hero and Review Editor media:
+[[sessions/2026-10-29-UI-Foundation-Phase-Seventeen]]. Managed decorative hero,
+mini cover and draft pictures; separate recovery/removal controls and explicit
+image copy. Original artwork/draft callbacks preserved.7 new tests,2907 full
+tests,107 browser cases and6 geometry configurations. No GitHub/service/build;
+profile, character and published attachments still have separate image owners.
+
+2026-10-29 Explore art and review-cover adoption:
+[[sessions/2026-10-29-UI-Foundation-Phase-Sixteen]]. Featured art/poster, format
+cards, friend rating covers and shared review work attachments adopt managed
+recovery. Native Open/Retry stay independent; missing media keeps identity.
+7 new tests,2900 full tests,54 browser cases and12 geometry comparisons. Work
+hero and other image owners remain; local only, no GitHub, service write or build.
+
+2026-10-29 Home Continue reading media adoption:
+[[sessions/2026-10-29-UI-Foundation-Phase-Fifteen]]. Poster/background explicit
+recovery, selectable failed thumbnails and original source/artwork binding.
+6 new tests,2893 full tests,14 Home cases plus26 Library/profile regressions;
+8 unchanged geometry comparisons. Home feed covers and other large artwork
+remain separate. Local only, no account save, GitHub, service write or build.
+
+2026-10-29 Library and profile cover adoption:
+[[sessions/2026-10-29-UI-Foundation-Phase-Fourteen]]. Main Library, all owner
+layouts, Reader Currently reading and visitor work/library cards share managed
+states. Missing covers retain their rank/title/slot; Open/Edit/Retry are separate
+controls and bypass legacy favorite capture.13 new tests,2887 full tests,
+53 browser cases and26 geometry comparisons. No saved-cover or service write;
+Home/other media and physical verification remain open. Local only, no build.
+
+2026-10-29 managed cover states, first F07 consumers:
+[[sessions/2026-10-29-UI-Foundation-Phase-Thirteen]]. Explore item covers and
+Work poster retain original sources with stable loading/ready/error/missing
+surfaces and explicit single-flight Retry. No generated failure replacement.
+15 new tests,2874 full suite,43 browser cases. Legacy Library/Profile/Home media
+and live providers remain separate; no saved cover change, GitHub or build.
+
+2026-10-28 work/search creator typography:
+[[sessions/2026-10-28-UI-Foundation-Phase-Twelve]]. Bounded44px author action,
+full secondary detail titles, automatic direction and literal-source tooltips.
+Search bylines use two text-relative lines and accessible title-plus-author names.
+14 new tests,2859 full suite,48 browser cases. No artwork/ranking/storage change,
+GitHub or build. Cover loading/failure presentation remains next.
+
+2026-10-28 community post counter/copy pass:
+[[sessions/2026-10-28-UI-Foundation-Phase-Eleven]]. Direct AR/EN post/thread
+labels, compact visible counts with exact accessible totals/plural forms and
+isolated author/number text. Reused feed nodes and exclusive reactions preserved.
+12 new tests,2845 full tests,56 local browser cases. No real account mutation,
+GitHub or build; work-author and other community/review text remain separate.
+
+2026-10-28 reading-title composition:
+[[sessions/2026-10-28-UI-Foundation-Phase-Ten]]. Full literal titles with automatic
+direction and stable two-line slots in Home, Library and three Profile layouts,
+including fixture visitor libraries. Flexible Showcase captions follow effective
+line height and update when source titles change.19 new regressions,2833 full
+tests,72 browser cases. Storage/artwork/metrics unchanged; no GitHub or build.
+
+2026-10-28 reading-state vocabulary:
+[[sessions/2026-10-28-UI-Foundation-Phase-Nine]]. Shared display-only AR/EN
+labels/empty messages cover Library, three Profile layouts, badges/work status,
+Import chips and fixture visitor library. Stored states and chapter/hour logic
+unchanged. Profile reading covers are named keyboard buttons.22 new regressions,
+2814 full tests,51 browser cases. No live import/account change, GitHub or build.
+
+2026-10-28 legal/support presentation:
+[[sessions/2026-10-28-UI-Foundation-Phase-Eight]]. Privacy, Terms, Support and
+Community Guidelines read app colors with glass navigation,16px body,44px Back
+and accessible section links. Exact Arabic articles/dates/contact targets are
+hash-locked unchanged.19 new regressions,2792 full tests,65 browser cases.
+No legal translation/certification, contact, deployment, GitHub or native build.
+
+2026-10-28 review-report workflow:
+[[sessions/2026-10-28-UI-Foundation-Phase-Seven]]. Direct AR/EN glass form with
+single-flight report/mute/block, retained drafts and safe inline recovery.
+Device-save vs remote receipt wording is explicit. Core receipt writes reject
+stale owner/client/generation and merge concurrent reports without lost records.
+21 new tests,2773 full tests and20 browser checks; no actual moderation action,
+server change, GitHub or native build. Live delivery/hardware remain separate.
+
+2026-10-28 correction/safety tools:
+[[sessions/2026-10-28-UI-Foundation-Phase-Six]]. Sequential correction center/
+editor, Safety and Missing work drafts share opted-in Product Tools chrome and
+direct AR/EN. Honest device-only correction/draft copy, inline validation and
+recovery, explicit named Unblock/Unmute with safe pending focus.22 new tests,
+2752 full tests and56 local browser cases, including Data regression. No real
+correction/draft save, unblock, export or production action ran in browser QA;
+failure paths used isolated source tests or a fixture-only rejected service.
+
+2026-10-28 Data/privacy UI: [[sessions/2026-10-28-UI-Foundation-Phase-Five]].
+Scoped shared glass, direct AR/EN, wrapping list names and visible visibility
+labels; no misleading private-default promise. Product child dialogs now isolate
+their Settings parent and release on replacement/removal.13 new source tests,
+2730 full tests and20 local browser cases. No actual data export/privacy/account
+action, GitHub, native build or service change. See [[systems/Privacy-Data]].
+
+2026-10-28 Settings/Customize consistency:
+[[sessions/2026-10-28-UI-Foundation-Phase-Four]]. Shared scoped glass and readable
+controls; correct dialog naming, linked keyboard tabs, inline color validation
+and focus retention when Apply becomes disabled.2717 source tests,18 local
+browser cases. Existing preferences/persistence contracts retained. No real
+account actions, GitHub push, native build or production changes.
+
+2026-10-28 import UI batch: [[sessions/2026-10-28-UI-Foundation-Phase-Three]].
+Existing source choices now share semantic glass/font/field/action rules,
+unframed bands, visible labels and announced recovery with retained drafts.
+AR/EN first render,21 new regressions,2705 full tests and20 browser cases.
+Parsers, saved status values and confirmation/rollback contracts retained.
+Local only; real device/live import and the remaining UI plan are still open.
+
+2026-10-28 UI execution continues:
+[[sessions/2026-10-28-UI-Foundation-Phase-Two]] verifies character image-picker
+focus/inert/Escape, guarded owner/lifetime, serialized saves and provider Retry
+with20-second UI deadline.2684 source tests,15 browser lifecycle cases plus2
+fixture-provider checks. Device upload/account persistence and other planned
+windows remain separate. Local only, no GitHub push, build or service writes.
+
+2026-10-28 UI plan execution begins:
+[[sessions/2026-10-28-UI-Foundation-Phase-One]]. The first batch repairs the
+standalone character image picker's material/contrast/localization and removes
+profile reading-filter leakage in all three layouts.30 local browser cases;
+remaining sheets, device upload/focus and the broader redesign stay open.
+Local source only, no GitHub push, build or service change.
+
+2026-10-28 selection applied: [[sessions/2026-10-28-Share-Composer]] replaces the
+top/ranking/list Spotlight podium with the approved quiet first-pick row and
+nine equal tiles. App/manual colors preserved,2657 tests,36 theme/language/format
+cases; paired visual QA passed. Other designs/work-review output unchanged.
+
+2026-10-28 follow-up: [[sessions/2026-10-28-Share-Composer]] records a reproduced
+nested-list export failure, repaired modal mounting and keyboard isolation.
+2654 tests and six nested browser cases pass. New quieter image designs are
+proposals awaiting selection; none applied. Local only, native share unverified.
+
+2026-10-28 editable export: [[sessions/2026-10-28-Share-Composer]]. Work/review,
+character rankings, top boards and lists share three selectable image designs,
+app/custom colors and three formats. Large lists retain all items across pages;
+preview bytes equal the saved PNG.2653 tests,96 browser cases, local only.
+Actual iPhone/recipient-app sharing and content-rights gates remain separate.
+
+2026-10-28 local-only authorization: [[sessions/2026-10-28-Local-Work-Dislike]].
+Explicit work Dislike is0, separate from unrated/null and review reactions.
+Detail exact-count reader and Retry, composer/restoration, Home and share-zero
+handling prepared locally. No production/schema changes, build or Git push;
+real authenticated visibility and publication remain separate service gates.
+
+2026-10-27 functional priority: [[sessions/2026-10-27-Durable-Inbox-Review-Credit]].
+Owner prioritizes in-app delivery, not mandatory OS permission. Owner-scoped
+durable inbox/read retries and independent review-earned chapter/hour credit
+are source/browser verified;2620 tests pass. No service writes/release/push.
+Real two-account delivery, public credit projection and remaining import,
+work-dislike and character-photo requests are explicitly open.
+
+2026-10-27 sequential follow-up: [[sessions/2026-10-27-Home-Library-Profile-Refinement]].
+Home feed/progress, plain-background Library and all three original profile
+layouts received scoped refinements; whole-Home/Library pull refresh is wired.
+2610 tests,96 presentation and24 frame-motion cases, plus interactions and an
+11-book Library at three widths. Explore unchanged; owner/device acceptance open.
+
+2026-10-27 approval decision: [[sessions/2026-10-27-Home-Approved-Reference]].
+Owner approves Explore, rejects the other presentations. Home is revised first
+in its own layer,24 browser cases; Library/profile remain pending separate work.
+
+2026-10-27 material follow-up: [[sessions/2026-10-27-Glass-Depth-Typography]]
+records the owner's flat-glass/text objection. Shared material and contrast
+tokens replace90% control opacity; existing Arabic font and readable captions
+are coordinated.112 fresh browser cases and25 sampled pixel/contrast cases.
+
+2026-10-27 follow-up: [[sessions/2026-10-27-Ready-Themes-Hero-Bounds]] records
+owner screenshots disproving ready-made Pink consistency. Light/Pink now join
+the custom theme bridge; long Explore titles reserve the actual poster width.
+112 fresh browser cases; local only, no release/backend changes.
+
+2026-10-27: [[sessions/2026-10-27-Profile-Custom-Glass]] supersedes the Normal-only
+scope below: shared original three-layout Apple details and custom glass colors
+across cinematic screens/sheets.2587 tests,54 profile and16 route cases; local
+only. Owner visual approval and physical-device/live-service gates remain open.
+
+[[sessions/2026-10-26-Normal-Apple-Details]] supersedes the rejected profile
+concept direction: original layouts retained, Normal typography/control details
+polished first. Images, section order, frames and saved data remain.2580 source
+tests pass; Panoramic/Reader styling is unchanged and queued for separate passes.
+Local only, not native/device or production-service certification.
+
+[[sessions/2026-10-26-Work-Studio]] responds to the owner's follow-up screenshots
+with actual composition/workflow changes, not another color pass: status cards,
+three review views, portrait gallery, cover preview/apply and glass tool palette.
+2573 source tests pass. Existing storage/account callbacks remain authoritative;
+local AR/EN checks are not installed-device or production-service certification.
+
+[[sessions/2026-10-26-Work-Cinema]] handles the post composer first, then the work
+and connected editors in the selected glass identity.44 local bilingual viewport
+checks passed; genuine callbacks and original artwork remain. Escape and the
+book/chapter eligibility boundary were repaired. No push/build/service change.
+
+[[sessions/2026-10-26-Explore-Types-Search]] brings Types and Search into the
+approved identity and improves relevance, filters, paging and failure recovery.
+Search opens with real suggestions; explicit history is private session-only.
+No public-list search or production-service recovery is claimed. Local only.
+
+[[sessions/2026-10-26-Explore-Immersive-Reference]] replaces the separated hero
+with the owner's exact selected composition: top-to-bottom artwork, glass
+controls, a separate cover and Add, and three recommended previews.2541 source
+tests pass. Real catalog media, recommendation ownership and safe areas remain;
+no push, build or production changes.
+
+[[sessions/2026-10-26-Explore-Cinema]] removes the rejected automatic Library
+background and applies the approved dark/glass identity to Explore. Search and
+sheet layering fixes are included.2537 source tests,30 Explore and24 Library
+browser cases pass locally. No push/build or production service change.
+
+[[sessions/2026-10-26-Library-Cinema]] adds the next approved dark/glass section
+after Home. Owner-approved alternative Playwright completed24 Library cases and
+the pending Home/composer visual pass. Final2531 source tests pass. No push/build.
+
+[[sessions/2026-10-26-Open-Catalog]] expands local unified catalog search with
+four bibliographic sources, scoped identity/attribution and honest missing-work
+drafts. No push, native build or production deployment. Preview server: 8796.
+
+[[sessions/2026-10-25-Frame-Layout-Unity]] responds to rejected actual-profile
+screenshots after the store redesign. Shared header/side geometry, real artwork
+anchors, consistent portrait sizing and readable gutters cover51 old/new frames.
+306 public and87 actual-demo checks, plus9 long-name cases; no push or build.
+
+[[sessions/2026-10-25-Decoration-Store]] replaces the mixed shop with a searchable
+catalog, saved/owned views and live component previews.29 local offers cover both
+new six-pack batches and updated classics. Demo application preserved original
+profile media and was restored. No push/build or production enablement.
+
+[[sessions/2026-10-25-Balanced-Frame-Ribbons]] addresses the rejected thin upper
+line. The source texture now fills its ribbon band, with a modestly larger
+ornament and clear controls. A subsequent corner repair matches the animated
+side endpoints, tangents and separate textures.234 cases and2484 tests; no push/build.
+
+[[sessions/2026-10-25-Compact-Frame-Headers]] records the owner's correction:
+smaller crests above the banner, no crossing rail, and visible side deformation.
+234 final layout cases and2479 tests pass locally; no push or native build.
+
+[[sessions/2026-10-25-All-Frame-Restoration]] extends the repaired motion approach
+to the existing39-frame catalog. Preserved IDs and source art, connected skins,
+directional text clearance and lazy rigs;306 layout cases and2475 source tests.
+The source remains local; no build, push or live-service change.
+
+[[sessions/2026-10-25-Elven-Frame-Repairs]] addresses the owner's rejected elf
+page/PFP visuals: continuous material borders, connected PFP skin and accurate
+portrait silhouette.36 local layout cases pass; no push or binary build.
+
+[[sessions/2026-10-25-Elven-Local-Motion]] completes the selected six local elf
+renderers without a paid video service. Articulated parts, three-layout gallery,
+36-case matrix and2466 passing tests; no push, native build or production rollout.
+
+[[sessions/2026-10-25-Elven-Concepts]] adds twelve initial elf concepts and records
+the owner's six selected ear/woodland designs. Local three-ear twitch study and
+motion references verified; forest/page animation and app adoption still pending.
+New motion skills installed; nothing pushed or built.
+
+[[sessions/2026-10-25-PFP-Articulated-Motion]] adds independent PFP action layers
+instead of whole-image wobble while retaining approved page borders. Water/spray,
+gears, petals, panels and wing articulation verified locally;2461 tests pass.
+
+[[sessions/2026-10-24-Atelier-Perimeter-Waves]] replaces stretched Atelier side
+rails/footer with connected illustrated animated material, including rounded
+corners. Six-pack raster-motion proof and36 geometry cases;2457 source tests pass.
+
+[[sessions/2026-10-24-Atelier-Header-Waves]] replaces Atelier's thin upper line
+with six material-specific complete animated ribbons and removes the cropped top.
+Local36-case geometry checks pass; no GitHub push, native build or service change.
+
+[[sessions/2026-10-24-Banner-Repairs]] fixes decoration clipping, conflicting
+focal position, editor/output crop mismatch and tiny small-phone crests. Local
+owner/public browser matrices and2449 tests pass; device/service remain separate.
+
+[[sessions/2026-10-24-Profile-Header-Extent]] extends the original banner through
+the identity in all three layouts. Owner/public-renderer local QA and 2443 tests
+pass; physical-device and deployed-service verification remain separate.
+
+[[sessions/2026-10-24-Wooden-Shelf]] updates favorites to Showcase 3 / Bookshelf 7,
+with realistic wooden ends/supports, no lost saved choices and local-only verification.
+
+[[sessions/2026-10-24-Book-Showcase]] adds the ranked book view to favorites
+and library while preserving old choices. Local verification and live service QA are separate.
+
+[[sessions/2026-10-23-Reader-Layout]] adds the selected Profile design as a
+third saved layout (Reader), alongside Normal and Panoramic. Local only;
+the public artwork whitelist migration is prepared but not deployed.
+
+[[sessions/2026-10-21-Private-TestFlight-Candidate]] يوثق طلب بيلد خاص جديد
+من 3894356، و2411 اختبارًا قبل التحضير وبعده. وصل بناء36 إلى Apple وأكمل المعالجة
+بحالة Missing Compliance، مع0 مجموعات و0 مختبرين. بقي إقرار التشفير معلّقًا؛
+لا تغيير لأعضاء المجموعات أو إقرار الحقوق والخصوصية ولا تفعيل للاختبار.
+
+[[sessions/2026-10-21-Chat-Latest-Preview]] يوثق جلب 3894356 في نسخة هذه
+المحادثة، وحفظ الفهارس المولدة القديمة للاسترجاع وتشغيل المعاينة دون بيلد.
+
 [[sessions/2026-10-20-Publisher-Index]] يضيف29نبذة منصفحات الناشر ويكمل
 58خانة فيفهرسه،دون تغييرالمحفوظ؛2341اختبارًا و8حالات متصفح ناجحة.
 نقص النبذ العربية1190باقٍ،مع قائمة1206سجلات لنواقصحقول متداخلة؛كلالعملمحلي.
@@ -482,3 +839,13 @@ Type-page search now connects its selected format to the existing debounced onli
 2026-10-21: [[sessions/2026-10-21-Search-Audit]] repairs main All-format online lookup and isolates People/Lists from catalog listeners; 234 focused checks, browser result evidence, and five matching installed simulator assets. Live directory/provider coverage remains separate. No commit or push.
 
 2026-10-21: Owner authorized committing/pushing accumulated local repairs; [[sessions/2026-10-21-GitHub-Sync]] records 2370 passing full-suite checks and six missing-dependency failures, plus 234/234 focused search checks. No release upload.
+
+2026-10-24: [[sessions/2026-10-24-Motion-Atelier]] implements six locally gated
+original animated materials, shared scheduling and measured thick-frame clearance.
+All36 public-fixture layout/size cases passed geometry checks; demo apply/restore
+preserved avatar/banner. No GitHub push, native build or live service changes.
+
+2026-10-26: [[sessions/2026-10-26-Home-Cinema]] implements the approved cinematic
+Apple/Glassy direction on Home only. Actual reading data and existing feed are
+retained; Dislike gets immediate guarded updates. Library/Explore/Profile remain
+separate future phases. Full suite: 2523 passed. Local only, no build or push.

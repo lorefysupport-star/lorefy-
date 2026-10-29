@@ -1,0 +1,13 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const file='uploads/files/lorefy-app.js';let source=readFileSync(file,'utf8');
+const start=source.indexOf('normalizeCoverChoices=e=>'),end=source.indexOf(',_esc=',start);
+if(start<0||end<start)throw Error('Missing cover normalization boundary');
+const normalize=`normalizeCoverChoices=e=>{const i=typeof window<"u"&&window.LorefyCoverAPI,l=Array.isArray(e)?e:[],a=i&&i.uniqueChoices?i.uniqueChoices(l):l.map(p=>typeof p=="string"?p:p&&p.img).filter(Boolean),c=a.length?a:l.map(p=>typeof p=="string"?p:p&&p.img).filter(Boolean),key=p=>{try{const u=new URL(p,location.href);if(u.pathname==="/api/media"||/\\/functions\\/v1\\/lorefy-public\\/media$/.test(u.pathname))p=u.searchParams.get("url")||p}catch{}return i&&i.dedupeKey?i.dedupeKey(p):p};return c.map((p,f)=>{const row=l.find(v=>v&&typeof v==="object"&&key(v.img)===key(p)),details=row&&row.details?{...row.details}:i&&i.describe?i.describe(p):{};return{label:f===0?"الغلاف الأساسي":"غلاف "+(f+1),img:i&&i.displayUrl?i.displayUrl(p):p,details}})}`;
+source=source.slice(0,start)+normalize+source.slice(end);
+const oldStart='return No(!0),t.alternates(r).then(n=>{',newStart='return No(!0),(t.choices?t.choices(r):t.alternates(r)).then(n=>{';
+const at=source.indexOf(oldStart),done=at<0?source.indexOf(newStart):at;
+if(done<0)throw Error('Missing cover lookup boundary');
+const effectEnd=source.indexOf('}).catch(()=>{}).finally(()=>{o||No(!1)})',done);
+if(effectEnd<done)throw Error('Missing cover lookup completion');
+source=source.slice(0,done)+newStart+'if(o)return;On(d=>({...d,[r.id]:normalizeCoverChoices(n)}))'+source.slice(effectEnd);
+writeFileSync(file,source);

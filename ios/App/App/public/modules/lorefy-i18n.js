@@ -394,5 +394,22 @@
     return date.toLocaleDateString(locale, { day:'numeric', month:'long', year:'numeric' })
       + ' \u00b7 ' + date.toLocaleTimeString(locale, { hour:'2-digit', minute:'2-digit' });
   }
-  return {messages:messages,translate:translate,textNode:textNode,attributes:attributes,connections:connections,reviewTimestamp:reviewTimestamp};
+  // Display-only reading vocabulary. Publication metadata and persisted states stay separate.
+  var readingStates = [
+    {values:['أقرأ حالياً','reading'], ar:'أقرأ الآن', en:'Reading', emptyAr:'لا توجد أعمال تقرؤها الآن.', emptyEn:'No works you are reading right now.'},
+    {values:['تم القراءة','done','completed'], ar:'قرأته', en:'Completed', emptyAr:'لم تضف أعمالًا قرأتها بعد.', emptyEn:'No completed reads yet.'},
+    {values:['قائمة الأمنيات','wish'], ar:'أرغب بالقراءة', en:'Want to read', emptyAr:'لم تضف أعمالًا ترغب بقراءتها بعد.', emptyEn:'No works on your want-to-read list yet.'},
+    {values:['توقف','paused'], ar:'متوقف مؤقتًا', en:'Paused', emptyAr:'لا توجد أعمال متوقفة مؤقتًا.', emptyEn:'No paused reads.'},
+    {values:['توقف نهائي','dropped'], ar:'توقفت نهائيًا', en:'Dropped', emptyAr:'لا توجد أعمال توقفت عن قراءتها نهائيًا.', emptyEn:'No dropped reads.'}
+  ];
+  function readingStatusLabel(value, lang) {
+    var state = readingStates.find(function (row) { return row.values.includes(value); });
+    return state ? state[lang === 'en' ? 'en' : 'ar'] : typeof value === 'string' ? value : '';
+  }
+  function readingStatusEmpty(value, lang) {
+    var state = readingStates.find(function (row) { return row.values.includes(value); });
+    return state ? state[lang === 'en' ? 'emptyEn' : 'emptyAr'] : lang === 'en' ? 'No works with this reading status.' : 'لا توجد أعمال بهذه الحالة.';
+  }
+  return {messages:messages,translate:translate,textNode:textNode,attributes:attributes,connections:connections,reviewTimestamp:reviewTimestamp,
+    readingStatusLabel:readingStatusLabel,readingStatusEmpty:readingStatusEmpty};
 });

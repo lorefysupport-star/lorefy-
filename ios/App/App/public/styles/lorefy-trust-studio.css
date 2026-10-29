@@ -1,0 +1,41 @@
+/* Correction and safety content uses the shared Product Tools sheet chrome. */
+@layer lorefy-glass-materials {
+.lf-trust-studio .lf-product-list-row { display:grid !important; grid-template-columns:minmax(0,1fr) auto !important; align-items:start !important; gap:12px !important; padding-block:16px !important; border-color:var(--glass-edge) !important; }
+.lf-trust-studio .lf-product-list-copy :is(strong,small) { white-space:normal !important; overflow-wrap:anywhere; line-height:1.6 !important; }
+.lf-trust-studio .lf-product-list-copy strong { color:var(--ui-glass-ink) !important; font-size:14px !important; font-weight:500 !important; }
+.lf-trust-studio .lf-product-list-copy small { color:var(--ui-glass-secondary) !important; font-size:12px !important; }
+.lf-trust-studio .lf-product-status { max-width:112px; box-sizing:border-box; padding:5px 8px !important; border:1px solid var(--glass-edge); border-radius:6px !important; background:var(--ui-fill) !important; color:var(--ui-ink) !important; font-size:12px !important; font-weight:500 !important; line-height:1.5 !important; }
+.lf-trust-studio .lf-product-sheet-body>.lf-product-secondary { margin-top:20px !important; }
+.lf-correction-form .lf-product-form-row { gap:8px !important; margin-bottom:20px !important; }
+.lf-correction-form .lf-product-form-row label { color:var(--ui-glass-ink) !important; font-size:14px !important; line-height:1.6 !important; font-weight:500 !important; }
+.lf-correction-form :is(input,select,textarea) { background:var(--ui-fill) !important; color:var(--ui-ink) !important; border:1px solid var(--glass-edge) !important; border-radius:8px !important; font-family:var(--glass-font) !important; font-size:16px !important; line-height:1.6 !important; min-height:44px !important; padding:10px 12px !important; }
+.lf-correction-form textarea { min-height:128px !important; resize:vertical; }
+.lf-correction-form [aria-invalid='true'] { border-color:var(--ui-danger) !important; }
+.lf-correction-form .lf-product-primary { min-height:44px !important; background:var(--ui-action) !important; color:var(--ui-on-action) !important; border:1px solid var(--ui-action) !important; border-radius:8px !important; font-size:14px !important; font-weight:600 !important; line-height:1.6 !important; }
+.lf-trust-studio .lf-correction-feedback { margin:0 0 20px; border-inline-start:3px solid var(--ui-danger); padding:10px 12px; color:var(--ui-glass-ink); font-size:14px; line-height:1.7; }
+.lf-trust-studio .lf-safety-remove { width:auto !important; min-width:100px; min-height:44px !important; margin:0 !important; }
+.lf-trust-studio .lf-safety-feedback { grid-column:1/-1; margin:0; color:var(--ui-glass-ink); font-size:14px; line-height:1.7; padding:8px 12px; }
+.lf-trust-studio .lf-safety-feedback[role='alert'] { border-inline-start:3px solid var(--ui-danger); }
+.lf-request-studio .lf-catalog-request-form { display:grid; gap:20px; padding-top:16px; }
+.lf-request-studio .lf-catalog-request-form label { gap:8px; color:var(--ui-glass-ink); font-size:14px; font-weight:500; line-height:1.6; }
+.lf-request-studio .lf-catalog-request-form :is(input,select,textarea) { background:var(--ui-fill) !important; color:var(--ui-ink) !important; border:1px solid var(--glass-edge) !important; border-radius:8px !important; min-height:44px !important; font-size:16px !important; font-weight:400 !important; line-height:1.6 !important; padding:10px 12px !important; }
+.lf-request-studio .lf-catalog-request-form .lf-product-primary { min-height:44px !important; background:var(--ui-action) !important; color:var(--ui-on-action) !important; border:1px solid var(--ui-action) !important; border-radius:8px !important; font-size:14px !important; font-weight:600 !important; }
+.lf-request-studio .lf-catalog-request-form [aria-invalid='true'] { border-color:var(--ui-danger) !important; }
+.lf-request-studio .lf-request-error { color:var(--ui-glass-ink); border-inline-start:3px solid var(--ui-danger); padding-inline-start:10px; font-size:13px; font-weight:400; line-height:1.7; }
+.lf-request-studio .lf-request-feedback { color:var(--ui-glass-ink); font-size:14px; line-height:1.7; margin:0; }
+.lf-request-studio .lf-request-feedback[role='alert'] { border-inline-start:3px solid var(--ui-danger); padding:8px 12px; }
+.lf-request-studio .lf-catalog-request-drafts { padding-block:24px 4px; margin-top:24px; border-top:1px solid var(--glass-edge); }
+.lf-request-studio .lf-catalog-request-drafts h3 { color:var(--ui-glass-ink); font-size:16px; font-weight:600; line-height:1.5; margin:0 0 12px; }
+.lf-request-studio .lf-catalog-draft-remove { width:44px !important; height:44px !important; color:var(--ui-glass-ink) !important; }
+.lf-report-form .lf-product-form-row { gap:8px !important; margin-bottom:20px !important; }
+.lf-report-form label { color:var(--ui-glass-ink) !important; font-size:14px !important; font-weight:500 !important; line-height:1.6 !important; }
+.lf-report-form :is(select,textarea) { min-height:44px !important; padding:10px 12px !important; background:var(--ui-fill) !important; color:var(--ui-ink) !important; border:1px solid var(--glass-edge) !important; border-radius:8px !important; font-size:16px !important; font-weight:400 !important; line-height:1.6 !important; }
+.lf-report-form textarea { min-height:128px !important; resize:vertical; }
+.lf-report-form .lf-product-primary { min-height:44px !important; background:var(--ui-action) !important; color:var(--ui-on-action) !important; border:1px solid var(--ui-action) !important; border-radius:8px !important; font-size:14px !important; font-weight:600 !important; line-height:1.6 !important; }
+.lf-report-studio .lf-report-feedback { margin:16px 0 0; padding:10px 12px; color:var(--ui-glass-ink); font-size:14px; line-height:1.7; }
+.lf-report-studio .lf-report-feedback[role='alert'] { border-inline-start:3px solid var(--ui-danger); }
+.lf-report-studio .lf-product-danger { display:flex; align-items:center; justify-content:center; min-height:44px !important; margin-top:0 !important; padding:10px 12px !important; background:var(--ui-fill) !important; color:var(--ui-ink) !important; border:1px solid var(--ui-danger) !important; border-radius:8px !important; font-size:14px !important; font-weight:500 !important; line-height:1.5 !important; }
+.lf-trust-studio [hidden] { display:none !important; }
+.lf-trust-studio :is(input,textarea,button,select,[tabindex='-1']):focus-visible { outline:2px solid var(--ui-action) !important; outline-offset:3px !important; }
+@media (max-width:360px) { .lf-trust-studio .lf-product-list-row { grid-template-columns:minmax(0,1fr) !important; } }
+}

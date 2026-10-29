@@ -46,9 +46,10 @@ test('gallery cards expose the precise score and retain their work navigation', 
   const start = source.indexOf('function profileRatedCharacterShelfCard(');
   vm.runInNewContext(source.slice(start, source.indexOf('function ratedCharacterGroups(', start)), scope);
   const card = scope.profileRatedCharacterShelfCard(items[0]);
-  assert.ok(card.attrs['aria-label'].includes('4.50'));
+  const open = nodes.find(n => n.attrs.class === 'lf-profile-character-open');
+  assert.ok(open.attrs['aria-label'].includes('4.50'));
   assert.equal(nodes.find(n => n.attrs.class === 'lf-character-rating-number').attrs.text, '4.50');
-  card.handlers.click(); assert.equal(opened.workId, 'boys');
+  open.handlers.click(); assert.equal(opened.workId, 'boys');
 });
 test('character gallery assets and portal-safe feather clipping are registered', () => {
   const css = fs.readFileSync(path.join(root, 'styles/lorefy-character-atlas.css'), 'utf8');

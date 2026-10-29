@@ -6,16 +6,18 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
-test('profile layout accepts only the two supported choices', () => {
+test('profile layout accepts the three supported choices', () => {
   const api = require('../modules/lorefy-profile-layout.js');
   for (const value of [null, undefined, '', {}, [], 'pink', 'IMMERSIVE']) assert.equal(api.normalize(value), 'normal');
   assert.equal(api.normalize('immersive'), 'immersive');
   assert.equal(api.normalize('normal'), 'normal');
+  assert.equal(api.normalize('reader'), 'reader');
 });
 
 test('public layout belongs to the owner, not the viewer', () => {
   const api = require('../modules/lorefy-profile-layout.js');
   assert.equal(api.forProfile({profile_layout:'immersive'}), 'immersive');
+  assert.equal(api.forProfile({profile_layout:'reader'}), 'reader');
   assert.equal(api.forProfile({}), 'normal');
   assert.equal(api.forProfile({profile_layout:'invalid'}), 'normal');
   assert.match(read('modules/lorefy-public-profile.js'), /root.LorefyProfileLayout.forProfile\(profile\)/);
@@ -34,8 +36,8 @@ test('layout sync is account scoped, and editor commits only after successful sa
 
 test('picker has translated choices and standard native radios', () => {
   const api = require('../modules/lorefy-profile-layout.js');
-  assert.deepEqual(api.options('en').map(x => x.label), ['Normal', 'Panoramic']);
-  assert.equal(api.options('ar').length, 2);
+  assert.deepEqual(api.options('en').map(x => x.label), ['Normal', 'Panoramic', 'Reader']);
+  assert.equal(api.options('ar').length, 3);
   assert.match(read('modules/lorefy-profile-layout.js'), /type:'radio'/);
   assert.match(read('index.html'), /modules\/lorefy-profile-layout.js/);
   assert.match(read('sw.js'), /modules\/lorefy-profile-layout.js/);
@@ -71,11 +73,12 @@ test('picker selects a draft via callback without writing account data', () => {
   const tree = window.LorefyProfileLayout.Picker({lang:'en', value:'normal', banner:'https://example.com/banner.jpg', avatar:'https://example.com/avatar.jpg', onChange:value => changes.push(value)});
   const flatten = tree => tree && typeof tree === 'object' ? [tree, ...tree.children.flatMap(flatten)] : [];
   const radios = flatten(tree).filter(node => node.type === 'input');
-  assert.equal(radios.length, 2);
+  assert.equal(radios.length, 3);
   assert.equal(radios[0].props.checked, true);
   assert.equal(radios[1].props.checked, false);
   radios[1].props.onChange();
-  assert.deepEqual(changes, ['immersive']);
+  radios[2].props.onChange();
+  assert.deepEqual(changes, ['immersive', 'reader']);
 });
 
 test('public SQL projects a whitelisted layout and preserves visibility guards', () => {

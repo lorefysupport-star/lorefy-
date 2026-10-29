@@ -110,6 +110,9 @@ window.LOREFY_CATALOG_UPDATES = window.LOREFY_CATALOG_UPDATES || {
    place; new or missing works are fetched on demand and cached as small deltas. */
 window.LOREFY_REMOTE_CATALOG = window.LOREFY_REMOTE_CATALOG || {
   enabled: true,
+  openSourcesPreview: true,
+  openSourcesEnabled: false,
+  requestTimeoutMs: 18000,
   autoSearch: true,
     // Load only the selected type's bundled expansion after the base catalog is ready.
     // Other types and remote providers remain lazy.
@@ -131,6 +134,9 @@ window.LOREFY_REMOTE_CATALOG = window.LOREFY_REMOTE_CATALOG || {
     anilist: true,
     mangaDex: true,
     openLibrary: true,
+    bookBrainz: true,
+    wikidata: true,
+    gcd: true,
     googleBooks: false
   }
 };

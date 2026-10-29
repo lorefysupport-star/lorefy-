@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lorefy Home Cinema QA</title>
+<style>
+body{margin:0;background:#141618;color:#eee;font:14px system-ui}
+header{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;flex-wrap:wrap}
+select{background:#282c30;border:1px solid #697078;border-radius:6px;color:#fff;min-height:44px;padding:6px}
+iframe{display:block;width:390px;height:844px;border:0;margin:0 auto 20px;background:#08090b}
+</style>
+<header><label>Viewport <select id="size"><option>390</option><option>320</option><option>768</option></select></label><label>Page <select id="route"><option value="home">Home</option><option value="library">Library</option><option value="discover">Explore</option></select></label></header>
+<iframe id="preview" title="Live Lorefy Home"></iframe>
+<script>
+// This fixture changes viewport and route only; it never seeds or clears account data.
+const frame=document.getElementById('preview');
+document.getElementById('size').onchange=event=>{frame.style.width=event.target.value+'px';frame.style.height=event.target.value==='768'?'1000px':'844px';};
+function load(){frame.src='../index.html?preview=demo&demo=ready&adaptive=1&route='+document.getElementById('route').value+'&fresh=home-cinema';}
+document.getElementById('route').onchange=load;load();
+</script>
+</html>

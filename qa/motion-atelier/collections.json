@@ -1,0 +1,110 @@
+[
+  {
+    "names": {
+      "ar": "عاصفة الحبر",
+      "en": "Inkstorm"
+    },
+    "second": "#e8ddcd",
+    "pageOverlay": "qa/motion-atelier/inkstorm/page.png",
+    "id": "atelier-inkstorm",
+    "artId": "inkstorm",
+    "releaseAllowed": false,
+    "geometry": {
+      "cy": 0.47451171875,
+      "size": 0.48515625,
+      "cx": 0.4982421875
+    },
+    "overlay": "qa/motion-atelier/inkstorm/avatar.png",
+    "accent": "#d32c44"
+  },
+  {
+    "names": {
+      "ar": "أطلس النجوم",
+      "en": "Star Atlas"
+    },
+    "second": "#46b9cb",
+    "pageOverlay": "qa/motion-atelier/star-atlas/page.png",
+    "id": "atelier-star-atlas",
+    "artId": "star-atlas",
+    "releaseAllowed": false,
+    "geometry": {
+      "cy": 0.46923828125,
+      "size": 0.446484375,
+      "cx": 0.49912109375
+    },
+    "overlay": "qa/motion-atelier/star-atlas/avatar.png",
+    "accent": "#c6a24d"
+  },
+  {
+    "names": {
+      "ar": "نسيم الساكورا",
+      "en": "Sakura Wind"
+    },
+    "second": "#c5a9b5",
+    "pageOverlay": "qa/motion-atelier/sakura-wind/page.png",
+    "id": "atelier-sakura-wind",
+    "artId": "sakura-wind",
+    "releaseAllowed": false,
+    "geometry": {
+      "cy": 0.4841796875,
+      "size": 0.45351562500000003,
+      "cx": 0.5105468750000001
+    },
+    "overlay": "qa/motion-atelier/sakura-wind/avatar.png",
+    "accent": "#dc7298"
+  },
+  {
+    "names": {
+      "ar": "مدّ زجاجي",
+      "en": "Tidal Glass"
+    },
+    "second": "#f39a79",
+    "pageOverlay": "qa/motion-atelier/tidal-glass/page.png",
+    "id": "atelier-tidal-glass",
+    "artId": "tidal-glass",
+    "releaseAllowed": false,
+    "geometry": {
+      "cy": 0.44638671875,
+      "size": 0.425390625,
+      "cx": 0.48330078125
+    },
+    "overlay": "qa/motion-atelier/tidal-glass/avatar.png",
+    "accent": "#29bbca"
+  },
+  {
+    "names": {
+      "ar": "الإشارة صفر",
+      "en": "Signal Zero"
+    },
+    "second": "#46d9d6",
+    "pageOverlay": "qa/motion-atelier/signal-zero/page.png",
+    "id": "atelier-signal-zero",
+    "artId": "signal-zero",
+    "releaseAllowed": false,
+    "geometry": {
+      "cy": 0.4560546875,
+      "size": 0.467578125,
+      "cx": 0.49912109375
+    },
+    "overlay": "qa/motion-atelier/signal-zero/avatar.png",
+    "accent": "#93d92c"
+  },
+  {
+    "names": {
+      "ar": "رحلة ورقية",
+      "en": "Paper Flight"
+    },
+    "second": "#dbd0b7",
+    "pageOverlay": "qa/motion-atelier/paper-flight/page.png",
+    "id": "atelier-paper-flight",
+    "artId": "paper-flight",
+    "releaseAllowed": false,
+    "geometry": {
+      "cy": 0.46220703125,
+      "size": 0.478125,
+      "cx": 0.517578125
+    },
+    "overlay": "qa/motion-atelier/paper-flight/avatar.png",
+    "accent": "#d44b41"
+  }
+]

@@ -78,17 +78,17 @@ test('localized commands preserve the review draft action and reader tab keys', 
 });
 
 test('status badges render their provided language while retaining Arabic persistence keys', () => {
-  const scope = {SC:{},C:{},W:'ar',window:{LorefyI18n:i18n},
+  const scope = {SC:{},C:{},W:'ar',window:{LorefyI18n:i18n},lorefyReadingStatusLabel:i18n.readingStatusLabel,
     React:{createElement:(type,props,...children) => ({children})}};
   const badge = helper('SBadge','PBar',scope);
-  for (const [status,label] of [['أقرأ حالياً','Reading'],['تم القراءة','Completed'],['قائمة الأمنيات','Wishlist'],['توقف','Paused'],['توقف نهائي','Dropped']]) {
+  for (const [status,label] of [['أقرأ حالياً','Reading'],['تم القراءة','Completed'],['قائمة الأمنيات','Want to read'],['توقف','Paused'],['توقف نهائي','Dropped']]) {
     assert.equal(badge({status,language:'en'}).children[0],label);
-    assert.equal(badge({status,language:'ar'}).children[0],status);
+    assert.equal(badge({status,language:'ar'}).children[0],i18n.readingStatusLabel(status,'ar'));
   }
 });
 
 test('shared status badges without a language prop use the document fallback, not App-local state', () => {
-  const badge=helper('SBadge','PBar',{SC:{},C:{},currentUILang:()=> 'en',window:{LorefyI18n:i18n},
+  const badge=helper('SBadge','PBar',{SC:{},C:{},currentUILang:()=> 'en',window:{LorefyI18n:i18n},lorefyReadingStatusLabel:i18n.readingStatusLabel,
     React:{createElement:(type,props,...children)=>({children})}});
   assert.equal(badge({status:'تم القراءة'}).children[0],'Completed');
 });

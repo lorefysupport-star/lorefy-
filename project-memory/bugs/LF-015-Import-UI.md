@@ -3,6 +3,12 @@
 ---
 # LF-015: Readable Import Actions and Named Fields
 
+2026-10-28 follow-up: [[sessions/2026-10-28-UI-Foundation-Phase-Three]] adopts the
+current glass/semantic material, visible field labels, direct AR/EN chrome and
+announced loading/error/review states. Source/browser evidence is updated there;
+this issue still requires native-device confirmation. Earlier evidence below is
+historical, not a claim that the old visual treatment is current.
+
 Dark-theme import buttons used white text on `#f0f0f3`. The overlay is attached
 beside `.lf-app`, so `.lf-app.is-dark .lf-im-go` never matched. The legacy action
 background resolved to the new theme action while its hard-coded foreground did

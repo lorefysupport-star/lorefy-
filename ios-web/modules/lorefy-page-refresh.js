@@ -5,6 +5,14 @@
   if (root && root.document) api.install(root);
 })(typeof window !== 'undefined' ? window : null, function () {
   'use strict';
+  var PAGE_SELECTOR='.lf-home-cinema,.lf-library-cinema,.lf-reader-full,.lf-profile-page,.lf-community-page';
+  function refreshNames(target,has) {
+    var community=target.matches('.lf-home-cinema,.lf-community-page');
+    var names=community?['community-posts']:target.matches('.lf-reader-full')?['profile-visitor']:['profile-owner'];
+    if(has('community-reviews'))names.push('community-reviews');
+    if(community&&has('community-friends'))names.push('community-friends');
+    return names;
+  }
   function createGesture() {
     var start = null, distance = 0;
     return {
@@ -67,7 +75,7 @@
     var editorSelector = '[role="dialog"],.nc-sheet,.lf-profile-list-editor,.lf-community-compose-sheet,.lf-feature-overlay';
     function blocked() { return !!doc.querySelector(editorSelector); }
     function visiblePage() {
-      return doc.querySelector('.lf-reader-full,.lf-profile-page,.lf-community-page');
+      return doc.querySelector(PAGE_SELECTOR);
     }
     function atTop(node) {
       for (var p = node; p && p !== doc; p = p.parentElement) {
@@ -115,10 +123,7 @@
       };
       busy = true; paint('refreshing');
       try {
-        var names = target.matches('.lf-community-page') ? ['community-posts']
-          : target.matches('.lf-reader-full') ? ['profile-visitor'] : ['profile-owner'];
-        if (runner.has('community-reviews')) names.push('community-reviews');
-        if (target.matches('.lf-community-page') && runner.has('community-friends')) names.push('community-friends');
+        var names = refreshNames(target,runner.has);
         await Promise.all(names.map(function (name) { return runner.run(name, {active:active}); }));
         if (request === generation) paint(active() ? 'success' : 'idle');
       } catch (_) { if (request === generation) paint(active() ? 'error' : 'idle'); }
@@ -168,5 +173,5 @@
     observer.observe(doc.documentElement, {childList:true,subtree:true});
     if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', schedule); else schedule();
   }
-  return {createGesture:createGesture, createRunner:createRunner, install:install};
+  return {PAGE_SELECTOR:PAGE_SELECTOR,refreshNames:refreshNames,createGesture:createGesture, createRunner:createRunner, install:install};
 });

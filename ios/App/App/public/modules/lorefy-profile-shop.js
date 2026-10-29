@@ -39,6 +39,57 @@
   let offerIds=null;
   const offeredBundles=()=>offerIds ? offerIds.map(findBundle).filter(Boolean) : bundles;
   const hasPaidOffers=()=>offeredBundles().some(pack=>!pack.free);
+  const collectionKey=pack=>pack.renderer==='elven'?'elven':pack.renderer==='atelier'?'atelier':'classic';
+  const searchKey=value=>String(value||'').normalize('NFKD').replace(/[\u0300-\u036f\u064b-\u065f]/g,'').replace(/[أإآ]/g,'ا').toLowerCase().trim();
+  function filterCatalog(options={}){
+    const {items=offeredBundles(),collection='all',query='',view='collections',wishlist=[],owned=[],freeOnly=false,sort='newest',lang='ar'}=options;
+    const terms=searchKey(query).split(/\s+/).filter(Boolean),rank={elven:0,atelier:1,classic:2};
+    return items.filter(p=>(collection==='all'||collectionKey(p)===collection)&&(!freeOnly||p.free)&&
+      (view!=='saved'||wishlist.includes(p.id))&&(view!=='owned'||p.free||owned.includes(p.productId))&&
+      terms.every(term=>searchKey([p.names.ar,p.names.en,p.collection.ar,p.collection.en].join(' ')).includes(term)))
+      .sort((a,b)=>sort==='name'?a.names[lang].localeCompare(b.names[lang],lang):rank[collectionKey(a)]-rank[collectionKey(b)]);
+  }
+  function installAtelierCollections(items) {
+    if(!isLocalLab()||!Array.isArray(items)||items.length!==6)return false;
+    const allowed=new Set(['inkstorm','star-atlas','sakura-wind','tidal-glass','signal-zero','paper-flight']),ids=new Set();
+    if(items.some(p=>!p||!allowed.has(p.artId)||p.id!=='atelier-'+p.artId||ids.has(p.id)||!ids.add(p.id)||
+      p.overlay!=='qa/motion-atelier/'+p.artId+'/avatar.png'||p.pageOverlay!=='qa/motion-atelier/'+p.artId+'/page.png'||
+      p.releaseAllowed!==false||!p.names||typeof p.names.ar!=='string'||typeof p.names.en!=='string'||
+      !/^#[\da-f]{6}$/i.test(p.accent)||!/^#[\da-f]{6}$/i.test(p.second)||!p.geometry||!validGeometry(p.geometry,.4)))return false;
+    const extra=items.map(p=>Object.freeze({id:p.id,artId:p.artId,renderer:'atelier',overlay:p.overlay,pageOverlay:p.pageOverlay,
+      names:Object.freeze({...p.names}),accent:p.accent,second:p.second,geometry:Object.freeze({...p.geometry}),releaseAllowed:false,
+      parts:Object.freeze(['frame','page']),free:true,price:null,row:'0%',icon:'Sparkles',
+      collection:Object.freeze({ar:'مشغل لورفاي',en:'Lorefy Atelier'}),motion:Object.freeze({color:p.accent,second:p.second})}));
+    bundles=Object.freeze([...bundles.filter(p=>p.renderer!=='atelier'),...extra]);
+    offerIds=Object.freeze([...extra.map(p=>p.id),...(offerIds||[]).filter(id=>!ids.has(id))]);return true;
+  }
+  function installElvenCollections(items) {
+    if(!isLocalLab()||!Array.isArray(items)||items.length!==6)return false;
+    const allowed=new Set(['emerald-whisper','duskborn','opal-silk','living-grove','elven-ranger','autumn-court']),ids=new Set();
+    if(items.some(p=>!p||!allowed.has(p.artId)||p.id!=='elven-'+p.artId||ids.has(p.id)||!ids.add(p.id)||
+      p.overlay!=='qa/elf-motion/'+p.artId+'/avatar.png'||p.pageOverlay!=='qa/elf-motion/'+p.artId+'/page.png'||
+      p.releaseAllowed!==false||!p.names||typeof p.names.ar!=='string'||typeof p.names.en!=='string'||
+      !/^#[\da-f]{6}$/i.test(p.accent)||!/^#[\da-f]{6}$/i.test(p.second)||!p.geometry||!validGeometry(p.geometry,.35)||
+      !Array.isArray(p.portraitClip)||p.portraitClip.length!==72||p.portraitClip.some(q=>!Array.isArray(q)||q.length!==2||q.some(v=>!Number.isFinite(v)||v<0||v>1))))return false;
+    const extra=items.map(p=>Object.freeze({id:p.id,artId:p.artId,renderer:'elven',overlay:p.overlay,pageOverlay:p.pageOverlay,
+      names:Object.freeze({...p.names}),accent:p.accent,second:p.second,geometry:Object.freeze({...p.geometry}),portraitClip:Object.freeze(p.portraitClip.map(q=>Object.freeze([...q]))),releaseAllowed:false,
+      parts:Object.freeze(['frame','page']),free:true,price:null,row:'0%',icon:'Sparkles',
+      collection:Object.freeze({ar:'إلف لورفاي',en:'Lorefy Elven Atelier'}),motion:Object.freeze({color:p.accent,second:p.second})}));
+    bundles=Object.freeze([...bundles.filter(p=>p.renderer!=='elven'),...extra]);
+    offerIds=Object.freeze([...extra.map(p=>p.id),...(offerIds||[]).filter(id=>!ids.has(id))]);return true;
+  }
+  function installRestoration(items){
+    if(!Array.isArray(items)||items.length!==39||new Set(items.map(p=>p&&p.id)).size!==39)return false;
+    if(items.some(p=>!p||(!findBundle(p.id)&&!(root.LorefyFrameRestoration&&root.LorefyFrameRestoration.valid(p)))||!(['observatory','blossom','manuscript'].includes(p.id)||/^(pfpvibes|original)-[a-z-]+$/.test(p.id))||
+      p.avatar!=='launch/decorations/refined/'+p.id+'.png'||!validGeometry(p.geometry,.35)||!p.aperture||!Number.isFinite(p.aperture.size)||p.aperture.size<=0||p.aperture.size>=p.geometry.size||
+      !Array.isArray(p.portraitClip)||p.portraitClip.length!==72||p.portraitClip.some(q=>!Array.isArray(q)||q.length!==2||q.some(v=>!Number.isFinite(v)||v<0||v>1))||
+      root.LorefyFrameRestoration&&!root.LorefyFrameRestoration.valid(p)))return false;
+    const byId=new Map(items.map(p=>[p.id,p]));
+    bundles=Object.freeze(bundles.map(pack=>{const p=byId.get(pack.id);return p?Object.freeze({...pack,motionRenderer:'restored',motionOverlay:p.avatar,
+      geometry:Object.freeze({...p.geometry}),portraitClip:Object.freeze(p.portraitClip.map(q=>Object.freeze([...q])))}):pack;}));return true;
+  }
+  function articulated(pack){return !!pack&&(pack.renderer==='atelier'||pack.renderer==='elven'||pack.motionRenderer==='restored');}
+  function motionOriginal(pack){const renderer=pack.motionRenderer||pack.renderer;return renderer?{original:{id:pack.motionRenderer?pack.id:pack.artId,renderer}}:{};}
   function installShopCatalog(catalog) {
     if(!catalog || catalog.version!==1 || !Array.isArray(catalog.freeIds) || catalog.freeIds.length!==5 || !Array.isArray(catalog.paid) || catalog.paid.length!==12)return false;
     const ids=new Set(),products=new Set();
@@ -86,7 +137,10 @@
     // Calibrated against each sprite's transparent portrait aperture, not its outer artwork.
     return {observatory:{cx:.493,cy:.463,size:.66},blossom:{cx:.523,cy:.483,size:.66},manuscript:{cx:.511,cy:.432,size:.66}}[id] || {cx:.5,cy:.5,size:.66};
   }
-  function validGeometry(g){return ['cx','cy','size'].every(key=>Number.isFinite(g[key])) && g.size>=.5 && g.size<=.85 &&
+  function avatarSize(id,width=440) {
+    const g=frameGeometry(id);return Math.min(96,(width<380?136:160)*g.size);
+  }
+  function validGeometry(g,min=.5){return ['cx','cy','size'].every(key=>Number.isFinite(g[key])) && g.size>=min && g.size<=.85 &&
     g.cx-g.size/2>=.02 && g.cx+g.size/2<=.98 && g.cy-g.size/2>=.02 && g.cy+g.size/2<=.98;}
   function avatarMotion(pack){return {...pack.motion,portrait:frameGeometry(pack.id)};}
   const wishlistKey = owner => 'lorefy.shop.preview.wishlist.v1:' + encodeURIComponent(owner);
@@ -110,9 +164,10 @@
     const geometry = frameGeometry(pack.id);
     return {'--shop-accent':pack.accent,'--shop-second':pack.second,'--shop-row':pack.row,'--shop-frame-x':pack.row,
       '--shop-portrait-x':geometry.cx * 100 + '%','--shop-portrait-y':geometry.cy * 100 + '%','--shop-portrait-size':geometry.size * 100 + '%',
-      '--shop-ring-scale':100 / geometry.size + '%','--shop-page-art':pack.overlay ? 'none' : 'url("../launch/shop/lorefy-page-' + pack.id + '.png")',
-      '--shop-frame-image':pack.overlay ? 'url("../' + pack.overlay + '")' : 'url("../launch/shop/lorefy-avatar-frames.png")',
-      '--shop-frame-size':pack.overlay ? '100% 100%' : '300% 100%'};
+      '--shop-ring-scale':100 / geometry.size + '%','--shop-portrait-clip':pack.portraitClip?'polygon('+pack.portraitClip.map(q=>q.map(v=>(v*100).toFixed(3)+'%').join(' ')).join(',')+')':'circle(50%)',
+      '--shop-portrait-radius':pack.portraitClip?'0':'50%','--shop-page-art':pack.overlay ? 'none' : 'url("../launch/shop/lorefy-page-' + pack.id + '.png")',
+      '--shop-frame-image':pack.motionOverlay||pack.overlay ? 'url("../' + (pack.motionOverlay||pack.overlay) + '")' : 'url("../launch/shop/lorefy-avatar-frames.png")',
+      '--shop-frame-size':pack.motionOverlay||pack.overlay ? '100% 100%' : '300% 100%'};
   };
   let lastProfile = {}, pendingRequest = null, controllerReady = false;
   function profileSnapshot() {
@@ -140,27 +195,38 @@
   function Art({pack, className = '', banner}) {
     return h('div', {className:'lf-shop-art ' + className, style:banner !== undefined ? {backgroundImage:banner ? 'url(' + JSON.stringify(banner) + ')' : 'none', backgroundSize:'cover', backgroundPosition:'center'} : packStyle(pack), 'aria-hidden':true});
   }
-  function Avatar({profile, pack, decorated = true}) {
+  function Avatar({profile, pack, decorated = true, animated = true}) {
     return h('div', {className:'lf-shop-avatar', 'data-frame':decorated ? pack.id : 'none', style:packStyle(pack)},
       h('span', {className:'lf-shop-avatar-image'}, profile.avatar ? h('img', {src:profile.avatar, alt:'', decoding:'async', onError:event => {event.currentTarget.hidden = true;}}) : null,
         h('span', {className:'lf-shop-avatar-letter', 'aria-hidden':true}, (profile.name || 'Lorefy').slice(0,1))),
-      decorated && h(FrameArt, {pack,kind:'avatar',className:'lf-shop-frame lf-shop-frame-art'}));
+      decorated && h(FrameArt, {pack,kind:'avatar',className:'lf-shop-frame lf-shop-frame-art',animated}));
   }
-  function FrameArt({pack,kind,className}) {
+  function FrameArt({pack,kind,className,animated=true}) {
     const ref=root.React.useRef(null);
-    root.React.useEffect(()=>root.LorefyFrameMotion ? root.LorefyFrameMotion.mount(ref.current,{...(kind==='avatar'?avatarMotion(pack):pack.motion),...(pack.renderer?{original:{id:pack.artId,renderer:pack.renderer}}:{})},kind) : undefined,[pack.id,kind]);
+    root.React.useEffect(()=>animated&&root.LorefyFrameMotion ? root.LorefyFrameMotion.mount(ref.current,{...(kind==='avatar'?avatarMotion(pack):pack.motion),...motionOriginal(pack)},kind) : undefined,[pack.id,kind,animated]);
     return h(kind==='avatar'?'span':'div',{ref,className,style:{...packStyle(pack),...(kind==='avatar'&&pack.overlay?{backgroundImage:'none'}:{})},
-      'data-motion-page':kind==='page'&&pack.overlay?'true':undefined,'aria-hidden':true},
-      kind==='avatar'&&pack.overlay&&h('img',{className:'lf-frame-overlay',src:pack.overlay,alt:'',loading:'lazy',decoding:'async'}));
+      'data-motion-page':kind==='page'&&(pack.overlay||pack.motionRenderer)?'true':undefined,'aria-hidden':true},
+      kind==='avatar'&&(pack.motionOverlay||pack.overlay)&&h('img',{className:'lf-frame-overlay',src:pack.motionOverlay||pack.overlay,alt:'',loading:'lazy',decoding:'async'}));
   }
   function Effect({pack, replay}) {
     return h('div', {className:'lf-shop-effect', key:replay, 'data-effect':pack.id, 'aria-hidden':true},
       [0,1,2,3,4,5].map(index => h('span', {key:index, style:{'--i':index}}, icon(index % 2 ? pack.icon : 'Sparkles', index % 2 ? 22 : 14))));
   }
-  function ProfilePreview({pack, profile, part = 'all', replay = 0, compact = false}) {
+  function ProfilePreview({pack, profile, part = 'all', replay = 0, compact = false,onRetry}) {
     const parts = previewParts(pack.id, part);
-    return h('section', {className:'lf-shop-profile' + (compact ? ' is-compact' : ''), style:packStyle(pack), 'data-preview-part':part,
+    const ref=root.React.useRef(null);
+    root.React.useEffect(()=>{
+      const node=ref.current;if(!node)return;
+      const renderer=root.LorefyOriginalRenderers?.[pack.motionRenderer||pack.renderer],id=pack.motionRenderer?pack.id:pack.artId;let alive=true,ready=!renderer?.load,failed=false;
+      const update=()=>{if(!alive||!ready)return;const layout=failed?null:renderer?.layout?.(id,node.clientWidth,node.clientHeight);node.style.setProperty('--store-preview-top',((layout?.line||64)+2)+'px');node.setAttribute?.('data-preview-ready','true');if(failed)node.setAttribute?.('data-preview-failed','true');};
+      update();if(renderer?.load)renderer.load(id).then(()=>{ready=true;update();}).catch(()=>{ready=true;failed=true;update();});
+      const observer=root.ResizeObserver?new root.ResizeObserver(update):null;observer?.observe(node);return ()=>{alive=false;observer?.disconnect();};
+    },[pack.id]);
+    return h('section', {ref,className:'lf-shop-profile lf-store-profile' + (compact ? ' is-compact' : ''), style:packStyle(pack), 'data-preview-part':part,
       'aria-label':text(root.document && root.document.documentElement.lang, 'معاينة البروفايل', 'Profile preview')},
+      h('div',{className:'lf-store-preview-loading',role:'status'},icon('LoaderCircle',22),text(root.document?.documentElement.lang,'جاري تحميل المعاينة','Loading preview')),
+      h('div',{className:'lf-store-preview-error',role:'status'},h('span',null,text(root.document?.documentElement.lang,'تعذّر تحميل الحركة','Animation unavailable')),h('button',{type:'button',onClick:onRetry,disabled:!onRetry},text(root.document?.documentElement.lang,'إعادة المحاولة','Retry'))),
+      h('div',{className:'lf-store-preview-toolbar','aria-hidden':true},icon('ChevronLeft',18),h('span',null,text(root.document?.documentElement.lang,'البروفايل','Profile')),icon('MoreHorizontal',18)),
       h(Art, {pack, className:'lf-shop-profile-banner', banner:profile.banner || ''}),
       parts.page && h(FrameArt,{pack,kind:'page',className:'lf-decoration-page-border is-preview'}),
       parts.effect && h(Effect, {pack, replay}),
@@ -168,44 +234,31 @@
         h('h2', {dir:'auto'}, profile.name || 'Lorefy'), h('p', {dir:'ltr'}, profile.handle || '@lorefy'),
         !compact && profile.bio && h('p', {className:'lf-shop-profile-bio', dir:'auto'}, profile.bio)));
   }
-  function Catalog({lang, profile, wishlist, onSelect, onWishlist, onlyWishlist = false}) {
-    const [mood, setMood] = root.React.useState('all');
-    const moods = [['all','كل الأجواء','All moods'],['dream','حالم','Dreamy'],['bloom','طبيعة','Nature'],['mystery','غامض','Mystic']];
-    const moodOf = pack => ['flower','leaf','heart','bubble'].includes(pack.motion.motif) ? 'bloom' : ['ghost','rune'].includes(pack.motion.motif) ? 'mystery' : 'dream';
-    const offers=offeredBundles();
-    const saved = onlyWishlist ? offers.filter(pack => wishlist.includes(pack.id)) : offers;
-    const shown = saved.filter(pack => mood === 'all' || moodOf(pack) === mood);
-    const featured = offers[0] || bundles[0];
-    return h('div', {className:'lf-shop-catalog'},
-      !onlyWishlist && offers.length>0 && h('section', {className:'lf-shop-editorial'},
-        h('div', {className:'lf-shop-intro'}, h('h2',null,text(lang,'لبروفايلك، حكاية أخرى.','Give your profile a new story.')),
-          h('p',null,text(lang,'اختر ما يشبهك. ودع التفاصيل تحكي عنك.','Find your mood. Let the details tell your story.'))),
-        h('button',{type:'button',className:'lf-shop-featured',style:packStyle(featured),onClick:()=>onSelect(featured.id),
-          'aria-label':text(lang,'اكتشف مجموعة ','Discover ') + featured.names[lang]},
-          h(Art,{pack:featured,className:'lf-shop-featured-landscape'}),
-          h('span',{className:'lf-shop-featured-edition'},icon('Moon',13),text(lang,'اختيار الرواق','ATELIER PICK')),
-          h('div',{className:'lf-shop-featured-portrait'},h(Avatar,{profile,pack:featured})),
-          h('div',{className:'lf-shop-featured-copy'},h('span',null,text(lang,'مجموعة لورفاي الأصلية','LOREFY ORIGINALS')),
-            h('h3',null,featured.names[lang]),h('p',null,featured.collection[lang]),
-            h('span',{className:'lf-shop-featured-link'},text(lang,'اكتشف الحزمة','Explore collection'),icon(lang==='en'?'ArrowRight':'ArrowLeft',16))),
-          h('span',{className:'lf-shop-featured-number','aria-hidden':true},'01'))),
-      h('header', {className:'lf-shop-section-head'}, h('div',null,h('span',{className:'lf-shop-eyebrow'},text(lang,'اختر أجواءك','FIND YOUR MOOD')),
-        h('h2', null, text(lang, onlyWishlist ? 'اختياراتك المحفوظة' : 'تشكيلة الرواق', onlyWishlist ? 'Your saved picks' : 'The collection'))),
-        h('span', {className:'lf-shop-total'},new Intl.NumberFormat(lang).format(shown.length), ' ',text(lang,'حزمة','collections'))),
-      h('div',{className:'lf-shop-moods',role:'group','aria-label':text(lang,'أجواء الحزم','Collection moods')},moods.map(([value,ar,en])=>
-        h('button',{key:value,type:'button','aria-pressed':mood===value,onClick:()=>setMood(value)},text(lang,ar,en)))),
-      h('div', {className:'lf-shop-products'}, shown.map(pack => h('article', {className:'lf-shop-product', key:pack.id, style:packStyle(pack)},
-        h('button', {type:'button', className:'lf-shop-product-preview', 'aria-label':text(lang,'معاينة ','Preview ') + pack.names[lang], onClick:() => onSelect(pack.id)},
-          h('span',{className:'lf-shop-product-orbit','aria-hidden':true}),
-          h(Avatar, {profile, pack}),h('span',{className:'lf-shop-piece-count'},pack.parts.length===2?text(lang,'إطاران متحركان','2 animated frames'):text(lang,'٣ قطع','3 pieces'))),
-        h('button', {type:'button', className:'lf-shop-wishlist', 'aria-pressed':wishlist.includes(pack.id),
-          'aria-label':text(lang,'حفظ في المفضلة: ','Wishlist: ') + pack.names[lang], title:text(lang,'المفضلة','Wishlist'), onClick:() => onWishlist(pack.id)}, icon('Heart', 18)),
-        h('div', {className:'lf-shop-product-copy'}, h('span',{className:'lf-shop-product-label'},text(lang,pack.overlay?'مجموعة خاصة':'لورفاي الأصلية',pack.overlay?'SIGNATURE COLLECTION':'LOREFY ORIGINALS')),
-          h('h3', null, pack.names[lang]),h('div',{className:'lf-shop-product-bottom'},h('span',{className:'lf-shop-price'},priceLabel(pack,lang)),
-          h('button', {type:'button', className:'lf-shop-view', 'aria-label':text(lang,'عرض الحزمة: ','View collection: ')+pack.names[lang],onClick:() => onSelect(pack.id)},icon(lang === 'en' ? 'ArrowUpRight' : 'ArrowUpLeft', 18))))))),
-      !shown.length && h('div', {className:'lf-shop-empty', role:'status'}, icon(onlyWishlist?'Heart':'Sparkles', 28),
-        h('p', null, text(lang,onlyWishlist?'لم تحفظ حزمة بهذه الأجواء بعد':'لا توجد حزم بهذه الأجواء',onlyWishlist?'No saved picks in this mood yet':'No collections in this mood'))),
-      h('p',{className:'lf-shop-catalog-note'},icon('Gift',15),hasPaidOffers()?text(lang,'٥ حزم مجانية · الحزم الجديدة شراء مرة واحدة','5 free collections · New collections are a one-time purchase'):text(lang,'جميع الحزم مجانية حاليًا','All collections are free for now')));
+  function Catalog({lang, profile, wishlist, onSelect, onWishlist, onlyWishlist=false,view='collections',owned=[],equipped={},catalogState,onCatalogState,onBrowse}) {
+    const [local,setLocal]=root.React.useState({collection:'all',query:'',sort:'newest',freeOnly:false});
+    const filters=catalogState||local,set=patch=>(onCatalogState||setLocal)({...filters,...patch});
+    const currentView=onlyWishlist?'saved':view,offers=offeredBundles();
+    const shown=filterCatalog({...filters,view:currentView,wishlist,owned,lang});
+    const families=[['all','الكل','All'],['elven','الإلف','Elven'],['atelier','المشغل','Atelier'],['classic','الكلاسيكيات','Classics']].filter(([key])=>key==='all'||offers.some(p=>collectionKey(p)===key));
+    const newPacks=offers.filter(p=>p.renderer==='elven').slice(0,3),equippedIds=[...new Set(Object.values(equipped).filter(Boolean))];
+    const canReset=!!(filters.query||filters.collection!=='all'||filters.freeOnly)&&!(currentView==='saved'&&!offers.some(p=>wishlist.includes(p.id)));
+    return h('div',{className:'lf-shop-catalog'},
+      h('div',{className:'lf-store-search'},icon('Search',19),h('input',{type:'search',value:filters.query,'aria-label':text(lang,'ابحث عن حزمة','Search collections'),placeholder:text(lang,'ابحث عن حزمة','Search collections'),onChange:e=>set({query:e.target.value})}),
+        filters.query&&h('button',{type:'button',onClick:()=>set({query:''}),'aria-label':text(lang,'مسح البحث','Clear search'),title:text(lang,'مسح البحث','Clear search')},icon('X',17))),
+      h('div',{className:'lf-store-families',role:'group','aria-label':text(lang,'مجموعات الزينة','Decoration collections')},families.map(([key,ar,en])=>h('button',{key,type:'button','aria-pressed':filters.collection===key,onClick:()=>set({collection:key})},text(lang,ar,en)))),
+      currentView==='owned'&&equippedIds.length>0&&h('section',{className:'lf-store-equipped'},h('h2',null,text(lang,'مظهرك الحالي','Currently equipped')),h('div',null,equippedIds.map(id=>{const p=findBundle(id);return p&&h('button',{key:id,type:'button',onClick:()=>onSelect(id)},h(Avatar,{profile,pack:p,animated:false}),h('span',null,p.names[lang]),icon('Check',16));}))),
+      currentView==='collections'&&!filters.query&&filters.collection==='all'&&newPacks.length>0&&h('section',{className:'lf-store-arrivals'},
+        h('header',null,h('div',null,h('span',null,text(lang,'وصل حديثًا','NEW ARRIVALS')),h('h2',null,text(lang,'إلف لورفاي','Lorefy Elven'))),h('button',{type:'button',onClick:()=>set({collection:'elven'})},text(lang,'عرض الكل','See all'),icon(lang==='en'?'ChevronRight':'ChevronLeft',17))),
+        h('div',{className:'lf-store-arrival-art'},newPacks.map(p=>h('button',{key:p.id,type:'button',style:packStyle(p),onClick:()=>onSelect(p.id),'aria-label':text(lang,'معاينة ','Preview ')+p.names[lang]},h(Avatar,{profile,pack:p,animated:false}),h('span',null,p.names[lang]))))),
+      h('header',{className:'lf-store-results'},h('div',null,h('h2',null,text(lang,currentView==='saved'?'المحفوظات':currentView==='owned'?'مجموعتي':'كل الحزم',currentView==='saved'?'Saved':currentView==='owned'?'My collection':'All collections')),h('span',{role:'status'},new Intl.NumberFormat(lang).format(shown.length),' ',text(lang,'حزمة','collections'))),
+        h('select',{value:filters.sort,'aria-label':text(lang,'ترتيب الحزم','Sort collections'),onChange:e=>set({sort:e.target.value})},h('option',{value:'newest'},text(lang,'الأحدث','Newest')),h('option',{value:'name'},text(lang,'الاسم','Name')))),
+      h('label',{className:'lf-store-free-filter'},h('input',{type:'checkbox',checked:filters.freeOnly,onChange:e=>set({freeOnly:e.target.checked})}),text(lang,'المجانية فقط','Free only')),
+      h('div',{className:'lf-shop-products'},shown.map(pack=>h('article',{className:'lf-shop-product',key:pack.id,style:packStyle(pack),'data-store-pack':pack.id},
+        h('button',{className:'lf-store-product-open',type:'button','data-store-open':pack.id,'aria-label':text(lang,'معاينة ','Preview ')+pack.names[lang],onClick:()=>onSelect(pack.id)},
+          h('span',{className:'lf-shop-product-preview'},h(Avatar,{profile,pack,animated:false}),h('span',{className:'lf-store-product-badge'},text(lang,pack.motionRenderer==='restored'?'مُحدّث':collectionKey(pack)!=='classic'?'جديد':'كلاسيكي',pack.motionRenderer==='restored'?'Updated':collectionKey(pack)!=='classic'?'New':'Classic'))),
+          h('span',{className:'lf-shop-product-copy'},h('span',{className:'lf-store-product-family'},pack.collection[lang]),h('strong',null,pack.names[lang]),h('span',{className:'lf-store-product-meta'},h('span',null,priceLabel(pack,lang)),h('span',null,icon(Object.values(equipped).includes(pack.id)?'Check':'Sparkles',14),text(lang,Object.values(equipped).includes(pack.id)?'مستخدمة':'متحركة',Object.values(equipped).includes(pack.id)?'Equipped':'Animated'))))),
+        h('button',{type:'button',className:'lf-shop-wishlist','aria-pressed':wishlist.includes(pack.id),'aria-label':text(lang,'حفظ في المفضلة: ','Wishlist: ')+pack.names[lang],title:text(lang,'المحفوظات','Saved'),onClick:()=>onWishlist(pack.id)},icon('Bookmark',18))))),
+      !shown.length&&h('div',{className:'lf-shop-empty',role:'status'},icon(currentView==='saved'?'Bookmark':'Search',28),h('h3',null,text(lang,currentView==='saved'?'لا توجد محفوظات هنا':'لا توجد نتائج',currentView==='saved'?'No saved collections here':'No results')),h('button',{type:'button',onClick:()=>canReset?set({collection:'all',query:'',freeOnly:false}):onBrowse?.()},text(lang,canReset?'إعادة ضبط الفلاتر':'استكشاف الحزم',canReset?'Reset filters':'Explore collections'))));
   }
   function priceLabel(pack,lang){return pack.free?text(lang,'مجانية','Free'):text(lang,'13 ر.س','SAR 13');}
   function Entry({language}) {
@@ -228,6 +281,9 @@
     const [status,setStatus] = R.useState('');
     const [equipped,setEquipped] = R.useState(normalizeDecoration(null));
     const [owned,setOwned]=R.useState([]),[storePrices,setStorePrices]=R.useState({});
+    const [catalogState,setCatalogState]=R.useState({collection:'all',query:'',sort:'newest',freeOnly:false});
+    const lastProduct=R.useRef(null);
+    const browseScroll=R.useRef(0);
     const host = R.useRef(null), closeButton = R.useRef(null), previous = R.useRef(null), body = R.useRef(null);
     const lang = root.document.documentElement.lang === 'en' ? 'en' : 'ar';
     R.useEffect(() => {
@@ -236,6 +292,7 @@
         if (!isAvailable(root.LorefyBackend) || event.detail.owner !== ownerId()) return;
         previous.current = root.document.activeElement;
         setRequest(event.detail); setSelection(null); setPart('all'); setTab('collections'); setError('');
+        setCatalogState({collection:'all',query:'',sort:'newest',freeOnly:false});lastProduct.current=null;browseScroll.current=0;
         setWishlist(readWishlist(root.sessionStorage, event.detail.owner));
         setEquipped(readDecoration(root.localStorage,event.detail.owner));setSaving(false);setStatus('');
         setOwned([]);setStorePrices({});
@@ -264,7 +321,7 @@
       function keyboard(event) {
         if (event.key === 'Escape') { event.preventDefault(); setRequest(null); }
         if (event.key !== 'Tab') return;
-        const controls = Array.from(host.current.querySelectorAll('button,a,[tabindex="0"]')).filter(node => !node.disabled && node.getClientRects().length);
+        const controls = Array.from(host.current.querySelectorAll('button,a,input,select,[tabindex="0"]')).filter(node => !node.disabled && node.getClientRects().length);
         const first = controls[0], last = controls[controls.length - 1];
         if (event.shiftKey && root.document.activeElement === first) {event.preventDefault(); last.focus();}
         else if (!event.shiftKey && root.document.activeElement === last) {event.preventDefault(); first.focus();}
@@ -278,14 +335,19 @@
       function previousFocus() { return previous.current; }
     }, [request]);
     R.useEffect(() => {
-      if (body.current) body.current.scrollTop = 0;
+      if (body.current) body.current.scrollTop = selection?0:browseScroll.current||0;
     }, [request, selection, tab]);
+    R.useEffect(()=>{
+      if(!request)return;
+      if(selection)closeButton.current?.focus();
+      else if(lastProduct.current)host.current?.querySelector('[data-store-open="'+lastProduct.current+'"]')?.focus({preventScroll:true});
+    },[selection]);
     R.useEffect(() => {
       if (!request || !hasPaidOffers() || !root.LorefyDecorationBilling || !root.LorefyDecorationBilling.watch || root.LorefyBackend.mode!=='live') return;
       return root.LorefyDecorationBilling.watch(request.owner, rows => {if(ownerId()===request.owner)setOwned(rows);});
     }, [request]);
     if (!request) return null;
-    const pack = findBundle(selection), selected = id => {setSelection(id); setPart('all'); setReplay(value => value + 1); setError('');setStatus('');};
+    const pack = findBundle(selection), selected = id => {browseScroll.current=body.current?.scrollTop||0;lastProduct.current=id;setSelection(id); setPart('all'); setReplay(value => value + 1); setError('');setStatus('');};
     const purchased=pack && (pack.free || owned.includes(pack.productId));
     async function purchase(restore=false){
       if(saving)return;setSaving(true);setError('');setStatus('');
@@ -318,30 +380,30 @@
       setWishlist(next); setError('');
     }
     const content = h('div', {className:'lf-shop-overlay', 'data-no-translate':'1', dir:lang === 'en' ? 'ltr' : 'rtl'},
-      h('section', {className:'lf-shop-dialog', role:'dialog', 'aria-modal':true, 'aria-labelledby':'lf-shop-title', ref:host},
+      h('section', {className:'lf-shop-dialog lf-store-v2', role:'dialog', 'aria-modal':true, 'aria-labelledby':'lf-shop-title', ref:host,'data-store-screen':pack?'detail':'catalog'},
         h('header', {className:'lf-shop-header'},
           h('button', {type:'button', className:'lf-shop-icon-button', ref:closeButton, onClick:() => pack ? setSelection(null) : setRequest(null),
-            'aria-label':text(lang,pack ? 'رجوع إلى الحزم' : 'إغلاق المتجر',pack ? 'Back to collections' : 'Close shop'), title:text(lang,'رجوع','Back')}, icon(lang === 'en' ? 'ChevronLeft' : 'ChevronRight',22)),
-          h('div', {className:'lf-shop-brand'},h('span',{className:'lf-shop-brand-mark'},icon('Feather',13),'LOREFY ATELIER'),
-            h('h1', {id:'lf-shop-title'}, pack ? pack.names[lang] : text(lang,'رواق لورفاي','Lorefy Atelier'))),
-          h('button', {type:'button', className:'lf-shop-icon-button', onClick:() => setRequest(null), 'aria-label':text(lang,'إنهاء المعاينة','End preview'), title:text(lang,'إنهاء المعاينة','End preview')}, icon('X',20))),
+            'aria-label':text(lang,pack ? 'رجوع إلى الحزم' : 'إغلاق المتجر',pack ? 'Back to collections' : 'Close shop'), title:text(lang,pack?'رجوع':'إغلاق',pack?'Back':'Close')}, icon(pack?(lang === 'en' ? 'ChevronLeft' : 'ChevronRight'):'X',22)),
+          h('div', {className:'lf-shop-brand'},h('span',{className:'lf-shop-brand-mark'},icon('Feather',13),'LOREFY'),
+            h('h1', {id:'lf-shop-title'},text(lang,pack?'معاينة الحزمة':'متجر الزينة',pack?'Collection preview':'Decoration Store'))),
+          h('button', {type:'button', className:'lf-shop-icon-button', onClick:() => pack?setRequest(null):setTab('saved'), 'aria-label':text(lang,pack?'إنهاء المعاينة':'المحفوظات',pack?'End preview':'Saved collections'), title:text(lang,pack?'إنهاء المعاينة':'المحفوظات',pack?'End preview':'Saved collections')}, icon(pack?'X':'Bookmark',20))),
         h('div', {className:'lf-shop-body', ref:body}, pack ? h(R.Fragment,null,
           h('div',{className:'lf-shop-preview-stage',style:packStyle(pack)},
-            h('span',{className:'lf-shop-preview-caption'},icon('Eye',15),text(lang,'على بروفايلك','ON YOUR PROFILE')),
-            h(ProfilePreview, {pack, profile:request.profile, part, replay})),
+            h('span',{className:'lf-shop-preview-caption'},icon('Eye',15),text(lang,'معاينة على بروفايلك','Your profile preview')),
+            h(ProfilePreview, {key:pack.id+':'+replay,pack, profile:request.profile, part, replay,onRetry:()=>setReplay(value=>value+1)})),
           h('div', {className:'lf-shop-detail'},
             h('div', {className:'lf-shop-detail-title'}, h('div',null,h('h2',null,pack.names[lang]),h('p',null,pack.collection[lang])),
               h('button',{className:'lf-shop-icon-button',type:'button',onClick:() => toggleWishlist(pack.id),'aria-pressed':wishlist.includes(pack.id),
-                'aria-label':text(lang,'حفظ في المفضلة: ','Wishlist: ') + pack.names[lang]},icon('Heart',20))),
+                'aria-label':text(lang,'حفظ في المفضلة: ','Wishlist: ') + pack.names[lang]},icon('Bookmark',20))),
             h('div', {className:'lf-shop-parts',role:'group','aria-label':text(lang,'أجزاء الحزمة','Bundle components')},
               [['all','Layers','الحزمة','Bundle'],['frame','CircleUserRound','إطار الصورة','Avatar frame'],['page','PanelTop','إطار الصفحة','Profile frame'],['effect','Sparkles','التأثير','Effect']].filter(([value])=>value==='all'||pack.parts.includes(value)).map(([value,symbol,ar,en]) =>
                 h('button',{key:value,type:'button','aria-pressed':part === value,onClick:() => {setPart(value); setReplay(count => count + 1);setStatus('');setError('');}},icon(symbol,20),h('span',null,text(lang,ar,en))))),
             h('div', {className:'lf-shop-includes'}, icon('Package',18), h('span',null,pack.parts.length===3?text(lang,'ثلاث قطع. حكاية واحدة.','Three pieces. One story.'):text(lang,'إطار صورة وإطار صفحة متحركان','Animated avatar + profile frames'))),
-            h('button',{className:'lf-shop-replay',type:'button',onClick:() => setReplay(value => value + 1)},icon('RotateCcw',17),text(lang,'إعادة المعاينة','Replay preview')))) :
+            pack.parts.includes('effect')&&h('button',{className:'lf-shop-replay',type:'button',onClick:() => setReplay(value => value + 1)},icon('RotateCcw',17),text(lang,'إعادة المعاينة','Replay preview')))) :
           h(R.Fragment,null,
             h('div', {className:'lf-shop-tabs',role:'group','aria-label':text(lang,'عرض المتجر','Shop view')},
-              [['collections','اكتشف','Discover'],['wishlist','محفوظاتك','Saved']].map(([value,ar,en]) => h('button',{key:value,type:'button','aria-pressed':tab === value,onClick:() => setTab(value)},icon(value==='collections'?'Grid2X2':'Heart',15),text(lang,ar,en),value === 'wishlist' && h('span',null,wishlist.length)))),
-            h(Catalog, {lang, profile:request.profile, wishlist, onSelect:selected, onWishlist:toggleWishlist, onlyWishlist:tab === 'wishlist'})),
+              [['collections','المتجر','Store'],['owned','مجموعتي','My collection'],['saved','المحفوظات','Saved']].map(([value,ar,en]) => h('button',{key:value,type:'button','aria-pressed':tab === value,onClick:() => {browseScroll.current=0;setTab(value);}},text(lang,ar,en),value === 'saved' && wishlist.length>0 && h('span',null,wishlist.length)))),
+            h(Catalog, {lang, profile:request.profile, wishlist, onSelect:selected, onWishlist:toggleWishlist,view:tab,owned,equipped,catalogState,onCatalogState:setCatalogState,onBrowse:()=>{browseScroll.current=0;setCatalogState({collection:'all',query:'',sort:'newest',freeOnly:false});setTab('collections');}})),
           hasPaidOffers() && h('button',{type:'button',className:'lf-shop-replay',disabled:saving,onClick:()=>purchase(true)},icon('RotateCcw',17),text(lang,'استعادة المشتريات','Restore purchases')),
           error && h('p',{className:'lf-shop-error',role:'alert'},error),status && h('p',{className:'lf-shop-status',role:'status'},status)),
         pack && h('footer', {className:'lf-shop-footer'},h('div',{className:'lf-shop-order-summary'},
@@ -367,6 +429,9 @@
         } catch (_) { /* Original collections remain available if the manifest is missing. */ }
       }
       if(root.fetch){try{const r=await root.fetch('launch/decorations/originals/catalog.json');if(r.ok)installShopCatalog(await r.json());}catch(_) { /* Purchase catalog fails closed; existing appearance remains. */ }}
+      if(isLocalLab()&&root.fetch){try{const r=await root.fetch('qa/motion-atelier/collections.json');if(r.ok)installAtelierCollections(await r.json());}catch(_) { /* Local artwork never changes the live catalog. */ }}
+      if(isLocalLab()&&root.fetch){try{const r=await root.fetch('qa/elf-motion/collections.json');if(r.ok)installElvenCollections(await r.json());}catch(_) { /* Elf artwork is confined to the local demo. */ }}
+      if(root.fetch){try{const r=await root.fetch('launch/decorations/refined/manifest.json');if(r.ok)installRestoration(await r.json());}catch(_){ /* Original rendering remains available if calibration cannot load. */ }}
       root.dispatchEvent(new root.CustomEvent('lorefy:profile-shop-catalog-ready'));
       let scheduled = false;
       function styleNode(node,pack) {Object.entries(packStyle(pack)).forEach(([key,value]) => node.style.setProperty(key,value));}
@@ -375,26 +440,47 @@
         const avatar = page.querySelector('.lf-profile-avatar,.lf-reader-avatar');
         if (avatar) {
           const pack = findBundle(choice.frame);
+          page.classList.toggle('has-atelier-avatar',articulated(pack));
           let ring = avatar.querySelector('.lf-decoration-avatar-frame');
           if (pack) {
             if (!ring) {ring = root.document.createElement('span');ring.className = 'lf-decoration-avatar-frame lf-shop-frame-art';ring.setAttribute('aria-hidden','true');avatar.appendChild(ring);}
             styleNode(ring,pack);avatar.classList.add('has-decoration');
             const geometry=frameGeometry(pack.id);
-            avatar.style.setProperty('--profile-decoration-avatar-size',Math.min(104,Math.round(176*geometry.size))+'px');
-            const overhang=ring.offsetWidth*(1-geometry.cx)-avatar.clientWidth/2;
-            avatar.style.setProperty('--profile-avatar-frame-inset',Math.max(40,Math.ceil(overhang+14))+'px');
+            avatar.classList.toggle('has-elven-portrait',pack.renderer==='elven');
+            avatar.classList.toggle('has-refined-portrait',pack.motionRenderer==='restored');
+            avatar.classList.add('has-calibrated-portrait');
+            avatar.style.setProperty('--elven-portrait-clip',packStyle(pack)['--shop-portrait-clip']);
+            avatar.style.setProperty('--profile-decoration-avatar-size',avatarSize(pack.id,page.clientWidth)+'px');
+            const overhang=ring.offsetWidth*(pack.portraitClip?Math.max(geometry.cx,1-geometry.cx):1-geometry.cx)-avatar.clientWidth/2;
+            avatar.style.setProperty('--profile-avatar-frame-inset',Math.max(40,Math.ceil(overhang+(pack.portraitClip?24:14)))+'px');
+            if(articulated(pack)){
+              avatar.style.setProperty('--atelier-avatar-bottom-gap',Math.max(12,Math.ceil(ring.getBoundingClientRect().bottom-avatar.getBoundingClientRect().bottom+18))+'px');
+              const header=page.querySelector('.lf-profile-banner,.lf-reader-banner');
+              if(header)page.style.setProperty('--atelier-owner-identity-inset',Math.max(18,Math.ceil(ring.getBoundingClientRect().bottom-header.getBoundingClientRect().bottom+18))+'px');
+              const identity=page.querySelector('.lf-profile-identity,.lf-reader-identity');
+              if(identity){
+                page.style.setProperty('--atelier-identity-space',Math.ceil(ring.getBoundingClientRect().width+14)+'px');
+                page.style.setProperty('--atelier-stacked-identity',Math.max(12,Math.ceil(ring.getBoundingClientRect().bottom-identity.getBoundingClientRect().top+16))+'px');
+              }
+            }else{avatar.style.removeProperty('--atelier-avatar-bottom-gap');page.style.removeProperty('--atelier-owner-identity-inset');}
             const bio=page.querySelector('.lf-profile-bio,.lf-reader-bio');
+            if(bio&&articulated(pack)&&page.dataset.profileLayout==='reader'){
+              const baseline=bio.getBoundingClientRect().top-parseFloat(root.getComputedStyle(bio).marginTop||0);
+              page.style.setProperty('--atelier-reader-bio-gap',Math.max(12,Math.ceil(ring.getBoundingClientRect().bottom-baseline+12))+'px');
+            }else page.style.removeProperty('--atelier-reader-bio-gap');
             if(bio && page.dataset.profileLayout==='immersive'){
               const baseline=bio.getBoundingClientRect().top-parseFloat(root.getComputedStyle(bio).marginTop||0);
               page.style.setProperty('--profile-frame-bio-gap',Math.max(24,Math.ceil(ring.getBoundingClientRect().bottom-baseline+8))+'px');
             } else page.style.removeProperty('--profile-frame-bio-gap');
-            if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(ring,{...avatarMotion(pack),...(pack.renderer?{original:{id:pack.artId,renderer:pack.renderer}}:{})},'avatar');
-          } else {if (ring) ring.remove();avatar.classList.remove('has-decoration');avatar.style.removeProperty('--profile-avatar-frame-inset');avatar.style.removeProperty('--profile-decoration-avatar-size');page.style.removeProperty('--profile-frame-bio-gap');}
+            if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(ring,{...avatarMotion(pack),...motionOriginal(pack)},'avatar');
+          } else {if (ring) ring.remove();avatar.classList.remove('has-decoration','has-elven-portrait','has-refined-portrait','has-calibrated-portrait');avatar.style.removeProperty('--elven-portrait-clip');avatar.style.removeProperty('--profile-avatar-frame-inset');avatar.style.removeProperty('--profile-decoration-avatar-size');page.style.removeProperty('--profile-frame-bio-gap');}
         }
         let pin = page.querySelector(':scope > .lf-decoration-page-pin');
         const pagePack = findBundle(choice.page);
+        page.classList.toggle('has-elven-page',!!pagePack&&pagePack.renderer==='elven');
+        page.classList.toggle('has-refined-page',!!pagePack&&pagePack.motionRenderer==='restored');
         page.classList.toggle('has-page-decoration',!!pagePack);
-        page.classList.toggle('has-original-page-decoration',!!(pagePack&&pagePack.renderer));
+        page.classList.toggle('has-original-page-decoration',!!(pagePack&&(pagePack.renderer||pagePack.motionRenderer)));
         if (pagePack) {
           if (!pin) {
             pin = root.document.createElement('div');pin.className = 'lf-decoration-page-pin';pin.setAttribute('aria-hidden','true');
@@ -402,8 +488,8 @@
           }
           styleNode(pin.firstElementChild,pagePack);
           pin.firstElementChild.style.setProperty('--decoration-height',page.clientHeight + 'px');
-          if(pagePack.overlay)pin.firstElementChild.setAttribute('data-motion-page','true');else pin.firstElementChild.removeAttribute('data-motion-page');
-          if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(pin.firstElementChild,{...pagePack.motion,...(pagePack.renderer?{original:{id:pagePack.artId,renderer:pagePack.renderer}}:{})},'page');
+          if(pagePack.overlay||pagePack.motionRenderer)pin.firstElementChild.setAttribute('data-motion-page','true');else pin.firstElementChild.removeAttribute('data-motion-page');
+          if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(pin.firstElementChild,{...pagePack.motion,...motionOriginal(pagePack)},'page');
         } else if (pin) pin.remove();
         const banner = page.querySelector('.lf-profile-banner,.lf-reader-banner');
         if (banner) {
@@ -457,5 +543,5 @@
     };
     if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
   }
-  return Object.freeze({get bundles(){return bundles;},get offered(){return offeredBundles();},installShopCatalog,installLocalCollections,installBetaCollections,isLocalLab,findBundle,isAvailable,DECORATION_KEY,normalizeDecoration,readDecoration,applyDecoration,frameGeometry,previewParts,readWishlist,writeWishlist,Catalog,ProfilePreview,Entry,Shop,open,start});
+  return Object.freeze({get bundles(){return bundles;},get offered(){return offeredBundles();},collectionKey,filterCatalog,installShopCatalog,installRestoration,installAtelierCollections,installElvenCollections,installLocalCollections,installBetaCollections,isLocalLab,findBundle,isAvailable,DECORATION_KEY,normalizeDecoration,readDecoration,applyDecoration,frameGeometry,avatarSize,previewParts,readWishlist,writeWishlist,Catalog,ProfilePreview,Entry,Shop,open,start});
 });

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lorefy Book Showcase QA</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../styles/lorefy-design-system.css">
+  <link rel="stylesheet" href="../styles/lorefy-book-showcase.css">
+  <style>
+    body { margin:0; background:#202123; }
+    .qa-showcase-page { width:min(100%,532px); margin:0 auto; }
+    .qa-showcase-page .lf-app { display:block; min-height:100vh; height:auto; overflow:visible; padding-bottom:24px; }
+    .qa-showcase-page header { display:flex; align-items:center; gap:12px; padding:24px 24px 8px; }
+    .qa-showcase-page .lf-app.lf-app.lf-app h1 { margin:0; font-size:26px; font-weight:600; }
+    .qa-showcase-page .lf-app.lf-app.lf-app header button { display:grid; place-items:center; min-width:44px; min-height:44px; background:none; border:0; color:var(--ui-danger); }
+    .qa-showcase-page .lf-app.lf-app.lf-app #opened { min-height:24px; margin:16px 20px; font-size:14px; color:var(--ui-secondary); }
+  </style>
+</head>
+<body>
+  <main class="qa-showcase-page">
+    <div class="lf-app">
+      <header><h1>اختياراتي</h1><button type="button" aria-label="فتح البروفايل" title="فتح البروفايل" onclick="location.href='../index.html?preview=demo&demo=ready&route=profile&decorationLab=1&adaptive=1'"><i data-lucide="pencil" aria-hidden="true"></i></button></header>
+      <div id="showcase"></div>
+      <p id="opened" role="status"></p>
+    </div>
+  </main>
+  <script src="../vendor/lucide.js"></script>
+  <script src="../modules/lorefy-library-view.js"></script>
+  <script>
+    const books=[
+      {title:'Berserk',cover:'https://cdn.myanimelist.net/images/manga/1/157897l.jpg'},
+      {title:'Vagabond',cover:'https://cdn.myanimelist.net/images/manga/1/259070l.jpg'},
+      {title:'Hunter x Hunter',cover:'https://cdn.myanimelist.net/images/manga/2/253119l.jpg'},
+      {title:'One Piece',cover:'https://cdn.myanimelist.net/images/manga/2/253146l.jpg'}
+    ];
+    const params=new URLSearchParams(location.search);
+    const count=params.get('count')==='4'?4:3;
+    const host=document.getElementById('showcase');
+    for(const book of books.slice(0,count)) {
+      const card=document.createElement('button');card.type='button';card.className='lf-library-card';card.title=book.title;
+      const cover=document.createElement('span');cover.className='lf-library-cover';
+      const image=document.createElement('img');image.src=book.cover;image.alt=book.title;cover.appendChild(image);
+      card.appendChild(cover);card.onclick=()=>{document.getElementById('opened').textContent=book.title;};host.appendChild(card);
+    }
+    if(params.get('theme')==='dark')document.querySelector('.lf-app').classList.add('is-dark');
+    LorefyLibraryView.syncShowcaseCards(document,host,host.children,true);
+    lucide.createIcons();
+  </script>
+</body>
+</html>

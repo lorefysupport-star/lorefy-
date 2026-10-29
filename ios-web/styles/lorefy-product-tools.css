@@ -508,3 +508,12 @@
   border-radius: 12px !important;
   background: var(--lf-surface) !important;
 }
+.lf-catalog-request-form{display:grid;gap:12px}
+.lf-catalog-request-form label{display:grid;gap:6px;font-size:13px;font-weight:600}
+.lf-product-sheet .lf-catalog-request-form :is(input,select,textarea){box-sizing:border-box;width:100%;min-height:44px;margin:0;border:1px solid var(--lf-line);border-radius:8px;padding:10px;background:var(--lf-surface-soft);color:var(--lf-text);font:inherit}
+.lf-catalog-request-form button,.lf-catalog-request-button{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font:inherit;color:inherit;cursor:pointer}
+.lf-catalog-request-button{flex:0 0 auto;background:transparent;border:0;padding:6px;font-size:12px;white-space:nowrap}
+.lf-catalog-request-button svg{width:16px;height:16px;flex-shrink:0}
+.lf-catalog-attribution{display:block;font-size:12px;margin-block-start:12px;overflow-wrap:anywhere;color:inherit;text-decoration:underline}
+.lf-catalog-request-drafts{margin-block:16px}
+.lf-product-sheet .lf-catalog-request-form .lf-product-primary{background:var(--lf-text)!important;color:var(--lf-surface)!important}

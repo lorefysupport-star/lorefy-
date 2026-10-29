@@ -11,6 +11,7 @@ const releaseConfigPath = path.join(root, "config", "lorefy-release.json");
 const publicBuildConfigPath = path.join(root, "config", "lorefy-build-public.json");
 const appConfigPath = path.join(root, "app.json");
 const runtimeEntries = [
+  "assets",
   "auth",
   "backend",
   "config",

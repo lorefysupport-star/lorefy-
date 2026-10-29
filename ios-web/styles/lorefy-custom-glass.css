@@ -1,0 +1,176 @@
+/* Custom, Light and Pink palettes outrank isolated cinematic color overrides. */
+@layer lorefy-custom-glass {
+.lf-app:is(.is-custom,.is-light,.is-pink),
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-explore-cinema,
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-rating-sheet,.lf-work-cover-sheet,.lf-work-status-sheet),
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page {
+  --ui-bg: var(--custom-bg) !important;
+  --ui-surface: var(--custom-surface) !important;
+  --ui-card: var(--custom-surface) !important;
+  --ui-fill: var(--custom-fill) !important;
+  --ui-fill-soft: var(--custom-fill-soft) !important;
+  --ui-ink: var(--custom-ink) !important;
+  --ui-text: var(--custom-ink) !important;
+  --ui-secondary: var(--custom-secondary) !important;
+  --ui-muted: var(--custom-muted) !important;
+  --ui-line: var(--custom-line) !important;
+  --ui-separator: var(--custom-separator) !important;
+  --ui-action: var(--custom-action) !important;
+  --ui-accent: var(--custom-action) !important;
+  --ui-selected: var(--custom-selected) !important;
+  --ui-accent-soft: var(--custom-selected) !important;
+  --ui-on-action: var(--custom-on-action) !important;
+  --ui-rating: var(--custom-rating) !important;
+  --ui-danger: var(--custom-danger) !important;
+  --ui-success: var(--custom-success) !important;
+  --ui-gold: var(--custom-gold) !important;
+  --ui-nav: var(--custom-nav) !important;
+  --ui-bar: var(--custom-bar) !important;
+  --cinema-ink: var(--custom-ink) !important;
+  --cinema-muted: var(--custom-muted) !important;
+  --cinema-base: var(--custom-bg) !important;
+  --cinema-line: var(--custom-line) !important;
+  --cinema-action: var(--custom-action) !important;
+  --library-ink: var(--custom-ink) !important;
+  --library-muted: var(--custom-muted) !important;
+  --library-line: var(--custom-line) !important;
+  background-color: var(--custom-bg) !important;
+  color: var(--custom-ink) !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink),:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page {
+  --custom-glass: var(--custom-surface);
+  --custom-edge: var(--custom-separator);
+  --custom-sheen: linear-gradient(145deg,#ffffff20,#ffffff03 50%,#ffffff0c);
+  --custom-blur: blur(24px) saturate(125%);
+}
+@supports (background:color-mix(in srgb,white,black)) {
+  .lf-app:is(.is-custom,.is-light,.is-pink),:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page {
+    --custom-glass: color-mix(in srgb,var(--custom-fill) 90%,transparent);
+    --custom-edge: color-mix(in srgb,var(--custom-ink) 28%,var(--custom-line));
+  }
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-home-cinema,.lf-library-cinema,.lf-explore-cinema,.lf-detail-page,.lf-cinema-resume.is-empty),
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page { background:var(--custom-bg) !important; color:var(--custom-ink) !important; }
+
+/* Media remains sharp. Only the fade blends into the selected page color. */
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-cinema-resume::before { background:linear-gradient(transparent 8%,color-mix(in srgb,var(--custom-bg) 68%,transparent) 50%,var(--custom-bg) 99%) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-detail-hero>div:nth-child(2) { background:linear-gradient(180deg,transparent,transparent 30%,var(--custom-bg)) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-explore-immersive-art::after { background:linear-gradient(180deg,#00000033,transparent 35%,color-mix(in srgb,var(--custom-bg) 20%,transparent) 64%,var(--custom-bg) 100%) !important; }
+
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-home-cinema,.lf-library-cinema,.lf-explore-cinema,.lf-detail-page,.lf-work-panel,.lf-community-compose-sheet) :is(h1,h2,h3,h4,strong),
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page :is(h1,h2,h3,strong) { color:var(--custom-ink) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-home-cinema,.lf-library-cinema,.lf-explore-cinema,.lf-detail-page,.lf-work-panel,.lf-community-compose-sheet) p,
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-work-creator,.lf-work-author-button,.lf-work-story>.lf-story-copy,.lf-cover-title,.lf-library-card-title,.lf-cover-studio-choice),
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page { color:var(--custom-secondary) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-home-cinema,.lf-library-cinema,.lf-explore-cinema,.lf-detail-page,.lf-work-panel,.lf-community-compose-sheet) small,
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-work-format,.lf-work-subtitle,.lf-work-rating-caption,.lf-work-facts,.lf-studio-field,.lf-studio-status,.lf-work-palette-title,.lf-community-composer-identity small,.lf-library-controls),
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) :is(.lf-character-score-label,.lf-character-name-line em) { color:var(--custom-muted) !important; }
+
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-bottom-nav,.lf-home-feed-tabs,.lf-icon-button,.lf-cinema-resume-action,.lf-library-view-switch,.lf-library-search input,.lf-library-tabs,.lf-library-controls select,.lf-explore-header>.lf-explore-icon,.lf-design-inline-search,.lf-explore-format-search,.lf-explore-tabs,.lf-explore-sorts,.lf-design-search-modes,.lf-work-section-nav,.lf-work-reader-tabs,.lf-chapter-more-menu,.lf-work-panel,.lf-rating-sheet,.lf-work-cover-sheet,.lf-work-status-sheet,.lf-post-composer,.lf-community-compose-sheet>section),
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) :is(.lf-character-page-top,.lf-character-page-search input,.lf-character-page-filters) {
+  background:var(--custom-surface) !important;
+  background:var(--custom-sheen),var(--custom-glass) !important;
+  color:var(--custom-ink) !important;
+  border-color:var(--custom-edge) !important;
+  backdrop-filter:var(--custom-blur) !important;
+  -webkit-backdrop-filter:var(--custom-blur) !important;
+  box-shadow:inset 0 1px 0 #ffffff24,0 6px 22px #0000001f !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-home-feed-tabs,.lf-library-view-switch,.lf-library-tabs,.lf-library-controls,.lf-explore-tabs,.lf-explore-sorts,.lf-design-search-modes,.lf-work-section-nav,.lf-work-reader-tabs,.lf-chapter-more-menu,.lf-community-compose-sheet) button,
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-studio-close,.lf-cover-studio-upload,.lf-cover-studio-more,.lf-cover-studio-reset,.lf-status-choices>button,.lf-cinema-resume-heading button,.lf-library-search>button),
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page button { color:var(--custom-ink) !important; border-color:var(--custom-line) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-library-search input,.lf-design-inline-search input,.lf-explore-format-search input,.lf-studio-field input,.lf-work-panel textarea,.lf-community-compose-sheet textarea),
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page input { color:var(--custom-ink) !important; caret-color:var(--custom-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(input,textarea)::placeholder { color:var(--custom-muted) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-library-tabs,.lf-library-view-switch,.lf-home-feed-tabs,.lf-explore-tabs,.lf-explore-sorts,.lf-design-search-modes,.lf-work-section-nav,.lf-work-reader-tabs) button:is([aria-selected='true'],[aria-pressed='true'],.is-active),
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-status-choices>button[aria-checked='true'] {
+  background:var(--custom-selected) !important; color:var(--custom-action) !important; border-color:var(--custom-action) !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-bottom-nav .lf-nav-item,.lf-community-composer-identity small) { color:var(--custom-muted) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-bottom-nav .is-active,.lf-work-rating,.lf-story-toggle,.lf-character-score-value,.lf-studio-current,.lf-cover-studio-preview small,.lf-chapter-more-menu>button svg) { color:var(--custom-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-studio-primary,.lf-chapter-quick-add,.lf-cover-studio-mark) { background:var(--custom-action) !important; color:var(--custom-on-action) !important; border-color:var(--custom-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-studio-primary:disabled { background:var(--custom-fill) !important; color:var(--custom-muted) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-status-choices>button,.lf-studio-field input,.lf-cover-studio-large,.lf-cover-studio-image,.lf-cover-studio-unavailable,.lf-chapter-more-menu>button,.lf-studio-footer,.lf-community-compose-glass footer) { background:var(--custom-fill-soft) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-studio-footer,.lf-studio-header,.lf-status-checkpoint,.lf-cover-studio-preview,.lf-review-card,.lf-work-facts,.lf-community-composer-author) { border-color:var(--custom-line) !important; }
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-rating-row { background:var(--custom-surface) !important; border-color:var(--custom-line) !important; color:var(--custom-ink) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-studio-destructive,.lf-studio-error) { color:var(--ui-danger) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(button,a,input,textarea,select,summary):focus-visible { outline-color:var(--custom-action) !important; }
+
+/* On-art titles use a stable scrim; page labels and actions use the owner palette. */
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-explore-cinema.has-feature .lf-explore-header h1 { color:#fff !important; text-shadow:0 2px 12px #000 !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-explore-section-head>button,.lf-library-search>svg,.lf-library-controls>span,.lf-design-feature-copy,.lf-explore-feature-meta,.lf-community-compose-audience,.lf-community-compose-length) { color:var(--custom-secondary) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-explore-feature-add,.lf-detail-hero button,.lf-chapter-quick-actions>button:not(.lf-chapter-quick-add),.lf-community-compose-tools button) { background:var(--custom-glass) !important; color:var(--custom-ink) !important; border-color:var(--custom-edge) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-community-compose-submit { background:var(--custom-action) !important; color:var(--custom-on-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-community-compose-submit:disabled { background:var(--custom-fill) !important; color:var(--custom-muted) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-community-picker>section { background:var(--custom-sheen),var(--custom-glass) !important; color:var(--custom-ink) !important; border-color:var(--custom-edge) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-community-picker>section :is(strong,button) { color:var(--custom-ink) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-community-picker>section p { color:var(--custom-secondary) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio :is(h2,h3,strong,label,button) { color:var(--custom-ink) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio :is(small,p,.lf-rating-scale-labels,.lf-rating-range-labels,.lf-rating-metric-label) { color:var(--custom-muted) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio :is(.lf-rating-number,.lf-rating-number output,.lf-rating-scale output) { color:var(--custom-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio :is(.lf-review-studio-tabs,.lf-rating-writing textarea,.lf-rating-footer) { background:var(--custom-fill-soft) !important; color:var(--custom-ink) !important; border-color:var(--custom-line) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio :is(.lf-rating-header,.lf-rating-work,.lf-rating-metric) { border-color:var(--custom-line) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio-tabs>button[aria-selected='true'] { background:var(--custom-selected) !important; color:var(--custom-action) !important; border-color:var(--custom-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio .lf-rating-footer>button { background:var(--custom-action) !important; color:var(--custom-on-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio .lf-rating-footer>button:disabled { background:var(--custom-fill) !important; color:var(--custom-muted) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio :is(.lf-review-score-controls>button,.lf-rating-recommendation button) { background:var(--custom-fill-soft) !important; border-color:var(--custom-line) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio .lf-rating-recommendation button[aria-pressed='true'] { background:var(--custom-selected) !important; border-color:var(--custom-action) !important; color:var(--custom-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-review-studio .lf-rating-scale span { color:var(--custom-muted) !important; }
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) :is(.lf-character-page-shell,.lf-character-toolbar) { background:var(--custom-bg) !important; }
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page :is(.lf-character-stat-grid b,.lf-character-score-value) { color:var(--custom-action) !important; }
+:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page :is(.lf-character-stat-grid span,.lf-character-score-label) { color:var(--custom-muted) !important; }
+
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-interface-color-row,.lf-interface-color-base,.lf-interface-layouts,.lf-interface-themes) {
+  border-color:var(--custom-edge) !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-interface-color-base button,.lf-interface-layouts button,.lf-interface-themes button) {
+  background:var(--custom-sheen),var(--custom-glass) !important;
+  color:var(--custom-ink) !important;
+  border-color:var(--custom-edge) !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-interface-color-base,.lf-interface-layouts,.lf-interface-themes) button[aria-pressed='true'] {
+  background:var(--custom-selected) !important; border-color:var(--custom-action) !important; color:var(--custom-action) !important;
+}
+
+/* A stable material behind header labels keeps light-page ink off dark artwork. */
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-friend-reader,.lf-friend-score,.lf-friend-section header button) { color:var(--custom-ink) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-cinema-rating,.lf-friend-score-value) { color:var(--custom-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-community-card-action,.lf-community-post-actions button):not(.is-active) { color:var(--custom-secondary) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-community-card-action,.lf-community-post-actions button):not(.is-active) :is(span,svg) { color:inherit !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-community-like-button,.lf-community-post-like).is-active { color:var(--ui-danger) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-community-dislike-button,.lf-community-post-dislike).is-active { color:var(--ui-gold) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-community-compose-fab {
+  background:var(--custom-sheen),var(--custom-glass) !important;
+  color:var(--custom-ink) !important;
+  border-color:var(--custom-edge) !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-home-cinema>.lf-social-header {
+  background:var(--custom-sheen),var(--custom-glass) !important;
+  backdrop-filter:var(--custom-blur) !important;
+  -webkit-backdrop-filter:var(--custom-blur) !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-social-header :is(.lf-social-brand,.lf-icon-button,.lf-cinema-heading h1) { color:var(--custom-ink) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-cinema-resume :is(.lf-cinema-resume-action,.lf-cinema-resume-heading h2) {
+  background:var(--custom-sheen),var(--custom-glass) !important;
+  color:var(--custom-ink) !important;
+  border-color:var(--custom-edge) !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-cinema-resume::before {
+  background:linear-gradient(transparent 8%,color-mix(in srgb,var(--custom-bg) 88%,transparent) 45%,var(--custom-bg) 98%) !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-explore-feature-selector>summary,.lf-explore-feature-controls,.lf-explore-category-copy) {
+  background:var(--custom-sheen),var(--custom-glass) !important;
+  border-color:var(--custom-edge) !important;
+  color:var(--custom-ink) !important;
+}
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-explore-feature-controls>button,.lf-explore-feature-meta>.lf-explore-feature-score,.lf-explore-category-copy svg) { color:var(--custom-secondary) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) .lf-explore-feature-controls>.lf-explore-feature-dot[aria-pressed='true']>span { background:var(--custom-action) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink) :is(.lf-explore-category,.lf-explore-category-art) { background:var(--custom-fill-soft) !important; border-color:var(--custom-line) !important; }
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  .lf-app:is(.is-custom,.is-light,.is-pink),:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page { --custom-glass:var(--custom-surface); }
+}
+@media (prefers-reduced-transparency:reduce) {
+  .lf-app:is(.is-custom,.is-light,.is-pink),:root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink']) .lf-character-page { --custom-glass:var(--custom-surface); --custom-blur:none; }
+}
+}

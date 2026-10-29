@@ -19,6 +19,7 @@ aliases: ["خريطة الميزات", "أين الكود", "feature map"]
 | بحث، كتالوج، نوع عمل، search، catalog | [[systems/Catalog-Search]] | `node --test tests/catalog-demand-loading.test.js tests/catalog-search-recovery.test.js tests/catalog-identity.test.js` |
 | فصول، ساعات، صفحات، progress، reading | [[systems/Reading-Library]] | `node --test tests/reading-metrics-stability.test.js tests/reading-status-policy.test.js tests/library-view.test.js` |
 | بروفايل، لست، مفضلة، profile، lists | [[systems/Profiles-Lists]] | `node --test tests/public-profile-view.test.js tests/profile-sections.test.js tests/profile-lists-unified.test.js` |
+| خصوصية، بيانات، تصدير، privacy، data | [[systems/Privacy-Data]] | `node --test tests/data-studio.test.js tests/privacy-safety-repairs.test.js tests/product-core.test.js` |
 | مجتمع، منشور، تعليق، جرس، notification | [[systems/Community-Notifications]] | `node --test tests/community-cloud.test.js tests/notification-delivery-runtime.test.js tests/home-social-discovery.test.js` |
 | استكشاف، تفاصيل، مشابه، شخصية | [[systems/Explore-Works]] | `node --test tests/explore-studio.test.js tests/work-relations.test.js tests/character-atlas.test.js` |
 | إطار، بنر، ثيم، حزمة، زينة، frame | [[systems/Appearance-Bundles]] | `node --test tests/frame-motion.test.js tests/profile-decoration.test.js tests/paid-collections.test.js` |

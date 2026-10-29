@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lorefy PFP Animation</title><base href="../">
+<link rel="stylesheet" href="styles/lorefy-frame-motion.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101214;color:#edf2f4;font-family:system-ui,sans-serif;letter-spacing:0}header{padding:18px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #343c41}h1{font-size:20px;margin:0}a{color:#71d0cd;text-decoration:none}main{max-width:600px;margin:0 auto;padding:20px 16px 28px}.stage{position:relative;width:320px;max-width:100%;aspect-ratio:1;margin:0 auto}.stage>img{position:absolute;left:var(--left);top:var(--top);width:var(--size);height:var(--size);object-fit:cover;border-radius:50%}h2{font-size:21px;text-align:center;margin:12px 0 24px}.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}button{font:inherit;color:inherit;background:#1b2023;border:1px solid #3b454a;min-height:48px;border-radius:6px;padding:10px 8px;cursor:pointer;overflow-wrap:anywhere}button[aria-pressed=true]{border-color:#71d0cd;background:#153b3d}button:focus-visible,a:focus-visible{outline:2px solid #71d0cd;outline-offset:3px}button:disabled{opacity:.55;cursor:wait}.record{width:100%;margin-top:20px;background:#d9eeec;color:#10282b;font-weight:600}body[data-theme=light]{background:#f5f8f8;color:#18292c}body[data-theme=light] button:not(.record){background:white;color:#18292c}body[data-theme=light] button[aria-pressed=true]{background:#d9eeec}footer{display:flex;justify-content:center;margin-top:16px}label{display:flex;align-items:center;gap:10px;font-size:13px}select{background:transparent;color:inherit;border:1px solid #66777b;border-radius:6px;padding:8px;font:inherit}option{color:#18292c}
+</style></head><body>
+<header><h1 dir="ltr">Lorefy · PFP</h1><a href="qa/motion-atelier.html?layout=reader&theme=dark&fresh=pfp-actions">الرواق</a></header>
+<main><div class="stage"><img alt="" src="launch/brand/lorefy-reading-scene.jpg"></div><h2></h2><nav class="options" aria-label="أنميشن الصورة الشخصية"></nav>
+<button class="record" disabled>تنزيل فيديو الحركة</button><footer><label>المظهر<select id="theme"><option value="dark">داكن</option><option value="light">فاتح</option></select></label></footer></main>
+<script src="modules/lorefy-frame-motion.js"></script><script src="modules/lorefy-bitmap-rig.js"></script><script src="modules/lorefy-avatar-rig.js"></script><script src="modules/lorefy-motion-atelier.js"></script><script src="modules/lorefy-elven-motion.js"></script><script src="modules/lorefy-frame-restoration.js"></script>
+<script>
+const params=new URLSearchParams(location.search),stage=document.querySelector('.stage'),portrait=stage.querySelector('img'),record=document.querySelector('.record'),theme=document.getElementById('theme');
+let packs=[],current=null,dispose=null,selectRun=0;
+const collection=params.get('collection')==='restored'?'restored':params.get('collection')==='elven'?'elf-motion':'motion-atelier',renderer=collection==='restored'?'restored':collection==='elf-motion'?'elven':'atelier';
+if(renderer==='elven')document.querySelector('header a').href='qa/elf-motion.html?layout=reader&theme=dark';
+if(renderer==='restored')document.querySelector('header a').href='qa/frame-restoration.html';
+theme.value=params.get('theme')||'dark';theme.onchange=()=>document.body.dataset.theme=theme.value;theme.onchange();
+async function select(pack){
+ const run=++selectRun;record.disabled=true;current=pack;document.querySelector('h2').textContent=pack.names.ar;
+ for(const b of document.querySelector('.options').children)b.setAttribute('aria-pressed',String(b.dataset.pack===pack.id));
+ if(dispose)dispose();
+ const g=pack.geometry;stage.style.setProperty('--left',(g.cx-g.size/2)*100+'%');stage.style.setProperty('--top',(g.cy-g.size/2)*100+'%');stage.style.setProperty('--size',g.size*100+'%');
+ portrait.style.borderRadius=pack.portraitClip?'0':'50%';portrait.style.clipPath=pack.portraitClip?'polygon('+pack.portraitClip.map(q=>q.map(v=>v*100+'%').join(' ')).join(',')+')':'none';
+ await LorefyOriginalRenderers[renderer].load(pack.artId);if(run!==selectRun)return;
+ dispose=LorefyFrameMotion.mount(stage,{original:{id:pack.artId,renderer}},'avatar');stage.dataset.pack=pack.id;record.disabled=false;
+}
+fetch(collection==='restored'?'launch/decorations/refined/manifest.json':'qa/'+collection+'/collections.json').then(r=>r.json()).then(items=>{
+ if(collection==='restored')items=items.map(p=>({...p,artId:p.id}));
+ packs=items;for(const p of packs){const b=document.createElement('button');b.type='button';b.dataset.pack=p.id;b.textContent=p.names.ar;b.onclick=()=>select(p);document.querySelector('.options').append(b);}
+ select(packs.find(p=>p.id===params.get('pack'))||packs.find(p=>p.artId==='tidal-glass')||packs[0]);
+});
+record.onclick=async()=>{
+ record.disabled=true;record.textContent='جارٍ التسجيل…';for(const b of document.querySelector('.options').children)b.disabled=true;
+ try{
+  const pack=current,g=pack.geometry,canvas=document.createElement('canvas');canvas.width=640;canvas.height=640;
+  const c=canvas.getContext('2d');c.fillStyle=theme.value==='dark'?'#101214':'#f5f8f8';c.fillRect(0,0,640,640);
+  const stream=canvas.captureStream(30);
+  const mime=['video/webm;codecs=vp8','video/webm;codecs=vp9','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
+  if(!mime)throw Error('Video recording unavailable');
+  const recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:8000000}),chunks=[];
+  recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
+  recorder.onstop=()=>{const url=URL.createObjectURL(new Blob(chunks,{type:mime})),a=document.createElement('a');a.href=url;a.download='lorefy-pfp-'+pack.artId+'.webm';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);stream.getTracks().forEach(t=>t.stop());};
+  const start=performance.now();recorder.start();
+  await new Promise(resolve=>{function tick(now){
+   const t=(now-start)/1000;c.fillStyle=theme.value==='dark'?'#101214':'#f5f8f8';c.fillRect(0,0,640,640);
+   c.save();c.translate(64,32);const d=512,r=g.size*d/2;
+   const crop=Math.min(portrait.naturalWidth,portrait.naturalHeight);
+   c.save();c.beginPath();
+   if(pack.portraitClip){pack.portraitClip.forEach((p,i)=>{const x=g.cx*d-r+p[0]*r*2,y=g.cy*d-r+p[1]*r*2;i?c.lineTo(x,y):c.moveTo(x,y);});c.closePath();}else c.arc(g.cx*d,g.cy*d,r,0,Math.PI*2);
+   c.clip();c.drawImage(portrait,(portrait.naturalWidth-crop)/2,(portrait.naturalHeight-crop)/2,crop,crop,g.cx*d-r,g.cy*d-r,r*2,r*2);c.restore();
+   LorefyOriginalRenderers[renderer].paint(c,pack.artId,'avatar',t,d,d);c.restore();
+   c.fillStyle=theme.value==='dark'?'#edf2f4':'#18292c';c.font='600 24px system-ui';c.textAlign='center';c.fillText(pack.names.en,320,590);
+   if(t<6)requestAnimationFrame(tick);else{recorder.stop();resolve();}
+  }requestAnimationFrame(tick);});
+ }catch(error){record.textContent='تعذّر تسجيل الفيديو';console.error(error);}
+ finally{record.disabled=false;record.textContent='تنزيل فيديو الحركة';for(const b of document.querySelector('.options').children)b.disabled=false;}
+};
+</script></body></html>

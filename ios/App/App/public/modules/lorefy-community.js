@@ -131,6 +131,40 @@
     return Math.floor(age / 86400000) + uiText("ي", "d");
   }
 
+  var communityNumbers = {
+    full:new Intl.NumberFormat('en-US'),
+    compact:new Intl.NumberFormat('en-US', {notation:'compact', maximumFractionDigits:1}),
+    plural:new Intl.PluralRules('ar')
+  };
+  function communityCount(kind, value, lang) {
+    var n = Number(value);
+    n = Number.isFinite(n) ? Math.min(Number.MAX_SAFE_INTEGER, Math.max(0, Math.floor(n))) : 0;
+    var full = communityNumbers.full.format(n), word;
+    if (lang === 'en') {
+      word = kind === 'reply' ? (n === 1 ? 'reply' : 'replies') : kind === 'dislike' ? (n === 1 ? 'dislike' : 'dislikes') : (n === 1 ? 'like' : 'likes');
+      full += ' ' + word;
+    } else {
+      var forms = kind === 'reply' ? ['ردّ واحد', 'ردّان', 'ردود', 'ردًّا', 'ردّ'] :
+        kind === 'dislike' ? ['حالة عدم إعجاب واحدة', 'حالتا عدم إعجاب', 'حالات عدم إعجاب', 'حالة عدم إعجاب', 'حالة عدم إعجاب'] :
+        ['إعجاب واحد', 'إعجابان', 'إعجابات', 'إعجابًا', 'إعجاب'];
+      var plural = communityNumbers.plural.select(n);
+      full = n === 1 ? forms[0] + ' (1)' : n === 2 ? forms[1] + ' (2)' :
+        full + ' ' + forms[plural === 'few' || plural === 'zero' ? 2 : plural === 'many' ? 3 : 4];
+    }
+    return {display:n >= 1000 ? communityNumbers.compact.format(n) : String(n), full:full};
+  }
+  function updatePostCounter(button, kind, value, compact) {
+    if (!button) return;
+    var count = communityCount(kind, value, doc.documentElement.lang);
+    var action = kind === 'reply' ? (compact ? uiText('الرد على الرد', 'Reply') : uiText('فتح الردود', 'Open replies')) :
+      kind === 'dislike' ? uiText('عدم إعجاب', 'Dislike') : uiText('إعجاب', 'Like');
+    var label = action + ' · ' + count.full;
+    if (button.getAttribute('aria-label') !== label) button.setAttribute('aria-label', label);
+    if (button.getAttribute('title') !== label) button.setAttribute('title', label);
+    var span = button.querySelector('span');
+    if (span && span.textContent !== count.display) span.textContent = count.display;
+  }
+
   function avatar(profile, size) {
     var wrap = el("span", { class:"lf-community-post-avatar", style:"--avatar-size:" + (size || 42) + "px" });
     if (profile && profile.avatar) {
@@ -505,6 +539,7 @@
 
   function openAttachmentPicker(preferredKind) {
     var options = savedAttachments().filter(function (item) { return !preferredKind || item.kind === preferredKind; });
+    var previous=doc.activeElement;
     var overlay = el("div", { class:"lf-community-picker", role:"dialog", "aria-modal":"true", "aria-label":"اختر ما تريد مشاركته" });
     var sheet = el("section", null, [
       el("header", null, [
@@ -512,7 +547,9 @@
         el("button", { type:"button", "aria-label":"إغلاق" }, icon("x", 19))
       ])
     ]);
-    sheet.querySelector("button").addEventListener("click", function () { overlay.remove(); });
+    var close=sheet.querySelector("button");
+    function dismissPicker(){overlay.remove();if(previous&&previous.isConnected)previous.focus({preventScroll:true});}
+    close.addEventListener("click", dismissPicker);
     var body = el("div", { class:"lf-community-picker-list" });
     if (!options.length) body.appendChild(el("div", { class:"lf-community-picker-empty" }, [
       icon("list-plus", 26), el("strong", { text:"لا توجد عناصر جاهزة" }),
@@ -520,14 +557,22 @@
     ]));
     options.forEach(function (item) {
       var button = el("button", { type:"button", class:"lf-community-picker-option" }, [renderAttachmentPreview(item, false)]);
-      button.addEventListener("click", function () { state.attachment = item; overlay.remove(); syncComposerAttachment(); });
+      button.addEventListener("click", function () { state.attachment = item; dismissPicker(); syncComposerAttachment(); });
       body.appendChild(button);
     });
     sheet.appendChild(body);
     overlay.appendChild(sheet);
-    overlay.addEventListener("click", function (event) { if (event.target === overlay) overlay.remove(); });
+    overlay.addEventListener("click", function (event) { if (event.target === overlay) dismissPicker(); });
+    overlay.addEventListener('keydown',function(event){
+      if(event.key === 'Escape'){event.preventDefault();event.stopPropagation();dismissPicker();return;}
+      if(event.key !== 'Tab')return;
+      var controls=Array.from(overlay.querySelectorAll('button:not(:disabled)')),first=controls[0],last=controls[controls.length-1];
+      if(event.shiftKey&&doc.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&doc.activeElement===last){event.preventDefault();first.focus();}
+    });
     communityOverlayHost().appendChild(overlay);
     hydrateIcons(overlay);
+    close.focus({preventScroll:true});
   }
 
   function syncComposerAttachment() {
@@ -586,14 +631,15 @@
     submit.disabled = !(textarea.value.trim() || state.attachment);
     var close = el("button", { type:"button", class:"lf-community-compose-close", "aria-label":"إلغاء النشر", title:"إلغاء النشر" }, icon('x', 22));
     var attachmentHost = el("div", { class:"lf-community-composer-attachment", hidden:true });
-    var composer = el("div", { class:"lf-community-compose-sheet", role:"dialog", "aria-modal":"true", "aria-label":"إنشاء منشور" }, [
+    var composer = el("div", { class:"lf-community-compose-sheet lf-community-compose-glass", role:"dialog", "aria-modal":"true", "aria-label":"إنشاء منشور" }, [
       el("section", null, [
         el("header", { class:"lf-community-compose-head" }, [close, el("strong", { text:"منشور جديد" }), submit]),
         el("div", { class:"lf-community-composer-main" }, [
-          avatar(me, 46),
-          el("div", { class:"lf-community-composer-copy" }, [
+          el("div", {class:"lf-community-composer-author"}, [avatar(me, 46),el("div", {class:"lf-community-composer-byline"}, [
             el("div", { class:"lf-community-composer-identity" }, [el("strong", { text:me.name }), el("small", { text:"@" + me.username, dir:"ltr" })]),
-            el('span', {class:'lf-community-compose-audience'}, [icon('globe',14),el('span',{text:doc.documentElement.lang === 'en' ? 'Public' : 'عام'})]),
+            el('span', {class:'lf-community-compose-audience'}, [icon('globe',14),el('span',{text:doc.documentElement.lang === 'en' ? 'Public' : 'عام'})])
+          ])]),
+          el("div", { class:"lf-community-composer-copy" }, [
             textarea,
             attachmentHost
           ])
@@ -719,13 +765,11 @@
       }
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", active ? "true" : "false");
-      var count = button.querySelector("span");
-      if (count) count.textContent = String(post.reactions[kind]);
+      updatePostCounter(button, kind, post.reactions[kind], false);
       if (peerButton) {
         peerButton.classList.toggle("is-active", !!post.reactions.mine[other]);
         peerButton.setAttribute("aria-pressed", post.reactions.mine[other] ? "true" : "false");
-        var peerCount = peerButton.querySelector("span");
-        if (peerCount) peerCount.textContent = String(post.reactions[other] || 0);
+        updatePostCounter(peerButton, other, post.reactions[other], false);
       }
       button.dataset.busy = "0";
     };
@@ -744,6 +788,7 @@
   }
 
   async function sharePost(post) {
+    if(global.LorefyShareComposer&&post.kind!=='text'&&post.attachment){var attachment=post.attachment;return global.LorefyShareComposer.open({kind:post.kind==='top'?'top':'list',title:attachment.title,text:post.body,items:attachment.items||[],profile:post.profile||{}});}
     var quote = quoteAttachment(post.attachment);
     var text = (post.body ? post.body + "\n" : "") + (quote ? "«" + quote.quote + "»\n" + quote.title + " · " + { chapter:"الفصل", page:"الصفحة", volume:"المجلد" }[quote.anchorType] + " " + quote.anchorValue + "\n" : post.attachment && post.attachment.title ? post.attachment.title + "\n" : "") + "#Lorefy";
     var studio = global.LorefyShareStudio;
@@ -766,11 +811,11 @@
     var profile = post.profile || {};
     var author = el("button", { type:"button", class:"lf-community-post-author" }, [
       avatar(profile, compact ? 34 : 42),
-      el("span", null, [el("strong", { text:profile.name || profile.username || "قارئ Lorefy" }), el("small", { text:"@" + String(profile.username || "lorefy_reader") + " · " + timeLabel(post.created_at) })])
+      el("span", null, [el("strong", { dir:'auto', title:profile.name || profile.username || uiText('قارئ Lorefy', 'Lorefy reader'), text:profile.name || profile.username || uiText('قارئ Lorefy', 'Lorefy reader') }), el("small", { dir:'ltr', 'data-no-translate':'1', text:"@" + String(profile.username || "lorefy_reader") + " · " + timeLabel(post.created_at) })])
     ]);
     author.addEventListener("click", function () { openProfile(profile); });
     var hasQuote = !!quoteAttachment(post.attachment);
-    var typeLabel = hasQuote ? "اقتباس" : post.kind === "list" ? "قائمة" : post.kind === "top" ? "ترتيب الشخصيات" : "منشور";
+    var typeLabel = hasQuote ? uiText('اقتباس', 'Quote') : post.kind === "list" ? uiText('قائمة', 'List') : post.kind === "top" ? uiText('ترتيب الشخصيات', 'Character ranking') : uiText('منشور', 'Post');
     var header = el("header", {class:'lf-community-post-header'}, [author, el("span", { class:"lf-community-post-kind is-" + (hasQuote ? "quote" : post.kind), text:typeLabel })]);
     if (post.user_id === identity().id) {
       var menu = el('details', {class:'lf-community-post-menu'});
@@ -798,10 +843,13 @@
     if (hasQuote) card.appendChild(renderAttachmentPreview(post.attachment, false));
     else if (post.attachment && Array.isArray(post.attachment.items)) card.appendChild(renderAttachmentPreview(Object.assign({ kind:post.kind }, post.attachment), false));
     var mine = post.reactions && post.reactions.mine || {};
-    var reply = el("button", { type:"button", class:"lf-community-post-replies", "aria-label":compact ? "الرد على الرد" : "فتح الردود" }, [icon("message-circle", 18), el("span", { text:String(post.replyCount || 0) })]);
-    var like = el("button", { type:"button", class:"lf-community-post-like" + (mine.like ? " is-active" : ""), "aria-label":"إعجاب", "aria-pressed":mine.like ? "true" : "false" }, [icon("heart", 18), el("span", { text:String(post.reactions && post.reactions.like || 0) })]);
-    var dislike = el("button", { type:"button", class:"lf-community-post-dislike" + (mine.dislike ? " is-active" : ""), "aria-label":"عدم إعجاب", "aria-pressed":mine.dislike ? "true" : "false" }, [icon("thumbs-down", 18), el("span", { text:String(post.reactions && post.reactions.dislike || 0) })]);
-    var share = el("button", { type:"button", "aria-label":"مشاركة" }, [icon("share-2", 18)]);
+    var reply = el("button", { type:"button", class:"lf-community-post-replies" }, [icon("message-circle", 18), el("span", { 'aria-hidden':'true', dir:'ltr', text:'' })]);
+    var like = el("button", { type:"button", class:"lf-community-post-like" + (mine.like ? " is-active" : ""), "aria-pressed":mine.like ? "true" : "false" }, [icon("heart", 18), el("span", { 'aria-hidden':'true', dir:'ltr', text:'' })]);
+    var dislike = el("button", { type:"button", class:"lf-community-post-dislike" + (mine.dislike ? " is-active" : ""), "aria-pressed":mine.dislike ? "true" : "false" }, [icon("thumbs-down", 18), el("span", { 'aria-hidden':'true', dir:'ltr', text:'' })]);
+    updatePostCounter(reply, 'reply', post.replyCount, compact);
+    updatePostCounter(like, 'like', post.reactions && post.reactions.like, compact);
+    updatePostCounter(dislike, 'dislike', post.reactions && post.reactions.dislike, compact);
+    var share = el("button", { type:"button", "aria-label":uiText('مشاركة المنشور', 'Share post'), title:uiText('مشاركة المنشور', 'Share post') }, [icon("share-2", 18)]);
     var saved = !!savedPosts()[post.id];
     var bookmark = el('button',{type:'button','aria-label':uiText('حفظ المنشور','Save post'),'aria-pressed':String(saved),class:saved ? 'is-active' : ''},icon('bookmark',18));
     bookmark.addEventListener('click',function () { toggleSavedPost(post,bookmark); });
@@ -841,16 +889,16 @@
     var sending = false;
     var repliesRequest = 0, replyRows = [], hasOlderReplies = false;
     var previousFocus = doc.activeElement;
-    var overlay = el("div", { class:"lf-community-thread", role:"dialog", "aria-modal":"true", "aria-label":"محادثة المنشور" });
-    var close = el("button", { type:"button", class:"lf-community-thread-close", "aria-label":"إغلاق" }, icon("x", 20));
-    var repliesHost = el("div", { class:"lf-community-thread-replies" }, [el("p", { class:"lf-community-thread-loading", text:"جارٍ تحميل الردود..." })]);
-    var input = el("textarea", { rows:"1", dir:"auto", maxlength:"500", placeholder:"اكتب رداً...", "aria-label":"اكتب رداً" });
+    var overlay = el("div", { class:"lf-community-thread", role:"dialog", "aria-modal":"true", "aria-label":uiText('محادثة المنشور', 'Post conversation') });
+    var close = el("button", { type:"button", class:"lf-community-thread-close", "aria-label":uiText('إغلاق', 'Close') }, icon("x", 20));
+    var repliesHost = el("div", { class:"lf-community-thread-replies" }, [el("p", { class:"lf-community-thread-loading", text:uiText('جارٍ تحميل الردود…', 'Loading replies…') })]);
+    var input = el("textarea", { rows:"1", dir:"auto", maxlength:"500", placeholder:uiText('اكتب ردًا…', 'Write a reply…'), "aria-label":uiText('اكتب ردًا', 'Write a reply') });
     var replyTarget = null;
     var targetLabel = el('span');
     var clearTarget = el('button',{type:'button','aria-label':uiText('إلغاء الرد المحدد','Cancel reply target')},icon('x',18));
     var targetBar = el('div',{class:'lf-community-reply-target',hidden:true},[targetLabel,clearTarget]);
     clearTarget.addEventListener('click',function () { replyTarget = null; targetBar.hidden = true; input.focus(); });
-    var send = el("button", { type:"button", disabled:"disabled", "aria-label":"إرسال الرد" }, icon("send", 18));
+    var send = el("button", { type:"button", disabled:"disabled", "aria-label":uiText('إرسال الرد', 'Send reply') }, icon("send", 18));
     var draftKey = String(identity().id || identity().username) + ':' + post.id;
     input.value = replyDrafts.get(draftKey) || '';
     send.disabled = !input.value.trim();
@@ -862,7 +910,7 @@
       input.focus();
     }
     var sheet = el("section", null, [
-      el("header", { class:"lf-community-thread-head" }, [close, el("strong", { text:"المنشور" }), el("span", { "aria-hidden":"true" })]),
+      el("header", { class:"lf-community-thread-head" }, [close, el("strong", { text:uiText('المنشور', 'Post') }), el("span", { "aria-hidden":"true" })]),
       el("div", { class:"lf-community-thread-body" }, [el("div", { class:"lf-community-thread-origin" }, [postCard(post, true, targetReply)]), repliesHost]),
       targetBar, el("footer", { class:"lf-community-thread-compose" }, [avatar(identity(), 36), input, send])
     ]);
@@ -911,16 +959,16 @@
         replyRows = Array.from(new Map((older ? chunk.concat(replyRows) : chunk).map(function (row) { return [row.id, row]; })).values()).sort(function (a,b) { return new Date(a.created_at)-new Date(b.created_at) || a.id.localeCompare(b.id); });
         if (!older && chunk.length < 40) {
           post.replyCount = chunk.length;
-          var count = sheet.querySelector('.lf-community-thread-origin .lf-community-post-actions button span');
-          if (count) count.textContent = String(post.replyCount);
+          var replyButton = sheet.querySelector('.lf-community-thread-origin .lf-community-post-replies');
+          updatePostCounter(replyButton, 'reply', post.replyCount, true);
         }
         var replies = replyRows;
         repliesHost.textContent = "";
         if (hasOlderReplies || older && chunk.length === 40) {
-          var previous = el('button', { type:'button', class:'lf-community-load-more', text:'عرض الردود السابقة' });
+          var previous = el('button', { type:'button', class:'lf-community-load-more', text:uiText('عرض الردود السابقة', 'Older replies') });
           previous.addEventListener('click', function () { previous.disabled = true; paintReplies(true); }); repliesHost.appendChild(previous);
         }
-        if (!replies.length) repliesHost.appendChild(el("p", { class:"lf-community-thread-empty", text:"كن أول من يرد" }));
+        if (!replies.length) repliesHost.appendChild(el("p", { class:"lf-community-thread-empty", text:uiText('كن أول من يرد', 'Be the first to reply') }));
         replies.forEach(function (replyPost) {
           var row = el("div", { class:"lf-community-thread-reply" }, [
             el("span", { class:"lf-community-thread-rail", "aria-hidden":"true" }),
@@ -932,7 +980,7 @@
         if (older) scrollBody.scrollTop = scrollTop + scrollBody.scrollHeight - scrollHeight;
       } catch (error) {
         if (!overlay.isConnected || request !== repliesRequest) return;
-        var retry = el('button', { type:'button', class:'lf-community-retry', text:'تعذر تحميل الردود · إعادة المحاولة' });
+        var retry = el('button', { type:'button', class:'lf-community-retry', text:uiText('تعذر تحميل الردود · إعادة المحاولة', 'Could not load replies · Retry') });
         retry.addEventListener('click', function () { retry.remove(); paintReplies(older); }); repliesHost.appendChild(retry);
       }
     }
@@ -956,7 +1004,7 @@
         var scrollBody = sheet.querySelector('.lf-community-thread-body');
         scrollBody.scrollTop = scrollBody.scrollHeight;
         renderPostFeed();
-      } catch (error) { toast(error && error.message || "تعذر إرسال الرد"); }
+      } catch (error) { toast(error && error.message || uiText('تعذر إرسال الرد', 'Could not send reply')); }
       finally { sending = false; send.disabled = !input.value.trim(); }
     });
     overlay.appendChild(sheet);
@@ -1027,10 +1075,12 @@
       }else card=postCard(post,false);
       [ ["like",".lf-community-post-like"],["dislike",".lf-community-post-dislike"] ].forEach(function(entry){
         var button=card.querySelector(entry[1]);if(!button)return;
-        var reactions=post.reactions||{},mine=reactions.mine||{},active=!!mine[entry[0]],count=button.querySelector("span"),value=String(reactions[entry[0]]||0);
-        button.classList.toggle("is-active",active);button.setAttribute("aria-pressed",String(active));if(count&&count.textContent!==value)count.textContent=value;
+        var reactions=post.reactions||{},mine=reactions.mine||{},active=!!mine[entry[0]];
+        button.classList.toggle("is-active",active);button.setAttribute("aria-pressed",String(active));
+        updatePostCounter(button, entry[0], reactions[entry[0]], false);
       });
-      var replies=card.querySelector(".lf-community-post-replies span");if(replies&&replies.textContent!==String(post.replyCount||0))replies.textContent=String(post.replyCount||0);
+      var replyButton=card.querySelector('.lf-community-post-replies');
+      updatePostCounter(replyButton, 'reply', post.replyCount, false);
       nextCards.set(String(post.id),{post:post,fingerprint:fingerprint,card:card});
       var timestamp=card.querySelector(".lf-community-post-author small");
       if(timestamp){var label="@"+String(post.profile&&post.profile.username||"lorefy_reader")+" · "+timeLabel(post.created_at);if(timestamp.textContent!==label)timestamp.textContent=label;}

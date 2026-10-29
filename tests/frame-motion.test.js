@@ -15,7 +15,7 @@ test('original page art removes transparent margins and keeps side rails outside
     assert.equal(bands[0][0],bounds.x);assert.equal(bands[0][1],bounds.y);
     assert.ok(Math.abs(top[4]+top[6]/2-w/2)<1e-8);
     assert.ok(bottom[5]+bottom[7]<=h-2);
-    assert.ok(top[7]<=64 && bottom[7]<=24);
+    assert.ok(top[7]<=(w>=280&&w<380?72:64) && bottom[7]<=24);
     for(const i of [0,2,4,7,8])assert.ok(Math.abs(bands[i][6]/bands[i][2]-bands[i][7]/bands[i][3])<1e-8,'Faces and corner ornaments must not be flattened');
     for(const start of [0]){
       assert.equal(bands[start][4],2);assert.equal(bands[start+4][4]+bands[start+4][6],w-2);
@@ -92,7 +92,8 @@ test('central crest fits between two controls on either side on small phones',()
     const bounds={w:940,h:1400,crest,join:.92};
     const layout=motion.pageLayout(bounds,width,956);
     const centreWidth=bounds.w*crest*layout.top/layout.sourceTop;
-    assert.ok(centreWidth<=width-252+.01,'Leave a 4px gap between the crest and both button groups');
+    if(width<380)assert.ok(layout.topY>=64&&centreWidth<=144.01,'Use a separate ornament row below both button groups');
+    else assert.ok(centreWidth<=width-252+.01,'Leave a 4px gap between the crest and both button groups');
   }
 });
 

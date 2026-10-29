@@ -1,0 +1,76 @@
+{
+  "page": {
+    "width": 342,
+    "height": 768,
+    "cx": 0.5,
+    "cy": 0.5,
+    "size": 0.7094736842105264,
+    "parts": [
+      {
+        "file": "page-part-0.png",
+        "x": 0,
+        "y": 305,
+        "w": 5,
+        "h": 42,
+        "area": 70
+      },
+      {
+        "file": "avatar-part-0.png",
+        "x": 27,
+        "y": 13,
+        "w": 92,
+        "h": 119,
+        "area": 5375
+      },
+      {
+        "file": "avatar-part-1.png",
+        "x": 15,
+        "y": 321,
+        "w": 84,
+        "h": 127,
+        "area": 4992
+      },
+      {
+        "file": "avatar-part-2.png",
+        "x": 405,
+        "y": 16,
+        "w": 90,
+        "h": 106,
+        "area": 4677
+      }
+    ]
+  },
+  "avatar": {
+    "width": 512,
+    "height": 512,
+    "cx": 0.49912109375,
+    "cy": 0.4560546875,
+    "size": 0.467578125,
+    "parts": [
+      {
+        "file": "avatar-part-0.png",
+        "x": 27,
+        "y": 13,
+        "w": 92,
+        "h": 119,
+        "area": 5375
+      },
+      {
+        "file": "avatar-part-1.png",
+        "x": 15,
+        "y": 321,
+        "w": 84,
+        "h": 127,
+        "area": 4992
+      },
+      {
+        "file": "avatar-part-2.png",
+        "x": 405,
+        "y": 16,
+        "w": 90,
+        "h": 106,
+        "area": 4677
+      }
+    ]
+  }
+}

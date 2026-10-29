@@ -1624,7 +1624,7 @@
       });
   }
 
-  function fandomCharacterPictures(api, character) {
+  function fandomCharacterPictures(api, character, options) {
     var name = character && (character.latin || character.name);
     if (!api || !name) return Promise.resolve([]);
     return fandomDirectPage(api, name)
@@ -1660,7 +1660,10 @@
               info.set("iiurlwidth", "480");
               info.set("format", "json");
               info.set("origin", "*");
-              return fandomFetchJson(api, info, "fandom image info").catch(function () { return null; });
+              return fandomFetchJson(api, info, "fandom image info").catch(function (error) {
+                if (options && options.reportErrors) throw error;
+                return null;
+              });
             })).then(function (responses) {
               var urls = seed.slice();
               responses.forEach(function (response) {
@@ -1676,7 +1679,10 @@
               });
               return dedupeUrls(urls);
             });
-          }).catch(function () { return seed; });
+          }).catch(function (error) {
+            if (options && options.reportErrors) throw error;
+            return seed;
+          });
       });
   }
 
@@ -2136,17 +2142,20 @@
       });
   }
 
-  function loadImageOptions(character, work) {
+  function loadImageOptions(character, work, options) {
     character = character || {};
     var seed = dedupeUrls([character.image, character.img, character.cover]);
     var fandom = fandomImageSource(character, work);
     var chain = characterMalId(character)
-      ? jikanCharacterPictures(character).catch(function () { return []; })
+      ? jikanCharacterPictures(character)
       : fandom && fandom.api
-        ? fandomCharacterPictures(fandom.api, character)
+        ? fandomCharacterPictures(fandom.api, character, options)
         : Promise.resolve([]);
     return chain
-      .catch(function () { return []; })
+      .catch(function (error) {
+        if (options && options.reportErrors) throw error;
+        return [];
+      })
       .then(function (urls) { return dedupeUrls(seed.concat(urls)).slice(0, IMAGE_OPTIONS_LIMIT); });
   }
 

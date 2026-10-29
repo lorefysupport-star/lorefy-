@@ -17,7 +17,7 @@ function functionsBetween(text, from, to, scope) {
 test('library filter names remain their status names during a search', () => {
   const start = app.indexOf('className:"lf-library-tabs"');
   const label = app.slice(start).match(/React\.createElement\("span",null,(.*?)\),React\.createElement\("b"/)[1];
-  const scope = { libraryQuery: 'Hunter', n: 'Completed' };
+  const scope = { libraryQuery: 'Hunter', o:'تم القراءة', W:'en', lorefyReadingStatusLabel:require('../modules/lorefy-i18n').readingStatusLabel };
   vm.runInNewContext('result=' + label, scope);
   assert.equal(scope.result, 'Completed');
 });
@@ -64,9 +64,12 @@ test('character loader keeps the live character search while the request finishe
   const scope = { request: 4, workRequest: 4, workStatus: { isConnected: true },
     rows: [{ id: 'kurapika' }], workResults: {}, CB: { query: 'كورابيكا' },
     search: { value: 'كورابيكا' }, options: { setAttribute() {} }, cat: {},
-    uiText: (ar, en) => en, fillPickerOptions() {} };
+    uiText: (ar, en) => en, isPickerCurrent:()=>true, fillPickerOptions() {} };
   vm.runInNewContext('(function(){' + growth.slice(start, end) + '})()', scope);
   assert.equal(scope.search.value, 'كورابيكا');
+  assert.equal(scope.CB.query, 'كورابيكا');
+  scope.isPickerCurrent=()=>false;scope.search.value='Obsolete query';
+  vm.runInNewContext('(function(){' + growth.slice(start, end) + '})()', scope);
   assert.equal(scope.CB.query, 'كورابيكا');
 });
 

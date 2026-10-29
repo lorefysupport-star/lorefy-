@@ -35,9 +35,9 @@
       avatar: safeText(reader.avatar || reader.av, 12000),
       av: safeText(reader.avatar || reader.av, 12000),
       banner: safeText(reader.banner, 24000),
-      profile_layout: reader.profile_layout === 'immersive' ? 'immersive' : 'normal',
+      profile_layout: reader.profile_layout === 'immersive' || reader.profile_layout === 'reader' ? reader.profile_layout : 'normal',
       theme: root.LorefyPublicAppearance ? root.LorefyPublicAppearance.normalize(reader).theme : reader.theme || 'dark',
-      library_view: reader.library_view === 'spines' || reader.library_view === 'shelf' ? reader.library_view : 'grid',
+      library_view: ['spines','shelf','showcase'].includes(reader.library_view) ? reader.library_view : 'grid',
       favorite_type: safeText(reader.favorite_type,30),
       banner_position: reader.banner_position != null && Number.isFinite(Number(reader.banner_position)) ? Math.max(0,Math.min(100,Number(reader.banner_position))) : 50,
       genres: Array.isArray(reader.genres) ? reader.genres.map(function (genre) { return safeText(genre, 30); }).filter(Boolean).slice(0, 4) : [],
@@ -119,7 +119,7 @@
     }
 
     return {
-      search: async function (value) {
+      search: async function (value, searchOptions) {
         var query = normalizeQuery(value);
         if (query.length < 2) return [];
         await hydrateFollowing();
@@ -127,8 +127,9 @@
           try {
             var remote = await adapter.searchPublicProfiles(query, MAX_RESULTS);
             if (Array.isArray(remote)) return rankReaders(remote, query, currentUserId, blockedIds);
-          } catch (error) {}
+          } catch (error) { if (searchOptions && searchOptions.strict) throw error; }
         }
+        if (searchOptions && searchOptions.strict) throw new Error('Reader directory unavailable');
         return rankReaders(readers, query, currentUserId, blockedIds);
       },
       isFollowing: function (profileId) { return following.has(String(profileId)); },

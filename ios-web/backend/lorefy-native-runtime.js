@@ -20,6 +20,50 @@
   var pendingToken = '';
   var connectionEpoch = 0, refreshEpoch = 0, activeAccount = '';
   var shownNotifications = new Set(), bannerTimer = null;
+  var INBOX_CACHE_PREFIX='lorefy.notifications.inbox.v1:';
+  var pendingReads=new Set(),readJob=null,inboxState='ready';
+
+  function inboxKey(owner) { return INBOX_CACHE_PREFIX+encodeURIComponent(owner); }
+  function cleanInbox(rows,owner) {
+    var seen=new Set();
+    return (Array.isArray(rows)?rows:[]).filter(function(row){
+      return row && typeof row.id==='string' && row.id.length>0 && row.id.length<=120 && !seen.has(row.id) &&
+        row.actor_id!==owner && (!row.user_id || row.user_id===owner) && seen.add(row.id);
+    }).slice(0,60).map(function(row){return {
+      id:row.id,user_id:owner,actor_id:String(row.actor_id||''),kind:String(row.kind||'').slice(0,40),
+      title:String(row.title||'').slice(0,120),body:String(row.body||'').slice(0,500),
+      target_path:String(row.target_path||'').slice(0,500),data:{postId:row.data&&row.data.postId},
+      read_at:row.read_at?String(row.read_at).slice(0,40):null,created_at:String(row.created_at||'').slice(0,40)
+    };});
+  }
+  function saveInbox() {
+    if(!activeAccount)return;
+    try{root.localStorage.setItem(inboxKey(activeAccount),JSON.stringify({ownerId:activeAccount,rows:cleanInbox(cloudNotifications,activeAccount),pendingReads:Array.from(pendingReads).slice(0,200)}));}catch(_){}
+  }
+  function restoreInbox(owner) {
+    try{
+      var record=JSON.parse(root.localStorage.getItem(inboxKey(owner))||'null');
+      if(!record || record.ownerId!==owner)return;
+      cloudNotifications=cleanInbox(record.rows,owner);
+      pendingReads=new Set((Array.isArray(record.pendingReads)?record.pendingReads:[]).filter(function(id){return typeof id==='string'&&id.length<=120;}).slice(0,200));
+    }catch(_){}
+  }
+  async function flushReadReceipts() {
+    var backend=root.LorefyBackend,epoch=connectionEpoch,owner=activeAccount;
+    if(!owner || !pendingReads.size || !backend || !backend.markNotificationsRead)return;
+    if(readJob && readJob.epoch===epoch)return readJob.promise;
+    var ids=Array.from(pendingReads),job={epoch:epoch,promise:null};readJob=job;
+    job.promise=Promise.resolve().then(function(){return backend.markNotificationsRead(ids);}).then(function(result){
+      if(epoch!==connectionEpoch || owner!==activeAccount || backend!==root.LorefyBackend || result===false)return;
+      ids.forEach(function(id){pendingReads.delete(id);});saveInbox();
+    }).catch(function(){ /* Retry these receipts on the next authenticated refresh. */ }).finally(function(){if(readJob===job)readJob=null;});
+    return job.promise;
+  }
+  function markInboxRead(ids) {
+    var selected=ids?new Set(ids):new Set(cloudNotifications.map(function(item){return item.id;})),now=new Date().toISOString();
+    cloudNotifications.forEach(function(item){if(selected.has(item.id)){item.read_at=item.read_at||now;pendingReads.add(item.id);}});
+    saveInbox();renderCloudNotifications();flushReadReceipts();
+  }
 
   function parseAppLink(rawUrl) {
     var raw = String(rawUrl || "").trim();
@@ -227,6 +271,7 @@
     style.textContent = ".lf-cloud-notifications{direction:rtl}.lf-cloud-notification{position:relative;display:flex;width:100%;gap:10px;padding:13px 18px;border:0;border-bottom:1px solid rgba(128,128,128,.16);background:transparent;color:inherit;text-align:right;font-family:inherit;cursor:pointer}.lf-cloud-notifications[dir=ltr]{direction:ltr}.lf-cloud-notifications[dir=ltr] .lf-cloud-notification{text-align:left}.lf-cloud-notification.is-unread{background:rgba(138,43,226,.09)}.lf-cloud-notification-dot{width:9px;height:9px;margin-top:6px;border-radius:50%;background:#8a2be2;flex:0 0 9px}.lf-cloud-notification-copy{min-width:0;flex:1}.lf-cloud-notification-copy strong,.lf-cloud-notification-copy span{display:block}.lf-cloud-notification-copy strong{font-size:13px}.lf-cloud-notification-copy span{font-size:12px;line-height:1.55;opacity:.72}.lf-cloud-notification-copy time{display:block;margin-top:3px;font-size:10px;opacity:.52}.lf-cloud-unread-badge{position:absolute!important;top:-3px!important;right:-3px!important;display:grid!important;place-items:center;width:17px!important;height:17px!important;border-radius:50%!important;background:#ef4056!important;color:#fff!important;font:800 9px/1 system-ui!important}.lf-notifications-page>p[data-lf-core-empty=hidden]{display:none!important}";
     style.textContent += '.lf-notification-banner{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px;right:12px;max-width:460px;margin:auto;z-index:2147483000;display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--ui-line,#dbe5e7);border-radius:16px;background:var(--ui-surface,#fff);color:var(--ui-ink,#172d30);box-shadow:0 6px 24px rgba(0,0,0,.16)}.lf-notification-banner button{font:inherit;color:inherit;border:0;background:transparent;cursor:pointer}.lf-notification-banner-open{flex:1;min-width:0;min-height:48px;padding:6px 10px;text-align:start}.lf-notification-banner-open strong,.lf-notification-banner-open span{display:block;overflow-wrap:anywhere}.lf-notification-banner-open strong{font-size:14px}.lf-notification-banner-open span{font-size:13px;line-height:1.5;margin-top:3px}.lf-notification-banner-close{width:44px;min-height:44px;font-size:24px!important}';
     root.document.head.appendChild(style);
+    style.textContent += '.lf-inbox-status{padding:14px 18px;color:var(--ui-secondary,#697582);font:inherit;text-align:start}.lf-inbox-status p{margin:0 0 8px;font-size:14px;line-height:1.65}.lf-inbox-status button{min-height:44px;padding:8px 16px;border:1px solid var(--ui-line,#cbd5dc);border-radius:22px;background:var(--ui-surface,#fff);color:var(--ui-action,#087c83);font:inherit;cursor:pointer}.lf-inbox-status button[hidden]{display:none}.lf-cloud-notification:focus-visible,.lf-inbox-status button:focus-visible{outline:2px solid var(--ui-action,#087c83);outline-offset:-3px}';
   }
 
   function updateBellBadges() {
@@ -250,17 +295,21 @@
     updateBellBadges();
     var page = root.document.querySelector(".lf-notifications-page");
     if (!page) return;
+    renderInboxStatus(page);
     var previous = page.querySelector(".lf-cloud-notifications");
-    if (previous) previous.remove();
+    var signature=JSON.stringify([root.document.documentElement.lang,cloudNotifications]);
     Array.prototype.forEach.call(page.children, function (child) {
       if (child.tagName === "P" && /لا إشعارات|No notifications/i.test(child.textContent || "")) {
-        if (cloudNotifications.length) child.setAttribute("data-lf-core-empty", "hidden");
+        if (cloudNotifications.length || inboxState!=='ready') child.setAttribute("data-lf-core-empty", "hidden");
         else child.removeAttribute("data-lf-core-empty");
       }
     });
+    if(previous && previous._lfInboxSignature===signature)return;
+    if(previous)previous.remove();
     if (!cloudNotifications.length) return;
     var section = root.document.createElement("section");
     section.className = "lf-cloud-notifications";
+    section._lfInboxSignature=signature;
     section.setAttribute("aria-label", root.document.documentElement.lang === "en" ? "Notifications" : "الإشعارات الجديدة");
     section.dir = root.document.documentElement.lang === "en" ? "ltr" : "rtl";
     cloudNotifications.forEach(function (item) {
@@ -281,16 +330,29 @@
       copy.appendChild(title); copy.appendChild(body); copy.appendChild(time);
       button.appendChild(dot); button.appendChild(copy);
       button.addEventListener("click", function () {
-        var backend = root.LorefyBackend;
-        if (backend && backend.markNotificationsRead) backend.markNotificationsRead([item.id]).catch(function () {});
-        item.read_at = new Date().toISOString();
-        renderCloudNotifications();
+        markInboxRead([item.id]);
         var route = notificationRoute(item); if (route) openRoute(route);
       });
       section.appendChild(button);
     });
-    var header = page.querySelector("header");
-    if (header) header.insertAdjacentElement("afterend", section); else page.prepend(section);
+    var header = page.querySelector(".lf-inbox-status") || page.querySelector("header");
+    if (header && header.insertAdjacentElement) header.insertAdjacentElement("afterend", section); else page.prepend(section);
+  }
+
+  function renderInboxStatus(page) {
+    var previous=page.querySelector('.lf-inbox-status'),en=root.document.documentElement.lang==='en';
+    if(inboxState==='ready'){if(previous)previous.remove();return;}
+    if(!previous){
+      previous=root.document.createElement('div');previous.className='lf-inbox-status';
+      var message=root.document.createElement('p');message.setAttribute('role','status');previous.appendChild(message);
+      var retry=root.document.createElement('button');retry.type='button';retry.addEventListener('click',function(){refreshCloudNotifications();});previous.appendChild(retry);
+      var header=page.querySelector('header');if(header)header.insertAdjacentElement('afterend',previous);else page.prepend(previous);
+    }
+    var text=inboxState==='loading'?(en?'Updating notifications...':'جارٍ تحديث الإشعارات...'):
+      cloudNotifications.length?(en?'Offline. Showing saved notifications.':'تعذر الاتصال. نعرض إشعاراتك المحفوظة.'):(en?'Could not load notifications.':'تعذر تحميل الإشعارات.');
+    if(previous.children[0].textContent!==text)previous.children[0].textContent=text;
+    previous.children[1].hidden=inboxState==='loading';
+    var label=en?'Retry':'إعادة المحاولة';if(previous.children[1].textContent!==label)previous.children[1].textContent=label;
   }
 
   function dismissBanner() {
@@ -314,9 +376,7 @@
     var body = root.document.createElement('span'); body.textContent = String(item.body || '');
     open.appendChild(title); open.appendChild(body);
     open.addEventListener('click',function(){
-      var backend=root.LorefyBackend;
-      if (backend && backend.markNotificationsRead) backend.markNotificationsRead([item.id]).catch(function(){});
-      item.read_at=new Date().toISOString(); dismissBanner(); renderCloudNotifications();
+      markInboxRead([item.id]);dismissBanner();
       var route=notificationRoute(item); if(route)openRoute(route);
     });
     var close=root.document.createElement('button'); close.type='button'; close.className='lf-notification-banner-close';
@@ -330,15 +390,25 @@
     var backend=root.LorefyBackend, epoch=connectionEpoch, request=++refreshEpoch;
     if (!backend || typeof backend.listNotifications !== 'function' || !activeAccount) return [];
     try {
+      await flushReadReceipts();
+      if(epoch!==connectionEpoch || request!==refreshEpoch)return [];
       var initialIds=new Set(cloudNotifications.map(function(item){return item.id;}));
       var rows=await backend.listNotifications(60);
       if(epoch!==connectionEpoch || request!==refreshEpoch)return [];
+      rows=cleanInbox(rows,activeAccount).map(function(row){
+        var old=cloudNotifications.find(function(item){return item.id===row.id;});
+        if(old&&old.read_at)row.read_at=row.read_at||old.read_at;
+        return row;
+      });
       var existing=new Set(cloudNotifications.map(function(item){return item.id;}));
       var fresh=cloudNotifications.filter(function(item){return !initialIds.has(item.id) && !rows.some(function(row){return row.id===item.id;});});
       cloudNotifications=fresh.concat(rows).slice(0,60);
+      inboxState='ready';saveInbox();
       renderCloudNotifications();
       if(announce) rows.filter(function(item){return !existing.has(item.id);}).reverse().forEach(announceNotification);
-    } catch(error) { /* Keep the current inbox during a temporary network failure. */ }
+    } catch(error) {
+      if(epoch===connectionEpoch && request===refreshEpoch){inboxState='offline';renderCloudNotifications();}
+    }
     return cloudNotifications;
   }
 
@@ -346,18 +416,21 @@
     var backend=root.LorefyBackend, epoch=++connectionEpoch;
     refreshEpoch++;
     if(cloudUnsubscribe){cloudUnsubscribe();cloudUnsubscribe=null;}
-    activeAccount='';cloudNotifications=[];shownNotifications.clear();dismissBanner();renderCloudNotifications();
+    activeAccount='';cloudNotifications=[];pendingReads=new Set();readJob=null;inboxState='loading';shownNotifications.clear();dismissBanner();renderCloudNotifications();
     if(!backend || !backend.getSession)return;
     var session;
-    try{session=await backend.getSession();}catch(error){return;}
-    if(epoch!==connectionEpoch || !session || !session.userId)return;
+    try{session=await backend.getSession();}catch(error){if(epoch===connectionEpoch){inboxState='offline';renderCloudNotifications();}return;}
+    if(epoch!==connectionEpoch)return;
+    if(!session || !session.userId){inboxState='ready';renderCloudNotifications();return;}
     activeAccount=session.userId;
+    restoreInbox(activeAccount);renderCloudNotifications();
     // Subscribe before fetching so new inserts cannot fall into a startup gap.
     if(typeof backend.subscribeNotifications==='function') {
       try {
         var unsubscribe=await backend.subscribeNotifications(function(item){
           if(epoch!==connectionEpoch || !item || item.actor_id===activeAccount || (item.user_id && item.user_id!==activeAccount))return;
-          cloudNotifications=[item].concat(cloudNotifications.filter(function(row){return row.id!==item.id;})).slice(0,60);
+          cloudNotifications=cleanInbox([item].concat(cloudNotifications.filter(function(row){return row.id!==item.id;})),activeAccount);
+          saveInbox();
           renderCloudNotifications();announceNotification(item);
           if(item.kind==='follow' && root.dispatchEvent && root.CustomEvent)root.dispatchEvent(new root.CustomEvent('lorefy:profile-follow-changed',{detail:item}));
         });
@@ -417,15 +490,13 @@
       if (!target) return;
       if (/^(الإشعارات|Notifications)$/.test(target.getAttribute('aria-label') || '')) refreshCloudNotifications();
       if (/قراءة الكل|Mark all as read/i.test(target.textContent || "") && target.closest(".lf-notifications-page")) {
-        var backend = root.LorefyBackend;
-        if (backend && backend.markNotificationsRead) backend.markNotificationsRead(null).catch(function () {});
-        cloudNotifications.forEach(function (item) { item.read_at = item.read_at || new Date().toISOString(); });
-        root.setTimeout(renderCloudNotifications, 0);
+        markInboxRead(null);
       }
     }, true);
     var observer = new MutationObserver(function () {
       var page = root.document.querySelector(".lf-notifications-page");
-      if (page && cloudNotifications.length && !page.querySelector(".lf-cloud-notifications")) renderCloudNotifications();
+      if (page && ((cloudNotifications.length && !page.querySelector(".lf-cloud-notifications")) ||
+          (inboxState !== 'ready' && !page.querySelector('.lf-inbox-status')))) renderCloudNotifications();
       else updateBellBadges();
     });
     observer.observe(root.document.body, { childList:true, subtree:true });

@@ -14,7 +14,7 @@ test('the complete application containing the reading picker still parses', () =
 function label() {
   const start = source.indexOf('function lorefyReadingStatusLabel(');
   assert.ok(start >= 0, 'reading intent must have a display label separate from its storage key');
-  const scope = {STATUS_WISHLIST: storedStatus};
+  const scope = {window:{LorefyI18n:i18n}};
   vm.runInNewContext(source.slice(start, source.indexOf('\nconst{useState', start)), scope);
   return scope.lorefyReadingStatusLabel;
 }
@@ -27,11 +27,11 @@ test('wish-state display says want to read in Arabic and English without renamin
   assert.equal(JSON.parse(declaration[1]), storedStatus);
 });
 
-test('other reading states and custom values are not rewritten by the display policy', () => {
+test('reading display labels are shared while unknown custom values remain untouched', () => {
   const render = label();
   for (const status of ['أقرأ حالياً', 'تم القراءة', 'توقف', 'توقف نهائي', 'Custom status']) {
-    assert.equal(render(status, 'ar'), status);
-    assert.equal(render(status, 'en'), status);
+    assert.equal(render(status, 'ar'), i18n.readingStatusLabel(status, 'ar'));
+    assert.equal(render(status, 'en'), i18n.readingStatusLabel(status, 'en'));
   }
 });
 

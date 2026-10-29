@@ -28,6 +28,31 @@ Backend/Merge → استجابة سحابية تخص الحساب الذي طل�
 
 ## حدود المصادر
 
+Reading-state labels: [[sessions/2026-10-28-UI-Foundation-Phase-Nine]]. Shared
+display functions must not rewrite saved statuses or parse publication metadata.
+Callbacks keep original choice values; label changes never imply progress,
+completion or review mutations. Unknown strings pass through.
+
+Review reports: [[sessions/2026-10-28-UI-Foundation-Phase-Seven]]. The existing
+report RPC/payload is unchanged. Remote receipts must still match the opening
+owner, generation, backend and client before local storage. Merge with the current
+`lorefy.safety.reports.v1` array after awaiting; do not overwrite concurrent
+receipts from an earlier snapshot. Closing UI does not cancel a server request;
+UI lifetime and same-owner receipt persistence are separate boundaries.
+
+Correction and missing-work UI: [[sessions/2026-10-28-UI-Foundation-Phase-Six]].
+`lorefy.data.corrections.v1` is a device queue; its current submit path does not
+send corrections to a server. `lorefy.catalog.requests.v1:<encoded owner>` stores
+local drafts under existing reference/type validation. UI copy must not claim
+cloud delivery. Safety report status is saved record state, not a live moderation
+check. This UI pass changes no service/storage schema.
+
+Work Dislike: [[sessions/2026-10-28-Local-Work-Dislike]]. A deliberate numeric0
+plus negative recommendation is different from null/unrated and from a Dislike
+reaction to another person's review. One review per owner/work is the source of
+truth. Public visible counts use the existing table's exact count under RLS,
+not loaded-feed length or a client-maintained counter. No schema was deployed.
+
 - الكتالوج يصف العمل؛ ليس مصدرًا لتاريخ القراءة المحفوظ. راجع [[systems/Reading-Library]].
 - البروفايل العام هو إسقاط للقارئ الذي تتم زيارته، وليس حالة الزائر. راجع [[systems/Profiles-Lists]].
 - الخادم يقرر صلاحية الرؤية والملكية. الواجهة والمعاينة المحلية ليست تجاوزًا للعقد.

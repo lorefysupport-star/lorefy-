@@ -9,7 +9,7 @@
   var activeMode = null;
 
   function normalizeMode(value) {
-    return value === 'spines' || value === 'shelf' ? value : 'grid';
+    return value === 'spines' || value === 'shelf' || value === 'showcase' ? value : 'grid';
   }
 
   function options(language) {
@@ -17,6 +17,7 @@
     return [
       { mode:'grid', icon:'layout-grid', label:english ? 'Covers' : 'أغلفة' },
       { mode:'spines', icon:'library-big', label:english ? 'Bookshelf' : 'رف الكتب' },
+      { mode:'showcase', icon:'gallery-horizontal-end', label:english ? 'Showcase' : 'عرض بارز' },
       { mode:'shelf', icon:'list', label:english ? 'List' : 'قائمة' }
     ];
   }
@@ -31,6 +32,10 @@
     return [176, 208, 188, 220][(spineHeight(title) - 172) / 8];
   }
 
+  function favoriteLimit(mode) {
+    return mode === 'showcase' ? 3 : mode === 'spines' ? 7 : 4;
+  }
+
   function setMode(value, storage) {
     var mode = normalizeMode(value);
     try { (storage || root.localStorage).setItem(KEY, mode); } catch (error) { return false; }
@@ -43,6 +48,7 @@
     mode = normalizeMode(mode);
     grid.classList.toggle('is-shelf-view', mode === 'shelf');
     grid.classList.toggle('is-spine-view', mode === 'spines');
+    grid.classList.toggle('is-showcase-view', mode === 'showcase');
     buttons.forEach(function (button) {
       button.setAttribute('aria-pressed', String(button.dataset.view === mode));
     });
@@ -56,15 +62,59 @@
     return isComplete && label === 'لم تحفظ مكان توقفك بعد' ? 'مكتمل' : label;
   }
 
+  function showcasePlacement(index) {
+    index=Math.max(0,Math.floor(Number(index)||0));
+    return {row:Math.floor(index/3)+1,position:['center','left','right'][index%3]};
+  }
+
+  // Add presentation metadata without reordering React-owned cards or their actions.
+  function syncShowcaseCards(doc, container, cards, active) {
+    cards=Array.from(cards);
+    container.classList.toggle('is-showcase-view',!!active);
+    container.classList.toggle('is-showcase-empty',!!active&&cards.length>0&&!cards.some(function(card){return !!(card.querySelector('[data-lorefy-book-cover]')||card.querySelector('img'));}));
+    if(!active)return;
+    var visible=0;
+    cards.forEach(function(card,index) {
+      var image=card.querySelector('img'),managed=card.querySelector('[data-lorefy-book-cover]'),present=managed||image;
+      card.classList.toggle('lf-showcase-empty',!present);
+      card.classList.toggle('lf-showcase-book',!!present);
+      if(!present)return;
+      var titleNode=card.querySelector('.lf-library-copy strong')||card.querySelector('.lf-reader-library-copy strong');
+      var title=card.getAttribute('data-work-title')||(titleNode&&titleNode.textContent)||(image&&image.alt)||card.title||'';
+      // The managed image may be absent or nested in lf-cover-surface; size the book, not that inner surface.
+      var placement=showcasePlacement(visible++),cover=managed||(image.parentElement===card?image:image.parentElement);
+      cover.classList.toggle('lf-showcase-cover',true);
+      card.setAttribute('data-showcase-position',placement.position);
+      card.style.setProperty('--showcase-row',String(placement.row));
+      var caption=card.querySelector('.lf-showcase-caption');
+      if(!caption) {
+        caption=doc.createElement('span');caption.className='lf-showcase-caption';
+        caption.setAttribute('data-no-translate','1');
+        var rank=doc.createElement('span');rank.className='lf-showcase-rank';rank.setAttribute('aria-hidden','true');
+        var label=doc.createElement('span');label.className='lf-showcase-title';label.setAttribute('dir','auto');
+        caption.appendChild(rank);caption.appendChild(label);card.appendChild(caption);
+      }
+      if(caption.children[0].textContent!==String(index+1))caption.children[0].textContent=String(index+1);
+      if(caption.children[1].textContent!==title)caption.children[1].textContent=title;
+      if(caption.children[1].title!==title)caption.children[1].title=title;
+    });
+  }
+
   function syncProfileFavorites(doc, mode) {
     doc.querySelectorAll('.lf-profile-page > .lf-profile-favorites:not(.lf-profile-top-characters-grid)').forEach(function (favorites) {
-      favorites.classList.toggle('is-spine-view', normalizeMode(mode) === 'spines' && !!favorites.querySelector('img'));
+      Array.from(favorites.children).forEach(function(slot,index) {
+        slot.classList.toggle('lf-favorite-overflow',index>=favoriteLimit(mode));
+      });
+      var hasBooks=!!(favorites.querySelector('[data-lorefy-book-cover]')||favorites.querySelector('img'));
+      favorites.classList.toggle('is-spine-view', normalizeMode(mode) === 'spines' && hasBooks);
+      syncShowcaseCards(doc,favorites,Array.from(favorites.children),normalizeMode(mode)==='showcase'&&hasBooks);
       Array.from(favorites.children).forEach(function (slot) {
         var image = slot.querySelector('img');
-        slot.classList.toggle('is-empty-spine', !image);
-        if (!image) return;
-        var title = slot.getAttribute('data-work-title') || image.alt || '';
-        var cover = image.parentElement;
+        var managed = slot.querySelector('[data-lorefy-book-cover]');
+        slot.classList.toggle('is-empty-spine', !managed && !image);
+        if (!managed && !image) return;
+        var title = slot.getAttribute('data-work-title') || (image && image.alt) || '';
+        var cover = managed || image.parentElement;
         cover.classList.toggle('lf-profile-spine-cover', true);
         var label = cover.querySelector('.lf-profile-spine-title');
         if (!label) {
@@ -86,6 +136,9 @@
 
   function mount(doc, storage) {
     syncProfileFavorites(doc, activeMode || savedMode(storage));
+    doc.querySelectorAll('.lf-reader-shelf-rail.is-showcase-view, .lf-reader-library-grid.is-showcase-view').forEach(function(container) {
+      syncShowcaseCards(doc,container,Array.from(container.children),true);
+    });
     var page = doc.querySelector('.lf-library-page');
     if (!page) return;
     var header = page.querySelector('.lf-library-header');
@@ -138,7 +191,7 @@
         });
         switcher.appendChild(button);
       });
-      header.insertBefore(switcher, header.querySelector('.lf-library-tabs'));
+      header.insertBefore(switcher, header.querySelector('.lf-library-search') || header.querySelector('.lf-library-tabs'));
       try { if (root.lucide && root.lucide.createIcons) root.lucide.createIcons({ nodes: [switcher] }); } catch (error) {}
     }
     var english = doc.documentElement.lang === 'en';
@@ -152,6 +205,7 @@
       if (text && text.textContent !== option.label) text.textContent = option.label;
     });
     applyMode(grid, Array.from(switcher.querySelectorAll('button')), activeMode || savedMode(storage));
+    syncShowcaseCards(doc,grid,Array.from(grid.querySelectorAll('.lf-library-card')),normalizeMode(activeMode||savedMode(storage))==='showcase');
   }
 
   if (root.document) {
@@ -164,7 +218,14 @@
         if (event.key !== KEY) return;
         activeMode = null; mount(doc, root.localStorage);
       });
-      var observer = new root.MutationObserver(function () {
+      var observer = new root.MutationObserver(function (records) {
+        var changed = records.some(function (record) {
+          if (record.type === 'childList') return true;
+          if (record.type === 'attributes') return record.attributeName === 'data-work-title';
+          var parent = record.target && record.target.parentElement;
+          return record.type === 'characterData' && parent && parent.closest('.lf-library-copy strong, .lf-reader-library-copy strong');
+        });
+        if (!changed) return;
         if (scheduled) return;
         scheduled = true;
         root.requestAnimationFrame(function () {
@@ -172,11 +233,12 @@
           mount(doc, root.localStorage);
         });
       });
-      observer.observe(doc.getElementById('root') || doc.body, { childList: true, subtree: true });
+      observer.observe(doc.getElementById('root') || doc.body, { childList: true, subtree: true,
+        attributes: true, attributeFilter: ['data-work-title'], characterData: true });
     };
     if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', start, { once: true });
     else start();
   }
 
-  return Object.freeze({ normalizeMode: normalizeMode, applyMode: applyMode, progressLabel: progressLabel, mount: mount, savedMode:savedMode, setMode:setMode, options:options, spineHeight:spineHeight, profileSpineHeight:profileSpineHeight, syncProfileFavorites:syncProfileFavorites });
+  return Object.freeze({ normalizeMode: normalizeMode, applyMode: applyMode, progressLabel: progressLabel, mount: mount, savedMode:savedMode, setMode:setMode, options:options, spineHeight:spineHeight, profileSpineHeight:profileSpineHeight, favoriteLimit:favoriteLimit, syncProfileFavorites:syncProfileFavorites, showcasePlacement:showcasePlacement, syncShowcaseCards:syncShowcaseCards });
 });

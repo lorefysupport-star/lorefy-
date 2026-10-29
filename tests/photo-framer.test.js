@@ -14,14 +14,14 @@ test('framing stays within source pixels at either orientation and control limit
  }
 });
 
-function ui(){
+function ui(options={}){
  const fs=require('node:fs'),vm=require('node:vm');const canvases=[],images=[];let applied=null,cancelled=0;
  function element(tag){const e={tag,children:[],listeners:{},style:{},setAttribute(k,v){this[k]=v;},appendChild(n){this.children.push(n);return n;},addEventListener(k,fn){this.listeners[k]=fn;},remove(){this.removed=true;},focus(){},setPointerCapture(){},getBoundingClientRect(){return{width:600,height:600};}};
  if(tag==='canvas'){e.draws=[];e.getContext=()=>({clearRect(){},beginPath(){},rect(){},arc(){},fill(){},stroke(){},drawImage(...args){e.draws.push(args);}});e.toDataURL=()=>`crop:${e.width}x${e.height}`;canvases.push(e);}return e;}
  const host=element('div'),doc={activeElement:null,body:host,querySelector:()=>host,createElement:element,addEventListener(){},removeEventListener(){}};
  const win={document:doc,Image:class{constructor(){this.naturalWidth=1200;this.naturalHeight=800;images.push(this);}},MutationObserver:class{observe(){}disconnect(){}}};
  vm.runInNewContext(fs.readFileSync(require.resolve('../modules/lorefy-photo-framer'),'utf8'),{window:win});
- win.LorefyPhotoFramer.open({src:'fixture',slot:'avatar',language:'en',isCurrent:()=>true,onApply:v=>applied=v,onCancel:()=>cancelled++});images[0].onload();
+ win.LorefyPhotoFramer.open({src:'fixture',slot:'avatar',language:'en',...options,isCurrent:()=>true,onApply:v=>applied=v,onCancel:()=>cancelled++});images[0].onload();
  function all(e=host){return[e,...e.children.flatMap(all)];}
  return{canvases,host,applied:()=>applied,cancelled:()=>cancelled,all,button:text=>all().find(e=>e.tag==='button'&&e.textContent===text)};
 }
@@ -37,4 +37,16 @@ test('two-finger pinch enlarges the image while the output frame stays square',(
  for(const [pointerId,clientX]of [[1,250],[2,350]])stage.listeners.pointerdown({pointerId,clientX,clientY:300,preventDefault(){}});
  stage.listeners.pointermove({pointerId:2,clientX:450,clientY:300});
  h.button('Use this framing').listeners.click();const args=h.canvases[1].draws[0];assert.equal(args[3],400);assert.equal(args[4],400);
+});
+
+test('banner framing exports the selected layout ratio instead of cropping it again after save',()=>{
+ for(const ratio of [320/254,440/233,.8]){
+  const h=ui({slot:'banner',ratio});h.button('Use this framing').listeners.click();
+  const out=h.canvases[1],args=out.draws[0];
+  assert.ok(Math.abs(out.width/out.height-ratio)<.002);
+  assert.ok(Math.abs(args[3]/args[4]-ratio)<1e-8);
+  assert.ok(Math.max(out.width,out.height)<=1200);
+ }
+ const h=ui({slot:'banner'});h.button('Use this framing').listeners.click();
+ assert.equal(h.applied(),'crop:1200x450');
 });

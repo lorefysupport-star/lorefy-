@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lorefy Atelier</title>
+<base href="../">
+<link rel="stylesheet" href="../styles/lorefy-frame-motion.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f7f8;color:#15292f;font-family:system-ui,sans-serif;letter-spacing:0}header{border-bottom:1px solid #dbe2e5;padding:20px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}h1{font-size:22px;margin:0}header a{color:#007e84;text-decoration:none;font-weight:600}main{max-width:1240px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:40px;padding:24px}.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-content:start}.choice{position:relative;border:1px solid #dbe2e5;border-radius:8px;background:white;padding:8px 8px 16px;color:inherit;font:inherit;cursor:pointer}.choice[aria-pressed=true]{outline:2px solid #00868a;border-color:transparent}.choice:focus-visible{outline:3px solid #00868a;outline-offset:4px}.avatar{position:relative;aspect-ratio:1;width:100%;display:block;margin-bottom:10px}.avatar img{position:absolute;object-fit:cover;object-position:center;width:var(--portrait);height:var(--portrait);left:var(--left);top:var(--top);border-radius:50%}.choice strong{font-size:14px;display:block}.choice small{color:#65757c;font-size:11px}.preview{width:100%;min-width:0}.controls{display:flex;gap:12px;padding:0 0 16px}label{font-size:12px;display:flex;align-items:center;gap:8px;flex:1}select{font:inherit;color:inherit;background:#fff;border:1px solid #cbd5da;border-radius:6px;padding:10px;min-width:0;flex:1}iframe{display:block;border:1px solid #cbd5da;width:100%;height:900px;border-radius:24px;background:white}body[data-theme=dark]{background:#101214;color:#edf2f4}body[data-theme=dark] .choice,body[data-theme=dark] select{background:#1b2023;border-color:#374248;color:#edf2f4}body[data-theme=dark] header{border-color:#374248}.choice .lf-frame-motion{z-index:1}
+@media(max-width:900px){main{grid-template-columns:minmax(0,1fr);gap:24px;max-width:560px;padding:16px}.choices{gap:8px}.preview{max-width:440px;margin:auto}.controls{flex-wrap:wrap}iframe{height:850px}header{padding:18px 16px}h1{font-size:19px}}
+</style></head><body>
+<header><h1 dir="ltr">Lorefy Atelier</h1><a href="../phone-preview.html?preview=demo&demo=ready&route=profile&decorationLab=1&fresh=motion-atelier">لورفاي</a></header>
+<main><section class="choices" aria-label="الإطارات"></section><section class="preview">
+<div class="controls"><label>التخطيط<select id="layout"><option value="normal">الكلاسيكي</option><option value="immersive">البانورامي</option><option value="reader">القارئ</option></select></label><label>المظهر<select id="theme"><option value="light">فاتح</option><option value="dark">داكن</option></select></label></div>
+<iframe title="معاينة البروفايل" src="about:blank"></iframe>
+</section></main>
+<script src="../modules/lorefy-frame-motion.js"></script>
+<script src="../modules/lorefy-avatar-rig.js"></script>
+<script src="../modules/lorefy-motion-atelier.js"></script>
+<script>
+const params=new URLSearchParams(location.search),choices=document.querySelector('.choices'),frame=document.querySelector('iframe');
+let selected=params.get('pack')||'atelier-tidal-glass';
+const layout=document.getElementById('layout'),theme=document.getElementById('theme');
+layout.value=params.get('layout')||'normal';theme.value=params.get('theme')||'light';
+function preview(){
+  for(const button of choices.children)button.setAttribute('aria-pressed',String(button.dataset.pack===selected));
+  document.body.dataset.theme=theme.value;
+  frame.src='qa/profile-header.html?decorationLab=1&pack='+selected+'&layout='+layout.value+'&theme='+theme.value+'&motion='+params.get('motion');
+}
+fetch('qa/motion-atelier/collections.json').then(r=>r.json()).then(packs=>{
+  for(const pack of packs){
+    const button=document.createElement('button');button.className='choice';button.dataset.pack=pack.id;button.type='button';button.setAttribute('aria-label',pack.names.ar);
+    const avatar=document.createElement('span');avatar.className='avatar';
+    const g=pack.geometry,img=document.createElement('img');img.src='launch/brand/lorefy-reading-scene.jpg';img.alt='';
+    avatar.style.setProperty('--portrait',g.size*100+'%');avatar.style.setProperty('--left',(g.cx-g.size/2)*100+'%');avatar.style.setProperty('--top',(g.cy-g.size/2)*100+'%');avatar.append(img);
+    const name=document.createElement('strong');name.textContent=pack.names.ar;const en=document.createElement('small');en.textContent=pack.names.en;
+    button.append(avatar,name,en);button.onclick=()=>{selected=pack.id;preview();};choices.append(button);
+    LorefyFrameMotion.mount(avatar,{original:{id:pack.artId,renderer:'atelier'}},'avatar');
+  }
+  preview();
+});
+layout.onchange=preview;theme.onchange=preview;
+</script></body></html>

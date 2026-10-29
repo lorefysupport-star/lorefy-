@@ -403,7 +403,12 @@
       catch(e){ return Promise.resolve(); }
     },
 
-    onAuth: function(cb){ this._authCbs.push(cb); },
+    onAuth: function(cb){
+      var self=this, active=true;
+      var listener=function(session){if(active)cb(session);};
+      this._authCbs.push(listener);
+      return function(){active=false;self._authCbs=self._authCbs.filter(function(fn){return fn!==listener;});};
+    },
     onPasswordRecovery: function(cb){ this._recoveryCbs.push(cb); },
     _emit: function(sess){ this._authCbs.forEach(function(cb){ try{cb(sess);}catch(e){} }); },
 
@@ -1521,6 +1526,17 @@
       }));
       assertMediaRequest(this, request);
       return hydratedRows;
+    },
+    countWorkDislikes: async function(workId){
+      if (this.mode !== "live") return null;
+      if (typeof workId !== "string" || !workId.trim() || workId.length > 200) throw new Error("Invalid work reference.");
+      var request = mediaRequestScope(this);
+      var result = await this.client.from("reviews").select("id", { count:"exact", head:true })
+        .eq("work_id", workId.trim()).eq("is_public", true).eq("rating", 0).eq("recommend", false);
+      assertMediaRequest(this, request);
+      if (result.error) throw result.error;
+      if (!Number.isSafeInteger(result.count) || result.count < 0) throw new Error("Dislike count is unavailable.");
+      return result.count;
     },
     listReviewCollection: async function(options){
       options = options || {};

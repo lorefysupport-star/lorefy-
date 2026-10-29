@@ -176,7 +176,8 @@ test('community profiles and feeds are driven by shared cloud state', () => {
   assert.match(app, /listProfileFollowers/);
   assert.match(app, /listProfileFollowing/);
   assert.match(app, /subscribeCommunity/);
-  assert.match(app, /String\(o\.mid\)!==String\(t\.mid\)\|\|!\(o\.userId==="me"/);
+  assert.match(app, /own=o=>String\(o\.mid\)===String\(t\.mid\)&&\(o\.userId==="me"\|\|o\.userId===window\.LorefyBackend\?\.user\?\.id\)/);
+  assert.match(app, /rows\.filter\(o=>!own\(o\)\)/);
   assert.match(app, /reviews:M\.filter\(r=>r\.userId===He\.id\)/);
   assert.doesNotMatch(app, /userId===t\.id\|\|y\.un===t\.un/);
   assert.doesNotMatch(app, /r=\[\.\.\.SEED_FEED\]\.filter\(y=>y\.un===t\.un\)/);

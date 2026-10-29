@@ -15,7 +15,7 @@ test('community supports standalone text, list, and top posts with replies', () 
   assert.match(backend, /replyCommunityPost:\s*async function/);
   assert.match(backend, /setCommunityPostReaction:\s*async function/);
   assert.match(moduleSource, /class:\s*"lf-community-compose-fab"/);
-  assert.match(moduleSource, /class:\s*"lf-community-compose-sheet"/);
+  assert.match(moduleSource, /class:\s*"lf-community-compose-sheet(?:\s[^"]*)?"/);
   assert.match(moduleSource, /aria-label":"إنشاء منشور"/);
   assert.match(moduleSource, /lorefy\.customLists\.v1/);
   assert.match(moduleSource, /lorefy\.charTopLists\.v1/);
@@ -123,8 +123,8 @@ test('community posts and replies expose exclusive like and dislike actions', ()
   assert.match(backend, /setCommunityPostReaction:\s*async function\(postId, kind, active\)/);
   assert.match(moduleSource, /setPostReaction\(post, "like"/);
   assert.match(moduleSource, /setPostReaction\(post, "dislike"/);
-  assert.match(moduleSource, /aria-label":"عدم إعجاب"/);
-  assert.match(moduleSource, /"الرد على الرد"/);
+  assert.match(moduleSource, /uiText\('عدم إعجاب', 'Dislike'\)/);
+  assert.match(moduleSource, /uiText\('الرد على الرد', 'Reply'\)/);
   assert.match(moduleSource, /lf-community-thread-rail/);
 });
 

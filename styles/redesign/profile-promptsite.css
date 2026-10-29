@@ -1,0 +1,124 @@
+@import url('./profile.css?v=20261023-profile-2');
+
+/* A separate local direction, informed by PromptSite's free mobile reference. */
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-page > .lf-profile-banner {
+  height: calc(184px + var(--nc-top,0px)) !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-banner > img {
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-banner .lf-profile-avatar {
+  width: 88px !important;
+  height: 88px !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: -36px !important;
+  transform: translateX(-50%) !important;
+  border: 4px solid var(--ui-bg) !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-identity {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) !important;
+  grid-template-areas: 'name' 'handle' 'bio' 'social' 'metrics' 'tabs' 'favorites' !important;
+  grid-template-rows: auto !important;
+  padding-top: 60px !important;
+  text-align: center !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-page:has(.lf-profile-avatar.has-decoration) .lf-profile-identity {
+  padding-top: 68px !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-identity .lf-profile-name {
+  width: 100% !important;
+  justify-self: stretch !important;
+  justify-content: center !important;
+  text-align: center !important;
+  margin: 0 0 4px !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-name p {
+  font-size: 28px !important;
+  line-height: 1.4 !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-identity .lf-profile-handle {
+  width: 100% !important;
+  text-align: center !important;
+  justify-self: stretch !important;
+  color: var(--ui-muted) !important;
+  margin: 0 !important;
+  font-size: 13px !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-identity .lf-profile-bio {
+  margin: 12px 0 0 !important;
+  text-align: center !important;
+  font-size: 14px !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-identity .lf-profile-connections {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  gap: 4px 20px !important;
+  min-height: 44px !important;
+  padding: 8px 0 !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-networks {
+  order: 3;
+  justify-content: center !important;
+  gap: 4px !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-networks a {
+  border: 0 !important;
+  background: transparent !important;
+  width: 44px !important;
+  height: 44px !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-reading-metrics {
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: 0 !important;
+  margin: 12px 0 24px !important;
+  border-block: 1px solid var(--ui-line) !important;
+  padding: 16px 0 !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-reading-metrics > :not(.is-profile-social-stat) {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: 6px !important;
+  min-height: 50px !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-reading-metrics > :not(.is-profile-social-stat) > div:first-child { display: none !important; }
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-reading-metrics :is(strong,p:first-of-type) {
+  font-size: 22px !important;
+  line-height: 1.3 !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-reading-metrics :is(span,p:last-of-type) {
+  text-align: center !important;
+  font-size: 11px !important;
+  line-height: 1.6 !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-section-tabs {
+  margin-bottom: 24px !important;
+  background: var(--ui-fill-soft) !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-section-tabs svg { display: none; }
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-section-tabs button { font-size: 14px !important; }
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-favorites.is-spine-view {
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 24px 16px !important;
+}
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-top-works-head { margin-bottom: 12px !important; }
+:is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-spine-cover { border: 0 !important; }
+@media (max-width: 360px) {
+  :is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-reading-metrics {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+    row-gap: 16px !important;
+  }
+  :is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-connections { column-gap: 12px !important; }
+}
+@media (min-width: 700px) {
+  :is(#lf-local-redesign, html[data-lf-redesign='profile']) .lf-profile-favorites.is-spine-view { grid-template-columns: repeat(4,minmax(0,1fr)) !important; }
+}

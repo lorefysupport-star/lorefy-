@@ -33,31 +33,32 @@ function harness(options={}) {
     ';const '+source.slice(publish,source.indexOf(',qo=async',publish))+';this.publish=tr;',scope);
   return {scope,finish,fail,open,backend,publish:()=>scope.publish(),calls:()=>calls,
     state:()=>JSON.parse(JSON.stringify({library,progress,removed,reviews})),
-    totals:()=>metrics.calculateReadingMetrics({library,progressById:progress}),
+    totals:()=>metrics.calculateReadingMetrics({library,progressById:progress,reviews}),
     change(next){if(next.library)library=next.library;if(next.progress)progress=next.progress;if(next.removed)removed=next.removed;sync();}};
 }
 
-test('publishing the first untracked rating completes Berserk and counts chapters and hours once',async()=>{
+test('publishing the first review counts Berserk once without assigning a library status',async()=>{
   const h=harness();await h.publish();
-  assert.equal(h.state().library.berserk,'تم القراءة');
-  assert.equal(h.state().progress.berserk.chapter,384);
-  assert.equal(Object.values(h.state().library).filter(s=>s==='تم القراءة').length,2);
+  assert.equal(h.state().library.berserk,undefined);
+  assert.equal(h.state().progress.berserk,undefined);
+  assert.equal(h.state().reviews[0].completionProgress.chapter,384);
+  assert.equal(Object.values(h.state().library).filter(s=>s==='تم القراءة').length,1);
   assert.equal(h.totals().chapters,804);assert.equal(h.totals().hours,161);
   assert.equal(h.state().reviews[0].r,4);
 });
 
 test('republishing a rating and later metadata growth do not increase its saved completion',async()=>{
   const h=harness();await h.publish();h.scope.m.ch=500;h.open();await h.publish();
-  assert.equal(h.state().library.berserk,'تم القراءة');
-  assert.equal(h.state().progress.berserk.chapter,384);assert.equal(h.totals().chapters,804);
+  assert.equal(h.state().library.berserk,undefined);
+  assert.equal(h.state().reviews[0].completionProgress.chapter,384);assert.equal(h.totals().chapters,804);
   const initialized=metrics.initializeCompletedProgress({library:h.state().library,progressById:h.state().progress,getWork:()=>h.scope.m});
   assert.deepEqual(initialized.changedIds,[]);
 });
 
 test('a first book rating captures pages without inventing chapters or double-counting volume time',async()=>{
   const h=harness({work:{ch:0,pages:200,vol:1}});await h.publish();
-  assert.equal(h.state().library.berserk,'تم القراءة');
-  assert.equal(h.state().progress.berserk.chapter,0);assert.equal(h.state().progress.berserk.page,200);
+  assert.equal(h.state().library.berserk,undefined);
+  assert.equal(h.state().reviews[0].completionProgress.chapter,0);assert.equal(h.state().reviews[0].completionProgress.page,200);
   assert.equal(h.totals().minutes,420*12+200*1.5);
 });
 
@@ -80,6 +81,19 @@ test('a failed or invalid rating never adds completion or reading metrics',async
   const h=harness({live:true}),before=h.state(),request=h.publish();h.fail(Error('Offline'));await request;
   assert.deepEqual(h.state(),before);
   const invalid=harness();invalid.scope.G=0;await invalid.publish();assert.equal(invalid.state().library.berserk,undefined);
+});
+
+test('an explicit zero dislike publishes once and does not change a saved library status',async()=>{
+ const h=harness({library:{berserk:'توقف'},progress:{berserk:{chapter:12}}});h.scope.G=0;h.scope.Fe='no';await h.publish();
+ assert.equal(h.state().reviews[0].r,0);assert.equal(h.state().reviews[0].recVal,'no');
+ assert.equal(h.state().library.berserk,'توقف');assert.equal(h.state().progress.berserk.chapter,12);
+ h.open();await h.publish();assert.equal(h.state().reviews.filter(r=>r.mid==='berserk').length,1);
+});
+
+test('zero without dislike and invalid numbers cannot reach publication',async()=>{
+ for(const value of [0,null,NaN,Infinity,-1,6,'0']){
+  const h=harness();h.scope.G=value;h.scope.Fe=value===0?null:'no';await h.publish();assert.equal(h.state().reviews.length,0);
+ }
 });
 
 test('a reading choice or checkpoint made while publishing is pending wins over automatic completion',async()=>{

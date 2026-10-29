@@ -27,6 +27,7 @@
   }
   function button(label, className, name, action) {
     var item = el('button', className); item.type = 'button'; item.setAttribute('aria-label', label);
+    item.setAttribute('title', label);
     if (name) item.appendChild(icon(name)); item.addEventListener('click', action); return item;
   }
   function refreshIcons(root) {
@@ -84,7 +85,8 @@
     var savedCount = core.total(work, metadataText) || core.total(record, '') || verifiedSource && verifiedSource.count || 0;
     var catalog = metadata && metadata.catalogFor(id);
     var count = Math.max(savedCount, catalog && catalog.total || 0);
-    var type = content.children[0] && content.children[0].textContent || '';
+    var format = content.querySelector('.lf-work-format');
+    var type = work && work.type || format && format.textContent || '';
     if (!count && !/مانجا|مانهوا|كوميكس|ويب نوفل|لايت نوفل|manga|manhwa|comic|web novel|light novel/i.test(type)) return null;
     var heroImage = content.closest('.lf-detail-page').querySelector('.lf-detail-hero > img');
     return { content: content, id: id, title: label, total: count,
@@ -550,6 +552,9 @@
     });
   }
 
+  function workMenuShift(rect, top, bottom) {
+    return Math.max(top - rect.top, Math.min(0, bottom - rect.bottom));
+  }
   function enhanceActions(actions) {
     if (!actions) return;
     function addReview(toolbar, reviewTarget) {
@@ -597,17 +602,32 @@
       add.appendChild(el('span', '', addTarget.textContent.trim() || 'إضافة للقائمة')); toolbar.appendChild(add);
     }
     if (reviewTarget) addReview(toolbar, reviewTarget);
+    function fitMenu() {
+      var menu = toolbar.querySelector('.lf-chapter-more-menu');
+      if (!menu || !menu.isConnected) { dismissMenu(); return; }
+      menu.style.setProperty('--lf-menu-shift', '0px');
+      var viewport = global.visualViewport, host = toolbar.closest('.lf-app'), bounds = host && host.getBoundingClientRect();
+      var top = Math.max(viewport ? viewport.offsetTop : 0, bounds ? bounds.top : 0) + 12;
+      var bottom = Math.min(viewport ? viewport.offsetTop + viewport.height : global.innerHeight, bounds ? bounds.bottom : global.innerHeight) - 12;
+      menu.style.setProperty('--lf-menu-height', Math.max(100, bottom - top) + 'px');
+      menu.style.setProperty('--lf-menu-shift', workMenuShift(menu.getBoundingClientRect(), top, bottom) + 'px');
+    }
     function dismissMenu(event) {
       if (event && toolbar.contains(event.target)) return;
       var openMenu = toolbar.querySelector('.lf-chapter-more-menu');
       if (openMenu) openMenu.remove();
       more.setAttribute('aria-expanded', 'false');
       doc.removeEventListener('pointerdown', dismissMenu);
+      global.removeEventListener('resize', fitMenu);
+      doc.removeEventListener('scroll', fitMenu, true);
+      if(global.visualViewport)global.visualViewport.removeEventListener('resize',fitMenu);
     }
     var more = button('المزيد من خيارات العمل', 'lf-chapter-more', 'ellipsis', function () {
       var menu = toolbar.querySelector('.lf-chapter-more-menu');
       if (menu) { dismissMenu(); return; }
       menu = el('div', 'lf-chapter-more-menu'); menu.setAttribute('role', 'menu');
+      menu.setAttribute('aria-label',text('خيارات العمل','Work options'));
+      menu.appendChild(el('div','lf-work-palette-title',text('خيارات العمل','Work options')));
       [['تقييم الشخصيات', '.lf-character-action-button:not(.lf-topchars-action-button)', 'users'],
         ['تغيير الغلاف', 'button[title="تغيير الغلاف"],button[title="Change cover"]', 'image'],
         ['ترتيب الشخصيات', '.lf-topchars-action-button', 'list-ordered']].forEach(function (choice) {
@@ -616,6 +636,8 @@
         item.setAttribute('role', 'menuitem'); item.appendChild(el('span', '', choice[0])); menu.appendChild(item);
       });
       toolbar.appendChild(menu); refreshIcons(menu); doc.addEventListener('pointerdown', dismissMenu);
+      fitMenu();global.addEventListener('resize',fitMenu);doc.addEventListener('scroll',fitMenu,true);
+      if(global.visualViewport)global.visualViewport.addEventListener('resize',fitMenu);
       more.setAttribute('aria-expanded', 'true');
       var first = menu.querySelector('button'); if (first) first.focus();
     });
@@ -671,10 +693,11 @@
   }
   function enhance() {
     if (readingUndo && readingUndo.owner !== readingOwner()) readingUndo = null;
+    var content=doc.querySelector('.lf-detail-page .lf-detail-content');
+    var actions=content&&content.querySelector('.lf-detail-actions');
+    if(actions)enhanceActions(actions);
     var info = context();
-    if (!info) return;
-    var actions = info.content.querySelector('.lf-detail-actions'); if (!actions) return;
-    enhanceActions(actions);
+    if (!info || !actions) return;
     var section = info.content.querySelector('.lf-chapter-section');
     if (section && section.dataset.workId === info.id && Number(section.dataset.total) === info.total && section.dataset.owner === info.owner) {
       refreshReading(section,info); return;

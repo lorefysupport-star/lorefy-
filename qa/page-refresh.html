@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lorefy Refresh QA</title>
+<style>body{margin:0;background:#151719;color:#eee;font:13px system-ui}header{display:flex;flex-wrap:wrap;gap:6px;padding:8px}button,select{min-height:44px;background:#272b2e;color:#fff;border:1px solid #555;border-radius:6px;padding:6px 12px}iframe{display:block;width:min(100%,390px);height:calc(100svh - 138px);min-height:500px;margin:auto;border:0}output{display:block;min-height:30px;padding:8px;overflow-wrap:anywhere}</style>
+<header><select id="route" aria-label="Page"><option value="home">Community</option><option value="profile">Profile</option></select><select id="language" aria-label="Language"><option value="ar">Arabic</option><option value="en">English</option></select><button id="pull">Pull 120</button><button id="release">Release</button><button id="short">Short pull</button><button id="cancel">Cancel pull</button><button id="failure">Fail next</button></header>
+<button id="measure">Measure idle</button><output id="metrics" role="status"></output><output id="receipt" role="status">Loading isolated demo</output><iframe id="preview" title="Lorefy demo"></iframe>
+<script>
+// Local-only fixture: real application and TouchEvents, replaceable read-only jobs.
+const frame=document.getElementById('preview'),receipt=document.getElementById('receipt');let calls=0,fail=false,target;
+function load(){frame.src='../index.html?fresh=refresh-qa&preview=demo&demo=ready&decorationLab=1&adaptive=1&route='+document.getElementById('route').value;}
+function result(){receipt.textContent=JSON.stringify({calls,state:frame.contentDocument.querySelector('.lf-page-refresh')?.dataset.state});}
+function touch(type,y){const w=frame.contentWindow,d=w.document;target=target||d.querySelector('.lf-community-page,.lf-profile-page');const point=new w.Touch({identifier:7,target,clientX:20,clientY:y});target.dispatchEvent(new w.TouchEvent(type,{bubbles:true,cancelable:true,touches:type==='touchend'||type==='touchcancel'?[]:[point],changedTouches:[point]}));result();}
+frame.addEventListener('load',()=>{target=null;const api=frame.contentWindow.LorefyPageRefresh;
+ if(!api){receipt.textContent='Refresh API missing';return;}
+ api.register(document.getElementById('route').value==='home'?'community-posts':'profile-owner',async context=>{calls++;result();await new Promise(resolve=>setTimeout(resolve,1500));if(!context.active())return false;if(fail){fail=false;throw Error('Controlled fixture failure');}return true;});result();
+});
+document.getElementById('pull').onclick=()=>{touch('touchstart',210);touch('touchmove',240);touch('touchmove',330);};
+document.getElementById('release').onclick=()=>touch('touchend',330);
+document.getElementById('short').onclick=()=>{touch('touchstart',210);touch('touchmove',240);touch('touchend',240);};
+document.getElementById('cancel').onclick=()=>{touch('touchstart',210);touch('touchmove',330);touch('touchcancel',330);};
+document.getElementById('failure').onclick=()=>{fail=true;receipt.textContent='Next job will fail';};
+document.getElementById('language').onchange=()=>{frame.contentDocument.documentElement.lang=document.getElementById('language').value;};
+document.getElementById('measure').onclick=()=>{let changed=0;const d=frame.contentDocument,observer=new frame.contentWindow.MutationObserver(rows=>{for(const row of rows){if(!row.target.closest?.('.lf-community-page'))continue;changed+=Array.from(row.addedNodes).filter(n=>n.nodeType===1).length+Array.from(row.removedNodes).filter(n=>n.nodeType===1).length;}});observer.observe(d.documentElement,{subtree:true,childList:true});document.getElementById('metrics').textContent='Measuring';setTimeout(()=>{observer.disconnect();document.getElementById('metrics').textContent='Idle 2s element changes: '+changed;},2000);};
+document.getElementById('route').onchange=load;load();setInterval(result,300);
+</script></html>

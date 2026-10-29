@@ -1,0 +1,229 @@
+/* Reader is a saved profile layout, not an application-wide theme.
+   The ID specificity branch takes precedence over legacy profile rules. */
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) {
+  --reader-layout-inline: 20px;
+  --reader-font-text: 'Readex Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --reader-font-latin: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Readex Pro', sans-serif;
+  --ui-font: var(--reader-font-text);
+  --profile-frame-controls-top: 14px;
+  font-family: var(--reader-font-text);
+  font-size: 15px; line-height: 1.6; letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  color: var(--ui-ink);
+  padding-bottom: calc(var(--nc-bottom,0px) + 104px) !important;
+  scroll-padding-bottom: 104px;
+}
+html[lang='en'] :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) { --ui-font: var(--reader-font-latin); font-family: var(--reader-font-latin); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-glyph { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; line-height: 1; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(button,a) { -webkit-tap-highlight-color: transparent; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(var(--nc-top,0px) + 4px) var(--reader-layout-inline) 4px;
+  min-height: 56px; box-sizing: border-box; gap: 12px;
+  background: transparent; position: relative; z-index: 12;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-toolbar h1 {
+  font-size: 24px; font-weight: 600; line-height: 1.4; margin: 0;
+  letter-spacing: 0; color: var(--ui-ink); overflow-wrap: anywhere;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-tools {
+  display: flex; align-items: center; flex: 0 0 auto; gap: 4px;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-tools button {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 0; background: transparent; color: var(--ui-secondary); padding: 0; cursor: pointer;
+  border-radius: 8px; transition: background-color 140ms ease, color 140ms ease;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-tools .lf-shop-shortcut { display: none !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-decoration-page-border {
+  padding-top: max(0px,calc(var(--nc-top,0px) - 12px)) !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) > :is(.lf-profile-banner,.lf-reader-banner) {
+  position: relative; height: 128px !important; margin: 0 !important;
+  padding: 0 !important; overflow: visible !important; background: var(--ui-fill) !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) > :is(.lf-profile-banner,.lf-reader-banner)::before,
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) > :is(.lf-profile-banner,.lf-reader-banner)::after { display: none !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) > :is(.lf-profile-banner,.lf-reader-banner) > img {
+  width: 100%; height: 100% !important; top: 0 !important; margin: 0 !important;
+  position: relative !important; object-fit: cover;
+  mask-image: none !important; -webkit-mask-image: none !important; opacity: 1 !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-avatar,
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-avatar {
+  width: 84px !important; height: 84px !important; border: 4px solid var(--ui-bg) !important;
+  border-radius: 50%; background: var(--ui-bg); box-shadow: none !important;
+  transform: none !important; left: auto !important; right: auto !important;
+  inset-inline-start: max(var(--reader-layout-inline),var(--profile-avatar-frame-inset,0px)) !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-avatar {
+  position: absolute !important; bottom: -48px !important; z-index: 4 !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-identity {
+  display: grid !important; grid-template-columns: minmax(0,1fr);
+  grid-template-areas: 'name' 'handle' 'bio' 'social' 'tabs' 'favorites';
+  grid-template-rows: auto !important; row-gap: 0 !important;
+  padding: 12px var(--reader-layout-inline) 0 !important; text-align: start !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-profile-name,.lf-profile-handle) {
+  width: calc(100% - var(--profile-header-avatar-space,112px)) !important;
+  margin-inline: 0 !important; justify-self: end !important; text-align: start !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-name {
+  grid-area: name; justify-content: flex-start !important; margin-block: 0 4px !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-profile-name p,.lf-reader-identity h1) {
+  color: var(--ui-ink) !important; font-size: 22px !important; line-height: 1.45 !important;
+  font-weight: 600 !important; letter-spacing: 0 !important; overflow-wrap: anywhere; margin: 0 !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-handle {
+  grid-area: handle; color: var(--ui-muted) !important; font-size: 13px !important;
+  margin-block: 0 !important; min-height: 24px; overflow-wrap: anywhere;
+  font-family: var(--reader-font-latin); font-weight: 400; line-height: 1.6;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-profile-bio,.lf-reader-bio) {
+  grid-area: bio; font-size: 15px !important; line-height: 1.7;
+  color: var(--ui-secondary) !important; text-align: start !important;
+  max-width: none !important; margin: 12px 0 4px !important; overflow-wrap: anywhere;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']):has(.has-decoration) .lf-profile-identity { padding-top: 24px !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']):has(.has-decoration) .lf-profile-bio { margin-top: 32px !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-connections {
+  grid-area: social; display: flex !important; justify-content: flex-start !important;
+  align-items: center !important; gap: 4px 20px !important; flex-wrap: wrap;
+  min-height: 44px; padding: 0 0 4px !important; margin: 0 !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-connections > button {
+  display: flex !important; gap: 6px !important; padding: 0; min-height: 44px;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-connections > button > svg { display: none; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-connection-label { display: inline; font-size: 13px; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-connections > button strong { font-family: var(--reader-font-latin); font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-networks { display: flex; order: 3; gap: 4px; margin-inline-start: auto; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-networks a { border: 0 !important; min-width: 44px; min-height: 44px; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-networks a svg { width: 18px; height: 18px; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-section-tabs {
+  grid-area: tabs; display: grid !important; grid-template-columns: repeat(3,minmax(0,1fr));
+  padding: 2px 0 !important; gap: 4px !important; background: transparent !important;
+  margin: 0 0 8px !important; border-block: 1px solid var(--ui-line) !important; border-radius: 0 !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-section-tabs button {
+  min-height: 44px; padding: 8px 6px !important; border: 0 !important;
+  border-radius: 8px !important; color: var(--ui-muted) !important;
+  background: transparent !important; box-shadow: none !important; font-size: 13px !important;
+  font-weight: 500 !important; line-height: 1.6 !important;
+  transition: color 140ms ease, background-color 140ms ease;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-section-tabs svg { display: none; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-section-tabs [aria-selected='true'] { background: var(--ui-selected) !important; color: var(--ui-action) !important; font-weight: 600 !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-top-works-head {
+  grid-area: favorites; display: grid !important; grid-template-columns: minmax(0,1fr) auto; align-items: center;
+  justify-content: space-between; min-height: 44px !important; margin: 0 0 4px !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-top-works-head > span { order: -1; text-align: start; font-size: 20px !important; font-weight: 600 !important; line-height: 1.5; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-top-works-head > button { display: flex !important; min-height: 44px; background: transparent !important; color: var(--ui-action) !important; border: 0 !important; box-shadow: none !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-top-works-head > button svg { width: 16px; height: 16px; stroke-width: 1.75; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-favorites:not(.lf-profile-top-characters-grid),
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) [data-profile-shelf='works'] .lf-reader-shelf-rail {
+  display: grid !important; grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  grid-auto-flow: row !important; gap: 10px !important; align-items: start !important;
+  width: 100% !important; max-width: none !important; box-sizing: border-box;
+  padding: 0 var(--reader-layout-inline) 16px !important; margin: 0 !important;
+  height: auto !important; min-height: 0 !important; background: transparent !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-favorites:not(.lf-profile-top-characters-grid)::after { display: none !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-favorites > [data-work-title] {
+  display: block !important; width: 100% !important; max-width: none !important;
+  min-width: 0 !important; height: auto !important; aspect-ratio: auto !important;
+  background: transparent !important; transform: none !important; position: relative;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-favorites > [data-work-title] > div:first-child,
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-spine-cover {
+  display: block !important; width: 100% !important; height: auto !important; aspect-ratio: 2/3 !important;
+  max-width: none !important; border: 0 !important; border-radius: 6px !important; overflow: hidden;
+  transform: none !important; box-shadow: 0 2px 5px rgb(0 0 0 / .1) !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-spine-cover::before,
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-spine-cover::after,
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-spine-title { display: none !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-favorites > [data-work-title] img { width: 100% !important; height: 100% !important; object-fit: cover; opacity: 1 !important; transform: none !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-cover-title {
+  display: block; color: var(--ui-secondary); font-size: 13px; line-height: 1.5;
+  font-family: var(--reader-font-latin); font-weight: 500; padding-top: 8px;
+  overflow-wrap: anywhere; text-align: start; min-block-size: 39px;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-favorites > [data-work-title] > button {
+  display: grid !important; place-items: center; position: absolute !important;
+  top: 0 !important; bottom: auto !important; left: 0 !important; width: 44px !important; height: 44px !important;
+  box-sizing: border-box; padding: 6px !important; border: 0 !important; border-radius: 50%;
+  background: var(--ui-surface) !important; background-clip: content-box !important;
+  color: var(--ui-action) !important; box-shadow: none !important;
+}
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-favorites > [data-work-title] > button svg { color: var(--ui-action) !important; stroke: var(--ui-action) !important; width: 16px !important; height: 16px !important; stroke-width: 1.75; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-reader-layout-reading,.lf-reader-layout-statistics) { margin: 0 var(--reader-layout-inline) 16px; padding-top: 12px; border-top: 1px solid var(--ui-line); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-reader-layout-reading,.lf-reader-layout-statistics) h2 { font-size: 18px; font-weight: 600; margin: 0 0 16px; line-height: 1.5; color: var(--ui-ink); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading > header { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading > header > button { display: flex; gap: 4px; min-height: 44px; align-items: center; margin-top: -8px; border: 0; color: var(--ui-action); background: transparent; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading-row { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 88px; padding: 8px 0; border: 0; background: transparent; color: var(--ui-ink); text-align: start; font: inherit; cursor: pointer; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading-row > img { width: 52px; height: 78px; object-fit: cover; border-radius: 4px; flex: 0 0 auto; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading-copy { display: grid; gap: 7px; min-width: 0; flex: 1; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading-copy strong { font-family: var(--reader-font-latin); font-size: 16px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading-copy > span { font-size: 12px; color: var(--ui-muted); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading-meta bdi { font-family: var(--reader-font-latin); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ui-secondary); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) progress { display: block; width: 100%; height: 5px; border: 0; border-radius: 4px; overflow: hidden; background: var(--ui-fill); accent-color: var(--ui-action); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) progress::-webkit-progress-bar { background: var(--ui-fill); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) progress::-webkit-progress-value { background: var(--ui-action); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) progress::-moz-progress-bar { background: var(--ui-action); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-empty { display: flex; gap: 10px; align-items: center; color: var(--ui-secondary); font-size: 14px; line-height: 1.7; padding-block: 8px; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-reading-metrics { display: grid !important; grid-template-columns: repeat(4,minmax(0,1fr)) !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-reading-metrics > :not(.is-profile-social-stat) { display: flex !important; flex-direction: column; align-items: flex-start !important; justify-content: flex-start !important; text-align: start; min-height: 50px !important; padding: 0 8px !important; border: 0 !important; gap: 8px; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-reading-metrics > :not(.is-profile-social-stat) > div:first-child,
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-reading-metrics svg { display: none !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-profile-reading-metrics,.lf-reader-metrics) :is(strong,p:first-of-type) { font-family: var(--reader-font-latin); font-size: 24px !important; font-weight: 600 !important; font-variant-numeric: tabular-nums; color: var(--ui-ink) !important; line-height: 1.3 !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-profile-reading-metrics,.lf-reader-metrics) :is(span,p:last-of-type) { font-size: 12px !important; font-weight: 400; line-height: 1.6 !important; color: var(--ui-secondary) !important; overflow-wrap: anywhere; white-space: normal !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-profile-reading-metrics,.lf-reader-metrics) > :last-child :is(strong,p:first-of-type) { font-family: inherit; font-size: 18px !important; line-height: 1.75 !important; white-space: normal !important; overflow-wrap: anywhere; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-top-characters-head { padding-inline: var(--reader-layout-inline); min-height: 44px; margin-bottom: 8px; direction: inherit; justify-content: space-between; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-top-characters-head > div { order: -1; direction: inherit; text-align: start; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-profile-top-characters-head strong,.lf-profile-recent > div:first-child > span:first-child,.lf-profile-community-head > strong,.lf-reader-shelf-head h2) { font-size: 18px !important; font-weight: 600 !important; line-height: 1.5; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-profile-top-characters-all,.lf-profile-top-works-head > button) { font-size: 13px !important; font-weight: 500 !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-top-characters-all { display: inline; color: var(--ui-action); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-section-panel h2 { font-size: 18px !important; font-weight: 600 !important; line-height: 1.5; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-folder-caption strong { font-size: 15px; font-weight: 600; line-height: 1.5; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-reading-statuses button { min-height: 44px; font-size: 13px; font-weight: 500; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-utilities { margin: 0 var(--reader-layout-inline) 20px; display: flex; justify-content: flex-end; gap: 8px; min-height: 44px; position: relative; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-utilities > div { position: static !important; height: auto !important; background: none !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-utilities > button { position: static !important; color: var(--ui-ink) !important; background: var(--ui-fill) !important; min-width: 44px; min-height: 44px; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-utilities button svg { color: var(--ui-ink) !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-reader-layout-utilities button,.lf-profile-top-character-empty,.lf-profile-networks a) > svg:not([stroke='none']) { stroke-width: 1.75; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-surface { margin: 0 !important; border: 0 !important; background: transparent; padding-top: 0 !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-identity { position: relative; display: grid !important; grid-template-areas: 'name' 'handle' 'bio' 'social' 'actions' 'error'; padding: 12px var(--reader-layout-inline) 0 !important; text-align: start !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-identity > .lf-reader-avatar { position: absolute !important; top: -36px !important; margin: 0 !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-identity h1 { grid-area: name; margin-inline: 0 !important; justify-self: end !important; width: calc(100% - var(--profile-header-avatar-space,112px)) !important; text-align: start !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-handle { grid-area: handle; margin: 4px 0 0 !important; margin-inline: 0 !important; justify-self: end !important; width: calc(100% - var(--profile-header-avatar-space,112px)); text-align: start; font-family: var(--reader-font-latin); font-size: 13px; line-height: 1.6; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-social-summary { grid-area: social; justify-content: flex-start !important; margin-block: 8px !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-primary-actions { grid-area: actions; margin-block: 8px 16px !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-back { display: none; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-cover.is-work { display: block !important; width: 100% !important; height: auto !important; aspect-ratio: auto !important; padding: 0; background: transparent; border: 0; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-cover.is-work > img { width: 100%; height: auto !important; aspect-ratio: 2/3; border-radius: 6px; object-fit: cover; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-section-panel { padding-inline: var(--reader-layout-inline); }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader'])[data-profile-section]:not([data-profile-section='overview']) :is(.lf-profile-overview-content,.lf-profile-top-works-head) { display: none !important; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(button,a,[role='button']):focus-visible { outline: 2px solid var(--ui-action); outline-offset: 3px; }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) button:active { opacity: .65; }
+@media(hover:hover) {
+  :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-tools button:hover { color: var(--ui-action); background: var(--ui-selected); }
+  :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-reading-row:hover strong { color: var(--ui-action); }
+}
+@media(prefers-reduced-motion:reduce) {
+  :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) :is(.lf-reader-layout-tools,.lf-profile-section-tabs) button { transition: none; }
+}
+.lf-profile-layout-options { grid-template-columns: repeat(auto-fit,minmax(120px,1fr)); }
+[data-mini-layout='reader'] .lf-layout-mini-banner { height: 48px; mask-image: none; }
+[data-mini-layout='reader'] .lf-layout-mini-avatar { left: 8px; top: 32px; width: 28px; height: 28px; }
+[data-mini-layout='reader'] .lf-layout-mini-name { left: 44px; top: 57px; width: 48%; }
+[data-mini-layout='reader'] .lf-layout-mini-stats { left: 8px; top: 82px; width: 84%; }
+@media(max-width:360px) {
+  :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) { --reader-layout-inline: 16px; }
+  :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-reading-metrics { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 16px 0; }
+  :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-networks { flex: 1 0 100%; margin-inline-start: 0; }
+}

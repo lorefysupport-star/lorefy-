@@ -884,6 +884,7 @@
   global.addEventListener("popstate", schedule);
   global.addEventListener("hashchange", schedule);
   global.LorefyShareStudio = {
+    loadImage: loadImage,
     scan: scan,
     collectShelfItems: collectShelfItems,
     imageSources: shareSourceCandidates,

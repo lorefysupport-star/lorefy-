@@ -1,0 +1,199 @@
+/* The selected cinematic identity is local to Home, not a global theme change. */
+/* Layered important rules override the legacy unlayered theme without leaking. */
+@layer lorefy-home-cinema {
+.lf-app:has(.lf-home-cinema){--cinema-ink:#f6f6f8;--cinema-muted:#b6b6be;--cinema-base:#08090b;--cinema-line:rgba(255,255,255,.15);--cinema-action:#6cf2d8;background:var(--cinema-base)!important}
+.lf-app .lf-home-cinema{position:relative;isolation:isolate;background:var(--cinema-base)!important;color:var(--cinema-ink);--cinema-chrome:calc(var(--nc-top,0px) + 142px);padding-bottom:calc(var(--nc-bottom,0px) + 110px)!important}
+.lf-home-cinema,.lf-home-cinema :is(button,h1,h2,h3,p,strong,span),.lf-app:has(.lf-home-cinema) .lf-bottom-nav{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;letter-spacing:0!important}
+.lf-home-cinema :is(h1,h2,h3){font-weight:700!important}
+.lf-home-cinema>.lf-social-header{height:var(--cinema-chrome);box-sizing:border-box;position:sticky!important;top:0!important;z-index:20!important;padding:calc(var(--nc-top,0px) + 10px) 18px 12px!important;background:rgba(8,9,11,.3)!important;border:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.lf-home-cinema .lf-greeting-row{display:grid!important;grid-template-columns:44px 44px minmax(0,1fr);gap:10px;direction:ltr;align-items:center;margin:0 0 14px!important;height:62px}
+.lf-home-cinema .lf-user-greeting{display:contents!important}
+.lf-home-cinema .lf-social-avatar{grid-column:2;grid-row:1;width:44px!important;height:44px!important;border-radius:50%!important;padding:0!important;overflow:hidden}
+.lf-home-cinema .lf-greeting-row>.lf-icon-button{grid-column:1;grid-row:1}
+.lf-home-cinema .lf-cinema-heading{grid-column:3;grid-row:1;text-align:right;min-width:0}
+.lf-home-cinema .lf-cinema-heading .lf-social-brand{display:block;color:#fff!important;font-size:16px!important;font-weight:700!important;line-height:1.3}
+.lf-home-cinema .lf-cinema-heading h1{color:#fff;font-size:28px;line-height:1.3;font-weight:700;margin:0;letter-spacing:0}
+.lf-home-cinema .lf-icon-button,.lf-home-cinema .lf-social-avatar,.lf-home-cinema .lf-home-feed-tabs,.lf-home-cinema .lf-cinema-resume-action{background:rgba(74,76,81,.48)!important;color:var(--cinema-ink)!important;border:1px solid rgba(255,255,255,.28)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 4px 16px rgba(0,0,0,.12);backdrop-filter:blur(18px) saturate(125%);-webkit-backdrop-filter:blur(18px) saturate(125%)}
+.lf-home-cinema .lf-icon-button{width:44px!important;height:44px!important;border-radius:50%!important}
+.lf-home-cinema .lf-home-feed-tabs{display:flex!important;gap:2px!important;width:100%;height:44px;margin:0!important;padding:3px!important;box-sizing:border-box;border-radius:14px!important}
+.lf-home-cinema .lf-home-feed-tabs button{flex:1!important;min-height:36px!important;max-width:none!important;margin:0!important;padding:4px 10px!important;border:1px solid transparent!important;border-radius:10px!important;color:var(--cinema-muted)!important;background:transparent!important;font-size:15px!important;line-height:1.25!important}
+.lf-home-cinema .lf-home-feed-tabs button[aria-selected=true]{color:#fff!important;background:rgba(255,255,255,.15)!important;border-color:rgba(255,255,255,.32)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)!important}
+.lf-home-cinema>.lf-background-decoration{display:none!important}
+.lf-home-cinema .lf-cinema-resume{position:relative;z-index:0;min-height:278px;display:flex;align-items:flex-end;padding:0 18px 18px;box-sizing:border-box;border-bottom:1px solid var(--cinema-line)}
+.lf-home-cinema .lf-cinema-backdrop{position:absolute;z-index:-2;inset-inline:0;top:calc(-1 * var(--cinema-chrome));width:100%;height:calc(100% + var(--cinema-chrome));object-fit:cover;object-position:center 35%;pointer-events:none;mask-image:linear-gradient(#000 75%,transparent);-webkit-mask-image:linear-gradient(#000 75%,transparent)}
+.lf-home-cinema .lf-cinema-resume::before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(transparent 8%,rgba(8,9,11,.55) 50%,#08090b 99%);pointer-events:none}
+.lf-home-cinema .lf-cinema-resume-content{display:grid;grid-template-columns:minmax(0,1fr) 100px;align-items:end;gap:18px;width:100%;min-width:0;padding-top:70px}
+.lf-home-cinema .lf-cinema-resume-copy{text-align:left;min-width:0}
+.lf-home-cinema .lf-cinema-resume-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lf-home-cinema .lf-cinema-resume-heading h2{font-size:13px;font-weight:500;line-height:1.5;margin:0;color:#e0e0e4;padding:5px 12px;background:rgba(64,66,72,.55);border:1px solid rgba(255,255,255,.18);border-radius:10px;backdrop-filter:blur(12px)}
+.lf-home-cinema .lf-cinema-resume-heading button{background:transparent;border:0;color:#fff;font:inherit;font-size:12px;min-height:44px;padding:8px 0;cursor:pointer}
+.lf-home-cinema .lf-cinema-resume h3{font-size:25px;font-weight:700;line-height:1.25;color:#fff;margin:0 0 8px;text-align:left;overflow-wrap:anywhere;letter-spacing:0}
+.lf-home-cinema .lf-cinema-resume p{font-size:13px;color:#e0e0e5;line-height:1.5;margin:0 0 10px!important;overflow-wrap:anywhere}
+.lf-home-cinema .lf-cinema-progress{height:4px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden;margin-bottom:12px;direction:ltr}
+.lf-home-cinema .lf-cinema-progress i{display:block;height:100%;background:var(--cinema-action);border-radius:inherit}
+.lf-home-cinema .lf-cinema-resume-action{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;border-radius:12px;padding:8px 14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.lf-home-cinema .lf-cinema-resume-action{position:relative;justify-content:center!important;padding-inline:44px!important;direction:ltr!important;box-sizing:border-box!important}
+.lf-home-cinema .lf-cinema-resume-action>svg{position:absolute;left:14px;width:22px;height:22px}
+.lf-home-cinema .lf-cinema-resume-cover{width:100%;border:0;padding:0;background:transparent;cursor:pointer;border-radius:5px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.lf-home-cinema .lf-cinema-resume-cover img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover}
+.lf-home-cinema .lf-cinema-reading-switch{position:absolute;inset-inline-end:18px;top:10px;display:flex;gap:8px}
+.lf-home-cinema .lf-cinema-reading-switch button{width:44px;min-height:48px;border:1px solid transparent;border-radius:5px;padding:3px;background:rgba(8,9,11,.6);cursor:pointer}
+.lf-home-cinema .lf-cinema-reading-switch button[aria-pressed=true]{border-color:var(--cinema-action)}
+.lf-home-cinema .lf-cinema-reading-switch img{display:block;width:28px;height:40px;object-fit:cover;margin:auto}
+.lf-home-cinema .lf-cinema-resume.is-empty{min-height:160px;display:grid;gap:16px;align-content:center;justify-items:start;background:#08090b}
+.lf-home-cinema .lf-cinema-resume.is-empty h2{margin:0;font-size:18px}
+.lf-home-cinema .lf-cinema-resume.is-empty .lf-cinema-resume-action{width:auto}
+.lf-home-cinema .lf-community-page{padding:0 18px!important;background:transparent!important}
+.lf-home-cinema .lf-friend-activity{margin:0!important;padding:18px 0 0!important;border:0!important;background:transparent!important}
+.lf-home-cinema .lf-friend-section{padding:0 0 16px!important;border-bottom:1px solid var(--cinema-line)!important}
+.lf-home-cinema .lf-friend-section header{padding:0 0 12px!important;min-height:44px}
+.lf-home-cinema .lf-friend-section h2{font-size:18px!important;font-weight:700!important;color:#fff!important;line-height:1.5}
+.lf-home-cinema .lf-friend-section header button{color:#dedee3!important;background:transparent!important;font-size:12px!important}
+html .lf-app .lf-home-cinema .lf-friend-activity .lf-friend-rail:not(.is-expanded){grid-auto-columns:calc((100% - 24px) / 3)!important;gap:12px!important;padding:0 0 8px!important;align-items:start}
+html .lf-app .lf-home-cinema .lf-friend-activity .lf-friend-rail .lf-friend-item{width:100%!important;min-width:0!important;background:transparent!important;border:0!important}
+.lf-home-cinema .lf-friend-cover{display:block!important;width:100%!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.lf-home-cinema .lf-friend-cover img{display:block!important;width:100%!important;height:auto!important;aspect-ratio:2/3!important;object-fit:cover!important;border-radius:5px!important}
+.lf-home-cinema .lf-friend-reader{display:flex!important;gap:5px!important;align-items:center;min-height:36px!important;font-size:12px!important;background:transparent!important;color:#eee!important;padding:4px 0!important}
+.lf-home-cinema .lf-friend-reader>img,.lf-home-cinema .lf-friend-avatar{width:20px!important;height:20px!important;border-radius:50%!important;flex-shrink:0}
+.lf-home-cinema .lf-friend-score{display:flex!important;gap:4px;align-items:center;color:#dedee5!important;font-size:12px!important}
+.lf-home-cinema .lf-review-card,.lf-home-cinema .lf-community-post{background:transparent!important;color:var(--cinema-ink)!important;border:0!important;border-bottom:1px solid var(--cinema-line)!important;border-radius:0!important;box-shadow:none!important;padding:16px 0!important;margin:0!important}
+.lf-home-cinema .lf-review-card :is(p,strong),.lf-home-cinema .lf-community-post :is(p,strong){color:#f0f0f3!important}
+.lf-home-cinema .lf-review-card p{font-size:14px!important;line-height:1.65!important}
+.lf-home-cinema :is(.lf-community-card-action,.lf-community-post-actions button){display:inline-flex!important;align-items:center;justify-content:center;gap:5px;min-width:40px;min-height:44px;color:#d9d9df!important;background:transparent!important;border:0!important;box-shadow:none!important;border-radius:8px!important;font-size:12px!important}
+.lf-home-cinema :is(.lf-community-dislike-button,.lf-community-post-dislike){display:inline-flex!important;visibility:visible!important;opacity:1!important}
+.lf-home-cinema :is(.lf-community-dislike-button,.lf-community-post-dislike).is-active{color:#ffae8c!important;background:rgba(255,128,92,.12)!important}
+.lf-home-cinema :is(.lf-community-like-button,.lf-community-post-like).is-active{color:#ff779c!important;background:rgba(255,119,156,.10)!important}
+.lf-home-cinema .lf-community-action-row{display:flex!important;align-items:center;justify-content:space-between;gap:2px;max-width:100%!important}
+.lf-app:has(.lf-home-cinema) .lf-bottom-nav{left:12px!important;right:12px!important;bottom:calc(var(--nc-bottom,0px) + 8px)!important;padding:6px!important;min-height:62px;box-sizing:border-box;border:1px solid rgba(255,255,255,.35)!important;border-radius:24px!important;background:rgba(55,57,63,.7)!important;backdrop-filter:blur(24px) saturate(130%);-webkit-backdrop-filter:blur(24px) saturate(130%);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 24px rgba(0,0,0,.22)!important}
+.lf-app:has(.lf-home-cinema) .lf-bottom-nav .lf-nav-item{color:#bdbdc7!important;min-height:48px!important}
+.lf-app:has(.lf-home-cinema) .lf-bottom-nav .lf-nav-item.is-active{color:var(--cinema-action)!important}
+.lf-app:has(.lf-home-cinema) .lf-bottom-nav .lf-nav-icon{background:transparent!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-fab{background:rgba(75,77,84,.72)!important;color:#fff!important;border:1px solid rgba(255,255,255,.4)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.2)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);bottom:calc(var(--nc-bottom,0px) + 90px)!important}
+.lf-home-cinema button:focus-visible{outline:2px solid var(--cinema-action)!important;outline-offset:3px}
+.lf-home-cinema .lf-cinema-heading{display:flex!important;flex-direction:column!important;align-items:flex-end!important;justify-content:center!important;direction:ltr!important}
+.lf-home-cinema .lf-cinema-resume{width:100%!important;max-width:100%!important;box-sizing:border-box!important;padding:0 18px 18px!important}
+.lf-home-cinema .lf-cinema-resume-content{display:grid!important;width:100%!important;min-width:0!important;direction:ltr!important;grid-template-columns:minmax(0,1fr) 100px;transform:none!important}
+.lf-home-cinema .lf-cinema-resume-content{padding-top:70px!important;box-sizing:border-box!important}
+.lf-home-cinema .lf-cinema-resume-copy{display:block!important;min-width:0!important;max-width:100%!important}
+.lf-home-cinema .lf-cinema-backdrop.is-cover{filter:none!important;transform:none!important}
+.lf-home-cinema>.lf-social-header{background:rgba(8,9,11,.78)!important}
+.lf-home-cinema .lf-friend-rail:not(.is-expanded){display:grid!important;grid-auto-flow:column!important}
+.lf-home-cinema .lf-friend-rail .lf-friend-item{flex:none!important}
+.lf-home-cinema .lf-friend-item{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;column-gap:4px!important}
+.lf-home-cinema .lf-friend-cover{grid-column:1/-1!important;grid-row:1!important}
+.lf-home-cinema .lf-friend-reader{grid-column:1!important;grid-row:2!important;min-width:0!important;margin:0!important;overflow:hidden!important}
+.lf-home-cinema .lf-friend-reader>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lf-home-cinema .lf-friend-score{grid-column:2!important;grid-row:2!important;align-self:center;margin:0!important}
+.lf-app:has(.lf-home-cinema) .lf-bottom-nav{transform:none!important;translate:none!important;width:auto!important;max-width:none!important}
+/* Stable React children stay in place; only the Home reading order is restyled. */
+.lf-home-cinema .lf-review-card{display:block!important;position:relative!important;direction:ltr!important;padding:14px 0 10px!important}
+.lf-home-cinema .lf-review-card>span{position:absolute!important;left:0!important;right:auto!important;top:16px!important;width:40px!important;height:40px!important}
+.lf-home-cinema .lf-review-card>span img{width:40px!important;height:40px!important}
+.lf-home-cinema .lf-community-review-body{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+.lf-home-cinema .lf-community-author-row{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;flex-wrap:nowrap!important;gap:2px!important;min-height:44px!important;box-sizing:border-box!important;padding:0 102px 0 50px!important;margin:0 0 8px!important;direction:ltr!important;text-align:left!important}
+.lf-home-cinema .lf-community-author-row>span:first-child{font-size:14px!important;font-weight:600!important;line-height:19px!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+.lf-home-cinema .lf-community-author-row>span[data-no-translate]{display:none!important}
+.lf-home-cinema .lf-community-author-row>span:last-child{font-size:11px!important;line-height:15px!important;color:var(--cinema-muted)!important}
+.lf-home-cinema .lf-cinema-review-score{position:absolute!important;top:16px!important;right:36px!important;margin:0!important;display:flex!important;min-height:32px!important}
+.lf-home-cinema .lf-cinema-review-score>span:not(.lf-cinema-rating){display:none!important}
+.lf-home-cinema .lf-cinema-rating{display:inline-flex!important;align-items:center!important;gap:4px!important;white-space:nowrap!important;color:#f6f6f8!important;font-size:13px!important;font-variant-numeric:tabular-nums}
+.lf-home-cinema .lf-cinema-rating b{font-weight:600!important}
+.lf-home-cinema .lf-review-card>.lf-community-delete-button,.lf-home-cinema .lf-review-card>.lf-product-review-menu{position:absolute!important;right:0!important;left:auto!important;top:10px!important;width:36px!important;height:44px!important;min-width:36px!important;z-index:2!important;margin:0!important;padding:8px!important}
+.lf-home-cinema .lf-review-card p{font-weight:400!important;font-size:14px!important;line-height:1.55!important;margin:0 0 8px!important}
+.lf-home-cinema .lf-community-work-card{direction:ltr!important;display:flex!important;align-items:center!important;gap:10px!important;width:100%!important;box-sizing:border-box!important;min-height:64px!important;max-height:none!important;padding:6px!important;margin:0 0 4px!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:6px!important;background:rgba(255,255,255,.035)!important;box-shadow:none!important;text-align:left!important}
+.lf-home-cinema .lf-community-work-card>img{width:38px!important;height:52px!important;aspect-ratio:2/3!important;border-radius:3px!important;object-fit:cover!important;flex:none!important}
+.lf-home-cinema .lf-community-work-card>div{min-width:0!important;flex:1!important;text-align:left!important;direction:ltr!important}
+.lf-home-cinema .lf-community-work-card p{font-size:13px!important;font-weight:500!important;margin:0 0 3px!important;text-align:left!important;line-height:1.3!important}
+.lf-home-cinema .lf-community-work-card .lf-type-badge{display:none!important}
+.lf-home-cinema .lf-community-work-card>div>div{font-size:11px!important;color:var(--cinema-muted)!important}
+.lf-home-cinema .lf-community-work-card>svg{transform:rotate(180deg)!important;width:16px!important;flex:none!important}
+.lf-home-cinema .lf-community-action-row{justify-content:flex-start!important;direction:ltr!important;gap:8px!important;max-width:none!important;margin:0!important;padding:0!important}
+.lf-home-cinema .lf-community-action-row .lf-community-like-button{order:0!important}
+.lf-home-cinema .lf-community-action-row .lf-community-comment-button{order:1!important}
+.lf-home-cinema .lf-community-action-row .lf-community-dislike-button{order:2!important}
+.lf-home-cinema .lf-community-action-row .lf-community-save-button{order:3!important}
+.lf-home-cinema .lf-community-action-row .lf-community-share-button{order:4!important}
+.lf-home-cinema .lf-community-action-row button,.lf-home-cinema .lf-community-post-actions button{width:auto!important;max-width:none!important;min-width:36px!important;min-height:44px!important;flex:none!important;font-size:11px!important;gap:4px!important}
+.lf-home-cinema .lf-community-action-row button svg{width:19px!important;height:19px!important;stroke-width:1.7!important}
+.lf-home-cinema .lf-community-post-card{display:block!important;position:relative!important;padding:14px 0 10px!important;margin:0!important;border:0!important;border-bottom:1px solid var(--cinema-line)!important;border-radius:0!important;background:transparent!important;color:var(--cinema-ink)!important;box-shadow:none!important;direction:ltr!important}
+.lf-home-cinema .lf-community-post-header{display:flex!important;align-items:center!important;min-height:44px!important;margin-bottom:8px!important;direction:ltr!important}
+.lf-home-cinema .lf-community-post-author{display:flex!important;align-items:center!important;gap:10px!important;padding:0!important;min-width:0!important;flex:1!important;background:transparent!important;direction:ltr!important;text-align:left!important;color:inherit!important}
+.lf-home-cinema .lf-community-post-author>span{min-width:0!important;text-align:left!important}
+.lf-home-cinema .lf-community-post-author strong{display:block!important;font-size:14px!important;font-weight:600!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lf-home-cinema .lf-community-post-author small{font-size:11px!important;color:var(--cinema-muted)!important}
+.lf-home-cinema .lf-community-post-kind{font-size:10px!important;color:var(--cinema-muted)!important;border:0!important;background:transparent!important}
+.lf-home-cinema .lf-community-post-body{font-size:14px!important;line-height:1.55!important;margin:0 0 8px!important;padding:0!important;color:inherit!important;max-width:none!important;text-align:start!important}
+.lf-home-cinema .lf-community-post-actions{display:flex!important;direction:ltr!important;justify-content:flex-start!important;gap:8px!important;padding:0!important;max-width:none!important;margin:0!important}
+.lf-home-cinema .lf-community-post-like{order:0}.lf-home-cinema .lf-community-post-replies{order:1}.lf-home-cinema .lf-community-post-dislike{order:2}
+.lf-home-cinema .lf-community-post-actions>button:nth-child(4){order:3}.lf-home-cinema .lf-community-post-actions>button:nth-child(5){order:4}
+/* The composer shares Home's material, but retains its original draft/focus logic. */
+.lf-app:has(.lf-home-cinema) .lf-community-compose-sheet{padding:calc(var(--nc-top,0px) + 12px) 10px 10px!important;box-sizing:border-box!important;align-items:flex-end!important;background:rgba(0,0,0,.42)!important;backdrop-filter:blur(6px)!important;-webkit-backdrop-filter:blur(6px)!important;isolation:isolate}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-sheet>section{position:relative!important;width:min(100%,560px)!important;height:660px!important;max-height:calc(var(--composer-viewport-height,100%) - var(--nc-top,0px) - 22px)!important;box-sizing:border-box!important;border-radius:26px!important;border:1px solid rgba(255,255,255,.3)!important;background:rgba(31,33,38,.88)!important;backdrop-filter:blur(30px) saturate(130%)!important;-webkit-backdrop-filter:blur(30px) saturate(130%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 18px 60px rgba(0,0,0,.4)!important;color:#f6f6f8!important;padding-top:12px!important;overflow:hidden!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-sheet>section::before{content:"";position:absolute;top:7px;left:calc(50% - 17px);width:34px;height:4px;border-radius:2px;background:rgba(255,255,255,.28);pointer-events:none}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-sheet :is(button,textarea,strong,small,span){font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;letter-spacing:0!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-head{display:grid!important;grid-template-columns:44px minmax(0,1fr) 68px!important;direction:ltr!important;gap:8px!important;padding:8px 14px 12px!important;min-height:58px!important;border-bottom:1px solid rgba(255,255,255,.1)!important;background:transparent!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-head>strong{font-size:16px!important;font-weight:600!important;color:#f6f6f8!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-close{height:40px!important;width:40px!important;padding:8px!important;min-height:40px!important;border-radius:50%!important;border:1px solid rgba(255,255,255,.18)!important;background:rgba(255,255,255,.06)!important;color:#e8e8ed!important;justify-self:start!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-submit{background:#6cf2d8!important;color:#092d28!important;border:0!important;border-radius:20px!important;min-height:40px!important;min-width:64px!important;padding:8px 16px!important;font-size:14px!important;font-weight:600!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-submit:disabled{background:rgba(255,255,255,.09)!important;color:#9698a2!important;opacity:1!important}
+.lf-app:has(.lf-home-cinema) .lf-community-composer-main{display:grid!important;grid-template-columns:40px minmax(0,1fr)!important;direction:ltr!important;align-content:stretch!important;flex:1 1 auto!important;gap:10px!important;padding:20px 18px!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain}
+.lf-app:has(.lf-home-cinema) .lf-community-composer-main>.lf-community-avatar{width:40px!important;height:40px!important}
+.lf-app:has(.lf-home-cinema) .lf-community-composer-copy{min-width:0!important;min-height:0!important;direction:rtl;align-items:stretch!important}
+.lf-app:has(.lf-home-cinema) .lf-community-composer-identity{display:flex!important;flex-wrap:wrap!important;gap:3px 8px!important;justify-content:flex-start!important;direction:ltr!important;text-align:left!important}
+.lf-app:has(.lf-home-cinema) .lf-community-composer-identity strong{font-size:14px!important;color:#f6f6f8!important}
+.lf-app:has(.lf-home-cinema) .lf-community-composer-identity small{font-size:11px!important;color:#aeb1bc!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-audience{align-self:flex-start!important;display:inline-flex!important;align-items:center!important;gap:5px!important;direction:ltr!important;color:#aeb1bc!important;font-size:11px!important;margin:8px 0 0!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-text{flex:1 0 auto!important;width:100%!important;min-height:160px!important;max-height:none!important;padding:12px 0!important;margin:6px 0 0!important;box-sizing:border-box!important;border:0!important;border-radius:0!important;background:transparent!important;color:#f6f6f8!important;font-size:17px!important;font-weight:400!important;line-height:1.65!important;caret-color:#6cf2d8!important;box-shadow:none!important;resize:none!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-text::placeholder{color:#aeb1bc!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-footer{display:flex!important;flex-direction:column!important;gap:12px!important;flex-shrink:0!important;padding:14px 14px max(16px,var(--nc-bottom,0px))!important;border-top:1px solid rgba(255,255,255,.12)!important;background:rgba(255,255,255,.025)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-tools{display:flex!important;justify-content:space-around!important;gap:8px!important;width:100%!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-tools button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-height:54px!important;flex:1!important;padding:8px 2px!important;border-radius:8px!important;border:1px solid rgba(255,255,255,.12)!important;background:rgba(255,255,255,.055)!important;color:#dce0e8!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-tools button span{font-size:11px!important;font-weight:500!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-length{width:100%!important;display:flex!important;align-items:center!important;gap:10px!important;direction:ltr!important;color:#aeb1bc!important;font-size:11px!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-meter{accent-color:#6cf2d8!important;flex:1!important;height:3px!important;border:0!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-sheet button:focus-visible{outline:2px solid #6cf2d8!important;outline-offset:2px!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-sheet button:active{filter:brightness(.86)}
+html[dir=ltr] .lf-app:has(.lf-home-cinema) .lf-community-composer-copy{direction:ltr}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-sheet.is-keyboard-open>section{height:100%!important}
+@supports not (backdrop-filter:blur(1px)){.lf-app:has(.lf-home-cinema) .lf-community-compose-sheet>section{background:#202228!important}}
+/* A writing canvas with a compact glass tool dock, not attachment cards. */
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass{align-items:center!important;padding:calc(var(--nc-top,0px) + 12px) 12px max(12px,var(--nc-bottom,0px))!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass>section{height:590px!important;padding-top:0!important;max-height:calc(var(--composer-viewport-height,100%) - var(--nc-top,0px) - var(--nc-bottom,0px) - 24px)!important;border-radius:24px!important;background:rgba(32,35,42,.82)!important;backdrop-filter:blur(38px) saturate(150%)!important;-webkit-backdrop-filter:blur(38px) saturate(150%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 20px 64px rgba(0,0,0,.5)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass>section::before{content:none!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-head{grid-template-columns:44px minmax(0,1fr) 76px!important;padding:14px 16px!important;border-bottom:0!important;background:rgba(255,255,255,.035)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-head>strong{font-size:17px!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-close{height:44px!important;width:44px!important;min-height:44px!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-submit{min-height:44px!important;border-radius:22px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.2)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-composer-main{display:flex!important;flex-direction:column!important;gap:18px!important;padding:18px 20px!important}
+.lf-app:has(.lf-home-cinema) .lf-community-composer-author{display:flex!important;align-items:center!important;gap:12px!important;width:100%!important;box-sizing:border-box!important;direction:ltr!important;padding-bottom:16px!important;border-bottom:1px solid rgba(255,255,255,.1)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-composer-author>.lf-community-avatar{width:44px!important;height:44px!important;flex:none!important;border:1px solid rgba(255,255,255,.2)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-composer-byline{display:grid!important;gap:4px!important;min-width:0!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-composer-identity{align-items:baseline!important;gap:4px 10px!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-composer-identity strong{font-size:15px!important;font-weight:600!important;overflow-wrap:anywhere!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-audience{margin:0!important;font-size:12px!important;opacity:.9}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-composer-copy{display:flex!important;flex-direction:column!important;flex:1!important;min-height:0!important;width:100%!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-text{min-height:180px!important;margin:0!important;padding:0!important;font-size:19px!important;line-height:1.7!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-text:focus{outline:none!important;box-shadow:none!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-footer{flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:16px!important;margin:0 14px 14px!important;padding:8px!important;border:1px solid rgba(255,255,255,.2)!important;border-radius:32px!important;background:rgba(98,102,115,.19)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-tools{width:auto!important;gap:6px!important;justify-content:flex-start!important;flex:none!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-tools button{position:relative!important;flex:none!important;width:44px!important;height:44px!important;min-height:44px!important;padding:10px!important;border-radius:50%!important;border:1px solid rgba(255,255,255,.14)!important;background:rgba(255,255,255,.06)!important;color:#dce5ec!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-tools button:hover{background:rgba(108,242,216,.14)!important;color:#6cf2d8!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-tools button span{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-length{display:grid!important;gap:6px!important;width:70px!important;margin-inline:8px!important;font-size:12px!important;text-align:center!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass .lf-community-compose-meter{width:100%!important;max-width:70px!important;height:3px!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass.is-keyboard-open{align-items:flex-start!important;padding-top:8px!important}
+.lf-app:has(.lf-home-cinema) .lf-community-compose-glass.is-keyboard-open>section{max-height:calc(var(--composer-viewport-height,100%) - 16px)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-picker{background:rgba(0,0,0,.48)!important;backdrop-filter:blur(8px)!important;-webkit-backdrop-filter:blur(8px)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-picker>section{width:min(100%,560px)!important;max-height:calc(100% - var(--nc-top,0px) - 16px)!important;box-sizing:border-box!important;border:1px solid rgba(255,255,255,.25)!important;border-radius:24px 24px 0 0!important;background:rgba(31,35,43,.94)!important;color:#f6f6f8!important;backdrop-filter:blur(30px)!important;-webkit-backdrop-filter:blur(30px)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-picker>section>header{padding:20px!important;border-bottom:1px solid rgba(255,255,255,.14)!important}
+.lf-app:has(.lf-home-cinema) .lf-community-picker>section>header strong{font-size:18px!important;font-weight:600!important;color:#f6f6f8!important}
+.lf-app:has(.lf-home-cinema) .lf-community-picker>section>header p,.lf-app:has(.lf-home-cinema) .lf-community-picker-empty p{font-size:14px!important;font-weight:400!important;line-height:1.7!important;color:#b5bac6!important}
+.lf-app:has(.lf-home-cinema) .lf-community-picker>section>header button{width:44px!important;height:44px!important;min-height:44px!important;border:1px solid rgba(255,255,255,.2)!important;border-radius:50%!important;background:rgba(255,255,255,.06)!important;color:#f6f6f8!important}
+.lf-app:has(.lf-home-cinema) .lf-community-picker-empty{background:transparent!important;border:0!important;color:#cbd0db!important}
+.lf-app:has(.lf-home-cinema) .lf-community-picker button:focus-visible{outline:2px solid #6cf2d8!important;outline-offset:2px!important}
+@supports not (backdrop-filter:blur(1px)){.lf-app:has(.lf-home-cinema) .lf-community-compose-glass>section{background:#20232a!important}}
+@media(prefers-reduced-transparency:reduce){.lf-app:has(.lf-home-cinema) .lf-community-compose-glass>section{background:#20232a!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}
+@supports not (backdrop-filter:blur(1px)){.lf-home-cinema .lf-home-feed-tabs,.lf-home-cinema .lf-cinema-resume-action,.lf-app:has(.lf-home-cinema) .lf-bottom-nav{background:#303238!important}}
+@media(min-width:700px){.lf-home-cinema{--cinema-chrome:calc(var(--nc-top,0px) + 152px)!important}.lf-home-cinema .lf-cinema-resume-content,.lf-home-cinema .lf-community-page{max-width:720px;margin-inline:auto}.lf-home-cinema .lf-cinema-resume-content{grid-template-columns:minmax(0,1fr) 140px}.lf-home-cinema .lf-cinema-resume{min-height:340px}.lf-home-cinema .lf-cinema-backdrop{object-position:center 40%}.lf-home-cinema .lf-cinema-resume h3{font-size:32px}}
+@media(max-width:350px){.lf-home-cinema .lf-cinema-resume-content{grid-template-columns:minmax(0,1fr) 82px;gap:12px}.lf-home-cinema .lf-cinema-resume h3{font-size:22px}.lf-home-cinema .lf-friend-section h2{font-size:16px!important}}
+}

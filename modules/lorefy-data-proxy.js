@@ -27,8 +27,14 @@
     var parsed;
     try { parsed = new URL(targetUrl, global.location && global.location.href); } catch (_) { return targetUrl; }
     provider = text(provider).toLowerCase();
-    var supported = ["anilist", "mangadex", "mangadex-covers", "openlibrary", "googlebooks", "jikan", "openlibrary-editions", "wikipedia", "wikidata", "commons", "dc-fandom", "marvel-fandom"];
+    var supported = ["anilist", "mangadex", "mangadex-covers", "openlibrary", "googlebooks", "jikan", "openlibrary-editions", "wikipedia", "wikidata", "commons", "dc-fandom", "marvel-fandom", "bookbrainz", "gcd"];
     if (supported.indexOf(provider) < 0) return targetUrl;
+    if(global.LOREFY_REMOTE_CATALOG?.openSourcesPreview===true&&['localhost','127.0.0.1'].includes(global.location?.hostname)&&['openlibrary','googlebooks','wikidata','bookbrainz','gcd'].includes(provider)){
+      var params=new URLSearchParams(parsed.search);
+      if(provider==='bookbrainz')params.set('path',parsed.pathname);
+      if(provider==='gcd'){var match=parsed.pathname.match(/\/series\/name\/([^/]+)\//);if(!match)return targetUrl;params.set('q',decodeURIComponent(match[1]));}
+      return '/api/catalog/'+provider+'?'+params;
+    }
     // Do not make all character and alternate-cover retrieval depend on a
     // single Edge egress path. These requests carry no session or user data.
     if (provider === "jikan") return targetUrl;

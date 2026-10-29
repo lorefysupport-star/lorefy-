@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lorefy Wood Shelf QA</title>
+  <link rel="stylesheet" href="../styles/lorefy-design-system.css">
+  <link rel="stylesheet" href="../styles/lorefy-interface-settings.css">
+  <link rel="stylesheet" href="../styles/lorefy-public-profile.css">
+  <link rel="stylesheet" href="../styles/lorefy-book-showcase.css">
+  <style>
+    body { margin:0; background:#202123; }
+    .lf-app { max-width:560px; margin:auto; min-height:100vh; height:auto; display:block; overflow:visible; padding:24px 0; }
+    h1 { font-size:24px; margin:0 20px 32px; }
+    .lf-library-grid { display:grid; position:relative; }
+    .lf-library-cover { display:block; overflow:hidden; margin-bottom:7px; }
+    .lf-library-cover img { width:100%; height:100%; object-fit:cover; }
+    .lf-library-card { width:100%; min-width:0; background:none; border:0; margin:0; content-visibility:auto; contain-intrinsic-size:1px 240px; }
+    .lf-library-done { position:absolute; top:7px; left:7px; display:grid; place-items:center; width:22px; height:22px; border:2px solid white; border-radius:50%; color:white; background:var(--ui-success,#167d51); }
+  </style>
+</head>
+<body><main class="lf-app"><h1>المفضلة</h1><div class="lf-library-grid is-spine-view"></div></main>
+<script>
+  const params=new URLSearchParams(location.search),host=document.querySelector('.lf-library-grid');
+  if(params.get('lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.querySelector('h1').textContent='Library';}
+  const books=[['Berserk','1/157897l'],['Vagabond','1/259070l'],['Hunter x Hunter','2/253119l'],['One Piece','2/253146l']];
+  const count=Math.max(1,Math.min(14,Number(params.get('count'))||(params.get('rows')==='2'?14:7)));
+  for(let index=0;index<count;index++) {
+    const [title,cover]=books[index%books.length],card=document.createElement('button');
+    card.type='button';card.className='lf-library-card';card.title=title;
+    card.style.setProperty('--spine-height',[172,196,180,188][index%4]+'px');
+    const wrap=document.createElement('span');wrap.className='lf-library-cover';
+    const image=document.createElement('img');image.src='https://cdn.myanimelist.net/images/manga/'+cover+'.jpg';image.alt=title;
+    const label=document.createElement('span');label.className='lf-library-spine-title';label.textContent=title;
+    const badge=document.createElement('span');badge.className='lf-library-done';badge.textContent='\u2713';badge.setAttribute('aria-hidden','true');
+    wrap.append(image,label,badge);card.append(wrap);host.append(card);
+  }
+  if(params.get('theme')==='dark')document.querySelector('.lf-app').classList.add('is-dark');
+</script></body></html>

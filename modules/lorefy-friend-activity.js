@@ -79,6 +79,10 @@
     var safety=root.LorefyProductTools && root.LorefyProductTools.core.safety;
     var hidden=safety ? safety.getBlockedUsers().concat(safety.getMutedUsers()) : [];
     var data=derive(live ? valid ? result.rows : [] : p.reviews,live ? valid ? result.following : [] : p.following,{owner:owner,hidden:hidden,aliases:root.LorefyCatalogAliases});
+    function workCover(work){
+      var card=h('button',{type:'button',className:'lf-friend-cover','aria-label':(en?'Open ':'فتح ')+work.title,onClick:function(){p.onWork(work);}},h('img',{src:p.cover(work),alt:'',loading:'lazy',decoding:'async',onError:p.onCoverError,'data-fallback':p.fallback(work)}));
+      return root.LorefyLibraryMedia?root.LorefyLibraryMedia.card(card,{lang:p.language,workId:work.id,title:work.title}):card;
+    }
     function section(kind,title,rows) {
       var items=rows.map(function (row) { return {row:row,work:p.getWork(row.mid)}; }).filter(function (item) { return eligible(item.work,root.LorefyCatalogPolicy); });
       return h('section',{className:'lf-friend-section','aria-label':title},
@@ -88,7 +92,7 @@
         : h('div',{className:'lf-friend-rail'+(expanded[kind]?' is-expanded':''),role:'list'},items.slice(0,expanded[kind]?80:12).map(function (item) {
           var row=item.row,w=item.work, profile=row.profile || {}, name=row.user || profile.name || profile.username || (en?'Reader':'قارئ'), avatar=row.av || profile.avatar;
           return h('article',{key:kind==='recent'?row.userId+'|'+row.mid:row.mid,className:'lf-friend-item',role:'listitem'},
-            h('button',{type:'button',className:'lf-friend-cover','aria-label':(en?'Open ':'فتح ')+w.title,onClick:function () { p.onWork(w); }},h('img',{src:p.cover(w),alt:'',loading:'lazy',decoding:'async',onError:p.onCoverError,'data-fallback':p.fallback(w)})),
+            workCover(w),
             kind==='recent' ? h('button',{type:'button',className:'lf-friend-reader','aria-label':(en?'Open profile: ':'فتح حساب: ')+name,onClick:function () { p.onReader({id:row.userId,name:name,un:row.un || profile.username,av:avatar}); }},avatar ? h('img',{src:avatar,alt:'',loading:'lazy',onError:function (e) { e.currentTarget.style.visibility='hidden'; }}) : h('span',{className:'lf-friend-avatar','aria-hidden':true},name.slice(0,1)),h('span',{'data-no-translate':'1',dir:'auto'},name))
             : !p.compact && h('strong',{className:'lf-friend-title','data-no-translate':'1',dir:'auto'},w.title),
             (!p.compact || kind==='recent') && h('div',{className:'lf-friend-score','aria-label':(en?'Rating out of five: ':'التقييم من خمسة: ')+row.r.toFixed(2)},

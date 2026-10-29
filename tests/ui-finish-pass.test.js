@@ -14,7 +14,7 @@ test('editorial cover keeps its title and supporting copy legible over artwork',
 });
 
 test('empty owner favorites offer one intentional selection action', () => {
-  assert.match(growth, /favorites\.classList\.toggle\("is-empty",\s*!favorites\.querySelector\("img"\)\)/);
+  assert.match(growth, /favorites\.classList\.toggle\("is-empty",\s*!favorites\.querySelector\("\[data-lorefy-book-cover\],img"\)\)/);
   assert.match(css, /\.lf-profile-favorites\.is-empty\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)/s);
   assert.match(css, /\.lf-profile-favorites\.is-empty\s*>\s*\[role="button"\]:not\(:first-child\)\s*\{[^}]*display:\s*none/s);
 });

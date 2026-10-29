@@ -1,0 +1,98 @@
+/* Import owns its layout; shared glass and semantic colors own its material. */
+@layer lorefy-glass-materials {
+.lf-im-page {
+  background:var(--ui-page-wash),var(--ui-bg) !important;
+  color:var(--ui-ink) !important;
+  font-family:var(--glass-font) !important;
+  direction:inherit !important;
+  text-align:start !important;
+}
+.lf-im-page :is(button,input,textarea,select,p,span,strong,em,h3,label) {
+  font-family:var(--glass-font) !important;
+  letter-spacing:0 !important;
+  overflow-wrap:anywhere;
+}
+.lf-im-page .lf-ov-head {
+  background:var(--glass-reflection),var(--glass-fill) !important;
+  border-color:var(--glass-edge) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+}
+.lf-im-page .lf-ov-title { color:var(--ui-glass-ink) !important; font-weight:600 !important; line-height:1.5 !important; }
+.lf-im-page .lf-ov-back { width:44px !important; height:44px !important; }
+.lf-im-page .lf-ov-headslot { width:44px !important; }
+.lf-im-page .lf-ov-body { min-height:0; width:100%; max-width:760px; box-sizing:border-box; margin-inline:auto; gap:0 !important; padding:20px 20px calc(32px + env(safe-area-inset-bottom)) !important; overscroll-behavior:contain; }
+.lf-im-page .lf-im-note { margin:0 !important; padding-block-end:20px; color:var(--ui-secondary) !important; font-size:14px !important; font-weight:400 !important; line-height:1.7 !important; }
+.lf-im-page .lf-im-card {
+  background:transparent !important;
+  border:0 !important;
+  border-block-end:1px solid var(--ui-line) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:20px 0 !important;
+  gap:14px !important;
+}
+.lf-im-page .lf-im-card:last-child { border-block-end:0 !important; }
+.lf-im-page .lf-im-card-head { align-items:start !important; flex-direction:column; gap:2px !important; }
+.lf-im-page .lf-im-card-head strong { color:var(--ui-ink) !important; font-size:17px !important; font-weight:600 !important; line-height:1.5 !important; }
+.lf-im-page :is(.lf-im-card-head em,.lf-im-tip) { color:var(--ui-secondary) !important; font-size:13px !important; font-weight:400 !important; line-height:1.6 !important; }
+.lf-im-page .lf-im-row { display:grid !important; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:12px !important; }
+.lf-im-page .lf-im-row>.lf-im-go { margin-block-start:29px !important; }
+.lf-im-page .lf-im-field { display:grid; gap:8px; min-width:0; color:var(--ui-ink); font-size:14px; line-height:1.5; }
+.lf-im-page input[type='text'] { direction:ltr !important; text-align:start !important; }
+.lf-im-page :is(input[type='text'],textarea) {
+  width:100% !important;
+  min-width:0 !important;
+  min-height:44px !important;
+  box-sizing:border-box;
+  padding:10px 12px !important;
+  background:var(--ui-fill) !important;
+  border:1px solid var(--ui-line) !important;
+  border-radius:8px !important;
+  color:var(--ui-ink) !important;
+  caret-color:var(--ui-action);
+  font-size:16px !important;
+  font-weight:400 !important;
+  line-height:1.5 !important;
+}
+.lf-im-page :is(input,textarea)::placeholder { color:var(--ui-muted) !important; opacity:1; }
+.lf-im-page textarea { min-height:132px !important; resize:vertical; }
+.lf-im-page :is(button,select) { min-height:44px !important; min-width:44px; border-radius:8px !important; font-size:14px !important; font-weight:600 !important; line-height:1.5 !important; white-space:normal !important; }
+.lf-im-page :is(.lf-im-file,.lf-im-more,.lf-im-chip,.lf-ov-back) {
+  background:var(--glass-reflection),var(--glass-fill) !important;
+  border:1px solid var(--glass-edge) !important;
+  color:var(--ui-glass-ink) !important;
+  box-shadow:inset 0 1px 0 #ffffff40 !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+}
+.lf-im-page .lf-ov-back { border-radius:50% !important; font-size:24px !important; }
+.lf-im-page :is(.lf-im-go,.lf-im-reload,.lf-im-chip.is-on) {
+  background:var(--ui-action) !important;
+  color:var(--ui-on-action) !important;
+  border:1px solid var(--ui-action) !important;
+  box-shadow:none !important;
+}
+.lf-im-page .lf-im-chips { gap:8px !important; }
+.lf-im-page .lf-im-chip { padding:8px 12px !important; }
+.lf-im-page :is(button,input,textarea,select):focus-visible { outline:2px solid var(--ui-action) !important; outline-offset:3px !important; }
+.lf-im-page :is(input,textarea)[aria-invalid='true'] { border-color:var(--ui-danger) !important; }
+.lf-im-page :is(.lf-im-field-error,.lf-im-error) { margin:0 !important; padding:10px 12px !important; background:var(--ui-fill-soft) !important; border:0 !important; border-inline-start:3px solid var(--ui-danger) !important; border-radius:4px !important; color:var(--ui-ink) !important; font-size:13px !important; font-weight:400 !important; line-height:1.6 !important; }
+.lf-im-page [hidden] { display:none !important; }
+.lf-im-page .lf-im-result { gap:12px !important; }
+.lf-im-page .lf-im-result:not(:empty) { padding-block-end:20px; border-block-end:1px solid var(--ui-line); }
+.lf-im-page .lf-im-loading { color:var(--ui-secondary); font-size:14px; line-height:1.6; }
+.lf-im-page .lf-im-preview { margin:0 !important; color:var(--ui-ink) !important; }
+.lf-im-page :is(.lf-im-preview h3,.lf-im-summary h3) { margin:0 0 8px; font-size:17px; font-weight:600; line-height:1.5; }
+.lf-im-page .lf-im-preview>p { color:var(--ui-secondary) !important; font-size:14px !important; line-height:1.6; }
+.lf-im-page .lf-im-preview-row { grid-template-columns:44px minmax(0,1fr); }
+.lf-im-page .lf-im-preview-row select { background:var(--ui-fill) !important; border-color:var(--ui-line) !important; color:var(--ui-ink) !important; font-weight:400 !important; white-space:nowrap !important; overflow:hidden; text-overflow:ellipsis; }
+.lf-im-page .lf-im-confirm { width:100%; margin-block-start:12px; padding:10px 16px; }
+.lf-im-page .lf-im-summary { background:transparent !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; padding:0 !important; color:var(--ui-ink) !important; font-size:14px !important; font-weight:400 !important; line-height:1.6 !important; }
+.lf-im-page button:active:not(:disabled) { transform:scale(.98); }
+.lf-im-page button:disabled { cursor:default; opacity:.6; }
+@media (max-width:360px) {
+  .lf-im-page .lf-im-row { grid-template-columns:minmax(0,1fr); }
+  .lf-im-page .lf-im-row>.lf-im-go { margin-block-start:0 !important; width:100%; }
+}
+}

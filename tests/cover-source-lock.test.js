@@ -6,6 +6,12 @@ const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 
+test('metadata-only editions never auto-attach title-matched covers from another edition',async()=>{
+  const requests=[],api=loadCoverApi(requests);
+  assert.equal(await api.resolve({id:'gcd-series-21965',title:'Absolute Watchmen',type:'كوميكس',metadataOnly:true}),'');
+  assert.equal(requests.length,0);
+});
+
 test('verified RanobeDB covers display and use the native gateway without allowing lookalike hosts', () => {
   const url = 'https://images.ranobedb.org/maAOIi8f73kFTkfV.jpg';
   const api = loadCoverApi([], null, { LorefyDataProxy: { mediaUrl: value => '/api/media?url=' + encodeURIComponent(value) } });

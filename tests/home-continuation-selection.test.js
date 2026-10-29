@@ -68,7 +68,7 @@ function renderSection(items, language = 'en') {
   const start = source.indexOf('continueReadingSection=()=>');
   const end = source.indexOf(',ir=()=>', start);
   assert.ok(start >= 0 && end > start);
-  const opens = [], scope = {Hn:items, W:language, C:{text:'black',accent:'teal'},
+  const opens = [], scope = {Hn:items, W:language, window:{}, C:{text:'black',accent:'teal'},
     React:{createElement:(tag, props, ...children)=>({tag,props:props || {},children})},
     uiText:(lang, ar, en)=>lang === 'en' ? en : ar, nt:route=>opens.push(route),
     T:work=>opens.push(work.id), je:work=>({page:work.page || 0}), progressPercent:()=>20,

@@ -151,8 +151,31 @@
     return node('button', {type:'button', class:'lf-profile-section-button ' + cls, 'aria-label':label,
       title:label, onclick:action}, [symbol && icon(symbol), !cls.includes('is-icon') && node('span',{text:label})]);
   }
-  function image(item) {
-    const holder = node('span', {class:'lf-profile-list-image'});
+  function releaseListImages(host) {
+    host.querySelectorAll('[data-profile-list-media]').forEach(holder => {
+      if (holder._portraitMedia) holder._portraitMedia.dispose(true);
+      holder._portraitMedia=null;
+    });
+  }
+  function replacePanel(state, ...children) {
+    releaseListImages(state.panel);
+    state.panel.replaceChildren(...children);
+  }
+  function image(item, retryHost) {
+    const holder = node('span', {class:'lf-profile-list-image','data-profile-list-media':'1'});
+    if (root.LorefyPortraitMedia) {
+      if (retryHost) {
+        holder.tabIndex=-1;
+        holder.setAttribute('role','group'); holder.setAttribute('aria-label',clean(item.name));
+      }
+      holder._portraitMedia=root.LorefyPortraitMedia.mount(holder,{
+        src:safeImage(item.image),alt:clean(item.name),initials:clean(item.name).slice(0,1),
+        language:doc.documentElement.lang,loading:'lazy',retry:!!retryHost,
+        retryHost:retryHost===true?holder:retryHost || undefined,
+        focusTarget:() => holder.parentElement?.querySelector('.lf-profile-list-select:not(:disabled),.lf-profile-rank-tools button:not(:disabled)') || holder
+      });
+      return holder;
+    }
     if (safeImage(item.image)) {
       const img = node('img', {src:item.image, alt:'', loading:'lazy', decoding:'async'});
       img.addEventListener('error',() => { img.remove(); holder.textContent = clean(item.name).slice(0,1); });
@@ -168,7 +191,7 @@
     return node('header',{class:'lf-profile-section-head'},[node('h2',{text:title}), action]);
   }
   function notice(state, message) {
-    state.panel.replaceChildren(node('p',{class:'lf-profile-section-empty',role:'status',text:message}));
+    replacePanel(state,node('p',{class:'lf-profile-section-empty',role:'status',text:message}));
   }
   function current(state) { return state.page.isConnected && states.get(state.page)===state &&
     (!state.owner || account(root.localStorage) === state.profile.id); }
@@ -176,7 +199,7 @@
     return (folder.kind==='characters'?t.characters:t.works)+' · '+folder.items.length+' '+t.count;
   }
   function folderArtwork(folder, cls) {
-    return node('span',{class:cls,'aria-hidden':'true',style:'--list-art-count:'+Math.max(1,Math.min(4,folder.items.length))},folder.items.slice(0,4).map(image));
+    return node('span',{class:cls,'aria-hidden':'true',style:'--list-art-count:'+Math.max(1,Math.min(4,folder.items.length))},folder.items.slice(0,4).map(item=>image(item)));
   }
   function folderVisibility(folder, t) {
     return node('span',{class:'lf-profile-folder-visibility'},[
@@ -187,7 +210,7 @@
     const back = folder.items.length>1 ? folder.items.slice(1,4) : folder.items.slice(0,1);
     return node('span',{class:'lf-profile-folder-stage','aria-hidden':'true'},[
       node('span',{class:'lf-profile-folder-back'}),
-      node('span',{class:'lf-profile-folder-fan','data-count':back.length},back.map(image)),
+      node('span',{class:'lf-profile-folder-fan','data-count':back.length},back.map(item=>image(item))),
       node('span',{class:'lf-profile-folder-pocket'},[
         folder.items.length && image(folder.items[0]),
         node('span',{class:'lf-profile-folder-pocket-label'},[
@@ -199,7 +222,7 @@
   }
   function chooseListKind(state) {
     const t=text(), en=doc.documentElement.lang==='en';
-    state.panel.replaceChildren(contentHeader(t.create,button(t.back,doc.documentElement.lang==='en'?'arrow-left':'arrow-right',()=>renderFolders(state))),
+    replacePanel(state,contentHeader(t.create,button(t.back,doc.documentElement.lang==='en'?'arrow-left':'arrow-right',()=>renderFolders(state))),
       node('p',{class:'lf-profile-list-kind-intro',text:en?'What would you like to collect?':'ما الذي تريد جمعه؟'}));
     [['works','book-open',en?'Work list':'قائمة أعمال',en?'Collect, rank and share your reads':'اجمع أعمالك ورتّبها وشاركها'],
      ['characters','users',en?'Character list':'قائمة شخصيات',en?'Your favourite characters, ranked':'شخصياتك المفضلة بالترتيب']].forEach(([kind,symbol,title,description])=>{
@@ -209,7 +232,7 @@
   }
   function renderFolders(state) {
     const t = text(), rows = foldersFor(state.profile,state.owner,root.localStorage).concat(state.owner && root.LorefyLegacyLists ? root.LorefyLegacyLists.rows() : []);
-    state.panel.replaceChildren(contentHeader(t.tabs[1],state.owner && button(t.create,'plus',() => chooseListKind(state),'is-profile-create')));
+    replacePanel(state,contentHeader(t.tabs[1],state.owner && button(t.create,'plus',() => chooseListKind(state),'is-profile-create')));
     if (!state.owner && state.profile.profile_lists_error) {
       state.panel.appendChild(node('p',{role:'status',class:'lf-profile-section-empty',text:t.unavailable}));
       state.panel.appendChild(button(t.retry,'rotate-cw',() => reloadFolders(state)));
@@ -259,7 +282,7 @@
       node('div',{class:'lf-profile-list-meta'},[node('span',{text:folderMeta(folder,t)}),folderVisibility(folder,t)]),
       node('h2',{'data-no-translate':'true',dir:'auto',text:folder.name})
     ]);
-    state.panel.replaceChildren(node('div',{class:'lf-profile-list-toolbar'},[
+    replacePanel(state,node('div',{class:'lf-profile-list-toolbar'},[
       button(t.back,doc.documentElement.lang==='en'?'arrow-left':'arrow-right',() => {
         renderFolders(state);
         const card = Array.from(state.panel.querySelectorAll('[data-profile-folder]')).find(el => el.dataset.profileFolder===folder.id);
@@ -275,7 +298,7 @@
       'data-no-translate':'true',dir:'auto',text:folder.description}));
     const list = node('ol',{class:'lf-profile-ranked-list'});
     folder.items.forEach((item,index) => list.appendChild(node('li',{class:index<3?'is-leading-rank':''},[
-      node('span',{class:'lf-profile-list-rank',text:String(index+1)}), image(item),
+      node('span',{class:'lf-profile-list-rank',text:String(index+1)}), image(item,true),
       node('strong',{'data-no-translate':'true',dir:'auto',text:item.name})
     ])));
     state.panel.appendChild(list);
@@ -320,7 +343,7 @@
     const t = text(), draft = source ? JSON.parse(JSON.stringify(source)) :
       {id:root.crypto.randomUUID(),name:'',description:'',kind:initialKind||'characters',isPublic:true,items:[]};
     const editOwner = state.profile.id;
-    state.panel.replaceChildren(contentHeader(source?t.edit:t.newTitle,button(t.cancel,'x',() => renderFolders(state))));
+    replacePanel(state,contentHeader(source?t.edit:t.newTitle,button(t.cancel,'x',() => renderFolders(state))));
     const form = node('form',{class:'lf-profile-list-editor'});
     const name = node('input',{type:'text',maxlength:100,required:'required',value:draft.name,'aria-label':t.name,placeholder:t.name,dir:'auto','data-no-translate':'true'});
     const description = node('textarea',{maxlength:500,'aria-label':t.description,placeholder:t.description,dir:'auto','data-no-translate':'true'});
@@ -345,7 +368,7 @@
     function updateResultSelection(){resultUpdates.forEach(update=>update());}
     function selectedRows(focusIndex, action) {
       const retained=new Set(draft.items);
-      selectedNodes.forEach((entry,item)=>{if(!retained.has(item)){entry.row.remove();selectedNodes.delete(item);}});
+      selectedNodes.forEach((entry,item)=>{if(!retained.has(item)){releaseListImages(entry.row);entry.row.remove();selectedNodes.delete(item);}});
       draft.items.forEach((item,index) => {
         let entry=selectedNodes.get(item);
         if(!entry){
@@ -358,11 +381,12 @@
           const up=button(t.up+' · '+item.name,'arrow-up',()=>move(-1),'is-icon');
           const down=button(t.down+' · '+item.name,'arrow-down',()=>move(1),'is-icon');
           const rank=node('span',{class:'lf-profile-list-rank'});
-          const row=node('li',{},[rank,image(item),node('strong',{'data-no-translate':'true',dir:'auto',text:item.name}),
+          const row=node('li');
+          row.append(rank,image(item,row),node('strong',{'data-no-translate':'true',dir:'auto',text:item.name}),
             node('div',{class:'lf-profile-rank-tools'},[up,down,button(t.removeItem+' · '+item.name,'x',()=>{
               const at=draft.items.indexOf(item);if(at<0)return;
               draft.items.splice(at,1);selectedRows(Math.min(at,draft.items.length-1),2);updateResultSelection();
-            },'is-icon')])]);
+            },'is-icon')]));
           entry={row,rank,up,down};selectedNodes.set(item,entry);hydrate(row);
         }
         entry.rank.textContent=String(index+1);entry.up.disabled=index===0;entry.down.disabled=index===draft.items.length-1;
@@ -370,7 +394,7 @@
       });
       kind.disabled=draft.items.length>0;status.textContent=draft.items.length+' / 50';
       if(action!=null){
-        const row=selected.children[focusIndex],controls=row&&row.querySelectorAll('button');
+        const row=selected.children[focusIndex],controls=row&&row.querySelector('.lf-profile-rank-tools').querySelectorAll('button');
         const control=controls&&(controls[action].disabled?controls[action===0?1:0]:controls[action]);
         (control||search).focus();
       }
@@ -403,7 +427,7 @@
     }
     function searchResults() {
       resultUpdates=[];
-      results.replaceChildren();
+      releaseListImages(results); results.replaceChildren();
       const q=search.value.trim().toLowerCase();
       if (activeWork && draft.kind==='characters') {
         const matches=cast.filter(character => [character.name,character.latin,character.nameAr].join(' ').toLowerCase().includes(q)).slice(0,40);
@@ -411,11 +435,13 @@
           const entry={id:String(character.id || character.key || character.name),workId:String(activeWork.id),
             name:character.name || character.latin,image:safeImage(character.image || character.img || character.cover)};
           const chosen=draft.items.some(item=>item.id===entry.id && item.workId===entry.workId);
-          const result=button(entry.name,chosen?'check':'plus',() => add(entry),'is-result');
-          result.setAttribute('data-no-translate','true'); result.disabled=chosen;
-          resultUpdates.push(()=>{const selected=draft.items.some(item=>item.id===entry.id&&item.workId===entry.workId);result.disabled=selected;
-            if(result.dataset.selected!==String(selected)){result.dataset.selected=String(selected);const symbol=result.querySelector('i,svg');if(symbol)symbol.replaceWith(icon(selected?'check':'plus'));hydrate(result);}});
-          result.dataset.selected=String(chosen);result.prepend(image(entry)); results.appendChild(result);
+          const select=button(entry.name,chosen?'check':'plus',() => add(entry),'lf-profile-list-select');
+          const result=node('div',{class:'lf-profile-section-button is-result','data-no-translate':'true'},[image(entry,true),select]);
+          select.disabled=chosen;
+          result.addEventListener('click',event=>{if(!event.target.closest('button'))select.click();});
+          resultUpdates.push(()=>{const selected=draft.items.some(item=>item.id===entry.id&&item.workId===entry.workId);select.disabled=selected;
+            if(result.dataset.selected!==String(selected)){result.dataset.selected=String(selected);const symbol=select.querySelector('i,svg');if(symbol)symbol.replaceWith(icon(selected?'check':'plus'));hydrate(select);}});
+          result.dataset.selected=String(chosen); results.appendChild(result);
         });
         if (castBusy) results.appendChild(node('p',{text:t.loading,role:'status'}));
         else if (!matches.length) results.appendChild(node('p',{text:t.noResults}));
@@ -427,12 +453,14 @@
             [work.title,work.titleEnglish,work.ar].join(' ').toLowerCase().includes(q)) : library[work.id]).slice(0,25);
         matches.forEach(work => {
           const entry=workItem(work), chosen=draft.kind==='works' && draft.items.some(item=>item.id===entry.id);
-          const result=button(entry.name,chosen?'check':draft.kind==='characters'?'chevron-left':'plus',
-            () => draft.kind==='characters'?chooseWork(work):add(entry),'is-result');
-          result.setAttribute('data-no-translate','true'); result.disabled=chosen;
-          resultUpdates.push(()=>{const selected=draft.kind==='works'&&draft.items.some(item=>item.id===entry.id);result.disabled=selected;
-            if(result.dataset.selected!==String(selected)){result.dataset.selected=String(selected);const symbol=result.querySelector('i,svg');if(symbol)symbol.replaceWith(icon(selected?'check':draft.kind==='characters'?'chevron-left':'plus'));hydrate(result);}});
-          result.dataset.selected=String(chosen);result.prepend(image(entry)); results.appendChild(result);
+          const select=button(entry.name,chosen?'check':draft.kind==='characters'?'chevron-left':'plus',
+            () => draft.kind==='characters'?chooseWork(work):add(entry),'lf-profile-list-select');
+          const result=node('div',{class:'lf-profile-section-button is-result','data-no-translate':'true'},[image(entry,true),select]);
+          select.disabled=chosen;
+          result.addEventListener('click',event=>{if(!event.target.closest('button'))select.click();});
+          resultUpdates.push(()=>{const selected=draft.kind==='works'&&draft.items.some(item=>item.id===entry.id);select.disabled=selected;
+            if(result.dataset.selected!==String(selected)){result.dataset.selected=String(selected);const symbol=select.querySelector('i,svg');if(symbol)symbol.replaceWith(icon(selected?'check':draft.kind==='characters'?'chevron-left':'plus'));hydrate(select);}});
+          result.dataset.selected=String(chosen); results.appendChild(result);
         });
         if (!matches.length) results.appendChild(node('p',{text:q?t.noResults:t.chooseWork}));
       }
@@ -493,7 +521,7 @@
   function renderPosts(state) {
     if (state.tab!=='posts') return;
     const t=text(), community=root.LorefyCommunity;
-    state.panel.replaceChildren(contentHeader(t.tabs[2],state.owner && community && button(t.write,'feather',() => community.openComposer(),'is-profile-create')));
+    replacePanel(state,contentHeader(t.tabs[2],state.owner && community && button(t.write,'feather',() => community.openComposer(),'is-profile-create')));
     const feed=node('div',{class:'lf-profile-post-feed'});
     if(state.reviewRoots)state.reviewRoots.forEach(root=>root.unmount());state.reviewRoots=[];
     const reviews=root.LorefyProfileReviews ? root.LorefyProfileReviews(state.profile,state.owner) : [];
@@ -519,6 +547,7 @@
   function selectTab(state, tab, focus=false) {
     state.tab=tab; state.page.dataset.profileSection=tab;
     state.panel.hidden=tab==='overview';
+    if (tab==='overview') releaseListImages(state.panel);
     state.buttons.forEach((button,index) => {
       const chosen=['overview','lists','posts'][index]===tab;
       button.setAttribute('aria-selected',String(chosen)); button.tabIndex=chosen?0:-1;
@@ -546,7 +575,7 @@
     });
   }
   function sync() {
-    liveStates.forEach(state=>{if(!state.page.isConnected){if(state.reviewRoots)state.reviewRoots.forEach(renderer=>renderer.unmount());liveStates.delete(state);}});
+    liveStates.forEach(state=>{if(!state.page.isConnected){releaseListImages(state.panel);if(state.reviewRoots)state.reviewRoots.forEach(renderer=>renderer.unmount());liveStates.delete(state);}});
     const lang=doc.documentElement.lang;
     doc.querySelectorAll('.lf-profile-page').forEach(page => {
       const owner=!page.classList.contains('lf-public-profile-page');
@@ -558,6 +587,7 @@
       compactMetrics(page);
       let state=states.get(page);
       if (state && state.profile.id!==profile.id) {
+        releaseListImages(state.panel);
         if(state.reviewRoots)state.reviewRoots.forEach(renderer=>renderer.unmount());
         state.bar.remove(); state.panel.remove(); states.delete(page); liveStates.delete(state); state=null;
       }
@@ -568,7 +598,7 @@
         state={page,profile,owner,bar,panel,tab:'overview',lang,posts:[],postRequest:0,postLoaded:false};
         states.set(page,state);liveStates.add(state);
         state.buttons=['overview','lists','posts'].map((tab,index) => {
-          const b=node('button',{type:'button',role:'tab',id:id+'-'+tab,'aria-controls':tab==='overview'?id+'-overview':panel.id,
+          const b=node('button',{type:'button',role:'tab',id:id+'-'+tab,'aria-controls':tab==='overview'?id+'-overview-panel':panel.id,
             onclick:() => selectTab(state,tab)},[icon(['layout-grid','folder-heart','feather'][index]),node('span',{text:text().tabs[index]})]);
           b.addEventListener('keydown',event => {
             const keys=['ArrowLeft','ArrowRight','Home','End'];

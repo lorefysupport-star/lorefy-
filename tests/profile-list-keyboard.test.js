@@ -51,6 +51,7 @@ function harness(lang = 'en') {
   api.saveFolder(storage, 'owner', folder);
   const scope = {...api, doc, root: {localStorage:storage}, node, button,
     text: () => api.labels(lang), current: () => true, hydrate() {}, image: () => node('span'),
+    replacePanel: (state,...children) => state.panel.replaceChildren(...children), releaseListImages() {},
     catalog: () => [], read: (store, key, fallback) => JSON.parse(store.getItem(key) || 'null') || fallback,
     contentHeader: (title, action) => node('header', {}, [action]),
     renderFolders: () => panel.replaceChildren(node('p', {text:'Lists'}))};

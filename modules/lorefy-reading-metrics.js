@@ -55,15 +55,28 @@
     return {progressById:next, changedIds:changedIds, pendingIds:pendingIds};
   }
 
+  function withReviewCompletion(review,work,metadata) {
+    return Object.assign({},review,{completedByReview:true,completionProgress:review.completionProgress?
+      normalizeProgress(review.completionProgress):completionCheckpoint(work,null,metadata)});
+  }
+
   function calculateReadingMetrics(options) {
     options = options || {};
     var library = options.library && typeof options.library === "object" ? options.library : {};
     var progressById = options.progressById && typeof options.progressById === "object" ? options.progressById : {};
     var totals = { chapters: 0, pages: 0, volumes: 0 };
     var minutes = 0;
+    var earned={};
+    (Array.isArray(options.reviews)?options.reviews:[]).forEach(function(review){
+      if(!review || review.completedByReview!==true || !review.completionProgress || !(review.userId==='me'||options.ownerId&&review.userId===options.ownerId))return;
+      var id=String(review.mid||'');if(!id)return;
+      var value=normalizeProgress(review.completionProgress),old=earned[id]||normalizeProgress(null);
+      earned[id]={chapter:Math.max(old.chapter,value.chapter),page:Math.max(old.page,value.page),volume:Math.max(old.volume,value.volume)};
+    });
 
-    Object.keys(library).forEach(function (id) {
+    Array.from(new Set(Object.keys(library).concat(Object.keys(earned)))).forEach(function (id) {
       var progress = normalizeProgress(progressById[id]);
+      if(earned[id])['chapter','page','volume'].forEach(function(unit){progress[unit]=Math.max(progress[unit],earned[id][unit]);});
       totals.chapters += progress.chapter;
       totals.pages += progress.page;
       totals.volumes += progress.volume;
@@ -110,6 +123,7 @@
     checkpointChapterDelta: checkpointChapterDelta,
     effectiveProgress: effectiveProgress,
     completionCheckpoint: completionCheckpoint,
+    withReviewCompletion: withReviewCompletion,
     initializeCompletedProgress: initializeCompletedProgress,
     calculateReadingMetrics: calculateReadingMetrics,
     sanitizeLegacyProgress: sanitizeLegacyProgress

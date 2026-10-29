@@ -64,6 +64,7 @@ test('personalization is one settings entry, then a labelled dialog with theme a
   assert.ok(nodes.some(n=>n.props.role==='dialog'&&n.props['aria-modal']===true));
   const theme=nodes.find(n=>n.props['aria-label']==='Dark');assert.ok(theme);theme.props.onClick();assert.deepEqual(changed,['dark']);
   assert.ok(nodes.some(n=>n.props['data-layout']==='spines'));
+  assert.ok(nodes.some(n=>n.props['data-layout']==='showcase'&&n.children.includes('Showcase')));
   assert.ok(nodes.some(n=>n.props.role==='switch'&&n.props['aria-label']==='Reduce motion'));
 });
 

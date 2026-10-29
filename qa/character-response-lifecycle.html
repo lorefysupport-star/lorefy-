@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lorefy character response QA</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;background:#202123;color:#fff;font:14px system-ui}main{display:grid;grid-template-columns:280px 440px;gap:24px;justify-content:center;padding:24px}aside{display:grid;align-content:start;gap:12px}button{min-height:44px;font:inherit;border:1px solid #777;border-radius:6px;cursor:pointer}iframe{width:440px;height:956px;border:0;background:#090909;border-radius:20px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px monospace}@media(max-width:800px){main{display:block;padding:12px}aside{margin-bottom:12px}iframe{width:100%;height:850px}}
+</style>
+<main>
+  <aside>
+    <h1>Character response QA</h1>
+    <p>Local demo only. Controlled responses, no real account writes.</p>
+    <button id="stall">Stall next response body</button>
+    <button id="empty">Return empty next response</button>
+    <button id="malformed">Return malformed next response</button>
+    <button id="retry">Retry current search</button>
+    <button id="late">Resolve old body</button>
+    <pre id="status" role="status">Loading demo...</pre>
+  </aside>
+  <iframe id="app" title="Lorefy demo under test" src="../index.html?preview=demo&amp;demo=ready&amp;route=profile&amp;decorationLab=1&amp;adaptive=1&amp;fresh=character-response-qa"></iframe>
+</main>
+<script>
+  const frame=document.getElementById('app'),status=document.getElementById('status');
+  let next='real',count=0,late=[],ready=false;
+  const report=text=>{status.textContent=text+'\nControlled requests: '+count+'\nPending test bodies: '+late.length;};
+  frame.addEventListener('load',()=>{
+    const app=frame.contentWindow,original=app.fetch.bind(app);
+    app.fetch=function(url,init){
+      let query='';try{query=JSON.parse(init&&init.body||'{}').query||'';}catch{}
+      if(next==='real'||!query.includes('characters(search:$search'))return original(url,init);
+      const mode=next;next='real';count++;
+      report(mode==='stall'?'Response headers delivered; body deliberately stalled.':mode==='malformed'?'Malformed character list delivered.':'Valid empty response delivered.');
+      return Promise.resolve({ok:true,status:200,json:()=>mode==='stall'?new Promise(resolve=>{late.push(resolve);report('Response headers delivered; body deliberately stalled.');}):Promise.resolve({data:{Page:{characters:mode==='malformed'?{}:[]}}})});
+    };
+    ready=true;report('Ready. Open favorite characters, then arm a controlled response.');
+  });
+  document.getElementById('stall').onclick=()=>{if(!ready)return;next='stall';report('Next character response will stall after its headers.');};
+  document.getElementById('empty').onclick=()=>{if(!ready)return;next='empty';report('Next character response will finish with valid empty results.');};
+  document.getElementById('malformed').onclick=()=>{if(!ready)return;next='malformed';report('Next character response will contain an invalid object instead of a list.');};
+  document.getElementById('retry').onclick=()=>{
+    const input=frame.contentDocument.querySelector('.lf-top-characters-editor-search');
+    if(input)input.dispatchEvent(new frame.contentWindow.Event('input',{bubbles:true}));
+  };
+  document.getElementById('late').onclick=()=>{const pending=late.splice(0);pending.forEach(resolve=>resolve({data:{Page:{characters:[]}}}));report('Old controlled body resolved; expired search must remain unchanged.');};
+</script>
+</html>

@@ -79,25 +79,25 @@
     seeds: ["manhua", "chinese comic"]
   };
   TYPE_CONFIG[TYPES.lightNovel] = {
-    providers: ["anilist", "openLibrary", "googleBooks"],
+    providers: ["anilist", "openLibrary", "googleBooks", "bookBrainz", "wikidata"],
     anilist: { country: "JP", formats: ["NOVEL"] },
     seeds: ["light novel", "japanese light novel"]
   };
   TYPE_CONFIG[TYPES.webNovel] = {
-    providers: ["anilist", "openLibrary", "googleBooks"],
+    providers: ["anilist", "openLibrary", "googleBooks", "bookBrainz", "wikidata"],
     anilist: { formats: ["NOVEL"] },
     seeds: ["web novel", "web fiction", "online fiction"]
   };
   TYPE_CONFIG[TYPES.novel] = {
-    providers: ["openLibrary", "googleBooks"],
+    providers: ["openLibrary", "googleBooks", "bookBrainz", "wikidata"],
     seeds: ["fiction novel", "literary fiction", "fantasy novel"]
   };
   TYPE_CONFIG[TYPES.book] = {
-    providers: ["openLibrary", "googleBooks"],
+    providers: ["openLibrary", "googleBooks", "bookBrainz", "wikidata"],
     seeds: ["nonfiction", "science history philosophy", "popular books"]
   };
   TYPE_CONFIG[TYPES.comics] = {
-    providers: ["openLibrary", "googleBooks"],
+    providers: ["openLibrary", "googleBooks", "bookBrainz", "wikidata", "gcd"],
     seeds: ["comics", "comic books", "graphic novel"]
   };
 
@@ -300,6 +300,7 @@
     var fallback = firstSupportedTitle(work.ar) || firstSupportedTitle(work.title) || firstSupportedTitle(work.searchTitle) || firstSupportedTitle(work.titleEnglish) || firstSupportedTitle(work.english);
     if (!fallback) return null;
     var normalized = Object.assign({}, work);
+    if(['BookBrainz','Wikidata','Grand Comics Database'].includes(normalized._apiSource)){normalized.st='غير معروفة';normalized.metadataOnly=true;}
     if (!isSupportedDisplayTitle(normalized.title)) normalized.title = fallback;
     if (!isSupportedDisplayTitle(normalized.ar)) normalized.ar = fallback;
     return normalized;
@@ -415,6 +416,7 @@
     var pop = Math.max(0, Number(doc.want_to_read_count) || ratingCount);
     return finishWork({
       id: "ol-" + olid,
+      openLibraryId:olid,catalogLevel:'work',sourceUrl:'https://openlibrary.org/works/'+olid,
       title: title,
       ar: title,
       altTitles: title === baseTitle ? [] : [baseTitle],
@@ -453,7 +455,13 @@
     var pop = Number(info.ratingsCount) || 100;
     return finishWork({
       id: "gb-" + item.id,
+      googleBooksId:String(item.id),catalogLevel:'edition',sourceUrl:'https://books.google.com/books?id='+encodeURIComponent(item.id),
+      isbn13:(info.industryIdentifiers||[]).find(function(p){return p.type==='ISBN_13';})?.identifier||'',
       title: title,
+      subtitle: normalizeSpaces(info.subtitle),
+      publisher: normalizeSpaces(info.publisher),
+      language: normalizeSpaces(info.language),
+      publicationDate: normalizeSpaces(info.publishedDate),
       ar: title,
       auth: Array.isArray(info.authors) ? info.authors.slice(0, 2).join(", ") : "",
       yr: year ? Number(year[0]) : 0,
@@ -574,17 +582,18 @@
     var ttl = Number(cfg.cacheTtlMs) || DEFAULT_TTL_MS;
     var cached = cache();
     var batch = cached.batches[key];
+    if(batch&&batch.partial)ttl=Math.min(ttl,60000);
     if (!batch || !Array.isArray(batch.ids) || Date.now() - Date.parse(batch.at || "0") > ttl) return null;
     var byId = new Map(cached.works.map(function (work) { return [String(work.id), work]; }));
     return batch.ids.map(function (id) { return byId.get(String(id)); }).filter(Boolean);
   }
 
-  function rememberBatch(key, works) {
+  function rememberBatch(key, works, partial) {
     var cached = cache();
     var byId = new Map(cached.works.map(function (work) { return [String(work.id), work]; }));
     uniqueWorks(works).forEach(function (work) { byId.set(String(work.id), work); });
     cached.works = Array.from(byId.values());
-    cached.batches[key] = { at: nowIso(), ids: uniqueWorks(works).map(function (work) { return String(work.id); }) };
+    cached.batches[key] = { at: nowIso(), ids: uniqueWorks(works).map(function (work) { return String(work.id); }), partial:!!partial };
     saveCache(cached);
   }
 
@@ -627,14 +636,21 @@
   }
 
   function fetchJson(url, options) {
-    return global.fetch(url, Object.assign({ cache: "no-store", headers: headers() }, options || {})).then(function (response) {
-      if (!response.ok) throw new Error("api catalog fetch " + response.status);
-      return response.json();
+    var controller=global.AbortController?new global.AbortController():null;
+    var timeout=Math.max(20,Math.min(20000,Number(config().requestTimeoutMs)||18000)),timer;
+    var deadline=new Promise(function(_resolve,reject){timer=global.setTimeout(function(){if(controller)controller.abort();reject(new Error('Catalog source timeout'));},timeout);});
+    var request=Promise.resolve().then(function(){return global.fetch(url,Object.assign({cache:'no-store',headers:headers()},options||{},controller?{signal:controller.signal}:{}));}).then(function(response){
+      if(!response.ok)throw new Error('api catalog fetch '+response.status);return response.json();
     });
+    return Promise.race([request,deadline]).finally(function(){global.clearTimeout(timer);});
   }
 
   function enabledProvider(name) {
     var providerConfig = config().providers || {};
+    if(['bookBrainz','wikidata','gcd'].includes(name)){
+      var local=config().openSourcesPreview===true&&['localhost','127.0.0.1'].includes(global.location&&global.location.hostname);
+      if(!global.LorefyOpenCatalog||(!local&&!(config().openSourcesEnabled===true&&config().openSourcesProxyUrl)))return false;
+    }
     return providerConfig[name] !== false;
   }
 
@@ -715,7 +731,7 @@
     params.set("q", q);
     params.set("maxResults", String(Math.min(40, perPage || cfg.perPage || DEFAULT_PER_PAGE)));
     params.set("startIndex", String(((page || 1) - 1) * Math.min(40, perPage || cfg.perPage || DEFAULT_PER_PAGE)));
-    params.set("printType", type === TYPES.comics ? "magazines" : "books");
+    params.set("printType", type === TYPES.comics ? "all" : "books");
     params.set("projection", "lite");
     if (cfg.googleBooksApiKey) params.set("key", cfg.googleBooksApiKey);
     return fetchJson(providerUrl("googlebooks", "https://www.googleapis.com/books/v1/volumes", params)).then(function (json) {
@@ -745,8 +761,23 @@
     anilist: fetchAniList,
     openLibrary: fetchOpenLibrary,
     googleBooks: fetchGoogleBooks,
-    mangaDex: fetchMangaDex
+    mangaDex: fetchMangaDex,
+    bookBrainz: function(q,t,p,n,o){return openClient().bookBrainz(q,o&&o.generalSearch?'All':t,p,n);},
+    wikidata: function(q,t,p,n,o){return openClient().wikidata(q,o&&o.generalSearch?'All':t,p,n);},
+    gcd: function(q,t,p,n,o){return openClient().gcd(q,o&&o.generalSearch?'All':t,p,n);}
   };
+  var openCatalogClient;
+  function openClient(){
+    if(!openCatalogClient)openCatalogClient=global.LorefyOpenCatalog.create({fetchJson:fetchJson,urlFor:function(provider,url){
+      if(config().openSourcesEnabled&&config().openSourcesProxyUrl){
+        var parsed=new URL(url),params=new URLSearchParams(parsed.search);
+        if(provider==='bookbrainz')params.set('path',parsed.pathname);
+        if(provider==='gcd'){params.set('q',decodeURIComponent(parsed.pathname.split('/name/')[1].replace(/\/$/,'')));}
+        return String(config().openSourcesProxyUrl).replace(/\/$/,'')+'/'+provider+'?'+params;
+      }
+      return providerUrl(provider,url.split('?')[0],new URLSearchParams(new URL(url).search));
+    }});return openCatalogClient;
+  }
 
   function chooseProviders(type, requestedProviders) {
     var providers = requestedProviders && requestedProviders.length ? requestedProviders : typeConfig(type).providers;
@@ -759,6 +790,8 @@
     if (cfg.enabled === false || !global.fetch) return Promise.resolve({ added: 0, works: [], skipped: "disabled" });
     type = normalizeType(type || readRouteType() || TYPES.manga);
     var providers = chooseProviders(type, options.providers);
+    if(options.isCurrent&&!options.isCurrent())return Promise.resolve({works:[],providers:providers,cancelled:true});
+    if(!providers.length)return Promise.resolve({works:[],providers:[],skipped:'no-providers'});
     var page = Number(options.page) || 1;
     var key = batchKey(kind, type, query, providers, page);
     var cached = options.force ? null : cachedBatch(key);
@@ -772,6 +805,7 @@
         return [{ _providerError: provider, error: error && error.message || String(error) }];
       });
     })).then(function (groups) {
+      if(options.isCurrent&&!options.isCurrent())return {works:[],providers:providers,cancelled:true};
       var errors = [];
       var works = [];
       groups.forEach(function (group) {
@@ -781,7 +815,7 @@
         });
       });
       works = uniqueWorks(works);
-      if (works.length || !errors.length) rememberBatch(key, works);
+      if (works.length || !errors.length) rememberBatch(key, works, errors.length>0);
       var summary = applyWorks(works, { type: type, query: query });
       if (errors.length) {
         write(STATE_KEY, Object.assign({}, state(), { status: "partial", errors: errors }));
@@ -803,6 +837,7 @@
         if (next >= types.length || options && options.isCurrent && !options.isCurrent()) return Promise.resolve();
         var selected = types[next++];
         var jobOptions=Object.assign({},options,{generalSearch:true,providers:selected===TYPES.lightNovel||selected===TYPES.webNovel?["anilist"]:undefined});
+        if(selected===TYPES.book&&typeof global!=='undefined'&&global.LorefyOpenCatalog)jobOptions.providers=['openLibrary','googleBooks','bookBrainz','wikidata','gcd'];
         return runProviders("search-all", query, selected, jobOptions).then(function(result){results.push(result);return worker();});
       }
       return Promise.all([worker(),worker()]).then(function(){
@@ -998,7 +1033,7 @@
       global.addEventListener("lorefy:route-change", cancelInputSearch);
       global.addEventListener("lorefy:routechange", cancelInputSearch);
     }
-    global.document.addEventListener("input", function (event) {
+    function handleCatalogInput(event) {
       if (!config().autoSearch) return;
       var target = event && event.target;
       // Only the work catalog search opts into remote enrichment. Drafts and
@@ -1022,7 +1057,11 @@
           notifyInputSearch(value,type,failed?"error":"ready");
         }).catch(function(){if(current())notifyInputSearch(value,type,"error");});
       }, SEARCH_DEBOUNCE_MS);
-    }, true);
+    }
+    global.document.addEventListener("input", handleCatalogInput, true);
+    // The lazy module may finish loading after the reader has already typed.
+    var existing=global.document.querySelector&&global.document.querySelector('.lf-search-box input,[data-lorefy-catalog-search] input,input[data-lorefy-catalog-search]');
+    if(existing&&existing.value)handleCatalogInput({target:existing});
   }
 
   function hookHistory() {
@@ -1041,6 +1080,8 @@
 
   var routeTimer = null;
   function scheduleRouteLoad() {
+    var active=global.document&&global.document.querySelector&&global.document.querySelector('.lf-search-box input,[data-lorefy-catalog-search] input,input[data-lorefy-catalog-search]');
+    if(active&&normalizeSpaces(active.value||'').length>=3&&active.closest&&!active.closest('[data-lorefy-search-local]'))return;
     cancelInputSearch();
     var cfg = config();
     if (!cfg.autoWarmCurrentType) return;

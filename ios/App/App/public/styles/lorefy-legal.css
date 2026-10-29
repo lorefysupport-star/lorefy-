@@ -1,108 +1,95 @@
 :root {
   color-scheme: light dark;
-  --page-bg: #f5f5f7;
-  --page-surface: #ffffff;
-  --page-text: #1d1d1f;
-  --page-muted: #6e6e73;
-  --page-line: #dedee3;
-  --page-accent: #6d28d9;
+  --ui-bg: #f7f9f9;
+  --ui-ink: #17282b;
+  --ui-secondary: #344d51;
+  --ui-muted: #566c70;
+  --ui-line: #dce5e6;
+  --ui-action: #006f6b;
+  --ui-glass-fill: rgba(255,255,255,.9);
+  --ui-glass-ink: #17282b;
+  --ui-glass-backdrop: blur(26px) saturate(150%);
+  --ui-glass-reflection: linear-gradient(132deg,rgba(255,255,255,.12),transparent 55%);
 }
-
 @media (prefers-color-scheme: dark) {
-  :root {
-    --page-bg: #0c0b10;
-    --page-surface: #18161d;
-    --page-text: #f5f5f7;
-    --page-muted: #a7a4ad;
-    --page-line: #333039;
-    --page-accent: #b77af4;
+  :root:not([data-legal-theme]) {
+    --ui-bg: #0b0b0c;
+    --ui-ink: #f5f5f7;
+    --ui-secondary: #d8d8dc;
+    --ui-muted: #a8a8b0;
+    --ui-line: #303033;
+    --ui-action: #f0f0f3;
+    --ui-glass-fill: rgba(23,23,25,.9);
+    --ui-glass-ink: #f5f5f7;
   }
 }
-
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
-  background: var(--page-bg);
-  color: var(--page-text);
-  font-family: "Readex Pro", "Cairo", system-ui, sans-serif;
-  direction: rtl;
+  background: var(--ui-bg);
+  background-image: var(--ui-page-wash);
+  color: var(--ui-ink);
+  font-family: "Readex Pro", "Cairo", -apple-system, system-ui, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0;
 }
-
-.legal-shell {
-  width: min(100%, 720px);
-  min-height: 100vh;
-  margin: 0 auto;
-  background: var(--page-surface);
-}
-
+.legal-shell { width: min(100%, 760px); min-height: 100vh; margin: 0 auto; }
 .legal-nav {
   position: sticky;
   top: 0;
   z-index: 2;
-  min-height: 58px;
+  min-height: 68px;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 9px 18px;
-  border-bottom: 1px solid var(--page-line);
-  background: color-mix(in srgb, var(--page-surface) 90%, transparent);
-  backdrop-filter: blur(16px);
+  padding: calc(12px + env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 12px max(20px, env(safe-area-inset-left));
+  border-bottom: 1px solid var(--ui-line);
+  background: var(--ui-glass-reflection), var(--ui-glass-fill);
+  -webkit-backdrop-filter: var(--ui-glass-backdrop);
+  backdrop-filter: var(--ui-glass-backdrop);
+  color: var(--ui-glass-ink);
 }
-
 .legal-back {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  min-height: 44px;
+  flex: 0 0 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--page-line);
+  border: 1px solid var(--ui-line);
   border-radius: 50%;
-  color: var(--page-text);
+  color: inherit;
   text-decoration: none;
-  font-size: 23px;
+  font-size: 28px;
+  line-height: 1;
+  background: var(--ui-glass-fill);
 }
-
-.legal-nav strong { font-size: 15px; }
-
-.legal-content { padding: 28px 22px 64px; }
-
-.legal-content h1 {
-  margin: 0 0 8px;
-  font-size: clamp(25px, 7vw, 36px);
-  letter-spacing: 0;
+.legal-back span { display: inline-block; direction: ltr; unicode-bidi: isolate; transform: scaleX(-1); }
+.legal-back:active { opacity: .7; }
+.legal-nav strong { font-size: 16px; font-weight: 600; }
+.legal-content {
+  padding: 32px max(24px, env(safe-area-inset-right)) calc(64px + env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  outline: none;
 }
-
-.legal-updated {
-  margin: 0 0 28px;
-  color: var(--page-muted);
-  font-size: 12px;
-}
-
-.legal-content section {
-  padding: 20px 0;
-  border-top: 1px solid var(--page-line);
-}
-
-.legal-content h2 {
-  margin: 0 0 9px;
-  font-size: 18px;
-  letter-spacing: 0;
-}
-
-.legal-content p,
-.legal-content li {
-  color: var(--page-muted);
-  font-size: 14px;
-  line-height: 1.9;
-}
-
+.legal-content h1 { margin: 0 0 12px; font-size: 30px; line-height: 1.5; font-weight: 700; }
+.legal-content .legal-updated { margin: 0 0 24px; color: var(--ui-muted); font-size: 13px; line-height: 1.8; }
+.legal-content section { padding: 24px 0; border-top: 1px solid var(--ui-line); }
+.legal-content h2 { margin: 0 0 12px; font-size: 19px; line-height: 1.7; scroll-margin-top: calc(100px + env(safe-area-inset-top)); }
+.legal-content p, .legal-content li { font-size: 16px; line-height: 2; color: var(--ui-secondary); }
 .legal-content p { margin: 0; }
-.legal-content ul { margin: 10px 0 0; padding-right: 21px; }
-.legal-content a { color: var(--page-accent); font-weight: 700; }
-
-.legal-note {
-  padding: 14px;
-  border-right: 3px solid var(--page-accent);
-  background: color-mix(in srgb, var(--page-accent) 7%, var(--page-surface));
-}
+.legal-content ul { margin: 12px 0 0; padding-inline-start: 24px; }
+.legal-content :is(h1,h2,p,li,a) { overflow-wrap: anywhere; }
+.legal-content a { color: var(--ui-action); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.legal-content a[href^="mailto:"] { direction: ltr; unicode-bidi: isolate; }
+.legal-toc { margin-bottom: 24px; border-block: 1px solid var(--ui-line); }
+.legal-toc summary { min-height: 44px; padding: 12px 0; cursor: pointer; font-weight: 600; }
+.legal-toc ol { padding-inline-start: 24px; margin: 0 0 12px; }
+.legal-toc a { display: block; min-height: 44px; padding: 6px 4px; }
+.legal-content .legal-note { padding: 16px; border-inline-start: 3px solid var(--ui-action); background: var(--ui-fill-soft); }
+:is(a,summary,h2):focus-visible { outline: 2px solid var(--ui-action); outline-offset: 4px; border-radius: 4px; }
+.legal-skip { position: fixed; inset-block-start: -120px; inset-inline-start: 20px; z-index: 3; padding: 12px 16px; color: var(--ui-ink); background: var(--ui-bg); }
+.legal-skip:focus { inset-block-start: calc(12px + env(safe-area-inset-top)); }
+@media (min-width: 800px) { .legal-content { padding-inline: 40px; padding-top: 40px; } }
+@media (prefers-reduced-transparency: reduce) { .legal-nav { background: var(--ui-bg); color: var(--ui-ink); backdrop-filter: none; } }
+@media (prefers-contrast: more) { .legal-nav { background: var(--ui-bg); color: var(--ui-ink); } .legal-content a { text-decoration-thickness: 2px; } }
+@media (forced-colors: active) { .legal-nav, .legal-back { border: 1px solid CanvasText; } }

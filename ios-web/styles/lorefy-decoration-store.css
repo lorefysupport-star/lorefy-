@@ -1,0 +1,130 @@
+/* Retail surfaces only. Profile artwork, eligibility and the shared motion clock stay unchanged. */
+.lf-shop-dialog.lf-store-v2 { width:100%; max-width:1040px; margin-inline:auto; background:var(--ui-bg); }
+.lf-store-v2 *, .lf-store-v2 *::before, .lf-store-v2 *::after { letter-spacing:0; }
+.lf-store-v2 .lf-shop-header { padding:calc(var(--nc-top,0px) + 12px) 20px 14px; border-bottom:1px solid var(--ui-line); }
+.lf-store-v2 .lf-shop-brand-mark { font-size:10px; gap:5px; color:var(--ui-muted); }
+.lf-store-v2 .lf-shop-header h1 { font-size:20px; line-height:1.5; margin:1px 0 0; }
+.lf-app .lf-store-v2 .lf-shop-icon-button { border:0; border-radius:50%; background:var(--ui-fill); color:var(--ui-ink); }
+.lf-store-v2 .lf-shop-body { padding-bottom:20px; scrollbar-width:none; }
+.lf-store-v2 .lf-shop-tabs { position:sticky; top:0; z-index:8; margin:0; padding:10px 20px; border:0; border-bottom:1px solid var(--ui-line); border-radius:0; background:var(--ui-bg); gap:4px; }
+.lf-app .lf-store-v2 .lf-shop-tabs button { min-height:42px; border-radius:6px; background:transparent; color:var(--ui-muted); border:0; font-size:13px; padding:8px 4px; gap:5px; }
+.lf-app .lf-store-v2 .lf-shop-tabs button[aria-pressed='true'] { background:var(--ui-fill); color:var(--ui-ink); box-shadow:none; font-weight:750; }
+.lf-store-v2 .lf-shop-tabs button span { font-size:11px; padding:1px 4px; background:var(--ui-surface); }
+.lf-store-v2 .lf-store-search { display:flex; align-items:center; gap:10px; min-height:46px; margin:18px 20px 10px; padding-inline:12px 4px; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-fill); color:var(--ui-muted); }
+.lf-store-v2 .lf-store-search > svg { flex:none; }
+.lf-store-v2 .lf-store-search input { min-width:0; flex:1; width:100%; border:0; background:transparent; color:var(--ui-ink); font:inherit; font-size:15px; height:44px; padding:0; outline:none; box-shadow:none; }
+.lf-store-v2 .lf-store-search:focus-within { outline:2px solid var(--ui-action); outline-offset:2px; }
+.lf-store-v2 .lf-store-search input::placeholder { color:var(--ui-muted); opacity:1; }
+.lf-app .lf-store-v2 .lf-store-search button { flex:none; display:grid; place-items:center; width:40px; height:44px; border:0; background:none; color:var(--ui-muted); padding:0; }
+.lf-store-v2 .lf-store-families { display:flex; gap:4px; margin:0 20px 18px; overflow:auto; scrollbar-width:none; border-bottom:1px solid var(--ui-line); }
+.lf-app .lf-store-v2 .lf-store-families button { flex:1 0 auto; min-height:44px; padding:8px; border:0; border-bottom:2px solid transparent; border-radius:0; background:none; color:var(--ui-muted); font-size:13px; white-space:nowrap; }
+.lf-app .lf-store-v2 .lf-store-families button[aria-pressed='true'] { border-bottom-color:var(--ui-action); color:var(--ui-action); font-weight:750; }
+.lf-store-v2 .lf-store-arrivals { margin:0 0 22px; padding-block:0 14px; border-bottom:1px solid var(--ui-line); }
+.lf-store-v2 .lf-store-arrivals header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 20px 12px; }
+.lf-store-v2 .lf-store-arrivals header span { font-size:11px; color:var(--ui-action); font-weight:650; }
+.lf-store-v2 .lf-store-arrivals h2 { font-size:21px; line-height:1.5; }
+.lf-app .lf-store-v2 .lf-store-arrivals header button { min-height:44px; display:flex; gap:2px; align-items:center; padding:0; border:0; background:none; color:var(--ui-action); font-size:13px; white-space:nowrap; }
+.lf-store-v2 .lf-store-arrival-art { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; padding:18px 20px 14px; background:#202425; color:#f6f7f7; }
+.lf-app .lf-store-v2 .lf-store-arrival-art button { min-width:0; display:flex; align-items:center; flex-direction:column; border:0; padding:0; background:none; color:inherit; font-size:12px; line-height:1.6; }
+.lf-store-v2 .lf-store-arrival-art .lf-shop-avatar { width:min(100%,116px); height:auto; aspect-ratio:1; margin:0 auto 10px; }
+.lf-store-v2 .lf-store-arrival-art button > span { min-height:38px; max-width:100%; overflow-wrap:anywhere; }
+.lf-store-v2 .lf-store-results { display:flex; align-items:center; justify-content:space-between; padding:0 20px; gap:10px; }
+.lf-store-v2 .lf-store-results > div { display:flex; align-items:baseline; gap:8px; min-width:0; }
+.lf-store-v2 .lf-store-results h2 { font-size:19px; line-height:1.5; }
+.lf-store-v2 .lf-store-results span { font-size:12px; color:var(--ui-muted); white-space:nowrap; }
+.lf-store-v2 .lf-store-results select { min-width:90px; max-width:45%; min-height:44px; font:inherit; font-size:13px; color:var(--ui-ink); background:var(--ui-bg); border:1px solid var(--ui-line); border-radius:6px; padding:6px 8px; }
+.lf-store-v2 .lf-store-free-filter { display:flex; width:fit-content; align-items:center; gap:8px; min-height:44px; margin:2px 20px 6px; font-size:12px; color:var(--ui-muted); cursor:pointer; }
+.lf-store-v2 .lf-store-free-filter input { width:17px; height:17px; accent-color:var(--ui-action); }
+.lf-store-v2 .lf-shop-products { grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; padding:0 20px 24px; }
+.lf-store-v2 .lf-shop-product { border:1px solid var(--ui-line); border-radius:8px; overflow:hidden; box-shadow:none; background:var(--ui-surface); }
+.lf-app .lf-store-v2 .lf-store-product-open { display:block; width:100%; border:0; padding:0; margin:0; border-radius:0; background:none; color:var(--ui-ink); text-align:start; }
+.lf-app .lf-store-v2 .lf-shop-product-preview { position:relative; display:flex; align-items:center; justify-content:center; width:100%; aspect-ratio:1.08; padding:18px 8px; overflow:hidden; background:#202425; }
+.lf-store-v2 .lf-shop-product-preview::after { display:none; }
+.lf-app .lf-store-v2 .lf-shop-product-preview > .lf-shop-avatar { width:min(144px,calc(100% - 18px)); height:auto; aspect-ratio:1; margin:0; transform:none; }
+.lf-store-v2 .lf-store-product-badge { position:absolute; top:8px; inset-inline-start:8px; padding:2px 6px; background:#f4f6f5; color:#253331; border-radius:4px; font-size:10px; line-height:1.6; font-weight:650; }
+.lf-store-v2 .lf-shop-product-copy { display:flex; flex-direction:column; min-height:112px; padding:10px 12px 12px; }
+.lf-store-v2 .lf-store-product-family { font-size:11px; line-height:1.5; color:var(--ui-muted); }
+.lf-store-v2 .lf-shop-product-copy > strong { min-height:42px; margin-top:4px; font-size:14px; line-height:1.5; font-weight:750; overflow-wrap:anywhere; }
+.lf-store-v2 .lf-store-product-meta { display:flex; align-items:center; gap:8px; margin-top:auto; min-height:28px; padding-inline-end:34px; color:var(--ui-action); font-size:12px; font-weight:650; }
+.lf-store-v2 .lf-store-product-meta > span:last-child { display:flex; font-size:0; }
+.lf-app .lf-store-v2 .lf-shop-wishlist { top:auto; bottom:5px; inset-inline-end:5px; width:44px; height:44px; border:0; border-radius:50%; color:var(--ui-muted); background:transparent; }
+.lf-store-v2 .lf-shop-wishlist[aria-pressed='true'] svg { color:var(--ui-action); fill:color-mix(in srgb,var(--ui-action) 18%,transparent); }
+.lf-store-v2 .lf-store-equipped { margin:0 20px 22px; padding-bottom:14px; border-bottom:1px solid var(--ui-line); }
+.lf-store-v2 .lf-store-equipped h2 { font-size:16px; margin-bottom:10px; }
+.lf-store-v2 .lf-store-equipped > div { display:flex; flex-wrap:wrap; gap:8px; }
+.lf-app .lf-store-v2 .lf-store-equipped button { display:flex; align-items:center; gap:10px; min-height:64px; padding:6px 8px; color:var(--ui-ink); border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-surface); text-align:start; }
+.lf-store-v2 .lf-store-equipped .lf-shop-avatar { width:50px; height:50px; margin:0; }
+.lf-store-v2 .lf-store-equipped button > span { font-size:13px; }
+.lf-store-v2 .lf-store-equipped button > svg { color:var(--ui-action); }
+.lf-store-v2 .lf-shop-empty { display:flex; flex-direction:column; align-items:center; gap:12px; padding:46px 24px; color:var(--ui-muted); text-align:center; }
+.lf-store-v2 .lf-shop-empty h3 { font-size:17px; color:var(--ui-ink); }
+.lf-app .lf-store-v2 .lf-shop-empty button { min-height:44px; padding:8px 14px; border:1px solid var(--ui-line); border-radius:6px; background:var(--ui-fill); color:var(--ui-action); }
+.lf-store-v2 .lf-shop-preview-stage { padding:12px 20px 0; background:var(--ui-fill); }
+.lf-store-v2 .lf-shop-preview-caption { justify-content:flex-start; padding:0 0 10px; font-size:12px; color:var(--ui-muted); }
+.lf-store-v2 .lf-store-profile { --store-preview-top:118px; position:relative; width:100%; max-width:400px; height:400px; margin:0 auto; padding:0; border:1px solid var(--ui-line); border-radius:18px; background:var(--ui-bg); isolation:isolate; overflow:hidden; }
+.lf-store-v2 .lf-store-preview-toolbar { position:absolute; inset-inline:24px; top:16px; height:38px; display:flex; align-items:center; justify-content:space-between; color:var(--ui-muted); font-size:13px; }
+.lf-store-v2 .lf-store-profile .lf-shop-profile-banner { position:absolute; inset-inline:0; top:var(--store-preview-top); width:100%; height:144px; background-position:center; mask-image:linear-gradient(#000 65%,transparent); -webkit-mask-image:linear-gradient(#000 65%,transparent); }
+.lf-store-v2 .lf-store-profile .lf-decoration-page-border.is-preview { inset:0; height:100%; border:0; padding:0; background:none !important; z-index:3; }
+.lf-store-v2 .lf-store-profile .lf-shop-profile-identity { position:absolute; top:calc(var(--store-preview-top) + 68px); inset-inline:24px; margin:0; text-align:center; }
+.lf-store-v2 .lf-store-profile .lf-shop-avatar { width:108px; height:108px; margin:0 auto; z-index:4; }
+.lf-store-v2 .lf-store-profile .lf-shop-profile-identity h2 { font-size:19px; line-height:1.5; margin:8px 0 0; }
+.lf-store-v2 .lf-store-profile .lf-shop-profile-identity p { font-size:12px; line-height:1.6; margin:3px 0 0; }
+.lf-store-v2 .lf-store-profile .lf-shop-profile-identity .lf-shop-profile-bio { display:none; }
+.lf-store-v2 .lf-store-profile:not([data-preview-ready]) > :not(.lf-store-preview-loading) { visibility:hidden; }
+.lf-store-v2 .lf-store-preview-loading { position:absolute; inset:0; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; color:var(--ui-muted); font-size:13px; }
+.lf-store-v2 .lf-store-profile[data-preview-ready] .lf-store-preview-loading { display:none; }
+.lf-store-v2 .lf-store-preview-error { display:none; }
+.lf-store-v2 .lf-store-profile[data-preview-failed] .lf-store-preview-error { position:absolute; inset-inline:24px; bottom:12px; z-index:6; display:flex; align-items:center; justify-content:space-between; font-size:12px; color:var(--ui-muted); background:var(--ui-bg); }
+.lf-app .lf-store-v2 .lf-store-preview-error button { min-height:44px; border:0; padding:6px; color:var(--ui-action); background:none; }
+.lf-store-v2 .lf-shop-detail { padding:20px; border-top:0; }
+.lf-store-v2 .lf-shop-detail-title { gap:8px; }
+.lf-store-v2 .lf-shop-detail-title h2 { font-size:22px; line-height:1.5; }
+.lf-store-v2 .lf-shop-detail-title p { font-size:12px; }
+.lf-store-v2 .lf-shop-parts { grid-template-columns:repeat(auto-fit,minmax(64px,1fr)); gap:6px; margin-top:18px; }
+.lf-app .lf-store-v2 .lf-shop-parts button { min-height:70px; border-radius:6px; border:1px solid var(--ui-line); background:var(--ui-fill); color:var(--ui-muted); padding:8px 3px; font-size:11px; }
+.lf-app .lf-store-v2 .lf-shop-parts button[aria-pressed='true'] { border-color:var(--ui-action); background:var(--ui-action); color:var(--ui-bg); }
+.lf-store-v2 .lf-shop-includes { display:flex; gap:8px; padding:14px 0; margin-top:10px; border:0; border-radius:0; border-bottom:1px solid var(--ui-line); background:none; font-size:12px; }
+.lf-store-v2 .lf-shop-footer { padding:12px 20px calc(12px + var(--nc-bottom,0px)); border-top:1px solid var(--ui-line); box-shadow:none; }
+.lf-store-v2 .lf-shop-order-summary { padding-bottom:10px; }
+.lf-store-v2 .lf-shop-order-summary strong { font-size:13px; }
+.lf-store-v2 .lf-shop-order-summary small { font-size:11px; line-height:1.5; }
+.lf-store-v2 .lf-shop-order-summary > span { font-size:17px; }
+.lf-app .lf-store-v2 .lf-shop-footer .lf-shop-apply { min-height:48px; border-radius:8px; font-size:14px; }
+.lf-app .lf-store-v2 .lf-shop-remove { margin-top:6px; min-height:40px; color:var(--ui-muted); }
+.lf-store-v2 :is(input,select):focus-visible { outline:2px solid var(--ui-action); outline-offset:2px; }
+@media (hover:hover) {
+  .lf-app .lf-store-v2 .lf-store-product-open:hover { background:var(--ui-fill); }
+  .lf-store-v2 .lf-store-product-open:hover .lf-shop-avatar { transform:translateY(-2px); }
+}
+@media (max-width:350px) {
+  .lf-store-v2 .lf-shop-header { padding-inline:14px; }
+  .lf-store-v2 .lf-shop-tabs { padding-inline:14px; }
+  .lf-store-v2 .lf-shop-tabs button { font-size:12px; }
+  .lf-store-v2 .lf-store-search { margin-inline:14px; }
+  .lf-store-v2 .lf-store-families { margin-inline:14px; }
+  .lf-store-v2 .lf-store-families button { font-size:12px; padding-inline:6px; }
+  .lf-store-v2 .lf-store-arrivals header { padding-inline:14px; }
+  .lf-store-v2 .lf-store-arrival-art { padding-inline:14px; gap:5px; }
+  .lf-store-v2 .lf-store-arrival-art button { font-size:11px; }
+  .lf-store-v2 .lf-store-results { padding-inline:14px; }
+  .lf-store-v2 .lf-store-results > div { gap:5px; }
+  .lf-store-v2 .lf-store-results h2 { font-size:17px; }
+  .lf-store-v2 .lf-store-free-filter { margin-inline:14px; }
+  .lf-store-v2 .lf-shop-products { padding-inline:14px; gap:10px; }
+  .lf-store-v2 .lf-shop-product-copy { padding-inline:9px; }
+  .lf-store-v2 .lf-shop-product-copy > strong { font-size:13px; }
+  .lf-store-v2 .lf-shop-preview-stage { padding-inline:12px; }
+  .lf-store-v2 .lf-shop-detail { padding-inline:14px; }
+  .lf-store-v2 .lf-shop-footer { padding-inline:14px; }
+}
+@media (min-width:760px) {
+  .lf-store-v2 .lf-shop-products { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .lf-store-v2 .lf-store-arrival-art { grid-template-columns:repeat(3,180px); justify-content:center; }
+  .lf-store-v2 .lf-store-arrival-art .lf-shop-avatar { width:128px; }
+  .lf-store-v2[data-store-screen='detail'] .lf-shop-body { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-content:start; }
+  .lf-store-v2 .lf-shop-preview-stage { padding-bottom:20px; }
+  .lf-store-v2 .lf-shop-detail { padding-top:40px; }
+}
+@media (min-width:420px) {
+  .lf-store-v2 .lf-store-profile .lf-shop-profile-identity .lf-shop-profile-bio { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; margin-top:9px; }
+}

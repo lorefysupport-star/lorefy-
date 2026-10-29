@@ -70,6 +70,22 @@
       action:'accent','on-action':'onAccent',selected:'accentSoft',rating:'rating',danger:'red',success:'green',gold:'gold',nav:'navBg',bar:'barBg',shadow:'shadow'};
     var result={};Object.keys(map).forEach(function(key){result['--ui-'+key]=p[map[key]];});
     result['--ui-action-pressed']=p.accentPressed || mix(p.accent,p.onAccent==='#FFFFFF'||p.onAccent==='#fff'?'#000000':'#ffffff',.12);
+    // Keep literal palette aliases: cinema screens can override --ui-* locally.
+    if(normalizeMode(mode)!=='dark')Object.keys(map).forEach(function(key){result['--custom-'+key]=p[map[key]];});
+    // Bound glass labels against both backdrop extremes and the reflection peak.
+    var dark=isDark(mode),alpha=dark?.68:.62,glare=dark?.12:.44;
+    var glassSamples=['#000000',dark?'#7a7a7a':'#ffffff'].flatMap(function(backdrop){
+      var base=mix(backdrop,p.card,alpha);
+      return [mix(base,'#ffffff',.015),mix(base,'#ffffff',glare)];
+    });
+    result['--ui-glass-fill']='rgba('+rgb(p.card).join(',')+','+alpha+')';
+    result['--ui-glass-sheet']='rgba('+rgb(p.card).join(',')+',.86)';
+    result['--ui-glass-ink']=readable(p.text,glassSamples,dark);
+    result['--ui-glass-secondary']=readable(p.text2,glassSamples,dark);
+    result['--ui-glass-action']=readable(p.accent,glassSamples,dark);
+    result['--ui-glass-backdrop']='blur(26px) saturate(150%) brightness('+(dark?'.48':'1.05')+')';
+    result['--ui-glass-reflection']='linear-gradient(132deg,rgba(255,255,255,'+glare+'),rgba(255,255,255,.015) 43%,rgba(255,255,255,'+(dark?'.07':'.2')+'))';
+    result['--ui-page-wash']='linear-gradient(145deg,'+mix(p.bg,p.accent,.16)+' 0%,'+p.bg+' 48%,'+mix(p.bg,p.fill2,.7)+' 100%)';
     return result;
   }
 

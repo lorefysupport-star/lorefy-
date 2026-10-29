@@ -114,7 +114,7 @@
       selected.forEach(function (w) { seen.add(idOf(w)); });
       shelves.push({key: key, title: title, subtitle: subtitle || '', items: selected});
     }
-    add('for-you', en ? 'Picked for you' : 'مختارة لك', candidates, '', 6, 1);
+    add('for-you', en ? 'You might like' : 'قد يعجبك', candidates, '', 6, 1);
     var genreKeys=new Set();
     (preferences.genres || []).forEach(function (genre, index) {
       var key=normalized(genreLabel(genre,'en'));
@@ -196,6 +196,72 @@
       seen.add(String(work.id)); return true;
     }).slice().sort(function (a, b) { return count(b.pop) - count(a.pop) || Number(!!b.rec) - Number(!!a.rec); }).slice(0, 3);
   }
+  function featureArtwork(work,cover,rightsSafe) {
+    return root.LorefyHomeCinema ? root.LorefyHomeCinema.artwork(work,cover,rightsSafe) : cover;
+  }
+  function searchKey(value) {
+    return String(value||'').normalize('NFKD').toLowerCase().replace(/[\u0300-\u036f\u064b-\u065f\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/[^\p{L}\p{N}]+/gu,' ').replace(/\s+/g,' ').trim();
+  }
+  function searchEditionKey(work) {
+    var type=formatKey(work.type),title=searchKey(work.title),author=searchKey(work.auth||work.author);
+    if(!['كتاب','رواية','لايت نوفل','ويب نوفل'].includes(type)||!title||work.volumeNumber||work.issueNumber)return '';
+    var description=[work.title,work.subtitle].concat(work.genres||[]).join(' ');
+    if(/\b(?:vol(?:ume)?|part|book|issue)\.?\s*#?\s*[0-9٠-٩]|\b(?:adaptation|abridged|collection|omnibus|study guide|graphic novel)\b|اقتباس|مختصر|مجلد|الجزء|مجموعة كاملة/i.test(description))return '';
+    var linked=String(work.openLibraryId||'');
+    if(/^OL\d+W$/.test(linked))return 'ol:'+type+':'+linked;
+    // Cached records without a known subtitle cannot safely identify editions.
+    if(work.catalogLevel!=='edition'||typeof work.subtitle!=='string'||!author||/^(unknown|various authors|غير معروف|مجهول)$/.test(author))return '';
+    return 'edition:'+JSON.stringify([type,title,author,searchKey(work.subtitle)]);
+  }
+  function groupSearchEditions(rows, previous) {
+    var groups=[],byKey=new Map(),seen=new Set();
+    (rows||[]).forEach(function(work){
+      if(!work||work.id==null||seen.has(String(work.id)))return;
+      seen.add(String(work.id));var family=searchEditionKey(work),key=family||'id:'+String(work.id),group=byKey.get(key);
+      if(!group){group={key:key,work:work,items:[],eligible:!!family};byKey.set(key,group);groups.push(group);}
+      group.items.push(work);
+    });
+    var ordered=[];
+    (previous||[]).forEach(function(old){var group=byKey.get(old.key);if(!group)return;group.work=group.items.find(function(work){return String(work.id)===String(old.work.id);})||group.work;ordered.push(group);byKey.delete(old.key);});
+    return ordered.concat(groups.filter(function(group){return byKey.has(group.key);}));
+  }
+  function editionDescription(work) {
+    return [work.publisher,work.publicationDate||work.yr,work.language,work.isbn13&&'ISBN '+work.isbn13,work._apiSource||work.source].filter(Boolean).join(' · ');
+  }
+  function editionCountLabel(count, language) {
+    if(language==='en')return count+(count===1?' edition':' editions');
+    return count===1?'طبعة واحدة':count===2?'طبعتان':count+(count%100>=3&&count%100<=10?' طبعات':' طبعة');
+  }
+  function rankSearchResults(rows,query) {
+    var q=searchKey(query),tokens=q.split(' ');
+    function score(work){
+      var titles=[work.title,work.ar].filter(Boolean).map(searchKey),aliases=[].concat(work.altTitles||[],work.aliases||[]).slice(0,40).filter(value=>typeof value==='string').map(searchKey),author=searchKey(work.auth||work.author);
+      if(titles.includes(q))return 0;if(aliases.includes(q))return 1;
+      if(titles.some(title=>title.startsWith(q)))return 2;
+      if(titles.some(title=>tokens.every(token=>title.includes(token))))return 3;
+      return author===q?4:author.startsWith(q)?5:6;
+    }
+    if(!q)return (rows||[]).slice();
+    return (rows||[]).map(work=>({work:work,score:score(work)})).sort((a,b)=>a.score-b.score||count(b.work.pop)-count(a.work.pop)||String(a.work.id).localeCompare(String(b.work.id))).map(row=>row.work);
+  }
+  function searchPhase(query,total,busy,failed){
+    if(!String(query||'').trim())return 'idle';if(searchKey(query).length<2)return 'short';
+    if(busy)return total?'updating':'loading';if(failed)return total?'partial':'error';return total?'ready':'empty';
+  }
+  function searchHistoryKey(owner){return 'lorefy.search.recent.v1.'+encodeURIComponent(String(owner||''));}
+  function readSearchHistory(storage,owner,now){
+    if(!owner)return [];now=now==null?Date.now():now;
+    try{var rows=JSON.parse(storage.getItem(searchHistoryKey(owner))||'[]');return (Array.isArray(rows)?rows:[]).filter(row=>row&&typeof row.q==='string'&&row.q.length<=120&&searchKey(row.q).length>=2&&['media','people','lists'].includes(row.mode)&&typeof row.format==='string'&&row.format.length<=60&&Number.isFinite(row.at)&&row.at<=now+300000&&now-row.at<30*86400000).slice(0,8);}catch(_){return [];}
+  }
+  function saveSearchHistory(storage,owner,entry,now){
+    var rows=readSearchHistory(storage,owner,now),q=String(entry&&entry.q||'').trim().replace(/\s+/g,' ').slice(0,120);
+    if(!owner||searchKey(q).length<2)return rows;
+    var mode=['media','people','lists'].includes(entry.mode)?entry.mode:'media',format=mode==='media'?String(entry.format||'').slice(0,60):'';
+    var next={q:q,mode:mode,format:format,at:now==null?Date.now():now};
+    rows=[next].concat(rows.filter(row=>!(searchKey(row.q)===searchKey(q)&&row.mode===mode&&formatKey(row.format)===formatKey(format)))).slice(0,8);
+    try{storage.setItem(searchHistoryKey(owner),JSON.stringify(rows));}catch(_){}return rows;
+  }
+  function clearSearchHistory(storage,owner){try{storage.removeItem(searchHistoryKey(owner));}catch(_){}return [];}
   // Transient navigation only; preferences and library still use their existing owner storage.
   var viewMemory = new Map();
   function Explore(props) {
@@ -214,15 +280,32 @@
     var slideState = React.useState(0), slide = slideState[0], setSlide = slideState[1];
     var searchState=React.useState(!!saved.searchActive),searchActive=searchState[0],setSearchActive=searchState[1];
     var searchQueryState=React.useState(saved.searchQuery||''),searchQuery=searchQueryState[0],setSearchQuery=searchQueryState[1];
+    var searchFiltersState=React.useState(saved.searchFilters||{format:'',genres:[],status:'all',sort:'relevance'}),searchFilters=searchFiltersState[0],setSearchFilters=searchFiltersState[1];
+    var searchLimitState=React.useState(36),searchLimit=searchLimitState[0],setSearchLimit=searchLimitState[1];
+    var attemptState=React.useState(0),searchAttempt=attemptState[0],setSearchAttempt=attemptState[1];
+    var historyStorage;try{historyStorage=root.sessionStorage;}catch(_){}
+    var recentState=React.useState(readSearchHistory(historyStorage,owner)),recent=recentState[0],setRecent=recentState[1];
+    var searchRetry=React.useRef(0);
+    var pendingState=React.useState(false),searchPending=pendingState[0],setSearchPending=pendingState[1];
     var inputTimer=React.useRef(null), searchInput=React.useRef(null);
     React.useEffect(function(){return function(){root.clearTimeout(inputTimer.current);};},[]);
     var searchModeState=React.useState(saved.searchMode||'media'),searchMode=searchModeState[0],setSearchMode=searchModeState[1];
+    React.useEffect(function(){searchRetry.current++;setSearchLimit(36);return function(){searchRetry.current++;};},[owner,searchQuery,searchMode,searchFilters]);
+    var previousOwner=React.useRef(owner);
+    React.useEffect(function(){
+      if(previousOwner.current===owner)return;
+      previousOwner.current=owner;searchRetry.current++;root.clearTimeout(inputTimer.current);
+      if(searchInput.current)searchInput.current.value='';
+      setSearchQuery('');setSearchMode('media');setSearchActive(false);setRemoteSearch(null);
+      setSearchFilters({format:'',genres:[],status:'all',sort:'relevance'});setRecent(readSearchHistory(historyStorage,owner));
+    },[owner]);
     var readersState=React.useState([]),readers=readersState[0],setReaders=readersState[1];
     var searchStatusState=React.useState(''),searchStatus=searchStatusState[0],setSearchStatus=searchStatusState[1];
     var remoteState=React.useState(null),remoteSearch=remoteState[0],setRemoteSearch=remoteState[1];
     React.useEffect(function(){function changed(event){setRemoteSearch(event.detail);}root.addEventListener('lorefy:catalog-remote-search',changed);return function(){root.removeEventListener('lorefy:catalog-remote-search',changed);};},[]);
-    var remoteMatches=remoteSearch&&formatKey(remoteSearch.type)===formatKey(format||"All")&&normalized(remoteSearch.query)===normalized(format?query:searchQuery),remoteBusy=remoteMatches&&remoteSearch.status==='searching',remoteFailed=remoteMatches&&remoteSearch.status==='error';
-    var pauseState = React.useState(false), paused = pauseState[0], setPaused = pauseState[1];
+    var activeSearchType=format||searchFilters.format||props.allType;
+    var remoteMatches=remoteSearch&&formatKey(remoteSearch.type)===formatKey(activeSearchType)&&normalized(remoteSearch.query)===normalized(format?query:searchQuery),remoteBusy=remoteMatches&&remoteSearch.status==='searching',remoteFailed=remoteMatches&&remoteSearch.status==='error';
+    var pauseState = React.useState(true), paused = pauseState[0], setPaused = pauseState[1];
     var reducedMotion = !!(root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches);
     var errorState = React.useState(false), loadError = errorState[0], setLoadError = errorState[1];
     var opener = React.useRef(null), panel = React.useRef(null), screen = React.useRef(null), sentinel = React.useRef(null), hero = React.useRef(null), busy = React.useRef(false);
@@ -233,10 +316,10 @@
       return component ? h(component, {size:size || 19, 'aria-hidden':true}) : null;
     };
     function remember(scroll) {
-      viewMemory.set(owner, {mode:mode, format:format, query:query, sort:sort, limit:limit,searchActive:searchActive,searchQuery:searchQuery,searchMode:searchMode, scroll:scroll == null ? screen.current && screen.current.scrollTop || 0 : scroll});
+      viewMemory.set(owner, {mode:mode, format:format, query:query, sort:sort, limit:limit,searchActive:searchActive,searchQuery:searchQuery,searchMode:searchMode,searchFilters:searchFilters, scroll:scroll == null ? screen.current && screen.current.scrollTop || 0 : scroll});
       if (viewMemory.size > 8) viewMemory.delete(viewMemory.keys().next().value);
     }
-    React.useEffect(function () { remember(); }, [owner, mode, format, query, sort, limit,searchActive,searchQuery,searchMode]);
+    React.useEffect(function () { remember(); }, [owner, mode, format, query, sort, limit,searchActive,searchQuery,searchMode,searchFilters]);
     React.useLayoutEffect(function () { if (screen.current) screen.current.scrollTop = saved.scroll; }, []);
     function top() { if (screen.current) screen.current.scrollTop = 0; }
     React.useEffect(function () {
@@ -281,7 +364,7 @@
     function more() {
       var currentState = root.LorefyCatalogLoader && root.LorefyCatalogLoader.state();
       if (busy.current || currentState && currentState.searchError) return;
-      if (limit < results.length) { setLimit(function (n) { return n + 60; }); return; }
+      if (limit < resultCount) { setLimit(function (n) { return n + 60; }); return; }
       if (catalogState && catalogState.hasMore && root.LorefyCatalogLoader) {
         busy.current = true; setLoadError(false);
         root.LorefyCatalogLoader.loadMore().catch(function () { setLoadError(true); }).finally(function () {
@@ -292,13 +375,14 @@
     function retryMediaSearch() {
       var loader = root.LorefyCatalogLoader;
       if(remoteFailed&&root.LorefyApiCatalog){
-        setRemoteSearch({query:format?query:searchQuery,type:format||'All',status:'searching'});
-        root.LorefyApiCatalog.search(format?query:searchQuery,format||'All',{force:true}).then(function(result){var failed=result&&(result.error||result.providerErrors&&result.providers&&result.providers.length&&result.providerErrors.length===result.providers.length);setRemoteSearch({query:format?query:searchQuery,type:format||'All',status:failed?'error':'ready'});});return;
+        var request=++searchRetry.current,text=format?query:searchQuery,type=activeSearchType;
+        setRemoteSearch({query:text,type:type,status:'searching'});
+        Promise.resolve().then(function(){return root.LorefyApiCatalog.search(text,type,{force:true});}).then(function(result){if(request!==searchRetry.current)return;var failed=result&&(result.error||result.providerErrors&&result.providers&&result.providers.length&&result.providerErrors.length===result.providers.length);setRemoteSearch({query:text,type:type,status:failed?'error':'ready'});}).catch(function(){if(request===searchRetry.current)setRemoteSearch({query:text,type:type,status:'error'});});return;
       }
       if (!loader) return;
       setLoadError(false);
       if (catalogState && catalogState.searchError && loader.retrySearch) loader.retrySearch();
-      else Promise.resolve(loader.loadFormat(format || props.allType, format ? query : searchQuery)).catch(function () { setLoadError(true); });
+      else Promise.resolve(loader.loadFormat(activeSearchType, format ? query : searchQuery)).catch(function () { setLoadError(true); });
     }
     React.useEffect(function () {
       if (!format || !sentinel.current || !root.IntersectionObserver) return;
@@ -316,24 +400,51 @@
       return function () { root.clearInterval(timer); };
     }, [features.length, paused, format, mode,searchActive,reducedMotion]);
     React.useEffect(function(){
-      if(!searchActive||searchMode!=='media')return;
-      var timer=root.setTimeout(function(){var loader=root.LorefyCatalogLoader;if(loader&&loader.loadFormat)loader.loadFormat(props.allType,searchQuery).catch(function(){setLoadError(true);});},180);
-      return function(){root.clearTimeout(timer);};
-    },[searchActive,searchQuery,searchMode]);
+      setSearchPending(false);
+      if(!searchActive||searchMode!=='media'||searchKey(searchQuery).length<2)return;
+      var active=true;setLoadError(false);setSearchPending(true);
+      var timer=root.setTimeout(function(){var loader=root.LorefyCatalogLoader;Promise.resolve().then(function(){return loader&&loader.loadFormat?loader.loadFormat(searchFilters.format||props.allType,searchQuery):null;}).catch(function(){if(active)setLoadError(true);}).finally(function(){if(active)setSearchPending(false);});},180);
+      return function(){active=false;root.clearTimeout(timer);};
+    },[searchActive,searchQuery,searchMode,searchFilters.format]);
     React.useEffect(function(){
       setReaders([]);setSearchStatus('');
-      if(!searchActive||searchMode!=='people'||searchQuery.trim().length<2)return;
+      if(!searchActive||searchMode!=='people'||searchKey(searchQuery).length<2)return;
+      setSearchStatus('loading');
       var active=true,timer=root.setTimeout(function(){
         setSearchStatus('loading');var discovery=root.LorefyUserDiscovery;
-        Promise.resolve(discovery&&discovery.buildDirectory?discovery.buildDirectory().search(searchQuery):[]).then(function(rows){if(active){setReaders(rows);setSearchStatus('');}}).catch(function(){if(active)setSearchStatus('error');});
+        Promise.resolve().then(function(){if(!discovery||!discovery.buildDirectory)throw Error('Reader directory unavailable');return discovery.buildDirectory().search(searchQuery,{strict:!!(root.LorefyBackend&&root.LorefyBackend.mode==='live')});}).then(function(rows){if(active){setReaders(rows);setSearchStatus('');}}).catch(function(){if(active)setSearchStatus('error');});
       },180);
       return function(){active=false;root.clearTimeout(timer);};
-    },[owner,searchActive,searchQuery,searchMode]);
-    var mediaResults=React.useMemo(function(){return searchActive&&searchMode==='media'&&searchQuery.trim()?catalogResults(props.getCatalog?props.getCatalog():ranked,props.allType,searchQuery,'popular',props.ratingScore):[];},[searchActive,searchMode,searchQuery,revision,ranked,props.getCatalog,props.allType,props.ratingScore]);
+    },[owner,searchActive,searchQuery,searchMode,searchAttempt]);
+    var mediaResults=React.useMemo(function(){
+      if(!searchActive||searchMode!=='media'||searchKey(searchQuery).length<2)return [];
+      var rows=catalogResults(props.getCatalog?props.getCatalog():ranked,searchFilters.format||props.allType,searchQuery,searchFilters.sort==='relevance'?'popular':searchFilters.sort,props.ratingScore).filter(function(work){return matchesFilters(work,searchFilters);});
+      return searchFilters.sort==='relevance'?rankSearchResults(rows,searchQuery):rows;
+    },[searchActive,searchMode,searchQuery,revision,ranked,props.getCatalog,props.allType,props.ratingScore,searchFilters]);
+    var editionContext=JSON.stringify([owner,format,format?query:searchQuery,searchMode,searchFilters,filters,sort]);
+    var editionView=React.useRef({context:'',entries:[]});
+    var groupingActive=format?searchKey(query).length>=2:searchActive&&searchMode==='media'&&searchKey(searchQuery).length>=2;
+    var editionEntries=React.useMemo(function(){
+      var previous=editionView.current.context===editionContext?editionView.current.entries:[];
+      var entries=groupSearchEditions(format?results:mediaResults,previous);
+      editionView.current={context:editionContext,entries:entries};return entries;
+    },[results,mediaResults,editionContext,format]);
+    var resultCount=groupingActive?editionEntries.length:results.length;
+    React.useEffect(function(){if(dialog&&dialog.kind==='editions'&&dialog.context!==editionContext)close();},[editionContext,dialog]);
     React.useEffect(function(){
       if(searchActive&&searchMode==='media'&&searchInput.current&&searchInput.current.value.trim().length>=3)searchInput.current.dispatchEvent(new root.Event('input',{bubbles:true}));
-    },[searchMode]);
-    function cancelSearch(){root.clearTimeout(inputTimer.current);if(searchInput.current)searchInput.current.value='';setSearchActive(false);setSearchQuery('');setSearchMode('media');if(root.document.activeElement&&root.document.activeElement.blur)root.document.activeElement.blur();}
+    },[searchMode,searchFilters.format]);
+    function rememberSearch(){
+      var text=searchInput.current?searchInput.current.value:searchQuery;
+      setRecent(saveSearchHistory(historyStorage,owner,{q:text,mode:searchMode,format:searchFilters.format}));
+    }
+    function clearSearch(){
+      searchRetry.current++;root.clearTimeout(inputTimer.current);
+      if(searchInput.current){searchInput.current.value='';searchInput.current.dispatchEvent(new root.Event('input',{bubbles:true}));searchInput.current.focus();}
+      setSearchQuery('');setRemoteSearch(null);
+      if(searchMode==='media'&&root.LorefyCatalogLoader)Promise.resolve(root.LorefyCatalogLoader.loadFormat(searchFilters.format||props.allType,'')).catch(function(){});
+    }
+    function cancelSearch(){clearSearch();setSearchActive(false);setSearchMode('media');if(root.document.activeElement&&root.document.activeElement.blur)root.document.activeElement.blur();}
     function chooseSearchSuggestion(text) {
       if (format) { setQuery(text); setLimit(60); }
       else {
@@ -341,26 +452,75 @@
         if (!searchInput.current || searchInput.current.value.trim() !== searchQuery.trim()) return;
         root.clearTimeout(inputTimer.current);
         searchInput.current.value = text;
+        searchRetry.current++;
         setSearchQuery(text);
+        searchInput.current.dispatchEvent(new root.Event('input',{bubbles:true}));
         searchInput.current.focus();
       }
     }
     function suggestionsFor(text, type) {
       return h(SearchSuggestions, {state:catalogState, query:text, type:type, language:props.language, onChoose:chooseSearchSuggestion});
     }
+    function changeSearchMode(nextMode){
+      searchRetry.current++;root.clearTimeout(inputTimer.current);
+      if(searchInput.current)setSearchQuery(searchInput.current.value);
+      setRemoteSearch(null);setSearchMode(nextMode);
+      if(nextMode!=='media'&&root.LorefyCatalogLoader)Promise.resolve(root.LorefyCatalogLoader.loadFormat(searchFilters.format||props.allType,'')).catch(function(){});
+      if(nextMode==='media')root.setTimeout(function(){
+        var input=searchInput.current;
+        if(input&&input.isConnected&&!input.closest('[data-lorefy-search-local]'))input.dispatchEvent(new root.Event('input',{bubbles:true}));
+      },0);
+    }
+    function replaySearch(entry){
+      searchRetry.current++;root.clearTimeout(inputTimer.current);setSearchMode(entry.mode);setSearchActive(true);setRemoteSearch(null);
+      setSearchFilters({format:entry.format,genres:[],status:'all',sort:'relevance'});setSearchQuery(entry.q);
+      if(searchInput.current){searchInput.current.value=entry.q;searchInput.current.focus();}
+      setRecent(saveSearchHistory(historyStorage,owner,entry));
+      root.setTimeout(function(){if(searchInput.current)searchInput.current.dispatchEvent(new root.Event('input',{bubbles:true}));},0);
+    }
+    function searchIdle(){
+      return h('section',{className:'lf-explore-search-idle'},
+        recent.length>0&&h('section',{className:'lf-explore-recent'},h('header',null,h('h2',null,t('بحثك الأخير','Recent searches')),h('button',{onClick:function(){setRecent(clearSearchHistory(historyStorage,owner));}},t('مسح الكل','Clear all'))),recent.map(function(entry,index){return h('button',{key:entry.mode+entry.q+index,className:'lf-explore-recent-row',onClick:function(){replaySearch(entry);}},Icon('History',18),h('span',{dir:'auto'},entry.q),h('small',null,entry.mode==='people'?t('الأشخاص','People'):entry.mode==='lists'?t('قوائمي','My lists'):entry.format?props.typeLabel(entry.format):t('الأعمال','Media')),Icon('ArrowUpLeft',17));})),
+        searchMode==='media'?h('section',null,h('h2',null,t('اكتشف عملك القادم','Find your next read')),h('div',{className:'lf-design-search-grid'},ranked.slice(0,6).map(function(work){return item(work,false);})))
+          :h('div',{className:'lf-explore-search-message'},Icon(searchMode==='people'?'Users':'List',32),h('h2',null,searchMode==='people'?t('ابحث عن قارئ','Find a reader'):t('ابحث في قوائمك','Search your lists')),h('p',null,searchMode==='people'?t('الاسم أو اسم المستخدم','Name or username'):t('اسم القائمة أو وصفها','List name or description'))));
+    }
+    function searchMessage(phase){
+      var messages={short:[t('أكمل البحث','Keep typing'),t('حرفان على الأقل','At least two characters')],loading:[t('جارٍ البحث…','Searching…'),''],error:[t('تعذّر الاتصال','Could not connect'),t('حاول مجدداً بعد التحقق من اتصالك','Check your connection and try again')],empty:[t('لا توجد نتائج مطابقة','No matching results'),t('جرّب عنواناً آخر أو غيّر الفلاتر','Try another title or change the filters')]};
+      if(phase==='empty'&&searchMode==='people')messages.empty=[t('لا توجد حسابات مطابقة','No matching readers'),t('جرّب الاسم أو اسم المستخدم','Try a name or username')];
+      var text=messages[phase];return text&&h('div',{className:'lf-explore-search-message',role:'status'},Icon(phase==='error'?'WifiOff':'Search',30),h('h2',null,text[0]),text[1]&&h('p',null,text[1]));
+    }
     function searchBody(){
-      if(!searchQuery.trim())return h('section',{className:'lf-design-inline-results','aria-live':'polite'});
+      if(!searchQuery.trim())return searchIdle();
+      if(searchKey(searchQuery).length<2)return searchMessage('short');
       var rows=mediaResults;
-      if(searchMode==='media')return h('section',{className:'lf-design-inline-results','aria-live':'polite'},h('p',{className:'lf-design-search-status'},loadError||remoteFailed||catalogState&&catalogState.searchError?t('تعذر البحث، حاول مجدداً.','Search failed. Try again.'):remoteBusy||catalogState&&catalogState.searching?t('جارٍ البحث…','Searching…'):rows.length+' '+t('نتيجة','results')),(loadError||remoteFailed||catalogState&&catalogState.searchError)&&h('button',{type:'button',className:'lf-explore-search-retry',onClick:retryMediaSearch},t('إعادة المحاولة','Try again')),suggestionsFor(searchQuery,props.allType),h('div',{className:'lf-design-search-grid'},rows.slice(0,120).map(function(w){return item(w,false);})));
-      if(searchMode==='people')return h('section',{className:'lf-design-inline-results','aria-live':'polite'},searchStatus?h('p',{className:'lf-design-search-status'},searchStatus==='loading'?t('جارٍ البحث…','Searching…'):t('تعذر البحث','Search failed')):readers.length?readers.map(function(reader){return h('button',{key:reader.id,className:'lf-design-person',onClick:function(){remember();root.LorefyUserDiscovery.openReaderProfile(reader,root.LorefyUserDiscovery.buildDirectory());}},reader.avatar&&h('img',{src:reader.avatar,alt:''}),h('span',{dir:'auto'},reader.name+' · @'+reader.username));}):h('p',{className:'lf-design-search-status'},t('لا توجد حسابات مطابقة','No matching people')));
+      if(searchMode==='media'){
+        var scoped=catalogState&&normalized(catalogState.searchQuery)===normalized(searchQuery)&&formatKey(catalogState.searchType)===formatKey(activeSearchType),failed=loadError||remoteFailed||scoped&&catalogState.searchError;
+        var phase=searchPhase(searchQuery,rows.length,searchPending||remoteBusy||scoped&&catalogState.searching,failed);
+        return h('section',{className:'lf-design-inline-results'},h('p',{className:'lf-design-search-status',role:'status'},phase==='updating'?t('جارٍ تحديث النتائج…','Updating results…'):phase==='partial'?t('بعض المصادر غير متاحة؛ هذه النتائج المتوفرة','Some sources are unavailable; showing available results'):phase==='ready'?editionEntries.length+' '+t('نتيجة متوفرة','available results'):''),
+          searchMessage(phase),failed&&h('button',{type:'button',className:'lf-explore-search-retry',onClick:retryMediaSearch},Icon('RotateCw',17),t('إعادة المحاولة','Try again')),
+          suggestionsFor(searchQuery,activeSearchType),h('div',{className:'lf-design-search-grid'},editionEntries.slice(0,searchLimit).map(searchEntry)),
+          editionEntries.length>searchLimit&&h('button',{className:'lf-explore-search-more',onClick:function(){setSearchLimit(searchLimit+36);}},t('عرض المزيد','Show more')),
+          (phase==='empty'||phase==='partial'||phase==='error')&&root.LorefyProductTools&&root.LorefyProductTools.openMissingRequests&&h('button',{className:'lf-catalog-request-button',onClick:function(){root.LorefyProductTools.openMissingRequests(searchQuery);}},Icon('BookPlus',18),t('طلب إضافة عمل','Request a missing work')));
+      }
+      if(searchMode==='people')return h('section',{className:'lf-design-inline-results'},searchStatus?searchMessage(searchStatus==='loading'?'loading':'error'):readers.length?readers.map(function(reader){return h('button',{key:reader.id,className:'lf-design-person',onClick:function(){rememberSearch();remember();root.LorefyUserDiscovery.openReaderProfile(reader,root.LorefyUserDiscovery.buildDirectory());}},reader.avatar?h('img',{src:reader.avatar,alt:''}):Icon('UserRound',24),h('span',null,h('strong',{dir:'auto'},reader.name),h('small',{dir:'ltr'},'@'+reader.username)),Icon('ChevronLeft',18));}):searchMessage('empty'),searchStatus==='error'&&h('button',{className:'lf-explore-search-retry',onClick:function(){setSearchAttempt(searchAttempt+1);}},Icon('RotateCw',17),t('إعادة المحاولة','Try again')));
       var lists=[];try{lists=root.LorefyProfileSections?root.LorefyProfileSections.foldersFor({},true,root.localStorage):[];}catch(_){}
       lists=lists.filter(function(list){return normalized(list.name+' '+list.description).includes(normalized(searchQuery));});
-      return h('section',{className:'lf-design-inline-results','aria-live':'polite'},lists.length?lists.map(function(list){return h('button',{key:list.id,className:'lf-design-person',onClick:function(){open({kind:'shelf',title:list.name,items:list.items.map(function(entry){return props.getWork(entry.workId||entry.id);}).filter(Boolean)});}},Icon('List',20),list.name);}):h('p',{className:'lf-design-search-status'},t('لا توجد قوائم مطابقة في حسابك','No matching lists in your account')));
+      return h('section',{className:'lf-design-inline-results'},lists.length?lists.map(function(list){return h('button',{key:list.id,className:'lf-design-person',onClick:function(){rememberSearch();open({kind:'shelf',title:list.name,items:list.items.map(function(entry){return props.getWork(entry.workId||entry.id);}).filter(Boolean)});}},Icon('List',20),h('span',null,h('strong',null,list.name),h('small',null,list.items.length+' '+t('عنصر','items'))),Icon('ChevronLeft',18));}):h('p',{className:'lf-design-search-status',role:'status'},t('لا توجد قوائم مطابقة في حسابك','No matching lists in your account')));
     }
-    function cover(work, eager) { return h('img', {src:props.cover(work), alt:'', loading:eager ? 'eager' : 'lazy', decoding:'async', onError:props.onCoverError, 'data-fallback':props.fallback(work)}); }
+    function cover(work, eager, featured) {
+      var src=props.cover(work),safe=!!(root.LOREFY_RUNTIME&&root.LOREFY_RUNTIME.rightsSafeMedia||root.LOREFY_RELEASE&&root.LOREFY_RELEASE.rightsSafeMedia);
+      return h('img', {className:featured?'lf-explore-feature-art':undefined,src:featured?featureArtwork(work,src,safe):src,alt:'',loading:eager?'eager':'lazy',decoding:'async',onError:props.onCoverError,'data-fallback':props.fallback(work)});
+    }
+    function heroArtwork(work){
+      var src=props.cover(work),safe=!!(root.LOREFY_RUNTIME&&root.LOREFY_RUNTIME.rightsSafeMedia||root.LOREFY_RELEASE&&root.LOREFY_RELEASE.rightsSafeMedia);
+      if(!root.LorefyCoverMedia)return h('div',{className:'lf-explore-immersive-art','aria-hidden':true},cover(work,true,true));
+      return h(root.LorefyCoverMedia,{workId:'explore-art:'+work.id,src:featureArtwork(work,src,safe),fallback:props.fallback(work),language:props.language,loading:'eager',fetchPriority:'high',render:function(surface,retry){
+        return h(React.Fragment,null,h('div',{className:'lf-explore-immersive-art','aria-hidden':true},surface),retry&&React.cloneElement(retry,{className:'lf-cover-retry lf-explore-art-retry','aria-label':t('إعادة تحميل الصورة','Retry artwork'),title:t('إعادة تحميل الصورة','Retry artwork')}));
+      }});
+    }
     function open(value) { opener.current = root.document.activeElement; setDialog(value); }
     function close() { collectionRequest.current++;setDialog(null); setDraft(null); }
-    function openWork(work) { remember(); if (root.document.activeElement && root.document.activeElement.blur) root.document.activeElement.blur(); props.onWork(work); }
+    function openWork(work) { if(searchActive&&searchQuery.trim())rememberSearch();remember(); if (root.document.activeElement && root.document.activeElement.blur) root.document.activeElement.blur(); props.onWork(work); }
     React.useEffect(function () {
       if (!dialog || !panel.current) return;
       panel.current.querySelector('button')?.focus();
@@ -381,11 +541,19 @@
       if (event.shiftKey && root.document.activeElement === firstNode) { event.preventDefault(); lastNode?.focus(); }
       if (!event.shiftKey && root.document.activeElement === lastNode) { event.preventDefault(); firstNode?.focus(); }
     }
-    function item(work, feedback) {
-      return h('article', {key:work.id, className:'lf-explore-work'},
-        h('button', {type:'button', className:'lf-explore-work-open', onClick:function () { openWork(work); }, 'aria-label':work.title, title:work.title}, cover(work)),
+    function searchEntry(entry) {
+      var multiple=entry.items.length>1;
+      return h('div',{key:entry.key,className:'lf-explore-search-entry','data-edition-group':entry.key},item(entry.work,false),
+        h('div',{className:'lf-search-edition-actions'},entry.eligible&&h('button',{type:'button',className:'lf-search-editions-button',disabled:!multiple,'aria-label':t('طبعات ','Editions of ')+entry.work.title+' · '+entry.items.length,
+          onClick:function(){open({kind:'editions',title:entry.work.title,context:editionContext,items:entry.items.map(function(work){return Object.assign({},work);})});}},Icon('BookOpen',16),editionCountLabel(entry.items.length,props.language))));
+    }
+    function item(work, feedback, edition) {
+      var byline=work.metadataOnly?work.source||work._apiSource:work.auth;
+      function renderCard(surface, retry) {return h('article', {key:work.id, className:'lf-explore-work lf-cover-card'},
+        h('button', {type:'button', className:'lf-explore-work-open','data-no-translate':'1',onClick:function () { openWork(work); }, 'aria-label':[work.title,byline,edition&&editionDescription(work)].filter(Boolean).join(' · '), title:work.title}, surface,h('strong',{className:'lf-explore-work-caption lf-catalog-work-title',dir:'auto',title:work.title,'data-no-translate':'1'},work.title),h('small',{className:'lf-explore-work-author',dir:'auto',title:byline,'data-no-translate':'1'},byline),edition&&h('small',{className:'lf-search-edition-meta',dir:'auto',title:editionDescription(work),'data-no-translate':'1'},editionDescription(work)||t('بيانات الطبعة غير متاحة','Edition details unavailable'))),retry,
         feedback && h('button', {type:'button', className:'lf-explore-work-options', 'aria-label':t('خيارات اقتراح ', 'Recommendation options for ') + work.title,
-          onClick:function () { open({kind:'feedback', work:work, title:work.title}); }}, Icon('Ellipsis', 16)));
+          onClick:function () { open({kind:'feedback', work:work, title:work.title}); }}, Icon('Ellipsis', 16)));}
+      return root.LorefyCoverMedia?h(root.LorefyCoverMedia,{key:work.id,workId:work.id,src:props.cover(work),fallback:props.fallback(work),loading:'lazy',language:props.language,render:renderCard}):renderCard(cover(work),null);
     }
     var collectionRequest=React.useRef(0);
     React.useEffect(function(){return function(){collectionRequest.current++;};},[owner]);
@@ -415,19 +583,21 @@
       if(dialog.shelf)fillCollection(dialog.shelf,dialog.title,target,collectionRequest.current,dialog.pager);
     }
     function filtersBody() {
+      var searching=dialog.kind==='searchFilters';
       return h(React.Fragment,null,
+        searching&&h('label',{className:'lf-explore-filter-field'},t('نوع العمل','Format'),h('select',{value:draft.format||'',onChange:function(event){setDraft(Object.assign({},draft,{format:event.target.value}));}},h('option',{value:''},t('كل الأعمال','All formats')),props.types.filter(function(type){return type!==props.allType;}).map(function(type){return h('option',{key:type,value:type},props.typeLabel(type));}))),
         h('label',{className:'lf-explore-filter-field'},t('التصنيف','Genre'),h('select',{value:(draft.genres||[])[0]||'',onChange:function(event){setDraft(Object.assign({},draft,{genres:event.target.value?[event.target.value]:[]}));}},h('option',{value:''},t('الكل','All genres')),props.genres.map(function(genre){return h('option',{key:genre,value:genre},genreLabel(genre,props.language));}))),
         h('label',{className:'lf-explore-filter-field'},t('الحالة','Status'),h('select',{value:draft.status,onChange:function(event){setDraft(Object.assign({},draft,{status:event.target.value}));}},[['all',t('الكل','All')],['completed',t('مكتمل','Completed')],['ongoing',t('مستمر','Ongoing')]].map(function(entry){return h('option',{key:entry[0],value:entry[0]},entry[1]);}))),
-        h('label',{className:'lf-explore-filter-field'},t('الترتيب','Sort'),h('select',{value:draft.sort,onChange:function(event){setDraft(Object.assign({},draft,{sort:event.target.value}));}},[['popular',t('الشائع','Popular')],['rating',t('الأعلى تقييماً','Top rated')],['newest',t('الأحدث','Newest')]].map(function(entry){return h('option',{key:entry[0],value:entry[0]},entry[1]);}))),
-        h('button',{className:'lf-explore-save',onClick:function(){setFilters({genres:draft.genres,status:draft.status,rating:0});setSort(draft.sort);setLimit(60);close();top();}},t('تطبيق','Apply')),
-        h('button',{className:'lf-explore-filter-reset',onClick:function(){setDraft({genres:[],status:'all',rating:0,sort:'popular'});}},t('إعادة ضبط','Reset')));
+        h('label',{className:'lf-explore-filter-field'},t('الترتيب','Sort'),h('select',{value:draft.sort,onChange:function(event){setDraft(Object.assign({},draft,{sort:event.target.value}));}},(searching?[['relevance',t('الأكثر صلة','Most relevant')]]:[]).concat([['popular',t('الشائع','Popular')],['rating',t('الأعلى تقييماً','Top rated')],['newest',t('الأحدث','Newest')]]).map(function(entry){return h('option',{key:entry[0],value:entry[0]},entry[1]);}))),
+        h('button',{className:'lf-explore-save',onClick:function(){if(searching){searchRetry.current++;setSearchFilters(draft);setSearchLimit(36);}else{setFilters({genres:draft.genres,status:draft.status,rating:0});setSort(draft.sort);setLimit(60);}close();top();}},t('تطبيق','Apply')),
+        h('button',{className:'lf-explore-filter-reset',onClick:function(){setDraft({format:'',genres:[],status:'all',rating:0,sort:searching?'relevance':'popular'});}},t('إعادة ضبط','Reset')));
     }
     function section(shelf) {
       var title = shelf.key.indexOf('genre-') === 0 ? genreLabel(shelf.title, props.language) : shelf.title;
       return h('section', {key:shelf.key, className:'lf-explore-shelf', 'data-shelf':shelf.key},
         h('header', {className:'lf-explore-section-head'}, h('div', null, h('h2', {dir:'auto'}, title)),
-          h('button', {onClick:function () { openShelf(shelf,title); }}, t('الكل', 'See all'), Icon('ChevronLeft', 16))),
-        shelf.items.length?h('div', {className:'lf-explore-rail'}, shelf.items.map(function (work) { return item(work, false); })):h('button',{className:'lf-explore-empty',onClick:function(){openShelf(shelf,title);}},t('اكتشف قراءة قصيرة','Find a shorter read')));
+          h('button', {onClick:function () { openShelf(shelf,title); }}, t('عرض الكل', 'See all'), Icon('ChevronLeft', 16))),
+        shelf.items.length?h('div', {className:'lf-explore-rail'}, shelf.items.slice(0,shelf.key==='for-you'?3:shelf.items.length).map(function (work) { return item(work, false); })):h('button',{className:'lf-explore-empty',onClick:function(){openShelf(shelf,title);}},t('اكتشف قراءة قصيرة','Find a shorter read')));
     }
     function toggle(field, value) {
       setDraft(function (current) { var next=Object.assign({},current), values=(current[field] || []).slice(); next[field]=values.includes(value)?values.filter(function(x){return x!==value;}):values.concat(value); return next; });
@@ -442,46 +612,68 @@
     }
     function chooseFormat(type) { setFilters({genres:[],status:'all',rating:0});setFormat(type); setMode('browse'); setQuery(''); setSort('popular'); setLimit(60); top(); }
     function back() { setFormat(''); setMode('browse'); setQuery(''); top(); }
-    function carousel() {
-      if (!selected) return null;
-      return h('section', {className:'lf-explore-feature', ref:hero, 'aria-label':t('أعمال معروفة','Well-known works')},
-        h('div',{className:'lf-explore-feature-card'},
-          h('button',{className:'lf-explore-feature-open',onClick:function(){openWork(selected);},'aria-label':selected.title},cover(selected,true),
-            h('span',{className:'lf-design-feature-copy'},h('span',{className:'lf-design-work-badges'},h('span',null,props.typeLabel(selected.type)),Number(selected.r)>0&&selected.rSrc&&h('span',null,'★ '+Number(selected.r).toFixed(1))),h('strong',{dir:'auto','data-no-translate':''},selected.title),h('p',{dir:'auto','data-no-translate':''},String(selected[en?'synopsisEn':'synopsisAr']||selected.synopsis||selected.auth||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim())))),
-        features.length>1 && h('div',{className:'lf-explore-feature-controls'},h('button',{'aria-label':t('العمل السابق','Previous work'),onClick:function(){setPaused(true);setSlide((slide+features.length-1)%features.length);}},Icon(en?'ChevronLeft':'ChevronRight',16)),
+    function featureControls() {
+      return h('div',{className:'lf-explore-feature-controls'},h('button',{'aria-label':t('العمل السابق','Previous work'),onClick:function(){setPaused(true);setSlide((slide+features.length-1)%features.length);}},Icon(en?'ChevronLeft':'ChevronRight',16)),
           features.map(function(work,index){return h('button',{key:work.id,className:'lf-explore-feature-dot','aria-label':work.title,'aria-pressed':index===slide%features.length,onClick:function(){setPaused(true);setSlide(index);}},h('span',null));}),
           h('button',{'aria-label':t('العمل التالي','Next work'),onClick:function(){setPaused(true);setSlide(slide+1);}},Icon('ChevronLeft',16)),
-          !reducedMotion && h('button',{type:'button',className:'lf-explore-feature-rotation','aria-label':paused?t('تشغيل العرض التلقائي','Start automatic slideshow'):t('إيقاف العرض التلقائي','Pause automatic slideshow'),onClick:function(){setPaused(function(value){return !value;});}},paused?t('تشغيل','Start'):t('إيقاف','Pause'))));
+          !reducedMotion && h('button',{type:'button',className:'lf-explore-feature-rotation','aria-label':paused?t('تشغيل العرض التلقائي','Start automatic slideshow'):t('إيقاف العرض التلقائي','Pause automatic slideshow'),title:paused?t('تشغيل العرض التلقائي','Start automatic slideshow'):t('إيقاف العرض التلقائي','Pause automatic slideshow'),onClick:function(){setPaused(function(value){return !value;});}},Icon(paused?'Play':'Pause',16)));
     }
-    return h('div', {className:'lf-screen-scroll lf-discover-page lf-explore-studio'+(format?' is-format':''),dir:en?'ltr':'rtl',ref:screen,onScroll:function(){remember();}},
+    function carousel() {
+      if (!selected) return null;
+      var rating=Number(selected.r),rated=selected.rSrc&&Number.isFinite(rating)&&rating>0&&rating<=5;
+      var poster=h('button',{type:'button',className:'lf-explore-feature-poster','aria-label':t('فتح ','Open ')+selected.title,onClick:function(){openWork(selected);}},cover(selected,true));
+      if(root.LorefyLibraryMedia)poster=root.LorefyLibraryMedia.card(poster,{lang:props.language,workId:selected.id,title:selected.title,loading:'eager'});
+      return h('section', {className:'lf-explore-feature',ref:hero,'aria-label':t('اختيار اليوم','Featured pick'),'data-featured-work':selected.id},
+        h('div',{className:'lf-explore-feature-card'},
+          h('div',{className:'lf-design-feature-copy',dir:'ltr'},
+            features.length>1?h('details',{className:'lf-explore-feature-selector'},h('summary',null,t('اختيار اليوم','Featured pick')),featureControls()):h('span',{className:'lf-explore-feature-label'},t('اختيار اليوم','Featured pick')),
+            h('button',{type:'button',className:'lf-explore-feature-open',onClick:function(){openWork(selected);},'aria-label':selected.title},h('strong',{dir:'auto','data-no-translate':'1'},selected.title)),
+            h('div',{className:'lf-explore-feature-action-row'},
+              props.onEditProgress&&h('button',{type:'button',className:'lf-explore-feature-add','aria-label':t('إضافة إلى مكتبتي: ','Add to my library: ')+selected.title,title:t('إضافة إلى مكتبتي','Add to my library'),onClick:function(){remember();props.onEditProgress(selected);}},Icon('Plus',23)),
+              h('span',{className:'lf-explore-feature-meta',dir:en?'ltr':'rtl'},props.typeLabel(selected.type),rated&&h('span',{className:'lf-explore-feature-score',dir:'ltr'},rating.toFixed(1),Icon('Star',18))))),
+          poster));
+    }
+    var immersive=!!selected&&!format&&mode==='you'&&!searchActive;
+    return h('div', {className:'lf-screen-scroll lf-discover-page lf-explore-studio lf-explore-cinema'+(format?' is-format':'')+(immersive?' has-feature':'')+(searchActive?' is-searching':'')+(!format&&!searchActive&&mode==='browse'?' is-types':''),dir:en?'ltr':'rtl',ref:screen,onScroll:function(){remember();}},
+      immersive&&heroArtwork(selected),
       h('header',{className:'lf-explore-header',dir:format?'ltr':undefined},
         format && h('button',{className:'lf-explore-icon','aria-label':t('العودة إلى الأنواع','Back to types'),onClick:back},Icon(en?'ArrowLeft':'ArrowRight')),
-        h('div',null,!format&&h('p',null,t('رفّك القادم','Your next shelf')),h('h1',null,format?props.typeLabel(format):t('استكشف','Explore'))),
-        format ? h('button',{className:'lf-explore-icon lf-explore-format-filter','aria-label':t('تصفية الأعمال','Filter works'),onClick:function(){setDraft(Object.assign({},filters,{sort:sort}));open({kind:'filters',title:t('تصفية الأعمال','Filter works')});}},Icon('SlidersHorizontal',22)) : h('button',{className:'lf-explore-icon','aria-label':t('تعديل ذوقي','Edit preferences'),onClick:function(){setDraft(Object.assign({},props.preferences));open({kind:'preferences',title:t('ذوقك في القراءة','Your reading taste')});}},Icon('SlidersHorizontal',22))),
-      format ? h('label',{className:'lf-explore-format-search','data-lorefy-catalog-search':format},Icon('Search'),h('input',{type:'search',value:query,'aria-label':t('بحث في ','Search ')+props.typeLabel(format),placeholder:t('ابحث في ','Search ')+props.typeLabel(format),onChange:function(event){setQuery(event.target.value);setLimit(60);},onKeyDown:function(event){if(event.key==='Escape'){event.target.blur();back();}}})) :
-        h('label',{className:'lf-design-inline-search lf-search-box','data-lorefy-catalog-search':'All','data-lorefy-search-local':searchMode==='media'?undefined:'true'},Icon('Search'),h('input',{type:'search',ref:searchInput,defaultValue:searchQuery,autoComplete:'off','aria-label':t('بحث','Search'),placeholder:searchMode==='people'?t('ابحث عن شخص','Search people'):searchMode==='lists'?t('ابحث عن قائمة','Search lists'):t('ابحث عن عمل أو مؤلف','Search media'),onFocus:function(){setSearchActive(true);},onChange:function(event){var value=event.target.value;root.clearTimeout(inputTimer.current);inputTimer.current=root.setTimeout(function(){setSearchQuery(value);},180);},onKeyDown:function(event){if(event.key==='Escape')cancelSearch();}})),
-      !format&&searchActive&&h('div',{className:'lf-design-search-modes',role:'tablist','aria-label':t('نوع البحث','Search type')},[['media',t('الأعمال','Media')],['people',t('الأشخاص','People')],['lists',t('القوائم','Lists')]].map(function(entry){return h('button',{key:entry[0],role:'tab','aria-selected':searchMode===entry[0],onClick:function(){setSearchMode(entry[0]);}},entry[1]);}),h('button',{className:'lf-design-search-close',onClick:cancelSearch},t('إلغاء','Cancel'))),
+        h('div',null,h('h1',null,format?props.typeLabel(format):searchActive?t('البحث','Search'):t('استكشف','Explore'))),
+        searchActive&&!format?h('button',{className:'lf-explore-search-cancel',onClick:cancelSearch},t('إلغاء','Cancel')):format ? h('button',{className:'lf-explore-icon lf-explore-format-filter','aria-label':t('تصفية الأعمال','Filter works'),onClick:function(){setDraft(Object.assign({},filters,{sort:sort}));open({kind:'filters',title:t('تصفية الأعمال','Filter works')});}},Icon('SlidersHorizontal',22)) : h('button',{className:'lf-explore-icon','aria-label':t('تعديل ذوقي','Edit preferences'),onClick:function(){setDraft(Object.assign({},props.preferences));open({kind:'preferences',title:t('ذوقك في القراءة','Your reading taste')});}},Icon('SlidersHorizontal',22))),
+      format ? h('label',{key:'format-search-'+format,className:'lf-explore-format-search','data-lorefy-catalog-search':format},Icon('Search'),h('input',{type:'search',value:query,'aria-label':t('بحث في ','Search ')+props.typeLabel(format),placeholder:t('ابحث في ','Search ')+props.typeLabel(format),onChange:function(event){setQuery(event.target.value);setLimit(60);},onKeyDown:function(event){if(event.key==='Escape'){event.target.blur();back();}}})) :
+        h('div',{key:'global-search',className:'lf-design-inline-search lf-search-box','data-lorefy-catalog-search':searchFilters.format||props.allType,'data-lorefy-search-local':searchMode==='media'?undefined:'true'},Icon('Search'),h('input',{type:'search',dir:'auto',ref:searchInput,defaultValue:searchQuery,autoComplete:'off',enterKeyHint:'search','aria-label':t('بحث','Search'),placeholder:searchMode==='people'?t('ابحث عن شخص','Search people'):searchMode==='lists'?t('ابحث في قوائمك','Search your lists'):t('ابحث عن عمل أو مؤلف','Search media or authors'),onFocus:function(){setSearchActive(true);},onChange:function(event){var value=event.target.value;searchRetry.current++;root.clearTimeout(inputTimer.current);inputTimer.current=root.setTimeout(function(){setSearchQuery(value);},180);},onKeyDown:function(event){if(event.key==='Escape')cancelSearch();if(event.key==='Enter'){root.clearTimeout(inputTimer.current);setSearchQuery(event.currentTarget.value);rememberSearch();event.currentTarget.blur();}}}),searchActive&&h('button',{type:'button',className:'lf-explore-search-clear','aria-label':t('مسح البحث','Clear search'),title:t('مسح البحث','Clear search'),onClick:clearSearch},Icon('X',17))),
+      format&&root.LorefyProductTools&&root.LorefyProductTools.openMissingRequests&&h('button',{type:'button',className:'lf-catalog-request-button',onClick:function(){root.LorefyProductTools.openMissingRequests(query);}},Icon('BookPlus',16),t('عمل غير موجود؟','Missing work?')),
+      !format&&searchActive&&h('div',{className:'lf-design-search-modes',role:'tablist','aria-label':t('نوع البحث','Search type'),onKeyDown:function(event){
+        if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+        var buttons=Array.from(event.currentTarget.querySelectorAll('[role=tab]')),index=buttons.indexOf(root.document.activeElement);
+        if(index<0)return;event.preventDefault();
+        var step=event.key==='ArrowRight'?(en?1:-1):(en?-1:1),next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+step+buttons.length)%buttons.length;
+        buttons[next].click();buttons[next].focus();
+      }},[['media',t('الأعمال','Media'),'BookOpen'],['people',t('الأشخاص','People'),'Users'],['lists',t('قوائمي','My lists'),'List']].map(function(entry){return h('button',{key:entry[0],role:'tab',tabIndex:searchMode===entry[0]?0:-1,'aria-selected':searchMode===entry[0],onClick:function(){changeSearchMode(entry[0]);}},Icon(entry[2],16),entry[1]);})),
+      !format&&searchActive&&searchMode==='media'&&h('div',{className:'lf-explore-search-tools'},h('button',{className:'lf-explore-search-filter',onClick:function(){setDraft(Object.assign({},searchFilters));open({kind:'searchFilters',title:t('تصفية البحث','Search filters')});}},Icon('SlidersHorizontal',17),t('الفلاتر','Filters'),(searchFilters.format||searchFilters.genres.length||searchFilters.status!=='all')&&h('span',null,t('مفعّلة','Active'))),h('small',null,searchFilters.format?props.typeLabel(searchFilters.format):t('كل الأعمال','All formats'))),
       format ? h('div',{className:'lf-explore-sorts',role:'group','aria-label':t('ترتيب الأعمال','Sort works')},[['popular',t('الشائع','Popular')],['rating',t('الأعلى تقييماً','Top rated')],['newest',t('الجديد','New')]].map(function(entry){return h('button',{key:entry[0],'aria-pressed':sort===entry[0],onClick:function(){setSort(entry[0]);setLimit(60);top();}},entry[1]);})) :
-        !searchActive&&h('div',{className:'lf-explore-tabs',role:'tablist','aria-label':t('أقسام استكشف','Explore views')},[['you',t('تصفّح','Browse')],['browse',t('النوع','Type')]].map(function(tab){return h('button',{key:tab[0],role:'tab',id:'explore-tab-'+tab[0],'aria-controls':'explore-panel','aria-selected':mode===tab[0],onClick:function(){setMode(tab[0]);top();}},tab[1]);})),
+        !searchActive&&h('div',{className:'lf-explore-tabs',role:'tablist','aria-label':t('أقسام استكشف','Explore views')},[['you',t('تصفّح','Browse')],['browse',t('الأنواع','Types')]].map(function(tab){return h('button',{key:tab[0],role:'tab',id:'explore-tab-'+tab[0],'aria-controls':'explore-panel','aria-selected':mode===tab[0],onClick:function(){setMode(tab[0]);top();}},tab[1]);})),
       format ? h(React.Fragment,null,
         h('p',{className:'lf-explore-catalog-status',role:'status'},loadError||remoteFailed||catalogState&&catalogState.searchError?t('تعذر تحميل النتائج، حاول مجدداً.','Could not load results. Try again.'):remoteBusy||catalogState&&catalogState.searching?t('جارٍ البحث…','Searching…'):!catalogReady?t('جارٍ تحميل الأعمال…','Loading works…'):''),
         suggestionsFor(query,format),
-        h('div',{className:'lf-explore-format-grid'},results.slice(0,limit).map(function(work){return item(work,false);})),
+        h('div',{className:'lf-explore-format-grid'},groupingActive?editionEntries.slice(0,limit).map(searchEntry):results.slice(0,limit).map(function(work){return item(work,false);})),
         !results.length&&catalogReady&&!loadError&&!remoteBusy&&!remoteFailed&&!(catalogState&&(catalogState.searching||catalogState.searchError))&&h('p',{className:'lf-explore-empty'},t('لا توجد نتائج لهذا البحث','No results for this search')),
-        h('div',{ref:sentinel,className:'lf-explore-more'},loadError||remoteFailed||catalogState&&catalogState.searchError?h('button',{type:'button',onClick:retryMediaSearch},t('إعادة المحاولة','Try again')):(limit<results.length||catalogState&&catalogState.hasMore)&&h('button',{onClick:more},t('تحميل المزيد','Load more')))) :
+        h('div',{ref:sentinel,className:'lf-explore-more'},loadError||remoteFailed||catalogState&&catalogState.searchError?h('button',{type:'button',onClick:retryMediaSearch},t('إعادة المحاولة','Try again')):(limit<resultCount||catalogState&&catalogState.hasMore)&&h('button',{onClick:more},t('تحميل المزيد','Load more')))) :
         searchActive?searchBody():h('div',{role:'tabpanel',id:'explore-panel','aria-labelledby':'explore-tab-'+mode},mode==='you'?h(React.Fragment,null,carousel(),
           !catalogReady&&h('p',{className:'lf-explore-catalog-status',role:'status'},t('جارٍ تحديث المكتبة…','Updating the library…')),
           shelves.length?shelves.slice(0,1).map(section):h('div',{className:'lf-explore-empty'},h('h2',null,t('لا توجد اقتراحات بعد','No suggestions yet'))),
           root.LorefyFriendActivity&&props.friendProps&&h(root.LorefyFriendActivity.Rails,Object.assign({},props.friendProps,{compact:true,showRecent:false,onSeeAll:function(title,items){setCollectionLimit(60);open({kind:'shelf',title:title,items:items});}})),shelves.slice(1).map(section)):
-          h('section',{className:'lf-explore-browse'},h('h2',null,t('اختر نوع العمل','Choose a type')),h('div',{className:'lf-explore-category-grid'},props.types.filter(function(type){return type!==props.allType;}).map(function(type){
+          h('section',{className:'lf-explore-browse'},h('h2',null,t('أنواع الأعمال','Formats')),h('div',{className:'lf-explore-category-grid'},props.types.filter(function(type){return type!==props.allType;}).map(function(type){
             var category=props.categories.find(function(entry){return entry.type===type;})||{type:type,count:0};
-            return h('button',{key:type,className:'lf-explore-category',onClick:function(){chooseFormat(type);}},category.rep?cover(category.rep):h('span',{className:'lf-explore-category-placeholder'},Icon('BookOpen',25)),
-              h('span',null,h('strong',null,props.typeLabel(type))));
+            var representative=ranked.find(function(work){return formatKey(work.type)===formatKey(type)&&!work.metadataOnly;})||category.rep;
+            var categoryCard=h('button',{key:type,className:'lf-explore-category',onClick:function(){chooseFormat(type);}},h('span',{className:'lf-explore-category-art'},representative?cover(representative):Icon('BookOpen',32)),
+              h('span',{className:'lf-explore-category-copy'},h('strong',null,props.typeLabel(type)),Icon('ChevronLeft',18)));
+            return root.LorefyLibraryMedia&&representative?root.LorefyLibraryMedia.card(categoryCard,{lang:props.language,workId:'format:'+type+':'+representative.id,title:props.typeLabel(type)}):categoryCard;
           })))),
-      dialog&&h('div',{className:'lf-explore-overlay'+(dialog.kind==='shelf'?' is-fullscreen':''),onClick:function(event){if(event.target===event.currentTarget)close();},onKeyDown:trap},h('section',{className:'lf-explore-dialog',ref:panel,role:'dialog','aria-modal':true,'aria-label':dialog.title},
+      dialog&&h('div',{className:'lf-explore-overlay'+(dialog.kind==='shelf'?' is-fullscreen':''),onClick:function(event){if(event.target===event.currentTarget)close();},onKeyDown:trap},h('section',{className:'lf-explore-dialog'+(dialog.kind==='editions'?' lf-search-editions-dialog':''),ref:panel,role:'dialog','aria-modal':true,'aria-label':dialog.title},
         h('header',null,h('h2',{dir:'auto'},dialog.title),h('button',{className:'lf-explore-icon','aria-label':t('إغلاق','Close'),onClick:close},Icon('X'))),
-        dialog.kind==='preferences'?preferencesBody():dialog.kind==='filters'?filtersBody():dialog.kind==='feedback'?h('div',{className:'lf-explore-feedback'},[['more_like_this',t('المزيد مثل هذا','More like this'),'Sparkles'],['not_interested',t('غير مهتم','Not interested'),'EyeOff']].map(function(action){return h('button',{key:action[0],onClick:function(){props.onFeedback(dialog.work.id,action[0]);setRevision(function(n){return n+1;});close();}},Icon(action[2]),action[1]);})):
+        dialog.kind==='editions'?h('div',{className:'lf-explore-dialog-grid lf-search-edition-grid'},dialog.items.map(function(work){return item(work,false,true);})):dialog.kind==='preferences'?preferencesBody():dialog.kind==='filters'||dialog.kind==='searchFilters'?filtersBody():dialog.kind==='feedback'?h('div',{className:'lf-explore-feedback'},[['more_like_this',t('المزيد مثل هذا','More like this'),'Sparkles'],['not_interested',t('غير مهتم','Not interested'),'EyeOff']].map(function(action){return h('button',{key:action[0],onClick:function(){props.onFeedback(dialog.work.id,action[0]);setRevision(function(n){return n+1;});close();}},Icon(action[2]),action[1]);})):
           h('div',{className:'lf-explore-dialog-grid'},dialog.items.slice(0,collectionLimit).map(function(work){return item(work,false);}),dialog.loading&&h('p',{className:'lf-explore-collection-status',role:'status'},t('جارٍ تحميل الأعمال…','Loading works…')),(collectionLimit<dialog.items.length||dialog.pager&&dialog.pager.hasMore()||dialog.error)&&h('button',{className:'lf-explore-collection-more',disabled:dialog.loading,onClick:moreCollection},dialog.error?t('إعادة المحاولة','Try again'):t('تحميل المزيد','Load more'))))));
   }
-  return {sectionWorks:sectionWorks,sectionType:sectionType,matchesFilters:matchesFilters,catalogResults:catalogResults, featuredWorks:featuredWorks, genreLabel: genreLabel, formatKey: formatKey, collections: COLLECTIONS, SearchSuggestions: SearchSuggestions, readingSnapshot: readingSnapshot, readingItems: readingItems, buildShelves: buildShelves, Explore: Explore};
+  return {editionCountLabel:editionCountLabel,groupSearchEditions:groupSearchEditions,rankSearchResults:rankSearchResults,searchPhase:searchPhase,readSearchHistory:readSearchHistory,saveSearchHistory:saveSearchHistory,clearSearchHistory:clearSearchHistory,featureArtwork:featureArtwork,sectionWorks:sectionWorks,sectionType:sectionType,matchesFilters:matchesFilters,catalogResults:catalogResults, featuredWorks:featuredWorks, genreLabel: genreLabel, formatKey: formatKey, collections: COLLECTIONS, SearchSuggestions: SearchSuggestions, readingSnapshot: readingSnapshot, readingItems: readingItems, buildShelves: buildShelves, Explore: Explore};
 });

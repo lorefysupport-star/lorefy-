@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lorefy | Elven Atelier</title>
+  <link rel="stylesheet" href="elf-concepts/gallery.css">
+</head>
+<body>
+  <header class="toolbar">
+    <a class="wordmark" href="motion-atelier.html?layout=reader&theme=dark" lang="en" dir="ltr">Lorefy <span>Atelier</span></a>
+    <div class="tools">
+      <label>المظهر <select id="theme"><option value="dark">داكن</option><option value="light">فاتح</option></select></label>
+      <button id="download" disabled>تنزيل بيان التصاميم <output id="count">6</output></button>
+    </div>
+  </header>
+  <main>
+    <div class="intro">
+      <p class="eyebrow" lang="en" dir="ltr">ELVEN COLLECTION / 01</p>
+      <h1>ستة تصاميم من عالم الإلف.</h1>
+      <p class="status">الرسومات المختارة · معاينة أولية لحركة الأذن</p>
+      <p><a href="elf-motion.html?layout=reader&theme=dark">معاينة التحريك داخل البروفايل</a></p>
+      <div class="motion-tools"><label><input id="motionPlay" type="checkbox" checked> حركة تلقائية</label><label>الزمن <input id="motionTime" type="number" min="0" max="12" step="0.02" value="0" disabled> ثانية</label></div>
+      <nav id="families" aria-label="عائلات الإلف"></nav>
+    </div>
+    <div id="gallery" aria-busy="true"></div>
+    <p id="notice" role="status"></p>
+  </main>
+  <dialog id="zoom" aria-labelledby="zoom-title">
+    <div class="zoom-header"><h2 id="zoom-title"></h2><button id="close">إغلاق</button></div>
+    <div class="zoom-scroll"><div class="art"><img alt=""></div></div>
+  </dialog>
+  <script src="elf-concepts/ear-motion.js"></script>
+  <script src="elf-concepts/gallery.js"></script>
+</body>
+</html>

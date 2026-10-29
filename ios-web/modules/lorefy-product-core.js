@@ -136,16 +136,20 @@
         };
         var backend = typeof window !== "undefined" && window.LorefyBackend;
         if (backend && backend.mode === "live" && typeof backend.submitReport === "function") {
+          var owner = safetyAccount(backend), client = backend.client;
           return backend.submitReport({
             targetId: report.targetId,
             targetType: report.targetType === "content" ? "review" : report.targetType,
             reason: report.reason,
             note: report.note
           }).then(function (cloudReport) {
+            assertSafetyAccount(backend, owner);
+            if (window.LorefyBackend !== backend || backend.mode !== "live" || backend.client !== client) throw new Error('Safety account changed');
             report.id = cloudReport.id;
             report.status = cloudReport.status || "open";
-            reports.unshift(report);
-            writeJson(store, KEYS.reports, reports.slice(0, 250));
+            var currentReports = safety.getReports();
+            currentReports.unshift(report);
+            writeJson(store, KEYS.reports, currentReports.slice(0, 250));
             return report;
           });
         }

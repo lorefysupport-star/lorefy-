@@ -19,7 +19,7 @@ function runtime(initial={a:{hero:5}}){
  const scope={K_SCORES:'ratings',K_CHARCUSTOM:'custom-images',K_CHARIMG:'images',read:(k,f)=>k==='ratings'?scores:f,global:{localStorage:storage},
   profileRatedCharacterCache:{},profileRatedCharacterLoads:{},profileRatedCharacterFailures:{},profileRatedCharacterGallery:null,profileTopCharacterEditor:null,
   castKey:c=>c.key,characterImageUrl:c=>c.image||'',profileWorkFor:id=>({id}),profileWorkTitle:id=>id,uiText:(ar,en)=>en,
-  el:(tag,props,kids)=>new Node(tag,props||{},kids||[]),scheduleCharacterActionIcons(){},
+  el:(tag,props,kids)=>new Node(tag,props||{},kids||[]),scheduleCharacterActionIcons(){},releaseCharacterPortraits(){},
   profileRatedCharacterShelfCard:item=>new Node('button',{class:'card',text:item.character.name}),
   workContext:({workId})=>({id:workId}),loadCast:work=>{calls.push(work.id);return provider(work);},
   paintProfileRatedCharacters:()=>{paint++;},syncProfileTopCharacters(){},
@@ -96,6 +96,13 @@ test('storage events close a cached gallery on sign-out and unchanged syncs pres
  assert.equal(nodes(ov.body,n=>n.attrs.class==='card')[0],card);
  h.setOwner('');h.scope.profileRatedCharacterStateChanged({detail:{key:'lorefy.activeUser.v1'}});
  assert.equal(ov.page.isConnected,false);
+});
+
+test('a nested dialog pauses the gallery without abandoning its state or search',()=>{
+ const h=runtime();h.scope.profileRatedCharacterCache.a=[{key:'hero',name:'Hero'}];const ov=h.open(),state=h.scope.profileRatedCharacterGallery;
+ const input=nodes(ov.body,n=>n.tag==='input')[0];input.value='Hero';input.handlers.input();ov.page.inert=true;h.sync();
+ assert.equal(h.scope.profileRatedCharacterGallery,state);assert.equal(nodes(ov.body,n=>n.tag==='input')[0],input);
+ h.setScores({a:{hero:4}});ov.page.inert=false;h.sync();assert.deepEqual(cards(ov),['Hero']);assert.equal(input.value,'Hero');
 });
 
 test('hydration coalesces in-flight requests and tolerates a synchronously throwing provider',async()=>{

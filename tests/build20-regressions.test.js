@@ -26,10 +26,10 @@ test("top-list image actions await the native iOS share sheet", () => {
   }
 });
 
-test("profile top-four works keeps a bounded picker and exactly four persisted ids", () => {
+test("profile favorites keeps a bounded picker and at most seven persisted ids", () => {
   assert.match(app, /PROFILE_FAVORITES_PICKER_BATCH=12/);
   assert.match(app, /\.slice\(0,PROFILE_FAVORITES_PICKER_BATCH\)/);
-  assert.match(app, /return n\?d:\[o\.id,\.\.\.d\]\.slice\(0,4\)/);
+  assert.match(app, /return n\?d:\[o\.id,\.\.\.d\]\.slice\(0,7\)/);
 });
 
 test("profile favorite search limits remote covers and exposes incremental results", () => {

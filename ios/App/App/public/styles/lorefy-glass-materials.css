@@ -1,0 +1,212 @@
+/* One material definition for chrome; owner-scoped palette tokens stay authoritative. */
+@layer lorefy-glass-materials {
+:is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
+.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page {
+  --glass-fill:var(--ui-surface);
+  --glass-sheet:var(--ui-surface);
+  --glass-reflection:none;
+  --glass-blur:none;
+  --glass-edge:var(--ui-separator);
+  --glass-font:-apple-system,BlinkMacSystemFont,"Segoe UI","Readex Pro",sans-serif;
+  --custom-glass:var(--glass-fill) !important;
+  --custom-sheen:var(--glass-reflection) !important;
+  --custom-blur:var(--glass-blur) !important;
+  --custom-edge:var(--glass-edge) !important;
+  --profile-apple-glass:var(--glass-fill) !important;
+  --profile-apple-sheen:var(--glass-reflection) !important;
+  --profile-apple-edge:var(--glass-edge) !important;
+}
+html[lang='ar'] :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
+html[lang='ar'] :is(.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page) {
+  --glass-font:"Readex Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
+  .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page {
+    --glass-fill:var(--ui-glass-fill);
+    --glass-sheet:var(--ui-glass-sheet);
+    --glass-reflection:var(--ui-glass-reflection);
+    --glass-blur:var(--ui-glass-backdrop);
+  }
+}
+@supports (color:color-mix(in srgb,white,black)) {
+  :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
+  .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page { --glass-edge:color-mix(in srgb,var(--ui-ink) 22%,var(--ui-line)); }
+}
+.lf-app.lf-app :is(.lf-home-cinema,.lf-library-cinema,.lf-explore-cinema,.lf-detail-page,.lf-profile-page),
+.lf-character-page .lf-character-page-shell {
+  background-image:var(--ui-page-wash) !important;
+  background-attachment:local !important;
+}
+.lf-app :is(.lf-home-cinema,.lf-library-cinema,.lf-explore-cinema,.lf-detail-page,.lf-profile-page,.lf-work-panel,.lf-rating-sheet) :is(button,input,textarea,p,span,small,strong,h1,h2,h3,b,label,summary),
+.lf-character-page :is(button,input,strong,span,h1,h2,h3) {
+  font-family:var(--glass-font) !important;
+  letter-spacing:0 !important;
+}
+.lf-app :is(.lf-bottom-nav,.lf-profile-section-tabs,.lf-home-feed-tabs,.lf-library-view-switch,.lf-library-tabs,.lf-design-inline-search,.lf-explore-format-search,.lf-explore-tabs,.lf-explore-sorts,.lf-work-section-nav,.lf-work-reader-tabs,.lf-community-compose-fab,.lf-profile-banner button:not(.lf-profile-avatar),.lf-reader-layout-tools button,.lf-profile-networks a,.lf-reader-socials a) {
+  background:var(--glass-reflection),var(--glass-fill) !important;
+  border-color:var(--glass-edge) !important;
+  box-shadow:inset 0 1px 0 #ffffff80,inset 0 -1px 0 #00000014,0 6px 20px #00000016 !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+  color:var(--ui-glass-ink) !important;
+}
+.lf-app :is(.lf-work-panel,.lf-rating-sheet,.lf-community-compose-sheet>section,.lf-community-picker>section,.lf-chapter-more-menu),
+.lf-image-choice-card {
+  background:var(--glass-reflection),var(--glass-sheet) !important;
+  border-color:var(--glass-edge) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+}
+/* Pair action ink with its fill; legacy white labels cannot follow a light accent. */
+.lf-image-choice-sheet {
+  direction:inherit !important;
+}
+.lf-image-choice-sheet .lf-image-choice-primary {
+  background:var(--ui-action) !important;
+  color:var(--ui-on-action) !important;
+  border:1px solid var(--ui-action) !important;
+}
+.lf-image-choice-sheet :is(.lf-image-choice-secondary,.lf-image-choice-external) {
+  background:var(--glass-reflection),var(--glass-fill) !important;
+  color:var(--ui-glass-ink) !important;
+  border:1px solid var(--glass-edge) !important;
+  box-shadow:inset 0 1px 0 #ffffff40 !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+}
+.lf-image-choice-card {
+  width:calc(100% - 16px) !important;
+  margin-inline:auto;
+  border:1px solid var(--glass-edge) !important;
+  color:var(--ui-glass-ink) !important;
+}
+.lf-image-choice-card :is(button,a,strong,span,p) {
+  font-family:var(--glass-font) !important;
+  letter-spacing:0 !important;
+}
+.lf-image-choice-head {
+  grid-template-columns:44px minmax(0,1fr) 52px !important;
+}
+.lf-image-choice-preview {
+  background:var(--ui-fill) !important;
+  border:1px solid var(--ui-line) !important;
+}
+.lf-image-choice-preview .lf-character-initial {
+  color:var(--ui-ink) !important;
+}
+.lf-image-choice-head strong {
+  color:var(--ui-glass-ink) !important;
+  font-size:17px !important;
+  font-weight:600 !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere;
+  line-height:1.4 !important;
+}
+.lf-image-choice-sheet :is(.lf-image-choice-head span,.lf-image-choice-status) {
+  color:var(--ui-glass-secondary) !important;
+  font-size:13px !important;
+  font-weight:400 !important;
+  line-height:1.5 !important;
+}
+.lf-image-choice-actions :is(button,a) {
+  min-height:44px !important;
+  padding:8px !important;
+  border-radius:8px !important;
+  font-size:14px !important;
+  font-weight:600 !important;
+  line-height:1.5 !important;
+}
+.lf-image-choice-sheet .lf-image-choice-retry {
+  min-height:44px !important;
+  margin:0 16px 12px !important;
+  padding:8px 14px !important;
+  border-radius:8px !important;
+  font-size:14px !important;
+  font-weight:600 !important;
+  line-height:1.5 !important;
+}
+:is(.lf-image-choice-close,.lf-character-image-edit,.lf-clx-image-edit) {
+  width:44px !important;
+  height:44px !important;
+}
+.lf-image-choice-close {
+  background:var(--glass-fill) !important;
+  border-color:var(--glass-edge) !important;
+  color:var(--ui-glass-ink) !important;
+}
+.lf-image-choice-sheet .lf-image-choice {
+  background:var(--ui-fill) !important;
+  border-color:var(--ui-line) !important;
+  color:var(--ui-ink) !important;
+  border-radius:8px !important;
+  font-size:13px !important;
+  font-weight:500 !important;
+}
+.lf-image-choice-card :is(button,a):focus-visible {
+  outline:2px solid var(--ui-action) !important;
+  outline-offset:3px !important;
+}
+.lf-image-choice-sheet .lf-image-choice-primary:active {
+  background:var(--ui-action-pressed) !important;
+}
+.lf-app :is(.lf-design-inline-search,.lf-explore-format-search,.lf-library-search) :is(input,svg,button) {
+  color:var(--ui-glass-ink) !important;
+  caret-color:var(--ui-glass-action) !important;
+}
+.lf-app :is(.lf-design-inline-search,.lf-explore-format-search,.lf-library-search) input::placeholder { color:var(--ui-glass-secondary) !important; }
+.lf-app :is(.lf-library-search input,.lf-library-controls select) {
+  background:var(--glass-reflection),var(--glass-fill) !important;
+  border-color:var(--glass-edge) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+  color:var(--ui-glass-ink) !important;
+}
+.lf-app :is(.lf-profile-banner button:not(.lf-profile-avatar),.lf-reader-layout-tools button,.lf-profile-networks a,.lf-reader-socials a) { color:var(--ui-glass-ink) !important; }
+.lf-app :is(.lf-profile-section-tabs,.lf-home-feed-tabs,.lf-library-tabs,.lf-library-view-switch,.lf-explore-tabs,.lf-explore-sorts,.lf-work-section-nav,.lf-work-reader-tabs) button {
+  color:var(--ui-glass-secondary) !important;
+  font-size:14px !important;
+  font-weight:500 !important;
+  line-height:1.45 !important;
+}
+.lf-app :is(.lf-profile-section-tabs,.lf-home-feed-tabs,.lf-library-tabs,.lf-library-view-switch,.lf-explore-tabs,.lf-explore-sorts,.lf-work-section-nav,.lf-work-reader-tabs) button:is([aria-selected='true'],[aria-pressed='true'],.is-active) {
+  background:var(--ui-selected) !important;
+  border-color:var(--ui-line) !important;
+  color:var(--ui-action) !important;
+  box-shadow:inset 0 1px 0 #ffffff66,0 1px 4px #00000014 !important;
+  font-weight:600 !important;
+}
+.lf-app .lf-bottom-nav .lf-nav-item { color:var(--ui-glass-secondary) !important; }
+.lf-app .lf-bottom-nav .lf-nav-item.is-active { color:var(--ui-glass-action) !important; }
+.lf-app .lf-nav-item>span:last-child {
+  font-family:var(--glass-font) !important;
+  font-size:12px !important;
+  font-weight:500 !important;
+  line-height:1.4 !important;
+  white-space:normal !important;
+}
+.lf-app :is(.lf-showcase-title,.lf-cover-title,.lf-library-card-title,.lf-explore-work-caption) {
+  font-family:var(--glass-font) !important;
+  font-size:13px !important;
+  font-weight:500 !important;
+  line-height:1.5 !important;
+  color:var(--ui-ink) !important;
+  overflow-wrap:anywhere !important;
+  white-space:normal !important;
+  letter-spacing:0 !important;
+}
+.lf-app :is(.lf-community-author-row>span:last-child,.lf-community-post-author small,.lf-friend-reader,.lf-work-format,.lf-work-subtitle) {
+  font-size:12px !important;
+  line-height:1.5 !important;
+  color:var(--ui-secondary) !important;
+}
+@media (prefers-reduced-transparency:reduce) {
+  :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
+  .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page {
+    --glass-fill:var(--ui-surface);
+    --glass-sheet:var(--ui-surface);
+    --glass-reflection:linear-gradient(transparent,transparent);
+    --glass-blur:none;
+  }
+}
+}

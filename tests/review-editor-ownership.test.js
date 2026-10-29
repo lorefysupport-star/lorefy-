@@ -14,7 +14,7 @@ function harness() {
   const backend={mode:'live',user:{id:'a'},_communityEpoch:0,publishReview:body=>{calls.push(body);return pending;}};
   const scope={window:{setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout(){},LorefyBackend:backend,localStorage:{getItem:key=>values.get(key)||null},dispatchEvent:mark('refresh'),
     LorefySavedReviewDraft:require('../modules/lorefy-review-editor').savedDraft,LorefyReviewComposer:()=>{}},
-    React:{createElement:(type,props)=>({type,props})},currentUILang:()=> 'en',I:()=>'',getScoreFields:()=>[],
+    React:{createElement:(type,props)=>({type,props})},currentUILang:()=> 'en',I:()=>'',legalCoverOf:()=> 'legal-fallback.svg',getScoreFields:()=>[],
     m:{id:'work',title:'A work'},M:[],G:4,J:'Reader',Y:'reader',Z:'',Fe:null,se:false,ze:{},gt:false,
     ct:{current:''},pt:{current:''},ft:[],reviewEditor:{current:null},on:true,
     dt:mark('rating'),no:mark('metrics'),ht:mark('images'),ro:mark('recommend'),io:mark('spoiler'),

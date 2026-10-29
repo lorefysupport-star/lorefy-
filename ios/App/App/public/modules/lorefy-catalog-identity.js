@@ -173,6 +173,10 @@
       ["anilist", work && (work.anilistId || work.idAniList)],
       ["openlibrary", work && (work.openLibraryId || work.olid)],
       ["googlebooks", work && work.googleBooksId],
+      ["wikidata", work && work.wikidataId],
+      ["bookbrainz", work && work.bookBrainzId],
+      ["gcd-series", work && work.gcdSeriesId && work.catalogLevel !== 'issue' ? work.gcdSeriesId : null],
+      ["gcd-issue", work && work.gcdIssueId],
       ["isbn", work && (work.isbn13 || work.isbn)]
     ].forEach(function (entry) {
       if (entry[1] !== undefined && entry[1] !== null && String(entry[1]).trim()) {
@@ -202,6 +206,10 @@
     var canonicalLeft = canonicalId(leftId, aliases || {});
     var canonicalRight = canonicalId(rightId, aliases || {});
     if (canonicalLeft === canonicalRight) return true;
+    if(a.catalogLevel&&b.catalogLevel&&a.catalogLevel!==b.catalogLevel)return false;
+    for(var field of ['isbn13','issueNumber','volumeNumber'])if(a[field]&&b[field]&&String(a[field])!==String(b[field]))return false;
+    // A provider's explicit edition/issue ID remains authoritative; a title is not an edition key.
+    if(a.catalogLevel==='edition'&&b.catalogLevel==='edition'&&sourceFamily(a)===sourceFamily(b))return false;
     if (hasSharedExternalId(a, b)) return true;
     if (normalizeType(a.type) !== normalizeType(b.type)) return false;
     if (!canonicalWorkKey(a.title) || canonicalWorkKey(a.title) !== canonicalWorkKey(b.title)) return false;
@@ -254,6 +262,12 @@
 
   function mergeRecord(primary, incoming, deferMergedIds) {
     if (!primary || !incoming || primary === incoming) return primary;
+    var attributionRows=[];
+    [primary,incoming].forEach(function(row){
+      attributionRows=attributionRows.concat(Array.isArray(row.catalogAttributions)?row.catalogAttributions:[]);
+      if(row.sourceUrl)attributionRows.push({source:row.source||row._apiSource||row.pl||'',url:row.sourceUrl,license:row.sourceLicense||''});
+    });
+    if(attributionRows.length){var seenAttributions=new Set();primary.catalogAttributions=attributionRows.filter(function(row){if(!row||!row.url||seenAttributions.has(row.url))return false;seenAttributions.add(row.url);return true;}).slice(0,20);}
     var comicEditions = null;
     if (isComicType(primary.type) && isComicType(incoming.type) && canonicalWorkKey(primary.title) === canonicalWorkKey(incoming.title)) {
       comicEditions = [];

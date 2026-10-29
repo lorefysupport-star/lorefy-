@@ -27,3 +27,6 @@ config/lorefy-release.json
 
 design-source/
 project-memory/
+archives/
+build34/
+docs/performance/

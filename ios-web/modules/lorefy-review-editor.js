@@ -9,17 +9,74 @@
     var formats = {'مانجا':'Manga','مانهوا':'Manhwa','مانهوا صيني':'Manhua','مانهوا صينية':'Manhua','مانهوا صينيّة':'Manhua','كوميكس':'Comics','رواية':'Novel','كتاب':'Book','لايت نوفل':'Light novel','ويب نوفل':'Web novel'};
     return lang === 'en' ? formats[value] || value : value;
   }
-  function canPublish(value) { return typeof value === 'number' && Number.isFinite(value) && value >= 0.25 && value <= 5; }
+  function isDislike(value, recommendation) { return value === 0 && (recommendation === 'no' || recommendation === false); }
+  function canPublish(value, recommendation) { return isDislike(value,recommendation) || typeof value === 'number' && Number.isFinite(value) && value >= 0.25 && value <= 5; }
+  function localDislikeCount(rows, workId, ownerId) {
+    var latest=new Map();
+    (rows||[]).forEach(function(row){
+      if(!row || String(row.mid)!==String(workId))return;
+      var user=row.userId==='me' ? ownerId||'me' : row.userId;
+      if(!user)return;
+      var old=latest.get(user);
+      if(!old || (Number(row.ts)||0)>(Number(old.ts)||0))latest.set(user,row);
+    });
+    return Array.from(latest.values()).filter(function(row){return row.is_public!==false && isDislike(row.r,row.recVal||row.rec);}).length;
+  }
   function ratingValue(index, part) { return Math.min(5, Math.max(0.25, index + ([0.25,0.5,0.75,1].includes(part) ? part : 1))); }
   function savedDraft(review) {
     review = review || {};
+    var recommendation=review.recVal || (review.rec === true ? 'yes' : isDislike(review.r,review.rec) ? 'no' : null);
+    if(recommendation==='no'&&!canPublish(review.r,'no'))recommendation=null;
     return {rating:Math.max(0,Math.min(5,Number(review.r)||0)),text:review.txt === '—' ? '' : String(review.txt || ''),
       ratings:Object.assign({story:0,art:0,chars:0,world:0},review.ratings || {}),
       images:Array.isArray(review.imgs) ? review.imgs.slice() : [],moment:String(review.moment || ''),
-      spoiler:!!review.spoiler,recommendation:review.recVal || (review.rec === true ? 'yes' : null)};
+      spoiler:!!review.spoiler,recommendation:recommendation};
   }
   root.LorefySavedReviewDraft = savedDraft;
-  if (typeof module === 'object' && module.exports) module.exports = { copy:copy, canPublish:canPublish, ratingValue:ratingValue, formatLabel:formatLabel, savedDraft:savedDraft };
+  root.LorefyCanPublishReview = canPublish;
+  if (typeof module === 'object' && module.exports) module.exports = { copy:copy, canPublish:canPublish, isDislike:isDislike, localDislikeCount:localDislikeCount, ratingValue:ratingValue, formatLabel:formatLabel, savedDraft:savedDraft };
+
+  root.LorefyWorkDislikes = function WorkDislikes(p) {
+    var R=root.React,h=R.createElement,backend=root.LorefyBackend,owner=backend&&backend.user&&backend.user.id;
+    var live=!!(backend&&backend.mode==='live'),workId=String(p.workId||''),en=p.language==='en';
+    var context=[live,owner,backend&&backend._communityEpoch].join(':'),state=R.useState(null),result=state[0],setResult=state[1];
+    var revision=JSON.stringify((p.reviews||[]).filter(function(row){return String(row.mid)===workId;}).map(function(row){return [row.id,row.r,row.recVal];}));
+    var retryRef=R.useRef(null);
+    R.useEffect(function(){
+      if(!live)return;
+      var active=true,sequence=0,client=backend.client,epoch=backend._communityEpoch;
+      function current(){
+        try{return active&&backend===root.LorefyBackend&&backend.mode==='live'&&backend.user&&backend.user.id===owner&&backend.client===client&&backend._communityEpoch===epoch&&(!root.localStorage.getItem('lorefy.activeUser.v1')||root.localStorage.getItem('lorefy.activeUser.v1')===owner);}catch(_){return false;}
+      }
+      async function load(){
+        var request=++sequence;
+        if(!current())return;
+        setResult({workId:workId,context:context,count:null,failed:false});
+        try{
+          if(!backend.countWorkDislikes)throw new Error('Count is unavailable');
+          var count=await backend.countWorkDislikes(workId);
+          if(!Number.isSafeInteger(count)||count<0)throw new Error('Count is unavailable');
+          if(current()&&request===sequence)setResult({workId:workId,context:context,count:count,failed:false});
+        }catch(_){if(current()&&request===sequence)setResult({workId:workId,context:context,count:null,failed:true});}
+      }
+      retryRef.current=load;load();
+      if(root.addEventListener)root.addEventListener('lorefy:community-refresh',load);
+      return function(){active=false;retryRef.current=null;if(root.removeEventListener)root.removeEventListener('lorefy:community-refresh',load);};
+    },[workId,context,backend,revision]);
+    var matching=result&&result.workId===workId&&result.context===context;
+    var count=live?(matching?result.count:null):localDislikeCount(p.reviews,workId,owner),failed=live&&matching&&result.failed;
+    var icons=root.NenIcons||{};
+    return h('div',{className:'lf-work-dislikes','aria-live':'polite','aria-label':en?'Public work dislikes':'عدم الإعجاب بالعمل في المراجعات العامة'},
+      icons.ThumbsDown&&h(icons.ThumbsDown,{size:16,'aria-hidden':true}),h('strong',{'data-work-dislike-count':'',dir:'ltr'},count===null?'—':String(count)),
+      h('span',null,en?'Dislikes':'عدم إعجاب'),failed&&h('button',{type:'button',title:en?'Retry dislike count':'إعادة تحميل عدد عدم الإعجاب','aria-label':en?'Retry dislike count':'إعادة تحميل عدد عدم الإعجاب',onClick:function(){retryRef.current&&retryRef.current();}},icons.RotateCw?h(icons.RotateCw,{size:16,'aria-hidden':true}):(en?'Retry':'إعادة المحاولة')));
+  };
+
+  root.LorefyWorkHeroMedia = function WorkHeroMedia(p) {
+    var R=root.React,h=R.createElement,name=p.language==='en'?'Retry artwork':'إعادة تحميل صورة العمل';
+    return h(root.LorefyCoverMedia,{src:p.src,fallback:p.fallback,workId:p.workId,language:p.language,alt:'',loading:'eager',fetchPriority:'high',render:function(surface,retry){
+      return h(R.Fragment,null,h('span',{className:'lf-work-hero-art','aria-hidden':true},surface),retry&&R.cloneElement(retry,{className:'lf-cover-retry lf-work-hero-retry','aria-label':name,title:name}));
+    }});
+  };
 
   root.LorefyWorkIdentity = function WorkIdentity(p) {
     var h=root.React.createElement, w=p.work, english=p.language==='en';
@@ -47,15 +104,16 @@
       event.preventDefault();setTab(buttons[next].dataset.workTab);buttons[next].focus();
     }
     return h('header',{className:'lf-work-identity',ref:host},
-      h('img',{className:'lf-work-poster',src:p.cover,alt:w.title,decoding:'async',onError:p.onError,'data-fallback':p.fallback}),
+      root.LorefyCoverMedia?h(root.LorefyCoverMedia,{className:'lf-work-poster',src:p.cover,fallback:p.fallback,alt:w.title,workId:w.id,language:p.language}):h('img',{className:'lf-work-poster',src:p.cover,alt:w.title,decoding:'async',onError:p.onError,'data-fallback':p.fallback}),
       h('div',{className:'lf-work-copy'},
         h('p',{className:'lf-work-format'},[formatLabel(w.type,p.language),w.yr].filter(Boolean).join(' · ')),
-        h('div',{className:'lf-work-title-line'},h('h1',{dir:'auto'},w.title)),
-        p.subtitle && h('p',{className:'lf-work-subtitle'},p.subtitle),
+        h('div',{className:'lf-work-title-line'},h('h1',{dir:'auto','data-no-translate':'1'},w.title)),
+        p.subtitle && h('p',{className:'lf-work-subtitle',dir:'auto',title:p.subtitle,'data-no-translate':'1'},p.subtitle),
         h('div',{className:'lf-work-rating','aria-label':english?'Work rating':'تقييم العمل'},feather&&h(feather,{size:20,'aria-hidden':true}),h('strong',{className:'lf-work-rating-value'},Number(p.rating)>0?Number(p.rating).toFixed(1):'—'),h('span',{className:'lf-work-rating-caption'},english?'out of 5':'من 5')),
+        h(root.LorefyWorkDislikes,{workId:w.id,language:p.language,reviews:p.reviews}),
         p.creator && (root.LorefyProductCore && root.LorefyProductCore.authorWorks([w],p.creator).length
-          ? h('button',{type:'button',className:'lf-work-creator lf-work-author-button',onClick:function(){ root.LorefyProductTools.openAuthor(p.creator); },'aria-label':(english?'Works by ':'أعمال ')+p.creator},p.creator,root.NenIcons && h(english?root.NenIcons.ChevronRight:root.NenIcons.ChevronLeft,{size:14,'aria-hidden':true}))
-          : h('p',{className:'lf-work-creator'},p.creator))),
+          ? h('button',{type:'button',className:'lf-work-creator lf-work-author-button',title:p.creator,'data-no-translate':'1',onClick:function(){ root.LorefyProductTools.openAuthor(p.creator); },'aria-label':(english?'Works by ':'أعمال ')+p.creator},h('span',{className:'lf-work-author-name',dir:'auto','data-no-translate':'1'},p.creator),root.NenIcons && h(english?root.NenIcons.ChevronRight:root.NenIcons.ChevronLeft,{size:14,'aria-hidden':true}))
+          : h('p',{className:'lf-work-creator',dir:'auto',title:p.creator,'data-no-translate':'1'},p.creator))),
       h('div',{className:'lf-work-action-slot'}),
       h('div',{className:'lf-work-facts'},w.st && h('span',null,w.st),p.metadata && h('span',null,p.metadata),w.pl && h('span',null,w.pl)),
       h('nav',{className:'lf-work-section-nav',role:'tablist','aria-label':english?'Work content':'محتوى العمل',onKeyDown:moveTab},
@@ -69,10 +127,18 @@
     var momentState = R.useState(p.momentRef.current || ''), moment = momentState[0], setMoment = momentState[1];
     var busyState = R.useState(false), busy = busyState[0], setBusy = busyState[1];
     var errorState = R.useState(''), error = errorState[0], setError = errorState[1];
+    var viewState=R.useState('write'),view=viewState[0],setView=viewState[1];
     var host = R.useRef(null), closeButton = R.useRef(null), busyRef = R.useRef(false);
     var limit = p.premium ? 4000 : 750;
     var isCurrent = function () { return !p.isCurrent || p.isCurrent(); };
-    var icon = function (name, props) { return p.icons[name] ? h(p.icons[name], Object.assign({size:18, 'aria-hidden':true}, props || {})) : null; };
+    var disliked=isDislike(p.rating,p.recommendation),valid=canPublish(p.rating,p.recommendation);
+    function pickRating(value){if(!isCurrent())return;if(value>0&&p.recommendation==='no')p.onRecommend(null);p.onRating(value);}
+    function pickRecommendation(value){
+      if(!isCurrent()||busyRef.current)return;
+      if(value==='no'){p.onRating(0);p.onRecommend(disliked?null:'no');}
+      else p.onRecommend(p.recommendation==='yes'?null:'yes');
+    }
+    var icon = function (name, props) { var component=p.icons[name]||root.NenIcons&&root.NenIcons[name];return component ? h(component, Object.assign({size:18, 'aria-hidden':true}, props || {})) : null; };
     var label = function (value) { return root.LorefyI18n ? root.LorefyI18n.translate(value, p.language) : value; };
     R.useEffect(function () {
       var previous = root.document.activeElement;
@@ -105,7 +171,7 @@
         h('div',{className:'lf-rating-scale-labels','aria-hidden':true},[0,1,2,3,4,5].map(function(n){return h('span',{key:n},String(n));})));
     }
     async function publish() {
-      if (!isCurrent() || busyRef.current || !canPublish(p.rating)) return;
+      if (!isCurrent() || busyRef.current || !canPublish(p.rating,p.recommendation)) return;
       busyRef.current = true; setBusy(true); setError('');
       try { if (await p.onPublish() === false && isCurrent()) setError(w.failure); }
       catch (e) { if (isCurrent()) setError(w.failure); }
@@ -114,29 +180,31 @@
     function optionalTitle(title) { return h('summary', null, h('span', null, title), h('small', null, w.optional)); }
     return h('div', {className:'nc-fade lf-review-editor-overlay', 'data-no-translate':'1', dir:english ? 'ltr' : 'rtl'},
       h('button', {className:'lf-rating-scrim', tabIndex:-1, 'aria-label':w.close, disabled:busy, onClick:p.onClose}),
-      h('section', {ref:host, className:'nc-sheet lf-rating-sheet', 'data-review-mid':String(p.work.id), role:'dialog', 'aria-modal':true, 'aria-labelledby':'lf-rating-title'},
+      h('section', {ref:host, className:'nc-sheet lf-rating-sheet lf-review-studio', 'data-review-mid':String(p.work.id), role:'dialog', 'aria-modal':true, 'aria-labelledby':'lf-rating-title'},
         h('div', {className:'lf-rating-handle', 'aria-hidden':true}),
         h('header', {className:'lf-rating-header'}, h('h2', {id:'lf-rating-title'}, w.title), h('button', {ref:closeButton, type:'button', title:w.close, 'aria-label':w.close, disabled:busy, onClick:p.onClose}, icon('X'))),
         h('div', {className:'lf-rating-body'},
-          h('div', {className:'lf-rating-work'}, h('img', {src:p.cover, alt:'', decoding:'async'}), h('div', null, h('span', null, formatLabel(p.work.type,p.language)), h('h3', null, p.work.title), h('p', null, [p.work.auth,p.work.yr].filter(Boolean).join(' · ')))),
+          h('div', {className:'lf-rating-work'}, h(root.LorefyCoverMedia,{className:'lf-review-mini-cover',src:p.cover,fallback:p.fallback,alt:p.work.title,workId:p.work.id,language:p.language}), h('div', null, h('span', null, formatLabel(p.work.type,p.language)), h('h3', null, p.work.title), h('p', null, [p.work.auth,p.work.yr].filter(Boolean).join(' · ')))),
           h('section', {className:'lf-rating-primary', 'aria-label':w.rating},
-            h('div', {className:'lf-rating-heading'}, h('h3', null, w.rating), h('output', {className:'lf-rating-number', 'aria-live':'polite'}, root.NenIcons && root.NenIcons.Feather && h(root.NenIcons.Feather,{size:24,'aria-hidden':true}), canPublish(p.rating) ? Number(p.rating).toFixed(2) : '—', h('small', null, canPublish(p.rating) ? w.outOf : w.empty))),
-            feathers(p.rating, p.onRating, w.rating, true)),
+            h('div', {className:'lf-rating-heading'}, h('h3', null, w.rating), h('output', {className:'lf-rating-number', 'aria-live':'polite'}, root.NenIcons && root.NenIcons.Feather && h(root.NenIcons.Feather,{size:24,'aria-hidden':true}), valid ? Number(p.rating).toFixed(2) : '—', h('small', null, disliked?(english?'Dislike · 0 out of 5':'عدم إعجاب · صفر من 5'):valid?w.outOf:w.empty))),
+            h('div',{className:'lf-review-score-controls'},h('button',{type:'button','aria-label':english?'Decrease rating':'خفض التقييم',title:english?'Decrease rating':'خفض التقييم',disabled:busy||p.rating<=0,onClick:function(){pickRating(Math.max(0,p.rating-.25));}},icon('Minus')),feathers(p.rating, pickRating, w.rating, true),h('button',{type:'button','aria-label':english?'Increase rating':'زيادة التقييم',title:english?'Increase rating':'زيادة التقييم',disabled:busy||p.rating>=5,onClick:function(){pickRating(Math.min(5,p.rating+.25));}},icon('Plus')))),
+          h('nav',{className:'lf-review-studio-tabs',role:'tablist','aria-label':english?'Review sections':'أقسام المراجعة',onKeyDown:function(event){if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;var buttons=Array.from(event.currentTarget.querySelectorAll('[role=tab]')),i=buttons.indexOf(root.document.activeElement);if(i<0)return;event.preventDefault();var step=event.key===(english?'ArrowRight':'ArrowLeft')?1:-1,next=event.key==='Home'?0:event.key==='End'?2:(i+step+3)%3;buttons[next].click();buttons[next].focus();}},[['write',english?'Your thoughts':'رأيك'],['details',english?'Details':'التفاصيل'],['extras',english?'Extras':'إضافات']].map(function(entry){return h('button',{key:entry[0],type:'button',role:'tab','data-review-view':entry[0],'aria-selected':view===entry[0],tabIndex:view===entry[0]?0:-1,onClick:function(){if(isCurrent())setView(entry[0]);}},entry[1]);})),
+          h('div',{className:'lf-review-view',hidden:view!=='write',role:'tabpanel','aria-label':english?'Your thoughts':'رأيك'},
           h('div', {className:'lf-rating-recommendation'}, h('p', null, w.recommend), h('div', null, [['yes',w.yes],['no',w.no]].map(function (item) {
-            return h('button', {key:item[0], type:'button', 'aria-pressed':p.recommendation === item[0], onClick:function () { p.onRecommend(p.recommendation === item[0] ? null : item[0]); }}, icon('ThumbsUp',{className:item[0] === 'no' ? 'is-flipped' : ''}), item[1]);
+            return h('button', {key:item[0], type:'button', disabled:busy, 'data-review-dislike':item[0]==='no'?'':undefined, 'aria-pressed':item[0]==='no'?disliked:p.recommendation==='yes', onClick:function () { pickRecommendation(item[0]); }}, icon(item[0]==='no'?'ThumbsDown':'ThumbsUp'), item[0]==='no'?(english?'Dislike · 0':'عدم إعجاب · صفر'):item[1]);
           }))),
           h('section', {className:'lf-rating-writing'},
             h('label', {htmlFor:'lf-rating-text'}, w.review, h('small', null, w.optional)),
             h('textarea', {id:'lf-rating-text', dir:'auto', rows:3, value:text, placeholder:w.placeholder, maxLength:limit, onChange:function (event) { if (!isCurrent()) return; p.textRef.current = event.target.value; setText(event.target.value); }}),
-            h('div', {className:'lf-rating-writing-meta'}, h('label', {className:'lf-rating-spoiler'}, h('input', {type:'checkbox', checked:p.spoiler, onChange:function (event) { p.onSpoiler(event.target.checked); }}), w.spoiler), h('span', {dir:'ltr'}, text.length+' / '+limit))),
-          h('details', {className:'lf-rating-details'}, optionalTitle(w.details), h('div', {className:'lf-rating-metrics'}, p.fields.map(function (field) {
+            h('div', {className:'lf-rating-writing-meta'}, h('label', {className:'lf-rating-spoiler'}, h('input', {type:'checkbox', checked:p.spoiler, onChange:function (event) { p.onSpoiler(event.target.checked); }}), w.spoiler), h('span', {dir:'ltr'}, text.length+' / '+limit)))),
+          h('div',{className:'lf-review-view',hidden:view!=='details',role:'tabpanel','aria-label':w.details},h('details', {className:'lf-rating-details',open:true}, optionalTitle(w.details), h('div', {className:'lf-rating-metrics'}, p.fields.map(function (field) {
             return h('div', {key:field.k, className:'lf-rating-metric'}, h('div', null, h('span', null, label(field.l)), h('output', null, p.ratings[field.k] ? Number(p.ratings[field.k]).toFixed(2) : '—')), feathers(p.ratings[field.k] || 0, function (value) { p.onMetric(field.k,value); },label(field.l)));
-          }))),
-          h('details', {className:'lf-rating-extras'}, optionalTitle(w.extras),
+          })))),
+          h('div',{className:'lf-review-view',hidden:view!=='extras',role:'tabpanel','aria-label':w.extras},h('details', {className:'lf-rating-extras',open:true}, optionalTitle(w.extras),
             h('label', {htmlFor:'lf-rating-moment'}, w.moment), h('textarea', {id:'lf-rating-moment', dir:'auto', rows:2, value:moment, maxLength:1000, placeholder:w.momentPlaceholder, onChange:function (event) { if (!isCurrent()) return; p.momentRef.current = event.target.value; setMoment(event.target.value); }}),
-            h('div', {className:'lf-rating-images'}, h('p', null, w.images), p.images.map(function (url,index) { return h('div', {key:index}, h('img', {src:url, alt:''}), h('button', {type:'button', 'aria-label':w.remove, onClick:function () { p.onRemoveImage(index); }}, icon('X'))); }),
+            h('div', {className:'lf-rating-images'}, h('p', null, w.images), p.images.map(function (url,index) { var name=(english?'Review image ':'صورة المراجعة ')+(index+1);return h('div', {key:index+':'+url,className:'lf-rating-attachment'}, h(root.LorefyCoverMedia,{className:'lf-review-attachment-media',src:url,alt:name,kind:'image',workId:p.work.id+':attachment:'+index,language:p.language}), h('button', {type:'button',className:'lf-rating-remove',title:w.remove+' '+(index+1), 'aria-label':w.remove+' '+(index+1), onClick:function () { p.onRemoveImage(index); }}, icon('X'))); }),
               p.premium && p.images.length < 10 ? h('label', {className:'lf-rating-attach'}, icon('Plus'), h('span', null, w.attach), h('input', {type:'file', accept:'image/*', onChange:p.onUpload})) : !p.premium && h('button', {type:'button', onClick:p.onPaywall}, icon('Lock'), w.premium)),
-            h('div', {className:'lf-rating-ranking', 'data-lf-review-ranking':'', 'aria-label':w.characters}))),
-        h('footer', {className:'lf-rating-footer'}, error && h('p', {role:'alert'}, error), h('button', {type:'button', disabled:busy || !canPublish(p.rating), onClick:publish}, busy ? w.publishing : p.completeOnPublish ? w.publishComplete : w.publish))));
+            h('div', {className:'lf-rating-ranking', 'data-lf-review-ranking':'', 'aria-label':w.characters})))),
+        h('footer', {className:'lf-rating-footer'}, error && h('p', {role:'alert'}, error), h('button', {type:'button', disabled:busy || !valid, onClick:publish}, busy ? w.publishing : p.completeOnPublish ? w.publishComplete : w.publish))));
   };
 })(typeof window !== 'undefined' ? window : this);

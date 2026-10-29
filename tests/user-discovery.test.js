@@ -9,6 +9,15 @@ const {
 } = require("../modules/lorefy-user-discovery.js");
 
 const testReaders = [{ id: "reader-qa", username: "qa_reader", name: "Test reader" }];
+test('strict live reader search refuses unavailable or malformed directory responses',async()=>{
+ await assert.rejects(createUserDirectory({readers:[]}).search('reader',{strict:true}),/unavailable/);
+ await assert.rejects(createUserDirectory({readers:[],adapter:{searchPublicProfiles:async()=>null}}).search('reader',{strict:true}),/unavailable/);
+});
+test('strict reader search reports a live error instead of presenting a false empty result',async()=>{
+ const directory=createUserDirectory({readers:[],adapter:{searchPublicProfiles:async()=>{throw Error('offline')}}});
+ await assert.rejects(directory.search('reader',{strict:true}),/offline/);
+ assert.deepEqual(await directory.search('reader'),[]);
+});
 
 test("reader search normalizes handles and refuses one-character enumeration", async () => {
   const directory = createUserDirectory({ readers: testReaders });

@@ -6,14 +6,14 @@ function harness(){
   const nodes=[],values=new Map([['lorefy.activeUser.v1','a'],['lorefy.user.library.v2',JSON.stringify({keep:'paused'})]]),writes=[],events=[],notices=[],fileReads=[];
   const works=[{id:'first',title:'First'},{id:'second',title:'Second'}],hooks={};
   function el(tag,attrs={},children=[]){const n={tag,attrs,children:children.filter(Boolean),handlers:{},value:'',disabled:false,hidden:false,isConnected:true,inert:false,
-    appendChild(c){if(c)this.children.push(c);},addEventListener(k,f){this.handlers[k]=f;},classList:{add(){},remove(){}},
+    appendChild(c){if(c)this.children.push(c);},addEventListener(k,f){this.handlers[k]=f;},classList:{add(){},remove(){}},setAttribute(k,v){this.attrs[k]=v;},removeAttribute(k){delete this.attrs[k];},focus(){},
     querySelectorAll(){return[];},click(){if(this.handlers.click&&!this.disabled)return this.handlers.click();}};
     let text=attrs.text||'';Object.defineProperty(n,'textContent',{get:()=>text,set:v=>{text=String(v);n.children=[];}});
     nodes.push(n);return n;}
   const page=el('div'),body=el('div'),storage={getItem:k=>values.get(k)||null,setItem(k,v){if(hooks.restore)hooks.restore(k,v);values.set(k,String(v));},removeItem:k=>values.delete(k)};
-  const global={localStorage:storage,LorefyBackend:{mode:'live',user:{id:'a'},client:{},_communityEpoch:1},
+  const global={LorefyI18n:require('../modules/lorefy-i18n'),localStorage:storage,LorefyBackend:{mode:'live',user:{id:'a'},client:{},_communityEpoch:1},
     dispatchEvent:e=>events.push(e),CustomEvent:function(type,options){this.type=type;this.detail=options.detail;}};
-  const scope={global,el,ovOpen:()=>({page,body,close(){page.inert=true;page.isConnected=false;}}),
+  const scope={doc:{documentElement:{lang:'en'}},global,el,ovOpen:()=>({page,body,close(){page.inert=true;page.isConnected=false;}}),
     read:(k,fallback)=>values.has(k)?JSON.parse(values.get(k)):fallback,
     write:(k,v)=>{writes.push(k);if(hooks.write&&hooks.write(k,v)===false)return false;values.set(k,JSON.stringify(v));return true;},
     uiText:(ar,en)=>en,toastSafe:t=>notices.push(t),mlTitleOf:w=>w.title,mlResultCover:w=>el('img',{alt:w.title}),
@@ -31,7 +31,7 @@ function harness(){
   return{scope,global,page,nodes,values,writes,events,notices,fileReads,hooks,works,find,
     preview:()=>find('lf-im-preview'),confirm:()=>find('lf-im-confirm'),
     async network(service,index=0){const input=nodes.filter(n=>n.tag==='input'&&n.attrs.type==='text')[service==='anilist'?0:1];input.value='qa-reader';
-      const button=nodes.find(n=>n.tag==='section'&&n.children.some(c=>c.tag==='div'&&c.children.includes(input))).children.find(c=>c.tag==='div').children[1];
+      const button=nodes.find(n=>n.tag==='section'&&n.children.some(c=>c.tag==='div'&&c.children.some(x=>x===input||x.children.includes(input)))).children.find(c=>c.tag==='div').children[1];
       button.click();await flush();return button;},
     file(index=0){const n=nodes.filter(n=>n.tag==='input'&&n.attrs.type==='file')[index];n.files=[{name:'qa.csv'}];n.handlers.change();return fileReads.at(-1);},
     paste(title){find('lf-im-paste').value=title;find('lf-im-go-wide').click();},

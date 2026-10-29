@@ -103,6 +103,12 @@
   }
   function renderCharacterPortraitImage(wrap, c) {
     if (!wrap) return;
+    if (global.LorefyPortraitMedia) {
+      if (wrap._portraitMedia) wrap._portraitMedia.dispose(true);
+      wrap._portraitMedia = global.LorefyPortraitMedia.mount(wrap, { src: characterImageUrl(c), alt: c.name || c.latin || "", initials: initials(c), language: doc.documentElement.lang, loading: "lazy" });
+      scheduleCharacterActionIcons();
+      return;
+    }
     var old = wrap.querySelector("img");
     if (old) old.remove();
     var label = wrap.querySelector(".lf-character-initial");
@@ -121,6 +127,10 @@
       });
       wrap.insertBefore(img, label);
     }
+  }
+  function releaseCharacterPortraits(host) {
+    if (!host) return;
+    Array.prototype.forEach.call(host.querySelectorAll('[data-lorefy-portrait]'), function (node) { if (node._portraitMedia) node._portraitMedia.dispose(); });
   }
   function characterPortrait(c, cls, onChange, work) {
     var portrait = el("div", { class: cls || "lf-character-portrait" });
@@ -223,25 +233,23 @@
   var activePage = null;
   var activeImagePicker = null;
 
-  function closeCharacterImagePicker() {
-    if (activeImagePicker && activeImagePicker.parentNode) activeImagePicker.parentNode.removeChild(activeImagePicker);
+  function closeCharacterImagePicker(picker) {
+    picker = picker || activeImagePicker;
+    if (!picker || picker !== activeImagePicker) return;
     activeImagePicker = null;
+    if (picker._releasePicker) picker._releasePicker();
+    releaseCharacterPortraits(picker);
+    if (picker.parentNode) picker.parentNode.removeChild(picker);
   }
   function imagePickerMount() { return doc.getElementById("screen") || doc.body; }
-  function appendImageChoice(host, c, url, label, onChange) {
+  function appendImageChoice(host, c, url, label, save) {
     if (!url) return;
-    var pick = el("button", { type: "button", class: "lf-image-choice", "aria-label": label || "اختيار الصورة" }, [
+    var pick = el("button", { type: "button", class: "lf-image-choice", "aria-label": label || uiText("اختيار الصورة", "Choose image") }, [
       el("img", { src: url, alt: c.name || c.latin || "", loading: "lazy", referrerpolicy: "no-referrer" }),
-      el("span", { text: label || "اختيار" })
+      el("span", { text: label || uiText("اختيار", "Choose") })
     ]);
-    pick.addEventListener("click", async function () {
-      pick.disabled = true;
-      try { await setCharacterImage(c, url); }
-      catch (error) { toastSafe(error.message); return; }
-      finally { pick.disabled = false; }
-      if (onChange) onChange(url);
-      toastSafe("تم حفظ صورة " + (c.name || c.latin || "الشخصية"));
-      closeCharacterImagePicker();
+    pick.addEventListener("click", function () {
+      return save(url, uiText("تم حفظ صورة ", "Saved image for ") + (c.name || c.latin || uiText("الشخصية", "character")));
     });
     host.appendChild(pick);
   }
@@ -251,39 +259,54 @@
   }
   function openCharacterImagePicker(c, onChange, work) {
     closeCharacterImagePicker();
+    var owner = profileRatedCharacterOwner(), picker, released = false, saving = false;
+    var requestId = 0, requestTimer = null, loading = false, unsubscribeAuth;
+    function close() { closeCharacterImagePicker(picker); }
+    function isCurrent() {
+      if (released || activeImagePicker !== picker || !picker.isConnected) return false;
+      if (profileRatedCharacterOwner() !== owner) { close(); return false; }
+      return true;
+    }
+    function ownerChanged() { if (profileRatedCharacterOwner() !== owner) close(); }
+    function paintSaving() {
+      card.setAttribute("aria-busy", String(saving));
+      var buttons = [resetBtn, uploadBtn].concat(Array.from(choices.querySelectorAll("button")));
+      if (saving && buttons.indexOf(doc.activeElement) !== -1) closeBtn.focus();
+      buttons.forEach(function (button) { button.disabled = saving; });
+    }
+    async function saveImage(url, message) {
+      if (!isCurrent() || saving) return;
+      saving = true; paintSaving();
+      try {
+        await setCharacterImage(c, url);
+        if (!isCurrent()) return;
+        if (onChange) onChange(url);
+        toastSafe(message);
+        close();
+      } catch (error) { if (isCurrent()) toastSafe(error.message); }
+      finally { if (isCurrent()) { saving = false; paintSaving(); } }
+    }
     var current = characterImageUrl(c);
     var card = el("div", { class: "lf-image-choice-card" });
-    var closeBtn = el("button", { type: "button", class: "lf-image-choice-close", "aria-label": "إغلاق", text: "×" });
-    closeBtn.addEventListener("click", closeCharacterImagePicker);
+    var closeBtn = el("button", { type: "button", class: "lf-image-choice-close", "aria-label": uiText("إغلاق", "Close"), text: "×" });
+    closeBtn.addEventListener("click", close);
     var preview = el("div", { class: "lf-image-choice-preview" });
     renderCharacterPortraitImage(preview, c);
     var fileInput = el("input", { type: "file", accept: "image/*", style: "display:none" });
     fileInput.addEventListener("change", function () {
       var f = fileInput.files && fileInput.files[0];
-      if (!f) return;
-      cbReadImageFile(f, async function (dataUrl) {
-        uploadBtn.disabled = true;
-        try { await setCharacterImage(c, dataUrl); }
-        catch (error) { toastSafe(error.message); return; }
-        finally { uploadBtn.disabled = false; }
-        if (onChange) onChange(dataUrl);
-        toastSafe("تم حفظ الصورة المرفوعة");
-        closeCharacterImagePicker();
+      if (!f || !isCurrent() || saving) return;
+      cbReadImageFile(f, function (dataUrl) {
+        return saveImage(dataUrl, uiText("تم حفظ الصورة المرفوعة", "Uploaded image saved"));
       });
       fileInput.value = '';
     });
-    var resetBtn = el("button", { type: "button", class: "lf-image-choice-secondary", text: "الصورة التلقائية" });
-    resetBtn.addEventListener("click", async function () {
-      resetBtn.disabled = true;
-      try { await setCharacterImage(c, ""); }
-      catch (error) { toastSafe(error.message); return; }
-      finally { resetBtn.disabled = false; }
-      if (onChange) onChange("");
-      toastSafe("رجعت للصورة التلقائية");
-      closeCharacterImagePicker();
+    var resetBtn = el("button", { type: "button", class: "lf-image-choice-secondary", text: uiText("الصورة التلقائية", "Automatic image") });
+    resetBtn.addEventListener("click", function () {
+      return saveImage("", uiText("رجعت للصورة التلقائية", "Automatic image restored"));
     });
-    var uploadBtn = el("button", { type: "button", class: "lf-image-choice-primary", text: "رفع صورة" });
-    uploadBtn.addEventListener("click", function () { fileInput.click(); });
+    var uploadBtn = el("button", { type: "button", class: "lf-image-choice-primary", text: uiText("رفع صورة", "Upload image") });
+    uploadBtn.addEventListener("click", function () { if (isCurrent() && !saving) fileInput.click(); });
     var mudaeLink = el("a", {
       class: "lf-image-choice-external",
       href: mudaeSearchUrl(c),
@@ -292,37 +315,87 @@
       text: "Mudae ↗"
     });
     var choices = el("div", { class: "lf-image-choice-grid" });
-    var status = el("p", { class: "lf-image-choice-status", text: "جاري جلب صور بديلة من API..." });
+    var status = el("p", { class: "lf-image-choice-status", role: "status", "aria-live": "polite", "aria-atomic": "true" });
+    var retryBtn = el("button", { type: "button", class: "lf-image-choice-secondary lf-image-choice-retry", text: uiText("إعادة المحاولة", "Retry") });
+    retryBtn.hidden = true;
+    retryBtn.addEventListener("click", loadChoices);
     card.appendChild(el("div", { class: "lf-image-choice-grabber", "aria-hidden": "true" }));
     card.appendChild(el("div", { class: "lf-image-choice-head" }, [
       closeBtn,
       el("div", {}, [
-        el("strong", { text: "تعديل صورة الشخصية" }),
-        el("span", { text: c.name || c.latin || "شخصية" })
+        el("strong", { text: uiText("تعديل صورة الشخصية", "Edit character image") }),
+        el("span", { text: c.name || c.latin || uiText("شخصية", "Character") })
       ]),
       preview
     ]));
     card.appendChild(el("div", { class: "lf-image-choice-actions" }, [resetBtn, uploadBtn, mudaeLink, fileInput]));
     card.appendChild(status);
+    card.appendChild(retryBtn);
     card.appendChild(choices);
     card.addEventListener("click", function (e) { e.stopPropagation(); });
-    activeImagePicker = el("div", { class: "lf-image-choice-sheet", role: "dialog", "aria-modal": "true", "aria-label": "اختيار صورة شخصية" }, card);
-    activeImagePicker.addEventListener("click", closeCharacterImagePicker);
-    imagePickerMount().appendChild(activeImagePicker);
-
-    appendImageChoice(choices, c, current, "الحالية", onChange);
-    var loader = global.LorefyCharacterSystem && global.LorefyCharacterSystem.loadImageOptions;
-    if (!loader) {
-      status.textContent = "مصدر الصور البديلة غير متاح حالياً.";
-      return;
+    picker = el("div", { class: "lf-image-choice-sheet", role: "dialog", "aria-modal": "true", "aria-label": uiText("اختيار صورة شخصية", "Choose character image") }, card);
+    activeImagePicker = picker;
+    picker.addEventListener("click", close);
+    imagePickerMount().appendChild(picker);
+    var releaseDialog = bindDialogKeys(picker, close, closeBtn);
+    picker._releasePicker = function () {
+      if (released) return;
+      released = true; requestId++;
+      clearTimeout(requestTimer);
+      global.removeEventListener("lorefy:stored-state", ownerChanged);
+      global.removeEventListener("storage", ownerChanged);
+      if (unsubscribeAuth) unsubscribeAuth();
+      releaseDialog();
+    };
+    global.addEventListener("lorefy:stored-state", ownerChanged);
+    global.addEventListener("storage", ownerChanged);
+    if (global.LorefyBackend && global.LorefyBackend.onAuth) {
+      unsubscribeAuth = global.LorefyBackend.onAuth(function (session) {
+        if (!session || String(session.userId || session.user && session.user.id || "") !== owner) close();
+      });
     }
-    loader(c, work && (work.sourceWork || work)).then(function (urls) {
-      var before = choices.children.length;
-      (urls || []).filter(function (url) { return url && url !== current; }).forEach(function (url, i) { appendImageChoice(choices, c, url, i ? "بديلة " + (i + 1) : "من المصدر", onChange); });
-      status.textContent = choices.children.length > before ? "اختر صورة بديلة أو ارفع صورتك." : "لم نجد صوراً بديلة لهذه الشخصية.";
-    }).catch(function () {
-      status.textContent = "تعذر جلب الصور البديلة الآن.";
-    });
+    appendImageChoice(choices, c, current, uiText("الحالية", "Current"), saveImage);
+    function loadFailed(id) {
+      if (!isCurrent() || id !== requestId) return;
+      requestId++; loading = false; clearTimeout(requestTimer);
+      choices.setAttribute("aria-busy", "false");
+      status.textContent = uiText("تعذر جلب الصور البديلة الآن.", "Could not load alternative images.");
+      retryBtn.hidden = false; retryBtn.disabled = false;
+    }
+    function loadChoices() {
+      if (!isCurrent() || loading) return;
+      var loader = global.LorefyCharacterSystem && global.LorefyCharacterSystem.loadImageOptions;
+      if (!loader) {
+        status.textContent = uiText("مصدر الصور البديلة غير متاح حالياً.", "Alternative image provider is unavailable.");
+        retryBtn.hidden = false; retryBtn.disabled = false;
+        return;
+      }
+      var id = ++requestId;
+      if (doc.activeElement === retryBtn) closeBtn.focus();
+      loading = true; retryBtn.disabled = true;
+      status.textContent = uiText("جارٍ تحميل صور بديلة…", "Loading alternative images…");
+      choices.setAttribute("aria-busy", "true");
+      requestTimer = setTimeout(function () { loadFailed(id); }, 20000);
+      Promise.resolve().then(function () {
+        if (!isCurrent() || id !== requestId) return [];
+        return loader(c, work && (work.sourceWork || work), { reportErrors: true });
+      }).then(function (urls) {
+        if (!isCurrent() || id !== requestId) return;
+        clearTimeout(requestTimer); loading = false;
+        var seen = [current], count = 0;
+        (urls || []).forEach(function (url) {
+          if (!url || seen.indexOf(url) !== -1) return;
+          seen.push(url);
+          appendImageChoice(choices, c, url, count++ ? uiText("بديلة ", "Alternative ") + count : uiText("من المصدر", "From source"), saveImage);
+        });
+        paintSaving(); choices.setAttribute("aria-busy", "false");
+        status.textContent = count ? uiText("اختر صورة بديلة أو ارفع صورتك.", "Choose an alternative image or upload your own.") : uiText("لم نجد صوراً بديلة لهذه الشخصية.", "No alternative images found for this character.");
+        // Do not strand keyboard focus on a control that is about to be hidden.
+        if (doc.activeElement === retryBtn) closeBtn.focus();
+        retryBtn.hidden = true;
+      }).catch(function () { loadFailed(id); });
+    }
+    loadChoices();
   }
 
   function scoreControl(workId, charKey, getStatus, displayName) {
@@ -511,6 +584,7 @@
           || (currentFilter === "support" && !/\u0631\u0626\u064a\u0633/.test(role));
         return (!q || name.indexOf(q) !== -1) && filterMatches;
       });
+      releaseCharacterPortraits(list);
       while (list.firstChild) list.removeChild(list.firstChild);
       rows = matches.slice(0, renderLimit).map(function (character) {
         var row = characterRow(work, character);
@@ -573,7 +647,7 @@
     var source = el("div", { class: "lf-character-source-row", "data-character-status": "" }, sourceChildren);
 
     /* top bar */
-    var back = el("button", { type: "button", class: "lf-character-page-back", "aria-label": "رجوع", html: "&rsaquo;" });
+    var back = el("button", { type: "button", class: "lf-character-page-back", "aria-label": uiText("رجوع","Back"), title:uiText("رجوع","Back") }, el("i", {"data-lucide":uiText("chevron-right","chevron-left"),"aria-hidden":"true"}));
     back.addEventListener("click", closePage);
     var top = el("div", { class: "lf-character-page-top" }, [
       back,
@@ -599,7 +673,9 @@
     ]);
 
     var page = el("div", { class: "lf-character-page", role: "dialog", "aria-modal": "true", "aria-label": uiText("تقييم شخصيات ", "Rate characters in ") + work.title }, shell);
+    page.classList.add("lf-character-studio");
     page._refreshStats = refreshStats;
+    page._releasePortraitMedia = function () { global.clearTimeout(searchTimer); releaseCharacterPortraits(page); };
     page._source = source;
     page._work = work;
     enhanceInteractionAccessibility(page);
@@ -622,7 +698,9 @@
   }
   function closePage() {
     if (!activePage) return;
+    closeCharacterImagePicker();
     var p = activePage; activePage = null;
+    if (p._releasePortraitMedia) p._releasePortraitMedia();
     p.classList.add("is-leaving");
     if (p._releaseDialog) p._releaseDialog();
     p.inert = true;
@@ -1103,16 +1181,33 @@
     } catch (e) {}
     return url;
   }
-  function cbPortrait(c, cls) {
+  function cbPaintPortrait(wrap,c,url,shareUrl,retryHost) {
+    if(wrap._portraitMedia)wrap._portraitMedia.dispose(true);
+    wrap.setAttribute('data-cb-source',url||'');
+    wrap._cbRetryHost=retryHost;
+    wrap._portraitMedia=global.LorefyPortraitMedia.mount(wrap,{src:url,alt:c.name||'',initials:initials(c),language:doc.documentElement.lang,loading:'lazy',shareSrc:shareUrl,retry:retryHost!==false,retryHost:retryHost||undefined,focusTarget:function(){return retryHost&&retryHost.querySelector('.lf-cb-slot-select,.lf-cb-picker-select')||wrap.parentNode&&wrap.parentNode.querySelector('.lf-cb-custom-api');}});
+    scheduleCharacterActionIcons();
+  }
+  function cbPortrait(c, cls, retryHost) {
     var wrap = el("div", { class: "lf-cb-portrait" + (cls ? " " + cls : ""), style: "background-image:" + cbGrad(c.id) },
-      el("span", { class: "lf-cb-initial", text: initials(c) }));
+      global.LorefyPortraitMedia?null:el("span", { class: "lf-cb-initial", text: initials(c) }));
     var cache = read(K_CHARIMG, {}), customUrl = cbCustomImg(c.id), originalUrl = customUrl || c.image || c.img || cache[c.id], url = cbDisplayImageUrl(originalUrl);
+    if(global.LorefyPortraitMedia){cbPaintPortrait(wrap,c,url,customUrl||cbShareImageUrl(originalUrl),retryHost);return wrap;}
     if (url) {
       var img = el("img", { src: url, alt: c.name, loading: "lazy", referrerpolicy: "no-referrer", "data-share-src": customUrl || cbShareImageUrl(originalUrl) });
       img.addEventListener("error", function () { try { img.remove(); } catch (e) {} });
       wrap.appendChild(img);
     }
     return wrap;
+  }
+  function cbRefreshPortrait(wrap,c,url,shareUrl) {
+    if(!wrap||!wrap.isConnected||wrap.closest&&wrap.closest('.is-leaving'))return;
+    var custom=cbCustomImg(c.id),next=cbDisplayImageUrl(custom||url);
+    if(!next)return;
+    if(global.LorefyPortraitMedia){if(wrap.getAttribute('data-cb-source')!==next)cbPaintPortrait(wrap,c,next,custom||shareUrl||cbShareImageUrl(next),wrap._cbRetryHost);return;}
+    if(wrap.querySelector('img'))return;
+    var img=el('img',{src:next,alt:c.name||'',referrerpolicy:'no-referrer','data-share-src':custom||shareUrl||cbShareImageUrl(next)});
+    img.addEventListener('error',function(){img.remove();});wrap.appendChild(img);
   }
   var cbImgQueue = [], cbImgBusy = false, cbImgRetried = {};
   function cbCustomImg(id) {
@@ -1225,7 +1320,7 @@
     return CB_CATS[0];
   }
 
-  function closePicker() { if (CB.pickerEl && CB.pickerEl.parentNode) CB.pickerEl.parentNode.removeChild(CB.pickerEl); CB.pickerEl = null; CB.editing = null; if(CB.pickerOpener && CB.pickerOpener.isConnected) CB.pickerOpener.focus(); CB.pickerOpener=null; }
+  function closePicker() { if(CB.pickerEl){if(CB.pickerEl._nestedImagePicker)closeCharacterImagePicker(CB.pickerEl._nestedImagePicker);releaseCharacterPortraits(CB.pickerEl);}if (CB.pickerEl && CB.pickerEl.parentNode) CB.pickerEl.parentNode.removeChild(CB.pickerEl); CB.pickerEl = null; CB.editing = null; if(CB.pickerOpener && CB.pickerOpener.isConnected) CB.pickerOpener.focus(); CB.pickerOpener=null; }
   function closeShare() { if (CB.shareEl && CB.shareEl.parentNode) CB.shareEl.parentNode.removeChild(CB.shareEl); CB.shareEl = null; }
   function overlayMount() { return doc.getElementById("screen") || doc.body; }
 
@@ -1239,6 +1334,7 @@
   }
   function openShare(cat) {
     closeShare();
+    if(global.LorefyShareComposer)return global.LorefyShareComposer.open({kind:'ranking',title:'أفضل شخصيات '+cat.label,profile:global.LorefyShareComposer.currentProfile(),items:cbSlots(cat.key).map(function(id,index){var c=id&&cbCharById(id);return c?{id:c.id,name:c.name,image:cbCustomImg(c.id)||read(K_CHARIMG,{})[c.id]||characterImageUrl(c),rank:index+1}:null;}).filter(Boolean),resolveImage:function(item){var c=cbCharById(item.id);return c?cbFetchImage(c):'';}});
     CB.shareEl = buildShareSheet(cat, cbSlots(cat.key));
     overlayMount().appendChild(CB.shareEl);
   }
@@ -1260,22 +1356,16 @@
 
     var grid = el("div", { class: "lf-cb-cover-grid" }, slots.map(function (id, index) {
       var c = id ? cbCharById(id) : null;
-      var slot = el("button", { type: "button", class: "lf-cb-slot" + (c ? " is-filled" : ""), "aria-haspopup": "dialog",
-        "aria-label": c ? ("تعديل خانة " + (index + 1) + ": " + c.name) : ("خانة فارغة " + (index + 1)) },
+      var slot = el("div", { class: "lf-cb-slot" + (c ? " is-filled" : "") },
         [ el("span", { class: "lf-cb-slot-num", text: String(index + 1) }) ]);
       if (c) {
-        var portrait = cbPortrait(c, "lf-cb-slot-portrait");
+        var portrait = cbPortrait(c, "lf-cb-slot-portrait", slot);
         slot.appendChild(portrait);
         slot.appendChild(el("span", { class: "lf-cb-slot-name", text: c.name }));
-        cbEnqueueImage(c, function (url) {
-          if (url && !portrait.querySelector("img")) {
-            var im = el("img", { src: url, alt: c.name, referrerpolicy: "no-referrer" });
-            im.addEventListener("error", function () { try { im.remove(); } catch (e) {} });
-            portrait.appendChild(im);
-          }
-        });
+        cbEnqueueImage(c, function (url,shareUrl) { cbRefreshPortrait(portrait,c,url,shareUrl); });
       }
-      slot.addEventListener("click", function () { openPicker(cat, index); });
+      var select=el("button",{type:"button",class: "lf-cb-slot-select","aria-haspopup":"dialog","aria-label":c?uiText("تعديل خانة ","Edit slot ")+(index+1)+": "+c.name:uiText("خانة فارغة ","Empty slot ")+(index+1)});
+      select.addEventListener("click", function () { openPicker(cat, index); });slot.appendChild(select);
       return slot;
     }));
 
@@ -1299,21 +1389,26 @@
   /* keep the character block in sync with the open hub + active category */
   function syncCharEmbed() {
     var hub = doc.querySelector(".lf-pref-board-hub");
-    if (!hub) { var stray = doc.querySelector(".lf-cb-embed"); if (stray && stray.parentNode) stray.parentNode.removeChild(stray); closePicker(); closeShare(); return false; }
+    if (!hub) { releaseCharacterPortraits(CB.embedEl);CB.embedEl=null;var stray = doc.querySelector(".lf-cb-embed"); if (stray && stray.parentNode) stray.parentNode.removeChild(stray); closePicker(); closeShare(); return false; }
     var rail = hub.querySelector(".lf-pref-board-rail");
     if (!rail) return false;
     var cat = catFromHub();
     if (!cat) return false;
     var sig = "embed|" + cat.key + "|" + cbSlots(cat.key).join(",");
     var existing = rail.querySelector(".lf-cb-embed");
+    if(CB.embedEl&&CB.embedEl!==existing)releaseCharacterPortraits(CB.embedEl);
+    CB.embedEl=existing;
     if (existing && existing.getAttribute("data-sig") === sig) return true;
     var next = buildCharEmbed(cat); next.setAttribute("data-sig", sig);
-    if (existing && existing.parentNode === rail) rail.replaceChild(next, existing);
+    if (existing && existing.parentNode === rail) {releaseCharacterPortraits(existing);rail.replaceChild(next, existing);}
     else rail.appendChild(next);
+    CB.embedEl=next;
     return true;
   }
 
   function buildPicker(cat) {
+    var owner=profileRatedCharacterOwner(),picker,imageSaving=false;
+    function isPickerCurrent(){return !!(picker && CB.pickerEl === picker && picker.isConnected && profileRatedCharacterOwner() === owner);}
     var slots = cbSlots(cat.key), currentId = slots[CB.editing];
     var usedExceptThis = {}; slots.forEach(function (id, i) { if (id && i !== CB.editing) usedExceptThis[id] = 1; });
     var q = profileTopCharacterSearchText(CB.query);
@@ -1343,12 +1438,15 @@
         var fileInput = el("input", { type: "file", accept: "image/*", style: "display:none" });
         fileInput.addEventListener("change", function () {
           var f = fileInput.files && fileInput.files[0];
-          if (!f) return;
+          if (!f || !isPickerCurrent()) return;
           cbReadImageFile(f, async function (dataUrl) {
+            if (!isPickerCurrent() || imageSaving) return;
+            imageSaving=true;
             upBtn.disabled = true;
             try { await cbSetCustomImg(curC.id, dataUrl); }
-            catch (error) { toastSafe(error.message); return; }
-            finally { upBtn.disabled = false; }
+            catch (error) { if(isPickerCurrent())toastSafe(error.message); return; }
+            finally { imageSaving=false;if(isPickerCurrent())upBtn.disabled = false; }
+            if (!isPickerCurrent()) return;
             toastSafe("تم حفظ صورتك لـ " + curC.name);
             cbInvalidateEmbeds(); syncCharEmbed();
             openPicker(cat, CB.editing); /* rebuild picker with new preview */
@@ -1359,10 +1457,13 @@
         upBtn.addEventListener("click", function () { fileInput.click(); });
         var apiBtn = el("button", { type: "button", class: "lf-cb-custom-api", text: "صور API" });
         apiBtn.addEventListener("click", function () {
+          if(!isPickerCurrent()||imageSaving)return;
           openCharacterImagePicker(curC, function () {
+            if (!isPickerCurrent()) return;
             cbInvalidateEmbeds(); syncCharEmbed();
             openPicker(cat, CB.editing);
           }, cbImageWork(curC, cat.key));
+          picker._nestedImagePicker=activeImagePicker;
         });
         var kids = [
           cbPortrait(curC, "lf-cb-custom-preview"),
@@ -1375,10 +1476,13 @@
         if (cbCustomImg(currentId)) {
           var rmBtn = el("button", { type: "button", class: "lf-cb-custom-rm", "aria-label": "إزالة الصورة المخصصة", text: "×" });
           rmBtn.addEventListener("click", async function () {
+            if(!isPickerCurrent()||imageSaving)return;
+            imageSaving=true;
             rmBtn.disabled = true;
             try { await cbSetCustomImg(curC.id, ""); }
-            catch (error) { toastSafe(error.message); return; }
-            finally { rmBtn.disabled = false; }
+            catch (error) { if(isPickerCurrent())toastSafe(error.message); return; }
+            finally { imageSaving=false;if(isPickerCurrent())rmBtn.disabled = false; }
+            if (!isPickerCurrent()) return;
             toastSafe("أُزيلت الصورة المخصصة");
             cbInvalidateEmbeds(); syncCharEmbed();
             openPicker(cat, CB.editing);
@@ -1409,7 +1513,7 @@
         button.addEventListener("click",function(){
           var request=++workRequest; workStatus.textContent=uiText("جاري تحميل الشخصيات…","Loading characters…");
           cbLoadWorkCharacters(w,cat.key).then(function(rows){
-            if(request!==workRequest || !workStatus.isConnected) return;
+            if(request!==workRequest || !isPickerCurrent()) return;
             workStatus.textContent=rows.length?rows.length+uiText(" شخصية"," characters"):uiText("لا توجد شخصيات موثقة لهذا العمل","No verified characters for this work");
             workResults.textContent="";
             CB.query=search.value; options.setAttribute("data-visible","80"); fillPickerOptions(options,cat);
@@ -1434,7 +1538,7 @@
       else if(!e.shiftKey && doc.activeElement===last){e.preventDefault();first.focus();}
     });
 
-    var picker = el("div", { class: "lf-cb-picker" }, pickerCard);
+    picker = el("div", { class: "lf-cb-picker" }, pickerCard);
     picker.addEventListener("click", function () { closePicker(); });
     return picker;
   }
@@ -1448,16 +1552,18 @@
       if (!q) return true;
       return clCastText(c).indexOf(q) >= 0 || profileTopCharacterSearchText(c.work).indexOf(q) >= 0;
     });
+    releaseCharacterPortraits(host);
     host.innerHTML = "";
     if (!candidates.length) { host.appendChild(el("p", { class: "lf-cb-picker-empty", text: "لا توجد نتائج مطابقة" })); return; }
     var visible = Number(host.getAttribute("data-visible")) || 80;
     candidates.slice(0,visible).forEach(function (c) {
-      var opt = el("button", { type: "button", class: "lf-cb-picker-option" + (c.id === currentId ? " is-current" : "") }, [
-        cbPortrait(c, "lf-cb-opt-portrait"),
+      var opt = el("div", { class: "lf-cb-picker-option" + (c.id === currentId ? " is-current" : "") });
+      [cbPortrait(c, "lf-cb-opt-portrait", opt),
         el("span", { class: "lf-cb-opt-copy" }, [ el("strong", { text: c.name }), el("em", { text: c.latin + " · " + c.work }) ])
-      ]);
-      opt.addEventListener("click", function () { cbSetSlot(cat.key, CB.editing, c.id); closePicker(); syncCharEmbed(); toastSafe("تم حفظ الخانة"); });
-      cbEnqueueImage(c, function (url) { if (url) { var p = opt.querySelector(".lf-cb-portrait"); if (p && !p.querySelector("img")) { var im = el("img", { src: url, alt: c.name, referrerpolicy: "no-referrer" }); im.addEventListener("error", function () { try { im.remove(); } catch (e) {} }); p.appendChild(im); } } });
+      ].forEach(function(child){opt.appendChild(child);});
+      var select=el("button",{type:"button",class: "lf-cb-picker-select","aria-label":c.name,"aria-pressed":String(c.id===currentId)});
+      select.addEventListener("click", function () { cbSetSlot(cat.key, CB.editing, c.id); closePicker(); syncCharEmbed(); toastSafe("تم حفظ الخانة"); });opt.appendChild(select);
+      cbEnqueueImage(c, function (url,shareUrl) { cbRefreshPortrait(opt.querySelector('.lf-cb-portrait'),c,url,shareUrl); });
       host.appendChild(opt);
     });
     if(candidates.length>visible){
@@ -1726,9 +1832,14 @@
     }).catch(function () { cb(null); });
   }
   function clGrad(seed) { var h = 0, s = String(seed); for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; var a = h % 360; return "linear-gradient(150deg, hsl(" + a + " 60% 54%), hsl(" + ((a + 42) % 360) + " 56% 36%))"; }
-  function clFace(ch, cls) {
+  function clFace(ch, cls, retryHost) {
     var wrap = el("span", { class: "lf-clx-face" + (cls ? " " + cls : "") });
     wrap.style.backgroundImage = clGrad(ch.id || ch.name);
+    if (global.LorefyPortraitMedia) {
+      wrap._portraitMedia = global.LorefyPortraitMedia.mount(wrap, { src: characterImageUrl(ch), alt: ch.name || "", initials: String(ch.name || "?").trim().slice(0,1), language: doc.documentElement.lang, loading: "lazy", retry:!!retryHost, retryHost:retryHost, focusTarget:function(){return retryHost && (retryHost.querySelector('.lf-clx-cast-select') || retryHost.parentNode && retryHost.parentNode.querySelector('.lf-clx-slot-select'));} });
+      scheduleCharacterActionIcons();
+      return wrap;
+    }
     var init = el("b", { text: String(ch.name || "?").trim().slice(0, 1) });
     wrap.appendChild(init);
     var src = characterImageUrl(ch);
@@ -1775,6 +1886,7 @@
     var back = el("button", { type: "button", class: "lf-ov-back", "aria-label": uiText("رجوع", "Back"), text: "‹" });
     var restoreFocus;
     function closePage() {
+      releaseCharacterPortraits(page);
       page.classList.add("is-leaving");
       if(restoreFocus)restoreFocus();
       page.inert=true;
@@ -1872,6 +1984,7 @@
 
   /* ── list poster: aurora + 5×2 cover grid (real covers, gradient fallback) */
   function mlPoster(list) {
+    if(global.LorefyShareComposer)return global.LorefyShareComposer.open({kind:'list',title:list.name,profile:global.LorefyShareComposer.currentProfile(),items:(list.works||[]).map(function(id,index){var w=mlWorkBy(id);return {id:id,name:mlTitleOf(w),image:mlCoverOf(w),rank:index+1};})});
     if (global.LorefyShareStudio) {
       var studioCard = shareStudioCard(list.name || "قائمتي", (list.works || []).slice(0, 10).map(function (id) {
         var w = mlWorkBy(id);
@@ -1994,6 +2107,7 @@
     opts = opts || {};
     var ov = ovOpen("lf-ml-page", "قوائمي");
     function renderHub() {
+      releaseCharacterPortraits(ov.body);
       ov.body.textContent = "";
       var add = el("button", { type: "button", class: "lf-ml-add" }, [
         el("span", { class: "lf-ml-add-plus", text: "+" }),
@@ -2060,6 +2174,7 @@
       for (var li = 0; li < lists.length; li++) if (lists[li].id === listId) { list = lists[li]; break; }
       if (!list) return renderHub();
       function persist() { clSave(lists); }
+      releaseCharacterPortraits(ov.body);
       ov.body.textContent = "";
       var backRow = el("button", { type: "button", class: "lf-ml-backrow", text: "‹ كل القوائم" });
       backRow.addEventListener("click", renderHub);
@@ -2139,16 +2254,19 @@
       }
       function slotEl(ix, size) {
         var ch = list.chars[ix] || null;
-        var slot = el("button", { type: "button", class: "lf-clx-slot lf-clx-slot-" + size + (ch ? " is-filled" : " is-empty"), "aria-label": "المركز " + (ix + 1) });
+        var slot = el("div", { class: "lf-clx-slot lf-clx-slot-" + size + (ch ? " is-filled" : " is-empty") });
         if (ix === 0 && ch) slot.appendChild(el("span", { class: "lf-clx-crown", "aria-hidden": "true", text: "♛" }));
         var faceWrap = el("span", { class: "lf-clx-slot-facewrap" + (ix === 0 ? " is-first" : "") });
-        if (ch) faceWrap.appendChild(clFace(ch, "lf-clx-slot-face"));
+        if (ch) faceWrap.appendChild(clFace(ch, "lf-clx-slot-face", faceWrap));
         else faceWrap.appendChild(el("span", { class: "lf-clx-slot-hole", text: "+" }));
         faceWrap.appendChild(el("span", { class: "lf-clx-slot-rank" + (ix === 0 ? " is-gold" : ""), text: String(ix + 1) }));
         slot.appendChild(faceWrap);
         slot.appendChild(el("span", { class: "lf-clx-slot-name", text: ch ? ch.name : "فارغ" }));
         if (ch) {
-          var editImg = el("button", { type: "button", class: "lf-clx-image-edit", "data-character-image-edit": ch.id || ch.name, "aria-label": "تعديل صورة " + ch.name, text: "✎" });
+          var remove = el("button", {type:"button",class:"lf-clx-slot-select","aria-label":uiText("إزالة ","Remove ")+ch.name+uiText(" من المركز "," from rank ")+(ix+1)});
+          remove.addEventListener("click", function () { list.chars.splice(ix, 1); persist(); paintChosen(); updateCastSelection(); refreshHead(); var next=chosen.querySelector('.lf-clx-slot-select');if(next)next.focus();else castSearch.focus(); });
+          slot.appendChild(remove);
+          var editImg = el("button", { type: "button", class: "lf-clx-image-edit", "data-character-image-edit": ch.id || ch.name, "aria-label": uiText("تعديل صورة ","Edit image for ") + ch.name, title:uiText("تعديل صورة ","Edit image for ") + ch.name },el("i",{"data-lucide":"pencil","aria-hidden":"true"}));
           editImg.addEventListener("click", function (e) {
             e.preventDefault(); e.stopPropagation();
             openCharacterImagePicker(ch, function (url) {
@@ -2158,7 +2276,7 @@
           });
           slot.appendChild(editImg);
         }
-        if (ch) slot.addEventListener("click", function () { list.chars.splice(ix, 1); persist(); paintChosen(); updateCastSelection(); refreshHead(); });
+        scheduleCharacterActionIcons();
         return slot;
       }
       var chosenPodium=null, chosenRest=null, chosenHint=null, chosenSlotNodes=[];
@@ -2171,7 +2289,7 @@
           var key=JSON.stringify([list.chars[index]||null,size]),previous=chosenSlotNodes[index];
           if(previous&&previous.key===key)return;
           var node=slotEl(index,size);
-          if(previous)host.replaceChild(node,previous.node);else host.appendChild(node);
+          if(previous){releaseCharacterPortraits(previous.node);host.replaceChild(node,previous.node);}else host.appendChild(node);
           chosenSlotNodes[index]={key:key,node:node};
         }
         updateSlot(1,"md",chosenPodium);updateSlot(0,"lg",chosenPodium);updateSlot(2,"md",chosenPodium);
@@ -2183,6 +2301,7 @@
       function updateCastSelection(){castSelectionUpdates.forEach(function(update){update();});}
       function paintCast() {
         castSelectionUpdates=[];
+        releaseCharacterPortraits(castHost);
         castHost.textContent = "";
         if (castData === null) {
           castMeta.textContent = "";
@@ -2203,16 +2322,18 @@
         filtered.slice(0, castVisible).forEach(function (c) {
           var ch = { id: c.id, name: c.name, img: c.image || "" };
           var at = inList(ch);
-          var item = el("button", { type: "button", class: "lf-clx-cast-item" + (at >= 0 ? " is-in" : "") }, [
-            clFace(ch),
+          var item = el("div", { class: "lf-clx-cast-item" + (at >= 0 ? " is-in" : "") });
+          [
+            clFace(ch, null, item),
             el("span", { class: "lf-clx-cast-name", text: ch.name }),
             at >= 0 ? el("span", { class: "lf-clx-cast-badge", text: String(at + 1) }) : null
-          ]);
+          ].forEach(function(child){if(child)item.appendChild(child);});
+          var select = el("button",{type:"button",class: "lf-clx-cast-select","aria-label":ch.name});item.appendChild(select);
           var badge=item.querySelector(".lf-clx-cast-badge") || el("span",{class:"lf-clx-cast-badge"});
           if(!badge.parentNode)item.appendChild(badge);
-          function updateSelection(){var rank=inList(ch);item.setAttribute("class","lf-clx-cast-item"+(rank>=0?" is-in":""));badge.hidden=rank<0;badge.textContent=rank>=0?String(rank+1):"";}
+          function updateSelection(){var rank=inList(ch);item.setAttribute("class","lf-clx-cast-item"+(rank>=0?" is-in":""));badge.hidden=rank<0;badge.textContent=rank>=0?String(rank+1):"";select.setAttribute("aria-pressed",String(rank>=0));}
           castSelectionUpdates.push(updateSelection);updateSelection();
-          item.addEventListener("click", function () {
+          select.addEventListener("click", function () {
             var ix = inList(ch);
             if (ix >= 0) list.chars.splice(ix, 1);
             else { if (list.chars.length >= 10) { toastSafe("الحد ١٠ شخصيات"); return; } list.chars.push(ch); }
@@ -2230,10 +2351,10 @@
         }
       }
       paintChosen(); paintCast();
-      clLoadCast(list.mid, function (cast) { castData = cast || []; paintCast(); });
       ov.body.appendChild(chosen);
       ov.body.appendChild(castTools);
       ov.body.appendChild(castHost);
+      clLoadCast(list.mid, function (cast) { if (!ov.page.isConnected || ov.page.inert || chosen.parentNode !== ov.body) return; castData = cast || []; paintCast(); });
       /* manual add — works even when the cast can't be fetched */
       var man = el("input", { class: "lf-ml-search", type: "text", maxlength: "40", placeholder: "أو أضف شخصية باسمها…", "aria-label": "أضف شخصية باسمها" });
       man.addEventListener("keydown", function (e) {
@@ -2261,6 +2382,7 @@
       for (var li = 0; li < lists.length; li++) if (lists[li].id === listId) { list = lists[li]; break; }
       if (!list) return renderHub();
       function persist() { mlSave(lists); }
+      releaseCharacterPortraits(ov.body);
       ov.body.textContent = "";
       var backRow = el("button", { type: "button", class: "lf-ml-backrow", text: "‹ كل القوائم" });
       backRow.addEventListener("click", renderHub);
@@ -2365,6 +2487,7 @@
     var shareChars = global.LorefyShareStudio && global.LorefyShareStudio.characterShareItems
       ? global.LorefyShareStudio.characterShareItems(chars, clCastCache[list.mid], characterImageUrl)
       : chars.map(function (ch) { return { name: ch.name || "", img: characterImageUrl(ch) }; });
+    if(global.LorefyShareComposer)return global.LorefyShareComposer.open({kind:'top',title:list.title||'أفضل الشخصيات',profile:global.LorefyShareComposer.currentProfile(),items:shareChars});
     if (global.LorefyShareStudio) {
       var studioCard = shareStudioCard("أفضل 10 شخصيات · " + (list.title || ""), shareChars);
       toastSafe("جاري تجهيز صورة الرف…");
@@ -3159,10 +3282,25 @@
     else { var fr = new FileReader(); fr.onload = function () { cb(String(fr.result || "")); }; fr.onerror = function () { onErr("تعذر قراءة الملف"); }; fr.readAsText(file); }
   }
   function openImport() {
-    var ov = ovOpen("lf-im-page", "استيراد مكتبتك");
-    var note = el("p", { class: "lf-im-note", text: "انقل مكتبتك من حساباتك القديمة بدل إضافة كل عمل يدويًا. الأعمال الموجودة مسبقًا في مكتبتك لن تُمس." });
+    var ov = ovOpen("lf-im-page", uiText("استيراد مكتبتك", "Import your library"));
+    var note = el("p", { class: "lf-im-note", text: uiText("مكتبتك الحالية محفوظة. راجع المطابقات قبل تأكيد الاستيراد.", "Your existing library is preserved. Review matches before confirming import.") });
     ov.body.appendChild(note);
-    var result = el("div", { class: "lf-im-result" });
+    var result = el("div", { class: "lf-im-result", "aria-busy": "false" });
+    ov.body.appendChild(result);
+    function field(control, label) {
+      var error = el("p", { class: "lf-im-field-error", role: "alert", hidden: "" });
+      control._importError = error;
+      return el("label", { class: "lf-im-field" }, [el("span", { text: label }), control, error]);
+    }
+    function validate(control, message) {
+      var empty = !control.value.trim();
+      control._importError.hidden = !empty;
+      control._importError.textContent = empty ? message : "";
+      if (empty) { control.setAttribute("aria-invalid", "true"); control.focus(); }
+      else control.removeAttribute("aria-invalid");
+      return !empty;
+    }
+    function focusResult(node) { node.focus(); }
     var openingContext = importContext(), attemptId = 0;
     function importContext() {
       var backend = global.LorefyBackend || null, active = "";
@@ -3184,14 +3322,20 @@
       if (!currentAttempt(attemptId)) return 0;
       attemptId++;
       result.textContent = "";
+      result.setAttribute("aria-busy", "true");
+      var pending = el("p", { class: "lf-im-loading", role: "status", tabindex: "-1", text: uiText("جارٍ تجهيز المطابقات…", "Preparing matches…") });
+      result.appendChild(pending);
+      focusResult(pending);
       return attemptId;
     }
     function finish(res, sourceLabel, attempt) {
       if (!currentAttempt(attempt)) return;
       result.textContent = "";
+      result.setAttribute("aria-busy", "false");
       var selectedRows = res.rows.map(function (row) { return Object.assign({}, row); });
+      var heading = el("h3", { tabindex: "-1", text: uiText("راجع المطابقات", "Review matches") });
       var preview = el("section", { class:"lf-im-preview" }, [
-        el("h3", { text:uiText("راجع المطابقات", "Review matches") }),
+        heading,
         el("p", { text:uiText("لن تتغير مكتبتك قبل التأكيد. يمكنك تبديل النسخة أو استبعادها.", "Your library stays unchanged until you confirm. Change an edition or skip it.") })
       ]);
       var matches = el("div", { class:"lf-im-preview-list" });
@@ -3238,53 +3382,76 @@
           var partial = error && error.code === "LOREFY_IMPORT_PARTIAL_SAVE";
           confirm.disabled = !!partial;
           if (!saveError) {
-            saveError = el("p", { class:"lf-im-error lf-im-save-error", role:"alert" });
+            saveError = el("p", { class:"lf-im-error lf-im-save-error", role:"alert", tabindex:"-1" });
             preview.appendChild(saveError);
           }
           saveError.textContent = partial
             ? uiText("لم يكتمل الحفظ وقد بقيت بعض التغييرات. راجع مكتبتك قبل إعادة الاستيراد.", "Import was only partly saved. Check your library before importing again.")
             : uiText("تعذر تأكيد حفظ الاستيراد. حاول مجددًا.", "Unable to save your import. Please try again.");
           saveError.hidden = false;
+          focusResult(saveError);
           return;
         }
         if (currentAttempt(attempt)) renderResult(out,res,sourceLabel);
       });
       preview.appendChild(confirm);
       result.appendChild(preview);
+      focusResult(heading);
     }
     function renderResult(out, res, sourceLabel) {
       result.textContent = "";
+      result.setAttribute("aria-busy", "false");
+      var heading = el("h3", { tabindex: "-1", text: uiText("تم الاستيراد من ", "Imported from ") + sourceLabel });
       result.appendChild(el("div", { class: "lf-im-summary" }, [
-        el("strong", { text: "تم الاستيراد من " + sourceLabel }),
-        el("span", { text: "✓ " + out.added + " عمل أُضيف إلى مكتبتك" }),
-        out.ratings ? el("span", { text: out.ratings + " تقييم استُورد" }) : null,
-        out.skipped ? el("span", { text: "↺ " + out.skipped + " موجود مسبقًا (تُرك كما هو)" }) : null,
-        res.misses ? el("span", { text: "— " + res.misses + " عمل غير موجود في كتالوج لورفي" }) : null
+        heading,
+        el("span", { text: out.added + uiText(" عمل أُضيف إلى مكتبتك", " titles added to your library") }),
+        out.ratings ? el("span", { text: out.ratings + uiText(" تقييم استُورد", " ratings imported") }) : null,
+        out.skipped ? el("span", { text: out.skipped + uiText(" موجود مسبقًا (تُرك كما هو)", " already in your library (unchanged)") }) : null,
+        res.misses ? el("span", { text: res.misses + uiText(" عمل غير مطابق في الكتالوج", " titles not matched in the catalog") }) : null
       ]));
-      var reload = el("button", { type: "button", class: "lf-im-reload", text: "تم، العودة إلى التطبيق" });
+      var reload = el("button", { type: "button", class: "lf-im-reload", text: uiText("تم، العودة إلى التطبيق", "Done, return to the app") });
       reload.addEventListener("click", function () { ov.close(); });
       result.appendChild(reload);
+      focusResult(heading);
     }
     function fail(msg, attempt) {
       if (!currentAttempt(attempt)) return;
+      var messages = {
+        "اسم المستخدم غير موجود في AniList": "AniList username was not found.",
+        "اسم المستخدم غير موجود في Kitsu": "Kitsu username was not found.",
+        "تعذر الجلب من AniList": "Could not fetch from AniList. Try again.",
+        "الملف لا يبدو تصدير مانجا من MAL": "This file is not a MAL manga export.",
+        "الملف لا يبدو تصدير Goodreads (لا يوجد عمود Title)": "This Goodreads export has no Title column.",
+        "ملف فارغ": "The file is empty.",
+        "ملف فارغ أو بلا صفوف": "The file has no records.",
+        "لم أجد عمود العنوان (Title) في الملف": "The file has no Title column.",
+        "تعذر قراءة الملف": "Could not read the file.",
+        "لا توجد أعمال مانجا في هذا الحساب": "This account has no manga entries.",
+        "تعذر فك ضغط الملف — فك الضغط يدويًا وارفع ملف .xml": "Could not decompress the file. Choose an uncompressed XML file.",
+        "متصفحك لا يدعم فك الضغط — فك الضغط يدويًا وارفع ملف .xml": "File decompression is unavailable. Choose an uncompressed XML file."
+      };
       result.textContent = "";
-      result.appendChild(el("p", { class: "lf-im-error", text: msg }));
+      result.setAttribute("aria-busy", "false");
+      var translated = Object.prototype.hasOwnProperty.call(messages, msg) ? messages[msg] : msg;
+      var error = el("p", { class: "lf-im-error", role: "alert", tabindex: "-1", text: uiText(msg, translated) });
+      result.appendChild(error);
+      focusResult(error);
     }
     /* AniList — one-tap by username */
-    var alInput = el("input", { class: "lf-ml-search", type: "text", "aria-label": uiText("اسم المستخدم في AniList", "AniList username"), placeholder: "اسم المستخدم في AniList", autocapitalize: "none", autocorrect: "off" });
-    var alBtn = el("button", { type: "button", class: "lf-im-go", text: "استيراد" });
+    var alInput = el("input", { class: "lf-ml-search", type: "text", "aria-label": uiText("اسم المستخدم في AniList", "AniList username"), placeholder: uiText("اسم المستخدم في AniList", "AniList username"), autocapitalize: "none", autocorrect: "off" });
+    var alField = field(alInput, uiText("اسم المستخدم في AniList", "AniList username"));
+    var alBtn = el("button", { type: "button", class: "lf-im-go", text: uiText("استيراد", "Import") });
     alBtn.addEventListener("click", function () {
       var name = alInput.value.trim();
-      if (!name) { toastSafe("اكتب اسم المستخدم"); return; }
+      if (!validate(alInput, uiText("اكتب اسم المستخدم في AniList.", "Enter your AniList username."))) return;
       if (alBtn.disabled) return;
       var attempt = beginImport(); if (!attempt) return;
-      alBtn.disabled = true; alBtn.textContent = "جارٍ الجلب…";
-      imFetchAniList(name).then(function (res) { finish(res, "AniList", attempt); }).catch(function (e) { fail(e && e.message || "تعذر الجلب من AniList", attempt); }).then(function () { alBtn.disabled = false; alBtn.textContent = "استيراد"; });
+      alBtn.disabled = true; alBtn.textContent = uiText("جارٍ الجلب…", "Fetching…");
+      imFetchAniList(name).then(function (res) { finish(res, "AniList", attempt); }).catch(function (e) { fail(e && e.message || uiText("تعذر الجلب من AniList", "Could not fetch from AniList"), attempt); }).then(function () { alBtn.disabled = false; alBtn.textContent = uiText("استيراد", "Import"); });
     });
     ov.body.appendChild(el("section", { class: "lf-im-card" }, [
-      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "AniList" }), el("em", { text: "بزر واحد — اكتب اسمك فقط" })]),
-      el("div", { class: "lf-im-row" }, [alInput, alBtn]),
-      el("p", { class: "lf-im-tip", text: "لو مكتبتك في MAL: اربطها بـ AniList (مزامنة تلقائية) أو استخدم ملف التصدير بالأسفل." })
+      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "AniList" }), el("em", { text: uiText("مكتبة الحساب العامة", "Public account library") })]),
+      el("div", { class: "lf-im-row" }, [alField, alBtn])
     ]));
     /* MAL export file */
     var malFile = el("input", { type: "file", accept: ".xml,.gz,application/xml,text/xml,application/gzip", style: "display:none" });
@@ -3292,15 +3459,15 @@
       var f = malFile.files && malFile.files[0]; if (!f) return;
       var attempt = beginImport(); if (!attempt) return;
       imReadFileText(f, function (text) {
-        try { finish(imParseMalXml(text), "MyAnimeList", attempt); } catch (e) { fail(e.message || "ملف غير صالح", attempt); }
+        try { finish(imParseMalXml(text), "MyAnimeList", attempt); } catch (e) { fail(e.message || uiText("ملف غير صالح", "Invalid file"), attempt); }
       }, function (message) { fail(message, attempt); });
       malFile.value = "";
     });
-    var malBtn = el("button", { type: "button", class: "lf-im-file", text: "اختر ملف التصدير (.xml)" });
+    var malBtn = el("button", { type: "button", class: "lf-im-file", text: uiText("اختر ملف التصدير (.xml)", "Choose export file (.xml)") });
     malBtn.addEventListener("click", function () { malFile.click(); });
     ov.body.appendChild(el("section", { class: "lf-im-card" }, [
-      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "MyAnimeList" }), el("em", { text: "ملف التصدير الرسمي" })]),
-      el("p", { class: "lf-im-tip", text: "من MAL: Settings ← Export ← Manga List — ثم ارفع الملف هنا." }),
+      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "MyAnimeList" }), el("em", { text: uiText("ملف التصدير الرسمي", "Official library export") })]),
+      el("p", { class: "lf-im-tip", text: "MAL · Settings / Export / Manga List · XML, XML.GZ" }),
       malBtn, malFile
     ]));
     /* Goodreads export file */
@@ -3309,31 +3476,32 @@
       var f = grFile.files && grFile.files[0]; if (!f) return;
       var attempt = beginImport(); if (!attempt) return;
       imReadFileText(f, function (text) {
-        try { finish(imParseGoodreads(text), "Goodreads", attempt); } catch (e) { fail(e.message || "ملف غير صالح", attempt); }
+        try { finish(imParseGoodreads(text), "Goodreads", attempt); } catch (e) { fail(e.message || uiText("ملف غير صالح", "Invalid file"), attempt); }
       }, function (message) { fail(message, attempt); });
       grFile.value = "";
     });
-    var grBtn = el("button", { type: "button", class: "lf-im-file", text: "اختر ملف التصدير (.csv)" });
+    var grBtn = el("button", { type: "button", class: "lf-im-file", text: uiText("اختر ملف التصدير (.csv)", "Choose export file (.csv)") });
     grBtn.addEventListener("click", function () { grFile.click(); });
     ov.body.appendChild(el("section", { class: "lf-im-card" }, [
-      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "Goodreads" }), el("em", { text: "للروايات والكتب" })]),
-      el("p", { class: "lf-im-tip", text: "من Goodreads: My Books ← Import and export ← Export Library — ثم ارفع ملف CSV هنا." }),
+      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "Goodreads" }), el("em", { text: uiText("للروايات والكتب", "Novels and books") })]),
+      el("p", { class: "lf-im-tip", text: "Goodreads · My Books / Import and export / Export Library · CSV" }),
       grBtn, grFile
     ]));
     /* Kitsu — one-tap by username */
-    var ktInput = el("input", { class: "lf-ml-search", type: "text", "aria-label": uiText("اسم المستخدم في Kitsu", "Kitsu username"), placeholder: "اسم المستخدم في Kitsu", autocapitalize: "none", autocorrect: "off" });
-    var ktBtn = el("button", { type: "button", class: "lf-im-go", text: "استيراد" });
+    var ktInput = el("input", { class: "lf-ml-search", type: "text", "aria-label": uiText("اسم المستخدم في Kitsu", "Kitsu username"), placeholder: uiText("اسم المستخدم في Kitsu", "Kitsu username"), autocapitalize: "none", autocorrect: "off" });
+    var ktField = field(ktInput, uiText("اسم المستخدم في Kitsu", "Kitsu username"));
+    var ktBtn = el("button", { type: "button", class: "lf-im-go", text: uiText("استيراد", "Import") });
     ktBtn.addEventListener("click", function () {
       var name = ktInput.value.trim();
-      if (!name) { toastSafe("اكتب اسم المستخدم"); return; }
+      if (!validate(ktInput, uiText("اكتب اسم المستخدم في Kitsu.", "Enter your Kitsu username."))) return;
       if (ktBtn.disabled) return;
       var attempt = beginImport(); if (!attempt) return;
-      ktBtn.disabled = true; ktBtn.textContent = "جارٍ الجلب…";
-      imFetchKitsu(name).then(function (res) { finish(res, "Kitsu", attempt); }).catch(function (e) { fail(e && e.message || "تعذر الجلب من Kitsu", attempt); }).then(function () { ktBtn.disabled = false; ktBtn.textContent = "استيراد"; });
+      ktBtn.disabled = true; ktBtn.textContent = uiText("جارٍ الجلب…", "Fetching…");
+      imFetchKitsu(name).then(function (res) { finish(res, "Kitsu", attempt); }).catch(function (e) { fail(e && e.message || uiText("تعذر الجلب من Kitsu", "Could not fetch from Kitsu"), attempt); }).then(function () { ktBtn.disabled = false; ktBtn.textContent = uiText("استيراد", "Import"); });
     });
     ov.body.appendChild(el("section", { class: "lf-im-card" }, [
-      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "Kitsu" }), el("em", { text: "بزر واحد — اسم المستخدم فقط" })]),
-      el("div", { class: "lf-im-row" }, [ktInput, ktBtn])
+      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "Kitsu" }), el("em", { text: uiText("مكتبة الحساب العامة", "Public account library") })]),
+      el("div", { class: "lf-im-row" }, [ktField, ktBtn])
     ]));
     /* StoryGraph / any CSV — auto-detected columns */
     var anyFile = el("input", { type: "file", accept: ".csv,.tsv,text/csv", style: "display:none" });
@@ -3341,34 +3509,38 @@
       var f = anyFile.files && anyFile.files[0]; if (!f) return;
       var attempt = beginImport(); if (!attempt) return;
       imReadFileText(f, function (text) {
-        try { finish(imParseGenericCsv(text, IM_DONE), "ملف CSV", attempt); } catch (e) { fail(e.message || "ملف غير صالح", attempt); }
+        try { finish(imParseGenericCsv(text, IM_DONE), uiText("ملف CSV", "CSV file"), attempt); } catch (e) { fail(e.message || uiText("ملف غير صالح", "Invalid file"), attempt); }
       }, function (message) { fail(message, attempt); });
       anyFile.value = "";
     });
-    var anyBtn = el("button", { type: "button", class: "lf-im-file", text: "اختر ملف CSV" });
+    var anyBtn = el("button", { type: "button", class: "lf-im-file", text: uiText("اختر ملف CSV", "Choose CSV file") });
     anyBtn.addEventListener("click", function () { anyFile.click(); });
     ov.body.appendChild(el("section", { class: "lf-im-card" }, [
-      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "StoryGraph وأي موقع آخر (CSV)" }), el("em", { text: "أعمدة تُكتشف تلقائيًا" })]),
-      el("p", { class: "lf-im-tip", text: "يقبل تصدير StoryGraph وLibraryThing وAnime-Planet ومواقع الكوميكس — يكفي وجود عمود Title، وتُقرأ الحالة والتقييم إن وُجدا." }),
+      el("header", { class: "lf-im-card-head" }, [el("strong", { text: uiText("StoryGraph ومصادر أخرى", "StoryGraph and other sources") }), el("em", { text: uiText("ملف CSV أو TSV", "CSV or TSV file") })]),
+      el("p", { class: "lf-im-tip", text: "StoryGraph · LibraryThing · Anime-Planet · CSV / TSV" }),
       anyBtn, anyFile
     ]));
     /* paste a plain list of titles — works with ANY site (NovelUpdates, Webnovel…) */
     var pasteStatus = IM_DONE;
-    var chipsWrap = el("div", { class: "lf-im-chips" });
-    [[IM_DONE, "قرأتها"], [IM_READING, "أقرأها"], [IM_WISH, "أريد قراءتها"], [IM_PAUSED, "متوقف مؤقتًا"], [IM_DROPPED, "توقفت نهائيًا"]].forEach(function (p, ix) {
-      var chip = el("button", { type: "button", class: "lf-im-chip" + (ix === 0 ? " is-on" : ""), text: p[1] });
+    var chipsWrap = el("div", { class: "lf-im-chips", role: "group", "aria-label": uiText("حالة القراءة للعناوين", "Reading status for titles") });
+    [IM_DONE, IM_READING, IM_WISH, IM_PAUSED, IM_DROPPED].map(function (value) {
+      return [value, global.LorefyI18n.readingStatusLabel(value, doc.documentElement.lang)];
+    }).forEach(function (p, ix) {
+      var chip = el("button", { type: "button", class: "lf-im-chip" + (ix === 0 ? " is-on" : ""), "aria-pressed": String(ix === 0), text: p[1] });
       chip.addEventListener("click", function () {
         pasteStatus = p[0];
-        chipsWrap.querySelectorAll(".lf-im-chip").forEach(function (x) { x.classList.remove("is-on"); });
+        chipsWrap.querySelectorAll(".lf-im-chip").forEach(function (x) { x.classList.remove("is-on"); x.setAttribute("aria-pressed", "false"); });
         chip.classList.add("is-on");
+        chip.setAttribute("aria-pressed", "true");
       });
       chipsWrap.appendChild(chip);
     });
-    var pasteTa = el("textarea", { class: "lf-im-paste", rows: "5", "aria-label": uiText("عناوين الأعمال للاستيراد", "Titles to import"), placeholder: "الصق العناوين هنا — عنوان واحد في كل سطر…" });
-    var pasteBtn = el("button", { type: "button", class: "lf-im-go lf-im-go-wide", text: "استيراد القائمة" });
+    var pasteTa = el("textarea", { class: "lf-im-paste", rows: "5", "aria-label": uiText("عناوين الأعمال للاستيراد", "Titles to import"), placeholder: uiText("عنوان واحد في كل سطر", "One title per line") });
+    var pasteField = field(pasteTa, uiText("عناوين الأعمال للاستيراد", "Titles to import"));
+    var pasteBtn = el("button", { type: "button", class: "lf-im-go lf-im-go-wide", text: uiText("استيراد القائمة", "Import titles") });
     pasteBtn.addEventListener("click", function () {
       var lines = pasteTa.value.split(/\r?\n/).map(function (l) { return l.replace(/^\s*[\d\u0660-\u0669]+[).\-–]\s*/, "").trim(); }).filter(Boolean);
-      if (!lines.length) { toastSafe("الصق العناوين أولاً"); return; }
+      if (!validate(pasteTa, uiText("أضف عنوانًا واحدًا على الأقل.", "Enter at least one title."))) return;
       var attempt = beginImport(); if (!attempt) return;
       var rows = [], misses = 0;
       lines.forEach(function (t) {
@@ -3376,14 +3548,12 @@
         if (w) rows.push({ work: w, status: pasteStatus, chapters: 0, score: 0 });
         else misses++;
       });
-      finish({ rows: rows, misses: misses }, "قائمة العناوين", attempt);
+      finish({ rows: rows, misses: misses }, uiText("قائمة العناوين", "Title list"), attempt);
     });
     ov.body.appendChild(el("section", { class: "lf-im-card" }, [
-      el("header", { class: "lf-im-card-head" }, [el("strong", { text: "أي موقع — الصق العناوين" }), el("em", { text: "NovelUpdates وغيره" })]),
-      el("p", { class: "lf-im-tip", text: "ما عنده تصدير؟ انسخ أسماء الأعمال من أي موقع والصقها — واختر حالتها." }),
-      chipsWrap, pasteTa, pasteBtn
+      el("header", { class: "lf-im-card-head" }, [el("strong", { text: uiText("قائمة عناوين", "Title list") }), el("em", { text: "NovelUpdates · Webnovel" })]),
+      chipsWrap, pasteField, pasteBtn
     ]));
-    ov.body.appendChild(result);
   }
 
   /* ── profile character taste ── */
@@ -3393,6 +3563,7 @@
   var profileRatedCharacterLoads = {};
   var profileRatedCharacterFailures = {};
   var profileRatedCharacterGallery = null;
+  var profileRatedCharacterSection = null;
   var profileTopCharacterEditor = null;
   var homeReplyCloudItems = [];
   var homeReplyCloudLastFetch = 0;
@@ -3732,9 +3903,18 @@
     }
     return rows.sort(function (a, b) { return b.score - a.score; }).slice(0, 12).map(function (row) { return row.work; });
   }
-  function profileRatedCharacterPortrait(item) {
+  function profileRatedCharacterPortrait(item, retryHost) {
     var character = item.character || {}, portrait = el("span", { class: "lf-profile-rated-character-portrait" });
     var image = characterImageUrl(character);
+    if (retryHost && global.LorefyPortraitMedia) {
+      portrait._portraitMedia = global.LorefyPortraitMedia.mount(portrait, {
+        src: image, alt: character.name || character.latin || "", initials: initials(character),
+        language: doc.documentElement.lang, loading: "lazy", retry: true,
+        focusTarget: function () { return portrait.parentElement && portrait.parentElement.querySelector('.lf-profile-character-open'); }
+      });
+      scheduleCharacterActionIcons();
+      return portrait;
+    }
     if (image) {
       var img = el("img", { src: image, alt: character.name || character.latin || "", loading: "lazy", referrerpolicy: "no-referrer" });
       img.addEventListener("error", function () { img.remove(); portrait.textContent = initials(character); });
@@ -3756,25 +3936,28 @@
   }
   function profileRatedCharacterTile(item) {
     var character = item.character || {};
-    var tile = el("button", { type: "button", class: "lf-profile-rated-character" }, [
-      profileRatedCharacterPortrait(item),
+    var name = character.name || character.latin || uiText("شخصية", "Character");
+    var tile = el("div", { class: "lf-profile-rated-character" }, [
+      profileRatedCharacterPortrait(item, true),
       el("span", { class: "lf-profile-rated-character-copy" }, [
         el("strong", { text: character.name || character.latin || "شخصية" }),
         el("small", { text: item.workTitle }),
         profileRatedCharacterStars(item)
       ])
     ]);
-    tile.addEventListener("click", function () {
+    var open = el("button", { type: "button", class: "lf-profile-character-open", "aria-label": name + " · " + item.workTitle + " · " + Number(item.score).toFixed(2) + uiText(" من 5", " out of 5") });
+    open.addEventListener("click", function () {
       openCharacterPage({ workId: item.workId, work: item.work, cast: profileRatedCharacterCache[item.workId] || [] });
     });
+    tile.appendChild(open);
     return tile;
   }
   function profileRatedCharacterShelfCard(item) {
     var character = item.character || {};
     var name = character.name || character.latin || uiText("شخصية", "Character");
     var score = Number(item.score).toFixed(2);
-    var card = el("button", { type: "button", class: "lf-rated-character-shelf-card", "aria-label": name + " · " + item.workTitle + " · " + score + uiText(" من 5", " out of 5") }, [
-      profileRatedCharacterPortrait(item),
+    var card = el("div", { class: "lf-rated-character-shelf-card" }, [
+      profileRatedCharacterPortrait(item, true),
       el("span", { class: "lf-character-rating-badge", "aria-hidden": "true" }, [
         el("i", { "data-lucide": "feather" }),
         el("strong", { class: "lf-character-rating-number", text: score, "data-no-translate": "" })
@@ -3784,9 +3967,11 @@
         el("small", { text: item.workTitle })
       ])
     ]);
-    card.addEventListener("click", function () {
+    var open = el("button", { type: "button", class: "lf-profile-character-open", "aria-label": name + " · " + item.workTitle + " · " + score + uiText(" من 5", " out of 5") });
+    open.addEventListener("click", function () {
       openCharacterPage({ workId: item.workId, work: item.work, cast: profileRatedCharacterCache[item.workId] || [] });
     });
+    card.appendChild(open);
     return card;
   }
   function ratedCharacterGroups(entries, query, mode) {
@@ -3813,10 +3998,11 @@
   function syncProfileRatedCharacterGallery() {
     var state = profileRatedCharacterGallery;
     if (!state) return;
-    if (!state.page.isConnected || state.page.inert) { profileRatedCharacterGallery = null; return; }
+    if (!state.page.isConnected) { releaseCharacterPortraits(state.page); profileRatedCharacterGallery = null; return; }
     if (state.owner !== profileRatedCharacterOwner()) {
       state.close(); profileRatedCharacterGallery = null; return;
     }
+    if (state.page.inert) return;
     state.refresh();
   }
   function syncProfileTopCharacterEditor(refresh) {
@@ -3871,6 +4057,7 @@
       } else if (data.missing.length) status.textContent = uiText("نجمع تقييمات الشخصيات", "Loading character ratings");
       else if (data.unresolved) status.textContent = uiText("بعض تفاصيل الشخصيات غير متاحة من المصدر", "Some character details are unavailable from the source");
       status.hidden = !status.textContent;
+      releaseCharacterPortraits(gallery);
       gallery.textContent = "";
       var groups = ratedCharacterGroups(data.entries, search.value, mode), shown = 0, total = 0;
       if (mode === "rating" && groups.length) {
@@ -3931,12 +4118,13 @@
     var countText = data.total + uiText(" شخصية", " characters");
     if (count && count.textContent !== countText) count.textContent = countText;
     if (!rail) return;
-    var signature = JSON.stringify(data.entries.slice(0, 8).map(function (item) {
+    var signature = JSON.stringify([profileRatedCharacterOwner(), doc.documentElement.lang, data.entries.slice(0, 8).map(function (item) {
       var character = item.character || {};
       return [item.workId, character.id || character.name || character.latin || "", item.score, item.workTitle, characterImageUrl(character) || ""];
-    }));
+    })]);
     if (rail.dataset.ratedCharactersSignature !== signature) {
       rail.dataset.ratedCharactersSignature = signature;
+      releaseCharacterPortraits(rail);
       rail.textContent = "";
       if (data.entries.length) data.entries.slice(0, 8).forEach(function (item) { rail.appendChild(profileRatedCharacterTile(item)); });
       else rail.appendChild(el("p", { class: "lf-profile-rated-characters-loading", text: "نجمع الشخصيات التي قيّمتها..." }));
@@ -4469,9 +4657,9 @@
       id = String(id || "");
       if (id && !seen[id]) { seen[id] = true; draft.push(id); }
     });
-    draft = draft.slice(0, 4);
-    while (draft.length < 4) draft.push("");
-    var activeSlot = Number.isInteger(initialSlot) ? Math.max(0, Math.min(3, initialSlot)) : 0;
+    draft = draft.slice(0, 7);
+    while (draft.length < 7) draft.push("");
+    var activeSlot = Number.isInteger(initialSlot) ? Math.max(0, Math.min(6, initialSlot)) : 0;
     var search = el("input", {
       type: "search",
       class: "lf-top-works-editor-search",
@@ -4510,7 +4698,7 @@
       var displaced = draft[activeSlot] || "";
       draft[activeSlot] = id;
       if (previousIndex >= 0) draft[previousIndex] = displaced;
-      write("lorefy.user.favorites.v2", draft.filter(Boolean).slice(0, 4));
+      write("lorefy.user.favorites.v2", draft.filter(Boolean).slice(0, 7));
       global.dispatchEvent(new CustomEvent("lorefy:stored-state", { detail: { key: "lorefy.user.favorites.v2" } }));
       render();
     }
@@ -4619,7 +4807,7 @@
     });
     save.addEventListener("click", function () {
       stopCatalogRefresh();
-      var compact = draft.filter(Boolean).slice(0, 4);
+      var compact = draft.filter(Boolean).slice(0, 7);
       write("lorefy.user.favorites.v2", compact);
       global.dispatchEvent(new CustomEvent("lorefy:stored-state", { detail: { key: "lorefy.user.favorites.v2" } }));
       ov.close();
@@ -4639,13 +4827,13 @@
     var identity = page && page.querySelector(":scope > .lf-profile-identity");
     if (!favorites || !page || !identity) return false;
     var favoriteIds = read("lorefy.user.favorites.v2", []);
-    favoriteIds = Array.isArray(favoriteIds) ? favoriteIds.filter(Boolean).slice(0, 4) : [];
+    favoriteIds = Array.isArray(favoriteIds) ? favoriteIds.filter(Boolean).slice(0, 7) : [];
     var favoriteKey = JSON.stringify(favoriteIds);
     if (favorites.dataset.lfFavoriteCatalogRequested !== favoriteKey && global.LorefyCatalogLoader) {
       favorites.dataset.lfFavoriteCatalogRequested = favoriteKey;
       global.LorefyCatalogLoader.loadWorks(favoriteIds).catch(function () {});
     }
-    favorites.classList.toggle("is-empty", !favorites.querySelector("img"));
+    favorites.classList.toggle("is-empty", !favorites.querySelector("[data-lorefy-book-cover],img"));
     renameProfileFavouriteWorksHeading(page);
     var labels = identity.querySelectorAll("span, strong");
     var header = null;
@@ -4677,12 +4865,17 @@
       }
     }
     Array.prototype.forEach.call(favorites.children, function (slot, index) {
-      slot.setAttribute("role", "button");
-      slot.setAttribute("tabindex", "0");
-      slot.setAttribute("aria-label", uiText("تعديل العمل رقم ", "Edit favorite work ") + (index + 1) + uiText(" ضمن المفضلة", ""));
+      if (slot.classList.contains("lf-managed-cover-card")) {
+        slot.removeAttribute("role");slot.removeAttribute("tabindex");slot.removeAttribute("aria-label");
+      } else {
+        slot.setAttribute("role", "button");
+        slot.setAttribute("tabindex", "0");
+        slot.setAttribute("aria-label", uiText("تعديل العمل رقم ", "Edit favorite work ") + (index + 1) + uiText(" ضمن المفضلة", ""));
+      }
       if (!slot.dataset.lfTopWorksWired) {
         slot.dataset.lfTopWorksWired = "1";
         var openSlot = function (event) {
+          if (event.target.closest(".lf-cover-open,.lf-cover-retry,.lf-profile-cover-edit")) return;
           event.preventDefault();
           event.stopPropagation();
           if (event.stopImmediatePropagation) event.stopImmediatePropagation();
@@ -4754,7 +4947,11 @@
     var recent = page.querySelector(":scope > .lf-profile-recent");
     var rated = page.querySelector(":scope > .lf-profile-rated-characters");
     if (recent && rated && recent.nextSibling !== rated) page.insertBefore(recent, rated);
-    if (favorites.nextSibling !== topCharacters) page.insertBefore(topCharacters, favorites.nextSibling);
+    var readerStatistics = page.getAttribute('data-profile-layout') === 'reader'
+      && page.querySelector(':scope > .lf-reader-layout-statistics');
+    if (readerStatistics) {
+      if (readerStatistics.nextSibling !== topCharacters) page.insertBefore(topCharacters, readerStatistics.nextSibling);
+    } else if (favorites.nextSibling !== topCharacters) page.insertBefore(topCharacters, favorites.nextSibling);
     return true;
   }
   function hydrateProfileRatedCharacters(workId, onDone) {
@@ -4788,10 +4985,16 @@
   }
   function syncProfileRatedCharacters() {
     var favorites = doc.querySelector(".lf-profile-favorites");
+    var section = doc.querySelector(".lf-profile-rated-characters");
+    if (profileRatedCharacterSection && (profileRatedCharacterSection !== section || !favorites || !favorites.parentElement)) {
+      releaseCharacterPortraits(profileRatedCharacterSection);
+      var previousRail = profileRatedCharacterSection.querySelector('.lf-profile-rated-characters-rail');
+      if (previousRail) delete previousRail.dataset.ratedCharactersSignature;
+      profileRatedCharacterSection = null;
+    }
     if (!favorites || !favorites.parentElement) return false;
     var rows = profileRatedScoreRows();
-    var section = doc.querySelector(".lf-profile-rated-characters");
-    if (!rows.length) { if (section) section.remove(); return true; }
+    if (!rows.length) { if (section) { releaseCharacterPortraits(section); section.remove(); } profileRatedCharacterSection = null; return true; }
     if (!section) {
       var showAll = el("button", { type: "button", class: "lf-profile-rated-characters-all", text: uiText("عرض الكل", "See all") });
       section = el("section", { class: "lf-profile-rated-characters", "aria-label": uiText("شخصيات قيّمتها", "Rated characters") }, [
@@ -4810,6 +5013,7 @@
       showAll.dataset.lfProfileRatedCharactersWired = "1";
       showAll.addEventListener("click", openProfileRatedCharacters);
     }
+    profileRatedCharacterSection = section;
     paintProfileRatedCharacters(section);
     return true;
   }
@@ -5590,6 +5794,52 @@
     });
   }
 
+  var customizeDialogSequence = 0;
+  function enhanceCustomizeNavigation(sheet) {
+    var group = sheet.querySelector('.lf-customize-tabs');
+    if (!group) return;
+    var tabs = Array.from(group.querySelectorAll('button'));
+    var panels = [sheet.querySelector('.lf-customize-profile-panel'), sheet.querySelector('.lf-customize-appearance-panel')];
+    if (tabs.length !== 2 || panels.some(function (panel) { return !panel; })) return;
+    var prefix = sheet.dataset.lfCustomizeId || (sheet.dataset.lfCustomizeId = 'lf-customize-' + (++customizeDialogSequence));
+    function attr(node, name, value) { if (node.getAttribute(name) !== value) node.setAttribute(name, value); }
+    tabs.forEach(function (tab, index) {
+      var tabId = prefix + '-tab-' + index, panelId = prefix + '-panel-' + index;
+      attr(tab, 'id', tabId); attr(tab, 'aria-controls', panelId);
+      attr(panels[index], 'id', panelId); attr(panels[index], 'role', 'tabpanel'); attr(panels[index], 'aria-labelledby', tabId);
+      var stop = tab.getAttribute('aria-selected') === 'true' ? 0 : -1;
+      if (tab.tabIndex !== stop) tab.tabIndex = stop;
+      if (tab.dataset.lfCustomizeKeys) return;
+      tab.dataset.lfCustomizeKeys = '1';
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (item, position) {
+          var stop = position === index ? 0 : -1;
+          if (item.tabIndex !== stop) item.tabIndex = stop;
+        });
+      });
+      tab.addEventListener('keydown', function (event) {
+        if (event.target !== tab) return;
+        var next, rtl = doc.documentElement.getAttribute('dir') === 'rtl';
+        if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabs.length - 1;
+        else if (event.key === 'ArrowRight') next = (index + (rtl ? tabs.length - 1 : 1)) % tabs.length;
+        else if (event.key === 'ArrowLeft') next = (index + (rtl ? 1 : tabs.length - 1)) % tabs.length;
+        else return;
+        event.preventDefault(); tabs[next].click(); tabs[next].focus();
+      });
+    });
+  }
+  function legacySheetLabel(sheet, heading) {
+    var labels = [
+      ['lf-settings-sheet', uiText('الإعدادات','Settings')],
+      ['lf-customize-sheet', uiText('تخصيص حسابك','Customize your profile')],
+      ['lf-work-cover-sheet', uiText('اختر الغلاف','Choose cover')],
+      ['lf-work-status-sheet', uiText('حالة القراءة','Reading status')]
+    ];
+    for (var i = 0; i < labels.length; i++) if (sheet.classList.contains(labels[i][0])) return labels[i][1];
+    return heading && heading.textContent.trim() || uiText('خيارات العمل','Work options');
+  }
+
   function workReviewActionLabel(button){
     if(button.querySelector('path[d^="M7.9 20"]'))return uiText('الردود','Replies');
     if(button.querySelector('path[d^="M19 14"]'))return uiText('إعجاب','Like');
@@ -5603,6 +5853,7 @@
     var root = scope || doc;
     labelIconOnlyButtons(root);
     Array.from(root.querySelectorAll ? root.querySelectorAll('.nc-sheet') : []).forEach(enhanceReadingChoices);
+    Array.from(root.querySelectorAll ? root.querySelectorAll('.lf-customize-sheet') : []).forEach(enhanceCustomizeNavigation);
     Array.from(root.querySelectorAll ? root.querySelectorAll('.nc-sheet:has(.lf-cover-choice)') : []).forEach(function(sheet){sheet.classList.add('lf-work-cover-sheet');});
     // Legacy React sheets close through their overlay handler; keep that
     // state transition instead of removing React-owned nodes directly.
@@ -5611,10 +5862,14 @@
       sheet.dataset.lfDialogWired = '1';
       sheet.setAttribute('role','dialog'); sheet.setAttribute('aria-modal','true');
       var heading = sheet.querySelector('h1,h2,h3,strong');
-      sheet.setAttribute('aria-label', sheet.classList.contains('lf-settings-sheet') ? uiText('الإعدادات','Settings') : sheet.classList.contains('lf-work-cover-sheet') ? uiText('اختر الغلاف','Choose cover') : sheet.classList.contains('lf-work-status-sheet') ? uiText('حالة القراءة','Reading status') : heading && heading.textContent.trim() || uiText('خيارات العمل','Work options'));
+      sheet.setAttribute('aria-label', legacySheetLabel(sheet, heading));
       var overlay = sheet.parentElement;
       var initial = sheet.querySelector('[aria-label="إغلاق"],[aria-label="Close"]') || sheet.querySelector('button,input,select,textarea,[tabindex="0"]');
-      var release = bindDialogKeys(sheet, function () { if (overlay && overlay.isConnected) overlay.click(); }, initial);
+      var release = bindDialogKeys(sheet, function () {
+        var close = sheet.matches('.lf-work-status-sheet,.lf-work-cover-sheet') && sheet.querySelector('[aria-label="إغلاق"],[aria-label="Close"]');
+        if (close && close.isConnected) { if (!close.disabled) close.click(); }
+        else if (overlay && overlay.isConnected) overlay.click();
+      }, initial);
       var cleanup = new MutationObserver(function () {
         if (sheet.isConnected) return;
         cleanup.disconnect(); release();
@@ -5906,13 +6161,12 @@
       e.preventDefault();
       e.stopPropagation();
       if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      if (btn.dataset.lfReactionSync === "1") return;
+      btn.dataset.lfReactionSync = "1";
       var counts = read(K_COMMUNITY_DISLIKES, {});
       var mine = read(K_COMMUNITY_MY_DISLIKES, {});
       var nowMine = !mine[key];
-      var synced = await persistReviewReaction(card, "dislike", nowMine);
-      if (nowMine && read(K_COMMUNITY_MY_LIKES, {})[key]) {
-        synced = (await persistReviewReaction(card, "like", false)) && synced;
-      }
+      var hadLike = !!read(K_COMMUNITY_MY_LIKES, {})[key];
       if (nowMine) {
         var myLikes = read(K_COMMUNITY_MY_LIKES, {});
         if (myLikes[key]) {
@@ -5928,7 +6182,11 @@
       write(K_COMMUNITY_DISLIKES, counts);
       write(K_COMMUNITY_MY_DISLIKES, mine);
       syncCommunityReactionViews(key);
-      if (!synced) toastSafe("حُفظ تفاعلك محلياً وسيُزامن عند عودة الاتصال");
+      try {
+        var synced = await persistReviewReaction(card, "dislike", nowMine);
+        if (nowMine && hadLike) synced = (await persistReviewReaction(card, "like", false)) && synced;
+        if (!synced) toastSafe("حُفظ تفاعلك محلياً وسيُزامن عند عودة الاتصال");
+      } finally { btn.dataset.lfReactionSync = "0"; }
     }, true);
   }
   function updateCommunityHero(page, hero) {
@@ -6073,7 +6331,7 @@
   function reviewDetailRating(root, authorLeaves) {
     var direct = root && root.getAttribute && root.getAttribute("data-review-rating");
     var directScore = Number(direct);
-    if (directScore > 0 && directScore <= 5) return String(Math.round(directScore * 10) / 10);
+    if (direct != null && String(direct).trim() !== "" && Number.isFinite(directScore) && directScore >= 0 && directScore <= 5) return String(Math.round(directScore * 10) / 10);
     var rendered = communityRenderedStarRating(root);
     if (rendered > 0) {
       if (root && root.setAttribute) root.setAttribute("data-review-rating", String(rendered));
@@ -6135,6 +6393,7 @@
   }
   function openCommunityReviewShareSheet(card) {
     if (!card) return;
+    if(global.LorefyShareComposer){var value=reviewDetailSnapshot(card,communityCardKey(card));return global.LorefyShareComposer.open({kind:'review',title:value.work,text:value.text,rating:value.rating===''?null:Number(value.rating),profile:{name:value.author,handle:value.handle,avatar:value.avatar},items:[{name:value.work,image:value.cover}]});}
     var old = doc.querySelector(".lf-review-share-overlay");
     if (old) old.remove();
     var overlay = el("div", { class: "lf-review-share-overlay", role: "dialog", "aria-modal": "true", "aria-label": "مشاركة المراجعة" });

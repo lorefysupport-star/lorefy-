@@ -17,7 +17,7 @@ test('a reused favorite slot opens its current position after catalog hydration'
   const end = growth.indexOf('\n  function ', start + 10);
   const opened = [];
   function slot() {
-    return { dataset: {}, handlers: {}, setAttribute() {},
+    return { dataset: {}, handlers: {}, classList:{contains(){return false;}},setAttribute() {},
       addEventListener(name, handler) { this.handlers[name] = handler; } };
   }
   const recycled = slot();
@@ -34,7 +34,9 @@ test('a reused favorite slot opens its current position after catalog hydration'
   favorites.children = [slot(), slot(), recycled, slot()];
   favorites.children.forEach(node => { node.parentElement = favorites; });
   scope.syncProfileFavouriteWorksControls();
-  recycled.handlers.click({ preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() {} });
+  recycled.handlers.click({target:{closest(){return {};}}});
+  assert.deepEqual(opened,[],'managed controls bypass the favorite slot capture handler');
+  recycled.handlers.click({target:{closest(){return null;}},preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() {} });
   assert.deepEqual(opened, [2]);
   assert.deepEqual(requested, [['book']]);
 });

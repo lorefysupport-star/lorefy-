@@ -17,7 +17,8 @@
     var title=doc.createElement('h2');title.textContent=en?'Adjust your photo':'اضبط صورتك';panel.appendChild(title);
     var help=doc.createElement('p');help.textContent=en?'Move the photo inside the outline. Pinch to zoom.':'حرّك الصورة داخل الإطار. باعد بين إصبعين للتكبير.';panel.appendChild(help);
     var canvas=doc.createElement('canvas');canvas.width=600;canvas.height=600;canvas.tabIndex=0;canvas.className='lf-photo-framer-preview';canvas.setAttribute('aria-label',en?'Photo crop preview':'معاينة اقتصاص الصورة');panel.appendChild(canvas);
-    var image=new root.Image(),context=canvas.getContext('2d'),ratio=avatar?1:1200/450,outline=null,pointers=new Map();
+    var requested=Number(options.ratio);
+    var image=new root.Image(),context=canvas.getContext('2d'),ratio=avatar?1:Number.isFinite(requested)&&requested>=.5&&requested<=4?requested:1200/450,outline=null,pointers=new Map();
     function current(){return alive&&options.isCurrent();}
     function crop(){return geometry(image.naturalWidth||image.width,image.naturalHeight||image.height,ratio,zoom,x,y);}
     function paint(){
@@ -45,7 +46,7 @@
     button('−',function(){zoom=Math.max(1,zoom-.2);paint();}).setAttribute('aria-label',en?'Zoom out':'تصغير');
     button('+',function(){zoom=Math.min(4,zoom+.2);paint();}).setAttribute('aria-label',en?'Zoom in':'تكبير');
     button(en?'Reset':'إعادة ضبط',function(){zoom=1;x=y=.5;paint();});
-    var apply=button(en?'Use this framing':'استخدام الإطار',function(){if(!ready||!current())return;try{var output=doc.createElement('canvas'),g=crop();output.width=avatar?512:1200;output.height=avatar?512:450;output.getContext('2d').drawImage(image,g.x,g.y,g.width,g.height,0,0,output.width,output.height);var result=output.toDataURL('image/jpeg',.9);dispose();options.onApply(result);}catch(_){error.textContent=en?'Could not prepare this photo. Try again.':'تعذر تجهيز الصورة. حاول مجددًا.';}});apply.disabled=true;
+    var apply=button(en?'Use this framing':'استخدام الإطار',function(){if(!ready||!current())return;try{var output=doc.createElement('canvas'),g=crop();output.width=avatar?512:Math.round(1200*Math.min(1,ratio));output.height=avatar?512:Math.round(1200/Math.max(1,ratio));output.getContext('2d').drawImage(image,g.x,g.y,g.width,g.height,0,0,output.width,output.height);var result=output.toDataURL('image/jpeg',.9);dispose();options.onApply(result);}catch(_){error.textContent=en?'Could not prepare this photo. Try again.':'تعذر تجهيز الصورة. حاول مجددًا.';}});apply.disabled=true;
     panel.appendChild(actions);overlay.appendChild(panel);host.appendChild(overlay);Array.from(host.children).forEach(function(node){if(node!==overlay){inert.push([node,node.inert]);node.inert=true;}});
     // The crop belongs to the opening profile editor/account, including during auth changes.
     var observer=new root.MutationObserver(function(){if(alive&&!options.isCurrent())dispose();});observer.observe(host,{childList:true,subtree:true});

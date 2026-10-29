@@ -4,11 +4,12 @@
   if (root) root.LorefyProfileLayout = api;
 })(typeof window !== 'undefined' ? window : globalThis, function (root) {
   'use strict';
-  const normalize = value => value === 'immersive' ? 'immersive' : 'normal';
+  const normalize = value => value === 'immersive' || value === 'reader' ? value : 'normal';
   const forProfile = profile => normalize(profile && profile.profile_layout);
   const options = lang => [
     {value:'normal', label:lang === 'en' ? 'Normal' : '\u0639\u0627\u062f\u064a'},
-    {value:'immersive', label:lang === 'en' ? 'Panoramic' : '\u0628\u0627\u0646\u0648\u0631\u0627\u0645\u064a'}
+    {value:'immersive', label:lang === 'en' ? 'Panoramic' : '\u0628\u0627\u0646\u0648\u0631\u0627\u0645\u064a'},
+    {value:'reader', label:lang === 'en' ? 'Reader' : '\u0627\u0644\u0642\u0627\u0631\u0626'}
   ];
   function Picker(props) {
     const h = root.React.createElement;

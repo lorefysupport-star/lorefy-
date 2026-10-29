@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../">
+<title>Lorefy Elven Atelier</title><link rel="stylesheet" href="styles/lorefy-frame-motion.css">
+<style>
+*{box-sizing:border-box;letter-spacing:0}body{margin:0;background:#111516;color:#edf3f1;font:14px/1.55 system-ui,-apple-system,sans-serif}header{padding:18px 26px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #354245;gap:16px}h1{font-size:21px;margin:0}a{color:#9ed8c9;text-decoration:none}main{max-width:1260px;margin:auto;padding:24px;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:32px}.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-content:start;gap:14px}.choice{position:relative;min-width:0;background:#1b2123;color:inherit;border:1px solid #39474b;border-radius:8px;padding:8px 8px 14px;cursor:pointer;font:inherit}.choice[aria-pressed=true]{border-color:#9ed8c9;outline:1px solid #9ed8c9}.choice strong{display:block;font-size:14px}.choice small{font-size:11px;color:#b2c2c3}.avatar{position:relative;display:block;width:100%;aspect-ratio:1;margin-bottom:8px}.avatar>img{position:absolute;object-fit:cover;border-radius:50%;left:var(--left);top:var(--top);width:var(--portrait);height:var(--portrait)}.preview{min-width:0}.controls{display:flex;gap:12px;margin-bottom:16px}label{display:flex;align-items:center;gap:8px;min-width:0;flex:1;font-size:12px}select{flex:1;min-width:0;background:#1b2123;color:inherit;border:1px solid #526366;border-radius:6px;padding:10px;font:inherit;min-height:44px}.links{display:flex;gap:20px;justify-content:space-between;margin:14px 0;font-size:12px}iframe{width:100%;height:900px;display:block;border:1px solid #526366;border-radius:24px;background:#111516}a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid #9ed8c9;outline-offset:4px}body[data-theme=light]{background:#f4f8f7;color:#172d2e}body[data-theme=light] .choice,body[data-theme=light] select{background:white;color:#172d2e;border-color:#c6d7d6}body[data-theme=light] .choice small{color:#5e7779}body[data-theme=light] a{color:#006b5c}.error{color:#df9d85}
+@media(max-width:900px){main{max-width:560px;grid-template-columns:minmax(0,1fr);padding:16px;gap:24px}.choices{gap:8px}.choice{padding:4px 4px 12px}.choice strong{font-size:12px}.choice small{font-size:10px}.preview{max-width:440px;width:100%;margin:auto}header{padding:16px}h1{font-size:18px}.controls{gap:8px}.links{gap:12px}iframe{height:850px}}
+</style></head><body data-theme="dark">
+<header><h1 dir="ltr">Lorefy · Elven Atelier</h1><a href="qa/elf-concepts.html">الرسومات الأصلية</a></header>
+<main><section class="choices" aria-label="إطارات الإلف المختارة"></section><section class="preview"><div class="controls">
+<label>التخطيط<select id="layout"><option value="normal">الكلاسيكي</option><option value="immersive">البانورامي</option><option value="reader">القارئ</option></select></label>
+<label>المظهر<select id="theme"><option value="dark">داكن</option><option value="light">فاتح</option></select></label></div>
+<iframe title="معاينة بروفايل الإلف" src="about:blank"></iframe><div class="links"><a id="profileLink" target="_blank" rel="noopener">فتح البروفايل</a><a id="videoLink">معاينة PFP وتصدير فيديو</a></div><p class="error" role="status"></p></section></main>
+<script src="modules/lorefy-frame-motion.js"></script><script src="modules/lorefy-bitmap-rig.js"></script><script src="modules/lorefy-elven-motion.js"></script>
+<script>
+const params=new URLSearchParams(location.search),choices=document.querySelector('.choices'),frame=document.querySelector('iframe'),layout=document.getElementById('layout'),theme=document.getElementById('theme');
+let selected=params.get('pack')||'elven-emerald-whisper';
+layout.value=['normal','immersive','reader'].includes(params.get('layout'))?params.get('layout'):'reader';theme.value=params.get('theme')==='light'?'light':'dark';
+function preview(){
+ for(const button of choices.children)button.setAttribute('aria-pressed',String(button.dataset.pack===selected));
+ document.body.dataset.theme=theme.value;
+ frame.src='qa/profile-header.html?decorationLab=1&pack='+selected+'&layout='+layout.value+'&theme='+theme.value+'&motion=reduced';
+ document.getElementById('profileLink').href=frame.src;
+ document.getElementById('videoLink').href='qa/avatar-animation.html?collection=elven&pack='+selected+'&theme='+theme.value;
+}
+fetch('qa/elf-motion/collections.json').then(r=>{if(!r.ok)throw Error('Missing elven catalog');return r.json();}).then(packs=>{
+ if(!packs.some(p=>p.id===selected))selected=packs[0].id;
+ for(const pack of packs){
+  const button=document.createElement('button');button.className='choice';button.type='button';button.dataset.pack=pack.id;button.setAttribute('aria-label',pack.names.ar);
+  const avatar=document.createElement('span');avatar.className='avatar';const g=pack.geometry,img=document.createElement('img');img.src='launch/brand/lorefy-reading-scene.jpg';img.alt='';
+  avatar.style.setProperty('--left',(g.cx-g.size/2)*100+'%');avatar.style.setProperty('--top',(g.cy-g.size/2)*100+'%');avatar.style.setProperty('--portrait',g.size*100+'%');
+  if(pack.portraitClip){img.style.borderRadius='0';img.style.clipPath='polygon('+pack.portraitClip.map(q=>q.map(v=>v*100+'%').join(' ')).join(',')+')';}avatar.append(img);
+  const name=document.createElement('strong');name.textContent=pack.names.ar;const en=document.createElement('small');en.textContent=pack.names.en;
+  button.append(avatar,name,en);button.onclick=()=>{selected=pack.id;preview();};choices.append(button);
+  LorefyFrameMotion.mount(avatar,{original:{id:pack.artId,renderer:'elven'}},'avatar');
+ }
+ preview();
+}).catch(error=>{document.querySelector('.error').textContent='تعذّر فتح الرسومات المحلية.';console.error(error);});
+layout.onchange=preview;theme.onchange=preview;
+</script></body></html>

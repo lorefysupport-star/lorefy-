@@ -42,7 +42,7 @@
     var colorState=R.useState(current.color),color=colorState[0],setColor=colorState[1];
     var baseState=R.useState(current.base),base=baseState[0],setBase=baseState[1];
     var draftMode=design.customMode(color.trim(),base);
-    var host = R.useRef(null), close = R.useRef(null);
+    var host = R.useRef(null), close = R.useRef(null), colorInput = R.useRef(null);
     var icon = function (name, size) { return root.NenIcons && h(root.NenIcons[name], {size:size || 18, 'aria-hidden':true}); };
     var options = views.options(p.language);
     var title = text('المظهر والتخصيص', 'Appearance & personalization');
@@ -54,6 +54,7 @@
     }
     function applyColor(){
       if(!draftMode)return setError(text('أدخل لونًا صحيحًا مثل #12ABEF.','Enter a valid color such as #12ABEF.'));
+      if(colorInput.current)colorInput.current.focus();
       chooseAppearance(draftMode);
     }
     function chooseLayout(mode) {
@@ -115,21 +116,23 @@
     var entries = h(R.Fragment,null,entry,root.LorefyProfileShop && h(root.LorefyProfileShop.Entry,{language:p.language}));
     if (!open) return entries;
 
-    var books = (p.books || []).slice(0,layout === 'shelf' ? 3 : 8);
+    var books = (p.books || []).slice(0,layout === 'shelf' || layout === 'showcase' ? 3 : layout === 'spines' ? 7 : 8);
     var scene = h('section',{className:'lf-interface-preview','aria-label':text('معاينة المكتبة','Library preview')},
       h('div',{className:'lf-interface-preview-head'},h('strong',null,text('مكتبتك','Your library')),h('span',null,text('معاينة','Preview'))),
-      h('div',{className:'lf-interface-preview-books','data-mode':layout},books.map(function (book) {
-        return h('div',{key:book.id,className:'lf-interface-preview-book',title:book.title,style:{'--spine-height':views.spineHeight(book.title) + 'px'}},
-          h('img',{src:book.cover,alt:'',decoding:'async',onError:function (event) {
+      h('div',{className:'lf-interface-preview-books'+(layout==='showcase'?' is-showcase-view':''),'data-mode':layout},books.map(function (book,index) {
+        return h('div',{key:book.id,className:'lf-interface-preview-book'+(layout==='showcase'?' lf-showcase-book':''),title:book.title,
+          'data-showcase-position':layout==='showcase'?views.showcasePlacement(index).position:undefined,
+          style:{'--spine-height':views.spineHeight(book.title) + 'px','--showcase-row':'1'}},
+          h('img',{src:book.cover,alt:'',className:layout==='showcase'?'lf-showcase-cover':undefined,decoding:'async',onError:function (event) {
             if (!book.fallback || event.currentTarget.getAttribute('src') === book.fallback) return;
             event.currentTarget.src = book.fallback;
-          }}),h('span',{dir:'auto'},book.title));
+          }}),layout==='showcase'?h('span',{className:'lf-showcase-caption','data-no-translate':'1'},h('span',{className:'lf-showcase-rank','aria-hidden':true},index+1),h('span',{className:'lf-showcase-title',dir:'auto'},book.title)):h('span',{dir:'auto'},book.title));
       })));
     var content = h('div',{className:'lf-interface-body'},scene,h('section',{className:'lf-interface-section','aria-labelledby':'lf-interface-layout-title'},
             h('h3',{id:'lf-interface-layout-title'},text('عرض المكتبة','Library layout')),
             h('div',{className:'lf-interface-layouts',role:'group','aria-label':text('عرض المكتبة','Library layout')},options.map(function (option) {
               return h('button',{key:option.mode,type:'button','data-layout':option.mode,'aria-pressed':layout===option.mode,onClick:function () { chooseLayout(option.mode); }},
-                icon({grid:'LayoutGrid',spines:'LibraryBig',shelf:'List'}[option.mode],20),option.label);
+                icon({grid:'LayoutGrid',spines:'LibraryBig',showcase:'GalleryHorizontalEnd',shelf:'List'}[option.mode],20),option.label);
             }))),
           h('section',{className:'lf-interface-section','aria-labelledby':'lf-interface-theme-title'},
             h('h3',{id:'lf-interface-theme-title'},text('ألوان التطبيق','Appearance')),
@@ -140,12 +143,16 @@
             h('fieldset',{className:'lf-interface-custom'},
               h('legend',null,text('لونك الخاص','Custom color')),
               h('div',{className:'lf-interface-color-row'},
+                h('label',{className:'lf-interface-color-field'},h('span',null,text('اللون','Color')),
                 h('input',{type:'color','aria-label':text('اختر لون الثيم','Choose theme color'),value:design.customSettings(draftMode || p.appearance).color,
                   onInput:function(event){setColor(event.currentTarget.value);setError('');},
-                  onChange:function(event){setColor(event.target.value);setError('');}}),
-                h('input',{type:'text',dir:'ltr',spellCheck:false,autoComplete:'off',maxLength:7,'aria-label':text('كود اللون','Hex color'),
+                  onChange:function(event){setColor(event.target.value);setError('');}})),
+                h('label',{className:'lf-interface-color-field'},h('span',null,text('كود اللون','Hex color')),
+                h('input',{type:'text',ref:colorInput,dir:'ltr',spellCheck:false,autoComplete:'off',maxLength:7,'aria-label':text('كود اللون','Hex color'),
+                  'aria-describedby':error?'lf-interface-color-error':undefined,
                   value:color,'aria-invalid':!draftMode,onChange:function(event){setColor(event.target.value);setError('');},
-                  onBlur:function(){if(!draftMode)setError(text('أدخل لونًا صحيحًا مثل #12ABEF.','Enter a valid color such as #12ABEF.'));}})),
+                  onBlur:function(){if(!draftMode)setError(text('أدخل لونًا صحيحًا مثل #12ABEF.','Enter a valid color such as #12ABEF.'));}}))),
+              error && !draftMode && h('p',{className:'lf-interface-error',role:'alert',id:'lf-interface-color-error'},error),
               h('div',{className:'lf-interface-color-swatches',role:'group','aria-label':text('ألوان مقترحة','Suggested colors')},
                 ['#3687bb','#18a985','#df7134','#c45087','#775ac8','#b4b64a'].map(function(value){return h('button',{key:value,type:'button',
                   style:{'--color-swatch':value},'aria-label':text('لون ','Color ')+value,'aria-pressed':color.toLowerCase()===value,
@@ -159,7 +166,7 @@
           p.extra || null,h('section',{className:'lf-interface-section lf-interface-motion'},
             h('span',null,text('تقليل الحركة','Reduce motion')),
             h('button',{type:'button',role:'switch','aria-label':text('تقليل الحركة','Reduce motion'),'aria-checked':motion==='reduced',onClick:function () { chooseMotion(motion==='reduced' ? 'system' : 'reduced'); }},h('span',{'aria-hidden':true}))),
-          error && h('p',{className:'lf-interface-error',role:'alert'},error));
+          error && draftMode && h('p',{className:'lf-interface-error',role:'alert',id:'lf-interface-color-error'},error));
     if(p.embedded)return content;
     var panel = h('div',{className:'lf-interface-overlay','data-no-translate':'1',dir:english ? 'ltr' : 'rtl'},
       h('section',{className:'lf-interface-panel',role:'dialog','aria-modal':true,'aria-labelledby':'lf-interface-title',ref:host},

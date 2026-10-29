@@ -55,7 +55,7 @@ test('feed keeps unchanged cards through loading, pagination and other-post upda
  const scope={Date:{now:()=>now,parse:Date.parse},doc:{documentElement:{lang:'en'},querySelector:()=>host},state,
   identity:()=>({id:viewer}),savedPosts:()=>({}),visibleCommunityPosts:()=>state.posts,uiText:(ar,en)=>en,
   el:(...args)=>new Node(...args),icon:()=>new Node('i'),timeLabel:()=>String(now),postCard:()=>{created++;const card=new Node('article'),time=new Node('small');card.appendChild(time);card.querySelector=()=>time;return card;},
-  orderCommunityFeed(){},hydrateIcons(){}};
+  orderCommunityFeed(){},hydrateIcons(){},updatePostCounter(){}};
  const start=source.indexOf('  function renderPostFeed()'),end=source.indexOf('  function orderCommunityFeed()',start);
  vm.runInNewContext(source.slice(start,end),scope);scope.renderPostFeed();const original=list.children.slice();
  scope.renderPostFeed();assert.equal(created,2);

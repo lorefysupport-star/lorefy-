@@ -6,6 +6,29 @@
   'use strict';
   const motifs=new Set(['spark','leaf','heart','ghost','flower','bubble','rune']);
   const clamp=(value,low,high,fallback)=>Number.isFinite(Number(value))?Math.max(low,Math.min(high,Number(value))):fallback;
+  function profileHeader(width,ratio=.43) {
+    ratio=clamp(ratio,.08,1,.43);
+    const stacked=width<380,line=stacked?116:64,maxHeight=stacked?52:64;
+    const w=Math.min(184,stacked?width-48:Math.max(36,width-248),maxHeight/ratio),h=w*ratio;
+    return {x:(width-w)/2,y:stacked?64+(52-h)/2:(64-h)/2,width:w,height:h,line};
+  }
+  function headerConnectors(width,cap,joins,waveAt=()=>0) {
+    return [false,true].map((right,index)=>{
+      const j=joins[index],sign=right?-1:1,radius=16,base=cap.line+8;
+      const anchor=cap.anchors?.[index],end=anchor?anchor.x:right?cap.x+cap.width*.94:cap.x+cap.width*.06,endY=anchor?anchor.y:cap.y+cap.height*.88,start=j.x+sign*radius,points=[];
+      const reach=Math.max(10,(j.y-base)*.7),c1={x:j.x+j.dx*reach,y:j.y+j.dy*reach},c2={x:start-sign*radius*.5523,y:base};
+      for(let i=0;i<=32;i++){
+        const u=i/32,v=1-u,s=u*u*(3-2*u);
+        points.push({edge:'top',x:v*v*v*j.x+3*v*v*u*c1.x+3*v*u*u*c2.x+u*u*u*start,y:v*v*v*j.y+3*v*v*u*c1.y+3*v*u*u*c2.y+u*u*u*base,half:j.half+(6.5-j.half)*s});
+      }
+      for(let i=1;i<=48;i++){
+        const u=i/48,x=start+(end-start)*u;
+        const lift=width<380?u:clamp((right?width-124-x:x-124)/Math.max(1,right?width-124-end:end-124),0,1,0),s=lift*lift*(3-2*lift);
+        points.push({edge:'top',x,y:base+(endY-base)*s+1.8*Math.sin(u*Math.PI)**2*waveAt(u,index),half:6.5});
+      }
+      points.texture=j.texture;return points;
+    });
+  }
   function measurePageArt(image,wideCrest=false) {
     const canvas=root.document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;
     const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0);
@@ -35,13 +58,17 @@
   }
   function pageLayout(bounds,width,height) {
     const sourceTop=bounds.h*.24,sourceBottom=bounds.h*.18;
-    const crest=clamp(bounds.crest,.52,.9,.52),centreRoom=Math.max(36,width-252);
-    const topScale=Math.min((width-4)/bounds.w,64/sourceTop,height*.22/sourceTop,centreRoom/(bounds.w*crest));
+    const crest=clamp(bounds.crest,.52,.9,.52),stacked=width>=280&&width<380;
+    const centreRoom=stacked?Math.min(144,width-48):Math.max(36,width-252);
+    const topScale=Math.min((width-4)/bounds.w,(stacked?72:64)/sourceTop,height*.22/sourceTop,centreRoom/(bounds.w*crest));
     const bottomScale=Math.min((width-4)/bounds.w,24/sourceBottom,height*.10/sourceBottom);
+    // Small phones give the crest its own row below the fixed-size controls.
+    const top=sourceTop*topScale,join=clamp(bounds.join,.35,.92,.72);
+    const topY=stacked?64:64-top*join,line=topY+top*join;
     return {top:sourceTop*topScale,bottom:sourceBottom*bottomScale,
       topWidth:width-4,bottomWidth:width-4,
       rail:Math.min(18,Math.max(8,width*.035)),sourceTop,sourceBottom,
-      line:64,controls:16,topY:64-sourceTop*topScale*clamp(bounds.join,.35,.92,.72)};
+      line,controls:16,topY};
   }
   function paintPageArt(ctx,image,bounds,seconds,width,height,color='#8b9999') {
     if(width<=4||height<=4)return;
@@ -65,7 +92,8 @@
         }else ctx.drawImage(image,x+sources[i],sourceY,sources[i+1]-sources[i],sourceHeight,targets[i],destY,targets[i+1]-targets[i],destHeight);
       }
     }
-    band(y,sourceTop,2+topY,top);
+    // Material renderers replace the entire cropped top with their animated illustrated ribbon.
+    if(!bounds.materialConnectors)band(y,sourceTop,2+topY,top);
     // Stretch only the side ornaments vertically, never the transparent centre.
     ctx.drawImage(image,x,y+sourceTop,sourceLeft,h-sourceTop-sourceBottom,2,2+topY+top,rail,middle);
     ctx.drawImage(image,x+w-sourceRight,y+sourceTop,sourceRight,h-sourceTop-sourceBottom,width-2-rail,2+topY+top,rail,middle);
@@ -165,7 +193,7 @@
   let scheduler;const mounted=new Map();
   function mount(element,value,kind='avatar') {
     if(!element || !root.document)return ()=>{};
-    const descriptor=normalize(value),original=value.original && /^[a-z-]+$/.test(value.original.id) && ['illustrated','autumn','original'].includes(value.original.renderer)?value.original:null;
+    const descriptor=normalize(value),original=value.original && /^[a-z-]+$/.test(value.original.id) && ['illustrated','autumn','original','atelier'].concat('elven','restored').includes(value.original.renderer)?value.original:null;
     const signature=JSON.stringify([descriptor,kind,original]);
     const old=mounted.get(element);if(old && old.signature===signature)return old.dispose;
     if(old)old.dispose();
@@ -195,21 +223,26 @@
     }
     let io,ro,disposed=false;
     const renderer=original && root.LorefyOriginalRenderers && root.LorefyOriginalRenderers[original.renderer];
-    let ready=false;
+    let ready=false,loading=false;
+    const lazy=!!(original&&original.renderer==='restored'&&root.IntersectionObserver);
+    function loadRenderer(){
+      if(!renderer||ready||loading||disposed)return;loading=true;
+      renderer.load(original.id).then(()=>{if(!disposed){ready=true;element.classList.add('has-original-motion');resize();draw(0);}}).catch(()=>{}).finally(()=>{loading=false;});
+    }
     function draw(time){if(!width||!height)return;if(renderer){if(!ready)return;ctx.clearRect(0,0,width,height);ctx.save();ctx.translate(0,paddingTop);renderer.paint(ctx,original.id,kind,time,width,height-paddingTop-paddingBottom);ctx.restore();}else paint(ctx,width,height,time,descriptor,kind);canvas.dataset.motionFrame=String(++frames);}
     const reduced=()=>root.document.documentElement.getAttribute('data-lorefy-motion')==='reduced'||root.matchMedia&&root.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const handle=scheduler.register(time=>{if(!element.isConnected){dispose();return;}draw(reduced()?0:time);});
+    const handle=scheduler.register(time=>{if(!element.isConnected){dispose();return;}draw(original&&(original.renderer==='atelier'||original.renderer==='elven'||original.renderer==='restored')?time:reduced()?0:time);});
     function dispose(){
       if(disposed)return;disposed=true;handle.dispose();if(io)io.disconnect();if(ro)ro.disconnect();
       const page=layoutPage;
       if(page)['--profile-frame-top','--profile-frame-bottom','--profile-frame-banner-top','--profile-frame-controls-top','--profile-controls-left','--profile-controls-right'].forEach(key=>page.style.removeProperty(key));
       canvas.remove();element.classList.remove('has-original-motion');mounted.delete(element);
     }
-    resize();if(renderer)renderer.load(original.id).then(()=>{if(!disposed){ready=true;element.classList.add('has-original-motion');resize();draw(0);}}).catch(()=>{});else draw(0);
-    if(root.IntersectionObserver){io=new root.IntersectionObserver(entries=>handle.setVisible(entries.some(e=>e.isIntersecting)),{threshold:0});io.observe(element);}else handle.setVisible(true);
+    resize();if(renderer){if(!lazy)loadRenderer();}else draw(0);
+    if(root.IntersectionObserver){io=new root.IntersectionObserver(entries=>{const visible=entries.some(e=>e.isIntersecting);if(visible&&lazy)loadRenderer();handle.setVisible(visible);},{threshold:0});io.observe(element);}else handle.setVisible(true);
     if(root.ResizeObserver){ro=new root.ResizeObserver(resize);ro.observe(element);}
     mounted.set(element,{signature,dispose});return dispose;
   }
   function sweep(){for(const [element,item]of mounted)if(!element.isConnected)item.dispose();}
-  return Object.freeze({normalize,sample,paint,measurePageArt,pageLayout,paintPageArt,clipPageEffects,createScheduler,mount,sweep});
+  return Object.freeze({normalize,sample,paint,profileHeader,headerConnectors,measurePageArt,pageLayout,paintPageArt,clipPageEffects,createScheduler,mount,sweep});
 });

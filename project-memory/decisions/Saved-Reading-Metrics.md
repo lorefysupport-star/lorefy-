@@ -24,6 +24,12 @@ a currently untracked work. Existing library/progress/removal entries win, even
 an explicit zero. Historical review hydration never backfills reading totals.
 
 This is a dated design contract, not a fresh correctness assertion.
+
+2026-10-27 owner direction supersedes the18 October publication side effect:
+[[sessions/2026-10-27-Durable-Inbox-Review-Credit]]. Review-earned chapters/pages/
+volumes live in a one-time owned-review snapshot. Manual library/status/progress
+remain independent. Count the per-work maximum, not manual+review sums. Do not
+backfill historical reviews or promise public SQL parity from owner-only tests.
 Sources: [audit](../../docs/FEATURE_AUDIT_20261011.md),
 [metrics module](../../modules/lorefy-reading-metrics.js),
 [regression tests](../../tests/reading-metrics-stability.test.js).

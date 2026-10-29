@@ -1,0 +1,73 @@
+/* Data tools retain their handlers; this scope owns only their presentation. */
+@layer lorefy-glass-materials {
+.lf-product-overlay:has(.lf-product-studio) { background:var(--ui-scrim) !important; justify-content:center !important; }
+.lf-product-studio {
+  width:calc(100% - 16px) !important;
+  max-width:720px;
+  max-height:92% !important;
+  margin-inline:auto !important;
+  padding:0 !important;
+  border:1px solid var(--glass-edge) !important;
+  border-radius:24px 24px 0 0 !important;
+  background:var(--glass-reflection),var(--glass-sheet) !important;
+  color:var(--ui-glass-ink) !important;
+  font-family:var(--glass-font) !important;
+  direction:inherit !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+  overscroll-behavior:contain;
+  scroll-padding-block:130px 24px;
+}
+.lf-product-studio :is(button,select,a,h2,h3,p,span,strong,small,label) { font-family:var(--glass-font) !important; letter-spacing:0 !important; overflow-wrap:anywhere; }
+.lf-product-studio .lf-product-grabber { margin-block:10px; background:var(--ui-secondary) !important; }
+.lf-product-studio .lf-product-sheet-head {
+  position:sticky;
+  top:0;
+  z-index:2;
+  grid-template-columns:44px minmax(0,1fr) 44px !important;
+  gap:8px;
+  padding:12px 16px !important;
+  background:var(--glass-reflection),var(--glass-fill) !important;
+  border-color:var(--glass-edge) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+}
+.lf-product-studio .lf-product-sheet-head h2 { color:var(--ui-glass-ink) !important; font-size:17px !important; font-weight:600 !important; line-height:1.5 !important; }
+.lf-product-studio .lf-product-sheet-head p { color:var(--ui-glass-secondary) !important; font-size:13px !important; line-height:1.5 !important; }
+.lf-product-studio .lf-product-icon-button { width:44px !important; height:44px !important; background:var(--glass-fill) !important; color:var(--ui-glass-ink) !important; border:1px solid var(--glass-edge) !important; }
+.lf-product-studio .lf-product-sheet-body { padding:4px 20px calc(28px + env(safe-area-inset-bottom)) !important; }
+.lf-product-studio .lf-product-section { padding-block:20px !important; background:transparent !important; border-color:var(--glass-edge) !important; }
+.lf-product-studio .lf-product-section h3 { color:var(--ui-glass-ink) !important; font-size:16px !important; font-weight:600 !important; line-height:1.5 !important; margin-bottom:8px !important; }
+.lf-product-studio .lf-product-section>p { color:var(--ui-glass-secondary) !important; font-size:14px !important; line-height:1.7 !important; }
+.lf-product-studio .lf-product-secondary {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  min-height:44px !important;
+  padding:10px 12px !important;
+  margin-top:0 !important;
+  background:var(--glass-reflection),var(--glass-fill) !important;
+  color:var(--ui-glass-ink) !important;
+  border:1px solid var(--glass-edge) !important;
+  border-radius:8px !important;
+  font-size:14px !important;
+  font-weight:500 !important;
+  line-height:1.5 !important;
+}
+.lf-product-studio .lf-product-secondary>svg { flex:none; }
+.lf-product-studio .lf-product-section>.lf-product-secondary { margin-top:10px !important; }
+.lf-product-studio .lf-product-inline-actions { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:10px !important; }
+.lf-data-studio .lf-product-list-row { display:grid !important; grid-template-columns:minmax(0,1fr) 132px !important; align-items:start !important; gap:16px !important; padding-block:16px; border-color:var(--glass-edge) !important; }
+.lf-data-studio .lf-product-list-copy strong { color:var(--ui-glass-ink) !important; font-size:14px !important; font-weight:500 !important; white-space:normal !important; line-height:1.6 !important; overflow:visible !important; text-overflow:clip !important; }
+.lf-data-studio .lf-product-list-copy small { color:var(--ui-glass-secondary) !important; font-size:12px !important; white-space:normal !important; line-height:1.5 !important; }
+.lf-product-visibility-field { display:grid; min-width:0; gap:6px; color:var(--ui-glass-secondary); font-size:12px; line-height:1.5; }
+.lf-data-studio select { width:100%; max-width:none !important; box-sizing:border-box; min-height:44px !important; padding:8px !important; background:var(--ui-fill) !important; color:var(--ui-ink) !important; border-color:var(--glass-edge) !important; border-radius:8px !important; font-size:16px !important; }
+.lf-product-studio .lf-product-empty { padding:12px 0 !important; background:transparent !important; color:var(--ui-glass-secondary) !important; font-size:14px !important; line-height:1.7 !important; }
+.lf-product-studio .lf-product-links { display:grid !important; gap:0 !important; }
+.lf-product-studio .lf-product-links a { display:flex; align-items:center; min-height:44px !important; padding-block:4px; color:var(--ui-glass-action) !important; font-size:14px !important; font-weight:500 !important; line-height:1.6 !important; text-decoration:underline; text-underline-offset:3px; }
+.lf-product-studio :is(button,select,a):focus-visible { outline:2px solid var(--ui-action) !important; outline-offset:3px !important; }
+.lf-product-studio button:disabled { opacity:.65; cursor:wait; }
+@media (max-width:360px) {
+  .lf-product-studio .lf-product-sheet-body { padding-inline:16px !important; }
+  .lf-product-studio .lf-product-inline-actions { grid-template-columns:minmax(0,1fr) !important; }
+  .lf-data-studio .lf-product-list-row { grid-template-columns:minmax(0,1fr) !important; gap:10px !important; }
+}
+}

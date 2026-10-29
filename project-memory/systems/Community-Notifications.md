@@ -6,6 +6,45 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-10-29-UI-Foundation-Phase-Seventeen]] adopts Review Editor mini
+cover and draft attachment display only. Original removal, upload, publish,
+account ownership and stale-editor guards remain; fixtures never publish.
+Published review pictures/quotes remain a separate UI owner. No notification,
+review or account record was sent or changed by this local verification.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Sixteen]] adopts work covers in friend
+rating rails and the shared review work attachment. Open work and Retry cannot
+accidentally open the enclosing review. Author avatars/profile callbacks, scores,
+reactions, privacy/safety/follow filtering and live refresh guards are unchanged.
+Local fixtures only; no publishing, reaction, saved review or notification sent.
+
+[[sessions/2026-10-29-UI-Foundation-Phase-Fifteen]] changes only Home Continue
+reading media, not friend-review rails, feed covers, reactions or notifications.
+Preserve separate owners when adopting further image consumers. No post, review,
+reaction or notification was sent by this local media verification.
+
+[[sessions/2026-10-28-UI-Foundation-Phase-Eleven]] refines standalone post/reply
+copy and counters, not review reactions or notifications. Compact visible counts
+retain exact plural-aware accessible names/tooltips; all counter update paths
+share one formatter without replacing cached feed cards. Direct AR/EN thread
+labels include empty/retry recovery.2845 full tests,56 isolated browser cases;
+demo reactions only, no real publishing/service/notification mutation.
+
+[[sessions/2026-10-28-UI-Foundation-Phase-Seven]] improves the review-options
+reporting form, not the post-reporting feature set or notifications.21 new
+source regressions,2773 full tests and20 local browser cases validate direct
+labels/materials, single-flight recovery, stale UI/receipt guards and concurrent
+receipt merging. No real report/mute/block or service deployment occurred.
+
+[[sessions/2026-10-28-Local-Work-Dislike]] prepares explicit work-dislike0 and
+the public visible count locally. This is not the existing review-reaction
+Dislike and does not change notification delivery. No backend deployment.
+
+[[sessions/2026-10-26-Work-Cinema]] first refines the post composer: full-width
+writing, independent author row, compact glass icon tools, preserved drafts and
+matching attachment pickers. Picker focus/Tab/Escape/return is checked locally.
+No actual post or review was published; no backend or notification changes.
+
 [[bugs/APNS-003-Permission-Intent-Race]] guards the current push preference across
 permission and registration awaits. Seven new cases and2251 full-suite tests
 pass; [[sessions/2026-10-19-Push-Permission-Intent]]. No live send/deploy/build.
@@ -40,6 +79,11 @@ identical post feed. [[sessions/2026-10-19-Pull-Refresh-Lifecycle]] tracks accep
 - لا تضف subscriptions متكررة لمجرد إعادة عرض القسم.
 
 ## الجرس مقابل Push
+
+2026-10-27: [[sessions/2026-10-27-Durable-Inbox-Review-Credit]] supersedes any
+assumption that OS push opt-in is required for the inbox. Recent60 rows/read
+receipts persist per authenticated owner, offline failures have Retry, and read
+history remains. Source/demo verified; actual two-account delivery still open.
 
 [[sessions/2026-10-16-Authorized-Push-Check]]: اختبار واحد مصرح به قبله APNs،
 وأكد المالك ظهوره خارج التطبيق والفتح إلى صندوق الإشعارات. هذا يثبت مسار
@@ -96,3 +140,8 @@ No notification, publication, relationship or stored-rating behavior changed.
 Unnecessary card rebuilding audit and fixes preserve unchanged editor/feed nodes; see [[sessions/2026-10-21-Stable-Rendering]].
 
 Home review Like stability: aligned declarative/enhanced Like and Dislike controls, immediate guarded Like updates, and retained cards across equivalent realtime responses. 549 focused checks and browser node-identity evidence; [[sessions/2026-10-21-Home-Like-Stability]].
+
+[[sessions/2026-10-26-Home-Cinema]]: Home-only dark/glass redesign preserves
+account-derived continuation and the existing feed. Dislike now uses guarded
+optimistic rendering with Like exclusion; Save stays independent. Local demo
+interaction verified; no production or native release change.
