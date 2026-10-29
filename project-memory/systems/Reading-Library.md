@@ -6,6 +6,12 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-10-30-Import-Written-Reviews]] retains explicit CSV review text,
+fills missing owner text independently of existing Library membership, preserves
+authored text/ratings/status/progress and deduplicates retries. Preview/opt-out,
+private unrated records and rollback verified:3034 source tests/168 UI fixtures.
+No public publication, live import, provider-review fetch or native delivery.
+
 [[sessions/2026-10-29-Library-Shelf-Acceptance]] verifies Library counts through15,
 seven spines per row and triplet Showcase rows without a total Library cap.
 Decorative managed spine titles no longer intercept the native Open button.

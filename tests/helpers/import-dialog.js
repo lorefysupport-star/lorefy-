@@ -22,7 +22,7 @@ function harness(lang='en'){
   imParseMalXml:()=>({rows:[],misses:0}),imParseGoodreads:()=>({rows:[],misses:0}),imParseGenericCsv:()=>({rows:[],misses:0}),
   imFindByTitle:title=>works.find(work=>work.title===title),imNorm:title=>title.toLowerCase(),imBuildMaps:()=>({byTitle:new Map(works.map(w=>[w.title.toLowerCase(),[w]]))}),
   mlTitleOf:work=>work.title,mlResultCover:work=>el('img',{alt:work.title}),
-  imApply:rows=>{writes.push(rows);if(hooks.saveError)throw hooks.saveError;return {added:rows.length,ratings:0,skipped:0};},
+  imApply:(rows,options)=>{writes.push(rows);if(hooks.apply)hooks.apply(rows,options);if(hooks.saveError)throw hooks.saveError;return {added:rows.length,ratings:0,reviews:0,skipped:0};},
   IM_DONE:'done',IM_READING:'reading',IM_WISH:'wish',IM_PAUSED:'paused',IM_DROPPED:'dropped'};
  const start=source.indexOf('  function openImport()');vm.runInNewContext(source.slice(start,source.indexOf('  /* \u2500\u2500 profile character taste',start)),scope);scope.openImport();
  return {page,body,doc,nodes,hooks,requests,writes,reads,works,

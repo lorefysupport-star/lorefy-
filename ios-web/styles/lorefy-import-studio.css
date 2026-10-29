@@ -87,6 +87,11 @@
 .lf-im-page .lf-im-preview>p { color:var(--ui-secondary) !important; font-size:14px !important; line-height:1.6; }
 .lf-im-page .lf-im-preview-row { grid-template-columns:44px minmax(0,1fr); }
 .lf-im-page .lf-im-preview-row select { background:var(--ui-fill) !important; border-color:var(--ui-line) !important; color:var(--ui-ink) !important; font-weight:400 !important; white-space:nowrap !important; overflow:hidden; text-overflow:ellipsis; }
+.lf-im-page .lf-im-review-option { display:flex; align-items:center; gap:10px; min-height:44px; font-size:14px; color:var(--ui-ink); }
+.lf-im-page .lf-im-include-reviews { width:20px; height:20px; flex:none; accent-color:var(--ui-action); }
+.lf-im-page .lf-im-review-preview { grid-column:2; min-width:0; color:var(--ui-secondary); font-size:14px; }
+.lf-im-page .lf-im-review-preview summary { display:flex; align-items:center; min-height:44px; cursor:pointer; color:var(--ui-action); }
+.lf-im-page .lf-im-review-preview p { margin:0 0 10px; white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.65; color:var(--ui-ink); }
 .lf-im-page .lf-im-confirm { width:100%; margin-block-start:12px; padding:10px 16px; }
 .lf-im-page .lf-im-summary { background:transparent !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; padding:0 !important; color:var(--ui-ink) !important; font-size:14px !important; font-weight:400 !important; line-height:1.6 !important; }
 .lf-im-page button:active:not(:disabled) { transform:scale(.98); }

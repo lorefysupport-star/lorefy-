@@ -53,7 +53,7 @@ test('a failed confirmation keeps its preview and focuses the announced save err
 });
 
 test('import material is versioned and cached with the current entry',()=>{
- const asset='styles/lorefy-import-studio.css?v=20261028-import-studio-v1';for(const path of ['index.html','sw.js'])assert.ok(fs.readFileSync(path,'utf8').includes(asset),path);
+ const asset='styles/lorefy-import-studio.css?v=20261030-import-reviews-v1';for(const path of ['index.html','sw.js'])assert.ok(fs.readFileSync(path,'utf8').includes(asset),path);
 });
 
 for(const [raw,expected] of [
@@ -72,4 +72,15 @@ for(const [raw,expected] of [
 
 test('unrecognized provider errors remain literal even if they match object property names',async()=>{
  for(const message of ['constructor','toString','__proto__']){const h=harness();h.hooks.fetch=async()=>{throw Error(message);};h.start();await flush();assert.equal(h.find('lf-im-error').textContent,message);}
+});
+
+for(const lang of ['ar','en'])test('review text is previewed as literal text and import can be disabled in '+lang,async()=>{
+ const h=harness(lang),body='A review\n<script>not executable</script>';
+ h.hooks.fetch=async()=>({rows:[{work:h.works[0],status:'done',score:4,review:body}],misses:0});
+ h.start();await flush();
+ const preview=h.find('lf-im-review-preview');assert.ok(preview);assert.ok(preview.textContent.includes(body));
+ assert.equal(preview.querySelector('script'),null);assert.equal(h.writes.length,0);
+ const choice=h.find('lf-im-include-reviews');assert.equal(choice.checked,true);choice.checked=false;
+ let options;h.hooks.apply=(rows,value)=>options=value;h.find('lf-im-confirm').click();
+ assert.equal(options.reviews,false);
 });

@@ -34,6 +34,12 @@ Backend/Merge → استجابة سحابية تخص الحساب الذي طل�
 
 ## حدود المصادر
 
+Written imports: [[sessions/2026-10-30-Import-Written-Reviews]]. Explicit review
+columns are distinct from private notes. New imported reviews are private and
+unrated text uses null, not an intentional zero/dislike. Existing scores, authored
+text, reading statuses/progress must not be overwritten. Missing text can be
+filled into an existing owner review, with no public publication or extra record.
+
 Inbox reconnect: [[sessions/2026-10-30-Inbox-Reconnect]]. INSERT may announce;
 UPDATE merges read state in place without a toast. Read_at cannot be undone by
 duplicate inserts or older snapshots. Concurrent refresh consumers share one

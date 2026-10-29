@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v641-inbox-receipt-scope';
+const CACHE = 'lorefy-v642-import-reviews';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -24,7 +24,7 @@ const CORE = [
  './styles/lorefy-data-studio.css?v=20261028-trust-studio-v2',
  './styles/lorefy-trust-studio.css?v=20261028-report-studio-v1',
  './styles/lorefy-settings-studio.css?v=20261028-settings-studio-v1',
- './styles/lorefy-import-studio.css?v=20261028-import-studio-v1',
+ './styles/lorefy-import-studio.css?v=20261030-import-reviews-v1',
  './styles/lorefy-custom-glass.css?v=20261027-theme-unity-v2',
  './styles/lorefy-profile-apple.css?v=20261027-profile-colors-v1',
  './styles/lorefy-work-studio.css?v=20261029-cover-editions-v1',
@@ -176,7 +176,7 @@ const CORE = [
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
-  './modules/lorefy-growth-features.js?v=20261029-rated-profile-media-v1-tenrai-v1',
+  './modules/lorefy-growth-features.js?v=20261030-import-reviews-v1',
   './modules/lorefy-share-studio.js?v=20261028-share-composer-v3',
   './uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1',
   './launch/icons/icon-180.png',

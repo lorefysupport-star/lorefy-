@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-10-30 [[sessions/2026-10-30-Import-Written-Reviews]] repairs discarded
+Goodreads/CSV review text. Safe preview/opt-out, missing-text recovery, private
+unrated records and repeat import verified;3034 source tests/168 UI fixtures.
+No provider-published-review fetch, public tweet, new server job or native build.
+
 2026-10-30 [[sessions/2026-10-30-Inbox-Receipt-Scope]] follows the pushed
 reconnect repair `0df8087`: queued read acknowledgments are discarded before
 dispatch when account/logout/backend changes. No production data mutation or

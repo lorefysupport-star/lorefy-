@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Import text: [[sessions/2026-10-30-Import-Written-Reviews]] adds explicit written
+CSV review preservation with preview/opt-out, no-overwrite and idempotent local
+merge.3034 full tests/168 real-UI fixtures; no server jobs, publication or live
+provider-review completeness claim. Provider pagination remains next follow-up.
+
 F15 queued read receipt race: [[sessions/2026-10-30-Inbox-Receipt-Scope]]. Three
 new regressions for account/logout/backend transition before microtask dispatch;
 74 focused notifications tests and84 real-UI fixture checks. This is distinct

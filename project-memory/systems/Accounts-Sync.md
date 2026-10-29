@@ -6,6 +6,12 @@ aliases: ["حساب", "دخول", "مزامنة", "ضياع", "auth", "offline",
 ---
 # الحسابات والمزامنة
 
+[[sessions/2026-10-30-Import-Written-Reviews]] preserves the existing three-key
+import rollback/session guards. Explicit CSV review text is stored under the
+opening owner, never automatically published. Re-import fills only missing text;
+current authored reviews/ratings and legacy owner records remain authoritative.
+Cloud acknowledgment/job-resume is a separate open contract.
+
 [[sessions/2026-10-30-Supabase-Pro-Adoption]] adds bounded in-memory private
 image signature reuse. Auth still checked per caller; owner/active/client/epoch/
 project isolation and post-await guards retained. No persistent signed tokens,

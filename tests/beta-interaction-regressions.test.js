@@ -84,7 +84,7 @@ test('English system labels cover privacy, corrections and image positioning', (
 test('import offers a review step before it changes the library', () => {
   assert.match(growth, /lf-im-preview/);
   assert.match(growth, /im-confirm/);
-  assert.match(growth, /imApply\(selectedRows\)/);
+  assert.match(growth, /imApply\(selectedRows,\s*\{reviews:/);
   assert.doesNotMatch(growth, /function finish\(res, sourceLabel\)\s*\{\s*var out = imApply/);
 });
 

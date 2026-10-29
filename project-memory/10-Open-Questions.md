@@ -6,6 +6,11 @@ aliases: ["المشكلات", "النواقص", "المتبقي", "blockers"]
 ---
 # أمور لا تُغلق بالافتراض
 
+[[sessions/2026-10-30-Import-Written-Reviews]] closes explicit CSV review loss
+locally, not public provider review retrieval, live cloud acknowledgment, native
+file access or resumable background jobs. Existing authored text stays protected.
+Check provider pagination next; do not describe the whole import service as done.
+
 [[sessions/2026-10-30-Inbox-Reconnect]] closes reproducible source reconnect,
 parallel refresh and read-state regressions, not real two-device service delivery
 or a new installed version. Source push is authorized; server data/billing and

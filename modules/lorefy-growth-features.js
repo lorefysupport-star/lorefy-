@@ -3046,8 +3046,8 @@
     var candidates = maps.byTitle.get(head);
     return candidates && candidates[0] || null;
   }
-  /* rows: [{work, status, chapters, score(1-5|0)}] → merge into app storage */
-  function imApply(rows) {
+  /* rows: [{work, status, chapters, score(1-5|0), review?}] → merge into app storage */
+  function imApply(rows, options) {
     var keys = ["lorefy.user.library.v2", "lorefy.user.progress.v2", "lorefy.user.privateReviews.v2"];
     var storage = global.localStorage;
     var previous = keys.map(function (key) { return storage.getItem(key); });
@@ -3055,22 +3055,33 @@
     var prog = read("lorefy.user.progress.v2", {}) || {};
     var revs = read("lorefy.user.privateReviews.v2", []) || [];
     var idn = read("lorefy.identity.v1", {}) || {};
-    var added = 0, ratings = 0, skipped = 0;
-    var revHas = {};
-    revs.forEach(function (r) { if (r && r.userId === "me") revHas[String(r.mid)] = 1; });
+    var added = 0, ratings = 0, reviewCount = 0, skipped = 0;
+    var ownReviews = new Map();
+    revs.forEach(function (r) { if (r && (!r.userId || r.userId === "me")) ownReviews.set(String(r.mid), r); });
     rows.forEach(function (row) {
       var mid = String(row.work.id);
-      if (lib[mid]) { skipped++; return; }
-      lib[mid] = row.status; added++;
-      if (row.chapters > 0 && !prog[mid]) prog[mid] = { chapter: row.chapters, volume: 0, page: 0, note: "" };
-      if (row.score > 0 && !revHas[mid]) {
-        revs.unshift({
-          id: "r" + Date.now() + "-" + added, userId: "me", user: idn.name || "قارئ", un: idn.un || "reader", av: idn.avatar || "",
-          mid: row.work.id, r: row.score, rec: row.score >= 4, recVal: row.score >= 4 ? "yes" : (row.score <= 2 ? "no" : ""),
-          premium: false, txt: "—", imgs: [], ts: Date.now(), likes: 0, comments: 0,
-          ratings: { overall: row.score }, moment: "", spoiler: false, chars: null
-        });
-        revHas[mid] = 1; ratings++;
+      if (lib[mid]) skipped++;
+      else {
+        lib[mid] = row.status; added++;
+        if (row.chapters > 0 && !prog[mid]) prog[mid] = { chapter: row.chapters, volume: 0, page: 0, note: "" };
+      }
+      var body = options && options.reviews === false ? "" : typeof row.review === "string" ? row.review.trim() : "";
+      var existing = ownReviews.get(mid);
+      if (existing) {
+        // Fill only missing text; explicit ratings and authored reviews remain authoritative.
+        if (body && (!existing.txt || String(existing.txt).trim() === "—")) { existing.txt = body; reviewCount++; }
+      } else if (row.score > 0 || body) {
+        var score = row.score > 0 ? row.score : null;
+        var record = {
+          id: "r" + (global.crypto && global.crypto.randomUUID ? global.crypto.randomUUID() : Date.now() + "-" + Math.random().toString(36).slice(2)),
+          userId: "me", user: idn.name || "قارئ", un: idn.un || "reader", av: idn.avatar || "",
+          mid: row.work.id, r: score, rec: score >= 4, recVal: score >= 4 ? "yes" : (score !== null && score <= 2 ? "no" : ""),
+          premium: false, txt: body || "—", imgs: [], ts: Date.now(), likes: 0, comments: 0, isPublic: false,
+          ratings: { overall: score }, moment: "", spoiler: false, chars: null
+        };
+        revs.unshift(record); ownReviews.set(mid, record);
+        if (score !== null) ratings++;
+        if (body) reviewCount++;
       }
     });
     var updates = [lib, prog, revs];
@@ -3096,7 +3107,7 @@
     keys.forEach(function (key) {
       global.dispatchEvent(new global.CustomEvent("lorefy:stored-state", { detail: { key: key } }));
     });
-    return { added: added, ratings: ratings, skipped: skipped };
+    return { added: added, ratings: ratings, reviews: reviewCount, skipped: skipped };
   }
   function imStatusFromAL(s) {
     if (s === "CURRENT" || s === "REPEATING") return IM_READING;
@@ -3190,7 +3201,7 @@
     var lines = imParseCsvRows(text, ",");
     if (!lines.length) throw new Error("ملف فارغ");
     var head = lines[0].map(function (h) { return h.trim().toLowerCase(); });
-    var iT = head.indexOf("title"), iR = head.indexOf("my rating"), iS = head.indexOf("exclusive shelf");
+    var iT = head.indexOf("title"), iR = head.indexOf("my rating"), iS = head.indexOf("exclusive shelf"), iV = head.indexOf("my review");
     if (iT < 0) throw new Error("الملف لا يبدو تصدير Goodreads (لا يوجد عمود Title)");
     var rows = [], misses = 0;
     for (var i = 1; i < lines.length; i++) {
@@ -3199,7 +3210,7 @@
       if (!w) { misses++; continue; }
       var shelf = (iS >= 0 ? c[iS] : "") || "";
       var status = /currently/i.test(shelf) ? IM_READING : /to-read/i.test(shelf) ? IM_WISH : IM_DONE;
-      rows.push({ work: w, status: status, chapters: 0, score: Math.min(5, Math.max(0, Number(iR >= 0 ? c[iR] : 0) || 0)) });
+      rows.push({ work: w, status: status, chapters: 0, score: Math.min(5, Math.max(0, Number(iR >= 0 ? c[iR] : 0) || 0)), review: iV >= 0 ? c[iV] || "" : "" });
     }
     return { rows: rows, misses: misses };
   }
@@ -3224,6 +3235,7 @@
     if (iT < 0) throw new Error("لم أجد عمود العنوان (Title) في الملف");
     var iS = col(["read status", "exclusive shelf", "shelf", "status", "list"]);
     var iR = col(["star rating", "my rating", "rating", "score"]);
+    var iV = col(["my review", "review", "review text", "المراجعة"]);
     var rows = [], misses = 0;
     for (var i = 1; i < lines.length; i++) {
       var c = lines[i];
@@ -3232,7 +3244,7 @@
       var status = (iS >= 0 && imStatusWord(c[iS])) || defStatus || IM_DONE;
       var raw = iR >= 0 ? Number(String(c[iR] || "").trim()) : 0;
       var score = Number.isFinite(raw) ? Math.round((raw > 5 ? raw / 2 : raw) * 4) / 4 : 0;
-      rows.push({ work: w, status: status, chapters: 0, score: Math.min(5, Math.max(0, score || 0)) });
+      rows.push({ work: w, status: status, chapters: 0, score: Math.min(5, Math.max(0, score || 0)), review: iV >= 0 ? c[iV] || "" : "" });
     }
     return { rows: rows, misses: misses };
   }
@@ -3338,6 +3350,15 @@
         heading,
         el("p", { text:uiText("لن تتغير مكتبتك قبل التأكيد. يمكنك تبديل النسخة أو استبعادها.", "Your library stays unchanged until you confirm. Change an edition or skip it.") })
       ]);
+      var reviewToggle = null;
+      var reviewsAvailable = selectedRows.filter(function (row) { return typeof row.review === "string" && row.review.trim(); }).length;
+      if (reviewsAvailable) {
+        reviewToggle = el("input", {type:"checkbox", class:"lf-im-include-reviews"});
+        reviewToggle.checked = true;
+        preview.appendChild(el("label", {class:"lf-im-review-option"}, [reviewToggle,
+          el("span", {text:uiText("استيراد نصوص المراجعات", "Import written reviews") + " (" + reviewsAvailable + ")"})]));
+        preview.appendChild(el("p", {text:uiText("نضيف النصوص المفقودة فقط، دون استبدال تقييماتك أو مراجعاتك الحالية. لا نشر عام تلقائيًا.", "Only missing text is added. Existing ratings and written reviews stay unchanged. Nothing is published automatically.")}));
+      }
       var matches = el("div", { class:"lf-im-preview-list" });
       var visible = 0;
       var more = el("button", { type:"button", class:"lf-im-more", text:uiText("عرض المزيد", "Show more") });
@@ -3357,7 +3378,10 @@
             select.appendChild(el("option", { value:"", text:uiText("استبعاد", "Skip") }));
             select.value = String(work.id);
             select.addEventListener("change", function () { row.work = alternatives.find(function (w) { return String(w.id) === select.value; }) || null; });
-            matches.appendChild(el("div", { class:"lf-im-preview-row" }, [mlResultCover(work), select]));
+            var matchRow = el("div", { class:"lf-im-preview-row" }, [mlResultCover(work), select]);
+            if (typeof row.review === "string" && row.review.trim()) matchRow.appendChild(el("details", {class:"lf-im-review-preview"}, [
+              el("summary", {text:uiText("نص المراجعة", "Review text")}), el("p", {dir:"auto", text:row.review.trim()})]));
+            matches.appendChild(matchRow);
           })(visible);
         }
         more.hidden = visible >= selectedRows.length;
@@ -3376,7 +3400,7 @@
         selectedRows = selectedRows.filter(function (row) { return !!row.work; });
         if (saveError) saveError.hidden = true;
         var out;
-        try { out = imApply(selectedRows); }
+        try { out = imApply(selectedRows, {reviews:!reviewToggle || reviewToggle.checked}); }
         catch (error) {
           if (!currentAttempt(attempt)) return;
           var partial = error && error.code === "LOREFY_IMPORT_PARTIAL_SAVE";
@@ -3406,7 +3430,8 @@
         heading,
         el("span", { text: out.added + uiText(" عمل أُضيف إلى مكتبتك", " titles added to your library") }),
         out.ratings ? el("span", { text: out.ratings + uiText(" تقييم استُورد", " ratings imported") }) : null,
-        out.skipped ? el("span", { text: out.skipped + uiText(" موجود مسبقًا (تُرك كما هو)", " already in your library (unchanged)") }) : null,
+        out.reviews ? el("span", { text: out.reviews + uiText(" نص مراجعة استُورد", " written reviews imported") }) : null,
+        out.skipped ? el("span", { text: out.skipped + uiText(" حالة قراءة موجودة (تُركت كما هي)", " existing reading statuses kept unchanged") }) : null,
         res.misses ? el("span", { text: res.misses + uiText(" عمل غير مطابق في الكتالوج", " titles not matched in the catalog") }) : null
       ]));
       var reload = el("button", { type: "button", class: "lf-im-reload", text: uiText("تم، العودة إلى التطبيق", "Done, return to the app") });
