@@ -95,3 +95,5 @@ force-quit أو المزامنة بين جهازين حقيقيين، ولا ي�
 
 
 - [[sessions/2026-10-21-GitHub-Skills-Handoff]]: أذن المالك بنشر هذه التغييرات على GitHub، فيُستبدل قيد محلي فقط لهذا التسليم. لا يغيّر ذلك حدود الجهاز وVoiceOver أوالخدمات أوإصدارiOS.
+
+2026-10-29 service follow-up: [[sessions/2026-10-29-Supabase-Pro-Optimization]] confirms the Pro upgrade and healthy project, with targeted SQL optimization deployed and verified. Jikan upstream/connectivity failures, Apple authorization missing configuration, Google Books rate limits, full authenticated isolation and backup/restore evidence remain open. Historic billing 402 errors are followed by catalog 200 responses; no native release was created.

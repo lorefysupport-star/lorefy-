@@ -482,3 +482,5 @@ Type-page search now connects its selected format to the existing debounced onli
 2026-10-21: [[sessions/2026-10-21-Search-Audit]] repairs main All-format online lookup and isolates People/Lists from catalog listeners; 234 focused checks, browser result evidence, and five matching installed simulator assets. Live directory/provider coverage remains separate. No commit or push.
 
 2026-10-21: Owner authorized committing/pushing accumulated local repairs; [[sessions/2026-10-21-GitHub-Sync]] records 2370 passing full-suite checks and six missing-dependency failures, plus 234/234 focused search checks. No release upload.
+
+2026-10-29: [[sessions/2026-10-29-Supabase-Pro-Optimization]] confirms Pro and ACTIVE_HEALTHY, then applies five indexes and two equivalent chapter-review identity InitPlans. One live feed query improves from 80.915 ms to 23.905 ms; 23 isolated SQL checks and 63 focused source checks pass. Jikan, Apple server configuration and broader device/service evidence remain open. No Edge deployment or native build.

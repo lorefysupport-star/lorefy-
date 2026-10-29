@@ -309,3 +309,5 @@ Type-page search now connects its selected format to the existing debounced onli
 2026-10-21: [[sessions/2026-10-21-Search-Audit]] repairs main All-format online lookup and isolates People/Lists from catalog listeners; 234 focused checks, browser result evidence, and five matching installed simulator assets. Live directory/provider coverage remains separate. No commit or push.
 
 2026-10-21: Owner authorized committing/pushing accumulated local repairs; [[sessions/2026-10-21-GitHub-Sync]] records 2370 passing full-suite checks and six missing-dependency failures, plus 234/234 focused search checks. No release upload.
+
+2026-10-29 server evidence: [[sessions/2026-10-29-Supabase-Pro-Optimization]]; Pro/healthy project, five valid indexes, two cached chapter-review identity lookups, same ordered feed results; 23 isolated SQL assertions and 63 focused source checks passed. Billing-denied catalog requests recovered; Jikan and Apple configuration errors remain separate. No device or two-account Auth certification.
