@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-29T22:14:01.313Z
-Source commit: a0ae3eb80b6a2db88ca08c98dd54d44d40881f16
+Observed: 2026-10-29T22:26:50.621Z
+Source commit: ebbf2aaf986c1f2112ddf8e0ff1c75ca7f62eacb
 
 # Modules Source Inventory
 
@@ -42,7 +42,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-frame-motion.js](../../modules/lorefy-frame-motion.js) (17810 bytes)
 - [modules/lorefy-frame-restoration.js](../../modules/lorefy-frame-restoration.js) (19994 bytes)
 - [modules/lorefy-friend-activity.js](../../modules/lorefy-friend-activity.js) (10302 bytes)
-- [modules/lorefy-growth-features.js](../../modules/lorefy-growth-features.js) (417875 bytes)
+- [modules/lorefy-growth-features.js](../../modules/lorefy-growth-features.js) (419476 bytes)
 - [modules/lorefy-home-cinema.js](../../modules/lorefy-home-cinema.js) (6998 bytes)
 - [modules/lorefy-i18n.js](../../modules/lorefy-i18n.js) (44528 bytes)
 - [modules/lorefy-interface-settings.js](../../modules/lorefy-interface-settings.js) (15005 bytes)

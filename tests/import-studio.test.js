@@ -84,3 +84,13 @@ for(const lang of ['ar','en'])test('review text is previewed as literal text and
  let options;h.hooks.apply=(rows,value)=>options=value;h.find('lf-im-confirm').click();
  assert.equal(options.reviews,false);
 });
+
+for(const lang of ['ar','en'])test('incomplete Kitsu import shows a localized retryable error without a preview in '+lang,async()=>{
+ const raw='تعذر إكمال جلب مكتبة Kitsu. لم يتم استيراد أي بيانات. حاول مجددًا.';
+ const h=harness(lang);h.hooks.fetch=async()=>{throw Error(raw);};h.start('Kitsu','reader');await flush();
+ assert.equal(h.find('lf-im-error').textContent,lang==='ar'?raw:'Could not fetch the complete Kitsu library. No data was imported. Try again.');
+ assert.equal(h.find('lf-im-confirm'),null);assert.equal(h.writes.length,0);assert.equal(h.input('Kitsu').value,'reader');
+ assert.equal(h.find('lf-im-result').attrs['aria-busy'],'false');assert.equal(h.doc.activeElement,h.find('lf-im-error'));
+ h.hooks.fetch=async()=>({rows:[{work:h.works[0],status:'done'}],misses:0});h.start('Kitsu','reader');await flush();
+ assert.ok(h.find('lf-im-confirm'));assert.equal(h.writes.length,0);
+});

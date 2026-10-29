@@ -6,10 +6,15 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Kitsu import completeness: [[sessions/2026-10-30-Kitsu-Complete-Pagination]].
+3057 source tests/192 real local-UI fixtures; all next pages fetched or an
+explicit retryable failure before any preview. No live provider/service claim.
+
 Import text: [[sessions/2026-10-30-Import-Written-Reviews]] adds explicit written
 CSV review preservation with preview/opt-out, no-overwrite and idempotent local
 merge.3034 full tests/168 real-UI fixtures; no server jobs, publication or live
-provider-review completeness claim. Provider pagination remains next follow-up.
+provider-review completeness claim. Kitsu follow-up has separate evidence above;
+CSV browser acceptance rerun180 with actual dark/pink theme/language assertions.
 
 F15 queued read receipt race: [[sessions/2026-10-30-Inbox-Receipt-Scope]]. Three
 new regressions for account/logout/backend transition before microtask dispatch;

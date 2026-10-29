@@ -49,7 +49,7 @@ test('AniList ten-point fractional score retains quarter stars',async()=>{
  extract(read('modules/lorefy-growth-features.js'),'  function imFetchAniList(','  function imParseMalXml(',scope);assert.equal((await scope.imFetchAniList('qa')).rows[0].score,4.75);
 });
 test('Kitsu twenty-point score retains quarter stars',async()=>{
- let calls=0;const scope={IM_READING:'reading',IM_DONE:'done',IM_WISH:'wish',IM_DROPPED:'dropped',IM_PAUSED:'paused',imFindByTitle:()=>({id:'qa'}),withTimeout:p=>p,fetch:async()=>({ok:true,json:async()=>++calls===1?{data:[{id:'qa'}]}:{data:[{attributes:{status:'completed',ratingTwenty:17,progress:38},relationships:{manga:{data:{type:'manga',id:'2'}}}}],included:[{type:'manga',id:'2',attributes:{canonicalTitle:'QA'}}]}})};
+ let calls=0;const scope={URL,IM_READING:'reading',IM_DONE:'done',IM_WISH:'wish',IM_DROPPED:'dropped',IM_PAUSED:'paused',imFindByTitle:()=>({id:'qa'}),withTimeout:p=>p,fetch:async()=>({ok:true,json:async()=>++calls===1?{data:[{id:'qa'}]}:{data:[{attributes:{status:'completed',ratingTwenty:17,progress:38},relationships:{manga:{data:{type:'manga',id:'2'}}}}],included:[{type:'manga',id:'2',attributes:{canonicalTitle:'QA'}}]}})};
  extract(read('modules/lorefy-growth-features.js'),'  function imFetchKitsu(','  function imReadFileText(',scope);assert.equal((await scope.imFetchKitsu('qa')).rows[0].score,4.25);
 });
 test('library CSV exports current and legacy progress fields including pages and escaped notes',()=>{

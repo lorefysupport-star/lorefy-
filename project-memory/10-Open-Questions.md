@@ -6,10 +6,16 @@ aliases: ["المشكلات", "النواقص", "المتبقي", "blockers"]
 ---
 # أمور لا تُغلق بالافتراض
 
+[[sessions/2026-10-30-Kitsu-Complete-Pagination]] closes the local six-page
+truncation/retry defect with3057 full tests/192 UI fixture checks. Live provider,
+catalog title-match coverage, native network access, durable jobs and public
+review retrieval remain open. CSV acceptance rerun180 with actual theme checks.
+
 [[sessions/2026-10-30-Import-Written-Reviews]] closes explicit CSV review loss
 locally, not public provider review retrieval, live cloud acknowledgment, native
 file access or resumable background jobs. Existing authored text stays protected.
-Check provider pagination next; do not describe the whole import service as done.
+Kitsu pagination has its own later acceptance note; do not describe the whole
+import service as done or apply that evidence to other providers.
 
 [[sessions/2026-10-30-Inbox-Reconnect]] closes reproducible source reconnect,
 parallel refresh and read-state regressions, not real two-device service delivery

@@ -6,6 +6,11 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-10-30-Kitsu-Complete-Pagination]] removes the silent six-page
+cutoff, deduplicates provider entry IDs and rejects incomplete pagination before
+preview.3057 full tests/192 UI fixtures; CSV rerun180 with asserted theme/lang.
+No real provider account, resumable job or public publication acceptance.
+
 [[sessions/2026-10-30-Import-Written-Reviews]] retains explicit CSV review text,
 fills missing owner text independently of existing Library membership, preserves
 authored text/ratings/status/progress and deduplicates retries. Preview/opt-out,

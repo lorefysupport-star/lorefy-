@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v642-import-reviews';
+const CACHE = 'lorefy-v643-kitsu-pages';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -176,7 +176,7 @@ const CORE = [
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
-  './modules/lorefy-growth-features.js?v=20261030-import-reviews-v1',
+  './modules/lorefy-growth-features.js?v=20261030-kitsu-pages-v1',
   './modules/lorefy-share-studio.js?v=20261028-share-composer-v3',
   './uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1',
   './launch/icons/icon-180.png',

@@ -42,6 +42,12 @@ contract plus2 AR/EN UI cases. Existing CSV, session and rollback checks retaine
 
 ## Fresh Evidence
 
+Follow-up correction: [[2026-10-30-Kitsu-Complete-Pagination]] reran this CSV
+acceptance on current source:180/180 with actual theme/language asserted. The
+initial168 fixture checks seeded theme before demo bootstrap reset it to dark;
+their dark/pink label was insufficient proof. Updated fixture now sets the mode
+after bootstrap and waits for the document to match; screenshots regenerated.
+
 -132 focused tests passed. Final complete source suite **3034/3034**, zero failures,
   exit0,63,647ms. JS syntax checked. Memory audit run after documenting this repair.
 - **168/168** actual local-app browser checks; AR/EN x dark/pink x320/390/768.

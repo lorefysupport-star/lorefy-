@@ -3261,11 +3261,26 @@
         return u2.id;
       });
     }).then(function (uid) {
-      var rows = [], misses = 0;
+      var rows = [], misses = 0, pages = new Set(), entries = new Set();
+      var incomplete = "تعذر إكمال جلب مكتبة Kitsu. لم يتم استيراد أي بيانات. حاول مجددًا.";
       function pageLoad(url, n) {
-        return jget(url).then(function (j) {
+        var target = new URL(url, "https://kitsu.io/api/edge/library-entries");
+        if (target.protocol !== "https:" || (target.hostname !== "kitsu.io" && target.hostname !== "kitsu.app") || target.port || target.username || target.password || target.pathname !== "/api/edge/library-entries") throw new Error(incomplete);
+        target.hash = "";
+        target.searchParams.sort();
+        var identity = target.pathname + target.search;
+        // Reject broken pagination rather than presenting a truncated library as complete.
+        if (pages.has(identity) || n >= 1000) throw new Error(incomplete);
+        pages.add(identity);
+        return jget(target.href).then(function (j) {
+          if (!j || !Array.isArray(j.data) || (j.included != null && !Array.isArray(j.included))) throw new Error(incomplete);
           var inc = {}; (j.included || []).forEach(function (m) { inc[m.type + "/" + m.id] = m; });
-          (j.data || []).forEach(function (e) {
+          j.data.forEach(function (e) {
+            if (e.id != null) {
+              var identity = String(e.id);
+              if (entries.has(identity)) return;
+              entries.add(identity);
+            }
             var a = e.attributes || {};
             var rel = e.relationships && e.relationships.manga && e.relationships.manga.data;
             var med = rel ? inc[rel.type + "/" + rel.id] : null;
@@ -3276,10 +3291,15 @@
             rows.push({ work: w, status: st, chapters: Number(a.progress) || 0, score: Math.min(5, Math.max(0, Math.round(Number(a.ratingTwenty) || 0) / 4)) });
           });
           var next = j.links && j.links.next;
-          if (next && n < 5) return pageLoad(next, n + 1);
+          if (next != null) {
+            if (typeof next === "object") next = next.href;
+            if (typeof next !== "string" || !next.trim()) throw new Error(incomplete);
+            return pageLoad(next, n + 1);
+          }
         });
       }
-      return pageLoad("https://kitsu.io/api/edge/library-entries?filter[userId]=" + uid + "&filter[kind]=manga&include=manga&page[limit]=500", 0)
+      return pageLoad("https://kitsu.io/api/edge/library-entries?filter[userId]=" + encodeURIComponent(uid) + "&filter[kind]=manga&include=manga&page[limit]=500", 0)
+        .catch(function () { throw new Error(incomplete); })
         .then(function () {
           if (!rows.length && !misses) throw new Error("لا توجد أعمال مانجا في هذا الحساب");
           return { rows: rows, misses: misses };
@@ -3444,6 +3464,7 @@
       var messages = {
         "اسم المستخدم غير موجود في AniList": "AniList username was not found.",
         "اسم المستخدم غير موجود في Kitsu": "Kitsu username was not found.",
+        "تعذر إكمال جلب مكتبة Kitsu. لم يتم استيراد أي بيانات. حاول مجددًا.": "Could not fetch the complete Kitsu library. No data was imported. Try again.",
         "تعذر الجلب من AniList": "Could not fetch from AniList. Try again.",
         "الملف لا يبدو تصدير مانجا من MAL": "This file is not a MAL manga export.",
         "الملف لا يبدو تصدير Goodreads (لا يوجد عمود Title)": "This Goodreads export has no Title column.",
