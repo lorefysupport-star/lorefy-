@@ -3930,24 +3930,21 @@
   function profileTopCharacterSearchWorks(query) {
     query = profileTopCharacterSearchText(query);
     if (query.length < 2) return [];
-    var rows = [], works = mlWorks();
+    var rows = [], works = mlWorks(), shared=typeof global !== "undefined" && global.LorefyCatalogData;
     for (var i = 0; i < works.length; i++) {
-      var work = works[i];
-      var titles = [work && work.title, work && work.ar].filter(Boolean).map(profileTopCharacterSearchText);
-      var haystack = profileTopCharacterSearchText([
-        work && work.title,
-        work && work.ar,
-        work && work.auth,
-        work && work.author
+      var work = works[i], indexed=shared&&shared.getCatalogQueryIndex&&shared.getCatalogQueryIndex(work);
+      var haystack=indexed ? indexed.fields.slice(0,4).filter(Boolean).join(" ") : profileTopCharacterSearchText([
+        work&&work.title,work&&work.ar,work&&work.auth,work&&work.author
       ].filter(Boolean).join(" "));
-      if (haystack.indexOf(query) >= 0 || typeof global !== 'undefined' && global.LorefyCatalogData && global.LorefyCatalogData.matchesCatalogQuery(work, query)) {
-        var score = titles.some(function (title) { return title === query; }) ? 4
-          : titles.some(function (title) { return title.indexOf(query) === 0; }) ? 3
-          : titles.some(function (title) { return title.indexOf(query) >= 0; }) ? 2 : 1;
-        rows.push({ work: work, score: score });
-      }
+      if(haystack.indexOf(query)<0&&!(shared&&shared.matchesCatalogQuery(work,query)))continue;
+      // Normalize titles only for actual hits, reusing worker-prepared fields.
+      var titles=indexed ? indexed.fields.slice(0,2).filter(Boolean) : [work&&work.title,work&&work.ar].filter(Boolean).map(profileTopCharacterSearchText);
+      var score=titles.some(function(title){return title===query;})?4
+        :titles.some(function(title){return title.indexOf(query)===0;})?3
+        :titles.some(function(title){return title.indexOf(query)>=0;})?2:1;
+      rows.push({work:work,score:score});
     }
-    return rows.sort(function (a, b) { return b.score - a.score; }).slice(0, 12).map(function (row) { return row.work; });
+    return rows.sort(function(a,b){return b.score-a.score;}).slice(0,12).map(function(row){return row.work;});
   }
   function profileRatedCharacterPortrait(item, retryHost) {
     var character = item.character || {}, portrait = el("span", { class: "lf-profile-rated-character-portrait" });

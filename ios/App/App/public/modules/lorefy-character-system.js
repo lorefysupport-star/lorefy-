@@ -2334,13 +2334,21 @@
     return normalize([character.name,character.latin].concat(character.aliases||[]).join(' ')).indexOf(normalize(query))!==-1;
   }
   function cachedCharacterMatches(query, works) {
-    var result=[],cache=readCache(),byId=new Map((works||[]).filter(function(w){return !isNormalBook(w);}).map(function(w){return [String(w.id),w];}));
-    Object.keys(cache).forEach(function(id){if(!byId.has(id))return;var entry=cache[id],cast=entry&&(!entry.ts||Date.now()-entry.ts<=CACHE_TTL)&&entry.cast;if(cast && cast.some(function(c){return characterMatches(c,query);}))result.push({workId:id,cast:cast});});
-    return result;
+    var cache=readCache(),matches=new Map();
+    Object.keys(cache).forEach(function(id){
+      var entry=cache[id],cast=entry&&(!entry.ts||Date.now()-entry.ts<=CACHE_TTL)&&entry.cast;
+      if(cast&&cast.some(function(c){return characterMatches(c,query);}))matches.set(id,{workId:id,cast:cast});
+    });
+    if(!matches.size)return [];
+    // Only matching cached work IDs need classification. An empty cache/query
+    // must not build a second index of the complete discovery catalog.
+    var allowed=new Set();
+    (works||[]).forEach(function(work){var id=String(work&&work.id);if(matches.has(id)&&!isNormalBook(work))allowed.add(id);});
+    return Array.from(matches.values()).filter(function(row){return allowed.has(row.workId);});
   }
   async function searchCharacters(query, works, options) {
     options=options||{};
-    query=String(query||'').trim().slice(0,100);if(query.length<2)return [];
+    query=String(query||'').trim().slice(0,100);if(query.length<2||options.active&&!options.active())return [];
     var cached=cachedCharacterMatches(query,works),key=query.toLowerCase(),remote=nameSearchCache.get(key);
     if(!remote){
       var pending=nameSearchPending.get(key);
@@ -2361,6 +2369,7 @@
       remote=await pending;
     }
     if(options.active && !options.active())return [];
+    if(!remote.length)return cached;
     var found=new Map(cached.map(function(row){return [row.workId,row];}));
     var byMal=new Map(),byAni=new Map(),byTitle=new Map(),cache=readCache(),changed=false;
     function indexUnique(index,key,work){
