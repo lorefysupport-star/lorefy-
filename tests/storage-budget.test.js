@@ -19,7 +19,7 @@ test('non-quota failures are not hidden or treated as permission to delete cache
 });
 test('oversized catalog downloads are bounded and batch references stay valid',()=>{
  const source=fs.readFileSync('modules/lorefy-api-catalog.js','utf8'),values=new Map(),works=Array.from({length:100},(_,i)=>({id:String(i),description:'x'.repeat(20000)}));
- const scope={MAX_CACHE_CHARS:512*1024,MAX_CACHED_WORKS:6000,CACHE_KEY:'cache',config:()=>({}),uniqueWorks:v=>v,nowIso:()=>new Date().toISOString(),write:(k,v)=>values.set(k,JSON.stringify(v))};
+ const scope={global:{localStorage:{setItem:(key,value)=>values.set(key,value)}},MAX_CACHE_CHARS:512*1024,MAX_CACHED_WORKS:6000,CACHE_KEY:'cache',config:()=>({}),uniqueWorks:v=>v,nowIso:()=>new Date().toISOString(),write:(k,v)=>values.set(k,JSON.stringify(v))};
  const start=source.indexOf('  function saveCache('),end=source.indexOf('  function batchKey(',start);vm.runInNewContext(source.slice(start,end),scope);
  const cached={works,batches:{recent:{at:new Date().toISOString(),ids:works.map(w=>w.id)}}};scope.saveCache(cached);
  assert.ok(values.get('cache').length<=512*1024);assert.ok(cached.works.length>0);const ids=new Set(cached.works.map(w=>w.id));assert.ok(cached.batches.recent.ids.every(id=>ids.has(id)));

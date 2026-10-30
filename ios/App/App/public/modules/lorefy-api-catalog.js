@@ -157,17 +157,17 @@
   }
 
   function rebuildDuplicateIndex() {
-    var ids = new Set();
+    var records = new Map();
     var titles = new Map();
     var items = data();
     items.forEach(function (work) {
       if (!work || !work.id) return;
-      ids.add(String(work.id));
+      records.set(String(work.id), work);
       var key = catalogTitleKey(work);
       if (!titles.has(key)) titles.set(key, []);
       titles.get(key).push(work);
     });
-    duplicateIndex = { ids: ids, titles: titles };
+    duplicateIndex = { records: records, titles: titles };
     duplicateIndexSize = items.length;
     return duplicateIndex;
   }
@@ -178,13 +178,16 @@
   }
 
   function rememberDuplicateWorks(works) {
-    if (!duplicateIndex) return;
+    if (!duplicateIndex || !works || !works.length) return;
+    var storedRecords = new Map(data().slice(-works.length).map(function(work) { return [String(work && work.id), work]; }));
     (works || []).forEach(function (work) {
       if (!work || !work.id) return;
-      duplicateIndex.ids.add(String(work.id));
+      // The updater clones provider records; index the actual catalog object.
+      var stored = storedRecords.get(String(work.id)) || work;
+      duplicateIndex.records.set(String(work.id), stored);
       var key = catalogTitleKey(work);
       if (!duplicateIndex.titles.has(key)) duplicateIndex.titles.set(key, []);
-      duplicateIndex.titles.get(key).push(work);
+      duplicateIndex.titles.get(key).push(stored);
     });
     duplicateIndexSize = data().length;
   }
@@ -315,6 +318,15 @@
     return "";
   }
 
+  function providerTitles(titles, extra) {
+    var values = titles && typeof titles === 'object' ? Object.keys(titles).map(function(key) { return titles[key]; }) : [titles];
+    return Array.from(new Set(values.concat(extra || []).map(normalizeSpaces).filter(Boolean)));
+  }
+
+  function arabicTitle(titles, fallback) {
+    return titles.find(function(title) { return /[\u0600-\u06ff]/.test(title) && isSupportedDisplayTitle(title); }) || fallback;
+  }
+
   function sourceLine(source, title, type) {
     return "عمل مستورد من " + source + " ضمن مكتبة " + type + ": " + title + ".";
   }
@@ -368,13 +380,15 @@
     } catch (e) {}
     var rating = clampRating(media.averageScore);
     var pop = Number(media.popularity) || Number(media.favourites) || 100;
+    var titles = providerTitles(media.title, media.synonyms);
     return finishWork({
       id: "api-anilist-" + media.id + "-" + slug(title),
       malId: media.idMal || null,
       anilistId: media.id,
       isAdult: typeof media.isAdult === 'boolean' ? media.isAdult : null,
       title: title,
-      ar: title,
+      ar: arabicTitle(titles, title),
+      altTitles: titles.filter(function(value) { return value !== title; }),
       auth: author,
       yr: media.startDate && media.startDate.year || 0,
       sourceCoverUrl: ensureHttps(media.coverImage && (media.coverImage.large || media.coverImage.medium)),
@@ -400,6 +414,19 @@
     return TYPES.book;
   }
 
+  function sourceBookType(subjects, requestedType) {
+    if (requestedType === 'All') return generalBookType(subjects);
+    var requested = normalizeType(requestedType || TYPES.book);
+    // A selected tab must not turn explicit comics/fiction/nonfiction metadata
+    // into a different format. Unclassified bibliographic records retain the
+    // caller's scope until the source supplies stronger evidence.
+    var labels = (Array.isArray(subjects) ? subjects : []).join(' ').toLowerCase();
+    if (/light novel|web novel|web fiction|comic|graphic novel|manga|fiction|novel/.test(labels)) {
+      return generalBookType(subjects) === requested ? requested : null;
+    }
+    return requested;
+  }
+
   function mapOpenLibrary(doc, requestedType) {
     if (!doc || !doc.key || !doc.title) return null;
     var title = firstSupportedTitle(doc.title);
@@ -408,7 +435,8 @@
     var subtitle = normalizeSpaces(doc.subtitle);
     if (subtitle && title.toLowerCase().indexOf(subtitle.toLowerCase()) < 0) title += ': ' + subtitle;
     var olid = String(doc.key).split("/").pop();
-    var type = requestedType === "All" ? generalBookType(doc.subject) : normalizeType(requestedType || TYPES.book);
+    var type = sourceBookType(doc.subject, requestedType);
+    if (!type) return null;
     var cover = doc.cover_i ? "https://covers.openlibrary.org/b/id/" + doc.cover_i + "-L.jpg" : "";
     var subjects = Array.isArray(doc.subject) ? doc.subject : [];
     var rating = Number(doc.ratings_average) > 0 ? clampRating(doc.ratings_average) : 0;
@@ -448,7 +476,8 @@
     var info = item.volumeInfo;
     var title = firstSupportedTitle(info.title);
     if (!title) return null;
-    var type = requestedType === "All" ? generalBookType(info.categories) : normalizeType(requestedType || TYPES.book);
+    var type = sourceBookType(info.categories, requestedType);
+    if (!type) return null;
     var image = info.imageLinks && (info.imageLinks.extraLarge || info.imageLinks.large || info.imageLinks.medium || info.imageLinks.thumbnail || info.imageLinks.smallThumbnail);
     var year = String(info.publishedDate || "").match(/\d{4}/);
     var rating = clampRating(info.averageRating);
@@ -484,6 +513,7 @@
     var attrs = item.attributes;
     var title = firstTitle(attrs.title) || altTitle(attrs.altTitles);
     if (!title) return null;
+    var titles = providerTitles(attrs.title, [].concat.apply([], (Array.isArray(attrs.altTitles) ? attrs.altTitles : []).map(function(value) { return providerTitles(value); })));
     var type = typeFromMangaDex(item, requestedType);
     var coverRel = Array.isArray(item.relationships) ? item.relationships.find(function (rel) { return rel.type === "cover_art" && rel.attributes && rel.attributes.fileName; }) : null;
     var cover = coverRel ? "https://uploads.mangadex.org/covers/" + item.id + "/" + coverRel.attributes.fileName + ".512.jpg" : "";
@@ -494,7 +524,8 @@
       id: "md-" + item.id,
       contentRating: String(attrs.contentRating || ''),
       title: title,
-      ar: altTitle(attrs.altTitles) || title,
+      ar: arabicTitle(titles, altTitle(attrs.altTitles) || title),
+      altTitles: titles.filter(function(value) { return value !== title; }),
       auth: "",
       yr: Number(attrs.year) || 0,
       sourceCoverUrl: cover,
@@ -509,13 +540,13 @@
     }, "MangaDex", item.id);
   }
 
-  function isDuplicate(work) {
-    if (!work || !work.id) return true;
+  function findDuplicateWork(work) {
+    if (!work || !work.id) return null;
     var index = currentDuplicateIndex();
     var id = String(work.id);
-    if (index.ids.has(id)) return true;
+    if (index.records.has(id)) return index.records.get(id);
     var matches = index.titles.get(catalogTitleKey(work)) || [];
-    return matches.some(function (item) {
+    return matches.find(function (item) {
       if (global.LorefyCatalogIdentity && typeof global.LorefyCatalogIdentity.sameWork === "function") {
         return global.LorefyCatalogIdentity.sameWork(item, work, global.LorefyCatalogAliases || {});
       }
@@ -542,15 +573,22 @@
     });
   }
 
+  var cachedRaw, cachedValue, cachedPolicy;
   function cache() {
-    var cached = read(CACHE_KEY, null);
+    var raw = null;
+    try { raw = global.localStorage && global.localStorage.getItem(CACHE_KEY) || null; } catch (e) {}
+    if (cachedValue && raw === cachedRaw && cachedPolicy === global.LorefyCatalogPolicy) return cachedValue;
+    var cached = safeJson(raw, null);
     if (!cached || typeof cached !== "object" || Array.isArray(cached)) cached = {};
     cached.version = 1;
     cached.works = (Array.isArray(cached.works) ? cached.works : []).map(normalizeCachedWork).filter(function (work) {
       return work && !(global.LorefyCatalogPolicy && (global.LorefyCatalogPolicy.isExcludedWork(work) || global.LorefyCatalogPolicy.isExplicitWork(work) || global.LorefyCatalogPolicy.isAiGeneratedWork(work)));
     });
     cached.batches = cached.batches && typeof cached.batches === "object" ? cached.batches : {};
-    if(JSON.stringify(cached).length>MAX_CACHE_CHARS)saveCache(cached);
+    cachedRaw = raw;
+    cachedValue = cached;
+    cachedPolicy = global.LorefyCatalogPolicy;
+    if(raw && raw.length>MAX_CACHE_CHARS)saveCache(cached);
     return cached;
   }
 
@@ -565,16 +603,24 @@
       cached.works=cached.works.slice(Math.max(1,Math.ceil(cached.works.length/4)));
       var retained=new Set(cached.works.map(function(work){return String(work.id);}));
       Object.keys(cached.batches).forEach(function(key){
-        var batch=cached.batches[key];batch.ids=(batch.ids||[]).filter(function(id){return retained.has(String(id));});
+        var batch=cached.batches[key], count=(batch.ids||[]).length;batch.ids=(batch.ids||[]).filter(function(id){return retained.has(String(id));});
+        if (batch.ids.length !== count) batch.incomplete = true;
         if(!batch.ids.length)delete cached.batches[key];
       });
     }
     while(JSON.stringify(cached).length>MAX_CACHE_CHARS && Object.keys(cached.batches).length)delete cached.batches[Object.keys(cached.batches).pop()];
-    write(CACHE_KEY, cached);
+    var serialized = JSON.stringify(cached);
+    try { if (global.localStorage) global.localStorage.setItem(CACHE_KEY, serialized); } catch (e) {}
+    cachedRaw = serialized;
+    cachedValue = cached;
+    cachedPolicy = global.LorefyCatalogPolicy;
   }
 
-  function batchKey(kind, type, query, providers, page) {
-    return [kind, normalizeType(type), canonical(query || ""), (providers || []).join("+"), page || 1].join("|");
+  function batchKey(kind, type, query, providers, page, perPage) {
+    // Identifier slugs deliberately omit some scripts. Search cache identity
+    // must preserve them, or unrelated Japanese/Unicode queries share a key.
+    var queryKey = encodeURIComponent(normalizeSpaces(query || '').normalize('NFKC').toLowerCase());
+    return [kind, normalizeType(type), queryKey, (providers || []).slice().sort().join("+"), page || 1, perPage || config().perPage || DEFAULT_PER_PAGE].join("|");
   }
 
   function cachedBatch(key) {
@@ -583,24 +629,44 @@
     var cached = cache();
     var batch = cached.batches[key];
     if(batch&&batch.partial)ttl=Math.min(ttl,60000);
-    if (!batch || !Array.isArray(batch.ids) || Date.now() - Date.parse(batch.at || "0") > ttl) return null;
+    if (!batch || batch.incomplete || !Array.isArray(batch.ids) || !Number.isFinite(Date.parse(batch.at)) || Date.now() - Date.parse(batch.at) > ttl) return null;
     var byId = new Map(cached.works.map(function (work) { return [String(work.id), work]; }));
-    return batch.ids.map(function (id) { return byId.get(String(id)); }).filter(Boolean);
+    var works = batch.ids.map(function (id) { return byId.get(String(id)); }).filter(Boolean);
+    // Eviction or an external cache edit must not make a truncated batch look
+    // like a complete, fresh response for another fourteen days.
+    if (works.length !== batch.ids.length) return null;
+    return {works:works, errors:Array.isArray(batch.errors) ? batch.errors : [], partial:!!batch.partial};
   }
 
-  function rememberBatch(key, works, partial) {
+  function rememberBatch(key, works, errors) {
     var cached = cache();
     var byId = new Map(cached.works.map(function (work) { return [String(work.id), work]; }));
-    uniqueWorks(works).forEach(function (work) { byId.set(String(work.id), work); });
+    // Catalog consumers may attach reading state to their live records. Keep
+    // the reusable public-metadata cache detached from those mutable objects.
+    var incoming = safeJson(JSON.stringify(uniqueWorks(works)), []);
+    incoming.forEach(function (work) { byId.set(String(work.id), work); });
     cached.works = Array.from(byId.values());
-    cached.batches[key] = { at: nowIso(), ids: uniqueWorks(works).map(function (work) { return String(work.id); }), partial:!!partial };
+    cached.batches[key] = { at: nowIso(), ids: uniqueWorks(works).map(function (work) { return String(work.id); }), partial:!!(errors && errors.length), errors:errors || [] };
     saveCache(cached);
   }
 
   function applyWorks(works, meta) {
     if (global.LorefyCatalogQuality) global.LorefyCatalogQuality.apply(works);
+    var namesUpdated = 0;
     var candidates = uniqueWorks(works).filter(function (work) {
-      return !(global.LorefyCatalogPolicy && (global.LorefyCatalogPolicy.isExcludedWork(work) || global.LorefyCatalogPolicy.isExplicitWork(work) || global.LorefyCatalogPolicy.isAiGeneratedWork(work))) && !isDuplicate(work);
+      if (global.LorefyCatalogPolicy && (global.LorefyCatalogPolicy.isExcludedWork(work) || global.LorefyCatalogPolicy.isExplicitWork(work) || global.LorefyCatalogPolicy.isAiGeneratedWork(work))) return false;
+      var existing = findDuplicateWork(work);
+      if (!existing) return true;
+      var previous = Array.isArray(existing.altTitles) ? existing.altTitles : [];
+      var names = Array.from(new Set(previous.concat([work.title, work.ar], work.altTitles || []).map(normalizeSpaces).filter(function(title) { return title && title !== existing.title; })));
+      var changed = names.length !== previous.length;
+      if (changed) existing.altTitles = names;
+      if ((!existing.ar || existing.ar === existing.title) && /[\u0600-\u06ff]/.test(work.ar || '') && work.ar !== existing.ar) {
+        existing.ar = work.ar;
+        changed = true;
+      }
+      if (changed) { existing._indexed = false; namesUpdated++; }
+      return false;
     });
     try {
       if (global.LorefyComicsTaxonomy && typeof global.LorefyComicsTaxonomy.apply === "function") global.LorefyComicsTaxonomy.apply(candidates);
@@ -616,11 +682,16 @@
         upserts: candidates
       }, { cache: false, refresh: true, canonicalize: false });
     } else {
-      Array.prototype.push.apply(data(), candidates);
+      Array.prototype.push.apply(data(), safeJson(JSON.stringify(candidates), []));
       try { if (typeof global.__lorefyIngest === "function") global.__lorefyIngest(); } catch (e) {}
       try { if (typeof global.__lorefyRefresh === "function") global.__lorefyRefresh(); } catch (e) {}
       summary = { added: candidates.length, updatedWorks: 0, removed: 0, aliases: 0 };
     }
+    if (namesUpdated && !candidates.length) {
+      try { if (typeof global.__lorefyIngest === 'function') global.__lorefyIngest(); } catch (e) {}
+      try { if (!global.__lorefyIngestAsync && typeof global.__lorefyRefresh === 'function') global.__lorefyRefresh(); } catch (e) {}
+    }
+    summary.updatedWorks = (summary.updatedWorks || 0) + namesUpdated;
     rememberDuplicateWorks(candidates);
     write(STATE_KEY, Object.assign({}, state(), {
       status: "ready",
@@ -635,6 +706,16 @@
 
   function headers() {
     return { Accept: "application/json" };
+  }
+
+  function sourceError(message, status, retryAfter) {
+    var error = new Error(message);
+    error.status = Number(status) || 0;
+    if (error.status === 429 || error.status === 503 && retryAfter) {
+      var seconds = Number(retryAfter), deadline = Number.isFinite(seconds) && seconds > 0 ? Date.now() + seconds * 1000 : Date.parse(retryAfter);
+      error.retryAt = Math.min(Date.now() + 300000, Math.max(Date.now() + 1000, deadline || Date.now() + 30000));
+    }
+    return error;
   }
 
   function fetchJson(url, options) {
@@ -654,7 +735,7 @@
       if (parent && parent.aborted) throw aborted();
       return global.fetch(url, Object.assign({ cache: 'no-store', headers: headers() }, options, controller ? { signal: controller.signal } : {}));
     }).then(function (response) {
-      if (!response.ok) throw new Error('api catalog fetch ' + response.status);
+      if (!response.ok) throw sourceError('api catalog fetch ' + response.status, response.status, response.headers && response.headers.get('Retry-After'));
       return response.json();
     });
     return Promise.race([request, deadline, cancellation]).finally(function () {
@@ -714,7 +795,7 @@
     var queryText = [
       "query LorefyCatalog($page:Int,$perPage:Int,$search:String,$country:CountryCode,$formats:[MediaFormat],$sort:[MediaSort]){",
       "Page(page:$page,perPage:$perPage){media(type:MANGA,search:$search,countryOfOrigin:$country,format_in:$formats,sort:$sort,isAdult:false){",
-      "id idMal isAdult title{romaji english native} coverImage{large medium} averageScore popularity favourites chapters volumes status format countryOfOrigin genres description(asHtml:false) startDate{year}",
+      "id idMal isAdult title{romaji english native} synonyms coverImage{large medium} averageScore popularity favourites chapters volumes status format countryOfOrigin genres description(asHtml:false) startDate{year}",
       "staff(sort:RELEVANCE,perPage:2){nodes{name{full}}}",
       "}}}"
     ].join("");
@@ -724,7 +805,12 @@
       body: JSON.stringify({ query: queryText, variables: variables }),
       signal: options && options.signal
     }).then(function (json) {
-      var media = json && json.data && json.data.Page && json.data.Page.media || [];
+      if (json && Array.isArray(json.errors) && json.errors.length) {
+        var error = json.errors[0];
+        throw sourceError('AniList: ' + (error.message || 'source error'), error.status);
+      }
+      var media = json && json.data && json.data.Page && json.data.Page.media;
+      if (!Array.isArray(media)) throw new Error('AniList: invalid catalog response');
       return media.map(function (item) { return mapAniList(item, type); }).filter(Boolean);
     });
   }
@@ -738,7 +824,8 @@
     params.set("limit", String(Math.min(100, perPage || config().perPage || DEFAULT_PER_PAGE)));
     params.set("fields", "key,title,subtitle,language,author_name,first_publish_year,cover_i,subject,ratings_average,ratings_count,want_to_read_count,edition_count,number_of_pages_median");
     return fetchJson(providerUrl("openlibrary", "https://openlibrary.org/search.json", params), {signal: options && options.signal}).then(function (json) {
-      return (json && json.docs || []).map(function (doc) { return mapOpenLibrary(doc, options && options.generalSearch ? "All" : type); }).filter(Boolean);
+      if (!json || !Array.isArray(json.docs)) throw new Error('Open Library: invalid catalog response');
+      return json.docs.map(function (doc) { return mapOpenLibrary(doc, options && options.generalSearch ? "All" : type); }).filter(Boolean);
     });
   }
 
@@ -754,6 +841,7 @@
     params.set("projection", "lite");
     if (cfg.googleBooksApiKey) params.set("key", cfg.googleBooksApiKey);
     return fetchJson(providerUrl("googlebooks", "https://www.googleapis.com/books/v1/volumes", params), {signal: options && options.signal}).then(function (json) {
+      if (!json || json.error || !Array.isArray(json.items) && json.totalItems !== 0) throw new Error('Google Books: invalid catalog response');
       return (json && json.items || []).map(function (item) { return mapGoogleBook(item, options && options.generalSearch ? "All" : type); }).filter(Boolean);
     });
   }
@@ -772,7 +860,8 @@
     else params.set("order[followedCount]", "desc");
     (cfg.originalLanguages || []).forEach(function (lang) { params.append("originalLanguage[]", lang); });
     return fetchJson(providerUrl("mangadex", "https://api.mangadex.org/manga", params), {signal: options && options.signal}).then(function (json) {
-      return (json && json.data || []).map(function (item) { return mapMangaDex(item, type); }).filter(Boolean);
+      if (!json || !Array.isArray(json.data)) throw new Error('MangaDex: invalid catalog response');
+      return json.data.map(function (item) { return mapMangaDex(item, type); }).filter(Boolean);
     });
   }
 
@@ -801,9 +890,10 @@
 
   function chooseProviders(type, requestedProviders) {
     var providers = requestedProviders && requestedProviders.length ? requestedProviders : typeConfig(type).providers;
-    return providers.filter(function (name) { return PROVIDERS[name] && enabledProvider(name); });
+    return Array.from(new Set(providers.filter(function (name) { return PROVIDERS[name] && enabledProvider(name); })));
   }
 
+  var providerCooldowns = new Map();
   function runProviders(kind, query, type, options) {
     options = options || {};
     var cfg = config();
@@ -813,11 +903,12 @@
     if(options.signal&&options.signal.aborted || options.isCurrent&&!options.isCurrent())return Promise.resolve({works:[],providers:providers,cancelled:true});
     if(!providers.length)return Promise.resolve({works:[],providers:[],skipped:'no-providers'});
     var page = Number(options.page) || 1;
-    var key = batchKey(kind, type, query, providers, page);
+    var key = batchKey(kind, type, query, providers, page, options.perPage);
     var cached = options.force ? null : cachedBatch(key);
     if (cached) {
-      var cachedSummary = applyWorks(cached, { type: type, query: query });
-      return Promise.resolve(Object.assign(cachedSummary, { cached: true, providers: providers, type: type }));
+      var cachedSummary = applyWorks(cached.works, { type: type, query: query });
+      if (cached.partial) write(STATE_KEY, Object.assign({}, state(), {status:'partial', errors:cached.errors}));
+      return Promise.resolve(Object.assign(cachedSummary, { cached: true, providers: providers, providerErrors:cached.errors, type: type }));
     }
     write(STATE_KEY, Object.assign({}, state(), { status: "checking", checkedAt: nowIso(), lastType: type, lastQuery: query || "" }));
     var published = [], summaries = [];
@@ -825,6 +916,9 @@
     return Promise.all(providers.map(function (provider) {
       return Promise.resolve().then(function () {
         if (!current()) return [];
+        var cooldown = providerCooldowns.get(provider);
+        if (cooldown && cooldown.retryAt > Date.now()) throw cooldown;
+        providerCooldowns.delete(provider);
         return PROVIDERS[provider](query, type, page, options.perPage, options);
       }).then(function (works) {
         if (!current()) return [];
@@ -837,7 +931,8 @@
         }
         return works;
       }).catch(function (error) {
-        return [{_providerError:provider, error:error && error.message || String(error)}];
+        if (error && error.retryAt > Date.now()) providerCooldowns.set(provider, error);
+        return [{_providerError:provider, error:error && error.message || String(error), status:error && error.status || 0, retryAt:error && error.retryAt || 0}];
       });
     })).then(function (groups) {
       if (!current()) return {works:[], providers:providers, cancelled:true};
@@ -846,7 +941,7 @@
         if (item && item._providerError) errors.push(item); else works.push(item);
       }); });
       works = uniqueWorks(works);
-      if (works.length || !errors.length) rememberBatch(key, works, errors.length > 0);
+      if (works.length || !errors.length) rememberBatch(key, works, errors);
       if (!summaries.length) applyWorks([], {type:type, query:query});
       if (errors.length) write(STATE_KEY, Object.assign({}, state(), {status:'partial', errors:errors}));
       return {added:summaries.reduce(function(total,s){return total+(s.added||0);},0), works:uniqueWorks(published),
@@ -930,14 +1025,14 @@
     var pageSize = Math.max(1, Math.min(100, Number(options.expandedPageSize) || Number(cfg.expandedPageSize) || DEFAULT_EXPANSION_PAGE_SIZE));
     var key = batchKey("expanded", type, "", ["expanded"], 1);
     var cached = options.force ? null : cachedBatch(key);
-    if (cached && cached.length >= target) {
-      var cachedSummary = applyWorks(cached.slice(0, target), { type: type, query: "" });
+    if (cached && cached.works.length >= target) {
+      var cachedSummary = applyWorks(cached.works.slice(0, target), { type: type, query: "" });
       return Promise.resolve(Object.assign(cachedSummary, {
         cached: true,
         type: type,
-        catalogWorks: cached.slice(0, target),
+        catalogWorks: cached.works.slice(0, target),
         target: target,
-        coverage: cached.length
+        coverage: cached.works.length
       }));
     }
 
@@ -1094,9 +1189,9 @@
         if (!current()) return;
         inputController = global.AbortController ? new global.AbortController() : null;
         search(value, type, {isCurrent:current, signal:inputController && inputController.signal}).then(function(result){
-          if(!current())return;
+          if(!current() || result && result.cancelled)return;
           var failed=result&&(result.error||result.providerErrors&&result.providers&&result.providers.length&&result.providerErrors.length===result.providers.length);
-          notifyInputSearch(value,type,failed?"error":"ready");
+          notifyInputSearch(value,type,failed?"error":result&&result.providerErrors&&result.providerErrors.length?"partial":"ready");
         }).catch(function(){if(current())notifyInputSearch(value,type,"error");});
       }, SEARCH_DEBOUNCE_MS);
     }

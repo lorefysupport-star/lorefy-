@@ -70,11 +70,19 @@
   }
   function create(options){
     const fetchJson=options.fetchJson,urlFor=options.urlFor;
-    const get=(provider,url)=>fetchJson(urlFor(provider,url));
+    const get=async(provider,url)=>{
+      const result=await fetchJson(urlFor(provider,url));
+      if(!result||typeof result!=='object'||result.error||list(result.errors).length){
+        const error=result?.error||list(result?.errors)[0];
+        throw new Error(provider+': '+text(error?.info||error?.message||error?.code||error||'invalid source response'));
+      }
+      return result;
+    };
     async function bookBrainz(query,type,page=1,perPage=6){
       if(!query)return [];
       const size=Math.max(1,Math.min(6,perPage)),p=new URLSearchParams({q:query,size:String(size),from:String((page-1)*size)});
       const json=await get('bookbrainz','https://api.bookbrainz.org/1/search?'+p);
+      if(!Array.isArray(json.searchResult))throw new Error('bookbrainz: invalid source response');
       const rows=list(json.searchResult).filter(r=>uuid.test(r.bbid)&&['Work','Edition','EditionGroup'].includes(r.entityType)).slice(0,4),out=[];
       // A strict sequential bound avoids bursts against the community API.
       for(const row of rows){
@@ -88,9 +96,12 @@
       if(!query||page>1)return [];
       const language=/[\u0600-\u06ff]/.test(query)?'ar':'en';
       const base='https://www.wikidata.org/w/api.php?',p=new URLSearchParams({action:'wbsearchentities',format:'json',search:query,language,uselang:language,type:'item',limit:'6'});
-      const search=await get('wikidata',base+p),ids=list(search.search).map(r=>r.id).filter(id=>/^Q\d+$/.test(id)).slice(0,6);if(!ids.length)return [];
+      const search=await get('wikidata',base+p);
+      if(!Array.isArray(search.search))throw new Error('wikidata: invalid source response');
+      const ids=search.search.map(r=>r.id).filter(id=>/^Q\d+$/.test(id)).slice(0,6);if(!ids.length)return [];
       const entityParams=ids=>new URLSearchParams({action:'wbgetentities',format:'json',ids:ids.join('|'),props:'labels|aliases|claims|descriptions',languages:'en|ar',languagefallback:'1'});
       const result=await get('wikidata',base+entityParams(ids)),entities=result.entities||{};
+      if(!result.entities||typeof result.entities!=='object'||Array.isArray(result.entities))throw new Error('wikidata: invalid source response');
       const authorIds=[...new Set(Object.values(entities).flatMap(e=>values(e,'P50').map(v=>v.id)).filter(id=>/^Q\d+$/.test(id)))].slice(0,10);
       const authors=authorIds.length?(await get('wikidata',base+new URLSearchParams({action:'wbgetentities',format:'json',ids:authorIds.join('|'),props:'labels',languages:'en|ar'}))).entities||{}:{};
       return ids.map(id=>mapWikidata(entities[id],authors,type)).filter(Boolean);
@@ -98,7 +109,9 @@
     async function gcd(query,type,page=1){
       if(!query||(!/^(all|الكل)$/i.test(type)&&typeKey(type)!==T.comics))return [];
       const url='https://www.comics.org/api/series/name/'+encodeURIComponent(query) + '/?page='+Math.max(1,page);
-      const json=await get('gcd',url);return list(json.results).slice(0,20).map(r=>mapGcd(r,type)).filter(Boolean);
+      const json=await get('gcd',url);
+      if(!Array.isArray(json.results))throw new Error('gcd: invalid source response');
+      return json.results.slice(0,20).map(r=>mapGcd(r,type)).filter(Boolean);
     }
     return Object.freeze({bookBrainz,wikidata,gcd});
   }
