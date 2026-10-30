@@ -70,11 +70,12 @@
   }
 
   function rankReaders(readers, query, currentUserId, blockedIds) {
-    var blocked = new Set((blockedIds || []).map(String));
+    var blocked = new Set((blockedIds || []).map(String)), seen = new Set();
     return (readers || [])
       .map(normalizeReader)
       .filter(function (reader) {
-        return reader.id && reader.username && reader.id !== String(currentUserId || "") && !blocked.has(reader.id);
+        if(!reader.id || !reader.username || reader.id === String(currentUserId || "") || blocked.has(reader.id) || seen.has(reader.id))return false;
+        seen.add(reader.id);return true;
       })
       .map(function (reader) {
         var username = reader.username.toLowerCase();
@@ -97,23 +98,36 @@
     var blockedIds = options.blockedIds || [];
     var following = readFollowing(storage);
     var hydrated = false;
+    var pendingSearches = new Map(), followingChanges = new Map(), followingHydrationPending = false;
+    var searchTimeoutMs = Math.max(20,Math.min(20000,Number(options.searchTimeoutMs)||10000));
+
+    function requestReaders(query) {
+      var timer;
+      var request = Promise.resolve().then(function(){return adapter.searchPublicProfiles(query, MAX_RESULTS);});
+      var deadline = new Promise(function(_,reject){timer=setTimeout(function(){reject(new Error('Reader directory search timed out'));},searchTimeoutMs);});
+      return Promise.race([request,deadline]).finally(function(){clearTimeout(timer);});
+    }
 
     async function hydrateFollowing() {
       if (hydrated || !adapter || typeof adapter.getFollowedProfileIds !== "function") return;
       hydrated = true;
+      followingHydrationPending = true;
       try {
         var ids = await adapter.getFollowedProfileIds();
         if (Array.isArray(ids)) {
           following = new Set(ids.map(String));
+          followingChanges.forEach(function(value,id){if(value)following.add(id);else following.delete(id);});
+          followingChanges.clear();
           persistFollowing(storage, following);
         }
-      } catch (error) {}
+      } catch (error) {} finally { followingHydrationPending = false;followingChanges.clear(); }
     }
 
     function applyFollowing(profileId, value) {
       var id = safeText(profileId, 120);
       if (!id) return false;
       if (value === true) following.add(id); else following.delete(id);
+      if(followingHydrationPending)followingChanges.set(id,value===true);
       persistFollowing(storage, following);
       return following.has(id);
     }
@@ -122,10 +136,18 @@
       search: async function (value, searchOptions) {
         var query = normalizeQuery(value);
         if (query.length < 2) return [];
-        await hydrateFollowing();
+        // Follow-state metadata is independent of matching public readers.
+        // A stalled follow request must never block a healthy directory lookup.
+        if(!searchOptions || searchOptions.includeFollowing!==false)hydrateFollowing();
         if (adapter && typeof adapter.searchPublicProfiles === "function") {
           try {
-            var remote = await adapter.searchPublicProfiles(query, MAX_RESULTS);
+            var pending = pendingSearches.get(query);
+            if(!pending){
+              pending = requestReaders(query);
+              pendingSearches.set(query,pending);
+              pending.then(function(){if(pendingSearches.get(query)===pending)pendingSearches.delete(query);},function(){if(pendingSearches.get(query)===pending)pendingSearches.delete(query);});
+            }
+            var remote = await pending;
             if (Array.isArray(remote)) return rankReaders(remote, query, currentUserId, blockedIds);
           } catch (error) { if (searchOptions && searchOptions.strict) throw error; }
         }

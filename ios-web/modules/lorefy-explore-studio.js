@@ -45,7 +45,7 @@
   }
   function normalized(value) { return String(value || '').trim().toLowerCase(); }
   function formatKey(value) {
-    var key=normalized(value), types={manga:'مانجا',manhwa:'مانهوا',manhua:'مانهوا صيني',comics:'كوميكس',novel:'رواية',book:'كتاب','light novel':'لايت نوفل','web novel':'ويب نوفل','مانهوا صينية':'مانهوا صيني'};
+    var key=normalized(value), types={all:'الكل',manga:'مانجا',manhwa:'مانهوا',manhua:'مانهوا صيني',comics:'كوميكس',novel:'رواية',book:'كتاب','light novel':'لايت نوفل','web novel':'ويب نوفل','مانهوا صينية':'مانهوا صيني'};
     return types[key] || key;
   }
   var COLLECTIONS = [
@@ -232,17 +232,23 @@
     if(language==='en')return count+(count===1?' edition':' editions');
     return count===1?'طبعة واحدة':count===2?'طبعتان':count+(count%100>=3&&count%100<=10?' طبعات':' طبعة');
   }
+  var relevanceIndexes=new WeakMap();
   function rankSearchResults(rows,query) {
     var q=searchKey(query),tokens=q.split(' ');
     function score(work){
-      var titles=[work.title,work.ar].filter(Boolean).map(searchKey),aliases=[].concat(work.altTitles||[],work.aliases||[]).slice(0,40).filter(value=>typeof value==='string').map(searchKey),author=searchKey(work.auth||work.author);
+      var data=root.LorefyCatalogData,index=data&&data.getCatalogQueryIndex&&data.getCatalogQueryIndex(work),entry=index&&relevanceIndexes.get(index);
+      if(!entry){
+        entry={titles:index?index.fields.slice(0,2).filter(Boolean):[work.title,work.ar].filter(Boolean).map(searchKey),aliases:[].concat(work.altTitles||[],work.aliases||[]).slice(0,40).filter(value=>typeof value==='string').map(searchKey),author:index?index.fields[work.auth?2:3]:searchKey(work.auth||work.author)};
+        if(index)relevanceIndexes.set(index,entry);
+      }
+      var titles=entry.titles,aliases=entry.aliases,author=entry.author;
       if(titles.includes(q))return 0;if(aliases.includes(q))return 1;
       if(titles.some(title=>title.startsWith(q)))return 2;
       if(titles.some(title=>tokens.every(token=>title.includes(token))))return 3;
       return author===q?4:author.startsWith(q)?5:6;
     }
     if(!q)return (rows||[]).slice();
-    return (rows||[]).map(work=>({work:work,score:score(work)})).sort((a,b)=>a.score-b.score||count(b.work.pop)-count(a.work.pop)||String(a.work.id).localeCompare(String(b.work.id))).map(row=>row.work);
+    return (rows||[]).map(work=>({work:work,score:score(work),popularity:count(work.pop),id:String(work.id)})).sort((a,b)=>a.score-b.score||b.popularity-a.popularity||a.id.localeCompare(b.id)).map(row=>row.work);
   }
   function searchPhase(query,total,busy,failed){
     if(!String(query||'').trim())return 'idle';if(searchKey(query).length<2)return 'short';
@@ -287,10 +293,10 @@
     var recentState=React.useState(readSearchHistory(historyStorage,owner)),recent=recentState[0],setRecent=recentState[1];
     var searchRetry=React.useRef(0);
     var pendingState=React.useState(false),searchPending=pendingState[0],setSearchPending=pendingState[1];
-    var inputTimer=React.useRef(null), searchInput=React.useRef(null);
+    var inputTimer=React.useRef(null), searchInput=React.useRef(null), formatSearchInput=React.useRef(null);
     React.useEffect(function(){return function(){root.clearTimeout(inputTimer.current);};},[]);
     var searchModeState=React.useState(saved.searchMode||'media'),searchMode=searchModeState[0],setSearchMode=searchModeState[1];
-    React.useEffect(function(){searchRetry.current++;setSearchLimit(36);return function(){searchRetry.current++;};},[owner,searchQuery,searchMode,searchFilters]);
+    React.useEffect(function(){searchRetry.current++;setSearchLimit(36);return function(){searchRetry.current++;};},[owner,format,query,searchQuery,searchMode,searchFilters]);
     var previousOwner=React.useRef(owner);
     React.useEffect(function(){
       if(previousOwner.current===owner)return;
@@ -304,7 +310,7 @@
     var remoteState=React.useState(null),remoteSearch=remoteState[0],setRemoteSearch=remoteState[1];
     React.useEffect(function(){function changed(event){setRemoteSearch(event.detail);}root.addEventListener('lorefy:catalog-remote-search',changed);return function(){root.removeEventListener('lorefy:catalog-remote-search',changed);};},[]);
     var activeSearchType=format||searchFilters.format||props.allType;
-    var remoteMatches=remoteSearch&&formatKey(remoteSearch.type)===formatKey(activeSearchType)&&normalized(remoteSearch.query)===normalized(format?query:searchQuery),remoteBusy=remoteMatches&&remoteSearch.status==='searching',remoteFailed=remoteMatches&&remoteSearch.status==='error';
+    var remoteMatches=remoteSearch&&formatKey(remoteSearch.type)===formatKey(activeSearchType)&&normalized(remoteSearch.query)===normalized(format?query:searchQuery),remoteBusy=remoteMatches&&remoteSearch.status==='searching',remoteFailed=remoteMatches&&(remoteSearch.status==='error'||remoteSearch.status==='partial');
     var pauseState = React.useState(true), paused = pauseState[0], setPaused = pauseState[1];
     var reducedMotion = !!(root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches);
     var errorState = React.useState(false), loadError = errorState[0], setLoadError = errorState[1];
@@ -344,7 +350,11 @@
     }, []);
     var catalogState = root.LorefyCatalogLoader && root.LorefyCatalogLoader.state();
     var catalogReady = !catalogState || catalogState.ready, catalogPartial = !!(catalogState && catalogState.partial);
-    var ranked = React.useMemo(function () { return root.LorefyPerformanceProbe?root.LorefyPerformanceProbe.measure("explore.ranking",function(){return props.getRanked(props.allType);}):props.getRanked(props.allType); }, [props.getRanked, revision]);
+    // Search has its own relevance/filter pipeline. Catalog progress must not
+    // also rebuild personalized shelves and featured picks hidden behind it.
+    var needsRanked = !props.getCatalog || !format && (!searchActive || searchMode==='media'&&!searchQuery.trim());
+    var needsShelves = !format && !searchActive && mode==='you';
+    var ranked = React.useMemo(function () { if(!needsRanked)return [];return root.LorefyPerformanceProbe?root.LorefyPerformanceProbe.measure("explore.ranking",function(){return props.getRanked(props.allType);}):props.getRanked(props.allType); }, [needsRanked,props.getRanked,props.allType,revision]);
     var seeds = (props.favorites || []).concat(props.preferences.seedWorkIds || [], Object.keys(props.library).filter(function (id) {
       return !/متوقف|متروك|paused|dropped/i.test(props.library[id]);
     })).slice(0, 24).map(props.getWork).filter(Boolean);
@@ -354,10 +364,10 @@
       seeds.forEach(function (work) { (work.genres || []).forEach(function (genre) { genreCounts.set(genre, (genreCounts.get(genre) || 0) + 1); }); });
       shelfPreferences = Object.assign({}, props.preferences, {genres:Array.from(genreCounts).sort(function (a,b) { return b[1]-a[1]; }).slice(0,3).map(function (entry) { return entry[0]; })});
     }
-    var shelves = React.useMemo(function(){return root.LorefyPerformanceProbe?root.LorefyPerformanceProbe.measure("explore.shelves",function(){return buildShelves(ranked, shelfPreferences, props.library, seeds, props.language, props.allType);}):buildShelves(ranked, shelfPreferences, props.library, seeds, props.language, props.allType);},[ranked,props.preferences,props.library,props.favorites,props.language]);
+    var shelves = React.useMemo(function(){if(!needsShelves)return [];return root.LorefyPerformanceProbe?root.LorefyPerformanceProbe.measure("explore.shelves",function(){return buildShelves(ranked, shelfPreferences, props.library, seeds, props.language, props.allType);}):buildShelves(ranked, shelfPreferences, props.library, seeds, props.language, props.allType);},[needsShelves,ranked,props.preferences,props.library,props.favorites,props.language]);
     // Bring account recommendations forward, without changing their ranking or deduplication.
     shelves.sort(function (a, b) { return Number(b.key === 'for-you') - Number(a.key === 'for-you'); });
-    var features = React.useMemo(function(){return featuredWorks(ranked);},[ranked]), selected = features[slide % (features.length || 1)];
+    var features = React.useMemo(function(){return needsShelves?featuredWorks(ranked):[];},[needsShelves,ranked]), selected = features[slide % (features.length || 1)];
     var results = React.useMemo(function () {
       return format ? catalogResults(props.getCatalog ? props.getCatalog() : ranked, format, query, sort, props.ratingScore).filter(function(work){return matchesFilters(work,filters);}) : [];
     }, [format, query, sort, revision, props.getCatalog,filters]);
@@ -377,7 +387,7 @@
       if(remoteFailed&&root.LorefyApiCatalog){
         var request=++searchRetry.current,text=format?query:searchQuery,type=activeSearchType;
         setRemoteSearch({query:text,type:type,status:'searching'});
-        Promise.resolve().then(function(){return root.LorefyApiCatalog.search(text,type,{force:true});}).then(function(result){if(request!==searchRetry.current)return;var failed=result&&(result.error||result.providerErrors&&result.providers&&result.providers.length&&result.providerErrors.length===result.providers.length);setRemoteSearch({query:text,type:type,status:failed?'error':'ready'});}).catch(function(){if(request===searchRetry.current)setRemoteSearch({query:text,type:type,status:'error'});});return;
+        Promise.resolve().then(function(){if(request!==searchRetry.current)return {cancelled:true};return root.LorefyApiCatalog.search(text,type,{force:true,isCurrent:function(){return request===searchRetry.current;}});}).then(function(result){if(request!==searchRetry.current||result&&result.cancelled)return;var failed=result&&(result.error||result.providerErrors&&result.providers&&result.providers.length&&result.providerErrors.length===result.providers.length);setRemoteSearch({query:text,type:type,status:failed?'error':result&&result.providerErrors&&result.providerErrors.length?'partial':'ready'});}).catch(function(){if(request===searchRetry.current)setRemoteSearch({query:text,type:type,status:'error'});});return;
       }
       if (!loader) return;
       setLoadError(false);
@@ -403,7 +413,7 @@
       setSearchPending(false);
       if(!searchActive||searchMode!=='media'||searchKey(searchQuery).length<2)return;
       var active=true;setLoadError(false);setSearchPending(true);
-      var timer=root.setTimeout(function(){var loader=root.LorefyCatalogLoader;Promise.resolve().then(function(){return loader&&loader.loadFormat?loader.loadFormat(searchFilters.format||props.allType,searchQuery):null;}).catch(function(){if(active)setLoadError(true);}).finally(function(){if(active)setSearchPending(false);});},180);
+      var timer=root.setTimeout(function(){var loader=root.LorefyCatalogLoader;Promise.resolve().then(function(){return loader&&loader.loadFormat?loader.loadFormat(searchFilters.format||props.allType,searchQuery):null;}).catch(function(){if(active)setLoadError(true);}).finally(function(){if(active)setSearchPending(false);});},0);
       return function(){active=false;root.clearTimeout(timer);};
     },[searchActive,searchQuery,searchMode,searchFilters.format]);
     React.useEffect(function(){
@@ -412,8 +422,8 @@
       setSearchStatus('loading');
       var active=true,timer=root.setTimeout(function(){
         setSearchStatus('loading');var discovery=root.LorefyUserDiscovery;
-        Promise.resolve().then(function(){if(!discovery||!discovery.buildDirectory)throw Error('Reader directory unavailable');return discovery.buildDirectory().search(searchQuery,{strict:!!(root.LorefyBackend&&root.LorefyBackend.mode==='live')});}).then(function(rows){if(active){setReaders(rows);setSearchStatus('');}}).catch(function(){if(active)setSearchStatus('error');});
-      },180);
+        Promise.resolve().then(function(){if(!discovery||!discovery.buildDirectory)throw Error('Reader directory unavailable');return discovery.buildDirectory().search(searchQuery,{strict:!!(root.LorefyBackend&&root.LorefyBackend.mode==='live'),includeFollowing:false});}).then(function(rows){if(active){setReaders(rows);setSearchStatus('');}}).catch(function(){if(active)setSearchStatus('error');});
+      },0);
       return function(){active=false;root.clearTimeout(timer);};
     },[owner,searchActive,searchQuery,searchMode,searchAttempt]);
     var mediaResults=React.useMemo(function(){
@@ -446,7 +456,7 @@
     }
     function cancelSearch(){clearSearch();setSearchActive(false);setSearchMode('media');if(root.document.activeElement&&root.document.activeElement.blur)root.document.activeElement.blur();}
     function chooseSearchSuggestion(text) {
-      if (format) { setQuery(text); setLimit(60); }
+      if (format) { if(formatSearchInput.current&&formatSearchInput.current.value.trim()!==query.trim())return;root.clearTimeout(inputTimer.current);if(formatSearchInput.current)formatSearchInput.current.value=text;setQuery(text); setLimit(60); }
       else {
         // An uncontrolled field may be ahead of its debounced state.
         if (!searchInput.current || searchInput.current.value.trim() !== searchQuery.trim()) return;
@@ -610,8 +620,8 @@
           h('div',{className:'lf-explore-preferences'},props.genres.map(function(genre){return h('label',{key:genre},h('input',{type:'checkbox',checked:(draft.genres||[]).includes(genre),onChange:function(){toggle('genres',genre);}}),genreLabel(genre,props.language));}))),
         h('button',{className:'lf-explore-save',onClick:function(){props.onPreferences(draft);close();}},t('حفظ','Save')));
     }
-    function chooseFormat(type) { setFilters({genres:[],status:'all',rating:0});setFormat(type); setMode('browse'); setQuery(''); setSort('popular'); setLimit(60); top(); }
-    function back() { setFormat(''); setMode('browse'); setQuery(''); top(); }
+    function chooseFormat(type) { root.clearTimeout(inputTimer.current);setFilters({genres:[],status:'all',rating:0});setFormat(type); setMode('browse'); setQuery(''); setSort('popular'); setLimit(60); top(); }
+    function back() { root.clearTimeout(inputTimer.current);setFormat(''); setMode('browse'); setQuery(''); top(); }
     function featureControls() {
       return h('div',{className:'lf-explore-feature-controls'},h('button',{'aria-label':t('العمل السابق','Previous work'),onClick:function(){setPaused(true);setSlide((slide+features.length-1)%features.length);}},Icon(en?'ChevronLeft':'ChevronRight',16)),
           features.map(function(work,index){return h('button',{key:work.id,className:'lf-explore-feature-dot','aria-label':work.title,'aria-pressed':index===slide%features.length,onClick:function(){setPaused(true);setSlide(index);}},h('span',null));}),
@@ -640,7 +650,7 @@
         format && h('button',{className:'lf-explore-icon','aria-label':t('العودة إلى الأنواع','Back to types'),onClick:back},Icon(en?'ArrowLeft':'ArrowRight')),
         h('div',null,h('h1',null,format?props.typeLabel(format):searchActive?t('البحث','Search'):t('استكشف','Explore'))),
         searchActive&&!format?h('button',{className:'lf-explore-search-cancel',onClick:cancelSearch},t('إلغاء','Cancel')):format ? h('button',{className:'lf-explore-icon lf-explore-format-filter','aria-label':t('تصفية الأعمال','Filter works'),onClick:function(){setDraft(Object.assign({},filters,{sort:sort}));open({kind:'filters',title:t('تصفية الأعمال','Filter works')});}},Icon('SlidersHorizontal',22)) : h('button',{className:'lf-explore-icon','aria-label':t('تعديل ذوقي','Edit preferences'),onClick:function(){setDraft(Object.assign({},props.preferences));open({kind:'preferences',title:t('ذوقك في القراءة','Your reading taste')});}},Icon('SlidersHorizontal',22))),
-      format ? h('label',{key:'format-search-'+format,className:'lf-explore-format-search','data-lorefy-catalog-search':format},Icon('Search'),h('input',{type:'search',value:query,'aria-label':t('بحث في ','Search ')+props.typeLabel(format),placeholder:t('ابحث في ','Search ')+props.typeLabel(format),onChange:function(event){setQuery(event.target.value);setLimit(60);},onKeyDown:function(event){if(event.key==='Escape'){event.target.blur();back();}}})) :
+      format ? h('label',{key:'format-search-'+format,className:'lf-explore-format-search','data-lorefy-catalog-search':format},Icon('Search'),h('input',{type:'search',dir:'auto',ref:formatSearchInput,defaultValue:query,'aria-label':t('بحث في ','Search ')+props.typeLabel(format),placeholder:t('ابحث في ','Search ')+props.typeLabel(format),onChange:function(event){var value=event.target.value;searchRetry.current++;root.clearTimeout(inputTimer.current);inputTimer.current=root.setTimeout(function(){setQuery(value);setLimit(60);},180);},onKeyDown:function(event){if(event.key==='Escape'){event.target.blur();back();}if(event.key==='Enter'){root.clearTimeout(inputTimer.current);setQuery(event.currentTarget.value);setLimit(60);}}})) :
         h('div',{key:'global-search',className:'lf-design-inline-search lf-search-box','data-lorefy-catalog-search':searchFilters.format||props.allType,'data-lorefy-search-local':searchMode==='media'?undefined:'true'},Icon('Search'),h('input',{type:'search',dir:'auto',ref:searchInput,defaultValue:searchQuery,autoComplete:'off',enterKeyHint:'search','aria-label':t('بحث','Search'),placeholder:searchMode==='people'?t('ابحث عن شخص','Search people'):searchMode==='lists'?t('ابحث في قوائمك','Search your lists'):t('ابحث عن عمل أو مؤلف','Search media or authors'),onFocus:function(){setSearchActive(true);},onChange:function(event){var value=event.target.value;searchRetry.current++;root.clearTimeout(inputTimer.current);inputTimer.current=root.setTimeout(function(){setSearchQuery(value);},180);},onKeyDown:function(event){if(event.key==='Escape')cancelSearch();if(event.key==='Enter'){root.clearTimeout(inputTimer.current);setSearchQuery(event.currentTarget.value);rememberSearch();event.currentTarget.blur();}}}),searchActive&&h('button',{type:'button',className:'lf-explore-search-clear','aria-label':t('مسح البحث','Clear search'),title:t('مسح البحث','Clear search'),onClick:clearSearch},Icon('X',17))),
       format&&root.LorefyProductTools&&root.LorefyProductTools.openMissingRequests&&h('button',{type:'button',className:'lf-catalog-request-button',onClick:function(){root.LorefyProductTools.openMissingRequests(query);}},Icon('BookPlus',16),t('عمل غير موجود؟','Missing work?')),
       !format&&searchActive&&h('div',{className:'lf-design-search-modes',role:'tablist','aria-label':t('نوع البحث','Search type'),onKeyDown:function(event){
