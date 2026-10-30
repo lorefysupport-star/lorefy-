@@ -4,6 +4,12 @@ status: source-reviewed
 date: 2026-10-14
 aliases: ["استكشاف", "تفاصيل", "أعمال", "شخصيات", "مشابه", "explore", "relations", "characters"]
 ---
+
+[[sessions/2026-10-30-Search-Audit]] adds measured search/character work budgets:
+hidden recommendations stop during search, native format input debounces scans,
+People query no longer awaits follow IDs, and character cache/remote misses skip
+wholecatalog indexing. Partial All/الكل failures keep cards+Retry in AR/EN.
+3111tests and local browser pass; device/provider coverage limits remain.
 # الاستكشاف وتفاصيل الأعمال والشخصيات
 
 [[sessions/2026-10-29-Cover-Edition-Choice]] preserves provider edition/volume

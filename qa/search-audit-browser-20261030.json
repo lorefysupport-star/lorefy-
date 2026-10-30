@@ -1,0 +1,121 @@
+{
+  "scope": "Loopback demo; local queries and controlled provider failure; no production account writes.",
+  "formatCases": [
+    {
+      "format": "Manga",
+      "query": "Naruto",
+      "state": "Browser tab: 7, Title: \"Lorefy\", URL: \"http://127.0.0.1:8802/qa/search-audit.tmp.html?preview=demo&demo=ready&route=discover&auditMode=local\".\n0 AXWebArea Lorefy, URL: 127.0.0.1:8802/qa/search-audit.tmp.html?preview=demo&demo=ready&route=discover&auditMode=local\n\t1 container\n\t\t2 container screen\n\t\t\t3 container\n\t\t\t\t92 container\n\t\t\t\t\t100 button Back to types\n\t\t\t\t\t\t101 image\n\t\t\t\t\t93 heading Manga, Value: 1\n\t\t\t\t\t\t94 text Manga\n\t\t\t\t\t95 button Filter works\n\t\t\t\t\t\t96 image\n\t\t\t\t\t102 image\n\t\t\t\t\t103 search text field (settable) Description: Search Manga, Value: Naruto\n\t\t\t\t\t104 button Missing work?\n\t\t\t\t\t\t105 image\n\t\t\t\t\t\t106 text Missing work?\n\t\t\t\t\t99 container Sort works\n\t\t\t\t\t\t107 checkbox Popular, Value: 1\n\t\t\t\t\t\t108 checkbox Top rated, Value: 0\n\t\t\t\t\t\t109 checkbox New, Value: 0\n\t\t\t\t\t110 text Searching…\n\t\t\t\t\t111 button Description: Naruto · Kishimoto, Masashi, Help: Naruto\n\t\t\t\t\t\t112 text Naruto\n\t\t\t\t\t\t113 text Kishimoto, Masashi\n\t\t\t\t\t114 button Description: Boruto: Naruto Next Generations · Masashi Kishimoto, Help: Boruto: Naruto Next Generations\n\t\t\t\t\t\t115 image Loading cover\n\t\t\t\t\t\t116 text Boruto: Naruto Next Generations\n\t\t\t\t\t\t117 text Masashi Kishimoto\n\t\t\t\t\t118 button Description: Naruto: The Whorl within the Spiral · Kishimoto, Masashi, Help: Naruto: The Whorl within the Spiral\n\t\t\t\t\t\t119 text Naruto: The Whorl within the Spiral\n\t\t\t\t\t\t120 text Kishimoto, Masashi\n\t\t\t\t\t121 button Description: Naruto Hiden Series · Kishimoto, Masashi, Help: Naruto Hiden Series\n\t\t\t\t\t\t122 text Naruto Hiden Series\n\t\t\t\t\t\t123 text Kishimoto, Masashi\n\t\t\t\t\t124 button Description: Boruto: Naruto Next Generations · Kodachi Ukyou, Help: Boruto: Naruto Next Generations\n\t\t\t\t\t\t125 image Loading cover\n\t\t\t\t\t\t126 text Boruto: Naruto Next Generations\n\t\t\t\t\t\t127 text Kodachi Ukyou\n\t\t\t\t\t128 button Description: Naruto (Official Colored) · Kishimoto Masashi, Help: Naruto (Official Colored)\n\t\t\t\t\t\t129 image Loading cover\n\t\t\t\t\t\t130 text Naruto (Official Colored)\n\t\t\t\t\t\t131 text Kishimoto Masashi\n\t\t\t\t\t132 button Description: Naruto. Vol. 29 · Masashi Kishimoto, Help: Naruto. Vol. 29\n\t\t\t\t\t\t133 image Loading cover\n\t\t\t\t\t\t134 text Naruto. Vol. 29\n\t\t\t\t\t\t135 text Masashi Kishimoto\n\t\t\t\t\t136 button Description: Naruto 22 · Masashi Kishimoto, Help: Naruto 22\n\t\t\t\t\t\t137 image Loading cover\n\t\t\t\t\t\t138 text Naruto 22\n\t\t\t\t\t\t139 text Masashi Kishimoto\n\t\t\t\t76 container Main navigation\n\t\t\t\t\t77 button Home\n\t\t\t\t\t\t78 image\n\t\t\t\t\t\t79 text Home\n\t\t\t\t\t80 button Explore\n\t\t\t\t\t\t81 image\n\t\t\t\t\t\t82 text Explore\n\t\t\t\t\t83 button Library\n\t\t\t\t\t\t84 image\n\t\t\t\t\t\t85 text Library\n\t\t\t\t\t86 button Profile\n\t\t\t\t\t\t87 image\n\t\t\t\t\t\t88 text Profile\n\t\t\t89 container statusbar\n\t\t\t\t90 text 9:41\n\t\t91 text معاينة Lorefy — اسحب وتنقّل كما في التطبيق\n\nThe focused UI element is 103 search text field (settable) Description: Search Manga, Value: Naruto"
+    },
+    {
+      "format": "Manhwa",
+      "query": "Solo Leveling",
+      "state": "Browser tab: 7, Title: \"Lorefy\", URL: \"http://127.0.0.1:8802/qa/search-audit.tmp.html?preview=demo&demo=ready&route=discover&auditMode=local\".\n0 AXWebArea Lorefy, URL: 127.0.0.1:8802/qa/search-audit.tmp.html?preview=demo&demo=ready&route=discover&auditMode=local\n\t1 container\n\t\t2 container screen\n\t\t\t3 container\n\t\t\t\t92 container\n\t\t\t\t\t93 button Back to types\n\t\t\t\t\t\t94 image\n\t\t\t\t\t95 heading Manhwa, Value: 1\n\t\t\t\t\t\t96 text Manhwa\n\t\t\t\t\t97 button Filter works\n\t\t\t\t\t\t98 image\n\t\t\t\t99 container\n\t\t\t\t\t100 image\n\t\t\t\t\t101 search text field (settable) Description: Search Manhwa, Value: Solo Leveling\n\t\t\t\t102 button Missing work?\n\t\t\t\t\t103 image\n\t\t\t\t\t104 text Missing work?\n\t\t\t\t105 container Sort works\n\t\t\t\t\t106 checkbox Popular, Value: 1\n\t\t\t\t\t107 checkbox Top rated, Value: 0\n\t\t\t\t\t108 checkbox New, Value: 0\n\t\t\t\t109 text Searching…\n\t\t\t\t110 container\n\t\t\t\t\t111 button Description: Solo Leveling · Chugong, Help: Solo Leveling\n\t\t\t\t\t\t112 text Solo Leveling\n\t\t\t\t\t\t113 text Chugong\n\t\t\t\t\t114 button Description: Solo Leveling: Ragnarok · Daul, Help: Solo Leveling: Ragnarok\n\t\t\t\t\t\t115 image Loading cover\n\t\t\t\t\t\t116 text Solo Leveling: Ragnarok\n\t\t\t\t\t\t117 text Daul\n\t\t\t\t76 container Main navigation\n\t\t\t\t\t77 button Home\n\t\t\t\t\t\t78 image\n\t\t\t\t\t\t79 text Home\n\t\t\t\t\t80 button Explore\n\t\t\t\t\t\t81 image\n\t\t\t\t\t\t82 text Explore\n\t\t\t\t\t83 button Library\n\t\t\t\t\t\t84 image\n\t\t\t\t\t\t85 text Library\n\t\t\t\t\t86 button Profile\n\t\t\t\t\t\t87 image\n\t\t\t\t\t\t88 text Profile\n\t\t\t89 container statusbar\n\t\t\t\t90 text 9:41\n\t\t91 text معاينة Lorefy — اسحب وتنقّل كما في التطبيق\n\nThe focused UI element is 101 search text field (settable) Description: Search Manhwa, Value: Solo Leveling"
+    },
+    {
+      "format": "Manhua",
+      "query": "Tales of Demons and Gods",
+      "observed": {
+        "heading": "Manhua",
+        "input": "Tales of Demons and Gods",
+        "status": "Searching…",
+        "titles": [
+          "Tales of Demons and Gods"
+        ]
+      }
+    },
+    {
+      "format": "Comics",
+      "query": "Watchmen",
+      "observed": {
+        "heading": "Comics",
+        "input": "Watchmen",
+        "status": "Searching…",
+        "titles": [
+          "Watchmen",
+          "Watchmen as literature"
+        ]
+      }
+    },
+    {
+      "format": "Novel",
+      "query": "Dune",
+      "observed": {
+        "heading": "Novel",
+        "input": "Dune",
+        "status": "Searching…",
+        "titles": [
+          "Dune",
+          "Study Guide : Dune"
+        ]
+      }
+    },
+    {
+      "format": "Book",
+      "query": "Atomic Habits",
+      "observed": {
+        "heading": "Book",
+        "input": "Atomic Habits",
+        "status": "Searching…",
+        "titles": []
+      }
+    },
+    {
+      "format": "Light novel",
+      "query": "Overlord",
+      "observed": {
+        "heading": "Light novel",
+        "input": "Overlord",
+        "status": "Searching…",
+        "titles": [
+          "Overlord"
+        ]
+      }
+    },
+    {
+      "format": "Web novel",
+      "query": "Shadow Slave",
+      "observed": {
+        "heading": "Web novel",
+        "input": "Shadow Slave",
+        "status": "Searching…",
+        "titles": [
+          "Shadow Slave"
+        ]
+      }
+    },
+    {
+      "format": "Book settled",
+      "observed": {
+        "heading": "Book",
+        "input": "Atomic Habits",
+        "status": "Searching…",
+        "titles": [
+          "Atomic Habits"
+        ]
+      }
+    }
+  ],
+  "arabic": {
+    "heading": "البحث",
+    "input": "نجيب محفوظ",
+    "status": "85 نتيجة متوفرة",
+    "titles": [
+      "أحلام فترة النقاهة: الأحلام الأخيرة",
+      "أحلام فترة النقاهة",
+      "أصداء السيرة الذاتية",
+      "أفراح القبة",
+      "الباقي من الزمن ساعة"
+    ]
+  },
+  "partial": {
+    "query": "Luminous Circuit",
+    "retry": true,
+    "status": "بعض المصادر غير متاحة؛ هذه النتائج المتوفرة",
+    "titles": [
+      "Luminous Circuit Audit"
+    ]
+  },
+  "escapeToTypes": true,
+  "suggestionChosen": "One Piece",
+  "partialRetried": true
+}

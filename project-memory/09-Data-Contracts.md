@@ -85,3 +85,5 @@ not loaded-feed length or a client-maintained counter. No schema was deployed.
 [مقاييس القراءة](../modules/lorefy-reading-metrics.js).
 
 [[00-Home]] | [[systems/Accounts-Sync]] | [[10-Open-Questions]]
+
+Search public metadata reuse: [[sessions/2026-10-30-Search-Audit]]. Parsed-cache reuse observes external storage/policy replacement; live records and persisted provider snapshots are detached. Alias-only enrichment requires proven same-work identity and preserves curated names and owner fields. Unicode/page-size keys and incomplete/partial batches must not convert provider failure to a complete empty result. People matching is independent of follow hydration; late hydration retains intervening follow choices and existing backend owner guards.

@@ -1,0 +1,169 @@
+{
+  "catalogCount": 121920,
+  "scope": "Node CPU/public bundled data only; no network, device or production claim",
+  "sameWorkPickerResults": true,
+  "before": {
+    "label": "before 6781dcf",
+    "emptyCharacterSearchMs": [
+      570.25,
+      565.13,
+      561.96
+    ],
+    "workPicker": [
+      {
+        "query": "Naruto",
+        "elapsedMs": 402.71,
+        "ids": [
+          "ol-comics-works-ol13268171w",
+          "mal-manga-11-naruto",
+          "ol-comics-works-ol8756057w",
+          "ol-comics-works-ol8756055w",
+          "ol-comics-works-ol8756045w",
+          "mal-lightnovel-90531-naruto-shinden-series",
+          "mal-manga-160710-naruto-gaiden-uzu-no-naka-no-tsumujikaze",
+          "mal-manga-86129-naruto-hiden-series",
+          "fwn-novel-naruto-i-have-a-gravity-training-room",
+          "md-9694e581-df6c-483a-942b-9572212c8669",
+          "md-00d22884-a479-40e6-a8c4-47b3f8f630dc",
+          "md-4bacea00-312e-4162-80d9-dbc46c0efccf"
+        ]
+      },
+      {
+        "query": "نجيب محفوظ",
+        "elapsedMs": 380.2,
+        "ids": [
+          "jarir-JRB5000013835",
+          "ol-OL1599738W",
+          "ol-OL1599691W",
+          "wikidata-Q12234985",
+          "wikidata-Q16207487",
+          "wikidata-Q2275911",
+          "wikidata-Q7126228",
+          "wikidata-Q7320048",
+          "wikidata-Q7716304",
+          "wikidata-Q7729227",
+          "wikidata-Q7738834",
+          "wikidata-Q7743683"
+        ]
+      },
+      {
+        "query": "Hunter x Hunter",
+        "elapsedMs": 391.98,
+        "ids": [
+          "mal-manga-26-hunter-x-hunter",
+          "anilist-30026",
+          "ol-comics-works-ol8215057w",
+          "ol-comics-works-ol8215054w",
+          "ol-comics-works-ol8215082w",
+          "ol-comics-works-ol8215064w",
+          "ol-comics-works-ol8215151w",
+          "ol-comics-works-ol8215152w",
+          "ol-comics-works-ol8215153w",
+          "ol-comics-works-ol19929605w",
+          "ol-comics-works-ol19929607w",
+          "ol-comics-works-ol8215088w"
+        ]
+      },
+      {
+        "query": "George Martin",
+        "elapsedMs": 389.94,
+        "ids": [
+          "n-game-of-thrones",
+          "ol-novel-works-ol257939w",
+          "ol-novel-works-ol257948w",
+          "ol-novel-works-ol257914w",
+          "ol-novel-works-ol1955906w",
+          "ol-novel-works-ol257944w",
+          "ol-novel-works-ol1955938w",
+          "ol-novel-works-ol17489309w",
+          "ol-novel-works-ol17079158w",
+          "ol-novel-works-ol15181593w",
+          "ol-novel-works-ol17463087w",
+          "ol-OL19754759W"
+        ]
+      }
+    ]
+  },
+  "after": {
+    "label": "after working source",
+    "emptyCharacterSearchMs": [
+      0.18,
+      0.01,
+      0
+    ],
+    "workPicker": [
+      {
+        "query": "Naruto",
+        "elapsedMs": 153,
+        "ids": [
+          "ol-comics-works-ol13268171w",
+          "mal-manga-11-naruto",
+          "ol-comics-works-ol8756057w",
+          "ol-comics-works-ol8756055w",
+          "ol-comics-works-ol8756045w",
+          "mal-lightnovel-90531-naruto-shinden-series",
+          "mal-manga-160710-naruto-gaiden-uzu-no-naka-no-tsumujikaze",
+          "mal-manga-86129-naruto-hiden-series",
+          "fwn-novel-naruto-i-have-a-gravity-training-room",
+          "md-9694e581-df6c-483a-942b-9572212c8669",
+          "md-00d22884-a479-40e6-a8c4-47b3f8f630dc",
+          "md-4bacea00-312e-4162-80d9-dbc46c0efccf"
+        ]
+      },
+      {
+        "query": "نجيب محفوظ",
+        "elapsedMs": 135.26,
+        "ids": [
+          "jarir-JRB5000013835",
+          "ol-OL1599738W",
+          "ol-OL1599691W",
+          "wikidata-Q12234985",
+          "wikidata-Q16207487",
+          "wikidata-Q2275911",
+          "wikidata-Q7126228",
+          "wikidata-Q7320048",
+          "wikidata-Q7716304",
+          "wikidata-Q7729227",
+          "wikidata-Q7738834",
+          "wikidata-Q7743683"
+        ]
+      },
+      {
+        "query": "Hunter x Hunter",
+        "elapsedMs": 144.58,
+        "ids": [
+          "mal-manga-26-hunter-x-hunter",
+          "anilist-30026",
+          "ol-comics-works-ol8215057w",
+          "ol-comics-works-ol8215054w",
+          "ol-comics-works-ol8215082w",
+          "ol-comics-works-ol8215064w",
+          "ol-comics-works-ol8215151w",
+          "ol-comics-works-ol8215152w",
+          "ol-comics-works-ol8215153w",
+          "ol-comics-works-ol19929605w",
+          "ol-comics-works-ol19929607w",
+          "ol-comics-works-ol8215088w"
+        ]
+      },
+      {
+        "query": "George Martin",
+        "elapsedMs": 140.23,
+        "ids": [
+          "n-game-of-thrones",
+          "ol-novel-works-ol257939w",
+          "ol-novel-works-ol257948w",
+          "ol-novel-works-ol257914w",
+          "ol-novel-works-ol1955906w",
+          "ol-novel-works-ol257944w",
+          "ol-novel-works-ol1955938w",
+          "ol-novel-works-ol17489309w",
+          "ol-novel-works-ol17079158w",
+          "ol-novel-works-ol15181593w",
+          "ol-novel-works-ol17463087w",
+          "ol-OL19754759W"
+        ]
+      }
+    ]
+  }
+}

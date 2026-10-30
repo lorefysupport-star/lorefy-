@@ -884,3 +884,5 @@ is superseded by [[sessions/2026-10-29-Jikan-Retirement]], and its separate sear
 latency follow-up has source/browser evidence in [[sessions/2026-10-29-Search-Performance]].
 Apple server configuration, physical-device acceptance and installed-client
 release delivery remain open. Applied SQL history is preserved, not replayed.
+
+2026-10-30: [[sessions/2026-10-30-Search-Audit]] records the owner-requested three-agent search audit on latestmain6781dcf. Removes repeated index/cache/render work, repairs aliases/types/partial failures and the All/الكل integration mismatch.3111 source tests and local8-format/AR/EN browser checks pass;11/12publicprobesvalid, Googlequota remains. Source push is authorized; native/service deployment remains separate.

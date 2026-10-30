@@ -4,6 +4,14 @@ status: source-reviewed
 date: 2026-10-14
 aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 ---
+
+[[sessions/2026-10-30-Search-Audit]] removes repeated fallback downloads,
+queued obsolete scans, hidden rankings and fullcache reads; aliases, source types,
+Unicode/page-size keys and partial failures are repaired. Actual browser found
+and verified All/الكل event canonicalization.3111 full tests/8format browser;
+11valid public API probes, Googlequota unresolved. Cold675.32→303.80ms and
+broadranking386.78→54.42ms are localCPU evidence; native delivery, stalledshard,
+optionalproduction sources and peak-load/dataquality gates remain separate.
 # الكتالوج والبحث
 
 [[sessions/2026-10-29-Search-Performance]] removes the delayed search-helper

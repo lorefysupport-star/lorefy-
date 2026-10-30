@@ -1,0 +1,2 @@
+{"source":"before","cacheChars":420354,"checksPerRun":100,"runs":7,"medianMs":59.58,"cacheParsesPerRun":100,"serializationsPerRun":100}
+{"source":"after","cacheChars":420354,"checksPerRun":100,"runs":7,"medianMs":0.45,"cacheParsesPerRun":1,"serializationsPerRun":0}

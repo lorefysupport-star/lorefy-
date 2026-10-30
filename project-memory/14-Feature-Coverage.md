@@ -706,3 +706,5 @@ is superseded by [[sessions/2026-10-29-Jikan-Retirement]], and its separate sear
 latency follow-up has source/browser evidence in [[sessions/2026-10-29-Search-Performance]].
 Apple server configuration, physical-device acceptance and installed-client
 release delivery remain open. Applied SQL history is preserved, not replayed.
+
+2026-10-30 search coverage: [[sessions/2026-10-30-Search-Audit]] maps worker/fallback/index, API/cache/type/alias integrity, global/format/People render lifecycle and character picker to54new regressions and3111full checks. Real-catalog hashes retained; local browser covers8formats and AR/EN partial/retry. Googlequota, optional-provider production gates, device and broader data-quality acceptance remain open.

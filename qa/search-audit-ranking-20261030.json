@@ -1,0 +1,63 @@
+{
+  "baselineRef": "6781dcfb533e26e2174b831ca6a6f6771f248247",
+  "before": {
+    "catalogCount": 121920,
+    "cases": [
+      {
+        "query": "Naruto",
+        "count": 60,
+        "coldMs": 5.08,
+        "warmMedianMs": 0.46,
+        "warmNormalizationsPerQuery": 215,
+        "orderHash": "75bc33d3166571c514db00ff59e75e309722a2664b5f2a49a0889e07429a8006"
+      },
+      {
+        "query": "the",
+        "count": 34150,
+        "coldMs": 391.52,
+        "warmMedianMs": 386.78,
+        "warmNormalizationsPerQuery": 116183,
+        "orderHash": "8975e45dc5796026206b5ee298d8a4f3e76d02e977a6a767c287bda84bc584d5"
+      },
+      {
+        "query": "احلام",
+        "count": 23,
+        "coldMs": 0.24,
+        "warmMedianMs": 0.14,
+        "warmNormalizationsPerQuery": 76,
+        "orderHash": "3d1c8bec0024f217590e1767adf01f249e8785c6ef42a83ac4f3af6f2217bcdb"
+      }
+    ]
+  },
+  "after": {
+    "catalogCount": 121920,
+    "cases": [
+      {
+        "query": "Naruto",
+        "count": 60,
+        "coldMs": 0.71,
+        "warmMedianMs": 0.07,
+        "warmNormalizationsPerQuery": 1,
+        "orderHash": "75bc33d3166571c514db00ff59e75e309722a2664b5f2a49a0889e07429a8006"
+      },
+      {
+        "query": "the",
+        "count": 34150,
+        "coldMs": 140.38,
+        "warmMedianMs": 54.42,
+        "warmNormalizationsPerQuery": 1,
+        "orderHash": "8975e45dc5796026206b5ee298d8a4f3e76d02e977a6a767c287bda84bc584d5"
+      },
+      {
+        "query": "احلام",
+        "count": 23,
+        "coldMs": 0.19,
+        "warmMedianMs": 0.02,
+        "warmNormalizationsPerQuery": 1,
+        "orderHash": "3d1c8bec0024f217590e1767adf01f249e8785c6ef42a83ac4f3af6f2217bcdb"
+      }
+    ]
+  },
+  "sameResultOrder": true,
+  "notes": "Node VM relevance sorting only; indexes prepared before measurement. Five warm passes; no network, browser or physical-device timing claim."
+}

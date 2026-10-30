@@ -1,0 +1,84 @@
+{
+  "indexRecords": 121920,
+  "cases": [
+    {
+      "query": "Naruto",
+      "type": "All",
+      "parts": 33,
+      "matchedRecords": 60,
+      "suggestions": [],
+      "coldMs": 340.89,
+      "warmMedianMs": 39.22,
+      "resultHash": "bad6621b0a0dc5fc7eda2904e78008c2c29d878462285a6a6fd081c3d63cd7dd"
+    },
+    {
+      "query": "ون بيس",
+      "type": "All",
+      "parts": 2,
+      "matchedRecords": 2,
+      "suggestions": [],
+      "coldMs": 25,
+      "warmMedianMs": 22.55,
+      "resultHash": "6ef5b5f8b08653a66bfc1cbcedefef6b4d543258ddebbe20a38558e8bf22bf6f"
+    },
+    {
+      "query": "نجيب محفوظ",
+      "type": "All",
+      "parts": 11,
+      "matchedRecords": 74,
+      "suggestions": [],
+      "coldMs": 19.85,
+      "warmMedianMs": 20.71,
+      "resultHash": "09cf99bd4c28357e7dc74ef10e191e5644e89c6c120f091524dee54d41b17b81"
+    },
+    {
+      "query": "One Peice",
+      "type": "All",
+      "parts": 0,
+      "matchedRecords": 0,
+      "suggestions": [
+        "One Piece"
+      ],
+      "coldMs": 84.2,
+      "warmMedianMs": 76.49,
+      "resultHash": "555db8672c012133eeb4bcb4634be720cec28b82fc7d6f6386f0f9af2c3a4c83"
+    },
+    {
+      "query": "كتاب",
+      "type": "Book",
+      "parts": 22,
+      "matchedRecords": 704,
+      "suggestions": [],
+      "coldMs": 23.33,
+      "warmMedianMs": 22.37,
+      "resultHash": "7d54de9186ca874e9d247561787a3c575121ab4de52979c83bbb3d153e63dab4"
+    },
+    {
+      "query": "Pride and Prejudice",
+      "type": "Novel",
+      "parts": 1,
+      "matchedRecords": 1,
+      "suggestions": [],
+      "coldMs": 21.34,
+      "warmMedianMs": 21.87,
+      "resultHash": "6543a707169d28ad5397f366c06dd5f07dc4309749695aab2ae6b989edc35bc0"
+    },
+    {
+      "query": "The",
+      "type": "All",
+      "parts": 153,
+      "matchedRecords": 34150,
+      "suggestions": [],
+      "coldMs": 40.94,
+      "warmMedianMs": 39.29,
+      "resultHash": "7477372a87bf7b0510ad3eee75b82c94863e683c6624e2aae9412972daba6886"
+    }
+  ],
+  "fallback": {
+    "elapsedMs": 292.55,
+    "maxSliceMs": 9.13,
+    "yields": 121,
+    "matchedRecords": 60
+  },
+  "notes": "Local Node CPU measurements with actual compact index; no network, browser or physical-device certification. First query includes cold index preparation. Hashes cover full ranked shard counts/scores and suggestions."
+}

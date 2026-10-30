@@ -1,0 +1,139 @@
+{
+  "checkedAt": "2026-10-30T00:17:41.776Z",
+  "scope": "Public metadata only. Individual observations; not peak-load or device certification.",
+  "results": [
+    {
+      "name": "AniList work search",
+      "configuration": "enabled",
+      "status": 200,
+      "elapsedMs": 603,
+      "records": 3,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=300",
+      "cors": "*"
+    },
+    {
+      "name": "AniList character search",
+      "configuration": "enabled",
+      "status": 200,
+      "elapsedMs": 628,
+      "records": 1,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=300",
+      "cors": "*"
+    },
+    {
+      "name": "MangaDex search",
+      "configuration": "enabled",
+      "status": 200,
+      "elapsedMs": 536,
+      "records": 3,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=300",
+      "cors": "*"
+    },
+    {
+      "name": "Open Library English search",
+      "configuration": "enabled",
+      "status": 200,
+      "elapsedMs": 1392,
+      "records": 3,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=300",
+      "cors": "*"
+    },
+    {
+      "name": "Open Library Arabic search",
+      "configuration": "enabled",
+      "status": 200,
+      "elapsedMs": 1015,
+      "records": 3,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=300",
+      "cors": "*"
+    },
+    {
+      "name": "Open Library editions",
+      "configuration": "enabled for exact work",
+      "status": 200,
+      "elapsedMs": 882,
+      "records": 3,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=300",
+      "cors": "*"
+    },
+    {
+      "name": "Tenrai MAL title search",
+      "configuration": "enabled",
+      "status": 200,
+      "elapsedMs": 354,
+      "records": 3,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=3600, s-maxage=10800",
+      "cors": "*"
+    },
+    {
+      "name": "Tenrai MAL character search",
+      "configuration": "enabled",
+      "status": 200,
+      "elapsedMs": 130,
+      "records": 3,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=3600, s-maxage=10800",
+      "cors": "*"
+    },
+    {
+      "name": "Google Books search",
+      "configuration": "disabled in current client config",
+      "status": 429,
+      "elapsedMs": 320,
+      "records": null,
+      "valid": false,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=300",
+      "cors": "*",
+      "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'books.googleapis.com' for consumer 'project_number:[redacted]'."
+    },
+    {
+      "name": "Wikidata search",
+      "configuration": "local preview; public enrichment route exists",
+      "status": 200,
+      "elapsedMs": 500,
+      "records": 3,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": "public, max-age=300",
+      "cors": "*"
+    },
+    {
+      "name": "BookBrainz search",
+      "configuration": "local preview; not enabled for production",
+      "status": 200,
+      "elapsedMs": 497,
+      "records": 3,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": null,
+      "cors": null
+    },
+    {
+      "name": "GCD search",
+      "configuration": "local preview; not enabled for production",
+      "status": 200,
+      "elapsedMs": 2027,
+      "records": 50,
+      "valid": true,
+      "retryAfter": null,
+      "cacheControl": null,
+      "cors": null
+    }
+  ]
+}

@@ -244,3 +244,5 @@ is superseded by [[sessions/2026-10-29-Jikan-Retirement]], and its separate sear
 latency follow-up has source/browser evidence in [[sessions/2026-10-29-Search-Performance]].
 Apple server configuration, physical-device acceptance and installed-client
 release delivery remain open. Applied SQL history is preserved, not replayed.
+
+2026-10-30: [[sessions/2026-10-30-Search-Audit]] resolves reproduced source/index/API/UI/character inefficiencies and hidden All-format error states. Live primary search probes return valid200; GoogleBooks429quota remains, and optional bibliography providers remain gated. Gateway source still needs separately authorized deployment; installed-native/device, peak-load, unreviewed metadata and20s stalled-shard queue limits remain open.
