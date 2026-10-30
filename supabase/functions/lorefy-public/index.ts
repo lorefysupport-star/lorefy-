@@ -29,8 +29,38 @@ function corsHeaders() {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,POST,HEAD,OPTIONS",
     "Access-Control-Allow-Headers": "authorization,apikey,content-type,accept",
-    "Vary": "Origin"
+    "Vary": "Origin",
+    "Cache-Control": "no-store",
+    "Access-Control-Expose-Headers": "Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset"
   };
+}
+
+async function catalogBytes(response: Response): Promise<Uint8Array> {
+  function tooLarge(): never { throw new Error("Catalog response too large"); }
+  if (Number(response.headers.get("content-length")) > MAX_CATALOG_BYTES) {
+    if (response.body) void response.body.cancel().catch(function(){});
+    return tooLarge();
+  }
+  if (!response.body) return new Uint8Array();
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      size += chunk.value.byteLength;
+      if (size > MAX_CATALOG_BYTES) {
+        void reader.cancel().catch(function(){});
+        return tooLarge();
+      }
+      chunks.push(chunk.value);
+    }
+  } finally { reader.releaseLock(); }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  return bytes;
 }
 
 async function catalogProxy(request: Request, provider: string, url: URL) {
@@ -99,14 +129,24 @@ async function catalogProxy(request: Request, provider: string, url: URL) {
       body,
       signal: AbortSignal.timeout(10000)
     });
-    const bytes = await upstream.arrayBuffer();
-    if (bytes.byteLength > MAX_CATALOG_BYTES) return new Response("Response Too Large", { status: 413, headers: corsHeaders() });
-    return new Response(request.method === "HEAD" ? null : bytes, {
+    let bytes: Uint8Array;
+    try { bytes = await catalogBytes(upstream); }
+    catch (error) {
+      if (error instanceof Error && error.message === "Catalog response too large") return new Response("Response Too Large", { status: 413, headers: corsHeaders() });
+      throw error;
+    }
+    const retryHeaders: Record<string, string> = {};
+    for (const name of ["Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset"]) {
+      const value = upstream.headers.get(name);
+      if (value && value.length <= 128) retryHeaders[name] = value;
+    }
+    return new Response(request.method === "HEAD" || [204, 205, 304].includes(upstream.status) ? null : bytes, {
       status: upstream.status,
       headers: {
         ...corsHeaders(),
         "Content-Type": upstream.headers.get("content-type") || "application/json; charset=utf-8",
-        "Cache-Control": "public, max-age=300",
+        ...retryHeaders,
+        "Cache-Control": upstream.ok ? "public, max-age=300" : "no-store",
         "X-Content-Type-Options": "nosniff"
       }
     });
