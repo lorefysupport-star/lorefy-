@@ -126,5 +126,5 @@ test('community copy changes use matching entry and offline asset versions', () 
     assert.ok(entry.includes(file + '?v=20261028-community-copy-v1'));
     assert.ok(sw.includes(file + '?v=20261028-community-copy-v1'));
   }
-  assert.match(sw, /lorefy-v643-kitsu-pages/);
+  assert.match(sw, /lorefy-v644-search-audit/);
 });

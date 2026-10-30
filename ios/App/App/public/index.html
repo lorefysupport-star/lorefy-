@@ -266,7 +266,7 @@
   </script>
 
   <!-- Load one useful catalog part before the app; remaining parts load on demand. -->
-  <script src="modules/lorefy-catalog-plan.js?v=20261019-search-authors-v1"></script>
+  <script src="modules/lorefy-catalog-plan.js?v=20261019-search-authors-v1-search-audit-v2"></script>
   <script src="uploads/lorefy-catalog-summary.js?v=20261018-runtime-cleanup-v1"></script>
   <script>
     // Direct work links still select their exact shard before mounting.
@@ -307,7 +307,7 @@
     })();
   </script>
   <script defer src="modules/lorefy-catalog-map-loader.js?v=20261018-runtime-cleanup-v1"></script>
-  <script defer src="modules/lorefy-catalog-loader.js?v=20261021-search-audit-fast-search-v1"></script>
+  <script defer src="modules/lorefy-catalog-loader.js?v=20261021-search-audit-fast-search-v1-search-audit-v2"></script>
   <script defer src="uploads/lorefy-chapter-overrides.js?v=20260616-v23"></script>
   <script defer src="uploads/lorefy-catalog-aliases.js?v=20260622-audit1"></script>
 
@@ -335,7 +335,7 @@
   <!-- Weekly catalog delta updater (applies cached updates before app boot) -->
   <script defer src="modules/lorefy-catalog-updater.js?v=20260726-catalog-safety-v4"></script>
   <!-- Curated Arabic titles are local so search remains useful without a network request. -->
-  <script defer src="modules/lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1"></script>
+  <script defer src="modules/lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1-search-audit-v2"></script>
   <script defer src="modules/lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4"></script>
   <script defer src="uploads/lorefy-arabic-library.js?v=20261008-arabic-breadth-v4"></script>
   <script defer src="uploads/lorefy-booktok-library.js?v=20260830-booktok-library-v1"></script>
@@ -372,7 +372,7 @@
       comics: "uploads/lorefy-comics-character-catalog.js?v=20260831-comic-images-v2"
     };
   </script>
-  <script defer src="modules/lorefy-character-system.js?v=20261028-image-picker-lifecycle-v2-tenrai-v1"></script>
+  <script defer src="modules/lorefy-character-system.js?v=20261028-image-picker-lifecycle-v2-tenrai-v1-search-audit-v2"></script>
   <link rel="stylesheet" href="styles/lorefy-public-profile.css?v=20261011-public-profile-layout-v4">
   <link rel="stylesheet" href="styles/lorefy-visual-polish.css?v=20260930-reference-v2">
   <link rel="stylesheet" href="styles/lorefy-work-surface.css?v=20261011-work-lists-v1">
@@ -416,7 +416,7 @@
   <script defer src="modules/lorefy-work-relations.js?v=20261007-work-relations-v3"></script>
   <script defer src="modules/lorefy-library-view.js?v=20261029-library-media-v1"></script>
   <script defer src="modules/lorefy-interface-settings.js?v=20261028-settings-studio-v1"></script>
-  <script defer src="modules/lorefy-explore-studio.js?v=20261029-search-editions-v1"></script>
+  <script defer src="modules/lorefy-explore-studio.js?v=20261029-search-editions-v1-search-audit-v2"></script>
   <script defer src="modules/lorefy-preview-readers.js?v=20261011-profile-sections-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-user-experience.css?v=20261015-connection-avatar-v1">
   <script defer src="modules/lorefy-user-experience.js?v=20261015-connection-avatar-v1"></script>
@@ -444,7 +444,7 @@
   <script defer src="modules/lorefy-work-panels.js?v=20261029-cover-editions-v1"></script>
   <script defer src="uploads/files/lorefy-app.js?v=20261029-cover-editions-v1"></script>
   <script defer src="modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1"></script>
-  <script defer src="modules/lorefy-growth-features.js?v=20261030-kitsu-pages-v1"></script>
+  <script defer src="modules/lorefy-growth-features.js?v=20261030-kitsu-pages-v1-search-audit-v2"></script>
   <script defer src="modules/lorefy-community.js?v=20261028-community-copy-v1"></script>
   <link rel="stylesheet" href="styles/lorefy-profile-sections.css?v=20261018-list-removal-v1">
   <script defer src="modules/lorefy-profile-sections.js?v=20261029-profile-list-media-v1"></script>
@@ -456,12 +456,12 @@
   <script defer src="modules/lorefy-product-tools.js?v=20261028-report-studio-v1"></script>
   <script defer src="modules/lorefy-reading-diary.js?v=20261018-runtime-cleanup-v1"></script>
   <script defer src="modules/lorefy-chapter-detail.js?v=20261026-work-studio-v1"></script>
-  <script defer src="modules/lorefy-user-discovery.js?v=20261026-explore-search-v1"></script>
+  <script defer src="modules/lorefy-user-discovery.js?v=20261026-explore-search-v1-search-audit-v2"></script>
   <script>
   window.LOREFY_DEFERRED_ASSETS = [
       "uploads/lorefy-ar-enrichment.js?v=20260707-lazy-v1",
-      "modules/lorefy-open-catalog.js?v=20261025-open-catalog",
-      "modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1"
+      "modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2",
+      "modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2"
     ];
   </script>
 
@@ -686,7 +686,7 @@
           window.__lorefyGrowthRetryCount = (window.__lorefyGrowthRetryCount || 0) + 1;
           if (window.__lorefyGrowthRetryCount > 3) return;
           var script = document.createElement('script');
-      script.src = 'modules/lorefy-growth-features.js?v=20261030-kitsu-pages-v1' + window.__lorefyGrowthRetryCount + '-' + Date.now();
+      script.src = 'modules/lorefy-growth-features.js?v=20261030-kitsu-pages-v1-search-audit-v2' + window.__lorefyGrowthRetryCount + '-' + Date.now();
           script.async = false;
           document.head.appendChild(script);
         }, 400);

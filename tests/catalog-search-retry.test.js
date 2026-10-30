@@ -81,6 +81,7 @@ test('retry while an index request is pending does not duplicate it',async()=>{
 
 test('an obsolete index failure cannot replace a newer successful search',async()=>{
   const h=harness();let fail;h.holdIndex(new Promise((r,j)=>fail=j));h.input('Old query');await h.settle();
+  h.win.Worker=class{constructor(){this.events={};}addEventListener(n,fn){this.events[n]=fn;}postMessage(request){queueMicrotask(()=>this.events.message({data:{type:'result',requestId:request.requestId,matches:[2,3,4].map(part=>({part,count:1,score:100}))}}));}terminate(){}};
   h.holdIndex(null);h.input('Needle');await h.settle();fail(new Error('old failure'));await h.settle();
   assert.equal(h.loader.state().searchError,false);assert.equal(h.loader.state().searching,false);
   assert.deepEqual(h.scripts,[2,3,4]);

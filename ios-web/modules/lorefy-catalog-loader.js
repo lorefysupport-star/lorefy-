@@ -10,7 +10,7 @@
   var loading = new Map();
   var activeQueue = Promise.resolve();
   var version = "20261013-discover-reviewed-v2";
-  var workerVersion = "20261019-search-authors-v1-fast-search-v1";
+  var workerVersion = "20261019-search-authors-v1-fast-search-v1-search-audit-v2";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
@@ -23,6 +23,9 @@
   var workerStagedRecords = [];
   var hydration = new Map();
   var searchWorker = null;
+  var fallbackIndexPromise = null;
+  var fallbackYieldChannel = null;
+  var fallbackYieldQueue = [];
   var searchRequests = new Map();
   var searchRequestId = 0;
   var searchGeneration = 0;
@@ -315,10 +318,11 @@
     return activeQueue;
   }
 
-  function searchIndexFallback(query, type, withSuggestions) {
+  function loadFallbackIndex() {
+    if (fallbackIndexPromise) return fallbackIndexPromise;
     var controller = typeof global.AbortController === "function" ? new global.AbortController() : null;
     var timer, expired = false;
-    return new Promise(function (resolve, reject) {
+    fallbackIndexPromise = new Promise(function (resolve, reject) {
       timer = global.setTimeout(function () {
         expired = true;
         try { if (controller) controller.abort(); } catch (error) {}
@@ -331,15 +335,44 @@
       }).then(function (index) {
         if (expired) throw new Error("Catalog search index timed out");
         if (!index || index.schema !== 1 || !Array.isArray(index.records)) throw new Error("Invalid catalog search index");
-        var entries = index.records.map(function (row) {
+        return index.records.map(function (row) {
           return { part: Number(row[0]), work: {
             id: row[1], title: row[2], ar: row[3], auth: row[4], type: row[5],
             altTitles: row[6], aliases: row[7], authorAliases: row[8]
           } };
         });
-        return planner.searchIndexResult(entries, query, type, global.LorefyCatalogData, withSuggestions);
       }).then(resolve, reject);
-    }).finally(function () { global.clearTimeout(timer); });
+    }).finally(function () { global.clearTimeout(timer); }).catch(function (error) {
+      fallbackIndexPromise = null;
+      throw error;
+    });
+    return fallbackIndexPromise;
+  }
+
+  function yieldSearchTask() {
+    return new Promise(function (resolve) {
+      // MessageChannel yields without the nested-timer clamp on older WebKit.
+      // It is created only when Worker fallback actually needs a second slice.
+      if (typeof global.MessageChannel === "function") {
+        if (!fallbackYieldChannel) {
+          fallbackYieldChannel = new global.MessageChannel();
+          fallbackYieldChannel.port1.onmessage = function () {
+            var next = fallbackYieldQueue.shift();
+            if (next) next();
+          };
+        }
+        fallbackYieldQueue.push(resolve);
+        fallbackYieldChannel.port2.postMessage(0);
+      } else global.setTimeout(resolve, 0);
+    });
+  }
+
+  function searchIndexFallback(query, type, withSuggestions, current) {
+    if (current && !current()) return Promise.resolve({matches: [], suggestions: [], cancelled: true});
+    return loadFallbackIndex().then(function (entries) {
+      if (current && !current()) return {matches: [], suggestions: [], cancelled: true};
+      return planner.searchIndexResultAsync(entries, query, type, global.LorefyCatalogData, withSuggestions, yieldSearchTask, current);
+    });
   }
 
   function failSearchWorker(worker, error) {
@@ -354,11 +387,11 @@
     try { worker.terminate(); } catch (ignore) {}
   }
 
-  function requestSearchResult(query, type, withSuggestions) {
-    if (typeof global.Worker !== "function") return searchIndexFallback(query, type, withSuggestions);
+  function requestSearchResult(query, type, withSuggestions, current) {
+    if (typeof global.Worker !== "function") return searchIndexFallback(query, type, withSuggestions, current);
     if (!searchWorker) {
       try { searchWorker = new global.Worker("modules/lorefy-catalog-search-worker.js?v=" + workerVersion); }
-      catch (error) { return searchIndexFallback(query, type, withSuggestions); }
+      catch (error) { return searchIndexFallback(query, type, withSuggestions, current); }
       var activeWorker = searchWorker;
       searchWorker.addEventListener("message", function (event) {
         var message = event.data || {};
@@ -380,9 +413,9 @@
         failSearchWorker(worker, new Error("Catalog search worker timed out"));
       }, SEARCH_REQUEST_TIMEOUT_MS);
       searchRequests.set(requestId, { resolve: resolve, reject: reject, worker: worker, timer: timer });
-      try { worker.postMessage({type: "search", requestId: requestId, query: query, catalogType: type, withSuggestions: withSuggestions !== false}); }
+      try { worker.postMessage({type: "search", requestId: requestId, query: query, catalogType: type, withSuggestions: withSuggestions !== false, channel: current ? "input" : undefined}); }
       catch (error) { failSearchWorker(worker, error); }
-    }).catch(function () { return searchIndexFallback(query, type, withSuggestions); });
+    }).catch(function () { return searchIndexFallback(query, type, withSuggestions, current); });
   }
 
   function refreshSearchStatus() {
@@ -436,7 +469,7 @@
     refreshSearchStatus();
     if (!query) return;
     searchTimer = global.setTimeout(function () {
-      requestSearchResult(query, type).then(function (result) {
+      requestSearchResult(query, type, undefined, function () { return generation === searchGeneration; }).then(function (result) {
         if (generation !== searchGeneration) return;
         searchMatches = result.matches;
         searchSuggestions = result.matches.length ? [] : result.suggestions;

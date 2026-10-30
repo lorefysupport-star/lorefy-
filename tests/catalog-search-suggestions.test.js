@@ -107,7 +107,7 @@ test('a late worker correction cannot replace the current query',async()=>{
   assert.deepEqual(Array.from(h.loader.state().suggestions),[]);assert.equal(h.loader.state().searchQuery,'No match anywhere');
 });
 test('failed and cleared searches never retain an earlier correction',async()=>{
-  const h=harness();h.input('One Peice');await h.settle();h.fail(true);h.input('Bersrk');await h.settle();
+  const h=harness(true);h.input('One Peice');await h.settle();h.pending[0]({matches:[],suggestions:['One Piece']});await h.settle();h.fail(true);h.input('Bersrk');await h.settle();h.pending[1]({type:'error',message:'worker failed'});await h.settle();
   assert.equal(h.loader.state().searchError,true);assert.deepEqual(Array.from(h.loader.state().suggestions),[]);
   h.input('');await h.settle();assert.deepEqual(Array.from(h.loader.state().suggestions),[]);
 });

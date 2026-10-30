@@ -63,5 +63,5 @@ test('legal offline core contains current styles, navigation and all linked poli
   assert.ok(sw.includes('./modules/lorefy-legal.js?v=20261028-legal-studio-v1'));
   assert.ok(sw.includes('./styles/lorefy-legal.css?v=20261028-legal-studio-v1'));
   assert.ok(sw.includes('./community-guidelines.html'));
-  assert.match(sw, /lorefy-v643-kitsu-pages/);
+  assert.match(sw, /lorefy-v644-search-audit/);
 });

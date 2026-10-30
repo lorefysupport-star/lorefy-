@@ -141,15 +141,27 @@
     (entries || []).forEach(function (entry) {
       var work = entry && entry.work;
       if (!work || !work.id || selectedType && normalizeRouteType(work.type) !== selectedType) return;
+      var prepared = searchApi.getCatalogQueryIndex && searchApi.getCatalogQueryIndex(work);
       var titles = [work.title, work.ar, work.auth || work.author];
-      // Only sourced textual aliases; never stringify arbitrary metadata.
+      var normalizedTitles = prepared ? [prepared.fields[0], prepared.fields[1], prepared.fields[work.auth ? 2 : 3]] : [];
+      var aliasIndex = 4;
+      // Only sourced textual aliases; never stringify arbitrary metadata or
+      // suggest the additional cross-language matcher expansions as new titles.
       [work.altTitles, work.aliases, work.authorAliases].forEach(function (aliases) {
-        if (typeof aliases === 'string') titles.push(aliases);
-        else if (Array.isArray(aliases)) aliases.forEach(function (alias) { if (typeof alias === 'string') titles.push(alias); });
+        if (!aliases) return;
+        if (!Array.isArray(aliases)) aliases = [aliases];
+        aliases.forEach(function (alias) {
+          if (typeof alias === 'string') {
+            titles.push(alias);
+            normalizedTitles.push(prepared && alias && alias.indexOf('\u0000') === -1 ? prepared.fields[aliasIndex] : undefined);
+          }
+          aliasIndex += 1;
+        });
       });
-      titles.forEach(function (title) {
+      titles.forEach(function (title, index) {
         if (typeof title !== 'string') return;
-        var text = searchApi.normalizeQuery(title);
+        var text = normalizedTitles[index];
+        if (text == null || title.indexOf('\u0000') !== -1) text = searchApi.normalizeQuery(title);
         if (!queryCorrection(normalized, text) || candidates.has(text)) return;
         candidates.set(text, title.trim());
       });
@@ -161,6 +173,38 @@
     var matches = searchIndexParts(entries, query, type, searchApi);
     return { matches: matches, suggestions: !matches.length && withSuggestions !== false
       ? suggestCatalogQueries(entries, query, type, searchApi) : [] };
+  }
+
+  // The no-Worker fallback shares the same matcher/order, but yields between
+  // bounded slices so a large first-use index does not freeze typing or taps.
+  async function searchIndexResultAsync(entries, query, type, searchApi, withSuggestions, yieldTask, current) {
+    entries = entries || [];
+    var found = new Map(), chunkSize = 1000;
+    function cancelled() { return current && !current(); }
+    for (var offset = 0; offset < entries.length; offset += chunkSize) {
+      if (cancelled()) return {matches: [], suggestions: [], cancelled: true};
+      searchIndexParts(entries.slice(offset, offset + chunkSize), query, type, searchApi).forEach(function (match) {
+        var existing = found.get(match.part);
+        if (existing) { existing.count += match.count; existing.score = Math.max(existing.score, match.score); }
+        else found.set(match.part, match);
+      });
+      if (offset + chunkSize < entries.length) await yieldTask();
+    }
+    var matches = Array.from(found.values()).sort(function (a, b) {
+      return b.score - a.score || b.count - a.count || a.part - b.part;
+    });
+    var suggestions = new Map();
+    if (!matches.length && withSuggestions !== false) {
+      for (var at = 0; at < entries.length; at += chunkSize) {
+        if (cancelled()) return {matches: [], suggestions: [], cancelled: true};
+        suggestCatalogQueries(entries.slice(at, at + chunkSize), query, type, searchApi).forEach(function (title) {
+          var key = searchApi.normalizeQuery(title);
+          if (!suggestions.has(key)) suggestions.set(key, title);
+        });
+        if (at + chunkSize < entries.length) await yieldTask();
+      }
+    }
+    return {matches: matches, suggestions: Array.from(suggestions.keys()).sort().slice(0, 3).map(function (key) { return suggestions.get(key); })};
   }
 
   function shouldWaitForInteraction(lastInteractionAt, now, quietWindowMs) {
@@ -211,6 +255,7 @@
     allCatalogParts: allCatalogParts,
     searchIndexParts: searchIndexParts,
     searchIndexResult: searchIndexResult,
+    searchIndexResultAsync: searchIndexResultAsync,
     shouldWaitForInteraction: shouldWaitForInteraction,
     pickFeaturedWork: pickFeaturedWork,
     typeParts: typeParts,

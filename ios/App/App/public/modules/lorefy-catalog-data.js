@@ -25,11 +25,15 @@
   }
 
   function queryText(value) {
-    return normalizedSearchText(value).normalize('NFKD')
+    if (value == null || value === "") return "";
+    var text = normalizedSearchText(value);
+    // Most source titles/authors are ASCII. This is equivalent to the Unicode
+    // path for that range and avoids five Unicode passes for every cold row.
+    if (/^[\x00-\x7f]*$/.test(text)) return text.replace(/[^a-z0-9]+/g, ' ').trim();
+    return text.normalize('NFKD')
       .replace(/[\u0300-\u036f\u064b-\u065f\u0670\u0640]/g,'')
       .replace(/[أإآ]/g,'ا').replace(/ى/g,'ي')
-      .replace(/[^\p{L}\p{N}]+/gu,' ')
-      .replace(/\s+/g,' ').trim();
+      .replace(/[^\p{L}\p{N}]+/gu,' ').trim();
   }
 
   var searchIndex = new WeakMap();
@@ -58,27 +62,55 @@
     return String(value == null ? "" : value);
   }
   function aliasSearchContent(record) {
-    return [].concat(record.altTitles || [], record.aliases || [], record.authorAliases || []).map(rawSearchField).join("\u0000");
+    if (!record.altTitles && !record.aliases && !record.authorAliases) return "";
+    var content = "", count = 0;
+    [record.altTitles, record.aliases, record.authorAliases].forEach(function (values) {
+      if (values == null) return;
+      if (!Array.isArray(values)) values = [values];
+      for (var index = 0; index < values.length; index++) {
+        if (count++) content += "\u0000";
+        content += rawSearchField(values[index]);
+      }
+    });
+    return content;
   }
+  function aliasLookup(groups) {
+    var lookup = new Map();
+    groups.forEach(function (group) { group.forEach(function (name) { lookup.set(name, group); }); });
+    return lookup;
+  }
+  var authorLookup = aliasLookup(authorNames), workLookup = aliasLookup(workNames);
   var lastQuery, lastNormalizedQuery, lastQueryTokens;
-  function buildQueryIndex(record) {
-    var aliases = [].concat(record.altTitles || [], record.aliases || [], record.authorAliases || []);
-    var signature = [record.title,record.ar,record.auth,record.author].concat(aliases).map(function(value){
-      if (value && typeof value === 'object') value = Object.values(value).join(' ');
-      return String(value == null ? '' : value);
-    }).join('\u0000');
-    var fields = signature.split('\u0000').map(queryText);
-    var author = fields[2] || fields[3];
-    var title = fields[0], arabicTitle = fields[1];
-    authorNames.forEach(function(group){
-      if (group.indexOf(author) !== -1) fields = fields.concat(group);
+  function buildQueryIndex(record, aliasContent) {
+    var fields = [record.title, record.ar, record.auth, record.author].map(function (value) { return queryText(rawSearchField(value)); });
+    if (aliasContent) [].concat(record.altTitles || [], record.aliases || [], record.authorAliases || []).forEach(function (value) {
+      fields.push(queryText(rawSearchField(value)));
     });
-    workNames.forEach(function(group){
-      if (group.indexOf(title) !== -1 || group.indexOf(arabicTitle) !== -1) fields=fields.concat(group);
-    });
-    return {signature:signature,text:fields.join(' '),fields:fields,
+    var authorAliases = authorLookup.get(fields[2] || fields[3]);
+    if (authorAliases) fields = fields.concat(authorAliases);
+    var titleAliases = workLookup.get(fields[0]), arabicAliases = workLookup.get(fields[1]);
+    if (titleAliases) fields = fields.concat(titleAliases);
+    if (arabicAliases && arabicAliases !== titleAliases) fields = fields.concat(arabicAliases);
+    return {text:fields.join(' '),fields:fields,
       title:record.title,ar:record.ar,auth:record.auth,author:record.author,
-      aliasCount:aliases.length,aliasContent:aliases.map(rawSearchField).join("\u0000")};
+      aliasContent:aliasContent,
+      objectContent:[record.title,record.ar,record.auth,record.author].some(function (value) { return value && typeof value === 'object'; })
+        ? [record.title,record.ar,record.auth,record.author].map(rawSearchField).join('\u0000') : null};
+  }
+  function getCatalogQueryIndex(record) {
+    if (!record || typeof record !== 'object') return null;
+    var cached = record._catalogCompact && record._queryIndex || searchIndex.get(record);
+    // Raw snapshots keep same-count/in-place alias edits observable. Avoid
+    // rebuilding whole field arrays and signatures for every unchanged row.
+    var aliases = aliasSearchContent(record);
+    if (!cached || cached.title !== record.title || cached.ar !== record.ar ||
+      cached.auth !== record.auth || cached.author !== record.author || cached.aliasContent !== aliases ||
+      cached.objectContent != null && cached.objectContent !== [record.title,record.ar,record.auth,record.author].map(rawSearchField).join('\u0000')) {
+      cached = buildQueryIndex(record, aliases);
+      if (record._catalogCompact) record._queryIndex = cached;
+      else searchIndex.set(record, cached);
+    }
+    return cached;
   }
   function matchesCatalogQuery(record, query) {
     if (!record || typeof record !== 'object' || !record.id) return false;
@@ -89,29 +121,7 @@
     }
     var text = lastNormalizedQuery || '';
     if (!text) return true;
-    var prepared = record._catalogCompact && record._queryIndex;
-    var cached;
-    if (prepared && prepared.title === record.title && prepared.ar === record.ar &&
-      prepared.auth === record.auth && prepared.author === record.author &&
-      prepared.aliasCount === (record.altTitles || []).length + (record.aliases || []).length + (record.authorAliases || []).length &&
-      prepared.aliasContent === aliasSearchContent(record)) {
-      cached = prepared;
-    } else {
-      cached = searchIndex.get(record);
-      // Check raw field content first; normalization is needed only after a change.
-      var signature = [record.title,record.ar,record.auth,record.author].concat(record.altTitles || [],record.aliases || [],record.authorAliases || []).map(function(value){
-        if(value && typeof value === 'object')value=Object.values(value).join(' ');
-        return String(value == null ? '' : value);
-      }).join('\u0000');
-      if (!cached || cached.signature !== signature) {
-        cached = buildQueryIndex(record);
-        searchIndex.set(record,cached);
-      }
-      if (record._catalogCompact) {
-        record._queryIndex = cached;
-        delete cached.signature;
-      }
-    }
+    var cached = getCatalogQueryIndex(record);
     if (cached.text.indexOf(text) !== -1) return true;
     var tokens = lastQueryTokens;
     if (!tokens.every(function(token){ return cached.text.indexOf(token) !== -1; })) return false;
@@ -155,8 +165,7 @@
       // rebuild them after a worker replaces the catalog.
       record._indexed = false;
       if (record._catalogCompact) {
-        record._queryIndex = buildQueryIndex(record);
-        delete record._queryIndex.signature;
+        getCatalogQueryIndex(record);
       }
       return record;
     });
@@ -165,8 +174,7 @@
   function prepareSearchIndexes(records) {
     (records || []).forEach(function(record){
       if(!record || !record.id)return;
-      if(record._catalogCompact && !record._queryIndex){record._queryIndex=buildQueryIndex(record);delete record._queryIndex.signature;}
-      else if(!record._catalogCompact && !searchIndex.has(record))searchIndex.set(record,buildQueryIndex(record));
+      getCatalogQueryIndex(record);
     });
   }
 
@@ -238,6 +246,7 @@
     sortRanked: sortRanked,
     matchesCatalogQuery: matchesCatalogQuery,
     normalizeQuery: queryText,
+    getCatalogQueryIndex: getCatalogQueryIndex,
     sourceSynopsis: sourceSynopsis,
     workLanguage: workLanguage,
     languageAffinity: languageAffinity
