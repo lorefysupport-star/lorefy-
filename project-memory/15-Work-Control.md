@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-01-Slow-Media-Recovery]]: managed image recovery verified with
+3142 tests/14 browser checks; no native/service mutation. Continue measured
+catalog/DOM work, preserve active layouts and do not claim all lag eliminated.
+
 [[sessions/2026-11-01-Home-Reading-Hierarchy]]: أصلح ترتيب تابع القراءة وثبات
 الهيدر واتجاه الأرقام؛ أزيل صفر بالمئة المضلل للأعمال المستمرة، وصار حساب
 المعروض يتبع الفصول أو الصفحات أو المجلدات المحفوظة.3137 اختبارًا و288 فحص

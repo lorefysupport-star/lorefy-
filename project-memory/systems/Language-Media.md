@@ -6,6 +6,11 @@ aliases: ["عربي", "إنجليزي", "ترجمة", "صور", "مشاركة", 
 ---
 # اللغة والصور والمشاركة
 
+[[sessions/2026-11-01-Slow-Media-Recovery]] fixes managed cover/portrait late
+success after the 5.5s UI deadline. Same request recovers, stale retries cannot
+paint current state.3142 tests/14 delayed-byte browser checks; provider transfer
+speed and native delivery remain unverified, not implied by this repair.
+
 [[sessions/2026-10-29-UI-Foundation-Phase-Twenty-Two]] adds opt-in managed portrait
 recovery to owner rated strip/gallery. Read-only favorite-editor consumers are
 unchanged. Native Retry/Open stay separate. Position native images absolutely

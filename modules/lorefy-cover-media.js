@@ -12,18 +12,19 @@
       var img=image.current, active=true, token=generation.current, timer=null, observer=null;
       if(!img)return;
       function current(){return active && generation.current===token && image.current===img;}
-      function release(){
+      function release(keepListeners){
         if(timer!==null){root.clearTimeout(timer);timer=null;}
         if(observer){observer.disconnect();observer=null;}
-        img.removeEventListener('load',loaded);img.removeEventListener('error',failed);
+        if(!keepListeners){img.removeEventListener('load',loaded);img.removeEventListener('error',failed);}
       }
-      function settle(next){
-        if(!current() || statusRef.current!=='loading')return;
-        statusRef.current=next;release();setStatus(next);
+      function settle(next,soft){
+        if(!current() || statusRef.current==='ready' || statusRef.current==='missing')return;
+        var changed=statusRef.current!==next;
+        statusRef.current=next;release(soft);if(changed)setStatus(next);
       }
       function loaded(){if(img.naturalWidth>0)settle('ready');else settle('error');}
       function failed(){settle('error');}
-      function arm(){if(current() && timer===null && statusRef.current==='loading')timer=root.setTimeout(failed,5500);}
+      function arm(){if(current() && timer===null && statusRef.current==='loading')timer=root.setTimeout(function(){settle('error',true);},5500);}
       img.addEventListener('load',loaded);img.addEventListener('error',failed);
       if(img.complete){if(img.naturalWidth>0)loaded();else failed();}
       else if(p.loading==='lazy' && root.IntersectionObserver){
@@ -59,14 +60,14 @@
     var retryName=(en?'Retry image for ':'إعادة تحميل صورة ')+name;retry.setAttribute('aria-label',retryName);retry.title=retryName;
     var icon=doc.createElement('i');icon.setAttribute('data-lucide','rotate-cw');icon.setAttribute('aria-hidden','true');retry.appendChild(icon);
     wrap.setAttribute('data-lorefy-portrait','1');wrap.appendChild(label);wrap.appendChild(status);if(p.retry!==false)(p.retryHost||wrap).appendChild(retry);
-    function release(){if(timer!==null){root.clearTimeout(timer);timer=null}if(observer){observer.disconnect();observer=null}if(img){img.removeEventListener('load',loaded);img.removeEventListener('error',failed)}}
+    function release(keepListeners){if(timer!==null){root.clearTimeout(timer);timer=null}if(observer){observer.disconnect();observer=null}if(img&&!keepListeners){img.removeEventListener('load',loaded);img.removeEventListener('error',failed)}}
     function paint(next){
       if(!active)return;state=next;wrap.setAttribute('data-portrait-state',state);wrap.setAttribute('aria-busy',String(state==='loading'));
       label.hidden=state==='ready';retry.hidden=state!=='error'&&!(state==='loading'&&retried);retry.setAttribute('aria-disabled',String(state!=='error'));
       status.textContent=state==='ready'?'':(state==='loading'?(en?'Loading image':'جارٍ تحميل الصورة'):state==='missing'?(en?'No image':'لا توجد صورة'):(en?'Image unavailable':'تعذر تحميل الصورة'))+(name?' · '+name:'');
       if(img)img.setAttribute('aria-hidden',String(state!=='ready'));
     }
-    function settle(next){if(!active||state!=='loading')return;var focused=doc.activeElement===retry;release();paint(next);if(next==='ready'&&focused){var edit=wrap.querySelector('.lf-character-image-edit')||(p.focusTarget&&p.focusTarget());if(edit)edit.focus()}}
+    function settle(next,soft){if(!active||state==='ready'||state==='missing')return;var focused=doc.activeElement===retry,changed=state!==next;release(soft);if(changed)paint(next);if(next==='ready'&&focused){var edit=wrap.querySelector('.lf-character-image-edit')||(p.focusTarget&&p.focusTarget());if(edit)edit.focus()}}
     var loaded,failed;
     function request(){
       release();if(img)img.remove();var current=++token;paint('loading');img=doc.createElement('img');
@@ -74,7 +75,7 @@
       if(p.shareSrc)img.setAttribute('data-share-src',p.shareSrc);
       loaded=function(){if(active&&token===current)settle(img.naturalWidth>0?'ready':'error')};failed=function(){if(active&&token===current)settle('error')};
       img.addEventListener('load',loaded);img.addEventListener('error',failed);wrap.insertBefore(img,label);img.src=source;
-      function arm(){if(active&&token===current&&state==='loading'&&timer===null)timer=root.setTimeout(failed,5500)}
+      function arm(){if(active&&token===current&&state==='loading'&&timer===null)timer=root.setTimeout(function(){if(token===current)settle('error',true)},5500)}
       if(img.complete){loaded();return}
       if(img.loading==='lazy'&&root.IntersectionObserver){observer=new root.IntersectionObserver(function(entries){if(entries.some(function(entry){return entry.isIntersecting})){if(observer){observer.disconnect();observer=null}arm()}},{rootMargin:'240px'});observer.observe(img)}else arm();
     }

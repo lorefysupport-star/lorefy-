@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Slow-Media-Recovery]] starts measured performance
+repairs: valid artwork arriving after the UI deadline is no longer permanently
+hidden.3142 tests/14 browser checks; no extra downloads or native release.
+
 2026-11-01 [[sessions/2026-11-01-Home-Reading-Hierarchy]] follows reaction
 repair278260a: stable Home chrome, labeled in-flow reading choices, correct Arabic
 numeric order, no ongoing false0% and real saved-unit percentages.3137 source

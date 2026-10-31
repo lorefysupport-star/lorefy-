@@ -1,12 +1,12 @@
 {
   "schema": 2,
-  "head": "278260ae352ea401d1fdce97a816dcfcdbddeddb",
+  "head": "b9547e4233d393c591aea0aca9d1344bfded45d5",
   "branch": "main",
   "fingerprints": {
     "package.json": "9f16962c0014a1df81cb5e6dce4db0315f8f330c54cac1b71795e372943e9ae8",
     "AGENTS.md": "6c8d1742a8542b6a82ede3f0a1eff3c1388cadd0180a17e7b1af18a3db3a51c7",
-    "index.html": "e82a8fa368a52d4581f676ff8c3f41bb53948562d118c46618971a43f3fa35ba",
-    "sw.js": "c9a5ffa036f0b0bf451d0bcd610300307fa70e7705aba52caadf4e2f5af4fe77",
+    "index.html": "7c878ad90b31a5451754bd94297d93785c8c80e86aa8b4a5c19cffd420d704f7",
+    "sw.js": "e749dd70e4d86c9eec3c3861b7b8c3b3f0bcb29deb78a19ae343c810374cc4e7",
     "modules/lorefy-frame-motion.js": "35f3c9e0a8c7f837374de2b729c513feff49fb1f402c27573dad0ed1ba119635",
     "styles/lorefy-frame-motion.css": "58132e373dc1f8e4cd557f5ab83c2c485a6f07d2e807d30149a74c8730228532",
     "docs/FEATURE_AUDIT_20261011.md": "185e3a025cdff7809562125ce0d649fe3a6ceb8a7683ad7ae1aa23e5b55f3fc8",
@@ -16,22 +16,16 @@
     "tools/project-memory.mjs": "445cf699ef2d54178cf89c3b4107c345233a63f4ad6ab7d9b87c25dcd9e90251"
   },
   "changes": {
-    "modules/lorefy-home-cinema.js": "aa51ea7faf5c311f435fde5f34203b3e18cc3dc2463f8cce887686671b161fea",
-    "modules/lorefy-library-cinema.js": "317e0cf39fb79acbf6c1f5154004963120070c0fdc1ac8c8d5271127cbfe25ad",
-    "styles/lorefy-home-immersive.css": "41e90e62ca71a287d8486e4b9e4569c5003941a16b64eaf5587d659399b9c6b2",
-    "tests/community-copy.test.js": "9a62d4f2350b8a075196f6067c9d17876e849679c52cd482a42529f1505977b5",
-    "tests/cover-media.test.js": "684ddbc4dfe81fed6553f681f16a3f086d2da733e984b9a7fa32255d4ab143a5",
-    "tests/data-studio.test.js": "ec75f409fa48f31fddbce350ad2188aa479d246d313914a35ba90da33f64635a",
-    "tests/home-cover-media.test.js": "9ecc0313cd47e540ece577a01395bdbc78fa681d86166636c24d5a2f62f7bd67",
-    "tests/home-feed-refinement.test.js": "886cf23ff80f09d295f0c7bd960e9376ede4dc9dcc0850823446334599996b18",
-    "tests/home-immersive.test.js": "cea6f18d006958f9b6faed3a77b2ecc0bda1c64cf689ad3187a11d9731e2efad",
-    "tests/legal-studio.test.js": "66664b24adf3449cbf1145023249316652e41cf4a5a61d11d6679daa2f305d77",
-    "tests/library-cinema.test.js": "37dd64c03e6f8a75b078c8dcabef6f6b15ccd82e8710a8b8eac19d3d7c2f7925",
-    "tests/reading-terminology.test.js": "a9ad5a0d8f94c98ef4187caccae8ed63015b45f1e4f1672be1328ed6f4a6c646",
-    "tests/reading-typography.test.js": "655a992592b55da12af1564b70888c437f364957053ff35d335ebbc8b659830e",
-    "tests/report-studio.test.js": "a76e43a7e07283e6cdd4dcd195891be55c2a06deb86f7333799801e3adffb19b",
-    "tests/ui-unity.test.js": "a3ca46f7ab4b705d0bd58d1251ea726ef3e7f1e5d79d52ff42f1c49ba1503272",
-    "tests/work-byline-typography.test.js": "f116f4e08707d780f5f86256ba86f9c0b0b2c6100b56961aef4910f501834b27"
+    "modules/lorefy-cover-media.js": "1b9e2c6ccbbc1c1e7ef39101439154d331e5e076fa9ae1c0552206f2ada41841",
+    "tests/community-copy.test.js": "b989aff04b29e987b5d88093dca97dd88595cb66f67fdd90e0f03f6096b2dbc6",
+    "tests/cover-media.test.js": "18507aec184cfed177dc1ce40ac7df7eb6e42a3c28565cab5775a1ca84fff2a3",
+    "tests/data-studio.test.js": "97462d3d0b7b86bc9170659a1a2c06c96da2d4987821c62d3b473a86b1d37482",
+    "tests/legal-studio.test.js": "4ac6512c20547c215bcd4612f09c27d7a268dcee230bb321bd958358cd17b3fe",
+    "tests/portrait-media.test.js": "2cb994e89464d5e63afc53e1e6c148c1ab2201ef5e817e6249681bb8a5774a3f",
+    "tests/reading-terminology.test.js": "f72d6dba6435d77d93567b29723ee35ac252f477c0d3cf8cccc545b055e59702",
+    "tests/reading-typography.test.js": "7b9d87d74b654e5af87edafee7616c867a0f467cd232c414db86413ef019c826",
+    "tests/report-studio.test.js": "d9b9588c4734a55b6b3a2b2754a88fe781446034fd6fb4f490777b0724eaaacd",
+    "tests/work-byline-typography.test.js": "2e5c3fae026a5ca9e0620f9da8ea4eeff87aa89e4357cc41954fd2c1d8e067d7"
   },
   "inventory": [
     {
@@ -667,8 +661,8 @@
     {
       "path": "index.html",
       "area": "Shell",
-      "bytes": 52510,
-      "sha256": "e82a8fa368a52d4581f676ff8c3f41bb53948562d118c46618971a43f3fa35ba"
+      "bytes": 52506,
+      "sha256": "7c878ad90b31a5451754bd94297d93785c8c80e86aa8b4a5c19cffd420d704f7"
     },
     {
       "path": "ios/App/App.xcodeproj/project.pbxproj",
@@ -877,8 +871,8 @@
     {
       "path": "modules/lorefy-cover-media.js",
       "area": "Modules",
-      "bytes": 8198,
-      "sha256": "271a36202cfc24835cc50105fedeb796e60f29122ecfbbbe6811afba5ebaccc5"
+      "bytes": 8487,
+      "sha256": "1b9e2c6ccbbc1c1e7ef39101439154d331e5e076fa9ae1c0552206f2ada41841"
     },
     {
       "path": "modules/lorefy-data-proxy.js",
@@ -2185,8 +2179,8 @@
     {
       "path": "sw.js",
       "area": "Shell",
-      "bytes": 16178,
-      "sha256": "c9a5ffa036f0b0bf451d0bcd610300307fa70e7705aba52caadf4e2f5af4fe77"
+      "bytes": 16172,
+      "sha256": "e749dd70e4d86c9eec3c3861b7b8c3b3f0bcb29deb78a19ae343c810374cc4e7"
     },
     {
       "path": "tests/account-deletion-recovery.test.js",
@@ -2785,8 +2779,8 @@
     {
       "path": "tests/community-copy.test.js",
       "area": "Tests",
-      "bytes": 9063,
-      "sha256": "9a62d4f2350b8a075196f6067c9d17876e849679c52cd482a42529f1505977b5"
+      "bytes": 9061,
+      "sha256": "b989aff04b29e987b5d88093dca97dd88595cb66f67fdd90e0f03f6096b2dbc6"
     },
     {
       "path": "tests/community-feed-language.test.js",
@@ -2857,8 +2851,8 @@
     {
       "path": "tests/cover-media.test.js",
       "area": "Tests",
-      "bytes": 10036,
-      "sha256": "684ddbc4dfe81fed6553f681f16a3f086d2da733e984b9a7fa32255d4ab143a5"
+      "bytes": 10889,
+      "sha256": "18507aec184cfed177dc1ce40ac7df7eb6e42a3c28565cab5775a1ca84fff2a3"
     },
     {
       "path": "tests/cover-source-lock.test.js",
@@ -2887,8 +2881,8 @@
     {
       "path": "tests/data-studio.test.js",
       "area": "Tests",
-      "bytes": 6907,
-      "sha256": "ec75f409fa48f31fddbce350ad2188aa479d246d313914a35ba90da33f64635a"
+      "bytes": 6905,
+      "sha256": "97462d3d0b7b86bc9170659a1a2c06c96da2d4987821c62d3b473a86b1d37482"
     },
     {
       "path": "tests/decoration-lab.test.js",
@@ -3223,8 +3217,8 @@
     {
       "path": "tests/legal-studio.test.js",
       "area": "Tests",
-      "bytes": 4962,
-      "sha256": "66664b24adf3449cbf1145023249316652e41cf4a5a61d11d6679daa2f305d77"
+      "bytes": 4960,
+      "sha256": "4ac6512c20547c215bcd4612f09c27d7a268dcee230bb321bd958358cd17b3fe"
     },
     {
       "path": "tests/library-cinema.test.js",
@@ -3409,8 +3403,8 @@
     {
       "path": "tests/portrait-media.test.js",
       "area": "Tests",
-      "bytes": 6837,
-      "sha256": "53bf44f4d570487a6d071f281f1dac33c59e56562a0badc4f6cc38f3c5075673"
+      "bytes": 7582,
+      "sha256": "2cb994e89464d5e63afc53e1e6c148c1ab2201ef5e817e6249681bb8a5774a3f"
     },
     {
       "path": "tests/post-reaction-feedback.test.js",
@@ -3721,14 +3715,14 @@
     {
       "path": "tests/reading-terminology.test.js",
       "area": "Tests",
-      "bytes": 5979,
-      "sha256": "a9ad5a0d8f94c98ef4187caccae8ed63015b45f1e4f1672be1328ed6f4a6c646"
+      "bytes": 5977,
+      "sha256": "f72d6dba6435d77d93567b29723ee35ac252f477c0d3cf8cccc545b055e59702"
     },
     {
       "path": "tests/reading-typography.test.js",
       "area": "Tests",
-      "bytes": 8711,
-      "sha256": "655a992592b55da12af1564b70888c437f364957053ff35d335ebbc8b659830e"
+      "bytes": 8709,
+      "sha256": "7b9d87d74b654e5af87edafee7616c867a0f467cd232c414db86413ef019c826"
     },
     {
       "path": "tests/recap-integrity.test.js",
@@ -3763,8 +3757,8 @@
     {
       "path": "tests/report-studio.test.js",
       "area": "Tests",
-      "bytes": 8565,
-      "sha256": "a76e43a7e07283e6cdd4dcd195891be55c2a06deb86f7333799801e3adffb19b"
+      "bytes": 8563,
+      "sha256": "d9b9588c4734a55b6b3a2b2754a88fe781446034fd6fb4f490777b0724eaaacd"
     },
     {
       "path": "tests/review-backend-owner.test.js",
@@ -4093,8 +4087,8 @@
     {
       "path": "tests/work-byline-typography.test.js",
       "area": "Tests",
-      "bytes": 7928,
-      "sha256": "f116f4e08707d780f5f86256ba86f9c0b0b2c6100b56961aef4910f501834b27"
+      "bytes": 7926,
+      "sha256": "2e5c3fae026a5ca9e0620f9da8ea4eeff87aa89e4357cc41954fd2c1d8e067d7"
     },
     {
       "path": "tests/work-detail-language.test.js",
@@ -4802,19 +4796,19 @@
     "apple:audit",
     "apple:audit:strict"
   ],
-  "verifiedAt": "2026-10-31T23:07:47.804Z",
+  "verifiedAt": "2026-10-31T23:23:05.919Z",
   "artifacts": {
-    "04-Current-State.md": "012d8887e12daca2371f7d47a0f1372fb537a74bab5caf7932f46d71be765ba3",
-    "07-Source-Atlas.md": "6c124318eac227f4f2b60d846e55560ca8a2a15bd37997d1795267df65059d9d",
-    "generated/Source-Modules.md": "8363a4602f85493554af3ceaadf78d606e61aff716b938da86f48dcdf3745571",
-    "generated/Source-Styles.md": "7363306e0e3c985d3b4fba4dfb428e54de73ec108629620603c4c2a449ee729b",
-    "generated/Source-Backend.md": "36d59b5c06a418918d01e6105c1fcc6a039f811bdeb1b78e55504a1d3ce0ad39",
-    "generated/Source-Tooling.md": "77192c09d18e0d0d33b26d7bfc4d49fe01ffaf4f6d304e37b9ec24a1c3b770b5",
-    "generated/Source-Tests.md": "43496b99049f62530e1e10a43f2574625087eec93f6fd80ccb5f17ffc0c12dfb",
-    "generated/Source-Docs.md": "5342276db1794897c6ccfe69e6663d23c1fb8993109142584fff5e0c9c69286a",
-    "generated/Source-Database.md": "e862232c9f433f92bd2b1ab687debd35171549209476a3bbe86678a8a2c177ea",
-    "generated/Source-Native.md": "78739dc3b41f36c847cbfe2c0a7ba873d0b5c4dd4175f325d6e388ada205ac31",
-    "generated/Source-Shell.md": "a34e8d70a93db4d31cb58748f2136adb0be31ed06977880942a81cc5f3cb501f",
+    "04-Current-State.md": "1cd10a7e96ff804e600c3c3f7018daae25a9aaf817b2de34f91da5c8be16dd95",
+    "07-Source-Atlas.md": "7573f14e3ba94d031bc7f4f9c10f63a55ee02707f90c2710cfdb512bbb1acff5",
+    "generated/Source-Modules.md": "5eb8d5d1e1e769e149f6c9ba956b14d3209b84387d46167d40aabe83baf0b85e",
+    "generated/Source-Styles.md": "978c1d3550a486b5658409964f61da4d9bac3c49f50f94084176e89bdb76aace",
+    "generated/Source-Backend.md": "ba4c042d410b7a4535b037a5cb07cabcd539c6cce1b29f28170b5e4b2888c0e1",
+    "generated/Source-Tooling.md": "17cd8abd494908d134bc39e01f8dd3696ca139493551d696efcac03ea243ee97",
+    "generated/Source-Tests.md": "829f58a269f48b946789720b21b88bbf1f8068324a02c8c5d85114f315593e1a",
+    "generated/Source-Docs.md": "360c3aa7059872e3260751f20adb1d3b68c18929c0847cf0c1d2087c97c3e66a",
+    "generated/Source-Database.md": "c63ca00c126e19904ddef872b64dbe1b24472126d7b08b584402db5da2dc60ab",
+    "generated/Source-Native.md": "5f3b66aa5a92a718f9c4ed3358e92eb01c3e2eedcf41237163c7391f7056ea67",
+    "generated/Source-Shell.md": "e2427728566bb1080414d39d53f3f3762f51c1e9792484f205c91a3010d2e3d4",
     "generated/Project-Brain.canvas": "3955aeb46974f461d4321dc37f303afcaa8e59281d1038629295e32ef4cbc3f1",
     "brain-map.json": "ccbcdcec84c2f2c7b53a06cdfd6a1d420de0601d2103e8f7a6945236e6d0399a"
   }

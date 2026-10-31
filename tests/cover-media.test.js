@@ -43,6 +43,17 @@ test('explicit retry starts one new request and repeated taps while loading do n
 test('a visible timeout ends once without an automatic retry loop',()=>{
  const h=harness();h.expire();assert.equal(h.state(),'error');assert.equal(h.images.size,1);assert.equal(h.timers.size,0);h.expire();assert.equal(h.images.size,1);
 });
+test('slow original cover recovers after the UI deadline without another request',()=>{
+ const h=harness();h.expire();assert.equal(h.state(),'error');h.load();
+ assert.equal(h.state(),'ready');assert.equal(h.images.size,1);assert.equal(h.timers.size,0);assert.equal(Object.keys(h.image().listeners).length,0);
+});
+test('a timed-out attempt cannot mark a newer image ready after retry',()=>{
+ const h=harness(),old=h.image(),late=old.listeners.load;h.expire();h.retry();
+ old.naturalWidth=100;old.complete=true;late?.();h.render();assert.equal(h.state(),'loading');h.load();assert.equal(h.state(),'ready');
+});
+test('a genuine network error after the soft deadline releases the retained listeners',()=>{
+ const h=harness();h.expire();h.error();assert.equal(h.state(),'error');assert.equal(Object.keys(h.image().listeners).length,0);h.unmount();
+});
 test('late callbacks from the previous attempt cannot fail a retry',()=>{
  const h=harness(),old=h.image().listeners.error,deadline=[...h.timers.values()][0];h.error();h.retry();old();deadline();h.render();assert.equal(h.state(),'loading');h.load();assert.equal(h.state(),'ready');
 });
@@ -96,10 +107,10 @@ test('cover material reserves space, uses theme tokens and does not animate layo
 test('cover media is present before consumers with matching offline keys',()=>{
  const entry=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8');
  for(const file of ['modules/lorefy-cover-media.js','styles/lorefy-cover-media.css','modules/lorefy-review-editor.js','modules/lorefy-explore-studio.js','modules/lorefy-profile-sections.js']){
-  const version=file==='styles/lorefy-cover-media.css'?'20261029-shelf-acceptance-v1':file==='modules/lorefy-profile-sections.js'?'20261029-profile-list-media-v1':file==='modules/lorefy-explore-studio.js'?'20261029-search-editions-v1':file==='modules/lorefy-review-editor.js'?'20261029-work-editor-media-v1':'20261029-category-board-v1';
+  const version=file==='styles/lorefy-cover-media.css'?'20261029-shelf-acceptance-v1':file==='modules/lorefy-profile-sections.js'?'20261029-profile-list-media-v1':file==='modules/lorefy-explore-studio.js'?'20261029-search-editions-v1':file==='modules/lorefy-review-editor.js'?'20261029-work-editor-media-v1':'20261101-slow-media-v1';
   assert.ok(entry.includes(file+'?v='+version));
   assert.ok(sw.includes(file+'?v='+version));
  }
  assert.ok(entry.indexOf('modules/lorefy-cover-media.js')<entry.indexOf('modules/lorefy-review-editor.js'));
- assert.match(sw,/lorefy-v646-home-reading/);
+ assert.match(sw,/lorefy-v647-slow-media/);
 });

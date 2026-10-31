@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Slow media: [[sessions/2026-11-01-Slow-Media-Recovery]].3142 source tests and14
+actual-app delayed-byte checks cover React covers and imperative portraits,
+retry/disposal ownership and one-request recovery. Network speed is separate.
+
 Home continuation: [[sessions/2026-11-01-Home-Reading-Hierarchy]].3137 full
 tests/288 local UI checks cover stable header,0/1/4 choices, no saved edits,
 ongoing checkpoint-only display and chapter/page/volume percentages. Physical
