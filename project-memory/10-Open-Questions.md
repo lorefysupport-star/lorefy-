@@ -6,6 +6,12 @@ aliases: ["المشكلات", "النواقص", "المتبقي", "blockers"]
 ---
 # أمور لا تُغلق بالافتراض
 
+[[sessions/2026-11-01-Home-Reaction-Feedback]] and
+[[sessions/2026-11-01-Home-Reading-Hierarchy]] cover local Home action feedback,
+reading geometry and displayed progress units.3137 full tests plus192/288 browser
+checks are not physical-device latency, production reaction/Realtime acceptance,
+remote artwork coverage or an installed update. Preserve those boundaries.
+
 [[sessions/2026-10-30-Kitsu-Complete-Pagination]] closes the local six-page
 truncation/retry defect with3057 full tests/192 UI fixture checks. Live provider,
 catalog title-match coverage, native network access, durable jobs and public

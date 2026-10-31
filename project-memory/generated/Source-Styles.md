@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-31T22:56:09.102Z
-Source commit: 5890894a4f52ee086d0efbb10f2f277be9da8866
+Observed: 2026-10-31T23:07:47.804Z
+Source commit: 278260ae352ea401d1fdce97a816dcfcdbddeddb
 
 # Styles Source Inventory
 
@@ -29,7 +29,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-frame-motion.css](../../styles/lorefy-frame-motion.css) (10214 bytes)
 - [styles/lorefy-glass-materials.css](../../styles/lorefy-glass-materials.css) (9711 bytes)
 - [styles/lorefy-home-cinema.css](../../styles/lorefy-home-cinema.css) (35389 bytes)
-- [styles/lorefy-home-immersive.css](../../styles/lorefy-home-immersive.css) (9836 bytes)
+- [styles/lorefy-home-immersive.css](../../styles/lorefy-home-immersive.css) (11151 bytes)
 - [styles/lorefy-import-studio.css](../../styles/lorefy-import-studio.css) (7113 bytes)
 - [styles/lorefy-interface-settings.css](../../styles/lorefy-interface-settings.css) (23869 bytes)
 - [styles/lorefy-legal.css](../../styles/lorefy-legal.css) (4324 bytes)

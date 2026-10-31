@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Home-Reading-Hierarchy]] follows reaction
+repair278260a: stable Home chrome, labeled in-flow reading choices, correct Arabic
+numeric order, no ongoing false0% and real saved-unit percentages.3137 source
+tests/288 browser checks; user data, artwork and native release unchanged.
+
 2026-11-01 [[sessions/2026-11-01-Home-Reaction-Feedback]] repairs Home action
 alignment and pending reaction feedback with3122 source tests/192 local browser
 checks. User requested Pro Max/Apple guidance and immediate verified source pushes;

@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Home continuation: [[sessions/2026-11-01-Home-Reading-Hierarchy]].3137 full
+tests/288 local UI checks cover stable header,0/1/4 choices, no saved edits,
+ongoing checkpoint-only display and chapter/page/volume percentages. Physical
+device, cloud acknowledgment and other historical percent consumers stay separate.
+
 Home reactions: [[sessions/2026-11-01-Home-Reaction-Feedback]]. Shared action
 geometry and immediate post feedback/rollback verified locally;3122 full tests,
 192 browser checks. Actual service/device acceptance remains separate.

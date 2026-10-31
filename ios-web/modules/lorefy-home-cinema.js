@@ -45,9 +45,10 @@
     var scene=R.useRef(null);
     R.useLayoutEffect(function(){return bindReadingChrome(scene.current);},[work?String(work.id):null]);
     if(!work)return h('section',{className:'lf-cinema-resume is-empty',ref:scene},h('h2',null,en?'No reading in progress':'لا توجد قراءة جارية'),h('button',{type:'button',className:'lf-cinema-resume-action',onClick:props.onExplore},icons.Compass&&h(icons.Compass,{size:20,'aria-hidden':true}),en?'Explore works':'استكشف الأعمال'));
-    var progress=props.progressFor(work),library=root.LorefyLibraryCinema,percent=library&&!library.hasTotal(work,progress)?null:meter(work,props.percent(work,progress)),cover=props.cover(work);
+    var ongoing=/ongoing|publishing|مستمرة|مستمر/i.test(String(work.st||''));
+    var progress=props.progressFor(work),library=root.LorefyLibraryCinema,percent=ongoing?null:library&&library.percentage?library.percentage(work,progress):library&&!library.hasTotal(work,progress)?null:meter(work,props.percent(work,progress)),cover=props.cover(work);
     var summary=props.summary(work,progress);
-    if(library)summary=library.checkpoint(work,progress,props.language,summary);
+    if(library&&!ongoing)summary=library.checkpoint(work,progress,props.language,summary);
     var safe=!!(root.LOREFY_RUNTIME&&root.LOREFY_RUNTIME.rightsSafeMedia||root.LOREFY_RELEASE&&root.LOREFY_RELEASE.rightsSafeMedia);
     var art=artwork(work,cover,safe),fallback=props.fallback(work);
     var backdrop=root.LorefyCoverMedia?h(root.LorefyCoverMedia,{workId:'home-background:'+work.id,src:art,fallback:fallback,language:props.language,loading:'eager',fetchPriority:'high',render:function(surface,retry){
@@ -56,20 +57,21 @@
     var poster=h('button',{type:'button',className:'lf-cinema-resume-cover','aria-label':(en?'Open ':'فتح ')+work.title,onClick:()=>props.onOpen(work)},h('img',{src:cover,alt:'',decoding:'async',onError:props.onError,'data-fallback':fallback}));
     if(root.LorefyLibraryMedia)poster=root.LorefyLibraryMedia.card(poster,{lang:props.language,workId:work.id,title:work.title,loading:'eager'});
     function thumbnail(w){
-      var attributes={key:w.id,type:'button','aria-label':w.title,'aria-pressed':w.id===work.id,onClick:()=>select(String(w.id))},src=props.cover(w);
+      var attributes={key:w.id,type:'button','aria-label':(en?'Switch to ':'التبديل إلى ')+w.title,title:w.title,'aria-pressed':String(w.id)===String(work.id),onClick:()=>select(String(w.id))},src=props.cover(w);
       return root.LorefyCoverMedia?h(root.LorefyCoverMedia,{key:w.id,workId:w.id,src:src,fallback:props.fallback(w),loading:'lazy',language:props.language,render:function(surface){return h('button',attributes,surface);}}):h('button',attributes,h('img',{src:src,alt:'',loading:'lazy',onError:props.onError,'data-fallback':props.fallback(w)}));
     }
     return h('section',{className:'lf-cinema-resume',ref:scene,'data-work-id':String(work.id)},
       backdrop,
       h('div',{className:'lf-cinema-resume-content',dir:'ltr'},
         h('div',{className:'lf-cinema-resume-copy',dir:en?'ltr':'rtl'},
-          h('div',{className:'lf-cinema-resume-heading'},h('h2',null,en?'Continue reading':'تابع القراءة'),h('button',{type:'button',onClick:props.onLibrary},en?'All':'الكل')),
+          h('div',{className:'lf-cinema-resume-heading'},h('h2',null,en?'Continue reading':'تابع القراءة'),h('button',{type:'button',className:'lf-cinema-library-link',onClick:props.onLibrary},en?'Library':'مكتبتي')),
           h('h3',{'data-no-translate':'1',dir:'auto',title:work.title},work.title),
-          h('p',{'data-no-translate':'1',dir:'auto'},summary),
+          h('p',{'data-no-translate':'1',dir:en?'ltr':'rtl'},h('bdi',{className:'lf-cinema-checkpoint',dir:'ltr'},summary)),
           percent!==null&&h('div',{className:'lf-cinema-progress-row'},h('div',{className:'lf-cinema-progress',role:'progressbar','aria-label':en?'Reading progress':'تقدّم القراءة','aria-valuemin':0,'aria-valuemax':100,'aria-valuenow':percent},h('i',{style:{width:percent+'%'}})),h('span',{className:'lf-cinema-progress-label','aria-hidden':true},percent+'%')),
           h('button',{type:'button',className:'lf-cinema-resume-action',onClick:()=>props.onOpen(work)},icons.BookOpen&&h(icons.BookOpen,{size:22,'aria-hidden':true}),en?'Continue':'متابعة')),
         poster),
-      works.length>1&&h('div',{className:'lf-cinema-reading-switch',role:'group','aria-label':en?'Reading works':'الأعمال الجارية'},works.map(thumbnail)));
+      works.length>1&&h('div',{className:'lf-cinema-reading-switch',role:'group','aria-label':en?'Reading works':'الأعمال الجارية',dir:en?'ltr':'rtl'},
+        h('span',{className:'lf-cinema-reading-label'},en?'Reading now':'قراءاتك'),h('div',{className:'lf-cinema-reading-options'},works.map(thumbnail))));
   }
   var api={artwork:artwork,meter:meter,bindReadingChrome:bindReadingChrome,Heading:Heading,ReviewRating:ReviewRating,Resume:Resume};
   root.LorefyHomeCinema=api;if(typeof module==='object'&&module.exports)module.exports=api;

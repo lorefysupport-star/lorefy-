@@ -13,7 +13,7 @@ test('Home poster Open and Retry are separate native controls and opening preser
 });
 test('thumbnail errors retain selection and pressed state without nesting a retry button',()=>{
  const root=load(),f=fixture(root),thumb=walk(f.node).find(n=>n.type==='CoverMedia'&&n.props.loading==='lazy'&&n.props.src==='a.jpg');assert.ok(thumb);
- const retry=h('button',{className:'lf-cover-retry'}),rendered=thumb.props.render(h('span',{}),retry);assert.equal(rendered.type,'button');assert.equal(rendered.props['aria-pressed'],true);assert.equal(rendered.props['aria-label'],'Original title');assert.ok(!walk(rendered).includes(retry));
+ const retry=h('button',{className:'lf-cover-retry'}),rendered=thumb.props.render(h('span',{}),retry);assert.equal(rendered.type,'button');assert.equal(rendered.props['aria-pressed'],true);assert.equal(rendered.props['aria-label'],'Switch to Original title');assert.equal(rendered.props.title,'Original title');assert.ok(!walk(rendered).includes(retry));
 });
 test('decorative backdrop is hidden from assistive technology but its recovery control is separate and named',()=>{
  const root=load(),f=fixture(root),backdrop=walk(f.node).find(n=>n.type==='CoverMedia'&&n.props.fetchPriority==='high');assert.ok(backdrop);

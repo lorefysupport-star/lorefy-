@@ -14,6 +14,15 @@ test('Library checkpoints show saved units and known totals, never fabricate a d
  assert.equal(api().checkpoint({ch:420},{chapter:0},'en','No checkpoint'),'No checkpoint');
  assert.equal(api().hasTotal({ch:0,pages:0}),false);
 });
+test('saved-unit percentage never uses a different unit total or exceeds one hundred',()=>{
+ assert.equal(api().percentage({pages:400},{page:100}),25);
+ assert.equal(api().percentage({ch:200},{chapter:50}),25);
+ assert.equal(api().percentage({vol:20},{volume:4}),20);
+ assert.equal(api().percentage({ch:200},{page:50}),null);
+ assert.equal(api().percentage({ch:0},{chapter:50}),null);
+ assert.equal(api().percentage({ch:100},{chapter:150}),100);
+ assert.equal(api().percentage({ch:100},{chapter:0}),0);
+});
 test('Library search remains controlled and its clear button updates the same state',()=>{
  global.React={createElement:(type,props,...children)=>({type,props:props||{},children:children.flat().filter(Boolean)})};
  global.NenIcons={Search:'Search',X:'X'};let query='Berserk';

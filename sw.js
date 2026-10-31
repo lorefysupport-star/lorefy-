@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v645-home-reactions';
+const CACHE = 'lorefy-v646-home-reading';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -19,7 +19,7 @@ const CORE = [
  './assets/home/berserk-home-v1.webp',
  './styles/lorefy-home-cinema.css?v=20261026-work-cinema-v1',
  './styles/lorefy-work-cinema.css?v=20261028-byline-type-v1',
- './styles/lorefy-home-immersive.css?v=20261101-home-reactions-v1',
+ './styles/lorefy-home-immersive.css?v=20261101-home-reading-v1',
  './styles/lorefy-glass-materials.css?v=20261028-trust-studio-v2',
  './styles/lorefy-data-studio.css?v=20261028-trust-studio-v2',
  './styles/lorefy-trust-studio.css?v=20261028-report-studio-v1',
@@ -29,9 +29,9 @@ const CORE = [
  './styles/lorefy-profile-apple.css?v=20261027-profile-colors-v1',
  './styles/lorefy-work-studio.css?v=20261029-cover-editions-v1',
  './modules/lorefy-work-panels.js?v=20261029-cover-editions-v1',
- './modules/lorefy-home-cinema.js?v=20261029-home-media-v1',
+ './modules/lorefy-home-cinema.js?v=20261101-home-reading-v1',
  './styles/lorefy-library-cinema.css?v=20261026-library-plain-v3',
- './modules/lorefy-library-cinema.js?v=20261028-reading-terms-v1',
+ './modules/lorefy-library-cinema.js?v=20261101-home-reading-v1',
   './styles/lorefy-explore-cinema.css?v=20261029-search-editions-v1',
   './assets/shelves/wall-walnut-v1.png',
  './modules/lorefy-local-redesign.js?v=20261022-profile-1',

@@ -6,6 +6,12 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-11-01-Home-Reading-Hierarchy]] aligns Home's displayed
+percentage with the saved chapter/page/volume unit. Ongoing work shows the saved
+checkpoint without a false final0% denominator. Stable header, in-flow reading
+choices and explicit Library action verified:3137 full tests/288 UI checks.
+Existing reading values/statuses and other Library consumers unchanged.
+
 [[sessions/2026-10-30-Kitsu-Complete-Pagination]] removes the silent six-page
 cutoff, deduplicates provider entry IDs and rejects incomplete pagination before
 preview.3057 full tests/192 UI fixtures; CSV rerun180 with asserted theme/lang.

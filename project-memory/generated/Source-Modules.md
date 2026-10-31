@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-31T22:56:09.102Z
-Source commit: 5890894a4f52ee086d0efbb10f2f277be9da8866
+Observed: 2026-10-31T23:07:47.804Z
+Source commit: 278260ae352ea401d1fdce97a816dcfcdbddeddb
 
 # Modules Source Inventory
 
@@ -43,11 +43,11 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-frame-restoration.js](../../modules/lorefy-frame-restoration.js) (19994 bytes)
 - [modules/lorefy-friend-activity.js](../../modules/lorefy-friend-activity.js) (10302 bytes)
 - [modules/lorefy-growth-features.js](../../modules/lorefy-growth-features.js) (420108 bytes)
-- [modules/lorefy-home-cinema.js](../../modules/lorefy-home-cinema.js) (6998 bytes)
+- [modules/lorefy-home-cinema.js](../../modules/lorefy-home-cinema.js) (7509 bytes)
 - [modules/lorefy-i18n.js](../../modules/lorefy-i18n.js) (44528 bytes)
 - [modules/lorefy-interface-settings.js](../../modules/lorefy-interface-settings.js) (15005 bytes)
 - [modules/lorefy-legal.js](../../modules/lorefy-legal.js) (4936 bytes)
-- [modules/lorefy-library-cinema.js](../../modules/lorefy-library-cinema.js) (3726 bytes)
+- [modules/lorefy-library-cinema.js](../../modules/lorefy-library-cinema.js) (3980 bytes)
 - [modules/lorefy-library-media.js](../../modules/lorefy-library-media.js) (4120 bytes)
 - [modules/lorefy-library-view.js](../../modules/lorefy-library-view.js) (12422 bytes)
 - [modules/lorefy-local-redesign.js](../../modules/lorefy-local-redesign.js) (1194 bytes)

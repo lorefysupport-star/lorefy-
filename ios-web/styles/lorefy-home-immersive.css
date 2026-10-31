@@ -1,7 +1,30 @@
 /* Home reference pass only. Keep the approved Explore and other layouts untouched. */
 @layer lorefy-home-immersive {
 .lf-app .lf-home-cinema { overflow-anchor:none; }
+.lf-app .lf-home-cinema { --cinema-chrome:calc(var(--nc-top,0px) + 126px) !important; }
+.lf-app .lf-home-cinema .lf-greeting-row { height:50px !important; margin-bottom:10px !important; }
 .lf-app .lf-home-cinema .lf-cinema-resume { container-type:inline-size; }
+.lf-app .lf-home-cinema .lf-cinema-resume:not(.is-empty) {
+  display:flex !important; flex-direction:column; align-items:stretch; justify-content:flex-end;
+  gap:18px; min-height:300px; padding-bottom:20px !important;
+}
+.lf-app .lf-home-cinema .lf-cinema-resume-content { padding-top:52px !important; }
+.lf-app .lf-home-cinema .lf-cinema-reading-switch {
+  position:static !important; display:flex; align-items:center; justify-content:space-between;
+  gap:12px; width:100%; min-width:0; padding-top:12px; border-top:1px solid var(--ui-line);
+}
+.lf-app .lf-home-cinema .lf-cinema-reading-label { color:var(--ui-secondary); font-size:12px; font-weight:500; line-height:1.5; }
+.lf-app .lf-home-cinema .lf-cinema-reading-options { display:flex; flex-shrink:0; gap:8px; }
+.lf-app .lf-home-cinema .lf-cinema-reading-switch button {
+  width:44px; height:54px; min-height:54px; display:grid; place-items:center;
+  border:1px solid var(--glass-edge); background:var(--glass-fill); border-radius:6px;
+  padding:3px; box-sizing:border-box; transition:border-color 120ms ease,background-color 120ms ease;
+}
+.lf-app .lf-home-cinema .lf-cinema-reading-switch button[aria-pressed='true'] { border:2px solid var(--ui-action); background:var(--ui-selected); }
+.lf-app .lf-home-cinema .lf-cinema-reading-switch button:active { background:var(--ui-fill); }
+.lf-app .lf-home-cinema .lf-cinema-reading-switch img { width:28px; height:42px; border-radius:2px; }
+.lf-app .lf-home-cinema .lf-cinema-library-link { min-width:44px; text-decoration:underline; text-underline-offset:4px; }
+.lf-app .lf-home-cinema .lf-cinema-checkpoint { font-variant-numeric:tabular-nums; unicode-bidi:isolate; }
 .lf-app .lf-home-cinema[data-home-chrome='immersive']>.lf-social-header {
   background:linear-gradient(180deg,#000000b8,#00000075 62%,#00000008) !important;
   backdrop-filter:none !important;
@@ -68,13 +91,6 @@
 }
 .lf-app .lf-home-cinema[data-home-chrome='scrolled'] .lf-cinema-heading :is(h1,.lf-social-brand),
 .lf-app .lf-home-cinema[data-home-chrome='plain'] .lf-cinema-heading :is(h1,.lf-social-brand) { color:var(--ui-glass-ink) !important; }
-.lf-app .lf-home-cinema[data-home-chrome='scrolled']>.lf-social-header {
-  height:calc(var(--nc-top,0px) + 116px) !important;
-  padding-block:calc(var(--nc-top,0px) + 8px) 8px !important;
-}
-.lf-app .lf-home-cinema[data-home-chrome='scrolled'] .lf-greeting-row { height:44px !important; margin-bottom:8px !important; }
-.lf-app .lf-home-cinema[data-home-chrome='scrolled'] .lf-cinema-heading .lf-social-brand { display:none !important; }
-.lf-app .lf-home-cinema[data-home-chrome='scrolled'] .lf-cinema-heading h1 { font-size:24px !important; }
 .lf-app .lf-home-cinema .lf-cinema-progress-row {
   display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:10px; margin:0 0 12px; direction:ltr;
 }

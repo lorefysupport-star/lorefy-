@@ -22,6 +22,11 @@
     var saved=savedUnit(work,progress);
     return saved&&saved.total?saved.current+' / '+saved.total+' '+saved.unit[language==='en'?'en':'ar']:fallback;
   }
+  function percentage(work,progress){
+    var saved=savedUnit(work,progress);
+    if(!saved)return hasTotal(work,progress)?0:null;
+    return saved.total?Math.max(0,Math.min(100,Math.round(saved.current/saved.total*100))):null;
+  }
   function Heading(props){
     var h=root.React.createElement;
     return h('div',{className:'lf-library-cinema-heading'},h('strong',{'data-no-translate':'1'},'Lorefy'),h('h1',null,props.language==='en'?'My Library':'مكتبتي'));
@@ -44,6 +49,6 @@
       h('p',null,search?(en?'Try a different title or author.':'جرّب عنوانًا أو مؤلفًا آخر.'):(en?'Keep the stories you want to return to.':'احتفظ بالأعمال التي تود العودة إليها.')),
       h('button',{type:'button',onClick:search?props.onClear:props.onExplore},en?(search?'Clear search':'Explore works'):(search?'مسح البحث':'استكشف الأعمال')));
   }
-  var api={hasTotal:hasTotal,checkpoint:checkpoint,Heading:Heading,Search:Search,Summary:Summary,Empty:Empty};
+  var api={hasTotal:hasTotal,checkpoint:checkpoint,percentage:percentage,Heading:Heading,Search:Search,Summary:Summary,Empty:Empty};
   root.LorefyLibraryCinema=api;if(typeof module==='object'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);
