@@ -10,6 +10,47 @@ const {
   validWorkTitle
 } = require('../modules/lorefy-catalog-identity.js');
 
+function normalizationHarness() {
+  const context=vm.createContext({});
+  vm.runInContext('globalThis.calls=0;const original=String.prototype.normalize;String.prototype.normalize=function(){calls++;return original.apply(this,arguments);}',context);
+  vm.runInContext(fs.readFileSync(path.join(__dirname,'../modules/lorefy-catalog-identity.js'),'utf8'),context);
+  return {context,normalize:context.LorefyCatalogIdentity.normalizeText};
+}
+
+test('identity reuses exact short text without repeating Unicode normalization',()=>{
+  const {context,normalize}=normalizationHarness();
+  assert.equal(normalize('MANGA: Berserk'),'manga berserk');
+  assert.equal(normalize('MANGA: Berserk'),'manga berserk');
+  assert.equal(context.calls,1);
+  assert.equal(normalize('   '),'');assert.equal(normalize('   '),'');
+  assert.equal(context.calls,2);
+});
+
+test('identity text memo is bounded and does not retain oversized strings',()=>{
+  const {context,normalize}=normalizationHarness();
+  normalize('oldest');for(let i=0;i<512;i++)normalize('unique '+i);
+  const count=context.calls;normalize('oldest');assert.equal(context.calls,count+1);
+  const long='x'.repeat(257);normalize(long);normalize(long);assert.equal(context.calls,count+3);
+  const expanded='\uFDFA'.repeat(20);normalize(expanded);normalize(expanded);assert.equal(context.calls,count+5);
+});
+
+test('failed platform normalization is not retained in the identity memo',()=>{
+  const {context,normalize}=normalizationHarness();
+  vm.runInContext('const tracked=String.prototype.normalize;globalThis.fail=true;String.prototype.normalize=function(){if(fail)throw Error("Unavailable");return tracked.apply(this,arguments);}',context);
+  assert.equal(normalize('Ａ'),'ａ');context.fail=false;
+  assert.equal(normalize('Ａ'),'a');
+});
+
+test('identity memo preserves Unicode results and reevaluates mutable string inputs',()=>{
+  const {normalize}=normalizationHarness();
+  for(const value of ['Ｆｕｌｌ！','Ａ','A','JoJo’s Bizarre Adventure','\uD800','كتاب: ١٢',null,0,false]){
+    const expected=String(value||'').normalize('NFKC').toLowerCase().replace(/[\u2018\u2019'`]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').replace(/\s+/g,' ').trim();
+    assert.equal(normalize(value),expected);assert.equal(normalize(value),expected);
+  }
+  const value={title:'First',toString(){return this.title;}};
+  assert.equal(normalize(value),'first');value.title='Second';assert.equal(normalize(value),'second');
+});
+
 test('Arabic ebook format suffixes and author spelling variants do not create another work',()=>{
   const base={id:'print',title:'ثلاثية غرناطة',auth:'رضوى عاشور',type:'رواية'};
   const ebook={id:'ebook',title:'ثلاثية غرناطة، كتاب إلكتروني',auth:'رضوي عاشور',type:'رواية'};

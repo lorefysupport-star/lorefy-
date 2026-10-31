@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Identity-Text-Work]] follows the three measured
+repairs with bounded short-string reuse.3153 tests/8 browser checks, unchanged
+identity output. Aggregate performance report keeps startup/device gates open.
+
 2026-11-01 [[sessions/2026-11-01-Diary-Idle-Work]] removes unchanged library JSON
 work from diary maintenance;3149 tests/16 browser checks plus12 slowed-CPU search
 checks. Real transitions and owner guards remain. Startup still needs profiling.

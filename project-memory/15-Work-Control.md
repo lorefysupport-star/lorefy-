@@ -6,6 +6,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-01-Identity-Text-Work]]: bounded identity normalization reuse
+verified with3153 tests/8 browser checks. See aggregate performance report;
+next acceptance is controlled cold startup, physical device and provider timing,
+not repeating these four repairs or deleting active layouts without evidence.
+
 [[sessions/2026-11-01-Diary-Idle-Work]]: unchanged diary processing removed,
 3149 tests/16 browser checks and12 slowed-CPU search checks pass. Full startup
 is not yet demonstrably faster; identity normalization/layout still need work.

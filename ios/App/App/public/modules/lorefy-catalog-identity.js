@@ -30,16 +30,27 @@
   var MAX_AUTHOR_TOKENS = 24;
   var MAX_AUTHOR_PAIRS = 96;
   var ALIAS_CACHE = new WeakMap();
+  var TEXT_CACHE = new Map();
 
   function normalizeText(value) {
     var text = String(value || "");
-    try { text = text.normalize("NFKC"); } catch (error) {}
-    return text
+    var input = text;
+    var cacheable = text.length <= 256;
+    var cached = cacheable ? TEXT_CACHE.get(input) : undefined;
+    if (cached !== undefined) return cached;
+    try { text = text.normalize("NFKC"); } catch (error) { cacheable = false; }
+    var result = text
       .toLowerCase()
       .replace(/[\u2018\u2019'`]/g, "")
       .replace(/[^\p{L}\p{N}]+/gu, " ")
       .replace(/\s+/g, " ")
       .trim();
+    if (cacheable && result.length <= 256) {
+      // Bound both entry count and input size while reusing common catalog text.
+      if (TEXT_CACHE.size >= 512) TEXT_CACHE.delete(TEXT_CACHE.keys().next().value);
+      TEXT_CACHE.set(input, result);
+    }
+    return result;
   }
 
   function canonicalWorkKey(title) {

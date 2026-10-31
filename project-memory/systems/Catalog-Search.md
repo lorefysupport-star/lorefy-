@@ -5,6 +5,10 @@ date: 2026-10-14
 aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 ---
 
+[[sessions/2026-11-01-Identity-Text-Work]] adds bounded exact-string normalization
+reuse, preserving Unicode and identity/alias output.3153 tests/8 browser checks;
+1322-record cold median29.06 to25.68ms. Full startup still not claimed optimized.
+
 [[sessions/2026-11-01-Catalog-Classification-Work]] removes duplicate content
 classification per uncached record without changing policy.1322 real records:
 45.56 to27.36ms median, half the normalizations, identical results;3145 tests,

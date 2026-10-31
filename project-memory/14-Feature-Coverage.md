@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Identity performance: [[sessions/2026-11-01-Identity-Text-Work]].3153 tests/8
+browser checks cover bounded pure memo and unchanged full identity output.
+All four current performance repairs retain separate receipts and boundaries.
+
 Diary idle work: [[sessions/2026-11-01-Diary-Idle-Work]].3149 source tests,16
 browser checks preserve actual transitions and owner close while skipping idle
 JSON processing.12 additional4x CPU search smoke checks pass; device stays open.

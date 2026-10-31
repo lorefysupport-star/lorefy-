@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v649-diary-sync';
+const CACHE = 'lorefy-v650-identity-memo';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -81,11 +81,11 @@ const CORE = [
   './modules/lorefy-cover-api.js?v=20261029-cover-editions-v1-tenrai-v1',
   './modules/lorefy-catalog-policy.js?v=20261101-policy-v1',
   './modules/lorefy-catalog-plan.js?v=20261019-search-authors-v1-search-audit-v2',
-  './modules/lorefy-catalog-loader.js?v=20261021-search-audit-fast-search-v1-search-audit-v2-policy-v1',
-  './modules/lorefy-catalog-search-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1',
-  './modules/lorefy-catalog-identity.js?v=20261010-identity-batch-v1',
+  './modules/lorefy-catalog-loader.js?v=20261021-search-audit-fast-search-v1-search-audit-v2-policy-v1-identity-v1',
+  './modules/lorefy-catalog-search-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1',
+  './modules/lorefy-catalog-identity.js?v=20261101-identity-memo-v1',
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
-  './modules/lorefy-catalog-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1',
+  './modules/lorefy-catalog-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1',
   './modules/lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1-search-audit-v2',
   './modules/lorefy-reading-metrics.js?v=20261027-durable-inbox-v1',
   './modules/lorefy-reading-diary-core.js?v=20261016-diary-position-v1',

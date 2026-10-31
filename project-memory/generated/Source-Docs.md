@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-31T23:38:03.882Z
-Source commit: ba381fea0b55872a878b11cdd1d25ae8a98e6a20
+Observed: 2026-10-31T23:43:10.773Z
+Source commit: 22f062fe8ebd1dd1e16e4bf104023123ab8b4cb1
 
 # Docs Source Inventory
 
@@ -71,6 +71,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/OPEN_CATALOG.md](../../docs/OPEN_CATALOG.md) (4533 bytes)
 - [docs/PAID_COLLECTIONS_2026-10-11.md](../../docs/PAID_COLLECTIONS_2026-10-11.md) (8995 bytes)
 - [docs/PERFORMANCE_AUDIT_2026-10-14.md](../../docs/PERFORMANCE_AUDIT_2026-10-14.md) (3434 bytes)
+- [docs/PERFORMANCE_REVIEW_2026-11-01.md](../../docs/PERFORMANCE_REVIEW_2026-11-01.md) (4439 bytes)
 - [docs/PREBUILD_ACCOUNTS_SHARE_2026-10-01.md](../../docs/PREBUILD_ACCOUNTS_SHARE_2026-10-01.md) (6767 bytes)
 - [docs/PROFILE_ATELIER_2026-10-10.md](../../docs/PROFILE_ATELIER_2026-10-10.md) (3262 bytes)
 - [docs/PROFILE_CUSTOM_GLASS_QA.md](../../docs/PROFILE_CUSTOM_GLASS_QA.md) (3895 bytes)
