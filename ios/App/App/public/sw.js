@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v644-search-audit';
+const CACHE = 'lorefy-v645-home-reactions';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -19,7 +19,7 @@ const CORE = [
  './assets/home/berserk-home-v1.webp',
  './styles/lorefy-home-cinema.css?v=20261026-work-cinema-v1',
  './styles/lorefy-work-cinema.css?v=20261028-byline-type-v1',
- './styles/lorefy-home-immersive.css?v=20261028-reading-type-v1',
+ './styles/lorefy-home-immersive.css?v=20261101-home-reactions-v1',
  './styles/lorefy-glass-materials.css?v=20261028-trust-studio-v2',
  './styles/lorefy-data-studio.css?v=20261028-trust-studio-v2',
  './styles/lorefy-trust-studio.css?v=20261028-report-studio-v1',
@@ -135,7 +135,7 @@ const CORE = [
   './styles/lorefy-visual-polish.css?v=20260930-reference-v2',
   './modules/lorefy-public-appearance.js?v=20261024-book-showcase-v1',
   './modules/lorefy-public-profile.js?v=20261029-library-media-v1',
-  './modules/lorefy-community.js?v=20261028-community-copy-v1',
+  './modules/lorefy-community.js?v=20261101-home-reactions-v1',
   './modules/lorefy-page-refresh.js?v=20261027-ui-refinement-v1',
   './modules/lorefy-library-view.js?v=20261029-library-media-v1',
   './modules/lorefy-interface-settings.js?v=20261028-settings-studio-v1',
@@ -176,7 +176,7 @@ const CORE = [
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
-  './modules/lorefy-growth-features.js?v=20261030-kitsu-pages-v1-search-audit-v2',
+  './modules/lorefy-growth-features.js?v=20261101-home-reactions-v1',
   './modules/lorefy-share-studio.js?v=20261028-share-composer-v3',
   './uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1',
   './launch/icons/icon-180.png',

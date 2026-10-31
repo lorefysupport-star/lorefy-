@@ -29,6 +29,6 @@ test('Home-only reference layer never changes approved Explore or other sections
  assert.match(css,/data-home-chrome='immersive'[^{}]*lf-social-header\s*\{[^}]*backdrop-filter:none/);
  assert.match(css,/\.lf-cinema-resume-action\s*\{[^}]*width:max-content/);
  assert.match(css,/\.lf-cinema-backdrop\s*\{[^}]*filter:none/);
- const html=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8'),asset=file+'?v=20261028-reading-type-v1';
+ const html=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8'),asset=file+'?v=20261101-home-reactions-v1';
  assert.ok(html.includes(asset)&&sw.includes(asset));assert.ok(html.indexOf(asset)<html.indexOf('styles/lorefy-glass-materials.css'));
 });

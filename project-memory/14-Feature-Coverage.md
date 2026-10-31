@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Home reactions: [[sessions/2026-11-01-Home-Reaction-Feedback]]. Shared action
+geometry and immediate post feedback/rollback verified locally;3122 full tests,
+192 browser checks. Actual service/device acceptance remains separate.
+
 Kitsu import completeness: [[sessions/2026-10-30-Kitsu-Complete-Pagination]].
 3057 source tests/192 real local-UI fixtures; all next pages fetched or an
 explicit retryable failure before any preview. No live provider/service claim.

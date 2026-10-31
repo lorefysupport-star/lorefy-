@@ -80,7 +80,7 @@ test('byline fixes have matching runtime/offline asset versions',()=>{
   assert.ok(entry.includes(file+'?v='+version));
   assert.ok(sw.includes(file+'?v='+version));
  }
- assert.match(sw,/lorefy-v644-search-audit/);
+ assert.match(sw,/lorefy-v645-home-reactions/);
 });
 test('linked author tooltip cannot be translated as an interface command',()=>{
  const r=render('توقف','en'),button=r.nodes.find(n=>n.props.className==='lf-work-creator lf-work-author-button');

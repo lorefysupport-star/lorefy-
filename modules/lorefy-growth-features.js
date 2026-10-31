@@ -6098,6 +6098,7 @@
   }
   function setCommunityActionLabel(btn, label, extraClass) {
     if (!btn) return;
+    label = uiText(label, { "تعليق":"Reply", "حفظ":"Save", "لايك":"Like", "مشاركة":"Share", "حذف المراجعة":"Delete review" }[label] || label);
     btn.classList.add("lf-community-card-action");
     if (extraClass) btn.classList.add(extraClass);
     btn.setAttribute("aria-label", label);
@@ -6108,7 +6109,11 @@
   function setCommunityCountLabel(btn, label, count) {
     if (!btn) return;
     var value = Math.max(0, parseInt(count || 0, 10) || 0);
-    var text = label + "، " + value;
+    var english = { "إعجاب":"Like", "عدم إعجاب":"Dislike" }[label] || label;
+    var text = uiText(label, english) + uiText("، ", ", ") + new Intl.NumberFormat("en").format(value);
+    var span = btn.querySelector("span:not(.lf-community-action-label)");
+    var display = value >= 1000 ? new Intl.NumberFormat("en", { notation:"compact", maximumFractionDigits:1 }).format(value) : String(value);
+    if (span && span.textContent !== display) span.textContent = display;
     btn.setAttribute("aria-label", text);
     btn.setAttribute("title", text);
   }
@@ -6121,7 +6126,6 @@
       span = doc.createElement("span");
       btn.appendChild(span);
     }
-    if (span.textContent !== String(count)) span.textContent = String(count);
     btn.classList.toggle("is-active", !!mine[key]);
     btn.setAttribute("aria-pressed", mine[key] ? "true" : "false");
     setCommunityCountLabel(btn, "عدم إعجاب", count);
@@ -6135,7 +6139,6 @@
       span = doc.createElement("span");
       btn.appendChild(span);
     }
-    if (span.textContent !== String(count)) span.textContent = String(count);
     btn.classList.toggle("is-active", !!mine[key]);
     btn.setAttribute("aria-pressed", mine[key] ? "true" : "false");
     setCommunityCountLabel(btn, "إعجاب", count);

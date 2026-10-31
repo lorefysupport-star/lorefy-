@@ -123,8 +123,9 @@ test('author and number typography retain natural text direction and scalable re
 test('community copy changes use matching entry and offline asset versions', () => {
   const entry = fs.readFileSync('index.html', 'utf8'), sw = fs.readFileSync('sw.js', 'utf8');
   for (const file of ['modules/lorefy-community.js', 'styles/lorefy-community.css']) {
-    assert.ok(entry.includes(file + '?v=20261028-community-copy-v1'));
-    assert.ok(sw.includes(file + '?v=20261028-community-copy-v1'));
+    const version=file.endsWith('.css')?'20261028-community-copy-v1':'20261101-home-reactions-v1';
+    assert.ok(entry.includes(file + '?v='+version));
+    assert.ok(sw.includes(file + '?v='+version));
   }
-  assert.match(sw, /lorefy-v644-search-audit/);
+  assert.match(sw, /lorefy-v645-home-reactions/);
 });

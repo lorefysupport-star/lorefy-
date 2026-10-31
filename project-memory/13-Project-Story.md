@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Home-Reaction-Feedback]] repairs Home action
+alignment and pending reaction feedback with3122 source tests/192 local browser
+checks. User requested Pro Max/Apple guidance and immediate verified source pushes;
+no native build or service mutation. Continue reading/header acceptance follows.
+
 2026-10-30 [[sessions/2026-10-30-Import-Written-Reviews]] repairs discarded
 Goodreads/CSV review text. Safe preview/opt-out, missing-text recovery, private
 unrated records and repeat import verified;3034 source tests/168 UI fixtures.

@@ -6,6 +6,12 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-11-01-Home-Reaction-Feedback]]: immediate standalone post
+feedback, shared opposite-action lock, snapshot-aware rollback and stale-owner
+suppression. Home actions share five44px tracks; localized/compact review counts
+retain exact labels without repeated text writes.3122 full tests/192 UI checks;
+no production reaction, service deployment or new native build.
+
 [[sessions/2026-10-30-Inbox-Receipt-Scope]] guards queued read receipts before
 dispatch, not only after response. Account/logout/backend changes cancel the old
 microtask before it can call the next context. Original owner pending receipts

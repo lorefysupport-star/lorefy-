@@ -20,7 +20,7 @@ test("growth maintenance ignores text-only mutations and avoids redundant reacti
   assert.match(growth, /MutationObserver\(function \(mutations\)/);
   assert.match(growth, /mutations\.some\(function \(mutation\)/);
   assert.match(growth, /node\.nodeType === 1/);
-  assert.match(growth, /span\.textContent !== String\(count\)/);
+  assert.match(growth, /span\.textContent !== display/);
   assert.match(growth, /card\.firstChild !== actionButtons\.delete/);
   assert.match(growth, /list\.dataset\.replyFingerprint !== fingerprint/);
   assert.match(growth, /anchor\.nextSibling !== section/);

@@ -750,34 +750,55 @@
   }
 
   function setPostReaction(post, kind, button, peerButton) {
-    if (button.dataset.busy === "1") return;
-    button.dataset.busy = "1";
+    if (button.dataset.busy === "1" || peerButton && peerButton.dataset.busy === "1") return;
     post.reactions = post.reactions || { like:0, dislike:0, mine:{ like:false, dislike:false } };
     post.reactions.mine = post.reactions.mine || { like:false, dislike:false };
+    var before = post.reactions;
     var active = !post.reactions.mine[kind];
     var other = kind === "like" ? "dislike" : "like";
-    var finish = function () {
-      if(!!post.reactions.mine[kind]!==active)post.reactions[kind] = Math.max(0, Number(post.reactions[kind] || 0) + (active ? 1 : -1));
-      post.reactions.mine[kind] = active;
-      if (active && post.reactions.mine[other]) {
-        post.reactions[other] = Math.max(0, Number(post.reactions[other] || 0) - 1);
-        post.reactions.mine[other] = false;
-      }
-      button.classList.toggle("is-active", active);
-      button.setAttribute("aria-pressed", active ? "true" : "false");
+    var optimistic = Object.assign({},before,{mine:Object.assign({},before.mine)});
+    optimistic[kind] = Math.max(0, Number(before[kind] || 0) + (active ? 1 : -1));
+    optimistic.mine[kind] = active;
+    if (active && optimistic.mine[other]) {
+      optimistic[other] = Math.max(0, Number(optimistic[other] || 0) - 1);
+      optimistic.mine[other] = false;
+    }
+    post.reactions = optimistic;
+    function paint() {
+      button.classList.toggle("is-active", !!post.reactions.mine[kind]);
+      button.setAttribute("aria-pressed", String(!!post.reactions.mine[kind]));
       updatePostCounter(button, kind, post.reactions[kind], false);
       if (peerButton) {
         peerButton.classList.toggle("is-active", !!post.reactions.mine[other]);
         peerButton.setAttribute("aria-pressed", post.reactions.mine[other] ? "true" : "false");
         updatePostCounter(peerButton, other, post.reactions[other], false);
       }
-      button.dataset.busy = "0";
-    };
+    }
+    function pending(busy) {
+      [button,peerButton].filter(Boolean).forEach(function (control) {
+        control.dataset.busy = busy ? "1" : "0";
+        control.setAttribute("aria-busy", String(busy));
+        control.setAttribute("aria-disabled", String(busy));
+      });
+    }
+    paint();
     var backend = global.LorefyBackend;
     if (!isDemo() && backend && backend.mode === "live" && backend.setCommunityPostReaction) {
-      backend.setCommunityPostReaction(post.id, kind, active).then(finish).catch(function (error) { button.dataset.busy = "0"; toast(error && error.message || "تعذر حفظ التفاعل"); });
+      var owner = backend.user && backend.user.id, epoch = backend._communityEpoch;
+      function current() { return global.LorefyBackend === backend && (backend.user && backend.user.id) === owner && backend._communityEpoch === epoch; }
+      pending(true);
+      function failed() {
+        if (!current()) return;
+        // A newer realtime snapshot is authoritative, not the optimistic copy.
+        if (post.reactions === optimistic) post.reactions = before;
+        paint();
+        toast(uiText("تعذر حفظ التفاعل. حاول مجددًا.", "Could not save your reaction. Please try again."));
+      }
+      try {
+        return Promise.resolve(backend.setCommunityPostReaction(post.id, kind, active)).then(function () { if (current()) paint(); }).catch(failed).finally(function () { pending(false); });
+      } catch (error) { failed(); pending(false); }
     } else {
-      finish();
+      pending(false);
       var savedReactions = read(LOCAL_REACTIONS_KEY, {}) || {};
       savedReactions[post.id] = post.reactions;
       write(LOCAL_REACTIONS_KEY, savedReactions);
