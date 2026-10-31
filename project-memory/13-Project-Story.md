@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Catalog-Classification-Work]] removes a duplicate
+classification pass; real fixture results unchanged, median CPU45.56 to27.36ms.
+3145 source tests/44 local browser checks; no service/native changes.
+
 2026-11-01 [[sessions/2026-11-01-Slow-Media-Recovery]] starts measured performance
 repairs: valid artwork arriving after the UI deadline is no longer permanently
 hidden.3142 tests/14 browser checks; no extra downloads or native release.

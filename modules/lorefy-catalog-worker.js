@@ -4,7 +4,7 @@ self.window = self;
 importScripts(
   "lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1-search-audit-v2",
   "lorefy-catalog-identity.js?v=20261010-identity-batch-v1",
-  "lorefy-catalog-policy.js?v=20261008-arabic-breadth-v4",
+  "lorefy-catalog-policy.js?v=20261101-policy-v1",
   "lorefy-comics-taxonomy.js?v=20261008-arabic-library-v2",
   "lorefy-bibliographic-overrides.js?v=20261008-arabic-breadth-v4",
   "../uploads/lorefy-editorial-picks.js?v=20261017-editorial-comics-v1",

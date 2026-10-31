@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-31T23:23:05.919Z
-Source commit: b9547e4233d393c591aea0aca9d1344bfded45d5
+Observed: 2026-10-31T23:30:10.280Z
+Source commit: 1dd2964eace0f2f4c818962d4a3a9fd70f66f6d7
 
 # Modules Source Inventory
 
@@ -17,14 +17,14 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-catalog-data.js](../../modules/lorefy-catalog-data.js) (12655 bytes)
 - [modules/lorefy-catalog-detail-cache.js](../../modules/lorefy-catalog-detail-cache.js) (1069 bytes)
 - [modules/lorefy-catalog-identity.js](../../modules/lorefy-catalog-identity.js) (25946 bytes)
-- [modules/lorefy-catalog-loader.js](../../modules/lorefy-catalog-loader.js) (31812 bytes)
+- [modules/lorefy-catalog-loader.js](../../modules/lorefy-catalog-loader.js) (31822 bytes)
 - [modules/lorefy-catalog-map-loader.js](../../modules/lorefy-catalog-map-loader.js) (1835 bytes)
 - [modules/lorefy-catalog-plan.js](../../modules/lorefy-catalog-plan.js) (12186 bytes)
-- [modules/lorefy-catalog-policy.js](../../modules/lorefy-catalog-policy.js) (5247 bytes)
+- [modules/lorefy-catalog-policy.js](../../modules/lorefy-catalog-policy.js) (5160 bytes)
 - [modules/lorefy-catalog-requests.js](../../modules/lorefy-catalog-requests.js) (2284 bytes)
 - [modules/lorefy-catalog-search-worker.js](../../modules/lorefy-catalog-search-worker.js) (2326 bytes)
 - [modules/lorefy-catalog-updater.js](../../modules/lorefy-catalog-updater.js) (13500 bytes)
-- [modules/lorefy-catalog-worker.js](../../modules/lorefy-catalog-worker.js) (3378 bytes)
+- [modules/lorefy-catalog-worker.js](../../modules/lorefy-catalog-worker.js) (3370 bytes)
 - [modules/lorefy-chapter-detail-core.js](../../modules/lorefy-chapter-detail-core.js) (5071 bytes)
 - [modules/lorefy-chapter-detail.js](../../modules/lorefy-chapter-detail.js) (51073 bytes)
 - [modules/lorefy-chapter-metadata.js](../../modules/lorefy-chapter-metadata.js) (13163 bytes)

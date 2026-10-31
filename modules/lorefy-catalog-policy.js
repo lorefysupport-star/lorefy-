@@ -58,8 +58,11 @@
       work.aiGenerated,work.isAiGenerated,work.authorship,work.genres,work.tags,work.r,work.rSrc]);
     var cached = eligibilityCache.get(work);
     if (cached && cached.signature === signature) return cached.eligible;
-    var eligible = computeRecommendationEligibility(work);
-    eligibilityCache.set(work,{signature:signature,eligible:eligible,discovery:computeRecommendationEligibility(work,true)});
+    var discovery = computeDiscoveryEligibility(work);
+    var rating = Number(work.r);
+    var eligible = discovery && Number.isFinite(rating) && rating > 0 && rating <= 5 &&
+      (!/^fwn-novel-/i.test(String(work.id || '')) || Boolean(String(work.rSrc || '').trim()));
+    eligibilityCache.set(work,{signature:signature,eligible:eligible,discovery:discovery});
     return eligible;
   }
 
@@ -69,11 +72,8 @@
     return eligibilityCache.get(work).discovery;
   }
 
-  function computeRecommendationEligibility(work, allowUnrated) {
+  function computeDiscoveryEligibility(work) {
     if (!work || isExcludedWork(work) || isExplicitWork(work) || isAiGeneratedWork(work)) return false;
-    var rating = Number(work.r);
-    if (!allowUnrated && (!Number.isFinite(rating) || rating <= 0 || rating > 5)) return false;
-    if (!allowUnrated && /^fwn-novel-/i.test(String(work.id || '')) && !String(work.rSrc || '').trim()) return false;
     // Popularity and ratings are not evidence of a content classification.
     var knownMal = [1,2,3,11,12,13,21,26,23390,44347,56805,96792];
     var knownAniList = [30001,30002,30003,30011,30012,30013,30021,30026,53390,74347,85135,87216];

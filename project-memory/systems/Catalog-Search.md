@@ -5,6 +5,11 @@ date: 2026-10-14
 aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 ---
 
+[[sessions/2026-11-01-Catalog-Classification-Work]] removes duplicate content
+classification per uncached record without changing policy.1322 real records:
+45.56 to27.36ms median, half the normalizations, identical results;3145 tests,
+44 actual-app browser checks. This is not a full-app latency claim.
+
 [[sessions/2026-10-30-Search-Audit]] removes repeated fallback downloads,
 queued obsolete scans, hidden rankings and fullcache reads; aliases, source types,
 Unicode/page-size keys and partial failures are repaired. Actual browser found

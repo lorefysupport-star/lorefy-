@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Classification: [[sessions/2026-11-01-Catalog-Classification-Work]].3145 tests,
+44 actual-app browser checks, policy vector digest unchanged and half the text
+normalizations on1322 real records. Device/cloud performance stays separate.
+
 Slow media: [[sessions/2026-11-01-Slow-Media-Recovery]].3142 source tests and14
 actual-app delayed-byte checks cover React covers and imperative portraits,
 retry/disposal ownership and one-request recovery. Network speed is separate.

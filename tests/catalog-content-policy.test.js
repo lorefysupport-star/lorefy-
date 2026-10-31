@@ -6,6 +6,51 @@ const vm = require('node:vm');
 
 const root = path.join(__dirname, '..');
 
+test('recommendation and discovery share one content-classification pass per unchanged work', () => {
+  const context = vm.createContext({});
+  vm.runInContext('globalThis.calls=[];const original=String.prototype.normalize;String.prototype.normalize=function(){calls.push(String(this));return original.apply(this,arguments);}', context);
+  vm.runInContext(fs.readFileSync(path.join(root, 'modules/lorefy-catalog-policy.js'), 'utf8'), context);
+  const work = { id:'fixture', title:'A journey', ar:'رحلة', genres:['Adventure'], tags:['Mystery'], isAdult:false, r:4 };
+  assert.equal(context.LorefyCatalogPolicy.isRecommendationEligible(work), true);
+  assert.equal(context.LorefyCatalogPolicy.isDiscoveryEligible(work), true);
+  assert.equal(context.calls.filter(value => value === work.title).length, 1);
+  assert.equal(context.calls.filter(value => value === work.ar).length, 1);
+  const calls = context.calls.length;
+  context.LorefyCatalogPolicy.isDiscoveryEligible(work);
+  context.LorefyCatalogPolicy.isRecommendationEligible(work);
+  assert.equal(context.calls.length, calls);
+});
+
+test('shared classification preserves unrated discovery and recommendation rating/source gates', () => {
+  const policy = require('../modules/lorefy-catalog-policy.js');
+  for (const r of [0, -1, 6, NaN, undefined]) {
+    const work = { id:'safe', title:'A journey', isAdult:false, r };
+    assert.equal(policy.isDiscoveryEligible(work), true);
+    assert.equal(policy.isRecommendationEligible(work), false);
+  }
+  const work = { id:'fwn-novel-test', title:'A journey', isAdult:false, r:4 };
+  assert.equal(policy.isDiscoveryEligible(work), true);
+  assert.equal(policy.isRecommendationEligible(work), false);
+  work.rSrc = 'Verified source';
+  assert.equal(policy.isRecommendationEligible(work), true);
+});
+
+test('cached shared classification invalidates for nested labels, rating and classification changes', () => {
+  const policy = require('../modules/lorefy-catalog-policy.js');
+  const work = { id:'safe', title:'A journey', isAdult:false, r:4, tags:[{name:'Mystery'}] };
+  assert.equal(policy.isRecommendationEligible(work), true);
+  work.tags[0].name = 'AI generated';
+  assert.equal(policy.isDiscoveryEligible(work), false);
+  assert.equal(policy.isRecommendationEligible(work), false);
+  work.tags[0].name = 'Mystery'; work.r = 0;
+  assert.equal(policy.isDiscoveryEligible(work), true);
+  assert.equal(policy.isRecommendationEligible(work), false);
+  work.adult = true;
+  assert.equal(policy.isDiscoveryEligible(work), false);
+  work.adult = false; work.r = 4;
+  assert.equal(policy.isRecommendationEligible(work), true);
+});
+
 test('retailer bookmarks are not bibliographic works, while books about bookmarks and craft remain valid',()=>{
   const policy=require('../modules/lorefy-catalog-policy');
   assert.equal(policy.isExcludedWork({id:'jarir-424717',title:'فاصل كتاب مطرز',genres:['فواصل الكتب']}),true);

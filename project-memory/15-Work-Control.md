@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-01-Catalog-Classification-Work]]: duplicated classification
+removed,3145 tests/44 browser checks and paired1322-record benchmark verified.
+Do not re-open the same search fixes as new tasks; continue from measured costs.
+
 [[sessions/2026-11-01-Slow-Media-Recovery]]: managed image recovery verified with
 3142 tests/14 browser checks; no native/service mutation. Continue measured
 catalog/DOM work, preserve active layouts and do not claim all lag eliminated.
