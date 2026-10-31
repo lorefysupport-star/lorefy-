@@ -6,6 +6,10 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-11-01-Diary-Idle-Work]] skips unchanged full-library JSON work
+on DOM maintenance/safety polling, preserving real transitions, sessions and
+owner checks.3149 tests/16 browser checks; not a whole-app startup speed claim.
+
 [[sessions/2026-11-01-Home-Reading-Hierarchy]] aligns Home's displayed
 percentage with the saved chapter/page/volume unit. Ongoing work shows the saved
 checkpoint without a false final0% denominator. Stable header, in-flow reading

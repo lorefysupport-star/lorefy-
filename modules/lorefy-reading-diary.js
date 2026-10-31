@@ -11,6 +11,7 @@
   var scheduled = false;
   var sessionTicker = 0;
   var lastFingerprint = '';
+  var lastStoredSnapshot = null;
   var catalogCache = { source: null, length: -1, byId: new Map() };
 
   function language() { return doc.documentElement.lang === 'en' ? 'en' : 'ar'; }
@@ -71,8 +72,14 @@
   function sync() {
     if (!doc.querySelector('#screen .lf-app')) return;
     if (doc.querySelector('.lf-diary-page') && state.owner!==diaryOwner()) {
-      close(); lastFingerprint=''; return;
+      close(); lastFingerprint=''; lastStoredSnapshot=null; return;
     }
+    // DOM maintenance and the safety poll must not parse an unchanged library.
+    try {
+      var stored = [global.localStorage.getItem('lorefy.user.library.v2'), global.localStorage.getItem('lorefy.user.progress.v2')];
+      if (lastStoredSnapshot && stored[0] === lastStoredSnapshot[0] && stored[1] === lastStoredSnapshot[1]) return;
+      lastStoredSnapshot = stored;
+    } catch (error) { lastStoredSnapshot = null; }
     var current = snapshot();
     var fingerprint = JSON.stringify(current);
     if (fingerprint === lastFingerprint) return;

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-31T23:30:10.280Z
-Source commit: 1dd2964eace0f2f4c818962d4a3a9fd70f66f6d7
+Observed: 2026-10-31T23:38:03.882Z
+Source commit: ba381fea0b55872a878b11cdd1d25ae8a98e6a20
 
 # Modules Source Inventory
 
@@ -70,7 +70,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-public-profile.js](../../modules/lorefy-public-profile.js) (23741 bytes)
 - [modules/lorefy-reader-layout.js](../../modules/lorefy-reader-layout.js) (7108 bytes)
 - [modules/lorefy-reading-diary-core.js](../../modules/lorefy-reading-diary-core.js) (9878 bytes)
-- [modules/lorefy-reading-diary.js](../../modules/lorefy-reading-diary.js) (51045 bytes)
+- [modules/lorefy-reading-diary.js](../../modules/lorefy-reading-diary.js) (51534 bytes)
 - [modules/lorefy-reading-metrics.js](../../modules/lorefy-reading-metrics.js) (6138 bytes)
 - [modules/lorefy-review-editor.js](../../modules/lorefy-review-editor.js) (23081 bytes)
 - [modules/lorefy-scroll-memory.js](../../modules/lorefy-scroll-memory.js) (5185 bytes)

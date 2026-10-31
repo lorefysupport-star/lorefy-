@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Diary idle work: [[sessions/2026-11-01-Diary-Idle-Work]].3149 source tests,16
+browser checks preserve actual transitions and owner close while skipping idle
+JSON processing.12 additional4x CPU search smoke checks pass; device stays open.
+
 Classification: [[sessions/2026-11-01-Catalog-Classification-Work]].3145 tests,
 44 actual-app browser checks, policy vector digest unchanged and half the text
 normalizations on1322 real records. Device/cloud performance stays separate.

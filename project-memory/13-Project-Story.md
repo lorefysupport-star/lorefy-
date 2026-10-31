@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Diary-Idle-Work]] removes unchanged library JSON
+work from diary maintenance;3149 tests/16 browser checks plus12 slowed-CPU search
+checks. Real transitions and owner guards remain. Startup still needs profiling.
+
 2026-11-01 [[sessions/2026-11-01-Catalog-Classification-Work]] removes a duplicate
 classification pass; real fixture results unchanged, median CPU45.56 to27.36ms.
 3145 source tests/44 local browser checks; no service/native changes.

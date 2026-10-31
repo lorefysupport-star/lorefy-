@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-01-Diary-Idle-Work]]: unchanged diary processing removed,
+3149 tests/16 browser checks and12 slowed-CPU search checks pass. Full startup
+is not yet demonstrably faster; identity normalization/layout still need work.
+
 [[sessions/2026-11-01-Catalog-Classification-Work]]: duplicated classification
 removed,3145 tests/44 browser checks and paired1322-record benchmark verified.
 Do not re-open the same search fixes as new tasks; continue from measured costs.

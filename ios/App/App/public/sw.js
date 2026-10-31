@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v648-catalog-policy';
+const CACHE = 'lorefy-v649-diary-sync';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -89,7 +89,7 @@ const CORE = [
   './modules/lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1-search-audit-v2',
   './modules/lorefy-reading-metrics.js?v=20261027-durable-inbox-v1',
   './modules/lorefy-reading-diary-core.js?v=20261016-diary-position-v1',
-  './modules/lorefy-reading-diary.js?v=20261018-runtime-cleanup-v1',
+  './modules/lorefy-reading-diary.js?v=20261101-diary-sync-v1',
   './modules/lorefy-chapter-detail-core.js?v=20261015-reading-owner-v1',
   './modules/lorefy-chapter-metadata.js?v=20261003-beta-final-v1-tenrai-v1',
   './modules/lorefy-chapter-detail.js?v=20261026-work-studio-v1',
