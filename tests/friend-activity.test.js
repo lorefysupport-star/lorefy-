@@ -14,6 +14,31 @@ test('empty, invalid or unrated data does not invent friend cards',()=>{
   assert.deepEqual(activity.derive([{userId:'a',mid:'one',r:0,ts:2},{userId:'a',mid:'bad',r:Infinity,ts:2}],['a']),{recent:[],popular:[]});
   assert.deepEqual(activity.derive([{userId:'a',mid:'one',r:4,ts:2}],[]),{recent:[],popular:[]});
 });
+
+test('friends intentional zero dislikes stay visible and contribute zero to the actual mean',()=>{
+  const rows=[{id:'old',userId:'a',mid:'alias',r:5,ts:1},
+    {id:'no',userId:'a',mid:'one',r:0,recVal:'no',ts:2},
+    {id:'yes',user_id:'b',work_id:'one',rating:5,recommend:true,created_at:'2026-11-01T00:00:00Z'},
+    {id:'raw-zero',user_id:'c',work_id:'two',rating:0,recommend:false,created_at:'2026-11-01T00:00:00Z'}];
+  const result=activity.derive(rows,['a','b','c'],{aliases:{alias:'one'}});
+  assert.equal(result.recent.find(row=>row.id==='no').r,0);
+  assert.equal(result.recent.find(row=>row.id==='raw-zero').r,0);
+  const one=result.popular.find(row=>row.mid==='one');assert.equal(one.count,2);assert.equal(one.r,2.5);
+});
+
+test('the newest private or unrated friend state cannot resurrect an older public score',()=>{
+  for(const change of [{r:null},{r:0,recVal:null,rec:false},{r:4,is_public:false},{r:NaN}]){
+    const rows=[{id:'old',userId:'a',mid:'one',r:5,ts:1},{id:'new',userId:'a',mid:'one',r:3,ts:2,...change},
+      {id:'other',userId:'b',mid:'one',r:2,ts:3}];
+    const result=activity.derive(rows,['a','b']);assert.deepEqual(result.recent.map(row=>row.id),['other']);
+    assert.equal(result.popular[0].count,1);assert.equal(result.popular[0].r,2);
+  }
+});
+
+test('missing or nonnumeric friend ratings never become zero dislikes or borrow stale raw ratings',()=>{
+  const rows=[null,undefined,'',false,true,NaN,Infinity].map((r,i)=>({id:String(i),userId:'a',mid:'one-'+i,r,rating:4,rec:false,recVal:null,ts:1}));
+  assert.deepEqual(activity.derive(rows,['a']),{recent:[],popular:[]});
+});
 test('friend shelves follow the published feed policy, even when editorial discovery lacks a classification',()=>{
   const policy=require('../modules/lorefy-catalog-policy.js');
   assert.equal(activity.eligible({id:'a',title:'A friend’s book',type:'رواية'},policy),true);
@@ -34,6 +59,7 @@ test('cloud shelves scope reads to actual follows and exclude private or inacces
   const value=await b.listFriendRatings();assert.deepEqual(Array.from(value.ratings,r=>r.id),['good']);
   assert(log.some(x=>x[0]==='in' && x[1]==='user_id'));assert(log.some(x=>x[0]==='eq' && x[1]==='is_public' && x[2]===true));
   assert(log.filter(x=>x[0]==='select').every(x=>!x[1].includes('body')&&!x[1].includes('image_urls')));
+  assert(log.some(x=>x[0]==='select' && x[1].split(',').includes('recommend')));
 });
 test('changing accounts while a shelf request runs discards the previous account data',async()=>{
   const b=backendHarness(()=>{throw Error('should not query');});b.getFollowedProfileIds=async()=>{b.user={id:'other'};return ['11111111-1111-4111-8111-111111111111'];};

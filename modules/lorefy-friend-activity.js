@@ -10,14 +10,21 @@
     var friends = new Set((following || []).map(String)), hidden = new Set((options.hidden || []).map(String));
     var latest = new Map();
     (reviews || []).forEach(function (review) {
+      if (!review) return;
       var user = String(review.userId || review.user_id || ''), workId = canonical(review.mid || review.work_id, options.aliases);
-      var rating = Number(review.r == null ? review.rating : review.r), ts = Number(review.ts) || Date.parse(review.created_at);
-      if (!friends.has(user) || hidden.has(user) || user === options.owner || user === 'me' || !workId || review.is_public === false || !Number.isFinite(ts) || !Number.isFinite(rating) || rating < .25 || rating > 5) return;
+      var raw = Object.prototype.hasOwnProperty.call(review, 'r') ? review.r : review.rating;
+      var rating = typeof raw === 'number' || typeof raw === 'string' && raw.trim() ? Number(raw) : NaN;
+      var ts = Number(review.ts) || Date.parse(review.created_at);
+      if (!friends.has(user) || hidden.has(user) || user === options.owner || user === 'me' || !workId || !Number.isFinite(ts)) return;
       var key = user + '|' + workId, previous = latest.get(key);
       var row = Object.assign({}, review, {userId:user, mid:workId, r:rating, ts:ts});
       if (!previous || ts > previous.ts || ts === previous.ts && String(row.id) > String(previous.id)) latest.set(key, row);
     });
-    var recent = Array.from(latest.values()).sort(function (a,b) { return b.ts-a.ts || String(b.id).localeCompare(String(a.id)); });
+    // Choose the latest state first, so a withdrawn score cannot revive an old one.
+    var recent = Array.from(latest.values()).filter(function (row) {
+      var negative = row.recVal !== undefined ? row.recVal === 'no' : row.recommend !== undefined ? row.recommend === false : row.rec === false;
+      return row.is_public !== false && Number.isFinite(row.r) && (row.r >= .25 && row.r <= 5 || row.r === 0 && negative);
+    }).sort(function (a,b) { return b.ts-a.ts || String(b.id).localeCompare(String(a.id)); });
     var groups = new Map();
     recent.forEach(function (row) {
       var group = groups.get(row.mid);

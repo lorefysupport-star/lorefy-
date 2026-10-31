@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Logical-Friend-Ratings]] installs/verifies the
+requested logic-audit guidance and fixes first reproduced product contradiction:
+friend zero/latest-state semantics.3156 tests/40 UI checks; remaining audit open.
+
 2026-11-01 [[sessions/2026-11-01-Identity-Text-Work]] follows the three measured
 repairs with bounded short-string reuse.3153 tests/8 browser checks, unchanged
 identity output. Aggregate performance report keeps startup/device gates open.

@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-01-Logical-Friend-Ratings]] fixes L-001 with3156 tests/40 UI
+checks. Requested skill installed and verified; next concrete audit items are
+visitor review mapping and legacy negative recommendation round-trip. No build.
+
 [[sessions/2026-11-01-Identity-Text-Work]]: bounded identity normalization reuse
 verified with3153 tests/8 browser checks. See aggregate performance report;
 next acceptance is controlled cold startup, physical device and provider timing,

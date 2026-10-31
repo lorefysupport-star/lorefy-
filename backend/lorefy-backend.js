@@ -1463,7 +1463,7 @@
       // Bound both URL size and concurrency for readers following many accounts.
       for (var offset=0; offset<batches.length; offset+=3) {
         var results = await Promise.all(batches.slice(offset,offset+3).map(async function(ids){
-          var result = await client.from("reviews").select("id,user_id,work_id,rating,is_public,created_at")
+          var result = await client.from("reviews").select("id,user_id,work_id,rating,recommend,is_public,created_at")
             .in("user_id",ids).eq("is_public",true).order("created_at",{ascending:false}).order("id",{ascending:false}).limit(500);
           assertMediaRequest(B, request);
           if (result.error) throw result.error;

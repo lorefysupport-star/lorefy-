@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v650-identity-memo';
+const CACHE = 'lorefy-v651-friend-logic';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -41,7 +41,7 @@ const CORE = [
   './uploads/lorefy-editorial-picks.js?v=20261017-editorial-comics-v1',
   './styles/lorefy-user-experience.css?v=20261015-connection-avatar-v1',
   './modules/lorefy-user-experience.js?v=20261015-connection-avatar-v1',
-  './modules/lorefy-friend-activity.js?v=20261029-editorial-media-v1',
+  './modules/lorefy-friend-activity.js?v=20261101-friend-logic-v1',
   './modules/lorefy-original-illustrated.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-original-autumn.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-original-original.js?v=20261013-all-profile-frames-v6',
@@ -119,7 +119,7 @@ const CORE = [
   './config/lorefy-config.js?v=20260924-catalog-v1',
   './backend/lorefy-secure-storage.js?v=20260824-keychain-v2',
   './modules/lorefy-storage-budget.js?v=20261021-save-quota',
-  './backend/lorefy-backend.js?v=20261030-inbox-reconnect-v1',
+  './backend/lorefy-backend.js?v=20261101-friend-logic-v1',
   './backend/lorefy-custom-artwork.js?v=20261019-artwork-quota-v1',
   './backend/lorefy-native-crypto.js?v=20261001-auth-recovery-v1',
   './modules/lorefy-subscriptions.js?v=20260722-billing-guard-v1',

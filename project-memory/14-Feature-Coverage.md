@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Logic L-001: [[sessions/2026-11-01-Logical-Friend-Ratings]],3156 tests/40 browser
+checks. Deliberate zero differs from unrated; latest canonical reader/work state
+wins before display/mean. Other logical audit findings retain separate status.
+
 Identity performance: [[sessions/2026-11-01-Identity-Text-Work]].3153 tests/8
 browser checks cover bounded pure memo and unchanged full identity output.
 All four current performance repairs retain separate receipts and boundaries.

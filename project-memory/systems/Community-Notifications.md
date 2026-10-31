@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-11-01-Logical-Friend-Ratings]] reconciles friend shelves with
+intentional zero dislikes and latest public/rated state.3156 tests/40 browser
+checks; public metadata SELECT adds recommend only, no production mutation.
+
 [[sessions/2026-11-01-Home-Reaction-Feedback]]: immediate standalone post
 feedback, shared opposite-action lock, snapshot-aware rollback and stale-owner
 suppression. Home actions share five44px tracks; localized/compact review counts
