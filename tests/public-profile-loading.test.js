@@ -4,8 +4,9 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
 
-function harness() {
+function harness(options = {}) {
   const states = [], effects = [], requests = [], follows = [], handlers = new Map();
+  const renderedReviews = [];
   let cursor = 0;
   const React = {
     createElement: (type, props, ...children) => ({ type, props: props || {}, children: children.flat(Infinity) }),
@@ -25,15 +26,17 @@ function harness() {
   const window = { React, NenIcons: {}, LorefyPageRefresh:{register:(key,fn)=>{handlers.set(key,fn);return()=>{if(handlers.get(key)===fn)handlers.delete(key);};}}, LorefyBackend: {
     mode: 'live',
     getPublicProfile(id) { return new Promise((resolve, reject) => requests.push({ id, resolve, reject })); },
-    listReviewCollection: async () => [],
+    listReviewCollection: async () => options.rows || [],
     toggleProfileFollow: async (...args) => follows.push(args)
   } };
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../modules/lorefy-public-profile.js'), 'utf8'), { window, URL });
   return {
-    requests, follows, handlers,
+    requests, follows, handlers, renderedReviews,
     render(id = 'reader-a') {
       cursor = 0;
-      const tree = window.LorefyPublicProfile({ profile: { id, username: id }, workById: () => null });
+      renderedReviews.length = 0;
+      const tree = window.LorefyPublicProfile({ profile: { id, username: id }, workById: () => null,
+        renderReview: row => { renderedReviews.push(row); return React.createElement('article', {id:row.id}); } });
       for (const effect of effects) {
         if (!effect?.callback) continue;
         const callback = effect.callback;
@@ -48,6 +51,25 @@ function nodes(tree) { return !tree || typeof tree !== 'object' ? [] : [tree, ..
 const followButton = tree => nodes(tree).find(node => node.props['data-follow-action']);
 const count = tree => nodes(tree).find(node => node.props['data-connection'] === 'followers').children[0].children[0];
 const settle = () => new Promise(resolve => setImmediate(resolve));
+
+test('visited profile preserves unrated versus explicit zero at the shared review-card boundary',async()=>{
+  const app=harness({rows:[{id:'unrated',user_id:'reader-a',work_id:'work',rating:null,recommend:null,is_public:true},
+    {id:'zero',user_id:'reader-a',work_id:'other',rating:0,recommend:false,is_public:true}]});
+  app.render();app.requests[0].resolve({id:'reader-a'});await settle();app.render();
+  const unrated=app.renderedReviews.find(row=>row.id==='unrated'),zero=app.renderedReviews.find(row=>row.id==='zero');
+  assert.equal(unrated.r,null);assert.equal(unrated.recVal,null);
+  assert.equal(zero.r,0);assert.equal(zero.recVal,'no');
+  assert.equal(zero.is_public,true);
+});
+
+test('visited profile passes negative reaction count and current viewer selection to the shared card',async()=>{
+  const app=harness({rows:[{id:'reaction',user_id:'reader-a',work_id:'work',rating:2,recommend:false,is_public:true,
+    reactions:{heart:9,like:3,dislike:4,mine:{heart:false,like:false,dislike:true}}}]});
+  app.render();app.requests[0].resolve({id:'reader-a'});await settle();app.render();
+  const row=app.renderedReviews[0];assert.equal(row.dislikeCount,4);assert.equal(row.myDislike,true);
+  assert.equal(row.likeCount,3);assert.equal(row.myLike,false);assert.equal(row.likes,9);
+  assert.equal(row.r,2);assert.equal(row.recVal,'no');
+});
 
 test('a remote reader does not appear unfollowed with zero followers while loading', async () => {
   const app = harness(), tree = app.render();

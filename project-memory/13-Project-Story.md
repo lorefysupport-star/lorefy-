@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Logical-Public-Review-Projection]] fixes L-002:
+visitor review mapping no longer invents zero or omits dislike state.3158 tests/
+16 browser contract checks, no service write or native release.
+
 2026-11-01 [[sessions/2026-11-01-Logical-Friend-Ratings]] installs/verifies the
 requested logic-audit guidance and fixes first reproduced product contradiction:
 friend zero/latest-state semantics.3156 tests/40 UI checks; remaining audit open.

@@ -13,11 +13,12 @@
   const reviewRow = row => {
     const author = row.profile || {}, reactions = row.reactions || {}, mine = reactions.mine || {};
     return { id:row.id, userId:row.user_id, user:author.name || author.username, un:author.username,
-      av:author.avatar, mid:row.work_id, r:Number(row.rating) || 0, txt:row.body || '',
+      av:author.avatar, mid:row.work_id, r:row.rating == null ? null : Number(row.rating) || 0, txt:row.body || '',
       rec:row.recommend === true, recVal:row.recommend === true ? 'yes' : row.recommend === false ? 'no' : null,
       imgs:row.images || [], ts:Date.parse(row.created_at), likes:Number(reactions.heart) || 0,
-      likeCount:Number(reactions.like) || 0, myHeart:!!mine.heart, myLike:!!mine.like,
-      comments:(row.comments || []).length, spoiler:!!row.spoiler };
+      likeCount:Number(reactions.like) || 0, myHeart:mine.heart === true, myLike:mine.like === true,
+      dislikeCount:Number(reactions.dislike) || 0, myDislike:mine.dislike === true,
+      comments:(row.comments || []).length, spoiler:!!row.spoiler, is_public:row.is_public };
   };
 
   root.LorefyPublicProfile = function PublicProfile(props) {

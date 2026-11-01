@@ -6,6 +6,10 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+[[sessions/2026-11-01-Logical-Public-Review-Projection]] preserves unrated null,
+zero dislike and negative reaction metadata at visitor collection/card boundary.
+3158 tests/16 browser contract checks; actual cloud writes/device remain separate.
+
 [[sessions/2026-10-29-Library-Shelf-Acceptance]]: normal Reader cover captions
 must not participate in spines/Showcase. Scoped exclusion restores full spine
 width and removes duplicate captions, without hiding normal-grid titles.

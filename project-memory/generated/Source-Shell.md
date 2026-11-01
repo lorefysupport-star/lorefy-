@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-10-31T23:55:50.114Z
-Source commit: 31880c9070c00fa0cd0d379770cf0abdcb0a9ec0
+Observed: 2026-11-01T00:01:10.328Z
+Source commit: 20766afb03877f44ec8ef8d41add3b3f4cdbc21e
 
 # Shell Source Inventory
 
@@ -16,14 +16,14 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [config/lorefy-config.js](../../config/lorefy-config.js) (7179 bytes)
 - [config/lorefy-runtime.js](../../config/lorefy-runtime.js) (5188 bytes)
 - [eas.json](../../eas.json) (542 bytes)
-- [index.html](../../index.html) (52508 bytes)
+- [index.html](../../index.html) (52507 bytes)
 - [ios/App/App.xcodeproj/project.pbxproj](../../ios/App/App.xcodeproj/project.pbxproj) (17113 bytes)
 - [package-lock.json](../../package-lock.json) (47791 bytes)
 - [package.json](../../package.json) (1908 bytes)
 - [phone-preview.html](../../phone-preview.html) (1731 bytes)
 - [README.md](../../README.md) (8763 bytes)
 - [Start-Lorefy.ps1](../../Start-Lorefy.ps1) (1268 bytes)
-- [sw.js](../../sw.js) (16220 bytes)
+- [sw.js](../../sw.js) (16227 bytes)
 - [uploads/files/lorefy-app.js](../../uploads/files/lorefy-app.js) (350806 bytes)
 - [uploads/files/lorefy-enrich.js](../../uploads/files/lorefy-enrich.js) (7308 bytes)
 

@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Logic L-002: [[sessions/2026-11-01-Logical-Public-Review-Projection]],3158 tests/
+16 browser checks preserve review semantics and stale-reader suppression. The
+card-prop adapter does not certify production reaction writes.
+
 Logic L-001: [[sessions/2026-11-01-Logical-Friend-Ratings]],3156 tests/40 browser
 checks. Deliberate zero differs from unrated; latest canonical reader/work state
 wins before display/mean. Other logical audit findings retain separate status.

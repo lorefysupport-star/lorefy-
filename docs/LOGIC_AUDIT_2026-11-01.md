@@ -53,12 +53,22 @@ Zero visible, latest privacy/unrated suppresses old score, actual mean includes
 zero, work/profile callbacks and cleanup work; no page errors. External requests
 blocked in isolated demo; not a live-service/native certification.
 
-### L-002: Public Profile Drops Review Semantics - Source Finding, Pending Repair
+### L-002: Public Profile Drops Review Semantics - Fixed
 
 `modules/lorefy-public-profile.js::reviewRow` coerces rating:null into0 and omits
 dislikeCount/myDislike although the shared card consumes them. The main cloud
-mapper already preserves null and both negative reaction fields. Reproduce at
-the visitor collection/render boundary before changing it; retain owner scope.
+mapper already preserves null and both negative reaction fields. Two executable
+collection-to-card tests reproduced0 instead of null and missing dislikeCount.
+Preserve null, explicit zero, dislikeCount/myDislike and visibility metadata;
+current-viewer flags use strict booleans, matching the existing main mapper.
+No server write, request scope, follow permission or theme changes.
+
+Evidence: focused38/38, final full3158/3158;16/16 AR/EN browser component-boundary
+checks. Mounted actual PublicProfile with controlled backend responses in an
+isolated iframe; actual Home rating renderer distinguishes null/zero. Card-prop
+adapter exposes negative count/selection. Old reader data hides immediately and
+late replaced-reader response is ignored. This is a mapper/render contract test,
+not proof of live review reaction writes or physical-device behavior.
 
 ### L-003: Editing Legacy Negative Recommendations - Source Finding, Pending Repair
 
