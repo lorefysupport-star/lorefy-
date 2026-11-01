@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+C-008 in [[sessions/2026-11-01-Community-Timeline]] prevents an older post read
+undoing a newer local reaction, without freezing later server totals.3219 tests/
+120 final paged/target/race browser checks. Native/live-service gates remain.
+
 C-007 in [[sessions/2026-11-01-Community-Timeline]] targets small known-post
 changes and retains safe full-window fallback.3216 tests/100 browser checks;
 manual/full refresh scope and owner guards preserved, no live-service changes.

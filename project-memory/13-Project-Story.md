@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+Community C-006..008 continuation in [[sessions/2026-11-01-Community-Timeline]]:
+loaded-window/scroll safety, small targeted refresh and old-read/local-reaction
+ordering verified with3219 tests/120 final browser checks. No new native build.
+
 Community C-007 in [[sessions/2026-11-01-Community-Timeline]] reduces known-post
 reactions to targeted metadata reads with loaded-window/anchor safety.3216 tests/
 100 local browser checks; no native build or production query benchmark.

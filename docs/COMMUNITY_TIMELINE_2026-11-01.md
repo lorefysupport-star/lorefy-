@@ -181,6 +181,30 @@ Cachev663-post-targets/six mirrors match.
 Receipts: artifacts/community-post-targets-20261101-full.log and
 output/playwright/community-post-targets-results.txt.
 
+## C-008: An Older Post Read Cannot Undo A New Local Reaction
+
+A background read started before Like could finish after the click, replace its
+optimistic state and repaint it off. The request now records each loaded post's
+reaction reference at start. If a local reaction replaced that reference before
+the response is normalized, preserve that newer reaction for this older read.
+Both full-window and targeted paths use the same normalization. A subsequent
+read started after the action still accepts fresh server totals; a rollback to
+the original reference also allows the server result. No timer-based freshness
+guess, persistent overlay, payload mutation or added request is needed.
+
+Three added regressions (the old-read case initially red for full/targeted data),
+focused47/47 and full3219/3219, exit0 (63893ms). Final browser120/120 AR/EN
+x320/390 reruns C-006/C-007 and gates a real module read/RPC around a native
+Like click: counter12->13 immediately, stale read cannot undo it, RPC completion
+keeps it selected, next server total19 applies. No page errors. Controlled data
+and RPCs only, not production writes or real network/device timing. This protects
+the standalone post owner; review interactions have their separate C-004 contract.
+Cachev664-post-reaction-order/six affected mirrors match.
+
+Receipts: artifacts/community-post-reaction-order-20261101-full.log and
+output/playwright/community-post-reaction-order-results.txt. This continuation
+adds20 source tests across three separate repairs; native build remains unchanged.
+
 ## Remaining Acceptance
 
 - Friend lifecycle is repaired locally; real two-reader delivery and provider

@@ -6,6 +6,12 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+C-006..008 passes3219 tests/120 final browser checks in
+[[sessions/2026-11-01-Community-Timeline]]: loaded-range/anchor, target reads and
+old-read reaction ordering are repaired locally. Next acceptance: actual
+two-reader delivery, native long-scroll/FPS and real reconnect/network behavior.
+Do not infer those from the controlled180-row fixture or start a native build.
+
 C-007 passes3216 tests/100 browser checks in
 [[sessions/2026-11-01-Community-Timeline]]: targeted known-post refresh is complete
 locally. Next inspect old in-flight reads versus optimistic reaction changes;

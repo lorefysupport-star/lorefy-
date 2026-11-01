@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Community C-008: [[sessions/2026-11-01-Community-Timeline]],3219 tests/120 final
+AR/EN checks include full/target read ordering, real click feedback in a gated
+module fixture and later fresh totals. Not production RPC/device certification.
+
 Community C-007: [[sessions/2026-11-01-Community-Timeline]],3216 tests/100 AR/EN
 checks. Known target updates/withdrawals, offscreen suppression and full-refresh
 scope after a target are verified. Database/native/network acceptance separate.

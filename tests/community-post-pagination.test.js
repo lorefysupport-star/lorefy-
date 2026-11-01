@@ -115,3 +115,28 @@ test('queued full refresh after a target cannot dispatch into a replaced account
  const target=h.load(true,false,{postIds:[id(80)]}),full=h.load(true);h.backend.user={id:'other'};release([row(80)]);
  assert.equal(await target,false);assert.equal(await full,false);assert.equal(h.calls.length,0);
 });
+
+test('a read started before a local reaction cannot overwrite the newer optimistic state',async()=>{
+ for(const targeted of [false,true]){
+  const before={like:0,dislike:0,mine:{like:false,dislike:false}},h=mount([{...row(0),reactions:before}]);await h.load(true);
+  let release;h.backend.listCommunityPosts=()=>new Promise(resolve=>release=resolve);
+  const job=h.load(true,false,targeted?{postIds:[id(0)]}:undefined);
+  const optimistic={like:1,dislike:0,mine:{like:true,dislike:false}};h.state.posts[0].reactions=optimistic;
+  release([{...row(0),reactions:before}]);await job;assert.equal(h.state.posts[0].reactions,optimistic);
+ }
+});
+
+test('a subsequent read still accepts fresh server totals instead of freezing the optimistic counter',async()=>{
+ const before={like:0,dislike:0,mine:{like:false,dislike:false}},h=mount([{...row(0),reactions:before}]);await h.load(true);
+ h.state.posts[0].reactions={like:1,dislike:0,mine:{like:true,dislike:false}};
+ const server={like:8,dislike:2,mine:{like:true,dislike:false}};h.setData([{...row(0),reactions:server}]);
+ await h.load(true,false,{postIds:[id(0)]});assert.equal(h.state.posts[0].reactions,server);
+});
+
+test('a local reaction rolled back before a read finishes does not hide newer server counts',async()=>{
+ const before={like:0,dislike:0,mine:{like:false,dislike:false}},h=mount([{...row(0),reactions:before}]);await h.load(true);
+ let release;h.backend.listCommunityPosts=()=>new Promise(resolve=>release=resolve);const job=h.load(true);
+ h.state.posts[0].reactions={like:1,dislike:0,mine:{like:true,dislike:false}};h.state.posts[0].reactions=before;
+ const server={like:11,dislike:2,mine:{like:false,dislike:false}};release([{...row(0),reactions:server}]);await job;
+ assert.equal(h.state.posts[0].reactions,server);
+});

@@ -287,6 +287,13 @@
     var backend = global.LorefyBackend;
     var accountId = String(backend && backend.user && backend.user.id || '');
     var expired = false, timer, job = {};
+    var reactionStart=new Map(state.posts.map(function (post) { return [String(post.id),{post:post,reactions:post.reactions}]; }));
+    function loadedPost(row) {
+      var post=normalizePost(row),previous=reactionStart.get(String(post.id));
+      // An older read must not undo a reaction changed after that read began.
+      if (previous && previous.post.reactions!==previous.reactions) post.reactions=previous.post.reactions;
+      return post;
+    }
     var targetIds=!older && context && Array.isArray(context.postIds) && context.postIds.length<=3 ?
       Array.from(new Set(context.postIds.map(String))).filter(function (id) { return state.posts.some(function (post) { return String(post.id)===id; }); }) : null;
     job.targeted=!!targetIds;
@@ -306,7 +313,7 @@
           targetIds.forEach(function (id,index) {
             var row=changes[index][0];
             if (row && String(row.id)!==id) throw new Error('Post response does not match the requested post.');
-            updated.set(id,row && !row.parent_id ? normalizePost(row) : null);
+            updated.set(id,row && !row.parent_id ? loadedPost(row) : null);
           });
           state.posts=state.posts.map(function (post) { return updated.has(String(post.id)) ? updated.get(String(post.id)) : post; }).filter(Boolean);
         } else {
@@ -320,7 +327,7 @@
         var rows=[],hasMore=false;
         // Revalidate the loaded range, not just its newest page or stale cache.
         while (job.current()) {
-          var chunk=(await backend.listCommunityPosts({limit:60,before:cursor || null})).map(normalizePost);
+          var chunk=(await backend.listCommunityPosts({limit:60,before:cursor || null})).map(loadedPost);
           if (!job.current()) return false;
           if (boundary && !rows.length && chunk.length && compare(chunk[0],boundary)<0) boundary=null;
           var kept=boundary?chunk.filter(function (row) { return compare(row,boundary)>=0; }):chunk;

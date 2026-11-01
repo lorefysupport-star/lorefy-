@@ -66,6 +66,14 @@ x320/390 including181 rows,20 reactions -> one post read/zero follows, unchanged
 anchor and single-row withdrawal. Cachev663/six mirrors. Not one database-query
 or production-latency certification; the existing metadata hydration remains.
 
+C-008: older full/targeted post reads cannot overwrite a local reaction changed
+after they started. Request-scoped reference comparison preserves the newer
+choice while subsequent reads and rolled-back choices accept server totals.
+Three added regressions; focused47/47, full3219/3219 (63893ms, exit0), final
+browser120/120 AR/EN x320/390 including gated read/RPC Like12->13, stale result
+protection and next total19. No live mutation/device timing. Cachev664/six mirrors.
+This continuation contains20 new source tests and three separately pushed repairs.
+
 See docs/COMMUNITY_TIMELINE_2026-11-01.md for evidence and remaining scope:
 completed source fixes and open native/service/long-pagination acceptance.
 No generic dead-code purge or design replacement is part of this repair.
