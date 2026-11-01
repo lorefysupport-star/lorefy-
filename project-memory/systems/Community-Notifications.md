@@ -6,6 +6,12 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-11-01-Smooth-Runtime]] S-004 avoids forced scroll layout only
+for no-post/no-error timeline status and tail controls. Post insertion/deletion,
+error banners and non-timeline layouts retain anchor measurement.36 focused
+tests/120 browser checks, final3255 source tests; measured empty-status feed
+path318.5 to31.3ms at4x CPU. No whole-app or native-frame-rate guarantee.
+
 C-008 in [[sessions/2026-11-01-Community-Timeline]] prevents an older post read
 undoing a newer local reaction, without freezing later server totals.3219 tests/
 120 final paged/target/race browser checks. Native/live-service gates remain.

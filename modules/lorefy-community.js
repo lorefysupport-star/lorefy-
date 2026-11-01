@@ -1117,7 +1117,10 @@
       !!state.hasMore, state.reviewFeed || {}, doc.documentElement.lang, Math.floor(Date.now() / 60000)]);
     if (host.__lorefyFeedSignature === signature && host.__lorefyFeedList === list) return;
     var page=state.page,scrollRoot=page && (page.closest && page.closest('.lf-screen-scroll') || page),anchors=[];
-    if (scrollRoot && scrollRoot.scrollTop>1 && scrollRoot.getBoundingClientRect && page.querySelectorAll) {
+    // Empty timeline/status controls sort after reviews and cannot move their cards.
+    var mayShiftCards=posts.length || cachedCards && cachedCards.size || state.error ||
+      list.querySelector('.lf-community-retry') || !(page && page.matches && page.matches('.lf-social-timeline'));
+    if (mayShiftCards && scrollRoot && scrollRoot.scrollTop>1 && scrollRoot.getBoundingClientRect && page.querySelectorAll) {
       var viewport=scrollRoot.getBoundingClientRect();
       Array.prototype.some.call(page.querySelectorAll('[data-post-timestamp], [data-review-timestamp]'),function (card) {
         var bounds=card.getBoundingClientRect();

@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-01-Smooth-Runtime]] S-004 follows with shared feed layout
+avoidance in empty-status/tail-only updates. Existing post/review anchors and
+reaction races retained;120 actual-browser fixture checks. Not a whole-app SLA.
+
 [[sessions/2026-11-01-Smooth-Runtime]] S-003 removes the local preview's
 review/completion no-op render loop. Same4x scenario Explore calls128 to3;
 fixture isolation, owner edits and3250 tests verified. Not a live-app speed claim.

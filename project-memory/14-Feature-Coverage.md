@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Feed layout work: [[sessions/2026-11-01-Smooth-Runtime]] S-004 covers no-post
+tail-only fast path, plus conservative post/error/fallback anchoring.36 focused
+tests and120 browser window/reaction cases; real service/device QA independent.
+
 Preview stability: [[sessions/2026-11-01-Smooth-Runtime]] S-003 covers stable
 combined reviews, no-op updates, fixture-only changes and queued reversal.
 3250 tests/16 actual-demo checks; production behavior remains independent.

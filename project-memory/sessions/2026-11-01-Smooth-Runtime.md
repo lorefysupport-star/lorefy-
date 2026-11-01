@@ -98,6 +98,38 @@ preview-stable-ui-results.txt; artifacts/preview-stability-20261101-full.log.
 Next shared hotspot: the feed probe attributed300.5 of318.5ms of measured render
 work to synchronous scrollTop layout reads; investigate before changing anchors.
 
+## S-004: skip unnecessary feed layout on empty timeline status updates
+
+Instrumented real Home at4x CPU isolated the expensive part of renderPostFeed:
+four scrollTop reads accounted for300.5 of318.5ms. Reading geometry after other
+UI writes forces synchronous style/layout. An empty post timeline's status and
+pagination rows already sort after review cards and cannot shift their anchors.
+
+modules/lorefy-community.js now avoids anchor reads only in that no-post,
+no-error timeline case. Incoming/remaining/deleted post cards, appearing/removed
+retry banners and non-timeline layouts keep conservative anchor measurement.
+No new scroll cache, event listener, deferred reaction, request or persisted state.
+
+The failing empty-status regression went from3 reads to0;36 focused tests pass,
+including prepend/deletion/targeted refresh/reaction ordering. Actual Home's
+same instrumented scenario goes318.5 to31.3ms in the measured feed calls, with
+zero scrollTop reads on that path. This is one loading/status path, not a claim
+that every feed or full app is10x faster. Independent runs have CPU variance.
+
+Actual AR/EN x320/390 browser fixture with180 paged posts:120/120 checks passed,
+no exceptions, native anchoring disabled. Full-window refresh, edited/deleted
+rows, node identity, viewport anchor, targeted reads, optimistic reaction races
+and subsequent fresh server counts all retained. No live backend was changed.
+
+Cachev672, six selective web mirrors match byte-for-byte. First full suite caught
+one stale stylesheet/module-version assertion; updated that expected URL only.
+Final full rerun3255/3255, zero failures, exit0 (80598ms). A final four-route4x
+sample also retained low Home feed work (21.4ms total,5.4ms maximum per call),
+without claiming identical machine load or real-provider latency. Receipts:
+output/playwright/smooth-feed-layout-{before,after}.txt,
+feed-layout-window-results.txt, smooth-hotpaths-final.txt;
+artifacts/feed-layout-20261101-full.log.
+
 ## Remaining measurement
 
 The four-route settled/scrolling observer sample is complete but short and uses
