@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-02-Profile-Interactions]] P-002 repairs the clipped Reader
+empty-favorites prompt without changing filled books or frames.3278 tests and
+18 additional browser cases pass; overall profile pass154 browser cases.
+
 [[sessions/2026-11-02-Profile-Interactions]] starts the full-profile audit with
 nine reproduced follow/connections races repaired.3276 tests,16 demo interaction
 and120 layout/frame checks. Empty favorites prompt and native QA remain open.

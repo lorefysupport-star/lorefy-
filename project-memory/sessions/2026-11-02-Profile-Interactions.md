@@ -46,10 +46,30 @@ Receipts outside Git: `artifacts/profile-actions-20261102-full.log`,
 `output/playwright/profile-follow-ui-v675-results.txt`,
 `output/playwright/profile-acceptance-v675-results.txt` and corresponding PNGs.
 
+## P-002: empty favorites prompt
+
+The empty prompt was full-width in normal/immersive but constrained to one
+64-80px cover column in Reader, clipping its AR/EN label. Reader's specific grid
+overrode the generic empty grid. Shared CSS now makes existing empty work and
+character actions span every grid track, uses border-box sizing and wraps their
+existing labels. Filled covers, fonts, colors, callbacks, saved favorites,
+rankings and frame artwork are unchanged.
+
+Two source regressions demonstrated red before repair;21 related tests pass.
+18/18 actual work-prompt cases cover three layouts, AR/EN at320/390px and all
+three book modes, including Enter/click opening and Escape closing the editor.
+Final checks await hidden state after the existing closing animation instead
+of an incorrect100ms guess. Final3278/3278 full tests, exit0,68044ms. First run
+caught three obsolete asset-version assertions; only expected URL updated before
+passing rerun. Cachev676 and six matching web mirrors; no native/live writes.
+Receipts outside Git: `artifacts/profile-empty-20261102-full.log`,
+`output/playwright/profile-empty-{before,after}-results.txt`,
+`output/playwright/profile-empty-interactions-results.txt`,
+`output/playwright/profile-empty-latest.png`.
+
 ## Open Audit Items
 
-An empty Reader favorites prompt appears constrained to a single cover column;
-reproduce/fix separately. Native media chooser/keyboard, real-account durability,
+The empty Reader prompt is repaired in P-002. Native media chooser/keyboard, real-account durability,
 all-pack visual coverage and long-session frame time remain independent gates.
 Do not report every profile interaction or device fully certified by this pass.
 No native build or production service deployment is authorized.

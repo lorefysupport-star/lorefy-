@@ -382,6 +382,14 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
 .lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty > .lf-profile-top-character:first-child { display: flex !important; min-height: 84px !important; aspect-ratio: auto !important; align-items: center; justify-content: flex-start; gap: 14px; padding: 14px 18px; border: 1px dashed var(--ui-separator) !important; background: var(--ui-fill-soft) !important; }
 .lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty > .lf-profile-top-character:first-child::after { content: 'اختر شخصياتك المفضلة'; color: var(--ui-secondary); font-size: 13px; font-weight: 550; text-align: start; }
 .lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty .lf-profile-top-character-empty { color: var(--ui-action); }
+.lf-app.lf-app.lf-app .lf-profile-favorites.is-empty > [role="button"]:first-child,
+.lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty > .lf-profile-top-character:first-child {
+  grid-column: 1 / -1 !important; width: 100% !important; min-width: 0; max-width: none !important; box-sizing: border-box;
+}
+.lf-app.lf-app.lf-app .lf-profile-favorites.is-empty > [role="button"]:first-child::after,
+.lf-app.lf-app.lf-app .lf-profile-top-characters-grid.is-empty > .lf-profile-top-character:first-child::after {
+  min-width: 0; white-space: normal; overflow-wrap: anywhere; line-height: 1.65;
+}
 .lf-app.lf-app.lf-app .lf-profile-identity > div:first-child > p { font-size: 22px !important; font-weight: 650 !important; }
 .lf-app.lf-app.lf-app .lf-profile-identity > p { margin-bottom: 12px !important; color: var(--ui-muted) !important; font-size: 13px !important; }
 .lf-app.lf-app.lf-app .lf-profile-identity > div:has(> button[aria-label="الحسابات التي أتابعها"]) { margin-bottom: 14px !important; gap: 18px !important; }

@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v675-profile-actions';
+const CACHE = 'lorefy-v676-profile-empty';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -75,7 +75,7 @@ const CORE = [
   './styles/lorefy-comics-search.css?v=20260923-comics-identity-v2',
   './styles/lorefy-auth-flow.css?v=20261018-minimal-entry-v1',
   './styles/lorefy-page-refresh.css?v=20261027-ui-refinement-v1',
-  './styles/lorefy-design-system.css?v=20261101-profile-material-v1',
+  './styles/lorefy-design-system.css?v=20261102-profile-empty-v1',
   './modules/lorefy-design-system.js?v=20261027-glass-depth-v3',
   './modules/lorefy-data-proxy.js?v=20261101-image-delivery-v1',
   './modules/lorefy-cover-api.js?v=20261101-cover-preparation-v1',

@@ -6,6 +6,10 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+P-002 in [[sessions/2026-11-02-Profile-Interactions]] restores full-width empty
+favorite prompts, preserving labels and editor actions.3278 source tests and18
+actual empty-layout interaction cases pass. Native and real writes remain open.
+
 [[sessions/2026-11-02-Profile-Interactions]] P-001 repairs visitor follow/list
 request lifetime, same-turn gates, confirmed counts and old-refresh rollback.
 3276 tests/16 React-demo checks;120 layout/frame smoke checks. Real account,

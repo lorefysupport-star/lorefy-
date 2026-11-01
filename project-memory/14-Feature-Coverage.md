@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Profile P-002: [[sessions/2026-11-02-Profile-Interactions]]. Empty actions span
+their grid and wrap labels.18 work-prompt cases verify AR/EN, three layouts/book
+modes, editor opening and keyboard return;3278 source tests pass.
+
 Profile P-001: [[sessions/2026-11-02-Profile-Interactions]]. Follow and connection
 callbacks are scoped, double dispatch prevented, busy feedback/confirmed count
 retained.3276 tests/136 browser checks, not a live/native or every-pack guarantee.
