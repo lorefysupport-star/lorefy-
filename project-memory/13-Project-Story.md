@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-01-Smooth-Runtime]] starts a measured performance pass with
+bounded pure cover-URL reuse, unchanged artwork/routing/rights and no extra fetch.
+3240 source tests/28 local browser checks; device/network timing remains separate.
+
 [[sessions/2026-11-01-Profile-Material-Continuity]] fixes the owner's shelf-theme
 report at its shared CSS source: transparent unframed content over the page
 gradient, preserving wood/books and all3 layouts without per-color patches.

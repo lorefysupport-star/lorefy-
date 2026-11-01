@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v668-profile-material';
+const CACHE = 'lorefy-v669-cover-preparation';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -78,7 +78,7 @@ const CORE = [
   './styles/lorefy-design-system.css?v=20261101-profile-material-v1',
   './modules/lorefy-design-system.js?v=20261027-glass-depth-v3',
   './modules/lorefy-data-proxy.js?v=20260909-full-catalog-v1-tenrai-v1',
-  './modules/lorefy-cover-api.js?v=20261029-cover-editions-v1-tenrai-v1',
+  './modules/lorefy-cover-api.js?v=20261101-cover-preparation-v1',
   './modules/lorefy-catalog-policy.js?v=20261101-policy-v1',
   './modules/lorefy-catalog-plan.js?v=20261019-search-authors-v1-search-audit-v2',
   './modules/lorefy-catalog-loader.js?v=20261021-search-audit-fast-search-v1-search-audit-v2-policy-v1-identity-v1',

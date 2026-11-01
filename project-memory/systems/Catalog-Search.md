@@ -23,6 +23,10 @@ broadranking386.78→54.42ms are localCPU evidence; native delivery, stalledshar
 optionalproduction sources and peak-load/dataquality gates remain separate.
 # الكتالوج والبحث
 
+[[sessions/2026-11-01-Smooth-Runtime]] S-001 bounds memoization of pure cover URL
+validation/edition keys; rights/proxy routing remains live. Identical-output CPU
+microbenchmark54.03 to11.09ms,3240 tests and28 browser checks. Not network timing.
+
 [[sessions/2026-10-29-Search-Performance]] removes the delayed search-helper
 chain and slowest-provider publication barrier, aborts obsolete input requests,
 prioritizes early book coverage and reuses multilingual normalized fields.

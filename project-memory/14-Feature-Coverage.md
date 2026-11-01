@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Smooth runtime: [[sessions/2026-11-01-Smooth-Runtime]] S-001 validates bounded
+cover CPU caching without caching display routing/rights;3240 tests,28 AR/EN
+demo checks and identical-output paired benchmarks. No native FPS certification.
+
 Profile material continuity: [[sessions/2026-11-01-Profile-Material-Continuity]].
 66 actual demo layout/palette/viewport cases and474 checks, including retained
 wood/seven slots and transparent Grid/Showcase transitions. Device QA separate.

@@ -11,6 +11,7 @@
   var GOOGLE_BOOKS_PAGE_SIZE = 40;
   var MAX_GOOGLE_BOOKS_PAGES = 10;
   var cache = new Map();
+  var normalizedUrls = new Map(), editionKeys = new Map();
   var IMAGE_HOSTS = new Set([
     "s3.anilist.co",
     "s4.anilist.co",
@@ -51,8 +52,21 @@
       /^\/covers\/svg\/270x360\/\d+\.svg$/.test(parsed.pathname);
   }
 
+  // Cache only pure text work, never rights decisions, proxy routes or image data.
+  function memoUrlText(store, value, compute) {
+    if (value.length > 2048 || /^data:/i.test(value)) return compute(value);
+    if (store.has(value)) return store.get(value);
+    var result = compute(value);
+    if (store.size >= 1024) store.delete(store.keys().next().value);
+    store.set(value, result);
+    return result;
+  }
+
   function normalizeUrl(value) {
-    var url = asText(value);
+    return memoUrlText(normalizedUrls, asText(value), parseCoverUrl);
+  }
+
+  function parseCoverUrl(url) {
     if (!url) return "";
     if (/^\/\//.test(url)) url = "https:" + url;
     if (/^http:\/\//i.test(url)) url = url.replace(/^http:\/\//i, "https://");
@@ -114,6 +128,10 @@
   }
 
   function coverDedupeKey(url) {
+    return memoUrlText(editionKeys, asText(url), parseCoverKey);
+  }
+
+  function parseCoverKey(url) {
     var normalized = normalizeUrl(url);
     if (!normalized) return "";
     if (/^data:image\//i.test(normalized)) return normalized.slice(0, 128);
