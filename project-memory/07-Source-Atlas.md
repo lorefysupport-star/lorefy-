@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T12:58:03.655Z
-Source commit: b335e7533d3361fad71d2b9ced6ae85e79507b64
+Observed: 2026-11-01T16:28:37.700Z
+Source commit: 21541c6276ec9355f15ca959fd9d8d0475650038
 
 # Source Atlas
 
@@ -14,7 +14,7 @@ A source inventory, not automatic understanding or a deployment audit. Every ent
 - [[generated/Source-Styles|Styles]]: 57 files
 - [[generated/Source-Backend|Backend]]: 10 files
 - [[generated/Source-Tooling|Tooling]]: 104 files
-- [[generated/Source-Tests|Tests]]: 382 files
+- [[generated/Source-Tests|Tests]]: 383 files
 - [[generated/Source-Docs|Docs]]: 93 files
 - [[generated/Source-Database|Database]]: 57 files
 - [[generated/Source-Native|Native]]: 10 files

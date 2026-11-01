@@ -6,6 +6,11 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+[[sessions/2026-11-01-Profile-Material-Continuity]] removes flat section paint
+behind favorites/recent/top-character content so the page gradient stays
+continuous in every palette. Three actual layouts,11 palettes and320/390px:
+474 browser checks passed. Walnut/books/actions/preferences remain unchanged.
+
 [[sessions/2026-11-01-Character-Studio]] unifies owner top character/work search,
 advances empty ranks and adds independent image commands across top/rated
 surfaces. Stable article/grid wrappers avoid legacy book-button suppression and

@@ -53,7 +53,7 @@ test('panel appearance is short, opacity-only and disabled for reduced motion', 
 });
 
 test('refreshed UI cache references match the source entry', () => {
-  const asset = 'styles/lorefy-design-system.css?v=20261018-social-profile-v1';
+  const asset = 'styles/lorefy-design-system.css?v=20261101-profile-material-v1';
   assert.ok(read('index.html').includes(asset));
   assert.ok(read('sw.js').includes(asset));
 });

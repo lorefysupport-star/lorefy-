@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+Shelf-theme patch: [[sessions/2026-11-01-Profile-Material-Continuity]]. Actual
+palette/layout matrix474/474, full source suite3236/3236 and six byte-identical
+mirrors verified before the repair push. Native/device acceptance stays separate.
+
 Character studio source work: [[sessions/2026-11-01-Character-Studio]]. Remaining
 acceptance: real account image durability and native Photos/camera/keyboard;
 no new native build or production deployment is authorized by this source pass.

@@ -364,7 +364,9 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
 .lf-app.lf-app.lf-app .lf-profile-banner > img[src^="data:image/svg+xml"] { opacity: 0 !important; }
 .lf-app.lf-app.lf-app .lf-profile-banner > div:last-child { width: 88px !important; height: 88px !important; bottom: -34px !important; border: 4px solid var(--ui-bg) !important; box-shadow: none !important; }
 .lf-app.lf-app.lf-app .lf-profile-identity { padding: 46px var(--ui-inline) 0 !important; margin: 0 !important; background: var(--ui-bg) !important; }
-.lf-app.lf-app.lf-app :is(.lf-profile-page, .lf-profile-favorites, .lf-profile-recent, .lf-profile-top-characters) { background: var(--ui-bg) !important; }
+.lf-app.lf-app.lf-app .lf-profile-page { background: var(--ui-bg) !important; }
+/* Unframed sections reveal the page gradient instead of painting flat patches. */
+.lf-app.lf-app.lf-app :is(.lf-profile-favorites, .lf-profile-recent, .lf-profile-top-characters) { background: transparent !important; }
 .lf-app.lf-app.lf-app .lf-profile-page { scrollbar-width: none !important; -ms-overflow-style: none; }
 .lf-app.lf-app.lf-app .lf-profile-page::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
 .lf-app.lf-app.lf-app .lf-profile-favorites { padding: 0 var(--ui-inline) 0 !important; margin-inline: 0 !important; width: 100% !important; }

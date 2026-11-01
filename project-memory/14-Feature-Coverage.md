@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Profile material continuity: [[sessions/2026-11-01-Profile-Material-Continuity]].
+66 actual demo layout/palette/viewport cases and474 checks, including retained
+wood/seven slots and transparent Grid/Showcase transitions. Device QA separate.
+
 Character studio: [[sessions/2026-11-01-Character-Studio]] covers top selection/
 search, rated strip/gallery, exact-score retention and the existing work-rating
 image editor. Owner/lifetime guards and all3 actual layouts/themes are checked

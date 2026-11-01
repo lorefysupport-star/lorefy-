@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T12:58:03.655Z
-Source commit: b335e7533d3361fad71d2b9ced6ae85e79507b64
+Observed: 2026-11-01T16:28:37.700Z
+Source commit: 21541c6276ec9355f15ca959fd9d8d0475650038
 
 # Tests Source Inventory
 
@@ -67,9 +67,9 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/appearance-feather.test.js](../../tests/appearance-feather.test.js) (2248 bytes)
 - [tests/apple-authorization.test.js](../../tests/apple-authorization.test.js) (2410 bytes)
 - [tests/apple-native-guard.test.js](../../tests/apple-native-guard.test.js) (1407 bytes)
-- [tests/apple-press-feedback.test.js](../../tests/apple-press-feedback.test.js) (1795 bytes)
+- [tests/apple-press-feedback.test.js](../../tests/apple-press-feedback.test.js) (1797 bytes)
 - [tests/apple-release-package.test.js](../../tests/apple-release-package.test.js) (13058 bytes)
-- [tests/apple-ui-surfaces.test.js](../../tests/apple-ui-surfaces.test.js) (4120 bytes)
+- [tests/apple-ui-surfaces.test.js](../../tests/apple-ui-surfaces.test.js) (4122 bytes)
 - [tests/arabic-library-expansion.test.js](../../tests/arabic-library-expansion.test.js) (4328 bytes)
 - [tests/arabic-library-repair.test.js](../../tests/arabic-library-repair.test.js) (17014 bytes)
 - [tests/arabic-open-catalog.test.js](../../tests/arabic-open-catalog.test.js) (8666 bytes)
@@ -291,6 +291,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/profile-read-session.test.js](../../tests/profile-read-session.test.js) (7155 bytes)
 - [tests/profile-refinement.test.js](../../tests/profile-refinement.test.js) (1181 bytes)
 - [tests/profile-relationship-session.test.js](../../tests/profile-relationship-session.test.js) (4294 bytes)
+- [tests/profile-section-theme.test.js](../../tests/profile-section-theme.test.js) (1290 bytes)
 - [tests/profile-sections.test.js](../../tests/profile-sections.test.js) (8845 bytes)
 - [tests/profile-shop.test.js](../../tests/profile-shop.test.js) (9713 bytes)
 - [tests/project-memory-workflow.test.js](../../tests/project-memory-workflow.test.js) (3399 bytes)
@@ -358,7 +359,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/settings-studio.test.js](../../tests/settings-studio.test.js) (7316 bytes)
 - [tests/share-composer.test.js](../../tests/share-composer.test.js) (9016 bytes)
 - [tests/social-artwork-chapters.test.js](../../tests/social-artwork-chapters.test.js) (5894 bytes)
-- [tests/social-profile-ui.test.js](../../tests/social-profile-ui.test.js) (6024 bytes)
+- [tests/social-profile-ui.test.js](../../tests/social-profile-ui.test.js) (6026 bytes)
 - [tests/source-attribution-label.test.js](../../tests/source-attribution-label.test.js) (2002 bytes)
 - [tests/stable-picker-rendering.test.js](../../tests/stable-picker-rendering.test.js) (7823 bytes)
 - [tests/state-recovery-runtime.test.js](../../tests/state-recovery-runtime.test.js) (6083 bytes)

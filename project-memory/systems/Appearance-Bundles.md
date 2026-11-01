@@ -6,6 +6,11 @@ aliases: ["إطارات", "بنرات", "حزم", "مجانية", "ثيم", "ز�
 ---
 # المظهر والإطارات والحزم
 
+[[sessions/2026-11-01-Profile-Material-Continuity]] separates the profile page
+base from transparent unframed sections; no more flat shelf rectangle over the
+shared gradient. Eleven actual palettes across all3 layouts; no frame/artwork
+or saved-color mutation. This does not certify native rendering.
+
 [[sessions/2026-10-28-UI-Foundation-Phase-Four]] gives Settings/Customize the
 shared material and named keyboard tabs, visible Color/Hex labels, inline
 validation and focus retention on explicit Apply. Four library modes and three

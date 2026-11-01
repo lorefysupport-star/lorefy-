@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-01-Profile-Material-Continuity]] fixes the owner's shelf-theme
+report at its shared CSS source: transparent unframed content over the page
+gradient, preserving wood/books and all3 layouts without per-color patches.
+
 [[sessions/2026-11-01-Character-Studio]] follows the favorite-type repair with
 single-field character/work discovery, next-empty ranking, consistent rated
 surfaces and image editing without losing scores/slots. Owner-only local UI;
