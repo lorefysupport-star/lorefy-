@@ -11,6 +11,11 @@
   }
   function isDislike(value, recommendation) { return value === 0 && (recommendation === 'no' || recommendation === false); }
   function canPublish(value, recommendation) { return isDislike(value,recommendation) || typeof value === 'number' && Number.isFinite(value) && value >= 0.25 && value <= 5; }
+  function recommendationOf(review) {
+    if (review.recVal === null || review.recVal === 'yes' || review.recVal === 'no') return review.recVal;
+    if (review.rec === true) return 'yes';
+    return review.rec === false && canPublish(review.r, 'no') ? 'no' : null;
+  }
   function localDislikeCount(rows, workId, ownerId) {
     var latest=new Map();
     (rows||[]).forEach(function(row){
@@ -20,12 +25,12 @@
       var old=latest.get(user);
       if(!old || (Number(row.ts)||0)>(Number(old.ts)||0))latest.set(user,row);
     });
-    return Array.from(latest.values()).filter(function(row){return row.is_public!==false && isDislike(row.r,row.recVal||row.rec);}).length;
+    return Array.from(latest.values()).filter(function(row){return row.is_public!==false && isDislike(row.r,recommendationOf(row));}).length;
   }
   function ratingValue(index, part) { return Math.min(5, Math.max(0.25, index + ([0.25,0.5,0.75,1].includes(part) ? part : 1))); }
   function savedDraft(review) {
     review = review || {};
-    var recommendation=review.recVal || (review.rec === true ? 'yes' : isDislike(review.r,review.rec) ? 'no' : null);
+    var recommendation=recommendationOf(review);
     if(recommendation==='no'&&!canPublish(review.r,'no'))recommendation=null;
     return {rating:Math.max(0,Math.min(5,Number(review.r)||0)),text:review.txt === '—' ? '' : String(review.txt || ''),
       ratings:Object.assign({story:0,art:0,chars:0,world:0},review.ratings || {}),
@@ -135,7 +140,10 @@
     function pickRating(value){if(!isCurrent())return;if(value>0&&p.recommendation==='no')p.onRecommend(null);p.onRating(value);}
     function pickRecommendation(value){
       if(!isCurrent()||busyRef.current)return;
-      if(value==='no'){p.onRating(0);p.onRecommend(disliked?null:'no');}
+      if(value==='no'){
+        if(p.recommendation==='no')p.onRecommend(null);
+        else{p.onRating(0);p.onRecommend('no');}
+      }
       else p.onRecommend(p.recommendation==='yes'?null:'yes');
     }
     var icon = function (name, props) { var component=p.icons[name]||root.NenIcons&&root.NenIcons[name];return component ? h(component, Object.assign({size:18, 'aria-hidden':true}, props || {})) : null; };
@@ -191,7 +199,7 @@
           h('nav',{className:'lf-review-studio-tabs',role:'tablist','aria-label':english?'Review sections':'أقسام المراجعة',onKeyDown:function(event){if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;var buttons=Array.from(event.currentTarget.querySelectorAll('[role=tab]')),i=buttons.indexOf(root.document.activeElement);if(i<0)return;event.preventDefault();var step=event.key===(english?'ArrowRight':'ArrowLeft')?1:-1,next=event.key==='Home'?0:event.key==='End'?2:(i+step+3)%3;buttons[next].click();buttons[next].focus();}},[['write',english?'Your thoughts':'رأيك'],['details',english?'Details':'التفاصيل'],['extras',english?'Extras':'إضافات']].map(function(entry){return h('button',{key:entry[0],type:'button',role:'tab','data-review-view':entry[0],'aria-selected':view===entry[0],tabIndex:view===entry[0]?0:-1,onClick:function(){if(isCurrent())setView(entry[0]);}},entry[1]);})),
           h('div',{className:'lf-review-view',hidden:view!=='write',role:'tabpanel','aria-label':english?'Your thoughts':'رأيك'},
           h('div', {className:'lf-rating-recommendation'}, h('p', null, w.recommend), h('div', null, [['yes',w.yes],['no',w.no]].map(function (item) {
-            return h('button', {key:item[0], type:'button', disabled:busy, 'data-review-dislike':item[0]==='no'?'':undefined, 'aria-pressed':item[0]==='no'?disliked:p.recommendation==='yes', onClick:function () { pickRecommendation(item[0]); }}, icon(item[0]==='no'?'ThumbsDown':'ThumbsUp'), item[0]==='no'?(english?'Dislike · 0':'عدم إعجاب · صفر'):item[1]);
+            return h('button', {key:item[0], type:'button', disabled:busy, 'data-review-dislike':item[0]==='no'?'':undefined, 'aria-pressed':p.recommendation===item[0], onClick:function () { pickRecommendation(item[0]); }}, icon(item[0]==='no'?'ThumbsDown':'ThumbsUp'), item[0]==='no'&&!(p.rating>0&&p.recommendation==='no')?(english?'Dislike · 0':'عدم إعجاب · صفر'):item[1]);
           }))),
           h('section', {className:'lf-rating-writing'},
             h('label', {htmlFor:'lf-rating-text'}, w.review, h('small', null, w.optional)),

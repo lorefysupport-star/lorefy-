@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-11-01-Logical-Recommendation-Roundtrip]] preserves legacy
+positive/no draft intent, canonical unknown and local dislike counting.3163
+tests/52 full demo review-flow checks; no service or reading-state mutation.
+
 [[sessions/2026-11-01-Logical-Friend-Ratings]] reconciles friend shelves with
 intentional zero dislikes and latest public/rated state.3156 tests/40 browser
 checks; public metadata SELECT adds recommend only, no production mutation.

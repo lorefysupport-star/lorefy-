@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Logic L-003: [[sessions/2026-11-01-Logical-Recommendation-Roundtrip]],3163 tests/
+52 actual-app review-flow checks. Three logic findings are closed in source;
+unreviewed domains, production and device acceptance remain separate.
+
 Logic L-002: [[sessions/2026-11-01-Logical-Public-Review-Projection]],3158 tests/
 16 browser checks preserve review semantics and stale-reader suppression. The
 card-prop adapter does not certify production reaction writes.

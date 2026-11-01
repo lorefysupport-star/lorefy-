@@ -107,10 +107,10 @@ test('cover material reserves space, uses theme tokens and does not animate layo
 test('cover media is present before consumers with matching offline keys',()=>{
  const entry=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8');
  for(const file of ['modules/lorefy-cover-media.js','styles/lorefy-cover-media.css','modules/lorefy-review-editor.js','modules/lorefy-explore-studio.js','modules/lorefy-profile-sections.js']){
-  const version=file==='styles/lorefy-cover-media.css'?'20261029-shelf-acceptance-v1':file==='modules/lorefy-profile-sections.js'?'20261029-profile-list-media-v1':file==='modules/lorefy-explore-studio.js'?'20261029-search-editions-v1':file==='modules/lorefy-review-editor.js'?'20261029-work-editor-media-v1':'20261101-slow-media-v1';
+  const version=file==='styles/lorefy-cover-media.css'?'20261029-shelf-acceptance-v1':file==='modules/lorefy-profile-sections.js'?'20261029-profile-list-media-v1':file==='modules/lorefy-explore-studio.js'?'20261029-search-editions-v1':file==='modules/lorefy-review-editor.js'?'20261101-recommendation-logic-v1':'20261101-slow-media-v1';
   assert.ok(entry.includes(file+'?v='+version));
   assert.ok(sw.includes(file+'?v='+version));
  }
  assert.ok(entry.indexOf('modules/lorefy-cover-media.js')<entry.indexOf('modules/lorefy-review-editor.js'));
- assert.match(sw,/lorefy-v652-profile-review-logic/);
+ assert.match(sw,/lorefy-v653-recommendation-logic/);
 });

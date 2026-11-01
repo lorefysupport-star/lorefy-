@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T00:01:10.328Z
-Source commit: 20766afb03877f44ec8ef8d41add3b3f4cdbc21e
+Observed: 2026-11-01T06:00:29.313Z
+Source commit: 4cc1e7804e5a5675279e31b20db36402b63abb70
 
 # Tests Source Inventory
 
@@ -167,7 +167,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/connection-keyboard.test.js](../../tests/connection-keyboard.test.js) (2451 bytes)
 - [tests/corrections-studio.test.js](../../tests/corrections-studio.test.js) (5003 bytes)
 - [tests/cover-edition-choice.test.js](../../tests/cover-edition-choice.test.js) (5899 bytes)
-- [tests/cover-media.test.js](../../tests/cover-media.test.js) (10899 bytes)
+- [tests/cover-media.test.js](../../tests/cover-media.test.js) (10902 bytes)
 - [tests/cover-source-lock.test.js](../../tests/cover-source-lock.test.js) (15598 bytes)
 - [tests/custom-appearance.test.js](../../tests/custom-appearance.test.js) (7275 bytes)
 - [tests/custom-artwork-persistence.test.js](../../tests/custom-artwork-persistence.test.js) (13763 bytes)
@@ -322,7 +322,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/report-studio.test.js](../../tests/report-studio.test.js) (8573 bytes)
 - [tests/review-backend-owner.test.js](../../tests/review-backend-owner.test.js) (7855 bytes)
 - [tests/review-earned-progress.test.js](../../tests/review-earned-progress.test.js) (2079 bytes)
-- [tests/review-editor-ownership.test.js](../../tests/review-editor-ownership.test.js) (8008 bytes)
+- [tests/review-editor-ownership.test.js](../../tests/review-editor-ownership.test.js) (8556 bytes)
 - [tests/review-editor.test.js](../../tests/review-editor.test.js) (9216 bytes)
 - [tests/review-first-completion.test.js](../../tests/review-first-completion.test.js) (8475 bytes)
 - [tests/review-image-failure.test.js](../../tests/review-image-failure.test.js) (9195 bytes)
@@ -369,15 +369,15 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/ui-finish-pass.test.js](../../tests/ui-finish-pass.test.js) (2389 bytes)
 - [tests/ui-placement.test.js](../../tests/ui-placement.test.js) (23551 bytes)
 - [tests/ui-profile-discover-polish.test.js](../../tests/ui-profile-discover-polish.test.js) (3647 bytes)
-- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5643 bytes)
+- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5646 bytes)
 - [tests/user-discovery.test.js](../../tests/user-discovery.test.js) (5208 bytes)
 - [tests/user-reported-fixes.test.js](../../tests/user-reported-fixes.test.js) (4739 bytes)
 - [tests/version-consistency.test.js](../../tests/version-consistency.test.js) (1492 bytes)
 - [tests/wood-shelf-clipping.test.js](../../tests/wood-shelf-clipping.test.js) (1555 bytes)
-- [tests/work-byline-typography.test.js](../../tests/work-byline-typography.test.js) (7936 bytes)
+- [tests/work-byline-typography.test.js](../../tests/work-byline-typography.test.js) (7939 bytes)
 - [tests/work-detail-language.test.js](../../tests/work-detail-language.test.js) (10732 bytes)
 - [tests/work-dislike-backend.test.js](../../tests/work-dislike-backend.test.js) (3621 bytes)
-- [tests/work-dislike.test.js](../../tests/work-dislike.test.js) (7428 bytes)
+- [tests/work-dislike.test.js](../../tests/work-dislike.test.js) (9194 bytes)
 - [tests/work-editor-media.test.js](../../tests/work-editor-media.test.js) (3870 bytes)
 - [tests/work-experience.test.js](../../tests/work-experience.test.js) (7250 bytes)
 - [tests/work-list-presentation.test.js](../../tests/work-list-presentation.test.js) (1785 bytes)

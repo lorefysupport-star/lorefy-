@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Logical-Recommendation-Roundtrip]] closes third
+scoped logic finding: no unintended recommendation/score change on text edit or
+deselection, canonical unknown isn't a dislike.3163 tests/52 actual-app checks.
+
 2026-11-01 [[sessions/2026-11-01-Logical-Public-Review-Projection]] fixes L-002:
 visitor review mapping no longer invents zero or omits dislike state.3158 tests/
 16 browser contract checks, no service write or native release.

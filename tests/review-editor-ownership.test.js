@@ -82,6 +82,14 @@ test('the current editor still publishes and a current failure preserves its dra
   assert.deepEqual(failed.writes,['toast']);assert.equal(failed.scope.ct.current,'First draft');
 });
 
+test('opening and republishing a legacy negative recommendation preserves its positive rating and false payload',async()=>{
+  const h=harness();h.scope.M=[{id:'legacy',userId:'me',mid:'work',r:2,rec:false,txt:'Original opinion'}];
+  h.scope.dt=value=>{h.scope.G=value;};h.scope.ro=value=>{h.scope.Fe=value;};
+  h.scope.open();assert.equal(h.scope.G,2);assert.equal(h.scope.Fe,'no');
+  const request=h.scope.publish();assert.equal(h.calls[0].rating,2);assert.equal(h.calls[0].recommend,false);
+  h.resolve({id:'legacy'});await request;
+});
+
 function imageHarness() {
   const h=harness(),readers=[],images=[],canvases=[],updates=[];
   h.scope.FileReader=class { constructor(){readers.push(this);} readAsDataURL(file){this.file=file;this.result='data:fictional-input';} };

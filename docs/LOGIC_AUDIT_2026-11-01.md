@@ -1,6 +1,6 @@
 # Lorefy Logic Audit - 2026-11-01
 
-Status: staged source audit and repairs, not whole-app certification.
+Status: three scoped source findings repaired and verified; not whole-app certification.
 
 ## Skill Setup
 
@@ -70,12 +70,45 @@ adapter exposes negative count/selection. Old reader data hides immediately and
 late replaced-reader response is ignored. This is a mapper/render contract test,
 not proof of live review reaction writes or physical-device behavior.
 
-### L-003: Editing Legacy Negative Recommendations - Source Finding, Pending Repair
+### L-003: Editing Legacy Negative Recommendations - Fixed
 
 `modules/lorefy-review-editor.js::savedDraft` preserves legacy positive numeric
 scores but restores rec:false only for zero. A positive score with an older
-negative recommendation can reopen with the recommendation cleared. Reproduce
-the round trip and canonical null-vs-legacy-false count distinction first.
+negative recommendation reopened with the recommendation cleared. Canonical
+recVal:null also fell through to legacy rec:false, misclassifying unknown zero
+as a dislike. Five added regressions reproduced data and visible-state failures.
+
+One local recommendation resolver now respects canonical null/yes/no before
+legacy booleans. Preserve legacy positive negative-recommendation scores rather
+than migrating them to zero. The selected legacy choice is shown as Not for me,
+not falsely Dislike0. Deselect preserves the score; a subsequent new Dislike
+deliberately chooses zero. Local counts use the same resolver and latest row.
+
+Evidence: focused50/50, final full3163/3163;52/52 actual-app browser checks,
+AR/EN x320/390 dark/pink. Open seeded legacy review, edit text, publish, reopen,
+deselect, deliberately choose zero, republish: one review, correct choice/score,
+unchanged explicit Library/progress. Unknown zero cannot publish. The publication
+test asserts demo mode and uses an isolated synthetic owner; no real account or
+service mutation. The initial browser attempt targeted the hidden legacy action;
+the verified run uses the visible current quick-review control. Authentication
+and intentional UI bridging were not removed to make fixtures pass.
+
+## Audit Coverage, Not An Automatic Whole-App Score
+
+| Framework area | This pass |
+| --- | --- |
+| Territory, execution/data boundaries | Mapped entry, main React source, feature modules, backend and mirrored runtimes |
+| Business claims and edge cases | Three reproduced review/friend/visitor contradictions repaired |
+| Test quality and historical fences | Executable data/effect/publication tests plus browser behavior; preserved intentional guards and explicit reading choices |
+| Integrations and deployment | Code inspected and local adapters tested; no live-service certification |
+| Architecture/ownership/debt | Scope mapped; large main/growth files and brittle repeated cache-version assertions remain maintenance risks, not new proven runtime bugs |
+| Performance/deletion | Prior performance report retained; no new speed claim or deletion of reachable legacy UI |
+| Enterprise requirements | B2B scoring is not applicable to this consumer reading audit |
+| Chain-link bottleneck/global completeness | Not established by this scoped logic pass; remaining domains require their own evidence |
+
+Final source suite3163/3163. Browser evidence is40 friend,16 profile contract and
+52 full review-flow checks, all passing. See linked session notes for red/green
+receipts and boundaries. No numerical correctness score for the entire app.
 
 ## Other Reviewed Contracts And Remaining Coverage
 

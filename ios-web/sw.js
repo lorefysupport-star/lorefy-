@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v652-profile-review-logic';
+const CACHE = 'lorefy-v653-recommendation-logic';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -155,7 +155,7 @@ const CORE = [
   './modules/lorefy-cover-media.js?v=20261101-slow-media-v1',
   './modules/lorefy-library-media.js?v=20261029-home-media-v1',
   './styles/lorefy-cover-media.css?v=20261029-shelf-acceptance-v1',
-  './modules/lorefy-review-editor.js?v=20261029-work-editor-media-v1',
+  './modules/lorefy-review-editor.js?v=20261101-recommendation-logic-v1',
   './styles/lorefy-review-editor.css?v=20261004-work-surface-v3',
   './styles/lorefy-work-surface.css?v=20261011-work-lists-v1',
   './styles/lorefy-character-atlas.css?v=20261007-character-atlas-v1',

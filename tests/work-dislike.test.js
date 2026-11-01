@@ -35,6 +35,33 @@ test('restoring dislike and legacy not-recommend scores never reclassifies null 
  assert.equal(api.savedDraft({r:null,rec:false}).recommendation,null);
  assert.equal(api.savedDraft({r:null,recVal:'no',rec:false}).recommendation,null);
 });
+
+test('legacy negative recommendations reopen with their original positive score and choice',()=>{
+ const {api}=model();const review={r:2,rec:false,txt:'Keep my opinion',imgs:['image'],ratings:{story:3}};
+ const before=JSON.stringify(review),draft=api.savedDraft(review);
+ assert.equal(draft.rating,2);assert.equal(draft.recommendation,'no');assert.equal(draft.text,'Keep my opinion');
+ assert.equal(draft.ratings.story,3);assert.equal(JSON.stringify(review),before);
+});
+
+test('legacy negative recommendation is visibly selected and toggles off without erasing its positive score',()=>{
+ const ratings=[],recs=[],m=model({rating:2,recommendation:'no',onRating:n=>ratings.push(n),onRecommend:n=>recs.push(n)});
+ const no=find(m.tree,n=>n.attributes['data-review-dislike']!==undefined);
+ assert.equal(no.attributes['aria-pressed'],true);assert.ok(no.children.includes('Not for me'));
+ no.attributes.onClick();assert.deepEqual(ratings,[]);assert.deepEqual(recs,[null]);
+});
+
+test('canonical unknown recommendation stays unknown instead of becoming a zero dislike',()=>{
+ const {api}=model();assert.equal(api.savedDraft({r:0,recVal:null,rec:false}).recommendation,null);
+ assert.equal(api.savedDraft({r:2,recVal:null,rec:false}).recommendation,null);
+ assert.equal(api.savedDraft({r:0,recVal:'no',rec:false}).recommendation,'no');
+});
+
+test('newest canonical unknown zero removes a prior local dislike without losing legacy explicit zero',()=>{
+ const {api}=model(),rows=[{id:'old',mid:'work',userId:'reader',r:0,recVal:'no',ts:1},
+ {id:'new',mid:'work',userId:'reader',r:0,recVal:null,rec:false,ts:2}];
+ assert.equal(api.localDislikeCount(rows,'work'),0);
+ assert.equal(api.localDislikeCount(rows.concat({mid:'work',userId:'other',r:0,rec:false,ts:3}),'work'),1);
+});
 test('demo dislike counts deduplicate owners and exclude unrated, private and different works',()=>{
  const {api}=model();assert.equal(typeof api.localDislikeCount,'function');
  const rows=[{mid:'work',r:0,recVal:'no',userId:'me'},{mid:'work',r:0,recVal:'no',userId:'owner'},
