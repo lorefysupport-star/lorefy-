@@ -6,6 +6,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+Current owner priority: [[sessions/2026-11-01-Community-Timeline]]. C-001 review
+realtime routing/catch-up passes3180 tests/18 browser checks. Continue friend
+shared loading, post invalidation routing, then review reaction consistency.
+This community task supersedes the next-diary suggestion below, not its evidence.
+
 [[sessions/2026-11-01-Logical-Diary-Write-Retry]] closes L-006 with3175 tests/52
 browser checks. History-write retry is verified; next separate contract is a
 snapshot-only failure after successful history persistence and crash recovery.

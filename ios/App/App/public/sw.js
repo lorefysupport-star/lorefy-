@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v656-diary-retry';
+const CACHE = 'lorefy-v657-community-routing';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -171,7 +171,7 @@ const CORE = [
   './styles/lorefy-book-showcase.css?v=20261028-reading-type-v1',
   './styles/lorefy-profile-header.css?v=20261024-banner-repairs-v4',
   './modules/lorefy-profile-header.js?v=20261025-restored-v1',
-  './uploads/files/lorefy-app.js?v=20261029-cover-editions-v1',
+  './uploads/files/lorefy-app.js?v=20261101-community-routing-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2',

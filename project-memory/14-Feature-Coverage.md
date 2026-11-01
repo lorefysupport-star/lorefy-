@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Community C-001: [[sessions/2026-11-01-Community-Timeline]],3180 tests/18 AR/EN
+browser checks for typed realtime refresh, burst coalescing/catch-up and idle
+card retention. Controlled backend/local demo, not live service or hardware.
+
 Logic L-006: [[sessions/2026-11-01-Logical-Diary-Write-Retry]],3175 tests/52
 browser quota-adapter checks cover failed history write/retry, retained notes,
 checkpoint and rendered units. Snapshot-only failure/atomic crash recovery open.

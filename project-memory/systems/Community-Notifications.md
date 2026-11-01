@@ -6,6 +6,11 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-11-01-Community-Timeline]] begins a focused timeline pass:
+C-001 routes/coalesces review realtime changes with one trailing catch-up,
+without post-triggered review/graph reads.3180 tests/18 local browser checks.
+Friend loading, post invalidations and reaction consistency are next, not closed.
+
 [[sessions/2026-11-01-Logical-Recommendation-Roundtrip]] preserves legacy
 positive/no draft intent, canonical unknown and local dislike counting.3163
 tests/52 full demo review-flow checks; no service or reading-state mutation.
