@@ -42,7 +42,7 @@ test('gallery cards expose the precise score and retain their work navigation', 
     nodes.push(node); return node;
   }
   let opened;
-  const scope = { el, uiText: (ar, en) => en, profileRatedCharacterPortrait: () => el('span'), profileRatedCharacterCache: {}, openCharacterPage: value => opened = value };
+  const scope = { el, uiText: (ar, en) => en, profileCharacterImageEdit:()=>el('button'),syncProfileRatedCharacterGallery(){},profileRatedCharacterPortrait: () => el('span'), profileRatedCharacterCache: {}, openCharacterPage: value => opened = value };
   const start = source.indexOf('function profileRatedCharacterShelfCard(');
   vm.runInNewContext(source.slice(start, source.indexOf('function ratedCharacterGroups(', start)), scope);
   const card = scope.profileRatedCharacterShelfCard(items[0]);
@@ -55,7 +55,7 @@ test('character gallery assets and portal-safe feather clipping are registered',
   const css = fs.readFileSync(path.join(root, 'styles/lorefy-character-atlas.css'), 'utf8');
   assert.match(css, /html:root.*\.lf-profile-rated-character-star-fill\s*\{[^}]*position:\s*absolute/s);
   assert.match(css, /\.lf-rated-character-shelf-rail\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
-  for (const file of ['index.html', 'sw.js']) assert.ok(fs.readFileSync(path.join(root, file), 'utf8').includes('styles/lorefy-character-atlas.css?v=20261007-character-atlas-v1'));
+  for (const file of ['index.html', 'sw.js']) assert.ok(fs.readFileSync(path.join(root, file), 'utf8').includes('styles/lorefy-character-atlas.css?v=20261101-character-studio-v1'));
 });
 test('English character roles are localized without changing the filter metadata', () => {
   const nodes = [];

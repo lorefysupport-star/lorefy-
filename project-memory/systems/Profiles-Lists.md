@@ -6,6 +6,15 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+[[sessions/2026-11-01-Character-Studio]] unifies owner top character/work search,
+advances empty ranks and adds independent image commands across top/rated
+surfaces. Stable article/grid wrappers avoid legacy book-button suppression and
+320px overlap. Nested image edits preserve owner, drafts, quarter scores and rank.
+Exact layout/theme assertions distinguish source/browser from device/cloud QA.
+Final3234 source tests and184 interaction/layout checks passed; no real account
+write or native build. Favorite-format layout verification also reran6/6 with
+the actual immersive attribute rather than its Panoramic display label.
+
 [[sessions/2026-11-01-Reading-Favorite-Type]] replaces unread favorite/wishlist/
 rating weights with distinct reading-evidenced works. Shared canonical owner/
 projection calculation, localized labels and bounded partial-catalog fallback;

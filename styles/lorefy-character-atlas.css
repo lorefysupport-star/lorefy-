@@ -75,3 +75,74 @@ html:root:root:root:root:root .lf-rated-character-shelf-copy small { font-size: 
 .lf-character-atlas-modes button:focus-visible,.lf-rated-character-shelf-card:focus-visible { outline: 2px solid var(--ui-action); outline-offset: 4px; }
 @media (min-width: 700px) { html:root:root:root:root:root .lf-rated-character-shelf-rail { grid-template-columns: repeat(3, minmax(0, 1fr)); } html:root:root:root:root:root .lf-character-rating-row { grid-template-columns: 84px minmax(0, 1fr) 250px !important; } html:root:root:root:root:root .lf-character-meta { grid-row: 1 / 3 !important; align-self: center !important; } html:root:root:root:root:root .lf-character-score-row { grid-column: 3; grid-row: 1 / 3 !important; align-self: center; } }
 @media (max-width: 359px) { html:root:root:root:root:root .lf-character-rating-row { grid-template-columns: 70px minmax(0, 1fr) !important; gap: 8px 12px !important; padding: 12px !important; } html:root:root:root:root:root .lf-character-portrait { width: 70px !important; height: 110px !important; } html:root:root:root:root:root .lf-profile-rated-characters-page .lf-ov-body { padding-inline: 16px; } }
+
+/* Owner character studio: one search, stable ranks and independent image actions. */
+html:root:root:root:root:root :is(.lf-profile-top-characters-editor,.lf-profile-rated-characters-page) {
+  color:var(--ui-ink)!important;
+  background:var(--ui-bg)!important;
+}
+html:root:root:root:root:root :is(.lf-profile-top-characters-editor,.lf-profile-rated-characters-page) .lf-ov-head {
+  background:color-mix(in srgb,var(--ui-surface) 78%,transparent)!important;
+  backdrop-filter:blur(22px) saturate(140%); -webkit-backdrop-filter:blur(22px) saturate(140%);
+  border-bottom:1px solid var(--ui-line)!important;
+}
+html:root:root:root:root:root .lf-profile-top-characters-editor .lf-ov-body {
+  width:100%; max-width:820px; box-sizing:border-box; gap:14px;
+  margin-inline:auto; padding:20px 16px calc(110px + env(safe-area-inset-bottom));
+}
+html:root:root:root:root:root .lf-top-characters-editor-slots { gap:10px; }
+html:root:root:root:root:root .lf-top-characters-editor-slot { border-radius:8px; aspect-ratio:3/4; background:var(--ui-fill); }
+html:root:root:root:root:root .lf-top-characters-editor-slot.is-active { border-color:var(--ui-action); box-shadow:0 0 0 2px color-mix(in srgb,var(--ui-action) 24%,transparent); }
+html:root:root:root:root:root .lf-top-characters-editor-slot-rank { background:var(--ui-surface); color:var(--ui-ink); font-variant-numeric:tabular-nums; }
+html:root:root:root:root:root .lf-top-characters-editor-slot>strong { font-size:11px; font-weight:600; padding-inline:5px; }
+.lf-character-selection-actions { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:44px; border-bottom:1px solid var(--ui-line); }
+.lf-character-selection-actions strong { min-width:0; overflow-wrap:anywhere; font-size:13px; font-weight:600; color:var(--ui-muted); }
+html:root:root:root:root:root .lf-top-characters-editor-search-box { grid-template-columns:20px minmax(0,1fr) 44px; min-height:52px; padding-inline:14px 4px; gap:6px; background:color-mix(in srgb,var(--ui-surface) 78%,transparent); border-color:var(--ui-line); }
+html:root:root:root:root:root .lf-top-characters-editor-search { width:100%; min-width:0; font-size:16px; text-align:start; color:var(--ui-ink); }
+html:root:root:root:root:root .lf-top-characters-editor-search-clear { width:44px; height:44px; background:transparent; color:var(--ui-muted); }
+.lf-top-characters-editor-search-icon { width:18px; height:18px; }
+.lf-top-characters-editor-search-box:focus-within,.lf-character-atlas-search:focus-within { outline:2px solid var(--ui-action); outline-offset:2px; }
+html:root:root:root:root:root .lf-character-picker-modes { display:flex; min-height:44px; padding:3px; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-fill); }
+html:root:root:root:root:root .lf-character-picker-modes button { flex:1; min-height:44px; font:inherit; font-size:13px; border:0; border-radius:5px; color:var(--ui-muted); background:transparent; }
+html:root:root:root:root:root .lf-character-picker-modes button[aria-selected="true"] { background:var(--ui-surface); color:var(--ui-action); box-shadow:0 1px 3px #00000010; }
+html:root:root:root:root:root .lf-top-characters-editor-work-results { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; background:transparent; border:0; margin:0; overflow:visible; }
+html:root:root:root:root:root .lf-top-characters-editor-work-results[hidden] { display:none; }
+html:root:root:root:root:root .lf-top-characters-editor-work-result { display:flex; align-items:center; gap:8px; padding:8px; min-height:68px; border:1px solid var(--ui-line); border-radius:8px; background:color-mix(in srgb,var(--ui-surface) 82%,transparent); color:var(--ui-ink); text-align:start; }
+html:root:root:root:root:root .lf-top-characters-editor-work-cover { flex:0 0 30px; width:30px; height:44px; }
+.lf-top-characters-editor-work-copy { min-width:0; }
+html:root:root:root:root:root .lf-top-characters-editor-work-copy strong { font-size:12px; line-height:1.4; white-space:normal; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+html:root:root:root:root:root .lf-top-characters-editor-work-copy small { display:none; }
+html:root:root:root:root:root .lf-top-characters-editor-work-action { display:none; }
+.lf-character-candidate-row { display:flex; align-items:center; min-width:0; gap:6px; border-bottom:1px solid var(--ui-line); }
+html:root:root:root:root:root .lf-top-characters-editor-candidate { flex:1; width:auto; min-width:0; display:grid; grid-template-columns:48px minmax(0,1fr) 24px; gap:10px; padding:12px 0; border:0; border-radius:0; background:transparent; color:var(--ui-ink); text-align:start; }
+html:root:root:root:root:root .lf-top-characters-editor-candidate .lf-profile-rated-character-portrait { width:48px; height:60px; border-radius:6px; }
+html:root:root:root:root:root .lf-top-characters-editor-candidate-copy strong { font-size:14px; line-height:1.4; font-weight:600; overflow-wrap:anywhere; }
+html:root:root:root:root:root .lf-top-characters-editor-candidate-copy small { font-size:12px; line-height:1.4; color:var(--ui-muted); }
+html:root:root:root:root:root .lf-top-characters-editor-candidate-action { width:24px; height:24px; border:0; background:var(--ui-fill); color:var(--ui-action); border-radius:50%; font-size:16px; font-weight:600; }
+html:root:root:root:root:root .lf-profile-character-image-edit {
+  position:relative; z-index:5; display:grid!important; place-items:center; flex:0 0 44px; width:44px!important; height:44px!important;
+  min-width:44px!important; min-height:44px!important; padding:0; margin:0; border:1px solid var(--ui-line); border-radius:50%;
+  background:color-mix(in srgb,var(--ui-surface) 86%,transparent); color:var(--ui-ink); cursor:pointer;
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+}
+.lf-profile-character-image-edit svg { width:18px; height:18px; pointer-events:none; }
+html:root:root:root:root:root .lf-character-rating-badge { direction:inherit!important; inset-inline-start:10px!important; inset-inline-end:auto!important; }
+html:root:root:root:root:root .lf-top-characters-editor-current-work button { min-height:44px; padding:8px 12px; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-fill)!important; color:var(--ui-ink)!important; font:inherit; font-size:12px; }
+html:root:root:root:root:root .lf-profile-top-character>.lf-profile-character-open { display:block!important; }
+html:root:root:root:root:root .lf-profile-top-characters-grid:not(.is-empty) { display:grid!important; grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:8px!important; }
+html:root:root:root:root:root .lf-profile-top-characters-grid:not(.is-empty)>.lf-profile-top-character { width:100%!important; min-width:0!important; max-width:none!important; height:auto!important; aspect-ratio:3/4!important; transform:none!important; }
+.lf-profile-top-character.is-empty .lf-profile-character-caption { display:none; }
+html:root:root:root:root:root :is(.lf-profile-top-character,.lf-rated-character-shelf-card,.lf-profile-rated-character)>.lf-profile-character-image-edit { position:absolute; top:4px; inset-inline-end:4px; }
+html:root:root:root:root:root .lf-profile-rated-character>.lf-profile-character-image-edit { top:auto; bottom:2px; }
+.lf-profile-character-caption { position:absolute; inset-inline:0; bottom:0; z-index:1; padding:24px 7px 8px; background:linear-gradient(transparent,#000b); color:white; font-size:11px; line-height:1.4; pointer-events:none; overflow-wrap:anywhere; }
+html:root:root:root:root:root .lf-profile-top-character:has(.lf-profile-character-open:focus-visible) { outline:2px solid var(--ui-action); outline-offset:3px; }
+.lf-profile-character-image-edit:focus-visible { outline:2px solid var(--ui-action); outline-offset:3px; }
+html:root:root:root:root:root .lf-top-characters-editor-save { margin:12px 16px calc(12px + env(safe-area-inset-bottom)); width:calc(100% - 32px); min-height:48px; flex-shrink:0; border:0; border-radius:8px; background:var(--ui-action); color:var(--ui-on-action)!important; font:inherit; font-size:16px; font-weight:600; }
+html:root:root:root:root:root .lf-rated-characters-overview { margin-bottom:16px; padding:20px 0; }
+html:root:root:root:root:root .lf-character-atlas-stat strong { font-size:22px; font-weight:650; }
+html:root:root:root:root:root .lf-character-atlas-stat small { font-size:12px; }
+html:root:root:root:root:root .lf-character-atlas-search { background:color-mix(in srgb,var(--ui-surface) 80%,transparent); border:1px solid var(--ui-line); height:52px; }
+html:root:root:root:root:root .lf-character-atlas-search input { font-size:16px; }
+html:root:root:root:root:root .lf-rated-character-shelf-card .lf-profile-rated-character-portrait { aspect-ratio:1/1; }
+html:root:root:root:root:root .lf-rated-character-shelf-copy small { font-size:12px; }
+html:root:root:root:root:root .lf-character-image-edit { width:44px!important; height:44px!important; bottom:0!important; left:0!important; min-width:44px; min-height:44px; }

@@ -168,7 +168,8 @@ test('every best-four character tile uses a direct native button editor trigger'
   assert.match(tile, /el\("button", \{/);
   assert.match(tile, /type: "button"/);
   assert.match(tile, /"data-lf-top-character-editor": "slot"/);
-  assert.match(tile, /tile\.addEventListener\("click", openProfileTopCharactersEditorFromControl, true\)/);
+  assert.match(tile, /open\.addEventListener\("click", openProfileTopCharactersEditorFromControl, true\)/);
+  assert.match(tile, /tile\.appendChild\(profileCharacterImageEdit/);
   assert.doesNotMatch(tile, /openCharacterPage\(/);
 });
 
@@ -185,7 +186,7 @@ test('best-four character controls survive React replacing a pressed profile car
   assert.match(boot, /wireProfileTopCharacterEditorDelegation\(\)/);
   assert.match(controls, /event\.stopPropagation\(\)/);
   assert.match(controls, /event\.stopImmediatePropagation\(\)/);
-  assert.match(controls, /tile\.addEventListener\("click", openProfileTopCharactersEditorFromControl, true\)/);
+  assert.match(controls, /open\.addEventListener\("click", openProfileTopCharactersEditorFromControl, true\)/);
   assert.match(sync, /header\.addEventListener\("click", openProfileTopCharactersEditorFromControl, true\)/);
   assert.match(controls, /openProfileTopCharactersEditor\(\)/);
   assert.match(styles, /\.lf-profile-top-character-image\s*\{[^}]*pointer-events:\s*none/s);

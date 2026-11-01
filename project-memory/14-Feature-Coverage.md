@@ -6,6 +6,13 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Character studio: [[sessions/2026-11-01-Character-Studio]] covers top selection/
+search, rated strip/gallery, exact-score retention and the existing work-rating
+image editor. Owner/lifetime guards and all3 actual layouts/themes are checked
+locally; native permissions/live provider/cloud durability remain independent.
+Final3234 source tests and184 local interaction/layout checks passed, with
+actual palette/layout assertions and no nested button or320px card overlap.
+
 Favorite format: [[sessions/2026-11-01-Reading-Favorite-Type]] covers read-only
 evidence, canonical aliases, duplicate suppression and stale/partial fallback.
 3228 tests/6 actual-demo layout checks; actual service/device acceptance separate.

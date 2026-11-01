@@ -6,6 +6,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+Character studio source work: [[sessions/2026-11-01-Character-Studio]]. Remaining
+acceptance: real account image durability and native Photos/camera/keyboard;
+no new native build or production deployment is authorized by this source pass.
+Final acceptance in this pass:3234 tests/184 local browser checks, zero failures.
+
 Favorite-type repair: [[sessions/2026-11-01-Reading-Favorite-Type]]. Next source
 task is owner top/rated-character selection, search and image-edit ergonomics.
 Preserve scores/slots/owner guards and verify actual UI, not only source patterns.

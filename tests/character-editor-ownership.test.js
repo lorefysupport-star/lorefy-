@@ -33,7 +33,7 @@ function harness(options = {}) {
   let provider = () => Promise.resolve([]);
   const item = { workId: 'work', character: { key: 'hero', name: options.name || 'Hero' }, workTitle: options.workTitle || 'Work', score: 5 };
   const scope = {
-    profileTopCharacterEditor: null, profileRatedCharacterCache: {}, K_SCORES: 'ratings', K_CHARCUSTOM: 'custom', K_CHARIMG: 'images',
+    profileTopCharacterEditor: null, activeImagePicker:null, profileRatedCharacterCache: {}, K_SCORES: 'ratings', K_CHARCUSTOM: 'custom', K_CHARIMG: 'images',
     profileRatedCharacterLoads: {}, profileRatedCharacterFailures: {},
     profileRatedCharacterOwner: () => owner, syncProfileRatedCharacterGallery() {},
     doc: { querySelector: () => null }, el: (tag, attrs, kids) => new Element(tag, attrs || {}, kids || []),
@@ -47,6 +47,7 @@ function harness(options = {}) {
     profileTopCharacterSearchText: value => value.toLowerCase(), profileTopCharacterSearchWorks: query => { workQueries.push(query); return options.works && query ? [{ id: 'work', title: 'Work' }] : []; },
     mlTitleOf: work => work.title || '', mlCoverOf: () => '',
     profileRatedCharacterPortrait: () => new Element('span'), profileRatedCharacterStars: () => new Element('span'),
+    characterImageUrl:c=>c.image||'',profileCharacterImageEdit:()=>new Element('button',{class:'lf-profile-character-image-edit'}),scheduleCharacterActionIcons(){},
     uiText: (ar, en) => options.lang === 'ar' ? ar : en, toastSafe: message => messages.push(message), mlWorks: () => [],
     setTimeout: fn => { const id = ++serial; timers.set(id, fn); return id; }, clearTimeout: id => timers.delete(id),
     global: { LorefyCharacterSystem: { characterMatches: () => true, searchCharacters: (query, works, options) => new Promise(resolve => searches.push({ resolve, options })) } }
@@ -77,6 +78,42 @@ function harness(options = {}) {
 }
 const flush = async () => { for (let i = 0; i < 12; i++) await Promise.resolve(); };
 
+test('default unified search shows matching works without asking for a search-mode change',()=>{
+  const h=harness({works:true}),ov=h.open(),input=find(ov.page,'lf-top-characters-editor-search');
+  input.value='Work';input.handlers.input();h.runTimers();
+  assert.ok(find(ov.page,'lf-top-characters-editor-work-result'));
+});
+
+test('selecting a new favorite advances to the next empty rank instead of repeatedly replacing rank one',()=>{
+  const h=harness(),ov=h.open();find(ov.page,'lf-top-characters-editor-candidate').click();
+  const slots=all(ov.body).filter(n=>(n.attrs.class||'').split(' ').includes('lf-top-characters-editor-slot'));
+  assert.equal(slots[1].attrs['aria-pressed'],'true');
+  assert.equal(slots[0].attrs['aria-pressed'],'false');
+});
+
+test('an image picker temporarily pauses the editor without invalidating its owner or draft',()=>{
+ const h=harness(),ov=h.open();find(ov.page,'lf-top-characters-editor-candidate').click();
+ h.scope.activeImagePicker=new Element('div');ov.page.inert=true;h.scope.syncProfileTopCharacterEditor(true);
+ assert.ok(h.scope.profileTopCharacterEditor);assert.equal(h.writes.length,1);
+ ov.page.inert=false;h.scope.activeImagePicker=null;h.scope.syncProfileTopCharacterEditor(true);
+ find(ov.page,'lf-top-characters-editor-save').click();assert.equal(h.writes.length,2);
+});
+
+test('unified work matches are refreshed when the catalog grows without changing the query',()=>{
+ const h=harness(),works=[];h.scope.mlWorks=()=>works;h.scope.profileTopCharacterSearchWorks=q=>q?works.slice():[];
+ const ov=h.open(),input=find(ov.page,'lf-top-characters-editor-search');input.value='Work';input.handlers.input();h.runTimers();
+ assert.equal(find(ov.page,'lf-top-characters-editor-work-result'),undefined);
+ works.push({id:'work',title:'Work'});h.scope.syncProfileTopCharacterEditor(true);
+ assert.ok(find(ov.page,'lf-top-characters-editor-work-result'));
+});
+
+test('manual rank selection updates its image-action toolbar without replacing candidate rows',()=>{
+ const h=harness(),ov=h.open(),row=find(ov.page,'lf-top-characters-editor-candidate');
+ const slots=all(ov.page).filter(n=>(n.attrs.class||'').split(' ').includes('lf-top-characters-editor-slot'));
+ slots[2].click();assert.match(find(ov.page,'lf-character-selection-actions').textContent,/Rank 3/);
+ assert.equal(find(ov.page,'lf-top-characters-editor-candidate'),row);
+});
+
 test('an active character-search timeout releases loading and permits a same-query retry', async () => {
   const h = harness(), ov = h.open(), input = find(ov.page, 'lf-top-characters-editor-search');
   h.scope.global.LorefyCharacterSystem.characterMatches = () => false;
@@ -92,14 +129,13 @@ test('an active character-search timeout releases loading and permits a same-que
   assert.equal(h.writes.length, 0);
 });
 
-test('empty character-name results never scan the work catalog or suggest hidden work rows', async () => {
+test('unified search retains matching work results when no character name matches', async () => {
   const h = harness({ works: true }), ov = h.open(), input = find(ov.page, 'lf-top-characters-editor-search');
   h.scope.global.LorefyCharacterSystem.characterMatches = () => false;
   input.value = 'Unknown'; input.handlers.input(); h.runTimers(); await flush();
   h.searches[0].resolve([]); await flush();
-  assert.equal(h.workQueries.filter(Boolean).length, 0);
-  assert.match(ov.body.textContent, /No matching characters/);
-  assert.doesNotMatch(ov.body.textContent, /Select a work from search results|You can also select a work/);
+  assert.equal(h.workQueries.filter(Boolean).length, 1);
+  assert.ok(find(ov.page,'lf-top-characters-editor-work-result'));
 });
 
 for (const lang of ['ar','en']) test('character editor search tabs support keyboard navigation in '+lang, () => {
@@ -271,8 +307,8 @@ test('a work selected from search can retry a failed unrated cast and settle to 
 
 test('English character editor chrome and accessibility labels are English on first render', () => {
   const h = harness(), ov = h.open();
-  assert.equal(ov.page.attrs['aria-label'], 'Favorites');
-  assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'Save favorites');
+  assert.equal(ov.page.attrs['aria-label'], 'Top characters');
+  assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'Done');
   assert.doesNotMatch(ov.body.textContent, /You choose the characters and their order/);
   for (const node of all(ov.page)) {
     assert.doesNotMatch(node._text + (node.attrs['aria-label'] || ''), /[\u0600-\u06ff]/);
@@ -292,8 +328,8 @@ test('filled English editor controls and confirmation stay localized without cha
 
 test('Arabic editor controls remain Arabic', () => {
   const h = harness({ lang: 'ar' }), ov = h.open();
-  assert.equal(ov.page.attrs['aria-label'], 'المفضلة');
-  assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'حفظ المفضلة');
+  assert.equal(ov.page.attrs['aria-label'], 'توب الشخصيات');
+  assert.equal(find(ov.page, 'lf-top-characters-editor-save').textContent, 'تم');
   assert.doesNotMatch(ov.body.textContent, /أنت تحدد الشخصيات وترتيبها/);
 });
 

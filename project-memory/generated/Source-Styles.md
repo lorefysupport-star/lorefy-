@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T12:22:10.318Z
-Source commit: 56f81fe7d2e18851d1bfaed21aec6bd182bef8fb
+Observed: 2026-11-01T12:58:03.655Z
+Source commit: b335e7533d3361fad71d2b9ced6ae85e79507b64
 
 # Styles Source Inventory
 
@@ -14,7 +14,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-auth-flow.css](../../styles/lorefy-auth-flow.css) (12386 bytes)
 - [styles/lorefy-book-showcase.css](../../styles/lorefy-book-showcase.css) (12617 bytes)
 - [styles/lorefy-chapter-detail.css](../../styles/lorefy-chapter-detail.css) (17998 bytes)
-- [styles/lorefy-character-atlas.css](../../styles/lorefy-character-atlas.css) (11565 bytes)
+- [styles/lorefy-character-atlas.css](../../styles/lorefy-character-atlas.css) (20748 bytes)
 - [styles/lorefy-cinema-ui.css](../../styles/lorefy-cinema-ui.css) (9088 bytes)
 - [styles/lorefy-comics-search.css](../../styles/lorefy-comics-search.css) (1755 bytes)
 - [styles/lorefy-community.css](../../styles/lorefy-community.css) (37939 bytes)

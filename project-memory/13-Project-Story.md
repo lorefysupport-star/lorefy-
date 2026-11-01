@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-01-Character-Studio]] follows the favorite-type repair with
+single-field character/work discovery, next-empty ranking, consistent rated
+surfaces and image editing without losing scores/slots. Owner-only local UI;
+existing profile layouts, artwork storage and publication contracts retained.
+
 [[sessions/2026-11-01-Reading-Favorite-Type]] stops unread favorite/wishlist and
 score weighting from choosing the owner format. Reading evidence counts each
 work once; AR/EN across all3 layouts checked locally, no new native build.

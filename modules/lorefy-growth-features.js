@@ -732,6 +732,10 @@
     var page = buildPage(work, cast);
     activePage = page;
     mountHost().appendChild(page);
+    if (opts && opts.characterName) {
+      var characterSearch = page.querySelector('.lf-character-search input');
+      if (characterSearch) { characterSearch.value = opts.characterName; characterSearch.dispatchEvent(new Event('input', {bubbles:true})); }
+    }
     requestAnimationFrame(function () { page.classList.add("is-in"); });
     page._releaseDialog = bindDialogKeys(page, closePage, page.querySelector(".lf-character-page-back"));
 
@@ -3929,6 +3933,10 @@
   }
   function profileTopCharacterSearchWorks(query) {
     query = profileTopCharacterSearchText(query);
+    if (!query) {
+      var library = read('lorefy.user.library.v2', {});
+      return Object.keys(library).reverse().map(profileWorkFor).filter(Boolean).slice(0, 8);
+    }
     if (query.length < 2) return [];
     var rows = [], works = mlWorks(), shared=typeof global !== "undefined" && global.LorefyCatalogData;
     for (var i = 0; i < works.length; i++) {
@@ -3977,6 +3985,24 @@
     scheduleCharacterActionIcons();
     return stars;
   }
+  function profileCharacterImageEdit(item, onChange) {
+    var owner = profileRatedCharacterOwner(), character = item.character || {};
+    var name = character.name || character.latin || uiText('الشخصية', 'character');
+    var button = el('button', {type:'button', class:'lf-profile-character-image-edit',
+      'aria-label':uiText('تغيير صورة ', 'Change image for ') + name,
+      title:uiText('تغيير صورة ', 'Change image for ') + name}, el('i', {'data-lucide':'image-plus', 'aria-hidden':'true'}));
+    button.addEventListener('click', function(event) {
+      event.preventDefault(); event.stopPropagation();
+      if (!button.isConnected || owner !== profileRatedCharacterOwner()) return;
+      openCharacterImagePicker(character, function() {
+        global.setTimeout(function() {
+          if (button.isConnected && owner === profileRatedCharacterOwner() && onChange) onChange();
+        }, 0);
+      }, item.work || profileWorkFor(item.workId));
+    });
+    scheduleCharacterActionIcons();
+    return button;
+  }
   function profileRatedCharacterTile(item) {
     var character = item.character || {};
     var name = character.name || character.latin || uiText("شخصية", "Character");
@@ -3990,9 +4016,10 @@
     ]);
     var open = el("button", { type: "button", class: "lf-profile-character-open", "aria-label": name + " · " + item.workTitle + " · " + Number(item.score).toFixed(2) + uiText(" من 5", " out of 5") });
     open.addEventListener("click", function () {
-      openCharacterPage({ workId: item.workId, work: item.work, cast: profileRatedCharacterCache[item.workId] || [] });
+      openCharacterPage({ workId: item.workId, work: item.work, characterName:name, cast: profileRatedCharacterCache[item.workId] || [] });
     });
     tile.appendChild(open);
+    tile.appendChild(profileCharacterImageEdit(item, function() { paintProfileRatedCharacters(profileRatedCharacterSection); }));
     return tile;
   }
   function profileRatedCharacterShelfCard(item) {
@@ -4012,9 +4039,10 @@
     ]);
     var open = el("button", { type: "button", class: "lf-profile-character-open", "aria-label": name + " · " + item.workTitle + " · " + score + uiText(" من 5", " out of 5") });
     open.addEventListener("click", function () {
-      openCharacterPage({ workId: item.workId, work: item.work, cast: profileRatedCharacterCache[item.workId] || [] });
+      openCharacterPage({ workId: item.workId, work: item.work, characterName:name, cast: profileRatedCharacterCache[item.workId] || [] });
     });
     card.appendChild(open);
+    card.appendChild(profileCharacterImageEdit(item, syncProfileRatedCharacterGallery));
     return card;
   }
   function ratedCharacterGroups(entries, query, mode) {
@@ -4226,13 +4254,15 @@
   function profileTopCharacterTile(item, index) {
     var character = item && item.character || null;
     var name = character && (character.name || character.latin) || "شخصية";
-    var tile = el("button", {
-      type: "button",
+    var tile = el("article", {
       class: "lf-profile-top-character" + (character ? " is-filled" : " is-empty"),
+    });
+    var open = el("button", {
+      type: "button", class:'lf-profile-character-open',
       "data-lf-top-character-editor": "slot",
       "aria-label": character ? uiText("تعديل ", "Edit ") + name + uiText(" ضمن المفضلة", " in favorites") : uiText("اختيار شخصية للخانة ", "Choose character for slot ") + (index + 1)
     });
-    tile.addEventListener("click", openProfileTopCharactersEditorFromControl, true);
+    open.addEventListener("click", openProfileTopCharactersEditorFromControl, true);
     if (!character) {
       tile.appendChild(el("span", { class: "lf-profile-top-character-empty", "aria-hidden": "true" }, [profileTopCharacterSlotPlus()]));
     } else {
@@ -4249,6 +4279,9 @@
         tile.appendChild(el("span", { class: "lf-profile-top-character-fallback", text: initials(character), "aria-hidden": "true" }));
       }
     }
+    tile.appendChild(open);
+    tile.appendChild(el('span', {class:'lf-profile-character-caption', 'aria-hidden':'true', text:(index+1)+'. '+(character ? name : uiText('أضف شخصية','Add character'))}));
+    if (character) tile.appendChild(profileCharacterImageEdit(item, syncProfileTopCharacters));
     return tile;
   }
   function profileTopCharacterSelection() {
@@ -4328,14 +4361,15 @@
       if (existingSearch) existingSearch.focus();
       return;
     }
-    var ov = ovOpen("lf-profile-top-characters-editor", uiText("المفضلة", "Favorites"));
+    var ov = ovOpen("lf-profile-top-characters-editor", uiText("توب الشخصيات", "Top characters"));
     var draft = profileTopCharacterSelection().slice(0, 4);
     while (draft.length < 4) draft.push(null);
     var activeSlot = 0, nameSearchTimer=null, nameSearchEpoch=0, nameSearchBusy=false, nameSearchFailed=false;
     var activeWorkId = "", loadingWorkId = "", pickerMode="characters";
     var editorOwner = profileRatedCharacterOwner(), editorInvalid = false;
     function editorActive() {
-      if (!editorInvalid && ov.page.isConnected && !ov.page.inert && editorOwner === profileRatedCharacterOwner()) return true;
+      if (!editorInvalid && ov.page.isConnected && editorOwner === profileRatedCharacterOwner() &&
+          (!ov.page.inert || activeImagePicker && activeImagePicker.isConnected)) return true;
       if (!editorInvalid) {
         editorInvalid = true;
         ++nameSearchEpoch;
@@ -4347,6 +4381,7 @@
     }
     profileTopCharacterEditor = { active: editorActive, refresh: render };
     var slots = el("div", { class: "lf-top-characters-editor-slots" });
+    var selectedActions = el('div', {class:'lf-character-selection-actions'});
     var search = el("input", {
       type: "search",
       class: "lf-top-characters-editor-search",
@@ -4358,12 +4393,12 @@
     });
     var clearSearch = el("button", { type: "button", class: "lf-top-characters-editor-search-clear", text: "×", "aria-label": uiText("مسح البحث", "Clear search") });
     var searchBox = el("div", { class: "lf-top-characters-editor-search-box" }, [
-      el("span", { class: "lf-top-characters-editor-search-icon", text: "⌕", "aria-hidden": "true" }),
+      el("i", { class: "lf-top-characters-editor-search-icon", 'data-lucide':'search', "aria-hidden": "true" }),
       search,
       clearSearch
     ]);
     var modes=el("div",{class:"lf-character-picker-modes",role:"tablist","aria-label":uiText("طريقة البحث","Search method")});
-    [ ["characters",uiText("الشخصيات","Characters")],["works",uiText("حسب العمل","By work")] ].forEach(function(entry){
+    [ ["characters",uiText("الكل","All")],["works",uiText("حسب العمل","By work")] ].forEach(function(entry){
       var modeButton=el("button",{type:"button",role:"tab",tabindex:entry[0]===pickerMode?"0":"-1","aria-selected":entry[0]===pickerMode?"true":"false",text:entry[1]});
       modeButton.addEventListener("click",function(){if(pickerMode===entry[0])return;pickerMode=entry[0];++nameSearchEpoch;clearTimeout(nameSearchTimer);clearTimeout(search.__renderTimer);nameSearchBusy=false;nameSearchFailed=false;activeWorkId="";loadingWorkId="";search.value="";Array.from(modes.children).forEach(function(b){b.setAttribute("aria-selected",String(b===modeButton));b.setAttribute("tabindex",b===modeButton?"0":"-1");});search.placeholder=pickerMode==="works"?uiText("ابحث عن عمل","Search works"):uiText("ابحث عن شخصية","Search characters");search.setAttribute("aria-label",search.placeholder);render();search.focus();});modes.appendChild(modeButton);
     });
@@ -4377,11 +4412,11 @@
       else return;
       event.preventDefault();buttons[next].click();buttons[next].focus();
     });
-    search.placeholder=uiText("ابحث عن شخصية","Search characters");search.setAttribute("aria-label",search.placeholder);
+    search.placeholder=uiText("ابحث عن شخصية أو عمل","Search characters or works");search.setAttribute("aria-label",search.placeholder);
     var workResults = el("div", { class: "lf-top-characters-editor-work-results", hidden: "" });
     var currentWork = el("div", { class: "lf-top-characters-editor-current-work", hidden: "" });
     var candidates = el("div", { class: "lf-top-characters-editor-list" });
-    var save = el("button", { type: "button", class: "lf-top-characters-editor-save", text: uiText("حفظ المفضلة", "Save favorites") });
+    var save = el("button", { type: "button", class: "lf-top-characters-editor-save", text: uiText("تم", "Done") });
     var headingTitle = el("strong", { text: uiText("الشخصيات التي قيّمتها", "Characters you rated") });
     var headingMeta = el("small", { text: uiText("أو ابحث عن أي عمل لإظهار شخصياته", "Or search for a work to see its characters") });
     function dataNow() { return profileCharacterEntries(); }
@@ -4401,6 +4436,12 @@
       if (existingIndex >= 0) draft[existingIndex] = displaced;
       setProfileTopCharacterSelection(draft);
       syncProfileTopCharacters();
+      if (existingIndex < 0) {
+        for (var next = 1; next < draft.length; next++) {
+          var candidateSlot = (activeSlot + next) % draft.length;
+          if (!draft[candidateSlot]) { activeSlot = candidateSlot; break; }
+        }
+      }
       render();
     }
     function candidateMatches(item, query) {
@@ -4419,15 +4460,21 @@
       var rows = data.entries.filter(function (item) {
         if (activeWorkId) return String(item.workId) === String(activeWorkId) && candidateMatches(item, query);
         if (query) return candidateMatches(item, query);
-        return !!item.score || !!selected[profileTopCharacterRefKey(profileTopCharacterRef(item))];
+        return true;
       });
       return activeWorkId ? rows : rows.slice(0, 120);
     }
+    var workQuery = null, workMatches = [], workCatalogSize = -1;
+    function matchingWorks(query) {
+      var size = mlWorks().length;
+      if (workQuery !== query || workCatalogSize !== size) { workQuery = query; workCatalogSize = size; workMatches = profileTopCharacterSearchWorks(query); }
+      return workMatches;
+    }
     function renderWorkResults(query) {
-      if(pickerMode!=="works"){workResults.hidden=true;workResults.replaceChildren();return;}
-      var works = profileTopCharacterSearchWorks(query);
+      if(activeWorkId){workResults.hidden=true;workResults.replaceChildren();return;}
+      var works = matchingWorks(query);
       workResults.textContent = "";
-      if (!query || query.length < 2) {
+      if (query && query.length < 2) {
         workResults.hidden = true;
         return;
       }
@@ -4471,9 +4518,16 @@
       if (!editorActive() || index === activeSlot) return;
       activeSlot = index;
       selectionUpdates.forEach(function(update){update();});
+      renderSelectedActions(dataNow());
+    }
+    function renderSelectedActions(data) {
+      selectedActions.textContent = '';
+      var activeItem = draft[activeSlot] && profileTopCharacterFromRef(draft[activeSlot], data.entries);
+      selectedActions.appendChild(el('strong', {text:uiText('الترتيب ', 'Rank ')+(activeSlot+1)+(activeItem?' · '+(activeItem.character.name||activeItem.character.latin):'')}));
+      if (activeItem) selectedActions.appendChild(profileCharacterImageEdit(activeItem, render));
     }
     function render() {
-      if (!editorActive()) return;
+      if (!editorActive() || ov.page.inert) return;
       selectionUpdates = [];
       var data = dataNow(), selected = {}, query = profileTopCharacterSearchText(search.value);
       var missingWorkIds = data.missing.slice();
@@ -4486,7 +4540,7 @@
       for (var slot = 0; slot < 4; slot++) {
         (function (slotIndex) {
           var ref = draft[slotIndex], item = ref && profileTopCharacterFromRef(ref, data.entries);
-          var slotKey=JSON.stringify([ref,item&&item.character,uiText("ar","en")]),previous=slotNodes[slotIndex];
+          var slotKey=JSON.stringify([ref,item&&item.character,item&&characterImageUrl(item.character),uiText("ar","en")]),previous=slotNodes[slotIndex];
           if(previous&&previous.key===slotKey){selectionUpdates.push(previous.update);previous.update();return;}
           var button = el("button", {
             type: "button",
@@ -4521,6 +4575,7 @@
           slotNodes[slotIndex]={key:slotKey,cell:slotCell,update:updateSlot};
         })(slot);
       }
+      renderSelectedActions(data);
       currentWork.textContent = "";
       if (activeWorkId) {
         var activeWork = profileWorkFor(activeWorkId);
@@ -4539,11 +4594,11 @@
         });
         currentWork.appendChild(changeWork);
         headingTitle.textContent = uiText("شخصيات ", "Characters: ") + (mlTitleOf(activeWork) || profileWorkTitle(activeWorkId));
-        headingMeta.textContent = loadingWorkId === activeWorkId ? uiText("يتم الآن جلب طاقم العمل", "Loading this work's cast") : uiText("اضغط للإضافة أو الإزالة", "Select to add or remove");
+        headingMeta.textContent = loadingWorkId === activeWorkId ? uiText("جارٍ التحميل", "Loading") : '';
       } else {
         currentWork.hidden = true;
-        headingTitle.textContent = query ? uiText("الشخصيات المطابقة", "Matching characters") : uiText("الشخصيات التي قيّمتها", "Characters you rated");
-        headingMeta.textContent = query ? (nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : pickerMode==="works" ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته", "Select a work to see its characters") : "") : pickerMode==="works" ? uiText("ابحث باسم العمل لإظهار شخصياته", "Search by work title to see its characters") : uiText("ابحث باسم شخصية، أو اختر «حسب العمل»", "Search by character name, or select By work");
+        headingTitle.textContent = query ? uiText("الشخصيات", "Characters") : uiText("من شخصياتك", "Your characters");
+        headingMeta.textContent = nameSearchBusy ? uiText("جاري البحث عن الشخصيات…","Searching characters…") : '';
       }
       renderWorkResults(query);
       var desiredCandidates=[], nextCandidates=new Map();
@@ -4557,12 +4612,12 @@
             ? uiText("لم نجد شخصيات موثقة لهذا العمل. جرّب عملاً آخر.", "No verified characters found for this work. Try another work.")
             : query
               ? (pickerMode==="works" ? (!workResults.hidden ? uiText("اختر عملاً من نتائج البحث لعرض شخصياته.", "Select a work from search results to see its characters.") : uiText("لا توجد أعمال مطابقة. جرّب عنواناً آخر.", "No matching works. Try another title.")) : uiText("لا توجد شخصيات مطابقة. جرّب اسماً آخر.", "No matching characters. Try another name."))
-              : pickerMode==="works" ? uiText("ابحث باسم العمل، ثم اختر شخصياتك المفضلة.", "Search by work title, then choose your favorite characters.") : uiText("ابحث باسم شخصية لإضافتها إلى المفضلة.", "Search by character name to add a favorite.");
+              : uiText("لا توجد شخصيات محفوظة بعد", "No saved characters yet");
         desiredCandidates.push(el("p", { class: "lf-profile-rated-characters-empty", role: "status", text: emptyText }));
       } else {
         rows.forEach(function (item) {
           var ref = profileTopCharacterRef(item), key = profileTopCharacterRefKey(ref), rank = selected[key] || 0;
-          var fingerprint=JSON.stringify([item.character,item.score,item.workTitle,uiText("ar","en")]),cached=candidateNodes.get(key);
+          var fingerprint=JSON.stringify([item.character,characterImageUrl(item.character),item.score,item.workTitle,uiText("ar","en")]),cached=candidateNodes.get(key);
           if(cached&&cached.fingerprint===fingerprint){cached.update();selectionUpdates.push(cached.update);desiredCandidates.push(cached.node);nextCandidates.set(key,cached);return;}
           var isActiveSelection = rank === activeSlot + 1;
           var rating = item.score
@@ -4581,7 +4636,7 @@
               el("small", { text: item.workTitle }),
               rating
             ]),
-            el("span", { class: "lf-top-characters-editor-candidate-action", text: isActiveSelection ? "✓" : uiText("تبديل", "Replace") })
+            el("span", { class: "lf-top-characters-editor-candidate-action", text: rank ? String(rank) : "+", 'aria-hidden':'true' })
           ]);
           button.addEventListener("click", function () {
             chooseCandidate(ref);
@@ -4591,10 +4646,11 @@
             var rank=selectionIndex(ref)+1,active=rank===activeSlot+1;
             button.setAttribute("class","lf-top-characters-editor-candidate"+(rank?" is-selected":"")+(active?" is-active":""));
             button.setAttribute("aria-label",active ? (item.character.name||item.character.latin||uiText("شخصية","Character"))+uiText(" محددة في الخانة "," selected in slot ")+(activeSlot+1) : uiText("استبدال الخانة ","Replace slot ")+(activeSlot+1)+uiText(" بـ "," with ")+(item.character.name||item.character.latin||uiText("شخصية","Character")));
-            action.textContent=active?"✓":uiText("تبديل","Replace");
+            action.textContent=rank?String(rank):"+";
           }
-          selectionUpdates.push(updateCandidate);nextCandidates.set(key,{fingerprint:fingerprint,node:button,update:updateCandidate});
-          desiredCandidates.push(button);
+          var row = el('div', {class:'lf-character-candidate-row'}, [button, profileCharacterImageEdit(item, render)]);
+          selectionUpdates.push(updateCandidate);nextCandidates.set(key,{fingerprint:fingerprint,node:row,update:updateCandidate});
+          desiredCandidates.push(row);
         });
       }
       if (failedWorkIds.length) {
@@ -4612,6 +4668,7 @@
       desiredCandidates.forEach(function(node,index){if(candidates.children[index]!==node)candidates.insertBefore(node,candidates.children[index]||null);});
       candidateNodes=nextCandidates;
       missingWorkIds.forEach(function (workId) { hydrateProfileRatedCharacters(workId); });
+      scheduleCharacterActionIcons();
     }
     search.addEventListener("input",function(){
       if (!editorActive()) return;
@@ -4642,6 +4699,7 @@
       toastSafe(uiText("تم حفظ المفضلة", "Favorites saved"));
     });
     ov.body.appendChild(slots);
+    ov.body.appendChild(selectedActions);
     ov.body.appendChild(searchBox);
     ov.body.appendChild(modes);
     ov.body.appendChild(workResults);
