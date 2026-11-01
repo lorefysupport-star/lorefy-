@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Logical-Diary-Units]] closes L-005: the diary
+records pages/volumes instead of silently discarding them.3172 tests/60 browser
+checks; unchanged status/metrics and no native build or production mutation.
+
 2026-11-01 [[sessions/2026-11-01-Logical-Profile-Zero-Count]] closes L-004:
 known zero remains authoritative over stale rows.3165 tests/42 browser checks
 cover all layouts; no data mutation or native/service release.

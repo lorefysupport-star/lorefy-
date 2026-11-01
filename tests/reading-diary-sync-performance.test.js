@@ -54,3 +54,16 @@ test('temporary storage access errors do not poison the raw-data shortcut',()=>{
   h.store.set('lorefy.user.progress.v2',JSON.stringify({one:{chapter:5}}));h.sync();
   assert.equal(JSON.parse(h.store.get('lorefy.user.readingDiarySnapshot.v1')).progress.one.chapter,5);
 });
+
+test('actual diary sync persists page and volume milestones once without regressing the unchanged shortcut',()=>{
+  for(const unit of ['page','volume']){
+    const h=setup();
+    h.store.set('lorefy.user.progress.v2',JSON.stringify({one:{[unit]:1}}));h.sync();
+    h.store.set('lorefy.user.progress.v2',JSON.stringify({one:{[unit]:3}}));h.sync();
+    const before={...h.stats};const writes=h.writes.length;h.sync();h.sync();
+    assert.deepEqual(h.stats,before);assert.equal(h.writes.length,writes);
+    const events=JSON.parse(h.store.get('lorefy.user.readingDiary.v1')||'[]');
+    assert.equal(events.length,1);assert.equal(events[0].anchorType,unit);
+    assert.equal(events[0].anchorValue,3);assert.equal(events[0].chapter,0);
+  }
+});

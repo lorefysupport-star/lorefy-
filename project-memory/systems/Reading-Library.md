@@ -6,6 +6,11 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-11-01-Logical-Diary-Units]] repairs L-005: page/volume milestones
+retain their unit on progress/start/completion; one event per update, unit-aware
+dedup and unchanged legacy chapter shape.3172 tests/60 actual-app browser checks.
+Cloud durability, OS sharing and device delivery remain separate gates.
+
 [[sessions/2026-11-01-Diary-Idle-Work]] skips unchanged full-library JSON work
 on DOM maintenance/safety polling, preserving real transitions, sessions and
 owner checks.3149 tests/16 browser checks; not a whole-app startup speed claim.

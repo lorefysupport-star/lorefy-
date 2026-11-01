@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-01-Logical-Diary-Units]] closes L-005 with3172 tests/60 UI
+checks. Next: diary failed-write/retry invariant. Cloud/native acceptance stays
+open. The older instruction below to investigate page/volume is superseded.
+
 [[sessions/2026-11-01-Logical-Profile-Zero-Count]] closes L-004 with3165 tests/
 42 checks across all layouts. Move to diary page/volume progress next; keep
 cloud/device and unreviewed contracts open, no native build.

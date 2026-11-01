@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T09:35:32.820Z
-Source commit: 3538b4785abbf572e839aa8d922e4535c666e9f9
+Observed: 2026-11-01T09:46:46.554Z
+Source commit: 83bae325b9046d7e436c14662085ec696ccd3bbf
 
 # Docs Source Inventory
 
@@ -64,7 +64,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/LIBRARY_CINEMA_QA.md](../../docs/LIBRARY_CINEMA_QA.md) (2493 bytes)
 - [docs/LIBRARY_EXPANSION_2026-10-03.md](../../docs/LIBRARY_EXPANSION_2026-10-03.md) (4742 bytes)
 - [docs/LIBRARY_QUALITY_REPAIR_2026-10-08.md](../../docs/LIBRARY_QUALITY_REPAIR_2026-10-08.md) (11778 bytes)
-- [docs/LOGIC_AUDIT_2026-11-01.md](../../docs/LOGIC_AUDIT_2026-11-01.md) (8849 bytes)
+- [docs/LOGIC_AUDIT_2026-11-01.md](../../docs/LOGIC_AUDIT_2026-11-01.md) (10236 bytes)
 - [docs/NATIVE_AUTH_SEARCH_FIXES_2026-10-12.md](../../docs/NATIVE_AUTH_SEARCH_FIXES_2026-10-12.md) (2407 bytes)
 - [docs/NEW_FEATURES_AUDIT_2026-10-08.md](../../docs/NEW_FEATURES_AUDIT_2026-10-08.md) (5772 bytes)
 - [docs/NORMAL_PROFILE_APPLE_QA.md](../../docs/NORMAL_PROFILE_APPLE_QA.md) (4593 bytes)

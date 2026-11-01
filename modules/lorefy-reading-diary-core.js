@@ -11,10 +11,6 @@
     var number = Number(raw);
     return Number.isFinite(number) && number > 0 ? Math.floor(number) : 0;
   }
-  function chapter(value) {
-    return progressAt(value, 'chapter');
-  }
-
   function preferredAnchor(work, progress) {
     // A saved checkpoint takes precedence; changing defaults never converts it.
     if (progressAt(progress, 'chapter')) return 'chapter';
@@ -32,13 +28,24 @@
     Object.keys(newLibrary).forEach(function (id) {
       var previous = oldLibrary[id];
       var current = newLibrary[id];
-      var currentChapter = chapter(newProgress[id]);
+      var unit = preferredAnchor(null, newProgress[id]);
+      var type;
       if (current === 'تم القراءة' && previous !== current) {
-        events.push({ id: id, type: 'completed', chapter: currentChapter, at: at });
+        type = 'completed';
       } else if (current === 'أقرأ حالياً' && previous !== current) {
-        events.push({ id: id, type: 'started', chapter: currentChapter, at: at });
-      } else if ((current === 'أقرأ حالياً' || current === 'تم القراءة') && currentChapter > chapter(oldProgress[id])) {
-        events.push({ id: id, type: 'progress', chapter: currentChapter, at: at });
+        type = 'started';
+      } else if (current === 'أقرأ حالياً' || current === 'تم القراءة') {
+        // Compare like units; one update must not create three milestones.
+        unit = ['chapter', 'page', 'volume'].find(function (candidate) {
+          return progressAt(newProgress[id], candidate) > progressAt(oldProgress[id], candidate);
+        });
+        if (unit) type = 'progress';
+      }
+      if (type) {
+        var value = progressAt(newProgress[id], unit);
+        var event = { id: id, type: type, chapter: unit === 'chapter' ? value : 0, at: at };
+        if (unit !== 'chapter') { event.anchorType = unit; event.anchorValue = value; }
+        events.push(event);
       }
     });
     return events;
@@ -170,7 +177,8 @@
     return (Array.isArray(incoming) ? incoming : []).concat(Array.isArray(existing) ? existing : [])
       .filter(function (event) {
         if (!event || !event.id || !Number.isFinite(Number(event.at))) return false;
-        var key = event.entryId || [event.id, event.type, event.chapter || 0, event.at].join('|');
+        var position = anchor(event);
+        var key = event.entryId || [event.id, event.type, position.type, position.value, event.at].join('|');
         if (seen.has(key)) return false;
         seen.add(key);
         return true;

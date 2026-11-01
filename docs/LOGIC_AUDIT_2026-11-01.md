@@ -1,6 +1,6 @@
 # Lorefy Logic Audit - 2026-11-01
 
-Status: four scoped source findings repaired and verified; not whole-app certification.
+Status: five scoped source findings repaired and verified; not whole-app certification.
 
 ## Skill Setup
 
@@ -106,7 +106,7 @@ and intentional UI bridging were not removed to make fixtures pass.
 | Enterprise requirements | B2B scoring is not applicable to this consumer reading audit |
 | Chain-link bottleneck/global completeness | Not established by this scoped logic pass; remaining domains require their own evidence |
 
-Final source suite3163/3163. Browser evidence is40 friend,16 profile contract and
+First-stage source suite3163/3163. Browser evidence is40 friend,16 profile contract and
 52 full review-flow checks, all passing. See linked session notes for red/green
 receipts and boundaries. No numerical correctness score for the entire app.
 
@@ -126,6 +126,27 @@ layout attributes: loading stays unknown, server0 wins before and after cached
 rows arrive, refreshed5 replaces0, absent count falls back to two owner reviews
 not a third reader's row. Controlled backend/iframe, not a live cloud query.
 No new request, source data mutation, native build or production deployment.
+
+### L-005: Diary Silently Ignores Page And Volume Progress - Fixed
+
+The transition detector compared chapters only. Page/volume increases produced
+no milestone, and starts/completions lost their saved position. Six initial
+regression failures included actual sync storing zero events instead of one.
+Compare each saved unit to itself and emit one milestone per work/update, using
+chapter/page/volume priority only among increased units. Starts/completions use
+the saved checkpoint preference. Keep legacy chapter objects intact; page and
+volume events use the existing anchorType/anchorValue contract with chapter0.
+The local merge identity now includes unit and position, avoiding collisions
+between page/volume milestones at the same instant. No catalog-unit conversion.
+
+Seven added regressions, focused27/27 and full3172/3172, exit0 (63014ms).
+60/60 actual-app browser checks: AR/EN x320/390, page progress/completion, volume
+start/progress, exactly four stored rows after repeat sync, localized labels,
+actual share actions passing the correct text to a controlled native-share
+adapter, close/cleanup and no horizontal overflow or page errors. The inspected
+AR screenshot shows the matching units. External services blocked; not native
+OS sharing, cloud persistence or device certification. Cachev655/six mirrors
+match. Next contract: failed diary writes and retry behavior.
 
 - Reading metrics and current review publication tests distinguish completion
   credit, explicit status/checkpoint and non-duplicated unit-based time. Preserve
