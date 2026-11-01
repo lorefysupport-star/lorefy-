@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T18:35:42.953Z
-Source commit: 8e1c0aecf8f78aad8c7fd89c5f44024c8b991dc2
+Observed: 2026-11-01T21:43:19.892Z
+Source commit: c3a796c426b023e2695fc719d41dc1d1484c79e1
 
 # Modules Source Inventory
 
@@ -67,7 +67,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-profile-sections.js](../../modules/lorefy-profile-sections.js) (42849 bytes)
 - [modules/lorefy-profile-shop.js](../../modules/lorefy-profile-shop.js) (55695 bytes)
 - [modules/lorefy-public-appearance.js](../../modules/lorefy-public-appearance.js) (4374 bytes)
-- [modules/lorefy-public-profile.js](../../modules/lorefy-public-profile.js) (23928 bytes)
+- [modules/lorefy-public-profile.js](../../modules/lorefy-public-profile.js) (25964 bytes)
 - [modules/lorefy-reader-layout.js](../../modules/lorefy-reader-layout.js) (7108 bytes)
 - [modules/lorefy-reading-diary-core.js](../../modules/lorefy-reading-diary-core.js) (10222 bytes)
 - [modules/lorefy-reading-diary.js](../../modules/lorefy-reading-diary.js) (51702 bytes)

@@ -15,6 +15,7 @@ function harness(options = {}) {
       if (!(index in states)) states[index] = typeof initial === 'function' ? initial() : initial;
       return [states[index], value => { states[index] = typeof value === 'function' ? value(states[index]) : value; }];
     },
+    useRef(initial) { const index=cursor++; if(!(index in states))states[index]={current:initial}; return states[index]; },
     useEffect(callback, deps) {
       const index = cursor++, previous = effects[index];
       if (!previous || deps.some((value, i) => value !== previous.deps[i])) {
@@ -27,11 +28,15 @@ function harness(options = {}) {
     mode: 'live',
     getPublicProfile(id) { return new Promise((resolve, reject) => requests.push({ id, resolve, reject })); },
     listReviewCollection: async () => options.rows || [],
-    toggleProfileFollow: async (...args) => follows.push(args)
+    user:{id:'viewer'},
+    toggleProfileFollow: options.follow || (async (...args) => {follows.push(args);return args[1];}),
+    listProfileFollowers: options.followers || (async()=>[]),
+    listProfileFollowing: options.following || (async()=>[])
   } };
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../modules/lorefy-public-profile.js'), 'utf8'), { window, URL });
   return {
-    requests, follows, handlers, renderedReviews,
+    requests, follows, handlers, renderedReviews, window,
+    unmount(){effects.forEach(effect=>effect?.cleanup?.());},
     render(id = 'reader-a') {
       cursor = 0;
       renderedReviews.length = 0;
@@ -51,6 +56,62 @@ function nodes(tree) { return !tree || typeof tree !== 'object' ? [] : [tree, ..
 const followButton = tree => nodes(tree).find(node => node.props['data-follow-action']);
 const count = tree => nodes(tree).find(node => node.props['data-connection'] === 'followers').children[0].children[0];
 const settle = () => new Promise(resolve => setImmediate(resolve));
+async function loaded(options={}){const app=harness(options);app.render();app.requests[0].resolve({id:'reader-a',follower_count:4,is_following:false});await settle();app.render();return app;}
+const connectionButton=(tree,kind)=>nodes(tree).find(n=>n.props['data-connection']===kind);
+const dialog=tree=>nodes(tree).find(n=>n.props.role==='dialog');
+const closeDialog=tree=>nodes(dialog(tree)).find(n=>n.type==='button'&&n.props['aria-label']==='إغلاق').props.onClick();
+
+test('same-turn follow taps dispatch once and report accessible busy state',async()=>{
+ let calls=0,release;const app=await loaded({follow:()=>{calls++;return new Promise(r=>release=r);}});
+ const click=followButton(app.render()).props.onClick,one=click(),two=click();
+ const busy=followButton(app.render());assert.equal(calls,1);assert.equal(busy.props.disabled,true);assert.equal(busy.props['aria-busy'],true);
+ release(true);await Promise.all([one,two]);assert.equal(count(app.render()),5);assert.equal(followButton(app.render()).props['aria-pressed'],true);
+});
+
+test('a refused follow never manufactures success or increments the follower count',async()=>{
+ const app=await loaded({follow:async()=>false});await followButton(app.render()).props.onClick();assert.equal(count(app.render()),4);assert.equal(followButton(app.render()).props['aria-pressed'],false);assert.ok(nodes(app.render()).some(n=>n.props.role==='alert'));
+});
+
+test('a late follow receipt is ignored after visiting another reader and returning',async()=>{
+ let release;const app=await loaded({follow:()=>new Promise(r=>release=r)}),events=[];
+ app.window.CustomEvent=class{constructor(type,options){this.type=type;this.detail=options.detail;}};app.window.dispatchEvent=e=>events.push(e);
+ const job=followButton(app.render()).props.onClick();app.render('reader-b');app.render('reader-a');
+ app.requests.at(-1).resolve({id:'reader-a',follower_count:9,is_following:false});await settle();app.render();
+ release(true);await job;assert.equal(count(app.render()),9);assert.equal(followButton(app.render()).props['aria-pressed'],false);assert.equal(events.filter(e=>e.type==='lorefy:profile-follow-changed').length,0);assert.equal(followButton(app.render()).props.disabled,false);
+});
+
+test('account replacement without a render invalidates pending follow results',async()=>{
+ let release;const app=await loaded({follow:()=>new Promise(r=>release=r)}),job=followButton(app.render()).props.onClick();app.window.LorefyBackend.user={id:'next-viewer'};release(true);await job;
+ const tree=app.render();assert.notEqual(count(tree),5);
+});
+
+test('closing and reopening followers cannot be filled by the previous dialog response',async()=>{
+ const pending=[];const app=await loaded({followers:()=>new Promise(r=>pending.push(r))});
+ const old=connectionButton(app.render(),'followers').props.onClick();closeDialog(app.render());
+ const current=connectionButton(app.render(),'followers').props.onClick();pending[1]([{id:'new',username:'new'}]);await current;
+ pending[0]([{id:'old',username:'old'}]);await old;const serialized=JSON.stringify(dialog(app.render()));assert.match(serialized,/@new/);assert.doesNotMatch(serialized,/@old/);
+});
+
+test('an old followers failure cannot mark a following dialog failed',async()=>{
+ let reject;const app=await loaded({followers:()=>new Promise((_,r)=>reject=r)});
+ const old=connectionButton(app.render(),'followers').props.onClick();const next=connectionButton(app.render(),'following').props.onClick();await next;reject(new Error('old request'));await old;
+ const modal=dialog(app.render());assert.equal(modal.props['aria-label'],'يتابع');assert.ok(!nodes(modal).some(n=>n.type==='button'&&n.children.includes('إعادة المحاولة')));
+});
+
+test('repeated opening while a connection list loads shares the current request',async()=>{
+ let calls=0,release;const app=await loaded({followers:()=>{calls++;return new Promise(r=>release=r);}});
+ const click=connectionButton(app.render(),'followers').props.onClick,a=click(),b=click();assert.equal(calls,1);release([]);await Promise.all([a,b]);assert.ok(dialog(app.render()));
+});
+
+test('unmounted profile cannot broadcast a late follow result',async()=>{
+ let release;const events=[],app=await loaded({follow:()=>new Promise(r=>release=r)});app.window.CustomEvent=class{};app.window.dispatchEvent=e=>events.push(e);
+ const job=followButton(app.render()).props.onClick();app.unmount();release(true);await job;assert.equal(events.length,0);
+});
+
+test('an older pull refresh cannot overwrite a newer confirmed follow',async()=>{
+ const app=await loaded(),job=app.handlers.get('profile-visitor')({active:()=>true});await followButton(app.render()).props.onClick();assert.equal(count(app.render()),5);
+ app.requests[1].resolve({id:'reader-a',follower_count:4,is_following:false});await job;assert.equal(count(app.render()),5);assert.equal(followButton(app.render()).props['aria-pressed'],true);
+});
 
 test('visited profile preserves unrated versus explicit zero at the shared review-card boundary',async()=>{
   const app=harness({rows:[{id:'unrated',user_id:'reader-a',work_id:'work',rating:null,recommend:null,is_public:true},

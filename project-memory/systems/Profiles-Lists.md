@@ -6,6 +6,11 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+[[sessions/2026-11-02-Profile-Interactions]] P-001 repairs visitor follow/list
+request lifetime, same-turn gates, confirmed counts and old-refresh rollback.
+3276 tests/16 React-demo checks;120 layout/frame smoke checks. Real account,
+device and all-pack/long-session acceptance remain independent.
+
 [[sessions/2026-11-01-Profile-Material-Continuity]] removes flat section paint
 behind favorites/recent/top-character content so the page gradient stays
 continuous in every palette. Three actual layouts,11 palettes and320/390px:

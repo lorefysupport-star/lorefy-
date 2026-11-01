@@ -33,6 +33,10 @@
     const [request, setRequest] = React.useState({ id:null, attempt:0, status:'loading' });
     const profile = snapshot.id === initial.id ? snapshot : initial;
     const backend = root.LorefyBackend;
+    const lifecycle = React.useRef(null);
+    const viewer = backend?.user?.id || null;
+    const isCurrent = scope => !!scope && scope.active && lifecycle.current === scope &&
+      scope.backend === root.LorefyBackend && scope.viewer === (root.LorefyBackend?.user?.id || null);
     const preview = root.LorefyPreviewReaders && root.LorefyPreviewReaders.isActive();
     const remote = !!backend && (backend.mode === 'live' || !!preview);
     const currentRequest = request.id === initial.id && request.attempt === attempt;
@@ -48,12 +52,21 @@
     }, [profile]);
 
     React.useEffect(() => {
+      const scope = {active:true, backend, viewer, following:false, followRevision:0, connection:null};
+      lifecycle.current = scope;
+      setBusy(false); setConnections(null);
+      return () => { scope.active = false; if (lifecycle.current === scope) lifecycle.current = null; };
+    }, [initial.id, attempt, backend, viewer]);
+
+    React.useEffect(() => {
       let active = true;
+      const scope = lifecycle.current;
+      const current = () => active && isCurrent(scope);
       setSnapshot(initial); setReviews(props.reviews || []); setConnections(null); setLibraryOpen(false); setError('');
       if (!remote) return;
       setRequest({ id:initial.id, attempt, status:'loading' });
       backend.getPublicProfile(initial.id).then(value => {
-        if (!active) return;
+        if (!current()) return;
         if (!value || value.id !== initial.id) {
           setSnapshot({ id:initial.id }); setError('هذا الحساب غير متاح.');
           setRequest({ id:initial.id, attempt, status:'failed' }); return;
@@ -61,25 +74,27 @@
         setSnapshot(value);
         setRequest({ id:initial.id, attempt, status:'ready' });
       }).catch(() => {
-        if (!active) return;
+        if (!current()) return;
         setError('تعذر تحميل الحساب. حاول مجدداً.');
         setRequest({ id:initial.id, attempt, status:'failed' });
       });
       const collection = preview ? Promise.resolve((props.reviews || []).filter(row => row.userId === initial.id)) : null;
-      if (preview) collection.then(rows => { if (active) setReviews(rows); });
+      if (preview) collection.then(rows => { if (current()) setReviews(rows); });
       else backend.listReviewCollection({ userId:initial.id }).then(rows => {
-        if (!active) return;
+        if (!current()) return;
         setReviews(rows.map(reviewRow));
-      }).catch(() => { if (active) setError('تعذر تحميل بعض معلومات الحساب. حاول مجدداً.'); });
+      }).catch(() => { if (current()) setError('تعذر تحميل بعض معلومات الحساب. حاول مجدداً.'); });
       return () => { active = false; };
-    }, [initial.id, attempt, remote]);
+    }, [initial.id, attempt, remote, backend, viewer]);
 
     React.useEffect(() => {
       if (!remote || !root.LorefyPageRefresh) return;
       let mounted = true;
       const owner = backend.user && backend.user.id;
+      const scope = lifecycle.current;
       const stop = root.LorefyPageRefresh.register('profile-visitor', async context => {
-        const current = () => mounted && ready && context.active() && backend === root.LorefyBackend
+        const revision = scope.followRevision;
+        const current = () => mounted && isCurrent(scope) && !scope.following && scope.followRevision === revision && ready && context.active() && backend === root.LorefyBackend
           && owner === (backend.user && backend.user.id);
         if (!current()) return false;
         const [value, rows] = await Promise.all([backend.getPublicProfile(initial.id),
@@ -90,7 +105,7 @@
         return true;
       });
       return () => { mounted = false; stop(); };
-    }, [initial.id, remote, ready]);
+    }, [initial.id, remote, ready, backend, viewer]);
 
     const username = profile.username || profile.un || '';
     const avatar = safeImage(profile.avatar || profile.av);
@@ -125,26 +140,43 @@
     const favoriteTypeLabel = {Manga:'مانجا',Manhwa:'مانهوا',Manhua:'مانهوا صيني',Comics:'كوميكس',Book:'كتاب',Novel:'رواية','Light Novel':'لايت نوفل','Web Novel':'ويب نوفل'}[favoriteType] || favoriteType;
 
     async function follow() {
-      if (busy || !ready) return;
+      const scope = lifecycle.current;
+      if (busy || !ready || !isCurrent(scope) || scope.following) return;
+      scope.following = true; scope.followRevision++;
       setBusy(true); setError('');
       const id = profile.id, following = !profile.is_following;
       try {
-        if (backend && backend.toggleProfileFollow) await backend.toggleProfileFollow(id, following);
-        setSnapshot(current => current.id === id ? { ...current, is_following:following,
-          follower_count:Math.max(0, (Number(current.follower_count) || 0) + (following ? 1 : -1)) } : current);
+        if (!backend?.toggleProfileFollow) throw new Error('Follow unavailable');
+        const saved = await backend.toggleProfileFollow(id, following);
+        if (!isCurrent(scope)) return;
+        if (saved !== following) throw new Error('Follow not confirmed');
+        setSnapshot(current => isCurrent(scope) && current.id === id ? { ...current, is_following:following,
+          follower_count:Math.max(0, (Number(current.follower_count) || 0) + Number(following) - Number(!!current.is_following)) } : current);
         if (root.dispatchEvent && root.CustomEvent) root.dispatchEvent(new root.CustomEvent('lorefy:profile-follow-changed', { detail:{ profileId:id, following } }));
-      } catch (_) { setError('تعذر حفظ المتابعة. حاول مجدداً.'); }
-      finally { setBusy(false); }
+      } catch (_) { if (isCurrent(scope)) setError('تعذر حفظ المتابعة. حاول مجدداً.'); }
+      finally { if (isCurrent(scope)) { scope.following = false; setBusy(false); } }
+    }
+    function closeConnections() {
+      if (lifecycle.current) lifecycle.current.connection = null;
+      setConnections(null);
     }
     async function openConnections(kind) {
-      if (!ready) return;
+      const scope = lifecycle.current;
+      if (!ready || !isCurrent(scope) || scope.connection?.loading && scope.connection.kind === kind) return;
       const id = profile.id;
+      const token = {kind, loading:true};
+      scope.connection = token;
+      const currentRequest = () => isCurrent(scope) && scope.connection === token;
       setConnections({ id, kind, loading:true, rows:[] });
       try {
         const rows = await backend[kind === 'followers' ? 'listProfileFollowers' : 'listProfileFollowing'](id, 200, 0);
-        setConnections(current => current && current.id === id && current.kind === kind ? { id, kind, rows, loading:false } : current);
+        if (!currentRequest()) return;
+        token.loading = false;
+        setConnections(current => currentRequest() && current && current.id === id && current.kind === kind ? { id, kind, rows, loading:false } : current);
       } catch (_) {
-        setConnections(current => current && current.id === id ? { ...current, loading:false, error:true } : current);
+        if (!currentRequest()) return;
+        token.loading = false;
+        setConnections(current => currentRequest() && current && current.id === id && current.kind === kind ? { ...current, loading:false, error:true } : current);
       }
     }
     const image = (src, name) => src ? h('img', { src, alt:name || '', loading:'lazy', decoding:'async', onError:props.onImageError }) : h('span', { className:'lf-reader-image-placeholder' }, String(name || '').slice(0, 1));
@@ -221,7 +253,7 @@
             h('span', { className:'lf-reader-social-divider', 'aria-hidden':true }),
             h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'followers', disabled:!ready, onClick:() => openConnections('followers'), 'aria-label':'عرض المتابعين' }, h('strong', null, ready ? Number(profile.follower_count) || 0 : '—'), h('span', null, 'متابع'))),
           h('div', { className:'lf-reader-primary-actions' },
-            h('button', { type:'button', className:'lf-reader-follow' + (ready && profile.is_following ? ' is-following' : ''), 'data-follow-action':true, onClick:follow, disabled:busy || !ready, 'aria-pressed':ready ? !!profile.is_following : undefined }, icon(ready && profile.is_following ? 'UserCheck' : 'UserPlus', 17), h('span', null, loading ? loadingLabel : !ready ? '—' : profile.is_following ? 'متابَع' : 'متابعة')),
+            h('button', { type:'button', className:'lf-reader-follow' + (ready && profile.is_following ? ' is-following' : ''), 'data-follow-action':true, onClick:follow, disabled:busy || !ready, 'aria-busy':busy, 'aria-pressed':ready ? !!profile.is_following : undefined }, icon(ready && profile.is_following ? 'UserCheck' : 'UserPlus', 17), h('span', null, loading || busy ? loadingLabel : !ready ? '—' : profile.is_following ? 'متابَع' : 'متابعة')),
             h('div', { className:'lf-reader-socials', 'aria-label':'روابط التواصل' },
               ...Object.entries(profile.social_links || {}).map(([kind, value]) => {
                 const href = socialUrl(kind, value);
@@ -268,9 +300,9 @@
           h('header', null, h('div', null, h('h2', null, 'المكتبة'), h('p', null, library.length + ' عمل')), h('button', { type:'button', onClick:() => setLibraryOpen(false), 'aria-label':'إغلاق' }, icon('X'))),
           h('div', { className:'lf-reader-library-grid is-full' + (spine ? ' lf-library-grid is-spine-view' : showcase ? ' is-showcase-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.map(work => libraryCard(work, false))))),
       connections && connections.id === profile.id && h('div', { className:'lf-reader-modal', role:'dialog', 'aria-modal':true, 'aria-label':connections.kind === 'followers' ? 'المتابعون' : 'يتابع' },
-        h('section', null, h('header', null, h('h2', null, connections.kind === 'followers' ? 'المتابعون' : 'يتابع'), h('button', { type:'button', onClick:() => setConnections(null), 'aria-label':'إغلاق' }, icon('X'))),
+        h('section', null, h('header', null, h('h2', null, connections.kind === 'followers' ? 'المتابعون' : 'يتابع'), h('button', { type:'button', onClick:closeConnections, 'aria-label':'إغلاق' }, icon('X'))),
           connections.loading ? h('p', null, 'جارٍ التحميل...') : connections.error ? h('button', { type:'button', onClick:() => openConnections(connections.kind) }, 'إعادة المحاولة') : connections.rows.length ? connections.rows.map(reader => h('button', {
-            key:reader.id, type:'button', className:'lf-reader-connection-row', onClick:() => { setConnections(null); root.dispatchEvent(new root.CustomEvent('lorefy:open-reader-profile', { detail:reader })); }
+            key:reader.id, type:'button', className:'lf-reader-connection-row', onClick:() => { closeConnections(); root.dispatchEvent(new root.CustomEvent('lorefy:open-reader-profile', { detail:reader })); }
           }, image(safeImage(reader.avatar), reader.name), h('span', null, reader.name || reader.username), h('small', { dir:'ltr' }, '@' + reader.username))) : h('p', null, 'لا توجد حسابات بعد')))
     ),{lang:root.document?.documentElement?.lang,onBack:props.onBack});
   };

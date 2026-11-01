@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-02-Profile-Interactions]] P-001 passes3276 tests and136 demo
+browser checks. Next independently reproduce the empty favorites prompt at
+small widths. Keep source, real-account, every-frame-pack and native QA distinct.
+
 Chapter metadata duplicate repair in [[sessions/2026-11-01-Image-Delivery]]
 passes3267 tests and AR/EN x320/390 browser evidence (4 requests to1). Next
 image work must measure actual provider/render behavior; no generic cache or

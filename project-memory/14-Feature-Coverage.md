@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Profile P-001: [[sessions/2026-11-02-Profile-Interactions]]. Follow and connection
+callbacks are scoped, double dispatch prevented, busy feedback/confirmed count
+retained.3276 tests/136 browser checks, not a live/native or every-pack guarantee.
+
 Concurrent chapter groups: [[sessions/2026-11-01-Image-Delivery]]. Canonical
 aliases/reordered repeated inputs share a pending request; errors release for
 retry, unrelated groups remain independent.3267 tests/four browser contexts.

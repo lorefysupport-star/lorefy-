@@ -37,7 +37,7 @@ test('owner metric labels the unchanged saved hour value as estimated', () => {
 });
 
 test('visitor hour metric is an estimate without changing the projected number', () => {
-  const window = {React:{createElement:h, useState:value => [typeof value === 'function' ? value() : value, () => {}], useEffect:() => {}}, NenIcons:{}};
+  const window = {React:{createElement:h, useState:value => [typeof value === 'function' ? value() : value, () => {}], useEffect:() => {},useRef:value=>({current:value})}, NenIcons:{}};
   vm.runInNewContext(source('modules/lorefy-public-profile.js'), {window, URL});
   const tree = window.LorefyPublicProfile({profile:{id:'fixture-reader', read_hours:237}, reviews:[], workById:() => null});
   const clock = nodes(tree).find(node => node.props['data-profile-stat'] === 'Clock');

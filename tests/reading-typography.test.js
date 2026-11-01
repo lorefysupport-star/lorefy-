@@ -47,7 +47,7 @@ test('Showcase captions can grow for enlarged text instead of clipping at 72 pix
 test('typography assets share current local cache keys',()=>{
  const assets=['uploads/files/lorefy-app.js','modules/lorefy-home-cinema.js','modules/lorefy-reader-layout.js','modules/lorefy-library-view.js','styles/lorefy-home-immersive.css','styles/lorefy-library-refined.css','styles/lorefy-profile-refined.css','styles/lorefy-book-showcase.css'];
  for(const file of ['index.html','sw.js'])for(const asset of assets)assert.ok(fs.readFileSync(file,'utf8').includes(asset+'?v='+(asset==='styles/lorefy-profile-refined.css'?'20261029-shelf-acceptance-v1':asset==='uploads/files/lorefy-app.js'?'20261101-reading-favorite-type-v1':asset==='modules/lorefy-home-cinema.js'?'20261101-home-reading-v1':['uploads/files/lorefy-app.js','modules/lorefy-reader-layout.js','modules/lorefy-library-view.js'].includes(asset)?'20261029-library-media-v1':asset==='styles/lorefy-home-immersive.css'?'20261101-home-reading-v1':'20261028-reading-type-v1')),asset);
- assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v674-chapter-requests/);
+ assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v675-profile-actions/);
 });
 test('Showcase reservation follows the effective line height, including legacy important rules',()=>{
  const css=fs.readFileSync('styles/lorefy-book-showcase.css','utf8');
@@ -72,7 +72,7 @@ test('unrelated attributes and user prose do not schedule title work',()=>{
  h.callback([{type:'childList'}]);assert.equal(h.frames.length,1);
 });
 test('visitor library titles retain full source text and work actions',()=>{
- const window={document:{documentElement:{lang:'en'}},React:{createElement:(type,props,...children)=>({type,props:props||{},children:children.flat(Infinity).filter(n=>n!=null&&n!==false)}),useState:v=>[v,()=>{}],useEffect(){}},NenIcons:{},LorefyI18n:require('../modules/lorefy-i18n')};
+ const window={document:{documentElement:{lang:'en'}},React:{createElement:(type,props,...children)=>({type,props:props||{},children:children.flat(Infinity).filter(n=>n!=null&&n!==false)}),useState:v=>[v,()=>{}],useEffect(){},useRef:value=>({current:value})},NenIcons:{},LorefyI18n:require('../modules/lorefy-i18n')};
  vm.runInNewContext(fs.readFileSync('modules/lorefy-public-profile.js','utf8'),{window,URL});
  let opened;const work={id:'fixture',title:titles[0],type:'Book'},nodes=walk(window.LorefyPublicProfile({profile:{id:'fixture-reader',library_entries:{fixture:'أقرأ حالياً'}},reviews:[],workById:()=>work,onWork:w=>opened=w}));
  const card=nodes.find(n=>String(n.props.className).startsWith('lf-reader-library-card')),name=walk(card).find(n=>n.type==='strong');

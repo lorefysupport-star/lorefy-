@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-02-Profile-Interactions]] starts the full-profile audit with
+nine reproduced follow/connections races repaired.3276 tests,16 demo interaction
+and120 layout/frame checks. Empty favorites prompt and native QA remain open.
+
 Chapter-request follow-up in [[sessions/2026-11-01-Image-Delivery]] removes
 duplicated pending metadata requests on row expansion. Same browser gesture
 4 to1 requests;3267 tests and four real-provider browser contexts verified.

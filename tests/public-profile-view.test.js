@@ -8,7 +8,7 @@ function render(profile, overrides = {}) {
   const React = {
     createElement: (type, props, ...children) => ({ type, props: props || {}, children: children.flat(Infinity) }),
     useState: value => [typeof value === 'function' ? value() : value, () => {}],
-    useEffect: () => {}
+    useEffect: () => {}, useRef:value=>({current:value})
   };
   const window = { React, NenIcons: {}, LorefyBackend: null, LorefyPublicAppearance:require('../modules/lorefy-public-appearance.js'), LorefyLibraryView:require('../modules/lorefy-library-view.js') };
   window.LorefyI18n = require('../modules/lorefy-i18n'); window.document = {documentElement:{lang:'ar'}};
