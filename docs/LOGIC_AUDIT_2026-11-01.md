@@ -1,6 +1,6 @@
 # Lorefy Logic Audit - 2026-11-01
 
-Status: three scoped source findings repaired and verified; not whole-app certification.
+Status: four scoped source findings repaired and verified; not whole-app certification.
 
 ## Skill Setup
 
@@ -111,6 +111,21 @@ Final source suite3163/3163. Browser evidence is40 friend,16 profile contract an
 receipts and boundaries. No numerical correctness score for the entire app.
 
 ## Other Reviewed Contracts And Remaining Coverage
+
+### L-004: Known Zero Review Count Replaced By Loaded Cache - Fixed
+
+PublicProfile's review metric used Number(review_count) || ownReviews.length.
+A valid server0 was therefore replaced by stale/cached loaded reviews. A new
+regression reproduced1 instead of0. Use cached owner-filtered length only for
+missing/null count, not a known0; keep other metrics and loading/error guards.
+
+Two added tests preserve numeric/string0 and positive authoritative counts,
+and owner-only fallback for missing/null. Focused24/24 and full3165/3165 pass.
+42/42 mounted browser checks cover AR/EN and actual normal/reader/immersive
+layout attributes: loading stays unknown, server0 wins before and after cached
+rows arrive, refreshed5 replaces0, absent count falls back to two owner reviews
+not a third reader's row. Controlled backend/iframe, not a live cloud query.
+No new request, source data mutation, native build or production deployment.
 
 - Reading metrics and current review publication tests distinguish completion
   credit, explicit status/checkpoint and non-duplicated unit-based time. Preserve

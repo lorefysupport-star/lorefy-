@@ -6,6 +6,10 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+[[sessions/2026-11-01-Logical-Profile-Zero-Count]] preserves known server0 rather
+than replacing it with stale review length.3165 tests/42 browser contract checks
+across all three layouts; missing count still uses only the visited reader.
+
 [[sessions/2026-11-01-Logical-Public-Review-Projection]] preserves unrated null,
 zero dislike and negative reaction metadata at visitor collection/card boundary.
 3158 tests/16 browser contract checks; actual cloud writes/device remain separate.

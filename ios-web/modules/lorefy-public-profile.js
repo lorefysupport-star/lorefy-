@@ -231,7 +231,7 @@
           loading && h('p', { role:'status', className:'lf-reader-loading' }, loadingLabel),
           error && h('div', { role:'alert', className:'lf-reader-error' }, error, h('button', { type:'button', onClick:() => setAttempt(attempt + 1) }, 'إعادة المحاولة')),
           h('div', { className:'lf-reader-metrics' }, ...[
-            ['MessageCircle', Number(profile.review_count) || ownReviews.length, 'مراجعة'],
+            ['MessageCircle', profile.review_count == null ? ownReviews.length : Number(profile.review_count) || 0, 'مراجعة'],
             ['MessagesSquare', Number(profile.post_count) || 0, 'منشور'],
             ['BookMarked', Number(profile.completed_count) || 0, 'مكتملة'],
             ['BookOpen', Number(profile.total_chapters) || 0, 'فصل'],

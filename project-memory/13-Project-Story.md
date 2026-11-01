@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Logical-Profile-Zero-Count]] closes L-004:
+known zero remains authoritative over stale rows.3165 tests/42 browser checks
+cover all layouts; no data mutation or native/service release.
+
 2026-11-01 [[sessions/2026-11-01-Logical-Recommendation-Roundtrip]] closes third
 scoped logic finding: no unintended recommendation/score change on text edit or
 deselection, canonical unknown isn't a dislike.3163 tests/52 actual-app checks.

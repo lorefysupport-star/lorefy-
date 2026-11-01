@@ -27,6 +27,22 @@ function render(profile, overrides = {}) {
 function nodes(tree) {
   return !tree || typeof tree !== 'object' ? [] : [tree, ...tree.children.flatMap(nodes)];
 }
+
+test('a known zero visitor review count is not replaced by a stale loaded review count',()=>{
+  for(const review_count of [0,'0',4]){
+    const tree=render({id:'reader-a',review_count},{reviews:[{id:'stale',userId:'reader-a',mid:'work'}],renderReview:()=>null});
+    const metric=nodes(tree).find(n=>n.props['data-profile-stat']==='MessageCircle');
+    assert.equal(metric.children.find(n=>n&&n.type==='strong').children[0],Number(review_count));
+  }
+});
+
+test('missing visitor review counts still use only this readers loaded collection',()=>{
+  for(const review_count of [null,undefined]){
+    const tree=render({id:'reader-a',review_count},{reviews:[{id:'own',userId:'reader-a'},{id:'other',userId:'reader-b'}],renderReview:()=>null});
+    const metric=nodes(tree).find(n=>n.props['data-profile-stat']==='MessageCircle');
+    assert.equal(metric.children.find(n=>n&&n.type==='strong').children[0],1);
+  }
+});
 test('visitor favorite format uses an Arabic source label that the English localizer can translate',()=>{
   const chip=nodes(render({id:'reader-a',favorite_type:'Manga'})).find(n=>n.props['data-favorite-type']);
   assert.ok(JSON.stringify(chip).includes('مانجا'));

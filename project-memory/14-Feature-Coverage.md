@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Logic L-004: [[sessions/2026-11-01-Logical-Profile-Zero-Count]],3165 tests/42
+browser contract checks preserve known zero and owner-only missing fallback.
+Actual service/device results remain distinct from this source/fixture evidence.
+
 Logic L-003: [[sessions/2026-11-01-Logical-Recommendation-Roundtrip]],3163 tests/
 52 actual-app review-flow checks. Three logic findings are closed in source;
 unreviewed domains, production and device acceptance remain separate.
