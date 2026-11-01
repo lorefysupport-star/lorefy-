@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-01 [[sessions/2026-11-01-Logical-Diary-Write-Retry]] closes L-006:
+failed history writes preserve the old checkpoint for retry, including reload
+recovery.3175 tests/52 browser checks; not general storage/cloud certification.
+
 2026-11-01 [[sessions/2026-11-01-Logical-Diary-Units]] closes L-005: the diary
 records pages/volumes instead of silently discarding them.3172 tests/60 browser
 checks; unchanged status/metrics and no native build or production mutation.

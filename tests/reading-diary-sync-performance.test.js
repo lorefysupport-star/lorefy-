@@ -5,8 +5,8 @@ const vm = require('node:vm');
 const core = require('../modules/lorefy-reading-diary-core.js');
 const source = fs.readFileSync(require('node:path').join(__dirname, '../modules/lorefy-reading-diary.js'), 'utf8');
 
-function setup() {
-  const store = new Map([
+function setup(initialStore) {
+  const store = initialStore || new Map([
     ['lorefy.user.library.v2', JSON.stringify({one:'أقرأ حالياً'})],
     ['lorefy.user.progress.v2', JSON.stringify({one:{chapter:1}})]
   ]);
@@ -66,4 +66,46 @@ test('actual diary sync persists page and volume milestones once without regress
     assert.equal(events.length,1);assert.equal(events[0].anchorType,unit);
     assert.equal(events[0].anchorValue,3);assert.equal(events[0].chapter,0);
   }
+});
+
+test('failed milestone write retains the old checkpoint and retries unchanged progress',()=>{
+  for(const unit of ['chapter','page','volume']){
+    const h=setup();h.store.set('lorefy.user.progress.v2',JSON.stringify({one:{[unit]:1}}));h.sync();
+    const snapshot=h.store.get('lorefy.user.readingDiarySnapshot.v1'),write=h.window.localStorage.setItem;
+    h.store.set('lorefy.user.progress.v2',JSON.stringify({one:{[unit]:3}}));
+    h.window.localStorage.setItem=(key,value)=>{
+      if(key==='lorefy.user.readingDiary.v1')throw Error('QuotaExceededError');
+      write(key,value);
+    };
+    h.sync();h.sync();
+    assert.equal(h.store.get('lorefy.user.readingDiarySnapshot.v1'),snapshot);
+    assert.equal(h.store.get('lorefy.user.readingDiary.v1'),undefined);
+    h.window.localStorage.setItem=write;h.sync();h.sync();
+    const events=JSON.parse(h.store.get('lorefy.user.readingDiary.v1')||'[]');
+    assert.equal(events.length,1);assert.deepEqual(core.anchor(events[0]),{type:unit,value:3});
+    assert.equal(JSON.parse(h.store.get('lorefy.user.readingDiarySnapshot.v1')).progress.one[unit],3);
+  }
+});
+
+test('recovery records the latest checkpoint after further progress without duplicates',()=>{
+  const h=setup();h.sync();const write=h.window.localStorage.setItem;
+  h.store.set('lorefy.user.progress.v2',JSON.stringify({one:{chapter:3}}));
+  h.window.localStorage.setItem=(key,value)=>{if(key==='lorefy.user.readingDiary.v1')throw Error('Storage unavailable');write(key,value);};
+  h.sync();h.window.localStorage.setItem=write;
+  h.store.set('lorefy.user.progress.v2',JSON.stringify({one:{chapter:5}}));h.sync();h.sync();
+  const events=JSON.parse(h.store.get('lorefy.user.readingDiary.v1')||'[]');
+  assert.deepEqual(events.map(event=>[event.type,event.chapter]),[['progress',5]]);
+  assert.equal(JSON.parse(h.store.get('lorefy.user.readingDiarySnapshot.v1')).progress.one.chapter,5);
+});
+
+test('failed completion history can recover after reload without losing existing notes',()=>{
+  const h=setup();h.sync();const write=h.window.localStorage.setItem;
+  const note={id:'one',type:'note',note:'Keep this note',entryId:'existing-note',chapter:1,at:1};
+  h.store.set('lorefy.user.readingDiary.v1',JSON.stringify([note]));
+  h.store.set('lorefy.user.library.v2',JSON.stringify({one:'تم القراءة'}));
+  h.window.localStorage.setItem=(key,value)=>{if(key==='lorefy.user.readingDiary.v1')throw Error('Storage unavailable');write(key,value);};
+  h.sync();
+  const reloaded=setup(h.store);reloaded.sync();reloaded.sync();
+  const events=JSON.parse(h.store.get('lorefy.user.readingDiary.v1'));
+  assert.equal(events.length,2);assert.equal(events[0].type,'completed');assert.deepEqual(events[1],note);
 });

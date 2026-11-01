@@ -1,6 +1,6 @@
 # Lorefy Logic Audit - 2026-11-01
 
-Status: five scoped source findings repaired and verified; not whole-app certification.
+Status: six scoped source findings repaired and verified; not whole-app certification.
 
 ## Skill Setup
 
@@ -147,6 +147,28 @@ adapter, close/cleanup and no horizontal overflow or page errors. The inspected
 AR screenshot shows the matching units. External services blocked; not native
 OS sharing, cloud persistence or device certification. Cachev655/six mirrors
 match. Next contract: failed diary writes and retry behavior.
+
+### L-006: Failed History Write Is Incorrectly Acknowledged - Fixed
+
+Diary sync ignored write(LOG_KEY)'s false result, advanced its persisted
+snapshot and retained the raw/fingerprint shortcuts. A quota/temporary write
+failure permanently skipped the milestone on unchanged progress or reload.
+Two failing regressions reproduced checkpoint3 replacing1 despite no stored
+event, and a completion disappearing on reload. On failed history write, return
+before updating the snapshot and invalidate the two shortcuts so the next sync
+can retry. Do not overwrite prior notes or claim that a failed event was saved.
+Recovery after further progress records the latest checkpoint, not a fabricated
+intermediate timeline. No new storage key, transaction protocol or server write.
+
+Three added regressions, focused38/38 and full3175/3175, exit0 (63167ms).
+52/52 actual-app browser checks: AR/EN, chapter/page/volume, two real intercepted
+Storage.setItem quota failures per fixture, checkpoint unchanged, prior note
+intact, successful recovery exactly once, correct visible unit and cleanup.
+No page errors. Source tests additionally cover completion recovery on a new
+module instance with persisted storage and keep the active-composer/owner guards.
+Cachev656/six runtime mirrors match. This repairs failed history writes only;
+snapshot-only failure after a successful history write, atomic multi-key crash
+recovery, real storage exhaustion and cloud/device acceptance remain unverified.
 
 - Reading metrics and current review publication tests distinguish completion
   credit, explicit status/checkpoint and non-duplicated unit-based time. Preserve

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T09:46:46.554Z
-Source commit: 83bae325b9046d7e436c14662085ec696ccd3bbf
+Observed: 2026-11-01T09:52:28.045Z
+Source commit: 540268d83530a67d95a66d9f1d4be05451ff9faa
 
 # Tests Source Inventory
 
@@ -305,7 +305,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/reading-diary-feedback.test.js](../../tests/reading-diary-feedback.test.js) (3135 bytes)
 - [tests/reading-diary-language.test.js](../../tests/reading-diary-language.test.js) (5986 bytes)
 - [tests/reading-diary-position.test.js](../../tests/reading-diary-position.test.js) (4967 bytes)
-- [tests/reading-diary-sync-performance.test.js](../../tests/reading-diary-sync-performance.test.js) (3810 bytes)
+- [tests/reading-diary-sync-performance.test.js](../../tests/reading-diary-sync-performance.test.js) (6555 bytes)
 - [tests/reading-diary-units.test.js](../../tests/reading-diary-units.test.js) (3674 bytes)
 - [tests/reading-diary.test.js](../../tests/reading-diary.test.js) (7454 bytes)
 - [tests/reading-intent-label.test.js](../../tests/reading-intent-label.test.js) (3158 bytes)

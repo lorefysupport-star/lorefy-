@@ -6,6 +6,10 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-11-01-Logical-Diary-Write-Retry]] repairs L-006: a failed history
+write cannot advance the checkpoint or poison idle shortcuts.3175 tests/52
+browser checks; later snapshot-only failures/crash atomicity remain unverified.
+
 [[sessions/2026-11-01-Logical-Diary-Units]] repairs L-005: page/volume milestones
 retain their unit on progress/start/completion; one event per update, unit-aware
 dedup and unchanged legacy chapter shape.3172 tests/60 actual-app browser checks.

@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Logic L-006: [[sessions/2026-11-01-Logical-Diary-Write-Retry]],3175 tests/52
+browser quota-adapter checks cover failed history write/retry, retained notes,
+checkpoint and rendered units. Snapshot-only failure/atomic crash recovery open.
+
 Logic L-005: [[sessions/2026-11-01-Logical-Diary-Units]],3172 tests/60 browser
 checks cover actual sync/render and share text via a controlled native adapter.
 Page/volume milestones and dedup verified, not cloud/device/OS share acceptance.

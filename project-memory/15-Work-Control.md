@@ -6,6 +6,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-01-Logical-Diary-Write-Retry]] closes L-006 with3175 tests/52
+browser checks. History-write retry is verified; next separate contract is a
+snapshot-only failure after successful history persistence and crash recovery.
+No native build or live-service changes authorized by this source audit.
+
 [[sessions/2026-11-01-Logical-Diary-Units]] closes L-005 with3172 tests/60 UI
 checks. Next: diary failed-write/retry invariant. Cloud/native acceptance stays
 open. The older instruction below to investigate page/volume is superseded.

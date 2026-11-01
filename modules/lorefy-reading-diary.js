@@ -87,7 +87,11 @@
     var previous = read(SNAP_KEY, null);
     if (previous && previous.library && previous.progress) {
       var changes = core.transitions(previous, current, Date.now());
-      if (changes.length) write(LOG_KEY, core.merge(entries(), changes));
+      if (changes.length && !write(LOG_KEY, core.merge(entries(), changes))) {
+        // Do not acknowledge a checkpoint whose milestone was not persisted.
+        lastFingerprint = ''; lastStoredSnapshot = null;
+        return;
+      }
     }
     write(SNAP_KEY, current);
     if (doc.querySelector('.lf-diary-page') && !state.composing) render();
