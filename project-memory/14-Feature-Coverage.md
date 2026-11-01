@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Application A-001: [[sessions/2026-11-02-App-Interactions]]. Community composer,
+attachments, editor, conversation and reader-post modal isolation verified with
+3299 source tests/104 browser checks. Other application paths remain separately
+tracked; no native/service completeness or whole-app performance claim.
+
 Explore E-002: [[sessions/2026-11-02-Explore-Interactions]]. Current-context
 pagination gates, obsolete results/callback rejection, synchronous failure and
 observer rebinding pass3293 source tests and192 final browser checks. No catalog

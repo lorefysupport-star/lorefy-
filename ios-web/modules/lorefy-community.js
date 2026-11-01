@@ -68,6 +68,29 @@
   function communityOverlayHost() {
     return doc.querySelector(".lf-app") || doc.getElementById("screen") || doc.body;
   }
+  var communityIsolationLocks = new WeakMap(), communityOverlayReleases = new Map();
+  function isolateCommunityOverlay(overlay) {
+    var locked=[],node=overlay,released=false;
+    // Nested community layers share locks so closing either cannot expose the background.
+    while(node&&node!==doc.body&&node.parentElement){
+      Array.from(node.parentElement.children).forEach(function(sibling){
+        if(sibling===node||/^(SCRIPT|STYLE)$/.test(sibling.tagName))return;
+        var lock=communityIsolationLocks.get(sibling);
+        if(!lock){lock={count:0,previous:sibling.inert};communityIsolationLocks.set(sibling,lock);}
+        lock.count++;sibling.inert=true;locked.push(sibling);
+      });node=node.parentElement;
+    }
+    function release(){
+      if(released)return;released=true;communityOverlayReleases.delete(overlay);
+      locked.forEach(function(sibling){var lock=communityIsolationLocks.get(sibling);if(!lock)return;
+        if(--lock.count===0){sibling.inert=lock.previous;communityIsolationLocks.delete(sibling);}
+      });
+    }
+    communityOverlayReleases.set(overlay,release);return release;
+  }
+  function releaseDetachedCommunityOverlays(){
+    communityOverlayReleases.forEach(function(release,overlay){if(!overlay.isConnected)release();});
+  }
   var replyDrafts = new Map();
 
   function isDemo() {
@@ -418,12 +441,14 @@
     var close = el('button', {type:'button','aria-label':uiText('إغلاق','Close')}, icon('x',20));
     var save = el('button', {type:'button',class:'lf-community-edit-save',text:uiText('حفظ التغييرات','Save changes')});
     var status = el('p', {role:'status','aria-live':'polite'});
-    function dismiss() { modal.remove(); if (returnFocus && returnFocus.isConnected) returnFocus.focus(); }
+    var releaseIsolation;
+    function dismiss() { modal.remove();if(releaseIsolation)releaseIsolation(); if (returnFocus && returnFocus.isConnected) returnFocus.focus({preventScroll:true}); }
     function valid() { save.disabled = !input.value.trim() && !Object.keys(post.attachment || {}).length; }
     input.addEventListener('input',valid);
     close.addEventListener('click',dismiss);
     modal.addEventListener('keydown',function (event) {
-      if (event.key === 'Escape') dismiss();
+      if (event.defaultPrevented) return;
+      if (event.key === 'Escape') {event.preventDefault();event.stopPropagation();dismiss();}
       if (event.key === 'Tab') {
         var controls = [close,input,save].filter(function (node) { return !node.disabled; });
         if (event.shiftKey && doc.activeElement === controls[0]) { event.preventDefault(); controls[controls.length-1].focus(); }
@@ -438,6 +463,7 @@
     });
     modal.appendChild(el('section',null,[el('header',null,[el('strong',{text:uiText('تعديل المنشور','Edit post')}),close]),input,status,save]));
     communityOverlayHost().appendChild(modal);
+    releaseIsolation=isolateCommunityOverlay(modal);
     valid(); hydrateIcons(modal); input.focus();
   }
   async function removePost(post, button) {
@@ -594,7 +620,8 @@
       ])
     ]);
     var close=sheet.querySelector("button");
-    function dismissPicker(){overlay.remove();if(previous&&previous.isConnected)previous.focus({preventScroll:true});}
+    var releaseIsolation;
+    function dismissPicker(){overlay.remove();if(releaseIsolation)releaseIsolation();if(previous&&previous.isConnected)previous.focus({preventScroll:true});}
     close.addEventListener("click", dismissPicker);
     var body = el("div", { class:"lf-community-picker-list" });
     if (!options.length) body.appendChild(el("div", { class:"lf-community-picker-empty" }, [
@@ -617,6 +644,7 @@
       else if(!event.shiftKey&&doc.activeElement===last){event.preventDefault();first.focus();}
     });
     communityOverlayHost().appendChild(overlay);
+    releaseIsolation=isolateCommunityOverlay(overlay);
     hydrateIcons(overlay);
     close.focus({preventScroll:true});
   }
@@ -654,7 +682,7 @@
     }
     if (composerViewportCleanup) composerViewportCleanup();
     composerViewportCleanup = null;
-    if (state.composeSheet) state.composeSheet.remove();
+    if (state.composeSheet) {state.composeSheet.remove();if(state.composeSheet.__releaseIsolation)state.composeSheet.__releaseIsolation();}
     state.composeSheet = null;
     state.attachment = null;
     if (composerReturnFocus && composerReturnFocus.isConnected) composerReturnFocus.focus({preventScroll:true});
@@ -731,8 +759,8 @@
     close.addEventListener("click", closeComposerSheet);
     composer.addEventListener("click", function (event) { if (event.target === composer && !publishing) closeComposerSheet(); });
     composer.addEventListener('keydown', function (event) {
-      if (publishing) return;
-      if (event.key === 'Escape' && !doc.querySelector('.lf-community-picker')) { event.preventDefault(); closeComposerSheet(); }
+      if (publishing || event.defaultPrevented) return;
+      if (event.key === 'Escape' && !doc.querySelector('.lf-community-picker')) { event.preventDefault();event.stopPropagation(); closeComposerSheet(); }
       if (event.key === 'Tab') {
         var controls = Array.prototype.slice.call(composer.querySelectorAll('button:not(:disabled),textarea:not(:disabled)'));
         var first = controls[0], last = controls[controls.length - 1];
@@ -781,6 +809,7 @@
       }
     });
     communityOverlayHost().appendChild(composer);
+    composer.__releaseIsolation=isolateCommunityOverlay(composer);
     fitComposerViewport();
     hydrateIcons(composer);
     syncComposerAttachment();
@@ -988,6 +1017,7 @@
       repliesRequest++;
       global.removeEventListener('lorefy:community-post-changed',changed);
       overlay.remove();
+      if(releaseIsolation)releaseIsolation();
       if (global.visualViewport) {
         global.visualViewport.removeEventListener('resize', fitViewport);
         global.visualViewport.removeEventListener('scroll', fitViewport);
@@ -1003,9 +1033,10 @@
     close.addEventListener("click", dismiss);
     overlay.addEventListener("click", function (event) { if (event.target === overlay) dismiss(); });
     overlay.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') dismiss();
+      if(event.defaultPrevented)return;
+      if (event.key === 'Escape') {event.preventDefault();event.stopPropagation();dismiss();}
       if (event.key !== 'Tab') return;
-      var controls = Array.from(overlay.querySelectorAll('button:not(:disabled), textarea, a[href]'));
+      var controls = Array.from(overlay.querySelectorAll('button:not(:disabled), textarea, a[href]')).filter(function(node){return node.getClientRects().length&&node.tabIndex>=0;});
       var first = controls[0], last = controls[controls.length - 1];
       if (event.shiftKey && doc.activeElement === first) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && doc.activeElement === last) { event.preventDefault(); first.focus(); }
@@ -1079,6 +1110,7 @@
     });
     overlay.appendChild(sheet);
     communityOverlayHost().appendChild(overlay);
+    var releaseIsolation=isolateCommunityOverlay(overlay);
     fitViewport();
     if (global.visualViewport) {
       global.visualViewport.addEventListener('resize', fitViewport);
@@ -1240,6 +1272,7 @@
 
   function openReaderPosts(profile) {
     profile = profile || identity();
+    var previous=doc.activeElement,releaseIsolation;
     var overlay = el("div", { class:"lf-community-profile-posts", role:"dialog", "aria-modal":"true", "aria-label":"منشورات القارئ" });
     var close = el("button", { type:"button", "aria-label":"إغلاق" }, icon("x", 19));
     var list = el("div", { class:"lf-community-profile-posts-list" });
@@ -1250,10 +1283,22 @@
       el("header", null, [close, el("div", null, [el("strong", { text:"المنشورات" }), el("small", { text:"@" + String(profile.username || "lorefy_reader").replace(/^@/, ""), dir:"ltr" })]), el("span", { text:String(rows.length) })]),
       list
     ]));
-    close.addEventListener("click", function () { overlay.remove(); });
-    overlay.addEventListener("click", function (event) { if (event.target === overlay) overlay.remove(); });
+    function dismiss(){overlay.remove();if(releaseIsolation)releaseIsolation();if(previous&&previous.isConnected)previous.focus({preventScroll:true});}
+    close.addEventListener("click", dismiss);
+    overlay.addEventListener("click", function (event) { if (event.target === overlay) dismiss(); });
+    overlay.addEventListener('keydown',function(event){
+      if(event.defaultPrevented)return;
+      if(event.key==='Escape'){event.preventDefault();event.stopPropagation();dismiss();return;}
+      if(event.key!=='Tab')return;
+      var controls=Array.from(overlay.querySelectorAll('button:not(:disabled),a[href]')).filter(function(node){return node.getClientRects().length&&node.tabIndex>=0;});
+      var first=controls[0],last=controls[controls.length-1];
+      if(event.shiftKey&&doc.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&doc.activeElement===last){event.preventDefault();first.focus();}
+    });
     communityOverlayHost().appendChild(overlay);
+    releaseIsolation=isolateCommunityOverlay(overlay);
     hydrateIcons(overlay);
+    close.focus({preventScroll:true});
   }
 
   async function readProfilePosts(profile, before) {
@@ -1484,6 +1529,7 @@
       refreshScheduled = true;
       global.requestAnimationFrame(function () {
         refreshScheduled = false;
+        releaseDetachedCommunityOverlays();
         enhance();
         ensureOwnerPostMetric();
       });

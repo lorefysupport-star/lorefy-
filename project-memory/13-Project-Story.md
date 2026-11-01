@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-02-App-Interactions]] extends the audit across application
+flows. A-001 closes community modal background/focus gaps with3299 source tests
+and104 browser checks. The full application/device is not yet certified.
+
 [[sessions/2026-11-02-Explore-Interactions]] E-002 prevents stale format pages
 blocking or altering a new browse context and preserves automatic pagination.
 3293 tests and192 final browser checks pass after both Explore repairs; original

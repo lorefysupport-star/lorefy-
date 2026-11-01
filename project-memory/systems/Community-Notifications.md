@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+A-001 in [[sessions/2026-11-02-App-Interactions]] isolates community modals,
+including nested attachments and detached cleanup.3299 tests/104 actual browser
+checks pass. Drafts and backend contracts stay; next inspect pending edit saves.
+
 [[sessions/2026-11-01-Smooth-Runtime]] S-004 avoids forced scroll layout only
 for no-post/no-error timeline status and tail controls. Post insertion/deletion,
 error banners and non-timeline layouts retain anchor measurement.36 focused
