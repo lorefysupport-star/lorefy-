@@ -6,6 +6,11 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+Chapter metadata follow-up in [[sessions/2026-11-01-Image-Delivery]] shares
+identical pending chapter groups (actual rapid taps4 requests to1).3267 tests
+and four AR/EN real-source browser contexts pass; retries and distinct work
+identities preserved. No progress/rating writes or cross-account cache added.
+
 [[sessions/2026-11-01-Image-Delivery]] reconnects chapter fallback images to the
 actual displayed Work Studio poster, restores visibility after errors and keeps
 trusted chapter art distinct from work art. Ten real Hunter x Hunter chapter

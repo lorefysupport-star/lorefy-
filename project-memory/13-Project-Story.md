@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+Chapter-request follow-up in [[sessions/2026-11-01-Image-Delivery]] removes
+duplicated pending metadata requests on row expansion. Same browser gesture
+4 to1 requests;3267 tests and four real-provider browser contexts verified.
+
 [[sessions/2026-11-01-Image-Delivery]] follows real image-delivery failures:
 local gateway TLS trust and the removed chapter-poster selector repaired.
 Eight format samples and ten distinct real chapter images decode;3262 tests.

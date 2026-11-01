@@ -50,6 +50,27 @@ Receipts outside Git: `artifacts/image-delivery-20261101-full.log`,
 `output/playwright/image-delivery-acceptance.txt`,
 `output/playwright/image-formats-chapters-results.txt` and corresponding PNGs.
 
+## Follow-up: concurrent chapter metadata
+
+Actual Work Studio with the public chapter response briefly held pending:
+three rapid chapter-row taps caused4 requests for the same ten chapters.
+`modules/lorefy-chapter-metadata.js` now shares identical pending groups keyed
+by canonical work identity and sorted unique missing chapter numbers. Each
+consumer picks its own requested data. Success reuses the existing cache;
+failure deletes pending work without caching the error, so retry remains usable.
+Different works/groups stay independent. No new storage or account-state cache.
+
+Five regressions, three demonstrated red before implementation;31 focused tests.
+Full suite3267/3267, exit0,82227ms. Same actual-browser gesture4 requests to1.
+Four real-provider AR/EN x320/390 contexts each retained one request after
+reopening rows,10 rows, actual chapter titles and decoded distinct images.
+Cachev674; six selective mirrors. No native build or production mutation.
+Receipts outside Git: `artifacts/chapter-requests-20261101-full.log`,
+`output/playwright/chapter-request-storm-{before,after}.txt`,
+`output/playwright/chapter-singleflight-ui-results.txt`.
+Coalescing covers identical missing groups, not all overlapping ranges or all
+image traffic. Provider latency and native performance remain separate gates.
+
 ## Remaining
 
 External providers can time out/remove images; missing chapter metadata is not

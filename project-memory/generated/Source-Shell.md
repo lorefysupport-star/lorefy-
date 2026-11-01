@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T18:05:45.350Z
-Source commit: 0f7f8e9e0c2f8d57fd2574689185df735dda3332
+Observed: 2026-11-01T18:35:42.953Z
+Source commit: 8e1c0aecf8f78aad8c7fd89c5f44024c8b991dc2
 
 # Shell Source Inventory
 
@@ -16,7 +16,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [config/lorefy-config.js](../../config/lorefy-config.js) (7179 bytes)
 - [config/lorefy-runtime.js](../../config/lorefy-runtime.js) (5188 bytes)
 - [eas.json](../../eas.json) (542 bytes)
-- [index.html](../../index.html) (52528 bytes)
+- [index.html](../../index.html) (52526 bytes)
 - [ios/App/App.xcodeproj/project.pbxproj](../../ios/App/App.xcodeproj/project.pbxproj) (17113 bytes)
 - [package-lock.json](../../package-lock.json) (47791 bytes)
 - [package.json](../../package.json) (1908 bytes)

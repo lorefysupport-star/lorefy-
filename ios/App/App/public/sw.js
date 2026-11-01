@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v673-image-delivery';
+const CACHE = 'lorefy-v674-chapter-requests';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -91,7 +91,7 @@ const CORE = [
   './modules/lorefy-reading-diary-core.js?v=20261101-diary-units-v1',
   './modules/lorefy-reading-diary.js?v=20261101-diary-retry-v1',
   './modules/lorefy-chapter-detail-core.js?v=20261015-reading-owner-v1',
-  './modules/lorefy-chapter-metadata.js?v=20261101-completed-progress-v1',
+  './modules/lorefy-chapter-metadata.js?v=20261101-chapter-requests-v1',
   './modules/lorefy-chapter-detail.js?v=20261101-image-delivery-v1',
   './modules/lorefy-product-core.js?v=20261028-report-studio-v1',
   './modules/lorefy-catalog-requests.js?v=20261025-open-catalog',

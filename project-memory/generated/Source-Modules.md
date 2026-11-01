@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T18:05:45.350Z
-Source commit: 0f7f8e9e0c2f8d57fd2574689185df735dda3332
+Observed: 2026-11-01T18:35:42.953Z
+Source commit: 8e1c0aecf8f78aad8c7fd89c5f44024c8b991dc2
 
 # Modules Source Inventory
 
@@ -27,7 +27,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-catalog-worker.js](../../modules/lorefy-catalog-worker.js) (3369 bytes)
 - [modules/lorefy-chapter-detail-core.js](../../modules/lorefy-chapter-detail-core.js) (5071 bytes)
 - [modules/lorefy-chapter-detail.js](../../modules/lorefy-chapter-detail.js) (51398 bytes)
-- [modules/lorefy-chapter-metadata.js](../../modules/lorefy-chapter-metadata.js) (13619 bytes)
+- [modules/lorefy-chapter-metadata.js](../../modules/lorefy-chapter-metadata.js) (14018 bytes)
 - [modules/lorefy-character-system.js](../../modules/lorefy-character-system.js) (107676 bytes)
 - [modules/lorefy-comics-search.js](../../modules/lorefy-comics-search.js) (4569 bytes)
 - [modules/lorefy-comics-taxonomy.js](../../modules/lorefy-comics-taxonomy.js) (13314 bytes)

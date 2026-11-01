@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Concurrent chapter groups: [[sessions/2026-11-01-Image-Delivery]]. Canonical
+aliases/reordered repeated inputs share a pending request; errors release for
+retry, unrelated groups remain independent.3267 tests/four browser contexts.
+
 Image transport: [[sessions/2026-11-01-Image-Delivery]]. Exact screenshot
 covers recovered; eight format samples, chapter-specific artwork/fallbacks,
 loopback/native route separation, no-referrer and3262 passing tests. Not an

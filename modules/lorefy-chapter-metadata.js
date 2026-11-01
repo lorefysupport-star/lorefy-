@@ -28,6 +28,7 @@
   var cache = new Map();
   var catalogs = new Map();
   var pendingCatalogs = new Map();
+  var pendingDetails = new Map();
   // Publisher-observed baseline, not a final total or a live chapter-list API.
   var countBaselines = {
     'fwn-featured-novel-shadow-slave': { count: 3233, label: 'Webnovel',
@@ -246,15 +247,21 @@
     var numbers = (chapters || []).map(Number).filter(function (number) {
       return Number.isSafeInteger(number) && number > 0 && number <= 100000;
     }).slice(0, 20);
-    var missing = numbers.filter(function (number) { return !cache.has(workId + ':' + number); });
+    var missing = Array.from(new Set(numbers.filter(function (number) { return !cache.has(workId + ':' + number); }))).sort(function (a, b) { return a - b; });
     if (!missing.length) return Promise.resolve(pick());
     var url = requestUrl(source, missing);
     if (!url) return Promise.resolve({});
-    return requestJson(url, fetcher).then(function (body) {
-      var found = parsePages(body, source, missing);
-      missing.forEach(function (number) { cache.set(workId + ':' + number, found[number] || null); });
-      return pick();
-    });
+    // Expanding chapter rows may render the same visible range before it loads.
+    var key = workId + ':' + missing.join(',');
+    var task = pendingDetails.get(key);
+    if (!task) {
+      task = requestJson(url, fetcher).then(function (body) {
+        var found = parsePages(body, source, missing);
+        missing.forEach(function (number) { cache.set(workId + ':' + number, found[number] || null); });
+      }).finally(function () { pendingDetails.delete(key); });
+      pendingDetails.set(key, task);
+    }
+    return task.then(pick);
 
     function pick() {
       var output = {};
