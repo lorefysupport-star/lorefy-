@@ -6,6 +6,13 @@ aliases: ["تدفق البيانات", "الحفظ", "storage", "ownership"]
 ---
 # عقود البيانات
 
+Completed-empty accounting: [[sessions/2026-11-01-Completed-Empty-Progress]].
+An explicit completed status plus an all-zero/missing checkpoint captures known
+totals once on initialization or catalog/chapter hydration. Preserve positive
+checkpoints and non-completed/orphan choices. Owned already-earned empty review
+snapshots can recover separately; plain historical ratings cannot. Per-work
+maxima prevent duplicate status/review credit. Unknown totals remain pending.
+
 ## الحفظ المحلي والمزامنة
 
 Private media URLs: [[sessions/2026-10-30-Supabase-Pro-Adoption]]. Durable

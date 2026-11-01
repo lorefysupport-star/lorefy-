@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v664-post-reaction-order';
+const CACHE = 'lorefy-v665-completed-progress';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -87,12 +87,12 @@ const CORE = [
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
   './modules/lorefy-catalog-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1',
   './modules/lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1-search-audit-v2',
-  './modules/lorefy-reading-metrics.js?v=20261027-durable-inbox-v1',
+  './modules/lorefy-reading-metrics.js?v=20261101-completed-progress-v1',
   './modules/lorefy-reading-diary-core.js?v=20261101-diary-units-v1',
   './modules/lorefy-reading-diary.js?v=20261101-diary-retry-v1',
   './modules/lorefy-chapter-detail-core.js?v=20261015-reading-owner-v1',
-  './modules/lorefy-chapter-metadata.js?v=20261003-beta-final-v1-tenrai-v1',
-  './modules/lorefy-chapter-detail.js?v=20261026-work-studio-v1',
+  './modules/lorefy-chapter-metadata.js?v=20261101-completed-progress-v1',
+  './modules/lorefy-chapter-detail.js?v=20261101-completed-progress-v1',
   './modules/lorefy-product-core.js?v=20261028-report-studio-v1',
   './modules/lorefy-catalog-requests.js?v=20261025-open-catalog',
   './modules/lorefy-product-tools.js?v=20261028-report-studio-v1',
@@ -171,7 +171,7 @@ const CORE = [
   './styles/lorefy-book-showcase.css?v=20261028-reading-type-v1',
   './styles/lorefy-profile-header.css?v=20261024-banner-repairs-v4',
   './modules/lorefy-profile-header.js?v=20261025-restored-v1',
-  './uploads/files/lorefy-app.js?v=20261101-community-reactions-v1',
+  './uploads/files/lorefy-app.js?v=20261101-completed-progress-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2',

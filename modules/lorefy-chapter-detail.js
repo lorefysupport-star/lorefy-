@@ -500,6 +500,7 @@
         global.LorefyChapterData[info.id] = Object.assign({}, global.LorefyChapterData[info.id] || {}, {
           chapters: info.total, latestChapter: info.total, sourceUrl: catalog.sourceUrl
         });
+        global.dispatchEvent(new CustomEvent('lorefy:chapter-metadata', {detail: {id: info.id}}));
       }
       if (!section.querySelector('.lf-chapter-editor')) render(section, info);
     }).catch(function () {

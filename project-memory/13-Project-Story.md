@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-01-Completed-Empty-Progress]] repairs the Shadow Slave report:
+publisher baseline plus saved all-zero completion/review recovery on metadata
+arrival. Positive snapshots stay frozen, counted once.3225 source tests/48
+actual-app AR/EN demo checks; no device/cloud certification or native build.
+
 Community C-006..008 continuation in [[sessions/2026-11-01-Community-Timeline]]:
 loaded-window/scroll safety, small targeted refresh and old-read/local-reaction
 ordering verified with3219 tests/120 final browser checks. No new native build.

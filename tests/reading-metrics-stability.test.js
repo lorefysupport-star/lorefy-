@@ -24,14 +24,14 @@ test('a completion captures totals once and legacy initialization is idempotent'
   assert.deepEqual(next.progressById,first.progressById);
 });
 
-test('legacy initialization waits for missing totals and preserves explicit zero', () => {
+test('legacy initialization waits for missing totals and repairs empty completed checkpoints', () => {
   const options = {library:{a:'completed',b:'completed'},progressById:{b:{chapter:0}},getWork:()=>null};
   const pending = metrics.initializeCompletedProgress(options);
-  assert.deepEqual(pending.pendingIds,['a']);
+  assert.deepEqual(pending.pendingIds,['a','b']);
   assert.deepEqual(pending.changedIds,[]);
   const ready = metrics.initializeCompletedProgress({...options,getWork:()=>({ch:100})});
-  assert.deepEqual(ready.changedIds,['a']);
-  assert.equal(ready.progressById.b.chapter,0);
+  assert.deepEqual(ready.changedIds,['a','b']);
+  assert.equal(ready.progressById.b.chapter,100);
 });
 
 test('legacy cleanup never deletes a saved completion checkpoint', () => {

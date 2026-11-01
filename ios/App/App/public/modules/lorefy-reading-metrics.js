@@ -27,6 +27,11 @@
     return normalizeProgress(value);
   }
 
+  function hasProgress(value) {
+    var progress = normalizeProgress(value);
+    return !!(progress.chapter || progress.page || progress.volume);
+  }
+
   // Catalog totals are captured on completion, never inferred during rendering.
   function completionCheckpoint(work, value, metadata) {
     var progress = normalizeProgress(value);
@@ -43,10 +48,10 @@
     var next = saved, changedIds = [], pendingIds = [];
     Object.keys(library).forEach(function (id) {
       if (!/^(تم(?:ت)? القراءة|completed|done)$/i.test(String(library[id] || '').trim())) return;
-      if (Object.prototype.hasOwnProperty.call(saved, id)) return;
+      if (hasProgress(saved[id])) return;
       var work = typeof options.getWork === 'function' ? options.getWork(id) : null;
       var totals = work && typeof options.getTotals === 'function' ? options.getTotals(work) : work;
-      var progress = completionCheckpoint(work, null, totals);
+      var progress = completionCheckpoint(work, saved[id], totals);
       if (!(progress.chapter || progress.page || progress.volume)) { pendingIds.push(id); return; }
       if (next === saved) next = Object.assign({}, saved);
       next[id] = progress;
@@ -56,8 +61,25 @@
   }
 
   function withReviewCompletion(review,work,metadata) {
-    return Object.assign({},review,{completedByReview:true,completionProgress:review.completionProgress?
+    return Object.assign({},review,{completedByReview:true,completionProgress:hasProgress(review.completionProgress)?
       normalizeProgress(review.completionProgress):completionCheckpoint(work,null,metadata)});
+  }
+
+  // Repair an earned but empty snapshot, not an arbitrary historical rating.
+  function initializeReviewCompletions(options) {
+    var reviews = options.reviews || [], next = reviews;
+    reviews.forEach(function (review, index) {
+      if (!review || review.completedByReview !== true || !review.completionProgress ||
+          !(review.userId === 'me' || options.ownerId && review.userId === options.ownerId) ||
+          !review.mid || hasProgress(review.completionProgress)) return;
+      var work = options.getWork(review.mid);
+      var totals = work && typeof options.getTotals === 'function' ? options.getTotals(work) : work;
+      var repaired = withReviewCompletion(review, work, totals);
+      if (!hasProgress(repaired.completionProgress)) return;
+      if (next === reviews) next = reviews.slice();
+      next[index] = repaired;
+    });
+    return next;
   }
 
   function calculateReadingMetrics(options) {
@@ -125,6 +147,7 @@
     completionCheckpoint: completionCheckpoint,
     withReviewCompletion: withReviewCompletion,
     initializeCompletedProgress: initializeCompletedProgress,
+    initializeReviewCompletions: initializeReviewCompletions,
     calculateReadingMetrics: calculateReadingMetrics,
     sanitizeLegacyProgress: sanitizeLegacyProgress
   };

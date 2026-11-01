@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Read completion: [[sessions/2026-11-01-Completed-Empty-Progress]],3225 tests/48
+actual-app AR/EN checks at320/390px. Known chapter snapshots, visible profile
+counts, reload, review dedup and recovery of zero completed progress verified.
+Shadow Slave3233 is a publisher-observed baseline, not a live/final total.
+
 Community C-008: [[sessions/2026-11-01-Community-Timeline]],3219 tests/120 final
 AR/EN checks include full/target read ordering, real click feedback in a gated
 module fixture and later fresh totals. Not production RPC/device certification.

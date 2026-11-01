@@ -28,6 +28,12 @@
   var cache = new Map();
   var catalogs = new Map();
   var pendingCatalogs = new Map();
+  // Publisher-observed baseline, not a final total or a live chapter-list API.
+  var countBaselines = {
+    'fwn-featured-novel-shadow-slave': { count: 3233, label: 'Webnovel',
+      countSourceUrl: 'https://www.webnovel.com/book/shadow-slave_22196546206090805',
+      checkedAt: '2026-11-01', status: 'مستمرة' }
+  };
 
   function identity(workId) { return aliases[String(workId || '')] || String(workId || ''); }
 
@@ -37,17 +43,18 @@
 
   function seedCatalog(target) {
     var records = target.LorefyChapterData = target.LorefyChapterData || {};
-    Object.keys(sources).concat(Object.keys(aliases)).forEach(function (id) {
-      var source = sourceFor(id);
+    Object.keys(sources).concat(Object.keys(aliases), Object.keys(countBaselines)).forEach(function (id) {
+      var source = sourceFor(id) || countBaselines[id];
       if (!source.count || !source.countSourceUrl) return;
       var previous = records[id] || {};
       var previousCount = Number(previous.latestChapter || previous.chapters);
       var count = Math.max(source.count, Number.isSafeInteger(previousCount) && previousCount <= 100000 ? previousCount : 0);
       records[id] = Object.assign({}, previous, { chapters: count, latestChapter: count,
-        source: 'Publisher chapter list', sourceUrl: source.countSourceUrl, updatedAt: source.checkedAt, status: source.status });
+        source: countBaselines[id] ? source.label : 'Publisher chapter list',
+        sourceUrl: source.countSourceUrl, updatedAt: source.checkedAt, status: source.status });
     });
     (target.LorefyMangaData || []).forEach(function (work) {
-      var source = work && sourceFor(work.id);
+      var source = work && (sourceFor(work.id) || countBaselines[work.id]);
       if (source && source.countSourceUrl && source.status) work.st = source.status;
     });
   }

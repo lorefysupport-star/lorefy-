@@ -112,5 +112,5 @@ test('cover media is present before consumers with matching offline keys',()=>{
   assert.ok(sw.includes(file+'?v='+version));
  }
  assert.ok(entry.indexOf('modules/lorefy-cover-media.js')<entry.indexOf('modules/lorefy-review-editor.js'));
- assert.match(sw,/lorefy-v664-post-reaction-order/);
+ assert.match(sw,/lorefy-v665-completed-progress/);
 });

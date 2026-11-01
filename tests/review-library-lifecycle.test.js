@@ -15,13 +15,15 @@ test('review-only hydration cannot create a completed library entry or catalog c
   }
 });
 
-test('legacy review reconciliation preserves existing historical completions and explicit zero', () => {
+test('legacy review reconciliation keeps statuses while an empty completed checkpoint is repaired', () => {
   const library = { historical: 'تم القراءة', paused: 'توقف' }, progressById = { historical: { chapter: 0, note: 'saved' } };
   const after = metrics.seedReviewedWorks(library, ['historical', 'paused', 'review-only'], {}, 'تم القراءة');
   assert.equal(after, library);
   assert.deepEqual(after, { historical: 'تم القراءة', paused: 'توقف' });
   const initialized = metrics.initializeCompletedProgress({ library: after, progressById, getWork: () => ({ ch: 500 }) });
-  assert.equal(initialized.progressById, progressById);
+  assert.equal(initialized.progressById.historical.chapter,500);
+  assert.equal(initialized.progressById.historical.note,'saved');
+  assert.equal(progressById.historical.chapter,0);
 });
 
 function deletion(status, fail = false) {

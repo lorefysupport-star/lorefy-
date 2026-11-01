@@ -6,6 +6,14 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-11-01-Completed-Empty-Progress]] supersedes the old all-zero
+completed exception: explicit Read with an empty checkpoint now captures known
+totals once, including late catalog/chapter metadata. Owned earned empty review
+snapshots recover independently; positive progress remains frozen and per-work
+maxima avoid double-counting. Shadow Slave has a publisher-observed3233-chapter
+baseline, not a final/live total.3225 tests/48 actual-app demo checks; native and
+cloud acceptance remain open, no new build.
+
 [[sessions/2026-11-01-Logical-Diary-Write-Retry]] repairs L-006: a failed history
 write cannot advance the checkpoint or poison idle shortcuts.3175 tests/52
 browser checks; later snapshot-only failures/crash atomicity remain unverified.
@@ -135,7 +143,7 @@ automatic Completed-status policy below is historical; public SQL parity open.
 
 - عند إكمال عمل، يلتقط `completionCheckpoint` إجماليًا متاحًا في تلك اللحظة.
 - rendering لا يرفع تقدم القارئ كلما تغيّر إجمالي provider.
-- تهيئة عمل مكتمل قديم تتم فقط عند غياب checkpoint، وبشكل محفوظ لا متكرر على كل render.
+- تهيئة عمل مكتمل قديم تتم عند غياب checkpoint أو فراغه بالكامل (تحديث 1 نوفمبر)، وبشكل محفوظ مرة واحدة بعد توفر الإجمالي، لا على كل render. أي تقدم موجب محفوظ لا يُستبدل.
 - تحميل المراجعات القديمة لا يهيئ حالة مكتبة أو اكتمالًا؛ النشر الحالي لعمل غير مسجل يتبع LF-066 مع حفظ كل حالة أو تقدم سابق.
 - نسبة مجهولة ليست نسبة مختلقة، والصفحات غير الفصول.
 
