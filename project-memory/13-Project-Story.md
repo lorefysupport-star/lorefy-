@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-01-Image-Delivery]] follows real image-delivery failures:
+local gateway TLS trust and the removed chapter-poster selector repaired.
+Eight format samples and ten distinct real chapter images decode;3262 tests.
+External latency and device coverage remain independent; no native build.
+
 [[sessions/2026-11-01-Smooth-Runtime]] S-004 follows with shared feed layout
 avoidance in empty-status/tail-only updates. Existing post/review anchors and
 reaction races retained;120 actual-browser fixture checks. Not a whole-app SLA.

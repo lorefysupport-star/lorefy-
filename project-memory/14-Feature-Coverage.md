@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Image transport: [[sessions/2026-11-01-Image-Delivery]]. Exact screenshot
+covers recovered; eight format samples, chapter-specific artwork/fallbacks,
+loopback/native route separation, no-referrer and3262 passing tests. Not an
+all-catalog or zero-latency guarantee; no production deployment.
+
 Feed layout work: [[sessions/2026-11-01-Smooth-Runtime]] S-004 covers no-post
 tail-only fast path, plus conservative post/error/fallback anchoring.36 focused
 tests and120 browser window/reaction cases; real service/device QA independent.

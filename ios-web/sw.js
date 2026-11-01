@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v672-feed-layout';
+const CACHE = 'lorefy-v673-image-delivery';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -77,7 +77,7 @@ const CORE = [
   './styles/lorefy-page-refresh.css?v=20261027-ui-refinement-v1',
   './styles/lorefy-design-system.css?v=20261101-profile-material-v1',
   './modules/lorefy-design-system.js?v=20261027-glass-depth-v3',
-  './modules/lorefy-data-proxy.js?v=20260909-full-catalog-v1-tenrai-v1',
+  './modules/lorefy-data-proxy.js?v=20261101-image-delivery-v1',
   './modules/lorefy-cover-api.js?v=20261101-cover-preparation-v1',
   './modules/lorefy-catalog-policy.js?v=20261101-policy-v1',
   './modules/lorefy-catalog-plan.js?v=20261019-search-authors-v1-search-audit-v2',
@@ -92,7 +92,7 @@ const CORE = [
   './modules/lorefy-reading-diary.js?v=20261101-diary-retry-v1',
   './modules/lorefy-chapter-detail-core.js?v=20261015-reading-owner-v1',
   './modules/lorefy-chapter-metadata.js?v=20261101-completed-progress-v1',
-  './modules/lorefy-chapter-detail.js?v=20261101-completed-progress-v1',
+  './modules/lorefy-chapter-detail.js?v=20261101-image-delivery-v1',
   './modules/lorefy-product-core.js?v=20261028-report-studio-v1',
   './modules/lorefy-catalog-requests.js?v=20261025-open-catalog',
   './modules/lorefy-product-tools.js?v=20261028-report-studio-v1',
@@ -152,7 +152,7 @@ const CORE = [
   './styles/lorefy-frame-motion.css?v=20261025-frame-unity-v2',
   './styles/lorefy-interface-settings.css?v=20261009-custom-appearance-v1',
   './modules/lorefy-scroll-memory.js?v=20261101-scroll-restore-v1',
-  './modules/lorefy-cover-media.js?v=20261101-slow-media-v1',
+  './modules/lorefy-cover-media.js?v=20261101-image-delivery-v1',
   './modules/lorefy-library-media.js?v=20261029-home-media-v1',
   './styles/lorefy-cover-media.css?v=20261029-shelf-acceptance-v1',
   './modules/lorefy-review-editor.js?v=20261101-recommendation-logic-v1',

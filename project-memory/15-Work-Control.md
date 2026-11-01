@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-01-Image-Delivery]] resolves observed local image502s and
+empty chapter posters, with3262 tests and real-provider decode evidence. Keep
+external provider latency/cold-cache/native acceptance open. No build authorized.
+
 S-003 in [[sessions/2026-11-01-Smooth-Runtime]] fixes preview no-op review
 render loops (3250 tests/16 browser checks). S-004 removes unnecessary empty-feed
 layout reads;3255 source tests/120 browser cases and mirrors verified for its

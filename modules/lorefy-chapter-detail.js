@@ -88,7 +88,8 @@
     var format = content.querySelector('.lf-work-format');
     var type = work && work.type || format && format.textContent || '';
     if (!count && !/مانجا|مانهوا|كوميكس|ويب نوفل|لايت نوفل|manga|manhwa|comic|web novel|light novel/i.test(type)) return null;
-    var heroImage = content.closest('.lf-detail-page').querySelector('.lf-detail-hero > img');
+    var page = content.closest('.lf-detail-page');
+    var heroImage = page.querySelector('.lf-work-poster img') || page.querySelector('.lf-detail-hero > img');
     return { content: content, id: id, title: label, total: count,
       finished: core.isFinished(work,verifiedSource), owner:readingOwner(),
       cover: heroImage && heroImage.getAttribute('src') || '', chapterDetails: {},
@@ -425,10 +426,13 @@
         row.setAttribute('aria-expanded', expanded === number ? 'true' : 'false');
         var art = el('span', 'lf-chapter-art');
         var chapterImage = el('img'); chapterImage.loading = 'lazy'; chapterImage.decoding = 'async';
+        chapterImage.referrerPolicy = 'no-referrer';
+        chapterImage.onload = function () { this.style.display = ''; };
         chapterImage.alt = text('غلاف العمل', 'Work cover');
         chapterImage.onerror = function () {
           if (this.dataset.chapterImage && info.cover && this.getAttribute('src') !== info.cover) {
             this.dataset.chapterImage = ''; this.src = info.cover; this.alt = text('غلاف العمل', 'Work cover');
+            art.classList.remove('has-chapter-image');
           } else this.style.display = 'none';
         };
         if (info.cover) chapterImage.src = info.cover;
@@ -536,9 +540,8 @@
         row.querySelector('.lf-chapter-date').textContent = detail && detail.date ? metadata.displayDate(detail.date, english() ? 'en' : 'ar') : '';
         var image = row.querySelector('.lf-chapter-art img');
         if (detail && detail.image && !(global.LorefyRightsSafeMedia && global.LorefyRightsSafeMedia.enabled())) {
-          var mediated = global.LorefyDataProxy && global.LorefyDataProxy.mediaUrl(detail.image);
-          if (!mediated || mediated === detail.image) return;
-          image.dataset.chapterImage = '1'; image.src = mediated; image.alt = 'غلاف الفصل ' + number;
+          var mediated = global.LorefyDataProxy ? global.LorefyDataProxy.mediaUrl(detail.image) : detail.image;
+          image.dataset.chapterImage = '1'; image.src = mediated; image.alt = text('غلاف الفصل ', 'Chapter cover ') + number;
           row.querySelector('.lf-chapter-art').classList.add('has-chapter-image');
         }
         var editorTitle = row.parentNode.querySelector('.lf-chapter-editor-heading strong');

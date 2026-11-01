@@ -31,6 +31,10 @@ test('loading cover retains original URL and opts out of legacy generated fallba
 test('eager hero requests retain their explicit browser fetch priority',()=>{
  const h=harness({loading:'eager',fetchPriority:'high'}),img=h.nodes().find(n=>n.type==='img');assert.equal(img.props.fetchPriority,'high');assert.equal(img.props.loading,'eager');h.unmount();
 });
+
+test('managed covers do not leak a referrer to third-party image hosts',()=>{
+ const h=harness();assert.equal(h.nodes().find(n=>n.type==='img').props.referrerPolicy,'no-referrer');h.unmount();
+});
 test('error shows an honest state and does not substitute any generated image',()=>{
  const h=harness();h.error();assert.equal(h.state(),'error');assert.equal(h.timers.size,0);
  assert.equal(h.nodes().find(n=>n.type==='img').props.src,'https://example.invalid/cover.jpg');
@@ -107,10 +111,10 @@ test('cover material reserves space, uses theme tokens and does not animate layo
 test('cover media is present before consumers with matching offline keys',()=>{
  const entry=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8');
  for(const file of ['modules/lorefy-cover-media.js','styles/lorefy-cover-media.css','modules/lorefy-review-editor.js','modules/lorefy-explore-studio.js','modules/lorefy-profile-sections.js']){
-  const version=file==='styles/lorefy-cover-media.css'?'20261029-shelf-acceptance-v1':file==='modules/lorefy-profile-sections.js'?'20261029-profile-list-media-v1':file==='modules/lorefy-explore-studio.js'?'20261029-search-editions-v1':file==='modules/lorefy-review-editor.js'?'20261101-recommendation-logic-v1':'20261101-slow-media-v1';
+  const version=file==='styles/lorefy-cover-media.css'?'20261029-shelf-acceptance-v1':file==='modules/lorefy-profile-sections.js'?'20261029-profile-list-media-v1':file==='modules/lorefy-explore-studio.js'?'20261029-search-editions-v1':file==='modules/lorefy-review-editor.js'?'20261101-recommendation-logic-v1':'20261101-image-delivery-v1';
   assert.ok(entry.includes(file+'?v='+version));
   assert.ok(sw.includes(file+'?v='+version));
  }
  assert.ok(entry.indexOf('modules/lorefy-cover-media.js')<entry.indexOf('modules/lorefy-review-editor.js'));
- assert.match(sw,/lorefy-v672-feed-layout/);
+ assert.match(sw,/lorefy-v673-image-delivery/);
 });

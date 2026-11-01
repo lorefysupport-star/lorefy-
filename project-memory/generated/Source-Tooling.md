@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T17:37:52.255Z
-Source commit: b49a729ba90dcb82b86204fed4efb394984f6e2a
+Observed: 2026-11-01T18:05:45.350Z
+Source commit: 0f7f8e9e0c2f8d57fd2574689185df735dda3332
 
 # Tooling Source Inventory
 
@@ -50,7 +50,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tools/import-openlibrary-dump.js](../../tools/import-openlibrary-dump.js) (7124 bytes)
 - [tools/import-ranobedb-dump.js](../../tools/import-ranobedb-dump.js) (7297 bytes)
 - [tools/inspect-ranobedb-dump.js](../../tools/inspect-ranobedb-dump.js) (652 bytes)
-- [tools/lorefy-api-server.js](../../tools/lorefy-api-server.js) (16326 bytes)
+- [tools/lorefy-api-server.js](../../tools/lorefy-api-server.js) (16949 bytes)
 - [tools/lorefy-ios-usb-session.sh](../../tools/lorefy-ios-usb-session.sh) (772 bytes)
 - [tools/lorefy-performance-local.js](../../tools/lorefy-performance-local.js) (1991 bytes)
 - [tools/patch-account-boundaries.js](../../tools/patch-account-boundaries.js) (4738 bytes)

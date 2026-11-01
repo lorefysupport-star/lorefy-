@@ -66,9 +66,14 @@
     try { parsed = new URL(targetUrl, global.location && global.location.href); } catch (_) { return targetUrl; }
     if (!/^https:$/i.test(parsed.protocol)) return targetUrl;
     if (/\/functions\/v1\/lorefy-public\/media$/i.test(parsed.pathname)) return parsed.toString();
+    var localGateway = sameOriginBase();
+    var location = global.location || {};
+    if (localGateway && /^(?:http:|https:)$/.test(location.protocol || '') &&
+        /^(?:127\.0\.0\.1|localhost|\[::1\])$/i.test(location.hostname || '')) {
+      return "/api/media?url=" + encodeURIComponent(parsed.toString());
+    }
     var publicGateway = publicBase();
     if (publicGateway) return publicGateway + "/media?url=" + encodeURIComponent(parsed.toString());
-    var localGateway = sameOriginBase();
     if (localGateway) return "/api/media?url=" + encodeURIComponent(parsed.toString());
     return targetUrl;
   }

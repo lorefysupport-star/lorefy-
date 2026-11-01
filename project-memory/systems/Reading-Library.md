@@ -6,6 +6,11 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-11-01-Image-Delivery]] reconnects chapter fallback images to the
+actual displayed Work Studio poster, restores visibility after errors and keeps
+trusted chapter art distinct from work art. Ten real Hunter x Hunter chapter
+images and Berserk fallbacks decoded; no progress/ratings/state contract changes.
+
 [[sessions/2026-11-01-Completed-Empty-Progress]] supersedes the old all-zero
 completed exception: explicit Read with an empty checkpoint now captures known
 totals once, including late catalog/chapter metadata. Owned earned empty review

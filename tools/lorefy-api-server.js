@@ -41,6 +41,8 @@ const MIME = {
 const MEDIA_HOSTS = new Set([
   "s3.anilist.co",
   "s4.anilist.co",
+  "media.kitsu.app",
+  "images.ranobedb.org",
   "cdn.myanimelist.net",
   "myanimelist.net",
   "covers.openlibrary.org",
@@ -66,6 +68,15 @@ function isAllowedMediaHost(hostname) {
     hostname === "archive.org" || hostname.endsWith(".archive.org") ||
     hostname.endsWith(".fandom.com") || hostname.endsWith(".fandom.wikia.com") ||
     hostname.endsWith(".wikia.nocookie.net") || hostname.endsWith(".wikimedia.org");
+}
+
+// Local HTTPS requests should use the OS trust store just like the browser.
+// Append roots without disabling certificate/hostname verification.
+function configureLocalTrust(tls, bindHost) {
+  if (!/^(127\.0\.0\.1|localhost|::1)$/.test(bindHost) ||
+      typeof tls.getCACertificates !== 'function' || typeof tls.setDefaultCACertificates !== 'function') return false;
+  tls.setDefaultCACertificates([...tls.getCACertificates('default'), ...tls.getCACertificates('system')]);
+  return true;
 }
 
 function isAllowedRequestOrigin(origin) {
@@ -404,9 +415,10 @@ if (require.main === module) {
   if (!/^(127\.0\.0\.1|localhost|::1)$/.test(host) && process.env.LOREFY_ALLOW_PUBLIC_HOST !== "1") {
     throw new Error("Refusing a public bind. Set LOREFY_ALLOW_PUBLIC_HOST=1 only behind a hardened reverse proxy.");
   }
+  configureLocalTrust(require('node:tls'), host);
   server.listen(port, host, () => {
     console.log(`Lorefy API/static server running at http://${host}:${port}/`);
   });
 }
 
-module.exports = { safeStaticPath, isAllowedMediaHost, isAllowedRequestOrigin, server };
+module.exports = { safeStaticPath, isAllowedMediaHost, isAllowedRequestOrigin, configureLocalTrust, server };
