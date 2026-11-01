@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+C-002 in [[sessions/2026-11-01-Community-Timeline]] shares bounded friend loads,
+preserves cached same-scope rows and catches new ratings without reaction-noise
+fetches.3186 tests/64 mounted React checks; no live/native certification.
+
 [[sessions/2026-11-01-Community-Timeline]] begins a focused timeline pass:
 C-001 routes/coalesces review realtime changes with one trailing catch-up,
 without post-triggered review/graph reads.3180 tests/18 local browser checks.

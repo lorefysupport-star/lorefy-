@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+C-002 friend lifecycle is verified in [[sessions/2026-11-01-Community-Timeline]]
+with3186 tests/64 UI checks. Continue post invalidation catch-up and review
+reaction consistency; real two-reader/device/service timing remains open.
+
 Current owner priority: [[sessions/2026-11-01-Community-Timeline]]. C-001 review
 realtime routing/catch-up passes3180 tests/18 browser checks. Continue friend
 shared loading, post invalidation routing, then review reaction consistency.

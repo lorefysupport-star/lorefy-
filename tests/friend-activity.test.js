@@ -67,7 +67,7 @@ test('changing accounts while a shelf request runs discards the previous account
 });
 test('page refresh awaits current friend shelves and unregisters on unmount',async()=>{
  const effects=[],states=[],handlers=new Map();
- const window={React:{createElement:(type,props,...children)=>({type,props,children}),useState:value=>{const i=states.length;states.push(value);return[value,next=>{states[i]=typeof next==='function'?next(states[i]):next;}];},useEffect:fn=>effects.push(fn)},
+ const window={setTimeout,clearTimeout,React:{createElement:(type,props,...children)=>({type,props,children}),useRef:value=>({current:value}),useState:value=>{const i=states.length;states.push(value);return[value,next=>{states[i]=typeof next==='function'?next(states[i]):next;}];},useEffect:fn=>effects.push(fn)},
   LorefyBackend:{mode:'live',user:{id:'owner'},listFriendRatings:async()=>({ratings:[],followingIds:['friend'],limited:false})},
   LorefyPageRefresh:{register:(name,fn)=>{handlers.set(name,fn);return()=>handlers.delete(name);}},addEventListener(){},removeEventListener(){}};
  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../modules/lorefy-friend-activity.js'),'utf8'),{window});

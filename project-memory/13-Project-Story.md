@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+Community C-002: friend-rating lifecycle and direct relevant realtime refresh
+are repaired in [[sessions/2026-11-01-Community-Timeline]],3186 tests/64 mounted
+React checks. Existing rows stay visible on refresh/failure; ownership remains.
+
 2026-11-01 [[sessions/2026-11-01-Community-Timeline]] starts the owner-prioritized
 community pass: review realtime routing/catch-up verified with3180 tests and18
 local browser checks. Friend/post/reaction follow-ups remain in this same pass.

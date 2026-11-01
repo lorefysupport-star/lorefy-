@@ -30,10 +30,30 @@ unrelated asset expectations were restored before the passing full rerun.
 Outside-Git evidence: artifacts/community-routing-20261101-full.log and
 output/playwright/community-routing.js/results.txt.
 
+## C-002: Friend Ratings Share One Bounded Refresh
+
+Five initial regression failures reproduced duplicate initial/pull requests,
+row clearing on background refresh, refetching after unrelated review props,
+unbounded loading and no direct new-rating subscription. Rails now shares one
+14s-bounded job across initial/manual/pull loads. Existing same-scope data stays
+visible during refresh/failure with Retry; no stale rows survive an owner,
+backend or following-scope replacement. Relevant review/follow events coalesce
+and queue one catch-up; reaction noise does not refetch metadata. No polling or
+new channel: subscribeCommunity shares the backend's existing connection.
+
+Focused16/16 and full3186/3186 pass (75656ms, exit0). Browser64/64 AR/EN
+x320/390 mounts the real React Rails with
+controlled data: one initial/pull request, stable card nodes during reload and
+failure, Retry, deadline/late result, unrelated props/reactions ignored, one
+new-rating load, owner-switch hiding and cleanup. Not production latency or
+catalog/provider coverage. Existing media tests use standard useRef stubs now;
+their missing hook, not an application failure, was found by the first full run.
+Cachev658-friend-refresh; six affected mirrors match.
+
 ## Remaining In This Pass
 
-- Friend rails clear their rows during refresh and can wait without a bound;
-  page refresh and effect requests need one shared lifecycle.
+- Friend lifecycle is repaired locally; real two-reader delivery and provider
+  artwork timing remain external acceptance checks.
 - Post realtime invalidations need domain routing and in-flight catch-up.
 - Review like/dislike writes have independent locks and misleading local-sync
   success copy; audit their failure and concurrent semantics.

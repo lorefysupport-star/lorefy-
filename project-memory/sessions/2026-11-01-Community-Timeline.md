@@ -18,6 +18,14 @@ Five initial failures; focused16/16, full3180/3180 (65269ms, exit0) and browser
 plus actual demo UI idle/card retention checks; not live or device certification.
 Cachev657-community-routing and six affected mirrors byte-identical.
 
+C-002: modules/lorefy-friend-activity.js now shares one bounded load, preserves
+same-scope rows through background refresh/failure and directly consumes relevant
+shared realtime events with one catch-up. Removed unrelated review-prop network
+dependency. Six new regressions (five initially red), focused16/16 and mounted
+React browser64/64 AR/EN x320/390 pass; provider/device delivery not certified.
+Cachev658-friend-refresh and six affected mirrors synchronized.
+Full3186/3186, exit0 (75656ms); source and controlled browser evidence only.
+
 See docs/COMMUNITY_TIMELINE_2026-11-01.md for evidence and remaining scope:
 friend shared loading, post invalidation routing and review reaction consistency.
 No generic dead-code purge or design replacement is part of this repair.

@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Community C-002: [[sessions/2026-11-01-Community-Timeline]],3186 tests/64 AR/EN
+small-phone checks: shared friend request, cached row retention, timeout/retry,
+late response/owner guards and typed live-event fixtures. Not real-device proof.
+
 Community C-001: [[sessions/2026-11-01-Community-Timeline]],3180 tests/18 AR/EN
 browser checks for typed realtime refresh, burst coalescing/catch-up and idle
 card retention. Controlled backend/local demo, not live service or hardware.

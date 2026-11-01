@@ -44,45 +44,64 @@
     var R=root.React, h=R.createElement, en=p.language==='en', backend=root.LorefyBackend;
     var owner=String(backend && backend.user && backend.user.id || ''), live=backend && backend.mode==='live';
     var followingKey=(p.following || []).map(String).sort().join('|');
-    var reviewKey=(p.reviews || []).map(function (r) { return r.id+':'+r.ts+':'+r.r; }).join('|');
     var state=R.useState({owner:'',rows:[],following:[],loading:live,error:false}), result=state[0], set=state[1];
-    var tick=R.useState(0), refresh=tick[0], update=tick[1], version=R.useState(0), bump=version[1];
+    var reload=R.useRef(null), version=R.useState(0), bump=version[1];
     var expandedState=R.useState({}), expanded=expandedState[0], expand=expandedState[1];
     R.useEffect(function () {
-      function changed() { update(function (n) { return n+1; }); }
       function ingested() { bump(function (n) { return n+1; }); }
-      root.addEventListener('lorefy:profile-follow-changed',changed);
-      root.addEventListener('lorefy:community-refresh',changed);
       root.addEventListener('lorefy:catalog-ingested',ingested);
       root.addEventListener('lorefy:reader-safety-changed',ingested);
-      return function () { root.removeEventListener('lorefy:profile-follow-changed',changed); root.removeEventListener('lorefy:community-refresh',changed); root.removeEventListener('lorefy:catalog-ingested',ingested); root.removeEventListener('lorefy:reader-safety-changed',ingested); };
+      return function () { root.removeEventListener('lorefy:catalog-ingested',ingested); root.removeEventListener('lorefy:reader-safety-changed',ingested); };
     },[]);
     R.useEffect(function () {
       if (!live) return;
-      var current=true;
-      set({owner:owner,rows:[],following:[],loading:true,error:false});
-      Promise.resolve().then(function () { return backend.listFriendRatings(); }).then(function (data) {
-        if (!current || owner !== String(backend.user && backend.user.id || '')) return;
-        set({owner:owner,rows:data.ratings,following:data.followingIds,limited:data.limited,loading:false,error:false});
-        var loader=root.LorefyCatalogLoader;
-        if (loader && loader.loadWorks) loader.loadWorks(data.ratings.map(function (r) { return r.work_id; })).catch(function () {});
-      }).catch(function () { if (current && owner === String(backend.user && backend.user.id || '')) set({owner:owner,rows:[],following:[],loading:false,error:true}); });
-      return function () { current=false; };
-    },[owner,live,followingKey,reviewKey,refresh]);
-    R.useEffect(function () {
-      if (!live || !root.LorefyPageRefresh) return;
-      var mounted=true;
-      var stop=root.LorefyPageRefresh.register('community-friends',async function (context) {
-        var data=await backend.listFriendRatings();
-        if (!mounted || !context.active() || owner!==String(backend.user && backend.user.id || '')) return false;
-        set({owner:owner,rows:data.ratings,following:data.followingIds,limited:data.limited,loading:false,error:false});
-        var loader=root.LorefyCatalogLoader;
-        if (loader && loader.loadWorks) loader.loadWorks(data.ratings.map(function (row) { return row.work_id; })).catch(function () {});
-        return true;
-      });
-      return function () { mounted=false; stop(); };
-    },[owner,live]);
-    var valid=!live || result.owner===owner, loading=live && (!valid || result.loading), error=live && valid && result.error;
+      var mounted=true,job=null,queued=false,deadlineTimer=0,refreshTimer=0,unsubscribe=null;
+      function current() { return mounted && root.LorefyBackend===backend && owner===String(backend.user && backend.user.id || ''); }
+      function keep(previous) { return previous.owner===owner && previous.scope===followingKey && previous.backend===backend; }
+      function load(context) {
+        if (!current() || context && context.active && !context.active()) return Promise.resolve(false);
+        if (job) return job;
+        set(function (previous) {
+          return Object.assign(keep(previous) ? {} : {owner:owner,scope:followingKey,backend:backend,rows:[],following:[]},
+            keep(previous) ? previous : {}, {loading:!keep(previous) || !previous.loaded,error:false});
+        });
+        var deadline=new Promise(function (_,reject) { deadlineTimer=root.setTimeout(function () { reject(new Error('Friend ratings timeout')); },14000); });
+        job=Promise.race([Promise.resolve().then(function () { return backend.listFriendRatings(); }),deadline]).then(function (data) {
+          if (!current()) return false;
+          set({owner:owner,scope:followingKey,backend:backend,rows:data.ratings,following:data.followingIds,limited:data.limited,loaded:true,loading:false,error:false});
+          var loader=root.LorefyCatalogLoader;
+          if (loader && loader.loadWorks) loader.loadWorks(data.ratings.map(function (row) { return row.work_id; })).catch(function () {});
+          return true;
+        }).catch(function () {
+          if (current()) set(function (previous) { return Object.assign({},previous,{loading:false,error:true}); });
+          return false;
+        }).finally(function () {
+          root.clearTimeout(deadlineTimer); job=null;
+          if (queued && current()) { queued=false; load(); }
+        });
+        return job;
+      }
+      function changed(payload) {
+        if (payload && payload.table && payload.table!=='reviews' && payload.table!=='profile_follows') return;
+        if (!current()) return;
+        if (job) { queued=true; return; }
+        if (!refreshTimer) refreshTimer=root.setTimeout(function () { refreshTimer=0; load(); },180);
+      }
+      function manual() { return load(); }
+      reload.current=load;
+      root.addEventListener('lorefy:profile-follow-changed',changed);
+      root.addEventListener('lorefy:community-refresh',manual);
+      var stop=root.LorefyPageRefresh && root.LorefyPageRefresh.register('community-friends',load);
+      if (backend.subscribeCommunity) backend.subscribeCommunity(changed).then(function (stop) { if (mounted) unsubscribe=stop; else if (stop) stop(); }).catch(function () {});
+      load();
+      return function () {
+        mounted=false; root.clearTimeout(deadlineTimer); root.clearTimeout(refreshTimer);
+        if (reload.current===load) reload.current=null;
+        if (unsubscribe) unsubscribe(); if (stop) stop();
+        root.removeEventListener('lorefy:profile-follow-changed',changed); root.removeEventListener('lorefy:community-refresh',manual);
+      };
+    },[owner,live,backend,followingKey]);
+    var valid=!live || result.owner===owner && result.scope===followingKey && result.backend===backend, loading=live && (!valid || result.loading), error=live && valid && result.error;
     var safety=root.LorefyProductTools && root.LorefyProductTools.core.safety;
     var hidden=safety ? safety.getBlockedUsers().concat(safety.getMutedUsers()) : [];
     var data=derive(live ? valid ? result.rows : [] : p.reviews,live ? valid ? result.following : [] : p.following,{owner:owner,hidden:hidden,aliases:root.LorefyCatalogAliases});
@@ -92,9 +111,11 @@
     }
     function section(kind,title,rows) {
       var items=rows.map(function (row) { return {row:row,work:p.getWork(row.mid)}; }).filter(function (item) { return eligible(item.work,root.LorefyCatalogPolicy); });
+      function retry() { if (reload.current) reload.current(); }
       return h('section',{className:'lf-friend-section','aria-label':title},
         h('header',null,h('h2',null,title),(p.onSeeAll ? items.length>0 : items.length>8) && h('button',{type:'button','aria-expanded':!!expanded[kind],onClick:function () { if(p.onSeeAll){p.onSeeAll(title,items.map(function(item){return item.work;}));return;}expand(function (old) { return Object.assign({},old,{[kind]:!old[kind]}); }); }},expanded[kind] ? en?'Less':'أقل' : en?'See all':'عرض الكل')),
-        loading ? h('p',{className:'lf-friend-empty',role:'status'},en?'Loading friends’ ratings…':'جارٍ تحميل تقييمات الأصدقاء…') : error ? h('div',{className:'lf-friend-empty',role:'status'},h('p',null,en?'Could not load friends’ ratings.':'تعذر تحميل تقييمات الأصدقاء.'),h('button',{type:'button',onClick:function () { update(function (n) { return n+1; }); }},en?'Try again':'إعادة المحاولة'))
+        error && items.length>0 && h('div',{className:'lf-friend-empty',role:'status'},en?'Could not update friends’ ratings. ':'تعذر تحديث تقييمات الأصدقاء. ',h('button',{type:'button',onClick:retry},en?'Try again':'إعادة المحاولة')),
+        loading ? h('p',{className:'lf-friend-empty',role:'status'},en?'Loading friends’ ratings…':'جارٍ تحميل تقييمات الأصدقاء…') : error && !items.length ? h('div',{className:'lf-friend-empty',role:'status'},h('p',null,en?'Could not load friends’ ratings.':'تعذر تحميل تقييمات الأصدقاء.'),h('button',{type:'button',onClick:retry},en?'Try again':'إعادة المحاولة'))
         : !items.length ? h('p',{className:'lf-friend-empty'},en?'Your friends’ ratings will appear here.':'ستظهر هنا تقييمات الحسابات التي تتابعها.')
         : h('div',{className:'lf-friend-rail'+(expanded[kind]?' is-expanded':''),role:'list'},items.slice(0,expanded[kind]?80:12).map(function (item) {
           var row=item.row,w=item.work, profile=row.profile || {}, name=row.user || profile.name || profile.username || (en?'Reader':'قارئ'), avatar=row.av || profile.avatar;
