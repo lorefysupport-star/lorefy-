@@ -314,7 +314,7 @@
     var pauseState = React.useState(true), paused = pauseState[0], setPaused = pauseState[1];
     var reducedMotion = !!(root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches);
     var errorState = React.useState(false), loadError = errorState[0], setLoadError = errorState[1];
-    var opener = React.useRef(null), panel = React.useRef(null), screen = React.useRef(null), sentinel = React.useRef(null), hero = React.useRef(null), busy = React.useRef(false);
+    var opener = React.useRef(null), panel = React.useRef(null), screen = React.useRef(null), sentinel = React.useRef(null), hero = React.useRef(null), busy = React.useRef(false), dialogInstance = React.useRef(0);
     var t = function (ar, english) { return en ? english : ar; };
     var Icon = function (name, size) {
       if (en && name === 'ChevronLeft') name = 'ChevronRight';
@@ -528,11 +528,12 @@
         return h(React.Fragment,null,h('div',{className:'lf-explore-immersive-art','aria-hidden':true},surface),retry&&React.cloneElement(retry,{className:'lf-cover-retry lf-explore-art-retry','aria-label':t('إعادة تحميل الصورة','Retry artwork'),title:t('إعادة تحميل الصورة','Retry artwork')}));
       }});
     }
-    function open(value) { opener.current = root.document.activeElement; setDialog(value); }
+    function open(value) { dialogInstance.current++;opener.current = root.document.activeElement; setDialog(value); }
     function close() { collectionRequest.current++;setDialog(null); setDraft(null); }
     function openWork(work) { if(searchActive&&searchQuery.trim())rememberSearch();remember(); if (root.document.activeElement && root.document.activeElement.blur) root.document.activeElement.blur(); props.onWork(work); }
     React.useEffect(function () {
       if (!dialog || !panel.current) return;
+      var previous = opener.current;
       panel.current.querySelector('button')?.focus();
       var changed = [], node = panel.current.parentElement;
       while (node && node.parentElement && node !== root.document.body) {
@@ -541,10 +542,11 @@
           changed.push([sibling, sibling.inert]); sibling.inert = true;
         }); node = node.parentElement;
       }
-      return function () { changed.forEach(function (entry) { entry[0].inert = entry[1]; }); if (opener.current && opener.current.isConnected) opener.current.focus(); };
-    }, [dialog]);
+      return function () { changed.forEach(function (entry) { entry[0].inert = entry[1]; }); if (previous && previous.isConnected) previous.focus({preventScroll:true}); };
+    }, [!!dialog, dialogInstance.current, owner]);
     function trap(event) {
-      if (event.key === 'Escape') { event.stopPropagation(); close(); }
+      if (event.defaultPrevented) return;
+      if (event.key === 'Escape') { event.preventDefault();event.stopPropagation(); close(); }
       if (event.key !== 'Tab' || !panel.current) return;
       var controls = Array.from(panel.current.querySelectorAll('button:not([disabled]),input,select,a[href]')).filter(function (node) { return node.getClientRects().length; });
       var firstNode = controls[0], lastNode = controls[controls.length - 1];

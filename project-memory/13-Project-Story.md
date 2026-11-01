@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-02-Explore-Interactions]] starts the requested Explore audit:
+E-001 preserves the focused work while a collection loads or fails.3286 tests
+and162 browser checks cover core Explore controls without changing its design.
+Next is obsolete format pagination; native and live-provider checks remain open.
+
 [[sessions/2026-11-02-Profile-Interactions]] P-003 repairs the unhandled visitor
 dialog boundary without redesigning the page.3283 tests and276 new browser
 checks verify keyboard focus, background isolation, retry and navigation across

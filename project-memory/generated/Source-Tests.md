@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T22:11:56.660Z
-Source commit: 4921644216dda8af7f2e00206568e5dd54de4c2b
+Observed: 2026-11-01T23:07:55.172Z
+Source commit: 0a96298462d6d8d8dab019e2fcd87be0eae588a6
 
 # Tests Source Inventory
 
@@ -357,7 +357,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/search-field-accessibility.test.js](../../tests/search-field-accessibility.test.js) (2692 bytes)
 - [tests/search-gateway-resilience.test.js](../../tests/search-gateway-resilience.test.js) (3021 bytes)
 - [tests/search-suggestion-interface.test.js](../../tests/search-suggestion-interface.test.js) (4472 bytes)
-- [tests/search-ui-work-budget.test.js](../../tests/search-ui-work-budget.test.js) (13306 bytes)
+- [tests/search-ui-work-budget.test.js](../../tests/search-ui-work-budget.test.js) (16001 bytes)
 - [tests/secure-storage.test.js](../../tests/secure-storage.test.js) (5423 bytes)
 - [tests/security-regressions.test.js](../../tests/security-regressions.test.js) (8249 bytes)
 - [tests/session-read-owner.test.js](../../tests/session-read-owner.test.js) (5490 bytes)

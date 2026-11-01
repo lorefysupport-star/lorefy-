@@ -23,14 +23,42 @@ function renderHarness(overrides={}) {
   vm.runInNewContext(fs.readFileSync('modules/lorefy-explore-studio.js','utf8'),context);
   const props={userKey:'budget-owner',language:'en',allType:'All',types:['All','Manga'],genres:[],preferences:{genres:[]},library:{},favorites:[],categories:[],
     getRanked(){rankingCalls++;return [work];},getCatalog:()=>[work],getWork:()=>work,typeLabel:value=>value,cover:()=>'',fallback:()=>'',onWork(){},...overrides};
-  function render(){stateIndex=memoIndex=refIndex=effectIndex=0;tree=root.LorefyExploreStudio.Explore(props);return tree;}
+  function render(){stateIndex=memoIndex=refIndex=effectIndex=0;tree=root.LorefyExploreStudio.Explore(props);for(const node of nodes(tree))if(node.props.ref&&String(node.props.className||'').split(' ').includes('lf-explore-dialog'))node.props.ref.current=root.testPanel||null;return tree;}
   function nodes(node,out=[]){if(node&&typeof node==='object'){out.push(node);(node.children||[]).forEach(child=>nodes(child,out));}return out;}
   function find(fn){return nodes(tree).find(fn);}
   function flush(){const pending=[...timers.values()];timers.clear();pending.forEach(timer=>timer.fn());}
   function flushEffects(){const pending=[...pendingEffects];pendingEffects.clear();pending.forEach(([index,fn])=>{if(effects[index].cleanup)effects[index].cleanup();effects[index].cleanup=fn();});}
   function emit(name,detail){assert.ok(listeners.has(name),'listener registered: '+name);listeners.get(name)({detail});}
-  return {render,find,flush,flushEffects,emit,slots,counts:()=>({rankingCalls,matchCalls}),root};
+  return {render,find,flush,flushEffects,emit,slots,unmount:()=>effects.forEach(effect=>effect?.cleanup?.()),counts:()=>({rankingCalls,matchCalls}),root};
 }
+
+function collectionHarness(){
+ const doc={activeElement:null,hidden:false,body:{}},opener={isConnected:true,focus(){doc.activeElement=this;}},close={focus(){doc.activeElement=this;}},card={focus(){doc.activeElement=this;}},background={inert:false};
+ const wrapper={parentElement:doc.body};doc.body.children=[wrapper,background];
+ const panel={parentElement:wrapper,querySelector:()=>close};doc.activeElement=opener;
+ const app=renderHarness();app.root.document=doc;app.root.testPanel=panel;
+ let resolve,reject,more=true;app.root.LorefyCatalogLoader={state:()=>({ready:true}),loadExplore:async()=>{},createCollectionPager:()=>({hasMore:()=>more,next:()=>new Promise((yes,no)=>{resolve=()=>{more=false;yes();};reject=no;})})};
+ app.render();app.flushEffects();
+ app.find(n=>n.type==='button'&&n.children.includes('See all')).props.onClick();app.render();app.flushEffects();
+ return{app,doc,opener,close,card,background,resolve:()=>resolve(),reject:()=>reject(Error('offline'))};
+}
+const settle=()=>new Promise(resolve=>setImmediate(resolve));
+
+for(const outcome of ['resolve','reject'])test('collection '+outcome+' keeps current focus instead of restarting the dialog',async()=>{
+ const f=collectionHarness();assert.equal(f.doc.activeElement,f.close);assert.equal(f.background.inert,true);
+ f.card.focus();f[outcome]();await settle();f.app.render();f.app.flushEffects();
+ assert.equal(f.doc.activeElement,f.card);assert.equal(f.background.inert,true);
+ const overlay=f.app.find(n=>String(n.props.className||'').split(' ').includes('lf-explore-overlay'));
+ let prevented=false,stopped=false;overlay.props.onKeyDown({key:'Escape',preventDefault(){prevented=true;},stopPropagation(){stopped=true;}});
+ f.app.render();f.app.flushEffects();assert.equal(prevented,true);assert.equal(stopped,true);assert.equal(f.background.inert,false);assert.equal(f.doc.activeElement,f.opener);
+});
+
+test('closing a loading collection restores the opener and ignores its later completion',async()=>{
+ const f=collectionHarness();f.app.find(n=>n.type==='button'&&n.props['aria-label']==='Close').props.onClick();f.app.render();f.app.flushEffects();
+ assert.equal(f.doc.activeElement,f.opener);assert.equal(f.background.inert,false);
+ f.resolve();await settle();f.app.render();f.app.flushEffects();assert.equal(f.app.find(n=>n.props.role==='dialog'),undefined);assert.equal(f.doc.activeElement,f.opener);
+ f.app.unmount();assert.equal(f.background.inert,false);
+});
 
 test('active media and people searches do not recalculate hidden personalized recommendations',()=>{
   const app=renderHarness();app.render();

@@ -12,6 +12,10 @@ wholecatalog indexing. Partial All/الكل failures keep cards+Retry in AR/EN.
 3111tests and local browser pass; device/provider coverage limits remain.
 # الاستكشاف وتفاصيل الأعمال والشخصيات
 
+E-001 in [[sessions/2026-11-02-Explore-Interactions]] fixes collection content
+updates stealing focus or restarting background isolation.3286 source tests and
+162 AR/EN browser checks pass; native/live provider timing remains separate.
+
 [[sessions/2026-10-29-Cover-Edition-Choice]] preserves provider edition/volume
 metadata through the actual cover picker. Choices share the legacy cached lookup;
 no new requests, identity remapping or reading-state writes. Unknown/conflicting
