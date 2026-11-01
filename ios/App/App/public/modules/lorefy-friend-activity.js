@@ -55,7 +55,7 @@
     },[]);
     R.useEffect(function () {
       if (!live) return;
-      var mounted=true,job=null,queued=false,deadlineTimer=0,refreshTimer=0,unsubscribe=null;
+      var mounted=true,job=null,queued=false,deadlineTimer=0,refreshTimer=0,unsubscribe=null,knownFriends=null;
       function current() { return mounted && root.LorefyBackend===backend && owner===String(backend.user && backend.user.id || ''); }
       function keep(previous) { return previous.owner===owner && previous.scope===followingKey && previous.backend===backend; }
       function load(context) {
@@ -68,6 +68,7 @@
         var deadline=new Promise(function (_,reject) { deadlineTimer=root.setTimeout(function () { reject(new Error('Friend ratings timeout')); },14000); });
         job=Promise.race([Promise.resolve().then(function () { return backend.listFriendRatings(); }),deadline]).then(function (data) {
           if (!current()) return false;
+          knownFriends=new Set(data.followingIds.map(String));
           set({owner:owner,scope:followingKey,backend:backend,rows:data.ratings,following:data.followingIds,limited:data.limited,loaded:true,loading:false,error:false});
           var loader=root.LorefyCatalogLoader;
           if (loader && loader.loadWorks) loader.loadWorks(data.ratings.map(function (row) { return row.work_id; })).catch(function () {});
@@ -83,6 +84,8 @@
       }
       function changed(payload) {
         if (payload && payload.table && payload.table!=='reviews' && payload.table!=='profile_follows') return;
+        var row=payload && payload.table==='reviews' && (payload.new && payload.new.user_id ? payload.new : payload.old);
+        if (row && row.user_id && knownFriends && !knownFriends.has(String(row.user_id))) return;
         if (!current()) return;
         if (job) { queued=true; return; }
         if (!refreshTimer) refreshTimer=root.setTimeout(function () { refreshTimer=0; load(); },180);

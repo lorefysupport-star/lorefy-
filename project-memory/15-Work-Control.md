@@ -6,6 +6,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+Community C-001..005 source pass:3199 tests and final Rails68/68, with earlier
+actual demo smoke32/32. [[sessions/2026-11-01-Community-Timeline]] records each
+separate repair and push; next acceptance is real two-reader/native/network and
+long pagination, not another redesign or a claim that all latency is eliminated.
+
 C-001..004 in [[sessions/2026-11-01-Community-Timeline]] pass3198 tests/194 local
 browser checks. Source routing/friend/post/reaction repairs are verified. Open:
 real two-reader arrival, native smoothness/network timing, long pagination and

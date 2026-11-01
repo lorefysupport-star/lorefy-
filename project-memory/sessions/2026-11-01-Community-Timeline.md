@@ -43,6 +43,13 @@ Cachev660 and ten affected runtime mirrors match. No provider/device benchmark,
 production mutation or build. Timeout does not cancel a server write; opposite
 review cleanup remains two RPCs. Total194 browser checks in this scoped pass.
 
+C-005 follow-up: established followed-reader IDs filter unrelated/own review
+events before requesting friend metadata. Unknown-author/delete payloads still
+refresh conservatively. One red regression, focused17/17 and updated mounted
+Rails68/68 AR/EN x320/390 pass. Cachev661/six mirrors; no shared-account cache,
+production access change or service-latency claim.
+Final full3199/3199, exit0 (68435ms). Each of the five repairs is a separate push.
+
 See docs/COMMUNITY_TIMELINE_2026-11-01.md for evidence and remaining scope:
 completed source fixes and open native/service/long-pagination acceptance.
 No generic dead-code purge or design replacement is part of this repair.

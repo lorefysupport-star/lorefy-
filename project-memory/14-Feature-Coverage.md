@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Community C-005: [[sessions/2026-11-01-Community-Timeline]],3199 source tests/68
+mounted Rails browser checks. Known non-friend/own review events are ignored;
+friend/unknown-author/delete catch-up remains. Live and device gates unchanged.
+
 Community C-004: [[sessions/2026-11-01-Community-Timeline]],3198 tests/60 reaction
 fixtures +32 actual demo smoke checks. Both action controls/copies, server0,
 rollback/timeout/owner guards and stable scroll/idle verified. Not live/device

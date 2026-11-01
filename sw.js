@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v660-community-reactions';
+const CACHE = 'lorefy-v661-friend-events';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -41,7 +41,7 @@ const CORE = [
   './uploads/lorefy-editorial-picks.js?v=20261017-editorial-comics-v1',
   './styles/lorefy-user-experience.css?v=20261015-connection-avatar-v1',
   './modules/lorefy-user-experience.js?v=20261015-connection-avatar-v1',
-  './modules/lorefy-friend-activity.js?v=20261101-friend-refresh-v1',
+  './modules/lorefy-friend-activity.js?v=20261101-friend-events-v1',
   './modules/lorefy-original-illustrated.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-original-autumn.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-original-original.js?v=20261013-all-profile-frames-v6',

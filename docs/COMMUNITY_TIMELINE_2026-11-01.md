@@ -107,6 +107,23 @@ output/playwright/community-reactions.js/results.txt and
 community-final-smoke.js/results.txt with AR/EN captures. Across this pass,
 194 browser contract/acceptance checks pass; no production benchmark is claimed.
 
+## C-005: Ignore Known Non-Friend Rating Events
+
+The shared channel also contains other public readers' review changes. After a
+successful friend read establishes the actual followed IDs, known stranger/own
+review events now skip friend metadata reloads. Follow changes, followed-reader
+changes and incomplete/authorless DELETE payloads still catch up conservatively.
+The followed set is effect-local and replaced with the owner/backend/following
+scope; this is not a cross-user cache or a permissions substitute.
+
+One red regression reproduced the unwanted read. Focused17/17 and full3199/3199
+pass (68435ms, exit0). The updated
+real React Rails browser run passes68/68 AR/EN x320/390:20 stranger+20 owner
+review events cause zero reads,20 friend changes cause one, and all previously
+tested loading/retry/timeout/owner behavior remains. Cachev661/six mirrors match.
+Receipts: artifacts/community-friend-events-20261101-full.log and
+output/playwright/community-friend-events-results.txt. No live-service benchmark.
+
 ## Remaining Acceptance
 
 - Friend lifecycle is repaired locally; real two-reader delivery and provider

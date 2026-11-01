@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+C-005 in [[sessions/2026-11-01-Community-Timeline]] filters known non-friend/own
+review events after actual following IDs load.3199 tests/68 updated Rails browser
+checks. Incomplete/delete payloads still refresh; source-only, not service proof.
+
 C-004 closes the scoped reaction pass in [[sessions/2026-11-01-Community-Timeline]]:
 shared review locks, conditional rollback, fresh server0/count metadata and
 bounded review/post writes.3198 tests,60 controlled +32 actual demo checks;

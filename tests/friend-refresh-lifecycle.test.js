@@ -19,7 +19,7 @@ function mount(){
  const h={props,backend,requests,handlers,state:()=>hooks[0],
   render(){cursor=0;const tree=window.LorefyFriendActivity.Rails(props);while(pending.length)pending.shift()();return tree;},
   emit(key,payload){for(const fn of events.get(key)||[])fn(payload);},
-  realtime(table){assert.equal(typeof listener,'function','friend rails subscribe to the shared change channel');listener({table});},
+  realtime(table){assert.equal(typeof listener,'function','friend rails subscribe to the shared change channel');listener(typeof table==='string'?{table}:table);},
   timers(ms){for(const[id,job]of[...timers])if(job.ms===ms){timers.delete(id);job.fn();}},
   cleanup(){for(const effect of effects)effect?.cleanup?.();}};
  h.render();return h;
@@ -62,4 +62,15 @@ test('old friend results cannot enter a replaced account and cleanup removes ref
  h.requests[0].resolve(sample);await settle();assert.equal(h.state().rows.length,0);
  h.requests[1].resolve({ratings:[],followingIds:[]});await settle();assert.equal(h.state().owner,'other');
  h.cleanup();assert.equal(h.handlers.size,0);
+});
+
+test('known stranger and own-review events do not reload friends, but incomplete delete payloads still catch up',async()=>{
+ const h=mount();await settle();h.requests[0].resolve(sample);await settle();
+ h.realtime({table:'reviews',new:{user_id:'stranger'}});
+ h.realtime({table:'reviews',new:{user_id:'owner'}});
+ h.timers(180);await settle();assert.equal(h.requests.length,1);
+ h.realtime({table:'reviews',new:{user_id:'friend'}});h.timers(180);await settle();assert.equal(h.requests.length,2);
+ h.requests[1].resolve(sample);await settle();
+ h.realtime({table:'reviews',eventType:'DELETE',old:{id:'unknown'}});h.timers(180);await settle();assert.equal(h.requests.length,3);
+ h.requests[2].resolve(sample);await settle();h.cleanup();
 });
