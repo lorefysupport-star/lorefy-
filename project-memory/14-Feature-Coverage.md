@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Community C-006: [[sessions/2026-11-01-Community-Timeline]],3209 tests/68 AR/EN
+checks across180 posts, old-boundary refresh, edits/deletions, explicit scroll
+anchor and usable older/end pagination. Controlled backend, not device evidence.
+
 Community C-005: [[sessions/2026-11-01-Community-Timeline]],3199 source tests/68
 mounted Rails browser checks. Known non-friend/own review events are ignored;
 friend/unknown-author/delete catch-up remains. Live and device gates unchanged.

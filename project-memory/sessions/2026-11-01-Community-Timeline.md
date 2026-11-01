@@ -50,6 +50,13 @@ Rails68/68 AR/EN x320/390 pass. Cachev661/six mirrors; no shared-account cache,
 production access change or service-latency claim.
 Final full3199/3199, exit0 (68435ms). Each of the five repairs is a separate push.
 
+C-006 continuation: loaded post window refresh follows keyset cursors through its
+old boundary, revalidates deleted/edited rows, preserves previous full data on
+later-page failure and anchors the visible surviving card. Ten added tests;
+full3209/3209 (63845ms, exit0), browser68/68 AR/EN x320/390,180 rows with native
+scroll anchoring disabled. Cachev662/six mirrors. No native/network benchmark.
+Next is targeted post invalidation to avoid full-window work for single reactions.
+
 See docs/COMMUNITY_TIMELINE_2026-11-01.md for evidence and remaining scope:
 completed source fixes and open native/service/long-pagination acceptance.
 No generic dead-code purge or design replacement is part of this repair.

@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+C-006 passes3209 tests/68 local paged/anchor checks in
+[[sessions/2026-11-01-Community-Timeline]]. Next: targeted known-post refresh for
+reactions, without keeping withdrawn rows or repeating whole-window requests.
+
 Community C-001..005 source pass:3199 tests and final Rails68/68, with earlier
 actual demo smoke32/32. [[sessions/2026-11-01-Community-Timeline]] records each
 separate repair and push; next acceptance is real two-reader/native/network and

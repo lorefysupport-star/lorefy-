@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+Community C-006 continuation in [[sessions/2026-11-01-Community-Timeline]]:
+3209 tests/68 browser checks verify retained loaded pages and scroll anchors,
+with deletion/edit revalidation. Native/network performance remains separate.
+
 Community C-005 completes this source pass with3199 tests and68 updated Rails
 browser checks: irrelevant author events no longer reload friends. See
 [[sessions/2026-11-01-Community-Timeline]] for all five repairs and acceptance gaps.

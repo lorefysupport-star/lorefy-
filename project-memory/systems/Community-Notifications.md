@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+C-006 in [[sessions/2026-11-01-Community-Timeline]] preserves/revalidates the
+loaded post window and visible-card offset.3209 tests/68 paged browser checks
+(180 rows, native anchoring disabled). Targeted reaction refresh is next.
+
 C-005 in [[sessions/2026-11-01-Community-Timeline]] filters known non-friend/own
 review events after actual following IDs load.3199 tests/68 updated Rails browser
 checks. Incomplete/delete payloads still refresh; source-only, not service proof.

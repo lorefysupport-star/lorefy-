@@ -124,12 +124,44 @@ tested loading/retry/timeout/owner behavior remains. Cachev661/six mirrors match
 Receipts: artifacts/community-friend-events-20261101-full.log and
 output/playwright/community-friend-events-results.txt. No live-service benchmark.
 
+## C-006: Preserve And Revalidate A Loaded Post Window
+
+Refreshing replaced all loaded pages with the newest60. Four initial failures
+reproduced missing old rows, missed edits/deletions, unhandled later-page failure
+and same-time cursor loss. Refresh now follows the existing keyset cursor through
+the previous oldest timestamp+id, including new head rows. It trims the final
+page to that boundary rather than retaining stale inaccessible rows. If that
+entire range disappears, the latest remaining older page is still available.
+The existing14s lifecycle and owner guards bound late work; repeating cursors
+fail without replacing the previous complete window. Full-page end is unknown
+until the next short/empty result, not guessed from visible row count.
+
+Before changing post DOM, capture at most two visible card positions and restore
+the first surviving card's offset afterward. New data does not force readers
+away from their current card; at top, new posts remain visible. No React nodes
+are moved outside their existing owner. Only changed post-feed renders measure
+geometry, not unchanged observer maintenance.
+
+Ten added tests, including red anchor/deleted-window regressions; focused25/25
+(pagination10 + existing loader/refresh15), full3209/3209, exit0 (63845ms).
+Browser68/68 AR/EN x320/390 uses the actual module with controlled paged reads,
+native scroll anchoring explicitly disabled:60->120 loaded rows; new head plus
+withdrawal retains121 through the old boundary; old edit applies; same anchor
+node/offset; deletion above stays anchored; older loading reaches180/end; at-top
+refresh stays at0. No page errors. This is a180-row fixture, not native FPS or
+production permission/latency certification. No schema/API/security change.
+Cachev662-post-window/six mirrors match. Follow-up: target known changed posts
+so ordinary reactions do not re-read the complete loaded range.
+
+Receipts: artifacts/community-post-window-20261101-full.log and
+output/playwright/community-post-window.js/results.txt.
+
 ## Remaining Acceptance
 
 - Friend lifecycle is repaired locally; real two-reader delivery and provider
   artwork timing remain external acceptance checks.
-- Post invalidation lifecycle is repaired locally; longer pagination/scroll and
-  reconnect under real network conditions remain acceptance work.
+- Loaded post windows/anchoring have180-row local acceptance; native smoothness,
+  much larger timelines and reconnect under real networks remain independent.
 - Review interactions are repaired locally; cross-device counts, two-RPC partial
   server outcomes and actual quota/network recovery require service acceptance.
 - Native smoothness, production query timing and two-reader arrival remain

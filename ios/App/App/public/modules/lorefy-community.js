@@ -288,9 +288,27 @@
     var work = Promise.all([(async function () {
       if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {
         var cursor = older && state.posts[state.posts.length - 1];
-        var rows = (await backend.listCommunityPosts({ limit:60, before:cursor || null })).map(normalizePost);
-        if (!job.current()) return false;
-        state.hasMore = rows.length === 60;
+        var boundary = !older && state.posts[state.posts.length - 1];
+        if (boundary && (!boundary.id || !Number.isFinite(Date.parse(boundary.created_at)))) boundary=null;
+        function compare(left,right) {
+          var difference=Date.parse(left.created_at)-Date.parse(right.created_at);
+          return difference || (String(left.id)>String(right.id)?1:String(left.id)<String(right.id)?-1:0);
+        }
+        var rows=[],hasMore=false;
+        // Revalidate the loaded range, not just its newest page or stale cache.
+        while (job.current()) {
+          var chunk=(await backend.listCommunityPosts({limit:60,before:cursor || null})).map(normalizePost);
+          if (!job.current()) return false;
+          if (boundary && !rows.length && chunk.length && compare(chunk[0],boundary)<0) boundary=null;
+          var kept=boundary?chunk.filter(function (row) { return compare(row,boundary)>=0; }):chunk;
+          rows=rows.concat(kept);hasMore=chunk.length===60 || kept.length<chunk.length;
+          var last=chunk[chunk.length-1];
+          if (last && cursor && compare(last,cursor)>=0) throw new Error('Post pagination did not advance.');
+          if (!last || older || !boundary || chunk.length<60 || compare(last,boundary)<=0) break;
+          if (!last.id || !Number.isFinite(Date.parse(last.created_at)) || cursor && compare(last,cursor)>=0) throw new Error('Post pagination did not advance.');
+          cursor=last;
+        }
+        state.hasMore = hasMore;
         var merged = older ? state.posts.concat(rows) : rows;
         state.posts = Array.from(new Map(merged.map(function (row) { return [row.id, row]; })).values());
       }
@@ -1067,6 +1085,15 @@
     var signature = JSON.stringify([cardContext, saved, posts, state.filter, !!state.error, !!state.loading,
       !!state.hasMore, state.reviewFeed || {}, doc.documentElement.lang, Math.floor(Date.now() / 60000)]);
     if (host.__lorefyFeedSignature === signature && host.__lorefyFeedList === list) return;
+    var page=state.page,scrollRoot=page && (page.closest && page.closest('.lf-screen-scroll') || page),anchors=[];
+    if (scrollRoot && scrollRoot.scrollTop>1 && scrollRoot.getBoundingClientRect && page.querySelectorAll) {
+      var viewport=scrollRoot.getBoundingClientRect();
+      Array.prototype.some.call(page.querySelectorAll('[data-post-timestamp], [data-review-timestamp]'),function (card) {
+        var bounds=card.getBoundingClientRect();
+        if (bounds.bottom>viewport.top && bounds.top<viewport.bottom) anchors.push({card:card,top:bounds.top});
+        return anchors.length===2;
+      });
+    }
     host.__lorefyFeedSignature = signature;
     host.__lorefyFeedList = list;
     var desired=[], previousCards=host.__lorefyPostCards || new Map(), nextCards=new Map();
@@ -1128,6 +1155,8 @@
     desired.forEach(function(node,index){if(list.children[index]!==node)list.insertBefore(node,list.children[index]||null);});
     host.__lorefyPostCards=nextCards;
     orderCommunityFeed();
+    var anchor=anchors.find(function (value) { return value.card.isConnected; });
+    if (anchor) scrollRoot.scrollTop+=anchor.card.getBoundingClientRect().top-anchor.top;
     hydrateIcons(list);
   }
 
