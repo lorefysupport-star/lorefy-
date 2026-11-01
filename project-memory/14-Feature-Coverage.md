@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Community C-003: [[sessions/2026-11-01-Community-Timeline]],3190 tests/20 AR/EN
+module fixtures verify early post rendering, retained card/scroll during reaction
+refresh, typed catch-up and offscreen suppression. Not long-pagination evidence.
+
 Community C-002: [[sessions/2026-11-01-Community-Timeline]],3186 tests/64 AR/EN
 small-phone checks: shared friend request, cached row retention, timeout/retry,
 late response/owner guards and typed live-event fixtures. Not real-device proof.

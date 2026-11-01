@@ -26,6 +26,12 @@ React browser64/64 AR/EN x320/390 pass; provider/device delivery not certified.
 Cachev658-friend-refresh and six affected mirrors synchronized.
 Full3186/3186, exit0 (75656ms); source and controlled browser evidence only.
 
+C-003: modules/lorefy-community.js routes post invalidations, queues one catch-up,
+suppresses offscreen/old-owner dispatch, starts follows/posts together and renders
+ready posts before follows. Four red regressions; focused29/29, full3190/3190
+(70667ms, exit0), browser20/20 AR/EN including retained card/scroll140. Long
+pagination and real reconnect/device latency stay open. Cachev659/six mirrors.
+
 See docs/COMMUNITY_TIMELINE_2026-11-01.md for evidence and remaining scope:
 friend shared loading, post invalidation routing and review reaction consistency.
 No generic dead-code purge or design replacement is part of this repair.

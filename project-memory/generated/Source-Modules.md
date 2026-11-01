@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T10:27:02.835Z
-Source commit: e6afa8882d858a8640600bfab4e4def9acddf52b
+Observed: 2026-11-01T10:36:26.873Z
+Source commit: a1502d7db67bc59ff7fe0a55907a2fcd8025e25f
 
 # Modules Source Inventory
 
@@ -31,7 +31,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-character-system.js](../../modules/lorefy-character-system.js) (107676 bytes)
 - [modules/lorefy-comics-search.js](../../modules/lorefy-comics-search.js) (4569 bytes)
 - [modules/lorefy-comics-taxonomy.js](../../modules/lorefy-comics-taxonomy.js) (13314 bytes)
-- [modules/lorefy-community.js](../../modules/lorefy-community.js) (86325 bytes)
+- [modules/lorefy-community.js](../../modules/lorefy-community.js) (87626 bytes)
 - [modules/lorefy-cover-api.js](../../modules/lorefy-cover-api.js) (36089 bytes)
 - [modules/lorefy-cover-media.js](../../modules/lorefy-cover-media.js) (8487 bytes)
 - [modules/lorefy-data-proxy.js](../../modules/lorefy-data-proxy.js) (4119 bytes)

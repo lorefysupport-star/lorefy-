@@ -284,8 +284,8 @@
     var deadline = new Promise(function (_, reject) { timer = global.setTimeout(function () {
       expired = true; reject(new Error('Community refresh timeout'));
     }, 14000); });
-    var work = (async function () {
-    try {
+    var follows = loadFollowedProfileIds(!!force, job.current);
+    var work = Promise.all([(async function () {
       if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {
         var cursor = older && state.posts[state.posts.length - 1];
         var rows = (await backend.listCommunityPosts({ limit:60, before:cursor || null })).map(normalizePost);
@@ -296,15 +296,12 @@
       }
       else if (isDemo()) state.posts = demoPosts();
       else throw new Error('Community connection is unavailable.');
-      await loadFollowedProfileIds(!!force, job.current);
+      if (job.current()) renderPostFeed();
+    })(), follows]).then(function () {
       if (!job.current()) return false;
       state.loaded = true;
       return true;
-    } catch (error) {
-      if (!job.current()) return false;
-      throw error;
-    }
-    })();
+    });
     job.promise = Promise.race([work, deadline]).catch(function () {
       if (ownRequest()) { state.error = true; state.loaded = true; }
       return false;
@@ -1079,7 +1076,8 @@
     }
     var status = host.querySelector(":scope > header > span");
     if (status) status.textContent = state.filter === "friends" ? uiText('المتابَعون', 'Following') : state.filter === "mine" ? uiText('محتواك', 'Your posts') : state.filter === "popular" ? uiText('الأكثر تفاعلاً', 'Popular') : uiText('الأحدث', 'Latest');
-    if (!posts.length && !state.error) {
+    if (!posts.length && !state.error && state.loading) append(el('p',{class:'lf-community-post-empty',role:'status',text:uiText('جارٍ تحميل المنشورات…','Loading posts…')}));
+    if (!posts.length && !state.error && !state.loading) {
       var emptyTitle = state.filter === "friends" ? uiText('لا توجد منشورات من الحسابات التي تتابعها', 'No posts from people you follow yet') : state.filter === "mine" ? uiText('لا توجد منشورات لك بعد', 'You have not posted yet') : uiText('ابدأ أول محادثة', 'Start the first conversation');
       var emptyBody = state.filter === "friends" ? uiText('تابع قرّاء جدد لتظهر منشوراتهم هنا.', 'Follow new readers to see their posts here.') : uiText('اكتب فكرة أو شارك قائمة من حسابك.', 'Share a thought or a list from your profile.');
       append(el("div", { class:"lf-community-post-empty" }, [icon("messages-square", 26), el("strong", { text:emptyTitle }), el("p", { text:emptyBody })]));
@@ -1369,9 +1367,28 @@
     return true;
   }
 
-  function scheduleRefresh() {
-    global.clearTimeout(state.refreshTimer);
-    state.refreshTimer = global.setTimeout(function () { state.loaded = false; loadPosts(true); }, 180);
+  function scheduleRefresh(payload) {
+    if (payload && payload.table && !/^(community_posts|community_post_reactions|profile_follows)$/.test(payload.table)) return;
+    if (!state.page || !state.page.isConnected) { state.loaded=false; return; }
+    if (state.refreshTimer) return;
+    var page=state.page,backend=global.LorefyBackend,owner=backend && backend.user && backend.user.id;
+    function current() { return page===state.page && page.isConnected && backend===global.LorefyBackend && owner===(backend && backend.user && backend.user.id); }
+    state.refreshTimer = global.setTimeout(function () {
+      state.refreshTimer=0;
+      if (!current()) return;
+      var pending=state.postJob;
+      if (pending && pending.current()) {
+        if (state.refreshQueued!==pending) {
+          state.refreshQueued=pending;
+          pending.promise.finally(function () {
+            if (state.refreshQueued===pending) state.refreshQueued=null;
+            if (current()) scheduleRefresh();
+          });
+        }
+        return;
+      }
+      state.loaded=false; loadPosts(true);
+    },180);
   }
 
   function boot() {
@@ -1398,6 +1415,8 @@
     });
     observer.observe(doc.documentElement, { childList:true, subtree:true });
     global.addEventListener("lorefy:routechange", scheduleEnhance);
+    global.addEventListener('online',scheduleRefresh);
+    doc.addEventListener('visibilitychange',function () { if (!doc.hidden) scheduleRefresh(); });
     var backend = global.LorefyBackend;
     if (!isDemo() && backend && backend.subscribeCommunity) backend.subscribeCommunity(scheduleRefresh).then(function (unsubscribe) { state.unsubscribe = unsubscribe; }).catch(function () {});
     global.addEventListener("lorefy:open-reader-posts", function (event) { openReaderPosts(event.detail || identity()); });

@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+Community C-003: post reads/rendering and relevant invalidation lifecycle repaired
+in [[sessions/2026-11-01-Community-Timeline]],3190 tests/20 browser checks. No
+design replacement, native build, production event or server deployment.
+
 Community C-002: friend-rating lifecycle and direct relevant realtime refresh
 are repaired in [[sessions/2026-11-01-Community-Timeline]],3186 tests/64 mounted
 React checks. Existing rows stay visible on refresh/failure; ownership remains.

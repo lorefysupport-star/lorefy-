@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+C-003 in [[sessions/2026-11-01-Community-Timeline]] repairs post event routing,
+catch-up and early rendering independent of follow latency.3190 tests/20 actual
+module browser fixtures; long pagination and native/network smoothness separate.
+
 C-002 in [[sessions/2026-11-01-Community-Timeline]] shares bounded friend loads,
 preserves cached same-scope rows and catches new ratings without reaction-noise
 fetches.3186 tests/64 mounted React checks; no live/native certification.

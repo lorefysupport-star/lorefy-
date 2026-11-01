@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+C-003 passes3190 tests/20 browser checks in [[sessions/2026-11-01-Community-Timeline]].
+Next: review reaction lock/failure semantics and stale cached reaction counters.
+Long-pagination, real two-reader latency and native smoothness remain distinct.
+
 C-002 friend lifecycle is verified in [[sessions/2026-11-01-Community-Timeline]]
 with3186 tests/64 UI checks. Continue post invalidation catch-up and review
 reaction consistency; real two-reader/device/service timing remains open.
