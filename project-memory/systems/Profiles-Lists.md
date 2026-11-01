@@ -6,6 +6,11 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+P-003 in [[sessions/2026-11-02-Profile-Interactions]] aligns visitor connection
+and library dialogs with owner keyboard/isolation behavior, including restoring
+focus/background on close, navigation and unmount.3283 source tests and276 new
+browser checks pass. No visual redesign, native build or live writes.
+
 P-002 in [[sessions/2026-11-02-Profile-Interactions]] restores full-width empty
 favorite prompts, preserving labels and editor actions.3278 source tests and18
 actual empty-layout interaction cases pass. Native and real writes remain open.

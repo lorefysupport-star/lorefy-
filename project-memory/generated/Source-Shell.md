@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T21:57:01.682Z
-Source commit: 92031ee95e3a90832fc196e496c0046f3a2d9a91
+Observed: 2026-11-01T22:11:56.660Z
+Source commit: 4921644216dda8af7f2e00206568e5dd54de4c2b
 
 # Shell Source Inventory
 
@@ -23,7 +23,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [phone-preview.html](../../phone-preview.html) (1731 bytes)
 - [README.md](../../README.md) (8763 bytes)
 - [Start-Lorefy.ps1](../../Start-Lorefy.ps1) (1268 bytes)
-- [sw.js](../../sw.js) (16236 bytes)
+- [sw.js](../../sw.js) (16238 bytes)
 - [uploads/files/lorefy-app.js](../../uploads/files/lorefy-app.js) (351976 bytes)
 - [uploads/files/lorefy-enrich.js](../../uploads/files/lorefy-enrich.js) (7308 bytes)
 

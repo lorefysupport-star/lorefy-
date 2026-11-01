@@ -40,8 +40,9 @@ function harness(options = {}) {
     render(id = 'reader-a') {
       cursor = 0;
       renderedReviews.length = 0;
-      const tree = window.LorefyPublicProfile({ profile: { id, username: id }, workById: () => null,
+      const tree = window.LorefyPublicProfile({ profile: { id, username: id }, workById: options.workById || (() => null),
         renderReview: row => { renderedReviews.push(row); return React.createElement('article', {id:row.id}); } });
+      for (const node of nodes(tree)) if (node.props.ref && node.props.className === 'lf-reader-modal') node.props.ref.current = options.dialog || null;
       for (const effect of effects) {
         if (!effect?.callback) continue;
         const callback = effect.callback;
@@ -60,6 +61,56 @@ async function loaded(options={}){const app=harness(options);app.render();app.re
 const connectionButton=(tree,kind)=>nodes(tree).find(n=>n.props['data-connection']===kind);
 const dialog=tree=>nodes(tree).find(n=>n.props.role==='dialog');
 const closeDialog=tree=>nodes(dialog(tree)).find(n=>n.type==='button'&&n.props['aria-label']==='إغلاق').props.onClick();
+
+function modalFixture() {
+ const listeners=new Map(),doc={activeElement:null,documentElement:{lang:'en'},querySelector:()=>null},body={};
+ const make=(name,inert=false)=>({name,inert,isConnected:true,disabled:false,tabIndex:0,getClientRects:()=>[{}],focus(){doc.activeElement=this;}});
+ const opener=make('opener'),close=make('close'),row=make('row'),background=make('profile'),nav=make('nav'),previouslyInert=make('already-inert',true);
+ const modal={parentElement:body,querySelector:()=>close,querySelectorAll:()=>[close,row],contains:n=>n===close||n===row,
+  addEventListener:(key,fn)=>listeners.set(key,fn),removeEventListener:key=>listeners.delete(key)};
+ body.children=[background,modal,nav,previouslyInert];doc.body=body;doc.activeElement=opener;
+ const key=(key,shiftKey=false)=>{let prevented=false,stopped=false;listeners.get('keydown')?.({key,shiftKey,preventDefault(){prevented=true;},stopPropagation(){stopped=true;}});return{prevented,stopped};};
+ return{doc,modal,close,row,opener,background,nav,previouslyInert,listeners,key};
+}
+
+test('visitor connection dialog takes focus, isolates background and wraps keyboard navigation',async()=>{
+ const f=modalFixture(),app=await loaded({dialog:f.modal});app.window.document=f.doc;
+ await connectionButton(app.render(),'followers').props.onClick();app.render();
+ assert.equal(f.doc.activeElement,f.close);assert.equal(f.background.inert,true);assert.equal(f.nav.inert,true);
+ assert.equal(f.key('Tab',true).prevented,true);assert.equal(f.doc.activeElement,f.row);
+ assert.equal(f.key('Tab').prevented,true);assert.equal(f.doc.activeElement,f.close);
+});
+
+test('Escape closes visitor connections, restores opener and preserves earlier inert state',async()=>{
+ const f=modalFixture(),app=await loaded({dialog:f.modal});app.window.document=f.doc;
+ await connectionButton(app.render(),'followers').props.onClick();app.render();
+ assert.deepEqual(f.key('Escape'),{prevented:true,stopped:true});assert.equal(dialog(app.render()),undefined);
+ assert.equal(f.doc.activeElement,f.opener);assert.equal(f.background.inert,false);assert.equal(f.nav.inert,false);assert.equal(f.previouslyInert.inert,true);assert.equal(f.listeners.size,0);
+});
+
+test('connection result does not steal keyboard focus from a reader row',async()=>{
+ const f=modalFixture();let release;const app=await loaded({dialog:f.modal,followers:()=>new Promise(r=>release=r)});app.window.document=f.doc;
+ const job=connectionButton(app.render(),'followers').props.onClick();app.render();f.row.focus();
+ release([]);await job;app.render();assert.equal(f.doc.activeElement,f.row);assert.equal(f.nav.inert,true);
+ app.unmount();assert.equal(f.nav.inert,false);assert.equal(f.listeners.size,0);
+});
+
+test('visitor library shares keyboard dismissal and never stacks over a connection dialog',async()=>{
+ const f=modalFixture(),app=harness({dialog:f.modal,workById:id=>({id,title:'A work'})});app.window.document=f.doc;app.window.LorefyI18n={readingStatusLabel:value=>value};app.render();
+ app.requests[0].resolve({id:'reader-a',library_entries:{work:'Read'}});await settle();app.render();
+ const tree=app.render(),open=nodes(tree).find(n=>n.props['data-library-view-all']);open.props.onClick();app.render();
+ assert.equal(f.doc.activeElement,f.close);
+ assert.equal(dialog(app.render()).props['aria-label'],'مكتبة القارئ');
+ await connectionButton(app.render(),'following').props.onClick();
+ assert.equal(nodes(app.render()).filter(n=>n.props.role==='dialog').length,1);
+ assert.equal(dialog(app.render()).props['aria-label'],'يتابع');
+});
+
+test('backdrop dismisses only when the backdrop itself is pressed',async()=>{
+ const app=await loaded();await connectionButton(app.render(),'followers').props.onClick();
+ let modal=dialog(app.render());modal.props.onClick({target:{},currentTarget:{}});assert.ok(dialog(app.render()));
+ modal=dialog(app.render());const host={};modal.props.onClick({target:host,currentTarget:host});assert.equal(dialog(app.render()),undefined);
+});
 
 test('same-turn follow taps dispatch once and report accessible busy state',async()=>{
  let calls=0,release;const app=await loaded({follow:()=>{calls++;return new Promise(r=>release=r);}});

@@ -67,9 +67,37 @@ Receipts outside Git: `artifacts/profile-empty-20261102-full.log`,
 `output/playwright/profile-empty-interactions-results.txt`,
 `output/playwright/profile-empty-latest.png`.
 
+## P-003: visitor dialog interaction boundary
+
+The actual visitor connections dialog did not move focus inside, isolate the
+background or close with Escape (all three false in the before-browser probe).
+Unlike the owner dialog, the React visitor connections/library overlays had no
+focus lifecycle. Three new source regressions also failed before the repair.
+
+`modules/lorefy-public-profile.js` now manages the active overlay only: focus the
+existing close button, wrap Tab/Shift+Tab, dismiss with Escape or the backdrop,
+restore each sibling's earlier inert state and return to the connected opener.
+Library and connection opens are mutually exclusive. Async list completion does
+not restart focus management. Unmount cleans up listeners and background state.
+Fonts, colors, artwork, frames, reading data and backend calls are unchanged.
+
+Five regression cases cover isolation, keyboard wrap, Escape/focus restoration,
+old inert preservation, loading completion, cleanup, non-stacking and backdrop
+targeting. Related source tests pass; final full suite3283/3283, exit0,84494ms.
+Actual React/browser matrix264/264 covers all3 layouts, AR/EN and320/430px for
+Followers, Following and Library. Another12/12 checks cover retry, reader/work
+navigation and inert cleanup. No page errors in either matrix. The initial
+browser probe now reports all3 corrected conditions true. Cachev677 and six
+selectively synchronized web mirrors; no native build or live account writes.
+
+Receipts outside Git: `artifacts/profile-dialogs-20261102-full.log`,
+`output/playwright/profile-dialog-v677-results.txt`,
+`output/playwright/profile-dialog-navigation-v677-results.txt`,
+`output/playwright/profile-dialog-probe-v677.js`.
+
 ## Open Audit Items
 
-The empty Reader prompt is repaired in P-002. Native media chooser/keyboard, real-account durability,
+P-001 through P-003 are source/demo-verified. Native media chooser/keyboard, real-account durability,
 all-pack visual coverage and long-session frame time remain independent gates.
 Do not report every profile interaction or device fully certified by this pass.
 No native build or production service deployment is authorized.

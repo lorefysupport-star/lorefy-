@@ -34,6 +34,7 @@
     const profile = snapshot.id === initial.id ? snapshot : initial;
     const backend = root.LorefyBackend;
     const lifecycle = React.useRef(null);
+    const modalHost = React.useRef(null);
     const viewer = backend?.user?.id || null;
     const isCurrent = scope => !!scope && scope.active && lifecycle.current === scope &&
       scope.backend === root.LorefyBackend && scope.viewer === (root.LorefyBackend?.user?.id || null);
@@ -43,6 +44,40 @@
     const loading = remote && (!currentRequest || request.status === 'loading');
     const ready = !remote || currentRequest && request.status === 'ready';
     const loadingLabel = root.document?.documentElement?.lang === 'en' ? 'Loading...' : 'جارٍ التحميل...';
+    const modalKind = libraryOpen ? 'library' : connections?.id === profile.id ? connections.kind : null;
+    React.useEffect(() => {
+      const host = modalHost.current, doc = root.document;
+      if (!modalKind || !host || !doc) return;
+      const opener = doc.activeElement, isolated = [];
+      let node = host;
+      // Keep the background inert only for this dialog's lifetime, including nested containers.
+      while (node && node !== doc.body && node.parentElement) {
+        Array.from(node.parentElement.children).forEach(sibling => {
+          if (sibling !== node) { isolated.push([sibling, sibling.inert]); sibling.inert = true; }
+        });
+        node = node.parentElement;
+      }
+      function keydown(event) {
+        if (event.defaultPrevented) return;
+        if (event.key === 'Escape') {
+          event.preventDefault(); event.stopPropagation(); closeConnections(); setLibraryOpen(false); return;
+        }
+        if (event.key !== 'Tab') return;
+        const controls = Array.from(host.querySelectorAll('button,input,textarea,select,a[href],[tabindex="0"]'))
+          .filter(control => !control.disabled && control.tabIndex >= 0 && control.getClientRects().length);
+        const first = controls[0], last = controls[controls.length - 1];
+        if (!first) return;
+        if (event.shiftKey && doc.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && doc.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+      host.addEventListener('keydown', keydown);
+      host.querySelector('header button')?.focus({preventScroll:true});
+      return () => {
+        host.removeEventListener('keydown', keydown);
+        isolated.forEach(([element, inert]) => { element.inert = inert; });
+        if (opener?.isConnected) opener.focus({preventScroll:true});
+      };
+    }, [modalKind, initial.id, backend, viewer]);
     React.useEffect(() => {
       if (!root.document) return;
       const page = root.document.querySelector('.lf-reader-full');
@@ -167,6 +202,7 @@
       const token = {kind, loading:true};
       scope.connection = token;
       const currentRequest = () => isCurrent(scope) && scope.connection === token;
+      setLibraryOpen(false);
       setConnections({ id, kind, loading:true, rows:[] });
       try {
         const rows = await backend[kind === 'followers' ? 'listProfileFollowers' : 'listProfileFollowing'](id, 200, 0);
@@ -292,14 +328,14 @@
           h('div', { className:'lf-reader-library-grid' }, ...topWorks.map((work,index) => h('div', { key:work.id, className:'lf-reader-ranked-work' },
             workCard(work,undefined,false), h('span', { className:'lf-reader-work-rank' }, index+1))))),
         library.length > 0 && h('section', { className:'lf-reader-shelf lf-reader-library-preview', 'aria-label':'المكتبة' },
-          h('header', { className:'lf-reader-shelf-head' }, h('h2', null, 'المكتبة'), h('button', { type:'button', className:'lf-reader-view-all', 'data-library-view-all':true, onClick:() => setLibraryOpen(true) }, 'عرض الكل', h('span', null, library.length), icon(root.document?.documentElement?.lang === 'en' ? 'ChevronRight' : 'ChevronLeft', 15))),
+          h('header', { className:'lf-reader-shelf-head' }, h('h2', null, 'المكتبة'), h('button', { type:'button', className:'lf-reader-view-all', 'data-library-view-all':true, onClick:() => { closeConnections(); setLibraryOpen(true); } }, 'عرض الكل', h('span', null, library.length), icon(root.document?.documentElement?.lang === 'en' ? 'ChevronRight' : 'ChevronLeft', 15))),
           h('div', { className:'lf-reader-library-grid' + (spine ? ' lf-library-grid is-spine-view' : showcase ? ' is-showcase-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.slice(0, 4).map(work => libraryCard(work, true)))),
         h('section', { className:'lf-public-profile-reviews' }, h('h2', null, 'المراجعات'), ownReviews.length ? ownReviews.map(props.renderReview) : ready && h('p', { className:'lf-reader-empty' }, 'لا مراجعات بعد'))),
-      libraryOpen && h('div', { className:'lf-reader-modal', role:'dialog', 'aria-modal':true, 'aria-label':'مكتبة القارئ', onClick:() => setLibraryOpen(false) },
+      libraryOpen && h('div', { className:'lf-reader-modal', ref:modalHost, role:'dialog', 'aria-modal':true, 'aria-label':'مكتبة القارئ', onClick:() => setLibraryOpen(false) },
         h('section', { className:'lf-reader-library-dialog', onClick:event => event.stopPropagation() },
           h('header', null, h('div', null, h('h2', null, 'المكتبة'), h('p', null, library.length + ' عمل')), h('button', { type:'button', onClick:() => setLibraryOpen(false), 'aria-label':'إغلاق' }, icon('X'))),
           h('div', { className:'lf-reader-library-grid is-full' + (spine ? ' lf-library-grid is-spine-view' : showcase ? ' is-showcase-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.map(work => libraryCard(work, false))))),
-      connections && connections.id === profile.id && h('div', { className:'lf-reader-modal', role:'dialog', 'aria-modal':true, 'aria-label':connections.kind === 'followers' ? 'المتابعون' : 'يتابع' },
+      connections && connections.id === profile.id && h('div', { className:'lf-reader-modal', ref:modalHost, role:'dialog', 'aria-modal':true, 'aria-label':connections.kind === 'followers' ? 'المتابعون' : 'يتابع', onClick:event => { if (event.target === event.currentTarget) closeConnections(); } },
         h('section', null, h('header', null, h('h2', null, connections.kind === 'followers' ? 'المتابعون' : 'يتابع'), h('button', { type:'button', onClick:closeConnections, 'aria-label':'إغلاق' }, icon('X'))),
           connections.loading ? h('p', null, 'جارٍ التحميل...') : connections.error ? h('button', { type:'button', onClick:() => openConnections(connections.kind) }, 'إعادة المحاولة') : connections.rows.length ? connections.rows.map(reader => h('button', {
             key:reader.id, type:'button', className:'lf-reader-connection-row', onClick:() => { closeConnections(); root.dispatchEvent(new root.CustomEvent('lorefy:open-reader-profile', { detail:reader })); }

@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Profile P-003: [[sessions/2026-11-02-Profile-Interactions]]. Visitor Followers,
+Following and Library now own focus and temporary background isolation, restore
+them on close/navigation/unmount and do not stack.3283 tests and276 browser checks
+pass. This does not certify native keyboard/Photos or live-account persistence.
+
 Profile P-002: [[sessions/2026-11-02-Profile-Interactions]]. Empty actions span
 their grid and wrap labels.18 work-prompt cases verify AR/EN, three layouts/book
 modes, editor opening and keyboard return;3278 source tests pass.

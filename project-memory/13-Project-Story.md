@@ -6,13 +6,19 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-02-Profile-Interactions]] P-003 repairs the unhandled visitor
+dialog boundary without redesigning the page.3283 tests and276 new browser
+checks verify keyboard focus, background isolation, retry and navigation across
+all3 layouts. Native/real-account and every-pack long-session gates remain open.
+
 [[sessions/2026-11-02-Profile-Interactions]] P-002 repairs the clipped Reader
 empty-favorites prompt without changing filled books or frames.3278 tests and
 18 additional browser cases pass; overall profile pass154 browser cases.
 
 [[sessions/2026-11-02-Profile-Interactions]] starts the full-profile audit with
 nine reproduced follow/connections races repaired.3276 tests,16 demo interaction
-and120 layout/frame checks. Empty favorites prompt and native QA remain open.
+and120 layout/frame checks. The empty prompt was subsequently repaired in P-002;
+native QA remains open.
 
 Chapter-request follow-up in [[sessions/2026-11-01-Image-Delivery]] removes
 duplicated pending metadata requests on row expansion. Same browser gesture
