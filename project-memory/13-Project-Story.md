@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-01-Reading-Favorite-Type]] stops unread favorite/wishlist and
+score weighting from choosing the owner format. Reading evidence counts each
+work once; AR/EN across all3 layouts checked locally, no new native build.
+
 [[sessions/2026-11-01-Completed-Empty-Progress]] repairs the Shadow Slave report:
 publisher baseline plus saved all-zero completion/review recovery on metadata
 arrival. Positive snapshots stay frozen, counted once.3225 source tests/48

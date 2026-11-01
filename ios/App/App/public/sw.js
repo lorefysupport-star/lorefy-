@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v665-completed-progress';
+const CACHE = 'lorefy-v666-reading-favorite-type';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -133,7 +133,7 @@ const CORE = [
   './uploads/lorefy-catalog-aliases.js?v=20260622-audit1',
   './styles/lorefy-public-profile.css?v=20261011-public-profile-layout-v4',
   './styles/lorefy-visual-polish.css?v=20260930-reference-v2',
-  './modules/lorefy-public-appearance.js?v=20261024-book-showcase-v1',
+  './modules/lorefy-public-appearance.js?v=20261101-reading-favorite-type-v1',
   './modules/lorefy-public-profile.js?v=20261101-profile-count-v1',
   './modules/lorefy-community.js?v=20261101-post-reaction-order-v1',
   './modules/lorefy-page-refresh.js?v=20261027-ui-refinement-v1',
@@ -171,7 +171,7 @@ const CORE = [
   './styles/lorefy-book-showcase.css?v=20261028-reading-type-v1',
   './styles/lorefy-profile-header.css?v=20261024-banner-repairs-v4',
   './modules/lorefy-profile-header.js?v=20261025-restored-v1',
-  './uploads/files/lorefy-app.js?v=20261101-completed-progress-v1',
+  './uploads/files/lorefy-app.js?v=20261101-reading-favorite-type-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2',

@@ -10,7 +10,7 @@ test("owner profile and My Reviews only use reviews authored by the active accou
   const app = read("uploads", "files", "lorefy-app.js");
 
   assert.match(app, /myReviews=M\.filter\(r=>r\.userId==="me"\|\|r\.un===Y\)/);
-  assert.match(app, /profileFavoriteType=\(\(\)=>\{[\s\S]*?myReviews\.forEach/);
+  assert.match(app, /profileFavoriteType=.*?favoriteType\(\{library_entries:b,progress_by_id:le,own_reviews:myReviews\},workById\)/);
   assert.match(app, /profileRecentWorks=\(\(\)=>\{[\s\S]*?\[\.\.\.myReviews\]\.reverse\(\)/);
   assert.match(app, /To=myReviews\.length/);
 

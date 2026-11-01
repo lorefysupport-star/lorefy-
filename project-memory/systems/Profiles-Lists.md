@@ -6,6 +6,11 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+[[sessions/2026-11-01-Reading-Favorite-Type]] replaces unread favorite/wishlist/
+rating weights with distinct reading-evidenced works. Shared canonical owner/
+projection calculation, localized labels and bounded partial-catalog fallback;
+3228 source tests/6 demo layout-language checks. No native or production change.
+
 [[sessions/2026-11-01-Logical-Profile-Zero-Count]] preserves known server0 rather
 than replacing it with stale review length.3165 tests/42 browser contract checks
 across all three layouts; missing count still uses only the visited reader.

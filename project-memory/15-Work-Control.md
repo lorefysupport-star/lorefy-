@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+Favorite-type repair: [[sessions/2026-11-01-Reading-Favorite-Type]]. Next source
+task is owner top/rated-character selection, search and image-edit ergonomics.
+Preserve scores/slots/owner guards and verify actual UI, not only source patterns.
+
 Completed-empty repair in [[sessions/2026-11-01-Completed-Empty-Progress]] passes
 3225 source tests/48 actual-app demo checks. Next acceptance is the same Read/
 rating/restart path on an authorized actual account/device and cloud parity.

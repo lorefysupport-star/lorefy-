@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Favorite format: [[sessions/2026-11-01-Reading-Favorite-Type]] covers read-only
+evidence, canonical aliases, duplicate suppression and stale/partial fallback.
+3228 tests/6 actual-demo layout checks; actual service/device acceptance separate.
+
 Read completion: [[sessions/2026-11-01-Completed-Empty-Progress]],3225 tests/48
 actual-app AR/EN checks at320/390px. Known chapter snapshots, visible profile
 counts, reload, review dedup and recovery of zero completed progress verified.
