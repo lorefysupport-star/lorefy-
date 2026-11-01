@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Community C-004: [[sessions/2026-11-01-Community-Timeline]],3198 tests/60 reaction
+fixtures +32 actual demo smoke checks. Both action controls/copies, server0,
+rollback/timeout/owner guards and stable scroll/idle verified. Not live/device
+or atomic two-RPC certification.194 browser checks across all four scoped fixes.
+
 Community C-003: [[sessions/2026-11-01-Community-Timeline]],3190 tests/20 AR/EN
 module fixtures verify early post rendering, retained card/scroll during reaction
 refresh, typed catch-up and offscreen suppression. Not long-pagination evidence.

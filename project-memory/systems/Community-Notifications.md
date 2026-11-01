@@ -6,6 +6,11 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+C-004 closes the scoped reaction pass in [[sessions/2026-11-01-Community-Timeline]]:
+shared review locks, conditional rollback, fresh server0/count metadata and
+bounded review/post writes.3198 tests,60 controlled +32 actual demo checks;
+real two-reader/network/native and two-RPC partial outcomes remain separate.
+
 C-003 in [[sessions/2026-11-01-Community-Timeline]] repairs post event routing,
 catch-up and early rendering independent of follow latency.3190 tests/20 actual
 module browser fixtures; long pagination and native/network smoothness separate.

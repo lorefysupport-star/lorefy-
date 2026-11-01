@@ -4,7 +4,7 @@ function harness(){
  let resolve,reject,requests=0;const notices=[],post={id:'qa',reactions:{like:10,dislike:3,mine:{like:false,dislike:true}}};
  const button=()=>{const n=new Node('button',{},[new Node('span')]);n.getAttribute=k=>n.attrs[k]??null;return n;};
  const like=button(),dislike=button(),backend={mode:'live',user:{id:'a'},_communityEpoch:1,setCommunityPostReaction(){requests++;return new Promise((yes,no)=>{resolve=yes;reject=no;});}};
- const scope={Intl,doc:{documentElement:{lang:'en'}},uiText:(ar,en)=>en,isDemo:()=>false,global:{LorefyBackend:backend},toast:v=>notices.push(v)};
+ const scope={Intl,doc:{documentElement:{lang:'en'}},uiText:(ar,en)=>en,isDemo:()=>false,global:{LorefyBackend:backend,setTimeout,clearTimeout},toast:v=>notices.push(v)};
  const start=source.indexOf('  var communityNumbers =');vm.runInNewContext(source.slice(start,source.indexOf('  function avatar(',start)),scope);
  const begin=source.indexOf('  function setPostReaction(');vm.runInNewContext(source.slice(begin,source.indexOf('  async function sharePost(',begin)),scope);
  return {post,like,dislike,scope,notices,backend,get requests(){return requests;},send:(kind='like')=>scope.setPostReaction(post,kind,kind==='like'?like:dislike,kind==='like'?dislike:like),resolve:()=>resolve(true),reject:()=>reject(Error('offline'))};
@@ -39,6 +39,14 @@ for(const transition of ['account','epoch','backend'])test('obsolete post reacti
 test('removing a selected reaction is immediate and reversible',async()=>{
  const h=harness();h.send('dislike');assert.equal(h.dislike.attrs['aria-pressed'],'false');assert.equal(h.post.reactions.dislike,2);
  h.reject();await flush();assert.equal(h.dislike.attrs['aria-pressed'],'true');assert.equal(h.post.reactions.dislike,3);
+});
+
+test('hanging post reactions release the shared controls and become retryable',async()=>{
+ const h=harness();let timeout;
+ h.scope.global.setTimeout=(fn,ms)=>{assert.equal(ms,14000);timeout=fn;return 1;};h.scope.global.clearTimeout=()=>{};
+ const job=h.send();assert.equal(typeof timeout,'function');timeout();await job;
+ assert.equal(h.like.attrs['aria-busy'],'false');assert.equal(h.dislike.attrs['aria-disabled'],'false');
+ assert.equal(h.post.reactions.like,10);h.send();assert.equal(h.requests,2);h.resolve();await flush();
 });
 
 test('review reaction count is compact visually but exact and localized for assistive users',()=>{

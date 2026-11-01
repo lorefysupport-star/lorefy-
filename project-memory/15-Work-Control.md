@@ -6,6 +6,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+C-001..004 in [[sessions/2026-11-01-Community-Timeline]] pass3198 tests/194 local
+browser checks. Source routing/friend/post/reaction repairs are verified. Open:
+real two-reader arrival, native smoothness/network timing, long pagination and
+two-RPC partial outcomes. No build or production mutation in this pass.
+
 C-003 passes3190 tests/20 browser checks in [[sessions/2026-11-01-Community-Timeline]].
 Next: review reaction lock/failure semantics and stale cached reaction counters.
 Long-pagination, real two-reader latency and native smoothness remain distinct.

@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v659-post-refresh';
+const CACHE = 'lorefy-v660-community-reactions';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -135,7 +135,7 @@ const CORE = [
   './styles/lorefy-visual-polish.css?v=20260930-reference-v2',
   './modules/lorefy-public-appearance.js?v=20261024-book-showcase-v1',
   './modules/lorefy-public-profile.js?v=20261101-profile-count-v1',
-  './modules/lorefy-community.js?v=20261101-post-refresh-v1',
+  './modules/lorefy-community.js?v=20261101-community-reactions-v1',
   './modules/lorefy-page-refresh.js?v=20261027-ui-refinement-v1',
   './modules/lorefy-library-view.js?v=20261029-library-media-v1',
   './modules/lorefy-interface-settings.js?v=20261028-settings-studio-v1',
@@ -171,12 +171,12 @@ const CORE = [
   './styles/lorefy-book-showcase.css?v=20261028-reading-type-v1',
   './styles/lorefy-profile-header.css?v=20261024-banner-repairs-v4',
   './modules/lorefy-profile-header.js?v=20261025-restored-v1',
-  './uploads/files/lorefy-app.js?v=20261101-community-routing-v1',
+  './uploads/files/lorefy-app.js?v=20261101-community-reactions-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
-  './modules/lorefy-growth-features.js?v=20261101-home-reactions-v1',
+  './modules/lorefy-growth-features.js?v=20261101-community-reactions-v1',
   './modules/lorefy-share-studio.js?v=20261028-share-composer-v3',
   './uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1',
   './launch/icons/icon-180.png',

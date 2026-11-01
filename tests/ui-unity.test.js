@@ -37,8 +37,8 @@ test('updated UI assets use fresh cache keys', () => {
     'backend/lorefy-native-runtime.js','modules/lorefy-reading-metrics.js','styles/lorefy-notification-center.css',
     'backend/lorefy-backend.js','modules/lorefy-home-cinema.js']) {
     const versions = {
-      'modules/lorefy-growth-features.js':'20261101-home-reactions-v1',
-      'modules/lorefy-community.js':'20261101-post-refresh-v1',
+      'modules/lorefy-growth-features.js':'20261101-community-reactions-v1',
+      'modules/lorefy-community.js':'20261101-community-reactions-v1',
       'modules/lorefy-chapter-detail.js':'20261026-work-studio-v1',
       'styles/lorefy-work-studio.css':'20261029-cover-editions-v1',
       'modules/lorefy-work-panels.js':'20261029-cover-editions-v1',
@@ -49,7 +49,7 @@ test('updated UI assets use fresh cache keys', () => {
       'modules/lorefy-public-profile.js':'20261101-profile-count-v1',
       'modules/lorefy-i18n.js':'20261028-reading-terms-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',
-      'uploads/files/lorefy-app.js':'20261101-community-routing-v1',
+      'uploads/files/lorefy-app.js':'20261101-community-reactions-v1',
       'backend/lorefy-backend.js':'20261101-friend-logic-v1',
       'modules/lorefy-home-cinema.js':'20261101-home-reading-v1',
       'backend/lorefy-native-runtime.js':'20261030-inbox-receipt-scope-v1',

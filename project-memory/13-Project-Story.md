@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+Community C-001..004 source/browser pass verified in
+[[sessions/2026-11-01-Community-Timeline]]:3198 tests/194 local browser checks.
+Realtime routing/catch-up, stable friend loading, early post rendering and review
+reaction/cache consistency repaired; no new native build or production mutation.
+
 Community C-003: post reads/rendering and relevant invalidation lifecycle repaired
 in [[sessions/2026-11-01-Community-Timeline]],3190 tests/20 browser checks. No
 design replacement, native build, production event or server deployment.

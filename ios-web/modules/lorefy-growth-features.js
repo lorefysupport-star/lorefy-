@@ -6053,6 +6053,57 @@
   var K_COMMUNITY_MY_DISLIKES = "lorefy.communityMyDislikes.v1";
   var K_COMMUNITY_MY_LIKES = "lorefy.communityMyLikes.v1";
   var K_COMMUNITY_LIKES = "lorefy.communityLikes.v1";
+  var communityReactionJobs = new Map();
+  var communityReactionKeys = [K_COMMUNITY_LIKES,K_COMMUNITY_DISLIKES,K_COMMUNITY_MY_LIKES,K_COMMUNITY_MY_DISLIKES];
+  function communityReactionScope(key) {
+    var backend=global.LorefyBackend;
+    return String(backend && backend.user && backend.user.id || 'local')+'|'+key;
+  }
+  function communityReactionSnapshot(key) {
+    return communityReactionKeys.map(function (name) { return read(name,{})[key]; });
+  }
+  function beginCommunityReaction(card,key) {
+    var scope=communityReactionScope(key);
+    if (communityReactionJobs.has(scope)) return null;
+    var backend=global.LorefyBackend,request={key:key,scope:scope,backend:backend,
+      owner:backend && backend.user && backend.user.id,client:backend && backend.client,
+      epoch:backend && backend._communityEpoch,before:communityReactionSnapshot(key)};
+    communityReactionJobs.set(scope,request);
+    return request;
+  }
+  function communityReactionCurrent(request) {
+    var backend=global.LorefyBackend;
+    return backend===request.backend && request.owner===(backend && backend.user && backend.user.id)
+      && request.client===(backend && backend.client) && request.epoch===(backend && backend._communityEpoch);
+  }
+  function syncCommunityServerReactions(card,key) {
+    var raw=card.getAttribute && card.getAttribute('data-review-reactions');
+    if (!raw || card.__lorefyReactionSnapshot===raw || communityReactionJobs.has(communityReactionScope(key))) return;
+    try {
+      var values=JSON.parse(raw);
+      if (!Array.isArray(values) || values.length!==4) return;
+      values=[Math.max(0,Number(values[0])||0),Math.max(0,Number(values[1])||0),values[2]===true,values[3]===true];
+      communityReactionKeys.forEach(function (name,index) {
+        var saved=read(name,{});if (saved[key]!==values[index]) { saved[key]=values[index];write(name,saved); }
+      });
+      card.__lorefyReactionSnapshot=raw;
+    } catch (ignore) {}
+  }
+  function finishCommunityReaction(request,synced) {
+    if (communityReactionJobs.get(request.scope)!==request) return;
+    communityReactionJobs.delete(request.scope);
+    if (!communityReactionCurrent(request)) return;
+    if (!synced) {
+      communityReactionKeys.forEach(function (name,index) {
+        var saved=read(name,{});
+        if (saved[request.key]!==request.after[index]) return;
+        if (request.before[index]===undefined) delete saved[request.key]; else saved[request.key]=request.before[index];
+        write(name,saved);
+      });
+      toastSafe(uiText('تعذر تأكيد حفظ التفاعل. حاول مجددًا.','Could not confirm your reaction. Please try again.'));
+    }
+    syncCommunityReactionViews(request.key);
+  }
   var K_ACTIVE_REVIEW = "lorefy.communityActiveReview.v1";
   var K_ACTIVE_REVIEW_ID = "lorefy.communityActiveReviewId.v1";
   var K_REVIEW_DETAIL_DISLIKES = "lorefy.reviewDetailDislikes.v1";
@@ -6085,13 +6136,16 @@
     var backend = global.LorefyBackend;
     var reviewId = cloudReviewId(node);
     if (!reviewId || !backend || backend.mode !== "live" || !backend.setReviewReaction) return false;
+    var timer;
     try {
-      await backend.setReviewReaction(reviewId, kind, active);
+      await Promise.race([backend.setReviewReaction(reviewId, kind, active),new Promise(function (_,reject) {
+        timer=global.setTimeout(function () { reject(new Error('Reaction timeout')); },14000);
+      })]);
       return true;
     } catch (error) {
       console.warn("[Lorefy] reaction sync:", error);
       return false;
-    }
+    } finally { global.clearTimeout(timer); }
   }
   function renderThumbsDownIcon() {
     return '<svg class="lf-community-dislike-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 14V2"></path><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"></path></svg>';
@@ -6146,6 +6200,7 @@
   function wireCommunityLike(btn, card, dislikeBtn) {
     if (!btn || !card) return;
     var key = communityCardKey(card);
+    syncCommunityServerReactions(card,key);
     var counts = read(K_COMMUNITY_LIKES, {});
     if (counts[key] == null) {
       var initial = btn.querySelector("span:not(.lf-community-action-label)");
@@ -6160,6 +6215,7 @@
       event.stopPropagation();
       if (event.stopImmediatePropagation) event.stopImmediatePropagation();
       if (btn.dataset.lfReactionSync === "1") return;
+      var request=beginCommunityReaction(card,key);if (!request) return;
       var likes = read(K_COMMUNITY_MY_LIKES, {});
       var likeCounts = read(K_COMMUNITY_LIKES, {});
       var adding = !likes[key];
@@ -6181,16 +6237,17 @@
         }
       }
       syncCommunityReactionViews(key);
+      request.after=communityReactionSnapshot(key);
       try{
-        var synced = await persistReviewReaction(card, "like", adding);
-        if(adding&&hadDislike)synced=(await persistReviewReaction(card,"dislike",false))&&synced;
-        if (!synced) toastSafe("حُفظ تفاعلك محلياً وسيُزامن عند عودة الاتصال");
-      }finally{btn.dataset.lfReactionSync="0";}
+        var synced = !request.backend || request.backend.mode!=='live' || !cloudReviewId(card) ? true : await persistReviewReaction(card, "like", adding);
+        if(synced&&adding&&hadDislike&&request.backend&&request.backend.mode==='live'&&cloudReviewId(card)&&communityReactionCurrent(request))synced=(await persistReviewReaction(card,"dislike",false))&&synced;
+      }finally{btn.dataset.lfReactionSync="0";finishCommunityReaction(request,synced);}
     }, true);
   }
   function wireCommunityDislike(btn, card) {
     if (!btn || !card) return;
     var key = communityCardKey(card);
+    syncCommunityServerReactions(card,key);
     btn.classList.add("lf-community-card-action", "lf-community-dislike-button");
     btn.setAttribute("aria-label", "دسلايك");
     btn.setAttribute("title", "دسلايك");
@@ -6208,6 +6265,7 @@
       e.stopPropagation();
       if (e.stopImmediatePropagation) e.stopImmediatePropagation();
       if (btn.dataset.lfReactionSync === "1") return;
+      var request=beginCommunityReaction(card,key);if (!request) return;
       btn.dataset.lfReactionSync = "1";
       var counts = read(K_COMMUNITY_DISLIKES, {});
       var mine = read(K_COMMUNITY_MY_DISLIKES, {});
@@ -6228,11 +6286,11 @@
       write(K_COMMUNITY_DISLIKES, counts);
       write(K_COMMUNITY_MY_DISLIKES, mine);
       syncCommunityReactionViews(key);
+      request.after=communityReactionSnapshot(key);
       try {
-        var synced = await persistReviewReaction(card, "dislike", nowMine);
-        if (nowMine && hadLike) synced = (await persistReviewReaction(card, "like", false)) && synced;
-        if (!synced) toastSafe("حُفظ تفاعلك محلياً وسيُزامن عند عودة الاتصال");
-      } finally { btn.dataset.lfReactionSync = "0"; }
+        var synced = !request.backend || request.backend.mode!=='live' || !cloudReviewId(card) ? true : await persistReviewReaction(card, "dislike", nowMine);
+        if (synced && nowMine && hadLike && request.backend && request.backend.mode==='live' && cloudReviewId(card) && communityReactionCurrent(request)) synced = (await persistReviewReaction(card, "like", false)) && synced;
+      } finally { btn.dataset.lfReactionSync = "0"; finishCommunityReaction(request,synced); }
     }, true);
   }
   function updateCommunityHero(page, hero) {
@@ -6495,8 +6553,11 @@
     var nodes = doc.querySelectorAll(".lf-community-card, .lf-review-detail-enhanced");
     for (var i = 0; i < nodes.length; i++) {
       if (communityCardKey(nodes[i]) !== key) continue;
+      syncCommunityServerReactions(nodes[i],key);
       var like = nodes[i].querySelector(".lf-community-like-button");
       var dislike = nodes[i].querySelector(".lf-community-dislike-button");
+      var busy=communityReactionJobs.has(communityReactionScope(key));
+      [like,dislike].filter(Boolean).forEach(function (button) { button.setAttribute('aria-busy',String(busy));button.setAttribute('aria-disabled',String(busy)); });
       if (like) paintCommunityLike(like, key);
       if (dislike) paintCommunityDislike(dislike, key);
     }

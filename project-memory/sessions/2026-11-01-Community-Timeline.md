@@ -1,6 +1,6 @@
 ---
 kind: session
-status: in-progress-source-browser
+status: source-browser-verified-service-device-pending
 date: 2026-11-01
 source_commit: b90489f
 ---
@@ -32,8 +32,19 @@ ready posts before follows. Four red regressions; focused29/29, full3190/3190
 (70667ms, exit0), browser20/20 AR/EN including retained card/scroll140. Long
 pagination and real reconnect/device latency stay open. Cachev659/six mirrors.
 
+C-004: shared review reaction lock across both controls/copies, conditional
+per-review rollback, owner/client/epoch guards, honest retry feedback, fresh
+server counter/selection projection (including0) and bounded review/post writes.
+Eight added regressions and renderer contract. Full3198/3198, exit0 (68785ms).
+Browser60/60 controlled reaction checks plus32/32 actual demo click/scroll/idle
+checks, AR/EN x320/390. A demo-only opposite cleanup regression was caught by
+the final smoke, reproduced and fixed before final reruns. AR capture inspected.
+Cachev660 and ten affected runtime mirrors match. No provider/device benchmark,
+production mutation or build. Timeout does not cancel a server write; opposite
+review cleanup remains two RPCs. Total194 browser checks in this scoped pass.
+
 See docs/COMMUNITY_TIMELINE_2026-11-01.md for evidence and remaining scope:
-friend shared loading, post invalidation routing and review reaction consistency.
+completed source fixes and open native/service/long-pagination acceptance.
 No generic dead-code purge or design replacement is part of this repair.
 
 [[systems/Community-Notifications]] | [[13-Project-Story]] |

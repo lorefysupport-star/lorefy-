@@ -92,5 +92,5 @@ test('concurrent report receipts merge with current records rather than overwrit
 
 test('report behavior and sheet styles have fresh offline asset keys', () => {
   for (const file of ['index.html', 'sw.js']) for (const asset of ['modules/lorefy-product-core.js', 'modules/lorefy-product-tools.js', 'styles/lorefy-trust-studio.css']) assert.ok(fs.readFileSync(file, 'utf8').includes(asset + '?v=20261028-report-studio-v1'), asset);
-  assert.match(fs.readFileSync('sw.js', 'utf8'), /lorefy-v659-post-refresh/);
+  assert.match(fs.readFileSync('sw.js', 'utf8'), /lorefy-v660-community-reactions/);
 });

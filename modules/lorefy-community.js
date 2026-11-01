@@ -792,7 +792,10 @@
         toast(uiText("تعذر حفظ التفاعل. حاول مجددًا.", "Could not save your reaction. Please try again."));
       }
       try {
-        return Promise.resolve(backend.setCommunityPostReaction(post.id, kind, active)).then(function () { if (current()) paint(); }).catch(failed).finally(function () { pending(false); });
+        var timer;
+        return Promise.race([Promise.resolve(backend.setCommunityPostReaction(post.id, kind, active)),new Promise(function (_,reject) {
+          timer=global.setTimeout(function () { reject(new Error('Post reaction timeout')); },14000);
+        })]).then(function () { if (current()) paint(); }).catch(failed).finally(function () { global.clearTimeout(timer); pending(false); });
       } catch (error) { failed(); pending(false); }
     } else {
       pending(false);
