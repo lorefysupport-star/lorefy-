@@ -6,6 +6,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+C-007 passes3216 tests/100 browser checks in
+[[sessions/2026-11-01-Community-Timeline]]: targeted known-post refresh is complete
+locally. Next inspect old in-flight reads versus optimistic reaction changes;
+real two-reader/native/network and larger timeline acceptance remain open.
+
 C-006 passes3209 tests/68 local paged/anchor checks in
 [[sessions/2026-11-01-Community-Timeline]]. Next: targeted known-post refresh for
 reactions, without keeping withdrawn rows or repeating whole-window requests.

@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+Community C-007 in [[sessions/2026-11-01-Community-Timeline]] reduces known-post
+reactions to targeted metadata reads with loaded-window/anchor safety.3216 tests/
+100 local browser checks; no native build or production query benchmark.
+
 Community C-006 continuation in [[sessions/2026-11-01-Community-Timeline]]:
 3209 tests/68 browser checks verify retained loaded pages and scroll anchors,
 with deletion/edit revalidation. Native/network performance remains separate.

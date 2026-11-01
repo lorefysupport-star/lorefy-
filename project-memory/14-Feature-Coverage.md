@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Community C-007: [[sessions/2026-11-01-Community-Timeline]],3216 tests/100 AR/EN
+checks. Known target updates/withdrawals, offscreen suppression and full-refresh
+scope after a target are verified. Database/native/network acceptance separate.
+
 Community C-006: [[sessions/2026-11-01-Community-Timeline]],3209 tests/68 AR/EN
 checks across180 posts, old-boundary refresh, edits/deletions, explicit scroll
 anchor and usable older/end pagination. Controlled backend, not device evidence.

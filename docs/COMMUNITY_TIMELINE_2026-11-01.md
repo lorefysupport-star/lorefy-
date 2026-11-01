@@ -156,6 +156,31 @@ so ordinary reactions do not re-read the complete loaded range.
 Receipts: artifacts/community-post-window-20261101-full.log and
 output/playwright/community-post-window.js/results.txt.
 
+## C-007: Targeted Post Invalidation
+
+Small known-post changes now use the existing postId/limit1 read rather than
+refetching every loaded page and follows. Coalesce up to three known IDs;
+larger batches, new roots, unknown payloads and follow changes use the complete
+window path. Known replies revalidate their visible parent; offscreen reaction
+noise does not reload the timeline. Targets are restricted to already loaded
+posts, results must match the requested ID and unavailable rows are removed.
+
+The dirty queue retains its page/backend/owner and target set through a running
+job. A manual/full refresh joining a targeted read waits, then still performs its
+full revalidation; it cannot silently treat the narrow result as a full refresh,
+or dispatch a queued old-owner read into a replacement account.
+
+Seven new tests, five initial failures; focused32/32 and full3216/3216, exit0
+(63280ms). Browser100/100 AR/EN x320/390 reruns the prior paged/anchor flow and
+adds a181-row window:20 reactions -> one postId read, zero follows, updated12
+count, same card/offset; targeted withdrawal removes one row and preserves the
+anchor; offscreen reaction -> zero reads. Each post read still hydrates its
+existing metadata; this is not a claim of one underlying database query or a
+production latency benchmark. No API/schema/security change or live writes.
+Cachev663-post-targets/six mirrors match.
+Receipts: artifacts/community-post-targets-20261101-full.log and
+output/playwright/community-post-targets-results.txt.
+
 ## Remaining Acceptance
 
 - Friend lifecycle is repaired locally; real two-reader delivery and provider

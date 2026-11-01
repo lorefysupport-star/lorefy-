@@ -57,6 +57,15 @@ full3209/3209 (63845ms, exit0), browser68/68 AR/EN x320/390,180 rows with native
 scroll anchoring disabled. Cachev662/six mirrors. No native/network benchmark.
 Next is targeted post invalidation to avoid full-window work for single reactions.
 
+C-007: known post/reply/reaction events collect up to three targeted reads using
+the existing postId API, skip unrelated/offscreen reactions and keep full-window
+fallback for new roots/large/unknown/follow changes. Full refresh waiting on a
+target still revalidates its complete window under the same owner. Seven tests
+(five red), focused32/32, full3216/3216 (63280ms, exit0), browser100/100 AR/EN
+x320/390 including181 rows,20 reactions -> one post read/zero follows, unchanged
+anchor and single-row withdrawal. Cachev663/six mirrors. Not one database-query
+or production-latency certification; the existing metadata hydration remains.
+
 See docs/COMMUNITY_TIMELINE_2026-11-01.md for evidence and remaining scope:
 completed source fixes and open native/service/long-pagination acceptance.
 No generic dead-code purge or design replacement is part of this repair.

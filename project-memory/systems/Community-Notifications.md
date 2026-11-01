@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+C-007 in [[sessions/2026-11-01-Community-Timeline]] targets small known-post
+changes and retains safe full-window fallback.3216 tests/100 browser checks;
+manual/full refresh scope and owner guards preserved, no live-service changes.
+
 C-006 in [[sessions/2026-11-01-Community-Timeline]] preserves/revalidates the
 loaded post window and visible-card offset.3209 tests/68 paged browser checks
 (180 rows, native anchoring disabled). Targeted reaction refresh is next.

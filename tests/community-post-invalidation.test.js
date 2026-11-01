@@ -31,3 +31,20 @@ test('post data is published while an independent following lookup is still pend
  postsResolve([{id:'new'}]);await settle();assert.equal(state.posts[0]?.id,'new');assert.ok(paints>0);
  followResolve([]);assert.equal(await job,true);
 });
+
+test('a burst of reactions to one loaded post targets that post only',()=>{
+ const h=invalidation();h.state.posts=[{id:'one'}];
+ for(let i=0;i<20;i++)h.send({table:'community_post_reactions',new:{post_id:'one'}});h.flush();
+ assert.equal(h.calls.length,1);assert.deepEqual(Array.from(h.calls[0][2]?.postIds||[]),['one']);
+});
+test('known replies target their visible parent while offscreen reaction noise does nothing',()=>{
+ const h=invalidation();h.state.posts=[{id:'one'}];
+ h.send({table:'community_post_reactions',new:{post_id:'offscreen'}});h.flush();assert.equal(h.calls.length,0);
+ h.send({table:'community_posts',new:{id:'reply',parent_id:'one'}});h.flush();assert.deepEqual(Array.from(h.calls[0][2]?.postIds||[]),['one']);
+});
+test('many distinct targets or a new root use one full-window refresh',()=>{
+ const h=invalidation();h.state.posts=['one','two','three','four'].map(id=>({id}));
+ for(const post of h.state.posts)h.send({table:'community_post_reactions',new:{post_id:post.id}});h.flush();
+ assert.equal(h.calls.length,1);assert.equal(h.calls[0][2]?.postIds,undefined);
+ h.send({table:'community_posts',new:{id:'new-root',parent_id:null}});h.flush();assert.equal(h.calls.length,2);assert.equal(h.calls[1][2]?.postIds,undefined);
+});

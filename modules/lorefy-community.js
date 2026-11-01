@@ -269,7 +269,16 @@
   }
 
   function loadPosts(force, older, context) {
-    if (state.postJob && state.postJob.current()) return state.postJob.promise;
+    if (state.postJob && state.postJob.current()) {
+      if (state.postJob.targeted && !(context && Array.isArray(context.postIds))) {
+        var queuedPage=state.page,queuedBackend=global.LorefyBackend,queuedOwner=queuedBackend && queuedBackend.user && queuedBackend.user.id;
+        return state.postJob.promise.then(function () {
+          if (queuedPage!==state.page || queuedBackend!==global.LorefyBackend || queuedOwner!==(queuedBackend && queuedBackend.user && queuedBackend.user.id) || context && context.active && !context.active()) return false;
+          return loadPosts(force,older,context);
+        });
+      }
+      return state.postJob.promise;
+    }
     if (state.loaded && !force) return Promise.resolve(true);
     state.loading = true;
     state.error = false;
@@ -278,15 +287,29 @@
     var backend = global.LorefyBackend;
     var accountId = String(backend && backend.user && backend.user.id || '');
     var expired = false, timer, job = {};
+    var targetIds=!older && context && Array.isArray(context.postIds) && context.postIds.length<=3 ?
+      Array.from(new Set(context.postIds.map(String))).filter(function (id) { return state.posts.some(function (post) { return String(post.id)===id; }); }) : null;
+    job.targeted=!!targetIds;
     function ownRequest() { return request === state.feedRequest && feedPage === state.page; }
     job.current = function () { return !expired && ownRequest() && backend === global.LorefyBackend
       && accountId === String(backend && backend.user && backend.user.id || '') && (!context || !context.active || context.active()); };
     var deadline = new Promise(function (_, reject) { timer = global.setTimeout(function () {
       expired = true; reject(new Error('Community refresh timeout'));
     }, 14000); });
-    var follows = loadFollowedProfileIds(!!force, job.current);
+    var follows = targetIds ? Promise.resolve() : loadFollowedProfileIds(!!force, job.current);
     var work = Promise.all([(async function () {
       if (!isDemo() && backend && backend.mode === "live" && backend.listCommunityPosts) {
+        if (targetIds) {
+          var changes=await Promise.all(targetIds.map(function (id) { return backend.listCommunityPosts({postId:id,limit:1}); }));
+          if (!job.current()) return false;
+          var updated=new Map();
+          targetIds.forEach(function (id,index) {
+            var row=changes[index][0];
+            if (row && String(row.id)!==id) throw new Error('Post response does not match the requested post.');
+            updated.set(id,row && !row.parent_id ? normalizePost(row) : null);
+          });
+          state.posts=state.posts.map(function (post) { return updated.has(String(post.id)) ? updated.get(String(post.id)) : post; }).filter(Boolean);
+        } else {
         var cursor = older && state.posts[state.posts.length - 1];
         var boundary = !older && state.posts[state.posts.length - 1];
         if (boundary && (!boundary.id || !Number.isFinite(Date.parse(boundary.created_at)))) boundary=null;
@@ -311,6 +334,7 @@
         state.hasMore = hasMore;
         var merged = older ? state.posts.concat(rows) : rows;
         state.posts = Array.from(new Map(merged.map(function (row) { return [row.id, row]; })).values());
+        }
       }
       else if (isDemo()) state.posts = demoPosts();
       else throw new Error('Community connection is unavailable.');
@@ -1399,11 +1423,26 @@
     return true;
   }
 
-  function scheduleRefresh(payload) {
+  function scheduleRefresh(payload, resume) {
     if (payload && payload.table && !/^(community_posts|community_post_reactions|profile_follows)$/.test(payload.table)) return;
     if (!state.page || !state.page.isConnected) { state.loaded=false; return; }
-    if (state.refreshTimer) return;
     var page=state.page,backend=global.LorefyBackend,owner=backend && backend.user && backend.user.id;
+    var queue=state.postInvalidation;
+    if (!queue || queue.page!==page || queue.backend!==backend || queue.owner!==owner) {
+      global.clearTimeout(state.refreshTimer);state.refreshTimer=0;
+      queue=state.postInvalidation={page:page,backend:backend,owner:owner,full:false,ids:new Set()};
+    }
+    if (!resume) {
+      var row=payload && (payload.new && Object.keys(payload.new).length ? payload.new : payload.old),id;
+      if (payload && payload.table==='community_post_reactions' && row && row.post_id) id=String(row.post_id);
+      else if (payload && payload.table==='community_posts' && row) id=String(row.parent_id || row.id || '');
+      var known=id && state.posts.some(function (post) { return String(post.id)===id; });
+      if (known) queue.ids.add(id);
+      else if (id && payload && (payload.table==='community_post_reactions' || row.parent_id)) return;
+      else queue.full=true;
+      if (queue.ids.size>3) { queue.full=true;queue.ids.clear(); }
+    }
+    if (state.refreshTimer || !queue.full && !queue.ids.size) return;
     function current() { return page===state.page && page.isConnected && backend===global.LorefyBackend && owner===(backend && backend.user && backend.user.id); }
     state.refreshTimer = global.setTimeout(function () {
       state.refreshTimer=0;
@@ -1414,12 +1453,13 @@
           state.refreshQueued=pending;
           pending.promise.finally(function () {
             if (state.refreshQueued===pending) state.refreshQueued=null;
-            if (current()) scheduleRefresh();
+            if (current()) scheduleRefresh(null,true);
           });
         }
         return;
       }
-      state.loaded=false; loadPosts(true);
+      var targets=queue.full?null:Array.from(queue.ids);queue.full=false;queue.ids.clear();
+      state.loaded=false; loadPosts(true,false,targets?{postIds:targets}:undefined);
     },180);
   }
 

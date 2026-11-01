@@ -4,14 +4,15 @@ const id=n=>'11111111-1111-4111-8111-'+String(1000000000-n).padStart(12,'0');
 const row=n=>({id:id(n),created_at:new Date(Date.UTC(2026,10,1)-n*1000).toISOString(),body:'Post '+n});
 function order(a,b){return Date.parse(a.created_at)-Date.parse(b.created_at)||(a.id>b.id?1:a.id<b.id?-1:0);}
 function mount(rows){
- const state={page:{isConnected:true},posts:[]},calls=[];let data=rows,failAt=0;
+ const state={page:{isConnected:true},posts:[]},calls=[];let data=rows,failAt=0,followReads=0;
  const backend={mode:'live',user:{id:'owner'},listCommunityPosts:async options=>{
   calls.push(options);if(failAt&&calls.length===failAt)throw Error('offline');
+  if(options.postId)return data.filter(post=>post.id===options.postId).slice(0,options.limit);
   return data.filter(post=>!options.before||order(post,options.before)<0).slice(0,options.limit);
  }};
- const scope={state,global:{LorefyBackend:backend,setTimeout,clearTimeout},isDemo:()=>false,normalizePost:x=>({...x}),loadFollowedProfileIds:async()=>[],renderPostFeed(){}};
+ const scope={state,global:{LorefyBackend:backend,setTimeout,clearTimeout},isDemo:()=>false,normalizePost:x=>({...x}),loadFollowedProfileIds:async()=>{followReads++;return [];},renderPostFeed(){}};
  const start=source.indexOf('  function loadPosts(');vm.runInNewContext(source.slice(start,source.indexOf('  function localSavePost(',start)),scope);
- return{state,calls,backend,load:scope.loadPosts,setData:rows=>data=rows,failNextPage:n=>failAt=calls.length+n};
+ return{state,calls,backend,load:scope.loadPosts,followReads:()=>followReads,setData:rows=>data=rows,failNextPage:n=>failAt=calls.length+n};
 }
 async function twoPages(h){await h.load(true);await h.load(true,true);assert.equal(h.state.posts.length,120);}
 
@@ -84,4 +85,33 @@ test('prepending fresh posts preserves the visible card position without native 
 });
 test('fresh posts remain visible at the top instead of forcing a scroll offset',()=>{
  const h=renderedTimeline();h.state.posts.unshift(row(-1));h.render();assert.equal(h.scroll.scrollTop,0);
+});
+
+test('targeted refresh reads only the known changed post and keeps the other loaded rows and pagination',async()=>{
+ const data=Array.from({length:180},(_,i)=>row(i)),h=mount(data);await twoPages(h);const untouched=h.state.posts[0],followReads=h.followReads();
+ h.setData(data.map(post=>post.id===id(80)?{...post,body:'Changed target'}:post));h.calls.length=0;
+ assert.equal(await h.load(true,false,{postIds:[id(80)]}),true);
+ assert.equal(h.calls.length,1);assert.equal(h.calls[0].postId,id(80));assert.equal(h.calls[0].limit,1);
+ assert.equal(h.followReads(),followReads);assert.equal(h.state.posts.length,120);assert.equal(h.state.posts[0],untouched);
+ assert.equal(h.state.posts.find(post=>post.id===id(80)).body,'Changed target');assert.equal(h.state.hasMore,true);
+});
+
+test('targeted revalidation removes an unavailable post without dropping the rest of the window',async()=>{
+ const data=Array.from({length:180},(_,i)=>row(i)),h=mount(data);await twoPages(h);h.setData(data.filter(post=>post.id!==id(90)));
+ await h.load(true,false,{postIds:[id(90)]});assert.equal(h.state.posts.length,119);assert.equal(h.state.posts.some(post=>post.id===id(90)),false);
+ assert.equal(h.state.posts.at(-1).id,id(119));
+});
+
+test('full refresh waits for a running targeted read, then still revalidates the entire window',async()=>{
+ const data=Array.from({length:180},(_,i)=>row(i)),h=mount(data);await twoPages(h);const original=h.backend.listCommunityPosts;let release;
+ h.backend.listCommunityPosts=options=>options.postId?new Promise(resolve=>release=resolve):original(options);h.calls.length=0;
+ const target=h.load(true,false,{postIds:[id(80)]}),full=h.load(true);
+ release([row(80)]);assert.equal(await target,true);assert.equal(await full,true);assert.equal(h.calls.length,2);
+});
+
+test('queued full refresh after a target cannot dispatch into a replaced account',async()=>{
+ const data=Array.from({length:180},(_,i)=>row(i)),h=mount(data);await twoPages(h);const original=h.backend.listCommunityPosts;let release;
+ h.backend.listCommunityPosts=options=>options.postId?new Promise(resolve=>release=resolve):original(options);h.calls.length=0;
+ const target=h.load(true,false,{postIds:[id(80)]}),full=h.load(true);h.backend.user={id:'other'};release([row(80)]);
+ assert.equal(await target,false);assert.equal(await full,false);assert.equal(h.calls.length,0);
 });
