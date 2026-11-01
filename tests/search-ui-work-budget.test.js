@@ -23,7 +23,7 @@ function renderHarness(overrides={}) {
   vm.runInNewContext(fs.readFileSync('modules/lorefy-explore-studio.js','utf8'),context);
   const props={userKey:'budget-owner',language:'en',allType:'All',types:['All','Manga'],genres:[],preferences:{genres:[]},library:{},favorites:[],categories:[],
     getRanked(){rankingCalls++;return [work];},getCatalog:()=>[work],getWork:()=>work,typeLabel:value=>value,cover:()=>'',fallback:()=>'',onWork(){},...overrides};
-  function render(){stateIndex=memoIndex=refIndex=effectIndex=0;tree=root.LorefyExploreStudio.Explore(props);for(const node of nodes(tree))if(node.props.ref&&String(node.props.className||'').split(' ').includes('lf-explore-dialog'))node.props.ref.current=root.testPanel||null;return tree;}
+  function render(){stateIndex=memoIndex=refIndex=effectIndex=0;tree=root.LorefyExploreStudio.Explore(props);for(const node of nodes(tree)){if(node.props.ref&&String(node.props.className||'').split(' ').includes('lf-explore-dialog'))node.props.ref.current=root.testPanel||null;if(node.props.ref&&node.props.className==='lf-explore-more')node.props.ref.current=root.testSentinel||null;}return tree;}
   function nodes(node,out=[]){if(node&&typeof node==='object'){out.push(node);(node.children||[]).forEach(child=>nodes(child,out));}return out;}
   function find(fn){return nodes(tree).find(fn);}
   function flush(){const pending=[...timers.values()];timers.clear();pending.forEach(timer=>timer.fn());}
@@ -58,6 +58,54 @@ test('closing a loading collection restores the opener and ignores its later com
  assert.equal(f.doc.activeElement,f.opener);assert.equal(f.background.inert,false);
  f.resolve();await settle();f.app.render();f.app.flushEffects();assert.equal(f.app.find(n=>n.props.role==='dialog'),undefined);assert.equal(f.doc.activeElement,f.opener);
  f.app.unmount();assert.equal(f.background.inert,false);
+});
+
+function paginationHarness(observe=false){
+ const pending=[],observers=[],app=renderHarness({types:['All','Manga','Novel']});
+ if(observe){app.root.testSentinel={};app.root.IntersectionObserver=class{constructor(callback){this.callback=callback;observers.push(this);}observe(){}disconnect(){this.disconnected=true;}};}
+ app.root.LorefyCatalogLoader={state:()=>({ready:true,hasMore:true}),loadExplore:async()=>{},loadFormat:async()=>{},loadMore:()=>new Promise((resolve,reject)=>pending.push({resolve,reject}))};
+ app.render();app.flushEffects();
+ function choose(type){app.find(n=>n.props.role==='tab'&&n.children.includes('Types'))?.props.onClick();app.render();app.flushEffects();app.find(n=>n.props.className==='lf-explore-category'&&n.props.key===type).props.onClick();app.render();app.flushEffects();}
+ function back(){app.find(n=>n.props['aria-label']==='Back to types').props.onClick();app.render();app.flushEffects();}
+ function more(){app.find(n=>n.type==='button'&&n.children.includes('Load more')).props.onClick();}
+ choose('Manga');return{app,pending,observers,choose,back,more};
+}
+
+for(const outcome of ['resolve','reject'])test('old format pagination '+outcome+' cannot alter the new format page',async()=>{
+ const f=paginationHarness();f.more();await settle();f.back();f.choose('Novel');
+ f.pending[0][outcome](outcome==='reject'?Error('old failure'):undefined);await settle();f.app.render();f.app.flushEffects();
+ assert.equal(f.app.slots[4],60);assert.equal(f.app.find(n=>n.props.className==='lf-explore-catalog-status').children.includes('Could not load results. Try again.'),false);
+});
+
+test('changing format releases only its own pagination gate and older completion cannot unlock a newer request',async()=>{
+ const f=paginationHarness();f.more();await settle();f.back();f.choose('Novel');f.more();await settle();assert.equal(f.pending.length,2);
+ f.pending[0].resolve();await settle();f.more();await settle();assert.equal(f.pending.length,2);
+ f.pending[1].resolve();await settle();f.app.render();f.app.flushEffects();assert.equal(f.app.slots[4],120);
+});
+
+test('a synchronous pagination failure becomes retryable feedback instead of escaping the event handler',async()=>{
+ const f=paginationHarness();f.app.root.LorefyCatalogLoader.loadMore=()=>{throw Error('sync offline');};
+ assert.doesNotThrow(()=>f.more());await settle();f.app.render();f.app.flushEffects();
+ assert.ok(f.app.find(n=>n.props.className==='lf-explore-catalog-status').children.includes('Could not load results. Try again.'));
+});
+
+test('a retained pagination callback from an old format cannot start work in the new format',async()=>{
+ const f=paginationHarness(),old=f.app.find(n=>n.type==='button'&&n.children.includes('Load more')).props.onClick;
+ f.back();f.choose('Novel');old();await settle();assert.equal(f.pending.length,0);
+});
+
+test('unmounting Explore prevents a delayed page from changing its state',async()=>{
+ const f=paginationHarness();f.more();await settle();f.app.unmount();const before=JSON.stringify(f.app.slots);
+ f.pending[0].resolve();await settle();assert.equal(JSON.stringify(f.app.slots),before);
+});
+
+test('a new sort rebinds automatic pagination to the new context without reviving the old observer',async()=>{
+ const f=paginationHarness(true),old=f.observers[0];assert.equal(f.observers.length,1);
+ f.app.find(n=>n.type==='button'&&n.children.includes('New')).props.onClick();f.app.render();f.app.flushEffects();
+ assert.equal(old.disconnected,true);assert.equal(f.observers.length,2);
+ old.callback([{isIntersecting:true}]);await settle();assert.equal(f.pending.length,0);
+ f.observers[1].callback([{isIntersecting:true}]);await settle();assert.equal(f.pending.length,1);
+ f.pending[0].resolve();await settle();f.app.unmount();
 });
 
 test('active media and people searches do not recalculate hidden personalized recommendations',()=>{

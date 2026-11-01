@@ -6,10 +6,16 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-02-Explore-Interactions]] E-002 prevents stale format pages
+blocking or altering a new browse context and preserves automatic pagination.
+3293 tests and192 final browser checks pass after both Explore repairs; original
+design and catalog contracts remain. Live provider/native acceptance is separate.
+
 [[sessions/2026-11-02-Explore-Interactions]] starts the requested Explore audit:
 E-001 preserves the focused work while a collection loads or fails.3286 tests
 and162 browser checks cover core Explore controls without changing its design.
-Next is obsolete format pagination; native and live-provider checks remain open.
+Format pagination was subsequently repaired in E-002; native and live-provider
+checks remain open.
 
 [[sessions/2026-11-02-Profile-Interactions]] P-003 repairs the unhandled visitor
 dialog boundary without redesigning the page.3283 tests and276 new browser

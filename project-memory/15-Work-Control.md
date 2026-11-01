@@ -6,9 +6,14 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+[[sessions/2026-11-02-Explore-Interactions]] E-001/E-002 pass3293 source tests
+and192 final browser checks. Do not repeat dialog-focus/pagination fixes as new
+work. Native keyboard/long-scroll and live provider completeness/latency remain
+unverified; preserve source-only/no-deployment boundaries.
+
 [[sessions/2026-11-02-Explore-Interactions]] E-001 passes3286 tests/162 browser
-checks. Continue with a separate reproduction of format pagination outcomes
-after query/format replacement. No redesign, native build or service mutation.
+checks. The format pagination follow-up is now repaired in E-002. No redesign,
+native build or service mutation.
 
 P-003 in [[sessions/2026-11-02-Profile-Interactions]] closes visitor dialog focus,
 Escape and background-isolation gaps:3283 tests/276 new browser checks. Do not

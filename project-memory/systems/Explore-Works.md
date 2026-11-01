@@ -12,6 +12,12 @@ wholecatalog indexing. Partial All/الكل failures keep cards+Retry in AR/EN.
 3111tests and local browser pass; device/provider coverage limits remain.
 # الاستكشاف وتفاصيل الأعمال والشخصيات
 
+E-002 in [[sessions/2026-11-02-Explore-Interactions]] scopes format pagination
+to its current context and request, rejects obsolete callbacks/results and keeps
+automatic loading bound to the selected sort/query.3293 source tests and192
+final browser checks pass. No production or native build; provider/device gates
+remain independent of local controlled delayed-request evidence.
+
 E-001 in [[sessions/2026-11-02-Explore-Interactions]] fixes collection content
 updates stealing focus or restarting background isolation.3286 source tests and
 162 AR/EN browser checks pass; native/live provider timing remains separate.

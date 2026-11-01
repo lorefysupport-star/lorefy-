@@ -314,7 +314,11 @@
     var pauseState = React.useState(true), paused = pauseState[0], setPaused = pauseState[1];
     var reducedMotion = !!(root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches);
     var errorState = React.useState(false), loadError = errorState[0], setLoadError = errorState[1];
-    var opener = React.useRef(null), panel = React.useRef(null), screen = React.useRef(null), sentinel = React.useRef(null), hero = React.useRef(null), busy = React.useRef(false), dialogInstance = React.useRef(0);
+    var opener = React.useRef(null), panel = React.useRef(null), screen = React.useRef(null), sentinel = React.useRef(null), hero = React.useRef(null), busy = React.useRef(null), dialogInstance = React.useRef(0);
+    React.useEffect(function(){
+      var scope={active:true,request:null,loader:root.LorefyCatalogLoader,owner:owner,format:format,query:query,sort:sort,filters:filters};busy.current=scope;
+      return function(){scope.active=false;};
+    },[owner,format,query,sort,filters]);
     var t = function (ar, english) { return en ? english : ar; };
     var Icon = function (name, size) {
       if (en && name === 'ChevronLeft') name = 'ChevronRight';
@@ -372,14 +376,16 @@
       return format ? catalogResults(props.getCatalog ? props.getCatalog() : ranked, format, query, sort, props.ratingScore).filter(function(work){return matchesFilters(work,filters);}) : [];
     }, [format, query, sort, revision, props.getCatalog,filters]);
     function more() {
+      var scope=busy.current;
       var currentState = root.LorefyCatalogLoader && root.LorefyCatalogLoader.state();
-      if (busy.current || currentState && currentState.searchError) return;
+      if (!scope || !scope.active || scope.request || scope.loader!==root.LorefyCatalogLoader || scope.owner!==owner || scope.format!==format || scope.query!==query || scope.sort!==sort || scope.filters!==filters || currentState && currentState.searchError) return;
       if (limit < resultCount) { setLimit(function (n) { return n + 60; }); return; }
       if (catalogState && catalogState.hasMore && root.LorefyCatalogLoader) {
-        busy.current = true; setLoadError(false);
-        root.LorefyCatalogLoader.loadMore().catch(function () { setLoadError(true); }).finally(function () {
-          busy.current = false; setLimit(function (n) { return n + 60; }); setRevision(function (n) { return n + 1; });
-        });
+        var request={};scope.request=request;setLoadError(false);
+        function current(){return scope.active&&busy.current===scope&&scope.request===request&&scope.loader===root.LorefyCatalogLoader;}
+        Promise.resolve().then(function(){if(current())return scope.loader.loadMore();}).then(function(){
+          if(current()){setLimit(function(n){return n+60;});setRevision(function(n){return n+1;});}
+        }).catch(function(){if(current())setLoadError(true);}).finally(function(){if(current())scope.request=null;});
       }
     }
     function retryMediaSearch() {
@@ -400,7 +406,7 @@
         if (entries.some(function (entry) { return entry.isIntersecting; })) more();
       }, {root:screen.current, rootMargin:'0px 0px 300px 0px'});
       observer.observe(sentinel.current); return function () { observer.disconnect(); };
-    }, [format, limit, results.length, revision]);
+    }, [owner, format, query, sort, filters, limit, results.length, revision]);
     React.useEffect(function () {
       if (features.length < 2 || paused || format || mode !== 'you' || searchActive || reducedMotion) return;
       var timer = root.setInterval(function () {

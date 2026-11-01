@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Explore E-002: [[sessions/2026-11-02-Explore-Interactions]]. Current-context
+pagination gates, obsolete results/callback rejection, synchronous failure and
+observer rebinding pass3293 source tests and192 final browser checks. No catalog
+merge, reading-state change, native build or live service deployment.
+
 Explore E-001: [[sessions/2026-11-02-Explore-Interactions]]. Collection dialogs
 retain focus across asynchronous content updates; source3286/3286 and browser
 162/162. Filters/search/types/back and local delayed success/failure/retry pass.
