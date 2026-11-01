@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v669-cover-preparation';
+const CACHE = 'lorefy-v670-scroll-restore';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -151,7 +151,7 @@ const CORE = [
   './modules/lorefy-elven-motion.js?v=20261025-frame-unity-v2',
   './styles/lorefy-frame-motion.css?v=20261025-frame-unity-v2',
   './styles/lorefy-interface-settings.css?v=20261009-custom-appearance-v1',
-  './modules/lorefy-scroll-memory.js?v=20261003-home-social-v2',
+  './modules/lorefy-scroll-memory.js?v=20261101-scroll-restore-v1',
   './modules/lorefy-cover-media.js?v=20261101-slow-media-v1',
   './modules/lorefy-library-media.js?v=20261029-home-media-v1',
   './styles/lorefy-cover-media.css?v=20261029-shelf-acceptance-v1',

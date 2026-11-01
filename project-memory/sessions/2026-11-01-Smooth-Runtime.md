@@ -41,10 +41,40 @@ Evidence:
   smooth-cover-ui-results.txt, smooth-search-results.txt; full log
   artifacts/cover-preparation-20261101-full.log. Cachev669; six selective mirrors.
 
-## Next measurement
+## S-002: bounded, immediate scroll restoration
 
-Inspect observer work during settled Home/Profile/Library/Explore and scrolling.
-Do not infer no-lag behavior or native frame rate from source tests. Cold launch,
+The settled four-route observer probe did not reveal an idle update storm in
+its short demo window. A separate source/DOM reproduction found that a pending
+scroll restoration writes scrollTop synchronously for every content-mutation
+delivery.100 deliveries meant100 repeated layout writes; it now queues one RAF
+attempt. Pending-job identity and cancellation prevent an obsolete callback or
+timeout cancelling a newer page job. Touch/wheel/keyboard release the frame.
+
+Actual app checking also exposed CSS scroll-behavior:smooth on screen roots:
+the old scrollTop setter animated restoration instead of restoring immediately.
+Use scrollTo with explicit instant behavior for restoration only (plain-object
+fallback retained), without changing the page's smooth-scroll preference.
+This follows https://drafts.csswg.org/cssom-view/#scrolling; auto behavior may
+still honor the element's smooth CSS and is not an instant override.
+
+Quickly leaving a still-loading page must not replace its640px saved target
+with a clamped0. Click capture and route capture now skip pending restoration;
+ordinary reader scrolling still updates saved positions after cancellation.
+Six new regressions cover batching, obsolete jobs, cancellation, timeout/removal,
+instant restoration and quick leave/return;24 focused tests pass. Final full
+suite3246/3246, zero failures, exit0 (105113ms). Actual app AR320/EN390 and real
+DOM late-content/quick-navigation fixture:13/13 checks, no page exceptions.
+Earlier app checks exposed CSS smooth restoration; final run asserts restored
+positions and unchanged smooth CSS. Six selective index/SW/module mirrors match
+byte-for-byte; cachev670. No gesture animation, scroll CSS or frame-motion edits.
+
+Receipts: output/playwright/smooth-observers-before.txt,
+smooth-scroll-results.txt; artifacts/scroll-restore-20261101-full.log.
+
+## Remaining measurement
+
+The four-route settled/scrolling observer sample is complete but short and uses
+demo content. Do not infer no-lag behavior or native frame rate from it. Cold launch,
 large live feeds, physical-device gestures/keyboard, storage/image delivery and
 long-session memory need independent evidence; do not delete features or artwork
 as a shortcut to smaller measurements.

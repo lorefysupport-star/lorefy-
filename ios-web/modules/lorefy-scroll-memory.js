@@ -10,6 +10,11 @@
     return String(label || "unknown");
   }
 
+  function restorePosition(node, position) {
+    if (typeof node.scrollTo === "function") node.scrollTo({ top:position, behavior:"instant" });
+    else node.scrollTop = position;
+  }
+
   function createScrollMemory() {
     var positions = new Map();
     var active = null;
@@ -18,7 +23,7 @@
         if (active && (!options || options.capture !== false)) this.remember();
         active = { key:key, node:node };
         var position = positions.get(key) || 0;
-        node.scrollTop = position;
+        restorePosition(node, position);
         return position;
       },
       remember: function () {
@@ -42,21 +47,30 @@
       if (!pending) return;
       pending.observer.disconnect();
       global.clearTimeout(pending.timeout);
+      if (pending.frame !== null) global.cancelAnimationFrame(pending.frame);
       pending = null;
     }
 
     function restoreWhenReady(node, key, target) {
       if (target <= 0 || Math.abs(node.scrollTop - target) <= 2) return;
-      var observer = new global.MutationObserver(attempt);
-      pending = { node:node, key:key, observer:observer, timeout:0 };
+      var job = { node:node, key:key, observer:null, timeout:0, frame:null };
+      function scheduleAttempt() {
+        if (pending !== job || job.frame !== null) return;
+        job.frame = global.requestAnimationFrame(attempt);
+      }
       function attempt() {
-        if (!pending || pending.node !== node || !node.isConnected || memory.active().key !== key) { stopPending(); return; }
-        node.scrollTop = target;
+        job.frame = null;
+        if (pending !== job) return;
+        if (!node.isConnected || memory.active().key !== key) { stopPending(); return; }
+        restorePosition(node, target);
         if (Math.abs(node.scrollTop - target) <= 2) stopPending();
       }
-      observer.observe(node, { childList:true, subtree:true });
-      pending.timeout = global.setTimeout(stopPending, 3000);
-      global.requestAnimationFrame(attempt);
+      // Late image/card batches share one layout write in the next paint frame.
+      job.observer = new global.MutationObserver(scheduleAttempt);
+      pending = job;
+      job.observer.observe(node, { childList:true, subtree:true });
+      job.timeout = global.setTimeout(function () { if (pending === job) stopPending(); }, 3000);
+      scheduleAttempt();
     }
 
     function currentView() {
@@ -82,9 +96,10 @@
       if (!view) return;
       var previous = memory.active();
       if (previous && previous.node === view.node && previous.key === view.key) return;
+      var restoring = !!pending;
       stopPending();
       var sameNode = previous && previous.node === view.node;
-      var target = memory.enter(view.key, view.node, { capture:!sameNode });
+      var target = memory.enter(view.key, view.node, { capture:!sameNode && !restoring });
       restoreWhenReady(view.node, view.key, target);
     }
 
@@ -94,7 +109,7 @@
       global.requestAnimationFrame(sync);
     }
 
-    doc.addEventListener("click", function () { memory.remember(); }, true);
+    doc.addEventListener("click", function () { if (!pending) memory.remember(); }, true);
     doc.addEventListener("scroll", function (event) {
       var active = memory.active();
       if (active && event.target === active.node && !pending) memory.remember();

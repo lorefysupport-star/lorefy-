@@ -6,6 +6,11 @@ aliases: ["تشغيل", "تحميل", "bootstrap", "cache", "NenApp"]
 ---
 # تشغيل التطبيق
 
+[[sessions/2026-11-01-Smooth-Runtime]] S-002 batches late-content restoration
+into one frame, cancels stale jobs and restores instantly despite smooth CSS.
+Quick navigation cannot save a clamped0 over the pending target. User gesture
+and ordinary scroll preferences remain unchanged; native acceptance separate.
+
 [[bugs/LF-073-Surface-Render-Recovery]] adds an AppShell React render boundary
 with manual AR/EN recovery and no storage clearing or automatic retry loop.
 [[sessions/2026-10-19-Surface-Render-Recovery]]:5 added,15 focused,2195 full passing;

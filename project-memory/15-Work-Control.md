@@ -7,7 +7,9 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 # لوحة تطوير Lorefy
 
 Smooth runtime: [[sessions/2026-11-01-Smooth-Runtime]]. S-001 cover computation
-passes3240 tests/28 browser checks; inspect settled/scrolling observer work next.
+passes3240 tests/28 browser checks. S-002 scroll repair passes3246 source tests
+and13 actual-app/DOM checks before its own push. Short demo observer probe did
+not demonstrate an idle storm; do not claim full/native runtime optimization.
 Maintain independent native/network/large-live-feed gates; no build authorized.
 
 Shelf-theme patch: [[sessions/2026-11-01-Profile-Material-Continuity]]. Actual

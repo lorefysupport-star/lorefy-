@@ -9,6 +9,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 Smooth runtime: [[sessions/2026-11-01-Smooth-Runtime]] S-001 validates bounded
 cover CPU caching without caching display routing/rights;3240 tests,28 AR/EN
 demo checks and identical-output paired benchmarks. No native FPS certification.
+S-002 adds pending restoration batching/lifetime guards and explicit instant
+position restoration without removing the reader's smooth-scroll preference.
+Final3246 source tests and13 actual-app/DOM checks pass; native gestures still
+require device acceptance, not inferred from desktop/headless measurements.
 
 Profile material continuity: [[sessions/2026-11-01-Profile-Material-Continuity]].
 66 actual demo layout/palette/viewport cases and474 checks, including retained
