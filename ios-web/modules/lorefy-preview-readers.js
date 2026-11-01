@@ -59,13 +59,17 @@
   function reviewState(React,useStoredState,community){
     const [local,setLocal]=useStoredState('lorefy.user.privateReviews.v2',[]);
     const [fixtures,setFixtures]=React.useState(()=>community?clone(community.data.reviews):[]);
-    const shown=community?local.filter(r=>!community.reviewIds.has(r.id)).concat(fixtures).sort((a,b)=>b.ts-a.ts):local;
+    const shown=React.useMemo(()=>community?local.filter(r=>!community.reviewIds.has(r.id)).concat(fixtures).sort((a,b)=>b.ts-a.ts):local,[community,local,fixtures]);
     const state=React.useRef?React.useRef(shown):{current:shown};state.current=shown;
     if(!community)return [local,setLocal];
     return [shown,update=>{
-      const next=typeof update==='function'?update(state.current):update;state.current=next;
-      setLocal(next.filter(r=>!community.reviewIds.has(r.id)));
-      setFixtures(next.filter(r=>community.reviewIds.has(r.id)));
+      const next=typeof update==='function'?update(state.current):update;
+      if(next===state.current)return;
+      state.current=next;
+      const localRows=next.filter(r=>!community.reviewIds.has(r.id)),fixtureRows=next.filter(r=>community.reviewIds.has(r.id));
+      const sameRows=(a,b)=>a.length===b.length&&a.every((row,index)=>row===b[index]);
+      setLocal(previous=>sameRows(previous,localRows)?previous:localRows);
+      setFixtures(previous=>sameRows(previous,fixtureRows)?previous:fixtureRows);
     }];
   }
   function isActive(){return !!(root&&current&&backend&&allowed(root.location,backend.mode));}

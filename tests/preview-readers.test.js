@@ -38,12 +38,53 @@ test('viewer connections behave like app users and persist only under preview-sc
 });
 test('review state shows fixtures but never persists them in the real review collection',()=>{
   let local=[{id:'my-review',userId:'me',txt:'Keep me'}];let fixtureState;
-  const React={useState:fn=>{fixtureState=fn();return [fixtureState,fn=>fixtureState=typeof fn==='function'?fn(fixtureState):fn];}};
+  const React={useMemo:fn=>fn(),useState:fn=>{fixtureState=fn();return [fixtureState,fn=>fixtureState=typeof fn==='function'?fn(fixtureState):fn];}};
   const community=api.createCommunity({data,storage:storage(),viewerId:'demo-owner'});
   const [shown,set]=api.reviewState(React,()=>[local,fn=>local=typeof fn==='function'?fn(local):fn],community);
   assert.equal(shown.length,11);
   set(rows=>rows.map(r=>r.id==='my-review'?{...r,txt:'Changed'}:r));
   assert.equal(local.length,1);assert.equal(local[0].txt,'Changed');assert.equal(fixtureState.length,10);
+});
+
+function reviewHarness() {
+  const community=api.createCommunity({data,storage:storage(),viewerId:'demo-owner'});
+  let local=[{id:'own-review',userId:'me',r:4}],cursor=0,changes=0;
+  const cells=[];
+  const React={
+    useState(initial){const index=cursor++;if(!cells[index])cells[index]={value:initial()};return[cells[index].value,update=>{const next=typeof update==='function'?update(cells[index].value):update;if(next!==cells[index].value)changes++;cells[index].value=next;}];},
+    useRef(value){const index=cursor++;return cells[index]||(cells[index]={current:value});},
+    useMemo(fn,deps){const index=cursor++,prior=cells[index];if(!prior||deps.some((dep,i)=>dep!==prior.deps[i]))cells[index]={deps,value:fn()};return cells[index].value;}
+  };
+  const stored=()=>[local,update=>{const next=typeof update==='function'?update(local):update;if(next!==local)changes++;local=next;}];
+  return{render(){cursor=0;return api.reviewState(React,stored,community);},get local(){return local;},get changes(){return changes;}};
+}
+
+test('unchanged completion maintenance preserves review identity and cannot schedule another preview render',()=>{
+  const h=reviewHarness();const [first,set]=h.render();
+  set(rows=>rows);
+  assert.equal(h.changes,0,'identity updater is a no-op');
+  assert.equal(h.render()[0],first,'unrelated parent render keeps the same reviews');
+});
+
+test('equivalent review arrays retain unchanged local and fixture partitions',()=>{
+  const h=reviewHarness(),[first,set]=h.render(),local=h.local;
+  set(rows=>rows.slice());
+  assert.equal(h.changes,0);assert.equal(h.local,local);assert.equal(h.render()[0],first);
+});
+
+test('a fixture reaction changes only that fixture without persisting sample reviews',()=>{
+  const h=reviewHarness(),[first,set]=h.render(),fixture=first.find(row=>row.id!=='own-review'),local=h.local;
+  set(rows=>rows.map(row=>row.id===fixture.id?{...row,r:3.25}:row));
+  assert.equal(h.changes,1);assert.equal(h.local,local);
+  const [next]=h.render();assert.equal(next.find(row=>row.id===fixture.id).r,3.25);
+  assert.equal(h.local.some(row=>row.id===fixture.id),false);
+});
+
+test('queued review changes and reversals use the current partition, not a stale render',()=>{
+  const h=reviewHarness(),[,set]=h.render(),original=h.local[0];
+  set(rows=>rows.map(row=>row.id===original.id?{...row,r:1}:row));
+  set(rows=>rows.map(row=>row.id===original.id?original:row));
+  assert.equal(h.local[0],original);assert.equal(h.render()[0].find(row=>row.id===original.id).r,4);
 });
 test('standard application prepares the preview directory before mounting and visitor profiles read it',()=>{
   const index=fs.readFileSync(path.join(root,'index.html'),'utf8');

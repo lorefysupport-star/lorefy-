@@ -71,6 +71,33 @@ byte-for-byte; cachev670. No gesture animation, scroll CSS or frame-motion edits
 Receipts: output/playwright/smooth-observers-before.txt,
 smooth-scroll-results.txt; artifacts/scroll-restore-20261101-full.log.
 
+## S-003: remove the preview review/completion update loop
+
+The heavier four-route4x CPU probe found128 Explore ranking invocations in its
+startup sample. In modules/lorefy-preview-readers.js, reviewState created a new
+combined array every render and split even identity/no-op updater results into
+two new state arrays. The completed-progress maintenance effect watches reviews,
+so unchanged completion results could schedule another preview render repeatedly.
+
+Memoize the combined view by its actual local/fixture inputs; identity updaters
+do nothing, and functional partition setters retain unchanged row arrays. Actual
+fixture and owner edits still update, including two queued edits/reversal before
+render. Keep fictional reviews out of owner storage; live/non-preview behavior
+returns the original owner collection and setter unchanged.
+
+Four regressions added, three initially failed;10 focused and3250 full tests
+passed, exit0 (105007ms). Actual AR320/EN390 demo navigation/reaction checks16/16
+passed without page exceptions. Same instrumented4x startup scenario: Explore
+ranking calls128 to3; Profile long tasks56 to15. This is a local preview repair,
+not evidence of equivalent production startup gains. Absolute wall-clock times
+are sensitive to local CPU load/network and are not an SLA. Cachev671, six
+selective web mirrors byte-identical. No native build or production mutation.
+
+Receipts: output/playwright/smooth-hotpaths-{before,after}.txt,
+preview-stable-ui-results.txt; artifacts/preview-stability-20261101-full.log.
+Next shared hotspot: the feed probe attributed300.5 of318.5ms of measured render
+work to synchronous scrollTop layout reads; investigate before changing anchors.
+
 ## Remaining measurement
 
 The four-route settled/scrolling observer sample is complete but short and uses

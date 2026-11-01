@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v670-scroll-restore';
+const CACHE = 'lorefy-v671-preview-stability';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -46,7 +46,7 @@ const CORE = [
   './modules/lorefy-original-autumn.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-original-original.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-decoration-billing.js?v=20261011-shop',
-  './modules/lorefy-preview-readers.js?v=20261011-profile-sections-v1',
+  './modules/lorefy-preview-readers.js?v=20261101-preview-stability-v1',
   './styles/lorefy-profile-sections.css?v=20261018-list-removal-v1',
   './modules/lorefy-profile-sections.js?v=20261029-profile-list-media-v1',
   './modules/lorefy-i18n.js?v=20261028-reading-terms-v1',

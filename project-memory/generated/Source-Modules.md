@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T17:10:46.038Z
-Source commit: df48bcb8b026a881cdd5ee5a05eed20932b2e598
+Observed: 2026-11-01T17:29:08.429Z
+Source commit: 86a2f232e2596bcf3e516f74cdfa445f8d4a9ef5
 
 # Modules Source Inventory
 
@@ -59,7 +59,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-page-refresh.js](../../modules/lorefy-page-refresh.js) (9609 bytes)
 - [modules/lorefy-photo-framer.js](../../modules/lorefy-photo-framer.js) (8732 bytes)
 - [modules/lorefy-preview-cleanup.js](../../modules/lorefy-preview-cleanup.js) (3491 bytes)
-- [modules/lorefy-preview-readers.js](../../modules/lorefy-preview-readers.js) (6886 bytes)
+- [modules/lorefy-preview-readers.js](../../modules/lorefy-preview-readers.js) (7223 bytes)
 - [modules/lorefy-product-core.js](../../modules/lorefy-product-core.js) (14271 bytes)
 - [modules/lorefy-product-tools.js](../../modules/lorefy-product-tools.js) (54333 bytes)
 - [modules/lorefy-profile-header.js](../../modules/lorefy-profile-header.js) (6540 bytes)

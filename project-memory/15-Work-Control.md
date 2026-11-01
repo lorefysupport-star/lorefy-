@@ -6,6 +6,10 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+S-003 in [[sessions/2026-11-01-Smooth-Runtime]] fixes preview no-op review
+render loops (3250 tests/16 browser checks). Next measured shared hotspot is
+synchronous feed layout reads; retain visible-card anchor correctness.
+
 Smooth runtime: [[sessions/2026-11-01-Smooth-Runtime]]. S-001 cover computation
 passes3240 tests/28 browser checks. S-002 scroll repair passes3246 source tests
 and13 actual-app/DOM checks before its own push. Short demo observer probe did

@@ -6,6 +6,11 @@ aliases: ["تشغيل", "تحميل", "bootstrap", "cache", "NenApp"]
 ---
 # تشغيل التطبيق
 
+[[sessions/2026-11-01-Smooth-Runtime]] S-003 stops a demo review/completion
+identity-update loop. Stable view/partitions preserve real edits and fixture
+isolation; Explore startup ranking calls128 to3 in the same4x local scenario.
+3250 source tests/16 browser checks; do not project these gains onto production.
+
 [[sessions/2026-11-01-Smooth-Runtime]] S-002 batches late-content restoration
 into one frame, cancels stale jobs and restores instantly despite smooth CSS.
 Quick navigation cannot save a clamped0 over the pending target. User gesture

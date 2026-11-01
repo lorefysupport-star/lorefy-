@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-01-Smooth-Runtime]] S-003 removes the local preview's
+review/completion no-op render loop. Same4x scenario Explore calls128 to3;
+fixture isolation, owner edits and3250 tests verified. Not a live-app speed claim.
+
 [[sessions/2026-11-01-Smooth-Runtime]] starts a measured performance pass with
 bounded pure cover-URL reuse, unchanged artwork/routing/rights and no extra fetch.
 3240 source tests/28 local browser checks; device/network timing remains separate.

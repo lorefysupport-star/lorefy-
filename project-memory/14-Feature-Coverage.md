@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Preview stability: [[sessions/2026-11-01-Smooth-Runtime]] S-003 covers stable
+combined reviews, no-op updates, fixture-only changes and queued reversal.
+3250 tests/16 actual-demo checks; production behavior remains independent.
+
 Smooth runtime: [[sessions/2026-11-01-Smooth-Runtime]] S-001 validates bounded
 cover CPU caching without caching display routing/rights;3240 tests,28 AR/EN
 demo checks and identical-output paired benchmarks. No native FPS certification.
