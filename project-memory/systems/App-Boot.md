@@ -6,6 +6,11 @@ aliases: ["تشغيل", "تحميل", "bootstrap", "cache", "NenApp"]
 ---
 # تشغيل التطبيق
 
+[[sessions/2026-11-02-Prebuild-Repairs]] adds request-local lazy diversification
+features while preserving ranking output.3365 tests and three alternating browser
+pairs pass.4x CPU selection median46.4 to4.5ms; whole Explore ranking232.9 to215.7ms.
+This is not whole-app, network or native performance certification. Cachev689.
+
 [[sessions/2026-11-01-Smooth-Runtime]] S-003 stops a demo review/completion
 identity-update loop. Stable view/partitions preserve real edits and fixture
 isolation; Explore startup ranking calls128 to3 in the same4x local scenario.

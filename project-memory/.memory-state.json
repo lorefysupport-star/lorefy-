@@ -1,12 +1,12 @@
 {
   "schema": 2,
-  "head": "92e4c2349aa1dabd733c3a06702d7ed396ddeee4",
+  "head": "7abccf4d15613e4734d740c20e423cf092b92dec",
   "branch": "main",
   "fingerprints": {
     "package.json": "0eba29e35835f3808d1b08e3c290dd93d91d7e63e269d155382e567982f79064",
     "AGENTS.md": "6c8d1742a8542b6a82ede3f0a1eff3c1388cadd0180a17e7b1af18a3db3a51c7",
-    "index.html": "a87047609c63479039021e49c1e7dd9322f384facf56afb728c8763dc169c9d3",
-    "sw.js": "2dd2ff7f53d432f0dbec4a00fe9d1920db9b516d69e9a34b22bb93765890b141",
+    "index.html": "9f650756dd1473b93e4658b3d3b6a497f906577cc3760f6936e106571937cd01",
+    "sw.js": "122d1d1fa5ff35b479a2de8f82a11706d8d90a53ea9fa5d57b5a244e3a86f024",
     "modules/lorefy-frame-motion.js": "35f3c9e0a8c7f837374de2b729c513feff49fb1f402c27573dad0ed1ba119635",
     "styles/lorefy-frame-motion.css": "58132e373dc1f8e4cd557f5ab83c2c485a6f07d2e807d30149a74c8730228532",
     "docs/FEATURE_AUDIT_20261011.md": "185e3a025cdff7809562125ce0d649fe3a6ceb8a7683ad7ae1aa23e5b55f3fc8",
@@ -16,8 +16,17 @@
     "tools/project-memory.mjs": "445cf699ef2d54178cf89c3b4107c345233a63f4ad6ab7d9b87c25dcd9e90251"
   },
   "changes": {
-    "package-lock.json": "be867a3d626228feab8c375e459434ea0f2e660f6f6f6b80c25e68bbb7275099",
-    "package.json": "0eba29e35835f3808d1b08e3c290dd93d91d7e63e269d155382e567982f79064"
+    "tests/catalog-ranking-performance.test.js": "3c707ffd4bf317a52a532e43c0c68c0e5c0085e625d13f5566d03eccfc8c7c3c",
+    "tests/community-copy.test.js": "7a2f3f976b7d5ead97f89d7e4ae8e4ae9a7efa3d4fe23703e4d2800f2389f859",
+    "tests/cover-media.test.js": "3f05003251cc8da3f27ffd9f72e415251dec5ded8682c018854d9730eb97ad12",
+    "tests/data-studio.test.js": "bf23f1e99c17aba341307a54fe7d24f438a28f54462d77f8d52e4b563ebbe4d0",
+    "tests/legal-studio.test.js": "ff64d5da4448dd72cc47cd5807aac946f79b7970fb1b8920edb3dc812988fd0e",
+    "tests/preference-genres.test.js": "cd410bf568852a642538afbeff44058ff3f55647445afa20c7e04685e570f508",
+    "tests/reading-terminology.test.js": "8cd63ed7b89b333430bb82d03ada5b5eed33899c72780bd4e4092017d81d1326",
+    "tests/reading-typography.test.js": "f067c83c9589fc181edd3dbeb41e4bf0994dbc8c40d66b0fbb3855acaf5d8f22",
+    "tests/report-studio.test.js": "db8eaf8ed2ba274a325f778823845c09299b6c12ffe9add838ea29aaeaeb34d0",
+    "tests/ui-unity.test.js": "94bda5b8239c9d4ac739e7641e95243b723f5be6e7cc6a80888e325b28058a86",
+    "tests/work-byline-typography.test.js": "ee74c5d62478f3fb08f477db9d7a7d45a930e3533e0b685ca877816cc4e8016c"
   },
   "inventory": [
     {
@@ -671,8 +680,8 @@
     {
       "path": "index.html",
       "area": "Shell",
-      "bytes": 52545,
-      "sha256": "a87047609c63479039021e49c1e7dd9322f384facf56afb728c8763dc169c9d3"
+      "bytes": 52540,
+      "sha256": "9f650756dd1473b93e4658b3d3b6a497f906577cc3760f6936e106571937cd01"
     },
     {
       "path": "ios/App/App.xcodeproj/project.pbxproj",
@@ -2189,8 +2198,8 @@
     {
       "path": "sw.js",
       "area": "Shell",
-      "bytes": 16259,
-      "sha256": "2dd2ff7f53d432f0dbec4a00fe9d1920db9b516d69e9a34b22bb93765890b141"
+      "bytes": 16256,
+      "sha256": "122d1d1fa5ff35b479a2de8f82a11706d8d90a53ea9fa5d57b5a244e3a86f024"
     },
     {
       "path": "tests/account-deletion-recovery.test.js",
@@ -2525,8 +2534,8 @@
     {
       "path": "tests/catalog-ranking-performance.test.js",
       "area": "Tests",
-      "bytes": 10244,
-      "sha256": "eecd51c67308d58b8422840f67c590087316d688b5825cedb02bd4425c0a58d3"
+      "bytes": 13919,
+      "sha256": "3c707ffd4bf317a52a532e43c0c68c0e5c0085e625d13f5566d03eccfc8c7c3c"
     },
     {
       "path": "tests/catalog-rating-integrity.test.js",
@@ -2807,8 +2816,8 @@
     {
       "path": "tests/community-copy.test.js",
       "area": "Tests",
-      "bytes": 9065,
-      "sha256": "2ea4356ec5f266233bfab685be252011ce280682d2cc2fbea0efb5ac48b3d64f"
+      "bytes": 9067,
+      "sha256": "7a2f3f976b7d5ead97f89d7e4ae8e4ae9a7efa3d4fe23703e4d2800f2389f859"
     },
     {
       "path": "tests/community-edit-lifecycle.test.js",
@@ -2927,8 +2936,8 @@
     {
       "path": "tests/cover-media.test.js",
       "area": "Tests",
-      "bytes": 11102,
-      "sha256": "e2ac54332ef03fe7e92507c226f857b2b75c73b43f5edb8d52917fe583d2a006"
+      "bytes": 11104,
+      "sha256": "3f05003251cc8da3f27ffd9f72e415251dec5ded8682c018854d9730eb97ad12"
     },
     {
       "path": "tests/cover-preparation-performance.test.js",
@@ -2963,8 +2972,8 @@
     {
       "path": "tests/data-studio.test.js",
       "area": "Tests",
-      "bytes": 6909,
-      "sha256": "c666d39b48464dbe42f6f6da4b388e7ba1e086231d5f40d4633c160084869fde"
+      "bytes": 6911,
+      "sha256": "bf23f1e99c17aba341307a54fe7d24f438a28f54462d77f8d52e4b563ebbe4d0"
     },
     {
       "path": "tests/decoration-lab.test.js",
@@ -3329,8 +3338,8 @@
     {
       "path": "tests/legal-studio.test.js",
       "area": "Tests",
-      "bytes": 4964,
-      "sha256": "77aaef362317636b0e1902edbbb8a4bb98031c8ee5e1e4cdfded3da9e3a50b02"
+      "bytes": 4966,
+      "sha256": "ff64d5da4448dd72cc47cd5807aac946f79b7970fb1b8920edb3dc812988fd0e"
     },
     {
       "path": "tests/library-cinema.test.js",
@@ -3539,8 +3548,8 @@
     {
       "path": "tests/preference-genres.test.js",
       "area": "Tests",
-      "bytes": 2464,
-      "sha256": "4162409095e9175719f7d46508ff186bdeb9fe5a33f4a16433897f196ac3bc05"
+      "bytes": 2591,
+      "sha256": "cd410bf568852a642538afbeff44058ff3f55647445afa20c7e04685e570f508"
     },
     {
       "path": "tests/premium-preview.test.js",
@@ -3857,14 +3866,14 @@
     {
       "path": "tests/reading-terminology.test.js",
       "area": "Tests",
-      "bytes": 5947,
-      "sha256": "b88a4e8c70a86a1817d87998aa345a4d03f465bf1ab1512724ecf442c38d27e5"
+      "bytes": 5944,
+      "sha256": "8cd63ed7b89b333430bb82d03ada5b5eed33899c72780bd4e4092017d81d1326"
     },
     {
       "path": "tests/reading-typography.test.js",
       "area": "Tests",
-      "bytes": 8752,
-      "sha256": "12ea717ee03182dccabd276e1e704bda3cfe8fe2d6d5197c98d8fe1d53964065"
+      "bytes": 8749,
+      "sha256": "f067c83c9589fc181edd3dbeb41e4bf0994dbc8c40d66b0fbb3855acaf5d8f22"
     },
     {
       "path": "tests/recap-integrity.test.js",
@@ -3899,8 +3908,8 @@
     {
       "path": "tests/report-studio.test.js",
       "area": "Tests",
-      "bytes": 8567,
-      "sha256": "292ec2305a9304c6d28951821e02f64ddaa7f8eb68b927accf1d6b81e0a35962"
+      "bytes": 8569,
+      "sha256": "db8eaf8ed2ba274a325f778823845c09299b6c12ffe9add838ea29aaeaeb34d0"
     },
     {
       "path": "tests/review-backend-owner.test.js",
@@ -4223,8 +4232,8 @@
     {
       "path": "tests/ui-unity.test.js",
       "area": "Tests",
-      "bytes": 5661,
-      "sha256": "d0aa73b5e6fc27de635488f189f19bb8639bd3c103dc5664056371afe8e2ceb0"
+      "bytes": 5656,
+      "sha256": "94bda5b8239c9d4ac739e7641e95243b723f5be6e7cc6a80888e325b28058a86"
     },
     {
       "path": "tests/user-discovery.test.js",
@@ -4253,8 +4262,8 @@
     {
       "path": "tests/work-byline-typography.test.js",
       "area": "Tests",
-      "bytes": 7933,
-      "sha256": "60dce2104e1b6e740c74e0012f50d52eb8dff0ba0a58af29783acae5d0775c15"
+      "bytes": 7935,
+      "sha256": "ee74c5d62478f3fb08f477db9d7a7d45a930e3533e0b685ca877816cc4e8016c"
     },
     {
       "path": "tests/work-detail-language.test.js",
@@ -4925,8 +4934,8 @@
     {
       "path": "uploads/files/lorefy-app.js",
       "area": "Shell",
-      "bytes": 351976,
-      "sha256": "0e61266dd940f8a65ffb293d50680496eba843d6d3708d5fdb020908d9dba103"
+      "bytes": 352557,
+      "sha256": "a705a601f44cd688fdf2d208c6bc8fc049bdd07aa53134c81cedb3ce234e2741"
     },
     {
       "path": "uploads/files/lorefy-enrich.js",
@@ -4962,19 +4971,19 @@
     "apple:audit",
     "apple:audit:strict"
   ],
-  "verifiedAt": "2026-11-02T16:52:09.599Z",
+  "verifiedAt": "2026-11-02T17:18:00.987Z",
   "artifacts": {
-    "04-Current-State.md": "11cc6bb0abda085c7ddb9f9de4577209723899f3b448ec387794292dca7321e0",
-    "07-Source-Atlas.md": "c481b9b637549d0fc97eff855326d9980fabc7c279f3270f2e38d007f4a20980",
-    "generated/Source-Modules.md": "fd3a67922427e3194b6bcd6b8ca03a9488571d03e1846cb8b50918d16e2193ef",
-    "generated/Source-Styles.md": "56f89c22129b3b8efba0d1832f84dee873c07de8585380a0417bd6e0d6125d13",
-    "generated/Source-Backend.md": "1ac281b660908b66a2763173d24791d18523a86b607c3321f32f8ef5d5c9c799",
-    "generated/Source-Tooling.md": "41eb50c2f9dc3d3d7ba547c1bd944fdde64083de46d19cc03cd300039aed40b7",
-    "generated/Source-Tests.md": "42cb9dc324309774ff7d453cb1793b4b579a58b341b610c69aed81e0a9b13fb9",
-    "generated/Source-Docs.md": "f3e6f8eb2f6047adaa3e4a43e0e87fbf1be6ef8e7db8e2f07a5a8e7d13b0d1ec",
-    "generated/Source-Database.md": "435dbb3319cc5c3a25747c45d3b2d7ebb0bf8e0b709db3ac8f48883c31aab361",
-    "generated/Source-Native.md": "3f225edf67b02e670b153a695e17c3bfb2fb21fff18835ea7a05c014bbe38253",
-    "generated/Source-Shell.md": "dfc22ae27fa98d03f5ffd17cbf62045855c6bdda30947db0bbe2c1eb9f042201",
+    "04-Current-State.md": "940aebaaa732644300d59b0a974653b38b88fb3334d70721f47844cfc5ac38f6",
+    "07-Source-Atlas.md": "c1991924a923b742fcdf7cb24a0e5d4fe6ba119ee600fb84062513c6c1e40d1f",
+    "generated/Source-Modules.md": "4a1dc3e456d5bd86bf8418a547aa316c24373fdfc0251b09298c9721745ae4c8",
+    "generated/Source-Styles.md": "7c527c37f3d9edace81b3010843f9f3068aadb3253954e232e747b318f86b092",
+    "generated/Source-Backend.md": "bb32dd863363d7e00ff4024575c009d897a584c8768e8c2676ea1d81d2d379f9",
+    "generated/Source-Tooling.md": "bd809d24258eb484d676fe7983776c7a3f1a530b2a513b53573be92aa7f2a6fe",
+    "generated/Source-Tests.md": "171bba3ef5cbd77bf1477a5adf16e9ec431b03cb3bced1546a0f6e740de32453",
+    "generated/Source-Docs.md": "a490729296a7ff6b5c441ac076462732ddfc2d62fe2b6ed861b25c291c6505a8",
+    "generated/Source-Database.md": "65ef0d3aac29da48134185df814f3f6ba38b38d0db6a33050adbc44cc25d63ed",
+    "generated/Source-Native.md": "070183b08ebbf97c16085070f476e86250819d92db4b72f552bf12d76269dfcb",
+    "generated/Source-Shell.md": "cadeb84691a6348fd558e75317c13c56127be8cc2e5b20f9f16bb566ac3a8f8a",
     "generated/Project-Brain.canvas": "3955aeb46974f461d4321dc37f303afcaa8e59281d1038629295e32ef4cbc3f1",
     "brain-map.json": "ccbcdcec84c2f2c7b53a06cdfd6a1d420de0601d2103e8f7a6945236e6d0399a"
   }

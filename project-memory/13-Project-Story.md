@@ -9,7 +9,9 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 [[sessions/2026-11-02-Prebuild-Repairs]] closes R-04 development dependency
 advisories with scoped glob/minimatch overrides, an actual cancellation regression,
 3361 full tests and zero npm advisories. No native/runtime upgrade or legal gate
-override. Apple web configuration, startup performance and device gates remain.
+override. Its startup follow-up reuses diversification features per request with
+identical ranking output:3365 tests, three browser pairs, selection46.4 to4.5ms
+under4x CPU. Apple setup is explicitly deferred; other startup/device gates remain.
 
 A-009 in [[sessions/2026-11-02-App-Interactions]] synchronizes import cover art
 with the selected edition or Skip.3357 full tests,40 artwork browser checks and

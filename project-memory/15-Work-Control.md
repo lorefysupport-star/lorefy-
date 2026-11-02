@@ -7,9 +7,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 # لوحة تطوير Lorefy
 
 [[sessions/2026-11-02-Prebuild-Repairs]]: R-04 dependency advisories repaired,
-3361 tests/zero npm advisories. Next: measured startup bottleneck; Apple web
-secret and Service ID await owner details. Do not mark privacy/rights/device
-acceptance closed or run a native build without explicit authorization.
+3361 tests/zero npm advisories. Startup diversification now uses request-local
+features,3365 tests and three browser pairs; selection median46.4 to4.5ms under4x.
+Do not repeat that repair as new or claim whole-app10x. Apple web setup explicitly
+deferred by owner; no credential changes. Privacy/rights, physical-device and
+live two-account/advisor acceptance stay open. No native build is authorized.
 
 A-009 in [[sessions/2026-11-02-App-Interactions]] closes the edition-preview
 artwork follow-up with3357 full tests,40 browser cases and48 retry regressions.

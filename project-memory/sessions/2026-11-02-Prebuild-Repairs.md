@@ -47,15 +47,57 @@ Primary advisory references:
 - https://github.com/isaacs/node-glob/security/advisories/GHSA-3g3m-2fjr-6pw4
 - https://github.com/isaacs/minimatch/security/advisories/GHSA-g3hv-75wg-m249
 
+## Startup follow-up: request-local diversification features
+
+Tracing the actual Explore page under Chrome4x CPU isolated repeated author/type
+normalization in the120-candidate lookahead. The same candidates were analyzed
+again on each of100 picks. A request-local, lazily populated Map now reads each
+work's author/type/first genre once and reuses those features. The penalty weights,
+candidate window, strict tie comparison and source ordering remain unchanged.
+No persistent cache or account key was added; the Map dies with the call.
+
+Four source regressions cover bounded feature reads on frozen works, exact legacy
+ordering over500 candidates (Unicode, ties, prepared/missing metadata, duplicates
+and five result limits), metadata changes between calls and unvisited candidates.
+The repeated-read regression failed before repair; the parity controls already
+passed. The complete suite now passes3365/3365, exit0,68712ms. A test extraction
+boundary was made whitespace-tolerant after formatting this formerly minified
+function; no taste assertion was removed. Six shipped mirrors are byte-identical,
+asset query is20261102-ranking-features-v1, SW cachev689-ranking-features.
+
+Browser acceptance used three alternating before/after pairs, fresh demo contexts,
+390x844, service workers blocked, external/API requests aborted, catalog3305 and
+the old function injected into the control response only. All output100-ID lists
+matched their pair; no pageerror or horizontal overflow. Warm15-selection medians
+for each context: before38.9/55.5/46.4ms, after4.5/5.7/3.9ms. Median-of-medians:
+46.4 to4.5ms. Median cold diversification maximum56.1 to10.4ms; entire Explore
+ranking maximum232.9 to215.7ms. This is a bounded algorithm improvement, not a
+10x whole-app speed claim, real-network image check or physical iPhone result.
+First trial ran alongside source tests and was noisier; the final receipt was
+captured after those tests finished. Screenshots intentionally show missing remote
+covers because the performance fixture blocks them; this is not a delivery test.
+
+Evidence outside Git: output/playwright/prebuild-20261102/
+ranking-features-acceptance-idle.txt, ranking-features-explore.png and
+artifacts/prebuild-ranking-features-tests.log. Browser instrumentation does not
+ship in the application. Native compiling and production changes were not run.
+
 ## Remaining, not silently completed
 
-- R-01: live Supabase Apple provider is enabled with Bundle ID only and an empty
-  OAuth secret. Native ID-token authentication is a different path. Owner reports
-  a dedicated Sign in with Apple key exists; its path/Key ID/web Service ID are
-  needed. Never substitute the APNs key or publish key material.
-- Startup performance requires a measured source-level trace and narrow fix.
+- R-01: explicitly deferred by the owner on2026-11-02. The live Apple provider
+  observation was Bundle ID only and an empty OAuth secret. Native ID-token auth
+  is separate. The attached4TUFJH4GN2 key was previously reserved for APNs and
+  was not read or reused. Developer access was unavailable to the signed-in
+  App Manager. Do not resume credential setup without the owner returning to it.
+- Other startup long tasks still require their own traces; the measured
+  diversification repair above does not certify all startup work as fast.
 - App Privacy and content rights require actual evidence, not flipping flags.
 - Physical-device and real two-account/server acceptance remain separate gates.
+- A new read-only performance-advisor attempt returned connector unavailable.
+  No production DB inspection, configuration change or migration is claimed.
+- Source strict release preflight still intentionally fails on privacy and
+  content rights. Build number stays35; choose the next number only during an
+  explicitly authorized build after checking Apple. R-07 is not a runtime bug.
 
 [[systems/Native-Release]] | [[systems/App-Boot]] | [[13-Project-Story]]
 [[14-Feature-Coverage]] | [[15-Work-Control]]

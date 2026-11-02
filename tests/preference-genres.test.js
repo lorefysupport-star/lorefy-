@@ -27,7 +27,9 @@ test('taste preferences offer fiction and nonfiction genres in both languages', 
 
 test('nonfiction preferences boost matching catalog genres rather than only Arabic labels', () => {
   const start = app.indexOf('GENRE_TERMS=');
-  const end = app.indexOf(',diversifyRankedWorks=', start);
+  const boundary = app.slice(start).search(/,\s*diversifyRankedWorks=/);
+  assert.ok(start >= 0 && boundary > 0, 'taste profile extraction boundaries');
+  const end = start + boundary;
   const scope = { workById: () => null, arGenreOf: () => '' };
   vm.runInNewContext('const ' + app.slice(start, end) + '; this.profile=buildTasteProfile({genres:["تاريخ","تطوير الذات","سيرة ذاتية","فلسفة","غير خيالي"]},{}); this.keys=workGenreKeys({title:"Atomic Habits",genres:["Self-help"]});', scope);
   for (const term of ['history', 'self help', 'biography', 'philosophy', 'nonfiction']) {

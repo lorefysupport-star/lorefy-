@@ -25,6 +25,80 @@ function runtime(works) {
   return {...context.window.LorefyRecommendationDebug, homeRows:context.homeRows};
 }
 
+function referenceDiversity(rows, limit = 100) {
+  const pending = rows.slice(0, Math.max(limit * 5, 300));
+  const result = [], authors = new Map(), types = new Map(), genres = new Map();
+  const normalize = value => String(value || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  const features = work => [work._tasteAuthor || normalize(work.auth),
+    work._tasteType || normalize(work.type), work._tasteGenreKeys[0] || ''];
+  while (result.length < limit && pending.length) {
+    let best = 0, score = -Infinity;
+    for (let index = 0; index < Math.min(pending.length, 120); index++) {
+      const [author, type, genre] = features(pending[index].m);
+      const adjusted = pending[index].score - (authors.get(author) || 0) * 24
+        - (types.get(type) || 0) * 2.5 - (genres.get(genre) || 0) * 7;
+      if (adjusted > score) { score = adjusted; best = index; }
+    }
+    const work = pending.splice(best, 1)[0].m;
+    result.push(work);
+    const [author, type, genre] = features(work);
+    authors.set(author, (authors.get(author) || 0) + 1);
+    types.set(type, (types.get(type) || 0) + 1);
+    genres.set(genre, (genres.get(genre) || 0) + 1);
+  }
+  return result;
+}
+
+test('diversification reads text features at most once per candidate per request', () => {
+  const reads = Array.from({length: 500}, () => ({author: 0, type: 0}));
+  const rows = reads.map((count, id) => ({score: 500 - id, m: Object.freeze({
+    id, _tasteGenreKeys: Object.freeze(['fantasy']),
+    get auth() { count.author++; return 'Writer ' + id % 11; },
+    get type() { count.type++; return 'Novel'; }
+  })}));
+  const original = rows.slice();
+  assert.equal(runtime([]).diversifyRankedWorks(rows).length, 100);
+  assert.ok(reads.every(count => count.author <= 1 && count.type <= 1),
+    'text feature analysis repeats within the lookahead loop');
+  assert.deepEqual(rows, original);
+  assert.ok(rows.every(row => Object.keys(row).join(',') === 'score,m'));
+});
+
+test('diversification preserves exact legacy order including ties, Unicode and duplicate candidates', () => {
+  const rows = Array.from({length: 500}, (_, id) => ({score: 50 - id % 17, m: {
+    id, auth: ['Writer A', 'كاتب ب', null][id % 3], type: id % 2 ? 'Novel' : 'Manga',
+    _tasteAuthor: id % 4 ? '' : 'prepared author',
+    _tasteType: id % 7 ? '' : 'prepared type', _tasteGenreKeys: [String(id % 5)]
+  }}));
+  rows[7] = {m: rows[2].m, score: rows[7].score};
+  const app = runtime([]);
+  for (const limit of [0, 1, 7, 100, 600]) {
+    assert.deepEqual(Array.from(app.diversifyRankedWorks(rows, limit), work => work.id),
+      referenceDiversity(rows, limit).map(work => work.id));
+  }
+});
+
+test('diversification observes changed metadata on the next request', () => {
+  const rows = [10, 9, 8].map((score, id) => ({score, m: {
+    id, auth: 'Writer A', type: 'Novel', _tasteGenreKeys: ['fantasy']
+  }}));
+  const app = runtime([]);
+  assert.deepEqual(Array.from(app.diversifyRankedWorks(rows), work => work.id), [0, 1, 2]);
+  rows[2].m.auth = 'Writer B';
+  assert.deepEqual(Array.from(app.diversifyRankedWorks(rows), work => work.id), [0, 2, 1]);
+});
+
+test('diversification does not analyze candidates outside the active lookahead', () => {
+  const rows = Array.from({length: 500}, (_, id) => ({score: 500 - id, m: {
+    id, _tasteGenreKeys: [], get auth() {
+      if (id >= 120) throw new Error('unused candidate analyzed');
+      return 'Writer';
+    }, type: 'Novel'
+  }}));
+  assert.equal(runtime([]).diversifyRankedWorks(rows, 1)[0].id, 0);
+  assert.deepEqual(Array.from(runtime([]).diversifyRankedWorks([], 100)), []);
+});
+
 test('reading-language recommendations change with language instead of returning a stale account cache',()=>{
   const app=runtime([
     {id:'arabic',title:'حكاية عربية',auth:'كاتب',type:'رواية',language:'ar'},

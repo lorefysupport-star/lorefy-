@@ -10,6 +10,10 @@ R-04: [[sessions/2026-11-02-Prebuild-Repairs]] verifies dev-tool cancellation,
 literal/glob cleanup and sync/async matching with3361 full tests and clean npm
 audit. Capacitor8.4.3 and all runtime behavior stay; no EAS/native certification.
 
+The same session's ranking follow-up verifies one feature read per candidate,
+legacy ordering/ties, between-call metadata freshness and lazy lookahead.3365 full
+tests and three4x browser pairs pass; no new global/account cache or redesign.
+
 A-009: [[sessions/2026-11-02-App-Interactions]] covers import edition artwork,
 Skip, missing-cover fallback, reselect, detached image error and final edition
 persistence.3357 tests,40 new browser cases and48 retry regressions pass.
