@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-02T15:26:55.321Z
-Source commit: 42d9b8632665b26d54315d6b888d9fff801812b1
+Observed: 2026-11-02T16:52:09.599Z
+Source commit: 92e4c2349aa1dabd733c3a06702d7ed396ddeee4
 
 # Shell Source Inventory
 
@@ -18,8 +18,8 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [eas.json](../../eas.json) (542 bytes)
 - [index.html](../../index.html) (52545 bytes)
 - [ios/App/App.xcodeproj/project.pbxproj](../../ios/App/App.xcodeproj/project.pbxproj) (17113 bytes)
-- [package-lock.json](../../package-lock.json) (47791 bytes)
-- [package.json](../../package.json) (1908 bytes)
+- [package-lock.json](../../package-lock.json) (48226 bytes)
+- [package.json](../../package.json) (2014 bytes)
 - [phone-preview.html](../../phone-preview.html) (1731 bytes)
 - [README.md](../../README.md) (8763 bytes)
 - [Start-Lorefy.ps1](../../Start-Lorefy.ps1) (1268 bytes)

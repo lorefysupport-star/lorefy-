@@ -37,6 +37,12 @@
     "yaml": "2.9.1"
   },
   "overrides": {
+    "rimraf": {
+      "glob": {
+        ".": "14.0.2",
+        "minimatch": "11.0.1"
+      }
+    },
     "@capacitor/core": "8.4.3",
     "@capacitor/android": "8.4.3"
   }

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-02T15:26:55.321Z
-Source commit: 42d9b8632665b26d54315d6b888d9fff801812b1
+Observed: 2026-11-02T16:52:09.599Z
+Source commit: 92e4c2349aa1dabd733c3a06702d7ed396ddeee4
 
 # Tests Source Inventory
 
@@ -388,6 +388,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/test-suite-isolation.test.js](../../tests/test-suite-isolation.test.js) (1128 bytes)
 - [tests/tester-lab.test.js](../../tests/tester-lab.test.js) (3512 bytes)
 - [tests/theme-wiring.test.js](../../tests/theme-wiring.test.js) (1472 bytes)
+- [tests/tooling-glob-compatibility.test.js](../../tests/tooling-glob-compatibility.test.js) (2764 bytes)
 - [tests/ui-coherence.test.js](../../tests/ui-coherence.test.js) (2423 bytes)
 - [tests/ui-consistency-phase-one.test.js](../../tests/ui-consistency-phase-one.test.js) (3392 bytes)
 - [tests/ui-finish-pass.test.js](../../tests/ui-finish-pass.test.js) (2389 bytes)

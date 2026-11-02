@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-02-Prebuild-Repairs]] closes R-04 development dependency
+advisories with scoped glob/minimatch overrides, an actual cancellation regression,
+3361 full tests and zero npm advisories. No native/runtime upgrade or legal gate
+override. Apple web configuration, startup performance and device gates remain.
+
 A-009 in [[sessions/2026-11-02-App-Interactions]] synchronizes import cover art
 with the selected edition or Skip.3357 full tests,40 artwork browser checks and
 48 retry regressions pass. Select/review node identity and focus stay intact;

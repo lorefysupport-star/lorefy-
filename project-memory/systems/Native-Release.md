@@ -6,6 +6,11 @@ aliases: ["آيفون", "بيلد", "تست فلاي", "ios", "TestFlight", "saf
 ---
 # غلاف iOS والتحزيم
 
+[[sessions/2026-11-02-Prebuild-Repairs]] pins patched glob/minimatch only under
+the dev-only rimraf dependency. CLI/native Capacitor remain8.4.3; cancellation
+and cleanup compatibility,3361 tests and npm audit pass. This source-tooling
+repair creates no binary and does not close privacy, rights or device gates.
+
 [[sessions/2026-10-21-Private-TestFlight-Candidate]] records the owner-authorized
 private candidate 36 from 3894356. Apple processed it as Missing Compliance;
 the loaded build detail confirms zero groups and zero individual testers.
