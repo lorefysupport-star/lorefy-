@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+A-005: [[sessions/2026-11-02-App-Interactions]] has3320 full source tests and
+100 actual inbox/import/trust dialog checks across AR/EN x320/430px. This covers
+empty/read-only/validation paths, not provider imports, writes or live delivery.
+
 A-004: [[sessions/2026-11-02-App-Interactions]] has3318 tests/26 controlled
 reply browser cases.168 cross-page Library/Work/Review/Settings cases pass with
 fresh Explore140/Profile120 regression cases; no exhaustive/native guarantee.

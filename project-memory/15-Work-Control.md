@@ -10,8 +10,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 A-001/A-002 verified3304 tests,18 edit-lifecycle and104 modal browser checks.
 A-003 export lifecycle passes3313 tests/44 browser checks; do not redo it as new.
 A-004 reply lifetime passes3318 tests/26 browser checks; cross-page168 and fresh
-Explore140/Profile120 also pass. Continue import/trust/inbox actual UI; observed
-English inbox copy gap remains. Source-only, per-repair push, no writes or build.
+Explore140/Profile120 also pass. A-005 closes inbox copy with3320 tests/100
+support-flow cases. The local interaction checkpoint is complete for its defined
+cases, not exhaustive app certification. Next gates: real two-account/service,
+large/long-session/offline and physical keyboard/Photos/share/push acceptance.
+Do not repeat A-001..005; source-only, per-repair push, no writes or build.
 
 [[sessions/2026-11-02-Explore-Interactions]] E-001/E-002 pass3293 source tests
 and192 final browser checks. Do not repeat dialog-focus/pagination fixes as new

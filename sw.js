@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v683-reply-lifecycle';
+const CACHE = 'lorefy-v684-inbox-copy';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -49,7 +49,7 @@ const CORE = [
   './modules/lorefy-preview-readers.js?v=20261101-preview-stability-v1',
   './styles/lorefy-profile-sections.css?v=20261018-list-removal-v1',
   './modules/lorefy-profile-sections.js?v=20261029-profile-list-media-v1',
-  './modules/lorefy-i18n.js?v=20261028-reading-terms-v1',
+  './modules/lorefy-i18n.js?v=20261102-inbox-copy-v1',
   './',
   './index.html',
   './manifest.webmanifest',

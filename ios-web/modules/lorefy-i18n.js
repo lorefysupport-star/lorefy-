@@ -5,6 +5,7 @@
 })(typeof window !== 'undefined' ? window : this, function() {
   'use strict';
   var messages = {
+    'قراءة الكل':'Mark all as read', 'لا إشعارات بعد':'No notifications yet',
     'اختر الغلاف':'Choose cover', 'اختر الغلاف الأساسي':'Choose default cover',
     'الغلاف الأساسي':'Default cover', 'الغلاف غير متاح':'Cover unavailable',
     'اختر غلاف المجلد':'Choose volume cover', 'حذف':'Delete',

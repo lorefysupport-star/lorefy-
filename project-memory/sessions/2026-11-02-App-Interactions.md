@@ -1,6 +1,6 @@
 ---
 kind: repair-session
-status: in-progress
+status: local-browser-pass
 date: 2026-11-02
 ---
 # Application interaction audit
@@ -114,7 +114,23 @@ Fresh Explore140/140 and Profile120/120 browser regressions also pass.
 `output/playwright/app-explore-regression-v683-results.txt`,
 `output/playwright/app-profile-regression-v683-results.txt` are outside Git.
 
-## Audit Coverage and Next Work
+## A-005: inbox language continuity
+
+The actual English inbox retained Arabic mark-all-read and empty-state strings.
+Added the two messages to the existing i18n dictionary, preserving Arabic and
+trailing-whitespace handling, without changing stored notifications/read state.
+The English regression failed before repair; both language tests now pass.
+30 focused tests;3320/3320 full tests, exit0,59787ms. Cachev684, six selected web
+mirrors match. `artifacts/app-inbox-copy-20261102-full.log` is outside Git.
+
+100/100 actual AR/EN x320/430px support-flow checks pass: localized inbox empty
+state/action, safe empty mark-read, Back, data/corrections/safety child dialogs,
+parent/background isolation and focus return, import empty validation/focus and
+close. No import/provider request, permission change, deletion, safety write or
+notification delivery was sent. Receipt outside Git:
+`output/playwright/app-support-flows-v684-results.txt`.
+
+## Audit Coverage and Remaining Gates
 
 | Area | Current evidence / next step |
 | --- | --- |
@@ -122,8 +138,17 @@ Fresh Explore140/140 and Profile120/120 browser regressions also pass.
 | Community overlays | A-001/A-002/A-004 source/browser verified; live writes remain separate. |
 | Library / work / review | Core actual UI paths pass168 cross-page cases, not every possible datum/input. |
 | Settings / personalization / export | Core settings/theme/layout/cancel pass; A-003 export verified. |
-| Import / safety / notifications | Additional actual-browser pass ongoing; English inbox copy gap observed. |
+| Import / safety / notifications |100 support cases pass; A-005 inbox copy repaired. Empty validation/read-only/dialog paths only. |
 | Device / live services | Native keyboard, Photos, hardware FPS, real accounts/providers remain separate. |
+
+This checkpoint closes the reproducible source findings A-001..005, not every
+possible application defect. Large/long-lived datasets, real two-account RLS,
+provider latency/quota/import content, offline/reconnect on hardware, native
+sharing/Photos/push and destructive account operations were not certified here.
+All writes used disposable demo/browser fixtures; no production data, native
+build or Apple/TestFlight operation. Existing Profile/Explore findings are not
+recounted as new repairs. Continue with a new evidenced finding or these explicit
+remaining acceptance gates; do not manufacture more media-only checkpoints.
 
 [[systems/Community-Notifications]] | [[systems/Explore-Works]]
 [[13-Project-Story]] | [[14-Feature-Coverage]] | [[15-Work-Control]]

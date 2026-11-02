@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+A-005 in [[sessions/2026-11-02-App-Interactions]] repairs English inbox action
+and empty-state copy.3320 full tests and100 AR/EN support browser cases pass.
+The A-001..005 local interaction checkpoint preserves design/data; remaining
+hardware/live-service/large-data gates are explicit, not a whole-app guarantee.
+
 A-004 in [[sessions/2026-11-02-App-Interactions]] protects a reopened reply
 draft from closed-dialog receipts;3318 full tests/26 browser cases pass.168
 cross-page cases plus fresh Explore140/Profile120 verify core navigation paths.
