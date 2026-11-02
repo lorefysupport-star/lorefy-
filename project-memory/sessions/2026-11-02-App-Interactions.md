@@ -212,6 +212,28 @@ six selected web mirrors match. Receipts outside Git:
 `output/playwright/import-selection-ar-v687.png`,
 `output/playwright/import-selection-en-v687.png`.
 
+## A-009: import artwork follows the match
+
+The match selector changed `row.work` but its cover kept showing the initial
+edition, including after Skip. All four new AR/EN behavioral tests failed before
+repair. Only the cover node is replaced on selection change. Skip creates the
+same-size empty cover holder; a selected work with no art retains the existing
+initial-letter fallback. The select, focused control, review details and text
+are not rebuilt. Detached image errors affect only the detached old holder.
+
+76 focused tests and3357/3357 full tests pass, exit0,62670ms.40/40 actual browser
+checks AR/EN x320/430px cover initial/new decoded local fixture art, selector/
+focus/details identity, delayed old-image error, Skip dimensions, missing art,
+reselect, bounds and saving the exact previewed edition with its private text.
+A-00848/48 actual CSV retry checks also pass onv688. No page errors or POSTs.
+Cachev688 and six selected web mirrors match. No provider, production data,
+native build or Apple operation. Receipts outside Git:
+`artifacts/app-import-artwork-20261102-full.log`,
+`artifacts/app-import-artwork-red.log`,
+`output/playwright/app-import-artwork-v688-results.txt`,
+`output/playwright/app-import-retry-regression-v688-results.txt`,
+`output/playwright/import-artwork-en-v688.png`.
+
 ## Audit Coverage and Remaining Gates
 
 | Area | Current evidence / next step |
@@ -220,7 +242,7 @@ six selected web mirrors match. Receipts outside Git:
 | Community overlays | A-001/A-002/A-004/A-006/A-007 source/browser verified; live auth/writes remain separate. |
 | Library / work / review | Core actual UI paths pass168 cross-page cases, not every possible datum/input. |
 | Settings / personalization / export | Core settings/theme/layout/cancel pass; A-003 export verified. |
-| Import / safety / notifications |100 support cases, A-005 inbox copy and A-00848 CSV/retry cases pass. Live provider/cloud/device gates remain. |
+| Import / safety / notifications |100 support cases, A-005 inbox copy, A-00848 CSV/retry and A-00940 artwork cases pass. Live provider/cloud/device gates remain. |
 | Device / live services | Native keyboard, Photos, hardware FPS, real accounts/providers remain separate. |
 
 This checkpoint closes the reproducible source findings A-001..005, not every

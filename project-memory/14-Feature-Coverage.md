@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+A-009: [[sessions/2026-11-02-App-Interactions]] covers import edition artwork,
+Skip, missing-cover fallback, reselect, detached image error and final edition
+persistence.3357 tests,40 new browser cases and48 retry regressions pass.
+
 A-008: [[sessions/2026-11-02-App-Interactions]] verifies skipped/reincluded import
 matches after multiple save failures:3353 full tests,48 AR/EN browser checks at
 320/430px, actual CSV/FileReader and local storage rollback; no production write.

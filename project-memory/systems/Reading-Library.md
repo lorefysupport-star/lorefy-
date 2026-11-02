@@ -6,6 +6,12 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+A-009 in [[sessions/2026-11-02-App-Interactions]] replaces only the import cover
+node when matching an edition, keeping select/focus/open review details stable.
+Skip leaves an empty same-size holder; missing art uses the existing fallback.
+3357 tests,40 new browser cases and48 import retry regressions pass. This is not
+external-image availability or provider-import acceptance.
+
 A-008 in [[sessions/2026-11-02-App-Interactions]] keeps the original editable
 import matches and filters a per-attempt copy. Reincluding a skipped match after
 a failed save now imports it; rollback/status/private-review contracts remain.

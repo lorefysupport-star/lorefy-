@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+A-009 in [[sessions/2026-11-02-App-Interactions]] synchronizes import cover art
+with the selected edition or Skip.3357 full tests,40 artwork browser checks and
+48 retry regressions pass. Select/review node identity and focus stay intact;
+no catalog artwork, saved statuses or provider behavior was replaced.
+
 A-008 in [[sessions/2026-11-02-App-Interactions]] preserves all editable import
 matches across recoverable save failures.3353 full tests and48 actual CSV/retry
 browser checks pass; existing data and private reviews remain intact. Provider

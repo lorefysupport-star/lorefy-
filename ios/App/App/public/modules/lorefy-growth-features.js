@@ -3401,8 +3401,14 @@
             });
             select.appendChild(el("option", { value:"", text:uiText("استبعاد", "Skip") }));
             select.value = String(work.id);
-            select.addEventListener("change", function () { row.work = alternatives.find(function (w) { return String(w.id) === select.value; }) || null; });
-            var matchRow = el("div", { class:"lf-im-preview-row" }, [mlResultCover(work), select]);
+            var cover = mlResultCover(work);
+            select.addEventListener("change", function () {
+              row.work = alternatives.find(function (w) { return String(w.id) === select.value; }) || null;
+              var nextCover = row.work ? mlResultCover(row.work) : el("span", {class:"lf-ml-result-cover", "aria-hidden":"true"});
+              cover.replaceWith(nextCover);
+              cover = nextCover;
+            });
+            var matchRow = el("div", { class:"lf-im-preview-row" }, [cover, select]);
             if (typeof row.review === "string" && row.review.trim()) matchRow.appendChild(el("details", {class:"lf-im-review-preview"}, [
               el("summary", {text:uiText("نص المراجعة", "Review text")}), el("p", {dir:"auto", text:row.review.trim()})]));
             matches.appendChild(matchRow);

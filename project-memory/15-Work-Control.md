@@ -6,6 +6,12 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+A-009 in [[sessions/2026-11-02-App-Interactions]] closes the edition-preview
+artwork follow-up with3357 full tests,40 browser cases and48 retry regressions.
+Do not repeat A-008/A-009 as new work. Next acceptance areas: long-lived import
+datasets and offline/reconnect recovery using isolated fixtures; real provider,
+cloud acknowledgement, two-account auth and hardware remain separate gates.
+
 A-008 in [[sessions/2026-11-02-App-Interactions]] closes the import selection
 retry defect with3353 full tests and48 actual browser checks. Next inspect
 edition-preview artwork against the current match; do not count it as fixed
