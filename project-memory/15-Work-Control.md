@@ -7,8 +7,8 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 # لوحة تطوير Lorefy
 
 [[sessions/2026-11-02-App-Interactions]] is the current application-wide pass.
-A-001 verified3299 tests/104 browser checks for community modal isolation.
-Continue pending-edit-save audit and remaining library/work/settings/export
+A-001/A-002 verified3304 tests,18 edit-lifecycle and104 modal browser checks.
+Continue remaining library/work/settings/export
 actual UI paths; source-only, per-repair push, no production writes or build.
 
 [[sessions/2026-11-02-Explore-Interactions]] E-001/E-002 pass3293 source tests

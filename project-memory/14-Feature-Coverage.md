@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+A-002: [[sessions/2026-11-02-App-Interactions]] covers pending edit input/save,
+failure/retry and late success/failure/detach.3304 source tests,18 controlled
+transport browser checks and104 unchanged modal checks pass; no live mutation.
+
 Application A-001: [[sessions/2026-11-02-App-Interactions]]. Community composer,
 attachments, editor, conversation and reader-post modal isolation verified with
 3299 source tests/104 browser checks. Other application paths remain separately

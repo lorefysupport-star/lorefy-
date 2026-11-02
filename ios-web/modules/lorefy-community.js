@@ -441,9 +441,10 @@
     var close = el('button', {type:'button','aria-label':uiText('إغلاق','Close')}, icon('x',20));
     var save = el('button', {type:'button',class:'lf-community-edit-save',text:uiText('حفظ التغييرات','Save changes')});
     var status = el('p', {role:'status','aria-live':'polite'});
-    var releaseIsolation;
-    function dismiss() { modal.remove();if(releaseIsolation)releaseIsolation(); if (returnFocus && returnFocus.isConnected) returnFocus.focus({preventScroll:true}); }
-    function valid() { save.disabled = !input.value.trim() && !Object.keys(post.attachment || {}).length; }
+    var releaseIsolation,saving=false,dismissed=false;
+    function current(){return !dismissed&&modal.isConnected;}
+    function dismiss() { if(dismissed)return;var connected=modal.isConnected;dismissed=true;modal.remove();if(releaseIsolation)releaseIsolation(); if (connected&&returnFocus && returnFocus.isConnected) returnFocus.focus({preventScroll:true}); }
+    function valid() { save.disabled = saving || !input.value.trim() && !Object.keys(post.attachment || {}).length; }
     input.addEventListener('input',valid);
     close.addEventListener('click',dismiss);
     modal.addEventListener('keydown',function (event) {
@@ -456,10 +457,11 @@
       }
     });
     save.addEventListener('click',async function () {
-      if (save.disabled) return;
-      save.disabled = true;
-      try { await mutatePost(post,{body:input.value.trim()}); dismiss(); }
-      catch (error) { status.textContent = uiText('تعذر الحفظ. بقي النص هنا؛ حاول مجددًا.','Could not save. Your text is kept here; try again.'); valid(); }
+      if (save.disabled||saving||!current()) return;
+      saving=true;input.disabled=true;valid();close.focus({preventScroll:true});
+      try { await mutatePost(post,{body:input.value.trim()}); if(current())dismiss(); }
+      catch (error) { if(current())status.textContent = uiText('تعذر الحفظ. بقي النص هنا؛ حاول مجددًا.','Could not save. Your text is kept here; try again.'); }
+      finally {saving=false;if(current()){input.disabled=false;valid();}}
     });
     modal.appendChild(el('section',null,[el('header',null,[el('strong',{text:uiText('تعديل المنشور','Edit post')}),close]),input,status,save]));
     communityOverlayHost().appendChild(modal);

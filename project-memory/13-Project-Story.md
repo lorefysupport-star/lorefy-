@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+Application A-002 in [[sessions/2026-11-02-App-Interactions]] prevents duplicate
+pending edits and obsolete editor focus/status updates;3304 tests,18 controlled
+transport browser checks and104 modal regression checks pass. Source only.
+
 [[sessions/2026-11-02-App-Interactions]] extends the audit across application
 flows. A-001 closes community modal background/focus gaps with3299 source tests
 and104 browser checks. The full application/device is not yet certified.

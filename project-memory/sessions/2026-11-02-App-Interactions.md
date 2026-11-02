@@ -37,12 +37,32 @@ Receipts outside Git: `artifacts/app-community-modals-20261102-full.log`,
 `output/playwright/app-community-modals-v680-results.txt`,
 `output/playwright/app-community-modal-probe-v680.js`.
 
+## A-002: pending community edit lifecycle
+
+Typing while save awaited transport could re-enable Save and issue another edit.
+Late results could dismiss a closed editor again, steal focus, or alter abandoned
+status. The editor now has a pending latch and connected/dismissed lifetime;
+draft input stays disabled until failure, then unlocks for one explicit retry.
+While saving, focus moves to Close so Escape/Tab still reach the active modal.
+Closing does not claim to cancel an already sent request; stale UI results are
+ignored. Payloads, ownership guards and backend transport are unchanged.
+
+Evidence: three of four initial regressions failed before repair; a fifth adds
+external detach. The busy-focus assertion also failed before the focus change.
+All five pass; final3304/3304 full tests, exit0,62504ms. Actual DOM browser checks
+AR/EN:18/18 with controlled deferred edit transport in isolated demo contexts,
+not live writes.104/104 community modal regression checks also pass, errors[].
+Cachev681; six selected web mirrors match. Receipts outside Git:
+`artifacts/app-community-edit-20261102-full.log`,
+`output/playwright/app-community-edit-v681-results.txt`,
+`output/playwright/app-community-modals-v681-results.txt`.
+
 ## Audit Coverage and Next Work
 
 | Area | Current evidence / next step |
 | --- | --- |
 | Profile / Explore | Prior independently verified P-001..003/E-001..002; do not repeat as new repairs. |
-| Community overlays | A-001 source/browser verified; next inspect pending edit save behavior. |
+| Community overlays | A-001/A-002 source/browser verified; live writes remain separate. |
 | Library / work / review | Source routing reviewed; broader actual UI smoke still queued. |
 | Settings / personalization / export | Source modal/async ownership reviewed; actual cross-page smoke still queued. |
 | Device / live services | Native keyboard, Photos, hardware FPS, real accounts/providers remain separate. |

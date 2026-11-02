@@ -8,7 +8,9 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 
 A-001 in [[sessions/2026-11-02-App-Interactions]] isolates community modals,
 including nested attachments and detached cleanup.3299 tests/104 actual browser
-checks pass. Drafts and backend contracts stay; next inspect pending edit saves.
+checks pass. A-002 subsequently guards pending edits and late editor results;
+3304 tests,18 controlled-transport browser checks and104 modal checks pass.
+Drafts/backend contracts stay. Live mutation/device acceptance is separate.
 
 [[sessions/2026-11-01-Smooth-Runtime]] S-004 avoids forced scroll layout only
 for no-post/no-error timeline status and tail controls. Post insertion/deletion,

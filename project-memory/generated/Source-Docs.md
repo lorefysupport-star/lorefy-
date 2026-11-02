@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-01T23:31:11.982Z
-Source commit: 9fac9f9956a59365101e83cc3c9ea790142d1cfd
+Observed: 2026-11-02T04:47:31.474Z
+Source commit: c4ed69f2e0f1b2a6d37fa147cd02acf774699ec2
 
 # Docs Source Inventory
 
