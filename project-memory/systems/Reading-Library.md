@@ -6,6 +6,11 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+A-008 in [[sessions/2026-11-02-App-Interactions]] keeps the original editable
+import matches and filters a per-attempt copy. Reincluding a skipped match after
+a failed save now imports it; rollback/status/private-review contracts remain.
+3353 tests and48 local CSV browser checks pass; no cloud or provider writes.
+
 Chapter metadata follow-up in [[sessions/2026-11-01-Image-Delivery]] shares
 identical pending chapter groups (actual rapid taps4 requests to1).3267 tests
 and four AR/EN real-source browser contexts pass; retries and distinct work

@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+A-008 in [[sessions/2026-11-02-App-Interactions]] preserves all editable import
+matches across recoverable save failures.3353 full tests and48 actual CSV/retry
+browser checks pass; existing data and private reviews remain intact. Provider
+accounts, cloud acknowledgements and native delivery are not certified.
+
 A-007 in [[sessions/2026-11-02-App-Interactions]] completes the distinct reply/
 edit opening-session follow-up.3349 source tests,144 new browser cases and148
 modal/edit/reply regression cases pass. Account changes are isolated fixtures;

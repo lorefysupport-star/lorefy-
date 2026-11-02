@@ -6,6 +6,11 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+A-008 in [[sessions/2026-11-02-App-Interactions]] closes the import selection
+retry defect with3353 full tests and48 actual browser checks. Next inspect
+edition-preview artwork against the current match; do not count it as fixed
+without reproduction. Live provider/cloud/device acceptance remains separate.
+
 A-007 in [[sessions/2026-11-02-App-Interactions]] completes the A-006 reply/edit
 owner follow-up:3349 source tests,144 browser cases and148 modal/edit/reply
 regressions pass. Do not repeat these as new findings. Remaining gates are real

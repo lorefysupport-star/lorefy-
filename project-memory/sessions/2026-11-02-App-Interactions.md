@@ -190,6 +190,28 @@ six selected web mirrors match. Receipts outside Git:
 `output/playwright/app-edit-regression-v686-results.txt`,
 `output/playwright/app-reply-regression-v686-results.txt`.
 
+## A-008: import selection survives retry
+
+Confirm destructively filtered the editable match array before durable save.
+After a recoverable failure, visible skipped rows could be reselected but no
+longer belonged to the next submitted array. All four new behavioral tests
+failed before repair. Confirm now passes a filtered copy to `imApply`, retaining
+the full editable set for subsequent attempts; no schema/parser/status change.
+
+48 focused tests and3353/3353 full tests pass, exit0,61914ms. The first full
+run caught one obsolete source assertion for the old variable; it now checks
+the per-attempt copy and explicitly forbids destructive filtering.
+48/48 actual browser checks pass AR/EN x320/430px: CSV/FileReader preview,
+skip/fail/reinclude, another failure with reversed selections, three-key rollback,
+both final choices saved, preserved data, private written reviews, focus and
+horizontal bounds. No JavaScript errors or POST requests. Storage failures are
+controlled fixtures, not live providers or real account writes. Cachev687 and
+six selected web mirrors match. Receipts outside Git:
+`artifacts/app-import-selection-20261102-full.log`,
+`output/playwright/app-import-selection-v687-results.txt`,
+`output/playwright/import-selection-ar-v687.png`,
+`output/playwright/import-selection-en-v687.png`.
+
 ## Audit Coverage and Remaining Gates
 
 | Area | Current evidence / next step |
@@ -198,7 +220,7 @@ six selected web mirrors match. Receipts outside Git:
 | Community overlays | A-001/A-002/A-004/A-006/A-007 source/browser verified; live auth/writes remain separate. |
 | Library / work / review | Core actual UI paths pass168 cross-page cases, not every possible datum/input. |
 | Settings / personalization / export | Core settings/theme/layout/cancel pass; A-003 export verified. |
-| Import / safety / notifications |100 support cases pass; A-005 inbox copy repaired. Empty validation/read-only/dialog paths only. |
+| Import / safety / notifications |100 support cases, A-005 inbox copy and A-00848 CSV/retry cases pass. Live provider/cloud/device gates remain. |
 | Device / live services | Native keyboard, Photos, hardware FPS, real accounts/providers remain separate. |
 
 This checkpoint closes the reproducible source findings A-001..005, not every

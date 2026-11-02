@@ -3421,10 +3421,10 @@
       confirm.addEventListener("click", function () {
         if (confirm.disabled || !currentAttempt(attempt)) return;
         confirm.disabled = true;
-        selectedRows = selectedRows.filter(function (row) { return !!row.work; });
+        var rowsToApply = selectedRows.filter(function (row) { return !!row.work; });
         if (saveError) saveError.hidden = true;
         var out;
-        try { out = imApply(selectedRows, {reviews:!reviewToggle || reviewToggle.checked}); }
+        try { out = imApply(rowsToApply, {reviews:!reviewToggle || reviewToggle.checked}); }
         catch (error) {
           if (!currentAttempt(attempt)) return;
           var partial = error && error.code === "LOREFY_IMPORT_PARTIAL_SAVE";

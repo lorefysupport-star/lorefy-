@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+A-008: [[sessions/2026-11-02-App-Interactions]] verifies skipped/reincluded import
+matches after multiple save failures:3353 full tests,48 AR/EN browser checks at
+320/430px, actual CSV/FileReader and local storage rollback; no production write.
+
 A-007: [[sessions/2026-11-02-App-Interactions]] binds reply/edit to the opening
 owner/client/session at dispatch and receipt.3349 tests,144 browser cases and
 148 modal/edit/reply regressions pass. No production auth or mutation performed.
