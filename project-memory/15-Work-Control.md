@@ -8,6 +8,7 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 
 [[sessions/2026-11-02-App-Interactions]] is the current application-wide pass.
 A-001/A-002 verified3304 tests,18 edit-lifecycle and104 modal browser checks.
+A-003 export lifecycle passes3313 tests/44 browser checks; do not redo it as new.
 Continue remaining library/work/settings/export
 actual UI paths; source-only, per-repair push, no production writes or build.
 

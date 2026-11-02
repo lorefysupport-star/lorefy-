@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v681-community-edit';
+const CACHE = 'lorefy-v682-export-lifecycle';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -12,7 +12,7 @@ const freshAssetPaths = [
 ];
 const CORE = [
  './styles/lorefy-share-composer.css?v=20261028-share-composer-v3',
- './modules/lorefy-share-composer.js?v=20261028-share-composer-v3',
+ './modules/lorefy-share-composer.js?v=20261102-export-lifecycle-v1',
  './styles/lorefy-notification-center.css?v=20261027-inbox-durable-v1',
  './styles/lorefy-profile-refined.css?v=20261029-shelf-acceptance-v1',
  './styles/lorefy-library-refined.css?v=20261028-reading-type-v1',

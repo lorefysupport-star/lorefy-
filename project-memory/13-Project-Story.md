@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+Application A-003 in [[sessions/2026-11-02-App-Interactions]] stops obsolete
+export rendering after asynchronous fonts/media.3313 tests and44 actual browser
+checks pass, preserving every share design/control. Native delivery is separate.
+
 Application A-002 in [[sessions/2026-11-02-App-Interactions]] prevents duplicate
 pending edits and obsolete editor focus/status updates;3304 tests,18 controlled
 transport browser checks and104 modal regression checks pass. Source only.

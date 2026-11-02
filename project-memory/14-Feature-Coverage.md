@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+A-003: [[sessions/2026-11-02-App-Interactions]] verifies export render revision
+and lifetime with9 new regressions,3313 full tests and44 actual browser checks.
+Real canvas/PNG output with controlled media, not native share/Photos acceptance.
+
 A-002: [[sessions/2026-11-02-App-Interactions]] covers pending edit input/save,
 failure/retry and late success/failure/detach.3304 source tests,18 controlled
 transport browser checks and104 unchanged modal checks pass; no live mutation.

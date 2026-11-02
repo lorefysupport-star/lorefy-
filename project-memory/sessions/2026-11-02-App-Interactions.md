@@ -57,6 +57,28 @@ Cachev681; six selected web mirrors match. Receipts outside Git:
 `output/playwright/app-community-edit-v681-results.txt`,
 `output/playwright/app-community-modals-v681-results.txt`.
 
+## A-003: obsolete export rendering
+
+After an export closed or its selection changed, awaited fonts/media could still
+start page loads, allocate a full-size canvas, draw and encode an obsolete PNG.
+The visible file already had a late-result guard, but that did not protect UI
+work. Render now checks lifetime plus selection revision after each await and
+before thumbnails; request-local image loading also checks this boundary.
+Artwork, three designs, palette controls, paging and delivery contracts stay.
+Already-started browser image/PNG operations are not falsely claimed canceled.
+
+Six regressions failed before repair (close/supersede at fonts/page/avatar);
+a seventh failing regression covered asynchronous source resolution. All nine
+now pass including current-render success.19 share focused tests and
+3313/3313 full tests, exit0,63233ms.44/44 actual browser checks AR/EN x320/430px
+with controlled media loading, real canvas drawing and PNG encode counting:
+closed renders encode0, replaced renders encode only the current image; all
+three designs, square/story/portrait, custom accent and Escape restore pass.
+No native share destination/Photos or live account certification. Cachev682,
+six selected web mirrors match. Receipts outside Git:
+`artifacts/app-export-lifecycle-20261102-full.log`,
+`output/playwright/app-export-lifecycle-v682-results.txt`.
+
 ## Audit Coverage and Next Work
 
 | Area | Current evidence / next step |
@@ -64,7 +86,7 @@ Cachev681; six selected web mirrors match. Receipts outside Git:
 | Profile / Explore | Prior independently verified P-001..003/E-001..002; do not repeat as new repairs. |
 | Community overlays | A-001/A-002 source/browser verified; live writes remain separate. |
 | Library / work / review | Source routing reviewed; broader actual UI smoke still queued. |
-| Settings / personalization / export | Source modal/async ownership reviewed; actual cross-page smoke still queued. |
+| Settings / personalization / export | A-003 export lifecycle verified; settings cross-page smoke ongoing. |
 | Device / live services | Native keyboard, Photos, hardware FPS, real accounts/providers remain separate. |
 
 [[systems/Community-Notifications]] | [[systems/Explore-Works]]

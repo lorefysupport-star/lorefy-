@@ -6,6 +6,10 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+A-003 in [[sessions/2026-11-02-App-Interactions]] guards obsolete share-image
+render work at async boundaries;3313 source tests/44 browser checks preserve
+three layouts, formats, custom accent and close. Native delivery stays separate.
+
 P-003 in [[sessions/2026-11-02-Profile-Interactions]] aligns visitor connection
 and library dialogs with owner keyboard/isolation behavior, including restoring
 focus/background on close, navigation and unmount.3283 source tests and276 new

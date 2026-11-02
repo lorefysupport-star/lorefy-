@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-02T04:47:31.474Z
-Source commit: c4ed69f2e0f1b2a6d37fa147cd02acf774699ec2
+Observed: 2026-11-02T05:01:40.207Z
+Source commit: 6b8db4dd60a3198ba6f5d9533f06c0bc4682e4f9
 
 # Modules Source Inventory
 
@@ -74,7 +74,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-reading-metrics.js](../../modules/lorefy-reading-metrics.js) (7240 bytes)
 - [modules/lorefy-review-editor.js](../../modules/lorefy-review-editor.js) (23373 bytes)
 - [modules/lorefy-scroll-memory.js](../../modules/lorefy-scroll-memory.js) (5860 bytes)
-- [modules/lorefy-share-composer.js](../../modules/lorefy-share-composer.js) (27796 bytes)
+- [modules/lorefy-share-composer.js](../../modules/lorefy-share-composer.js) (28079 bytes)
 - [modules/lorefy-share-studio.js](../../modules/lorefy-share-studio.js) (41736 bytes)
 - [modules/lorefy-storage-budget.js](../../modules/lorefy-storage-budget.js) (1067 bytes)
 - [modules/lorefy-subscriptions.js](../../modules/lorefy-subscriptions.js) (2856 bytes)
