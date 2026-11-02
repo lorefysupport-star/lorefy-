@@ -47,12 +47,16 @@ test('reply targeting preserves the draft and closing a thread does not discard 
   const start = source.indexOf('    function targetReply(');
   const end = source.indexOf('    var sheet =', start);
   const draft = 'Keep my draft exactly';
-  const scope = {post:{id:'root'}, replyTarget:null, targetBar:{hidden:true}, targetLabel:{textContent:''}, input:{value:draft,focus(){}}, uiText:(_,en)=>en};
+  const scope = {availableThread:()=>true,post:{id:'root'}, replyTarget:null, targetBar:{hidden:true}, targetLabel:{textContent:''}, input:{value:draft,focus(){}}, uiText:(_,en)=>en};
   vm.runInNewContext(source.slice(start,end),scope);
   scope.targetReply({id:'reply',profile:{username:'reader'}});
   assert.equal(scope.input.value,draft);
   assert.equal(scope.replyTarget.id,'reply');
   assert.equal(scope.targetBar.hidden,false);
+  scope.availableThread=()=>false;
+  scope.targetReply({id:'obsolete',profile:{username:'other'}});
+  assert.equal(scope.replyTarget.id,'reply');
+  assert.equal(scope.input.value,draft);
   assert.match(source, /replyDrafts\.get\(draftKey\)/);
   assert.match(source, /replyDrafts\.set\(draftKey, input\.value\)/);
 });

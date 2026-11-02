@@ -6,6 +6,13 @@ aliases: ["حساب", "دخول", "مزامنة", "ضياع", "auth", "offline",
 ---
 # الحسابات والمزامنة
 
+A-006/A-007 in [[sessions/2026-11-02-App-Interactions]] bind community publish,
+attachment, reply and edit windows to their opening backend/client/mode/epoch/
+identity/active-owner context.3349 source tests and isolated AR/EN browser cases
+verify no stale dispatch or receipt into a replacement window/account. Native
+Auth, real two-account RLS, transport cancellation and service writes are not
+claimed; existing Backend ownership guards/payloads are unchanged.
+
 [[sessions/2026-10-30-Import-Written-Reviews]] preserves the existing three-key
 import rollback/session guards. Explicit CSV review text is stored under the
 opening owner, never automatically published. Re-import fills only missing text;

@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+A-007: [[sessions/2026-11-02-App-Interactions]] binds reply/edit to the opening
+owner/client/session at dispatch and receipt.3349 tests,144 browser cases and
+148 modal/edit/reply regressions pass. No production auth or mutation performed.
+
 A-006: [[sessions/2026-11-02-App-Interactions]] verifies composer owner/client/
 epoch/editor boundaries and nested picker cleanup with3335 source tests,
 88 browser cases and104 modal regressions. Auth is a fixture, not live sign-in.

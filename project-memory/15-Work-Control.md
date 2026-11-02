@@ -6,6 +6,12 @@ aliases: ["لوحة التطوير", "العمل المتبقي", "control cente
 ---
 # لوحة تطوير Lorefy
 
+A-007 in [[sessions/2026-11-02-App-Interactions]] completes the A-006 reply/edit
+owner follow-up:3349 source tests,144 browser cases and148 modal/edit/reply
+regressions pass. Do not repeat these as new findings. Remaining gates are real
+two-account/server acceptance, long sessions/offline/hardware and native delivery;
+the controlled browser auth fixture does not close them. No build or deployment.
+
 A-006 in [[sessions/2026-11-02-App-Interactions]] passes3335 tests,88 deferred
 browser cases and104 modal regressions. Composer/picker ownership is repaired;
 continue inspecting reply/edit pre-dispatch session changes, then preserve the

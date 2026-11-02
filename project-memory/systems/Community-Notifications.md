@@ -6,6 +6,11 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+A-007 in [[sessions/2026-11-02-App-Interactions]] completes reply/edit session
+boundaries, distinct from prior window-lifetime fixes.3349 tests,144 actual
+browser cases and148 regressions pass under controlled transport/auth fixtures.
+Real login, server policies and device delivery remain separate.
+
 A-006 in [[sessions/2026-11-02-App-Interactions]] binds publish/attachment UI
 to the original session/editor;3335 tests,88 browser cases and104 modal checks
 pass. Reply/edit pre-dispatch owner gates are the next distinct audit target.

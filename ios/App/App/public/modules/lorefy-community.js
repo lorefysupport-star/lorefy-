@@ -442,6 +442,7 @@
   function editPost(post) {
     if (doc.querySelector('.lf-community-edit')) return;
     var returnFocus = doc.activeElement;
+    var ownsSession=communitySession(),stopAuth;
     var modal = el('div', {class:'lf-community-edit',role:'dialog','aria-modal':'true','aria-label':uiText('تعديل المنشور','Edit post')});
     var input = el('textarea', {rows:'5',maxlength:'500','aria-label':uiText('نص المنشور','Post text')});
     input.value = post.body;
@@ -449,8 +450,9 @@
     var save = el('button', {type:'button',class:'lf-community-edit-save',text:uiText('حفظ التغييرات','Save changes')});
     var status = el('p', {role:'status','aria-live':'polite'});
     var releaseIsolation,saving=false,dismissed=false;
-    function current(){return !dismissed&&modal.isConnected;}
-    function dismiss() { if(dismissed)return;var connected=modal.isConnected;dismissed=true;modal.remove();if(releaseIsolation)releaseIsolation(); if (connected&&returnFocus && returnFocus.isConnected) returnFocus.focus({preventScroll:true}); }
+    function current(){return !dismissed&&modal.isConnected&&ownsSession();}
+    function available(){if(current())return true;dismiss();return false;}
+    function dismiss() { if(dismissed)return;var connected=modal.isConnected;dismissed=true;if(stopAuth){stopAuth();stopAuth=null;}modal.remove();if(releaseIsolation)releaseIsolation(); if (connected&&returnFocus && returnFocus.isConnected) returnFocus.focus({preventScroll:true}); }
     function valid() { save.disabled = saving || !input.value.trim() && !Object.keys(post.attachment || {}).length; }
     input.addEventListener('input',valid);
     close.addEventListener('click',dismiss);
@@ -464,15 +466,17 @@
       }
     });
     save.addEventListener('click',async function () {
-      if (save.disabled||saving||!current()) return;
+      if (save.disabled||saving||!available()) return;
       saving=true;input.disabled=true;valid();close.focus({preventScroll:true});
-      try { await mutatePost(post,{body:input.value.trim()}); if(current())dismiss(); }
-      catch (error) { if(current())status.textContent = uiText('تعذر الحفظ. بقي النص هنا؛ حاول مجددًا.','Could not save. Your text is kept here; try again.'); }
+      try { await mutatePost(post,{body:input.value.trim()}); if(available())dismiss(); }
+      catch (error) { if(available())status.textContent = uiText('تعذر الحفظ. بقي النص هنا؛ حاول مجددًا.','Could not save. Your text is kept here; try again.'); }
       finally {saving=false;if(current()){input.disabled=false;valid();}}
     });
     modal.appendChild(el('section',null,[el('header',null,[el('strong',{text:uiText('تعديل المنشور','Edit post')}),close]),input,status,save]));
     communityOverlayHost().appendChild(modal);
     releaseIsolation=isolateCommunityOverlay(modal);
+    var sessionBackend=global.LorefyBackend;
+    if(sessionBackend&&sessionBackend.onAuth)stopAuth=sessionBackend.onAuth(function(){if(!ownsSession())dismiss();});
     valid(); hydrateIcons(modal); input.focus();
   }
   async function removePost(post, button) {
@@ -1010,7 +1014,7 @@
   }
   async function openThread(post) {
     if (doc.querySelector('.lf-community-thread')) return;
-    var sending = false;
+    var sending = false,dismissed=false,ownsSession=communitySession(),stopAuth;
     var repliesRequest = 0, replyRows = [], hasOlderReplies = false;
     var previousFocus = doc.activeElement;
     var overlay = el("div", { class:"lf-community-thread", role:"dialog", "aria-modal":"true", "aria-label":uiText('محادثة المنشور', 'Post conversation') });
@@ -1027,6 +1031,7 @@
     input.value = replyDrafts.get(draftKey) || '';
     send.disabled = !input.value.trim();
     function targetReply(replyPost) {
+      if(!availableThread())return;
       var username = String(replyPost && replyPost.profile && replyPost.profile.username || "");
       replyTarget = replyPost.id === post.id ? null : replyPost;
       targetBar.hidden = !replyTarget;
@@ -1038,7 +1043,11 @@
       el("div", { class:"lf-community-thread-body" }, [el("div", { class:"lf-community-thread-origin" }, [postCard(post, true, targetReply)]), repliesHost]),
       targetBar, el("footer", { class:"lf-community-thread-compose" }, [avatar(identity(), 36), input, send])
     ]);
+    function currentThread(){return !dismissed&&overlay.isConnected&&ownsSession();}
+    function availableThread(){if(currentThread())return true;dismiss();return false;}
     function dismiss() {
+      if(dismissed)return;var connected=overlay.isConnected;dismissed=true;
+      if(stopAuth){stopAuth();stopAuth=null;}
       repliesRequest++;
       global.removeEventListener('lorefy:community-post-changed',changed);
       overlay.remove();
@@ -1047,7 +1056,7 @@
         global.visualViewport.removeEventListener('resize', fitViewport);
         global.visualViewport.removeEventListener('scroll', fitViewport);
       }
-      if (previousFocus && previousFocus.isConnected) previousFocus.focus({preventScroll:true});
+      if (connected&&previousFocus && previousFocus.isConnected) previousFocus.focus({preventScroll:true});
     }
     function fitViewport() {
       var viewport = global.visualViewport;
@@ -1067,6 +1076,7 @@
       else if (!event.shiftKey && doc.activeElement === last) { event.preventDefault(); first.focus(); }
     });
     input.addEventListener("input", function () {
+      if(!availableThread())return;
       if (input.value) replyDrafts.set(draftKey, input.value); else replyDrafts.delete(draftKey);
       if (replyDrafts.size > 30) replyDrafts.delete(replyDrafts.keys().next().value);
       send.disabled = sending || !input.value.trim();
@@ -1074,13 +1084,14 @@
       input.style.height = Math.min(input.scrollHeight,110) + 'px';
     });
     async function paintReplies(older) {
+      if(!availableThread())return;
       var request = ++repliesRequest;
       var replyBefore = older && replyRows[0] || null;
       var scrollBody = sheet.querySelector('.lf-community-thread-body');
       var scrollHeight = scrollBody.scrollHeight, scrollTop = scrollBody.scrollTop;
       try {
         var chunk = await threadReplies(post, replyBefore);
-        if (!overlay.isConnected || request !== repliesRequest) return;
+        if (!overlay.isConnected || request !== repliesRequest || !availableThread()) return;
         hasOlderReplies = chunk.length === 40;
         replyRows = Array.from(new Map((older ? chunk.concat(replyRows) : chunk).map(function (row) { return [row.id, row]; })).values()).sort(function (a,b) { return new Date(a.created_at)-new Date(b.created_at) || a.id.localeCompare(b.id); });
         if (!older && chunk.length < 40) {
@@ -1105,14 +1116,14 @@
         hydrateIcons(repliesHost);
         if (older) scrollBody.scrollTop = scrollTop + scrollBody.scrollHeight - scrollHeight;
       } catch (error) {
-        if (!overlay.isConnected || request !== repliesRequest) return;
+        if (!overlay.isConnected || request !== repliesRequest || !availableThread()) return;
         var retry = el('button', { type:'button', class:'lf-community-retry', text:uiText('تعذر تحميل الردود · إعادة المحاولة', 'Could not load replies · Retry') });
         retry.addEventListener('click', function () { retry.remove(); paintReplies(older); }); repliesHost.appendChild(retry);
       }
     }
     send.addEventListener("click", async function () {
       var body = input.value.trim();
-      if (!body || sending || !overlay.isConnected) return;
+      if (!body || sending || !availableThread()) return;
       sending = true;
       send.disabled = true;
       input.focus({preventScroll:true});
@@ -1121,7 +1132,7 @@
         var attachment = {replyTo:replyContext(replyTarget)};
         if (!isDemo() && backend && backend.mode === "live" && backend.replyCommunityPost) await backend.replyCommunityPost(post.id, body,attachment);
         else localSavePost({ kind:"text", body:body, attachment:{replyTo:replyContext(replyTarget)}, parentId:post.id });
-        if (!overlay.isConnected) return;
+        if (!availableThread()) return;
         post.replyCount += 1;
         replyActivityAt = 0;
         if (input.value.trim() === body) input.value = "";
@@ -1129,12 +1140,12 @@
         input.dispatchEvent(new global.Event('input'));
         input.style.height = 'auto';
         await paintReplies();
-        if (!overlay.isConnected) return;
+        if (!availableThread()) return;
         var scrollBody = sheet.querySelector('.lf-community-thread-body');
         scrollBody.scrollTop = scrollBody.scrollHeight;
         renderPostFeed();
-      } catch (error) { if(overlay.isConnected)toast(error && error.message || uiText('تعذر إرسال الرد', 'Could not send reply')); }
-      finally { sending = false; if(overlay.isConnected)send.disabled = !input.value.trim(); }
+      } catch (error) { if(availableThread())toast(error && error.message || uiText('تعذر إرسال الرد', 'Could not send reply')); }
+      finally { sending = false; if(currentThread())send.disabled = !input.value.trim(); }
     });
     overlay.appendChild(sheet);
     communityOverlayHost().appendChild(overlay);
@@ -1147,13 +1158,15 @@
     hydrateIcons(overlay);
     close.focus({preventScroll:true});
     function changed() {
-      if (!overlay.isConnected) { global.removeEventListener('lorefy:community-post-changed',changed); return; }
+      if (!availableThread()) return;
       if (post.is_deleted) { dismiss(); return; }
       var origin = sheet.querySelector('.lf-community-thread-origin');
       origin.textContent = ''; origin.appendChild(postCard(post,true,targetReply));
       paintReplies();
     }
     global.addEventListener('lorefy:community-post-changed',changed);
+    var sessionBackend=global.LorefyBackend;
+    if(sessionBackend&&sessionBackend.onAuth)stopAuth=sessionBackend.onAuth(function(){if(!ownsSession())dismiss();});
     await paintReplies();
   }
 

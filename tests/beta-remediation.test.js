@@ -60,7 +60,7 @@ test('cloud synchronization respects the deployed twenty-key patch limit', async
 test('community reply submit remains busy while editing during a request', () => {
   const community = source('modules/lorefy-community.js');
   const thread = community.slice(community.indexOf('  async function openThread('),community.indexOf('  function renderPostFeed('));
-  assert.match(thread,/if \(!body \|\| sending \|\| !overlay\.isConnected\) return/);
+  assert.match(thread,/if \(!body \|\| sending \|\| !availableThread\(\)\) return/);
   assert.match(thread,/sending = true/);
   assert.match(thread,/send\.disabled = sending \|\| !input\.value\.trim\(\)/);
 });

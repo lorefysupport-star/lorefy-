@@ -159,22 +159,51 @@ selected web mirrors match. Receipts outside Git:
 `output/playwright/app-composer-session-v685-results.txt`,
 `output/playwright/app-community-modals-v685-results.txt`.
 
-Next source inspection: analogous pre-dispatch owner gates in reply/edit UI,
-not a repeat of A-002/A-004 connected-window receipt protection.
+The analogous reply/edit pre-dispatch owner follow-up is now A-007 below,
+distinct from A-002/A-004 connected-window receipt protection.
+
+## A-007: reply and edit opening-session boundaries
+
+Connected-window checks alone allowed an old reply/edit dialog to dispatch using
+a different current account/client/session.13 of24 focused behavioral cases
+failed before repair. Reply/edit now reuse A-006 session identity and require it
+before dispatch and after awaits; auth changes close the old dialog and release
+its subscription. Reply loading, draft input and reply targeting use that same
+boundary. Close is idempotent; detached/late cleanup does not refocus an old
+opener. Current-session failure retains a retryable draft. Backend RLS/payloads
+and the already-sent request are unchanged; this does not certify live auth.
+
+14 new cases cover both entry points.72 focused tests and3349/3349 full tests
+pass, exit0,62176ms. One isolated legacy targeting fixture was supplied its new
+current-session dependency, with an added invalid-session no-op assertion;
+its first-run ReferenceError was a harness dependency, not an app failure.
+144/144 actual browser cases AR/EN x320/430px cover owner/client/backend/epoch/
+active-owner change before dispatch, listener cleanup and pending old-owner
+results while a new composer owns focus.104 modal,18 edit and26 reply lifetime
+regression cases pass. All transport/auth is controlled in disposable demo
+contexts; no real posts, account switch, DB change or native build. Cachev686;
+six selected web mirrors match. Receipts outside Git:
+`artifacts/app-dialog-session-20261102-full.log`,
+`artifacts/app-dialog-session-focused.log`,
+`output/playwright/app-dialog-session-v686-results.txt`,
+`output/playwright/app-modals-regression-v686-results.txt`,
+`output/playwright/app-edit-regression-v686-results.txt`,
+`output/playwright/app-reply-regression-v686-results.txt`.
 
 ## Audit Coverage and Remaining Gates
 
 | Area | Current evidence / next step |
 | --- | --- |
 | Profile / Explore | Prior independently verified P-001..003/E-001..002; do not repeat as new repairs. |
-| Community overlays | A-001/A-002/A-004/A-006 source/browser verified; reply/edit pre-dispatch owner inspection next. Live writes separate. |
+| Community overlays | A-001/A-002/A-004/A-006/A-007 source/browser verified; live auth/writes remain separate. |
 | Library / work / review | Core actual UI paths pass168 cross-page cases, not every possible datum/input. |
 | Settings / personalization / export | Core settings/theme/layout/cancel pass; A-003 export verified. |
 | Import / safety / notifications |100 support cases pass; A-005 inbox copy repaired. Empty validation/read-only/dialog paths only. |
 | Device / live services | Native keyboard, Photos, hardware FPS, real accounts/providers remain separate. |
 
 This checkpoint closes the reproducible source findings A-001..005, not every
-possible application defect. Large/long-lived datasets, real two-account RLS,
+possible application defect. A-006/A-007 add isolated session-transition evidence,
+not live auth/RLS acceptance. Large/long-lived datasets, real two-account RLS,
 provider latency/quota/import content, offline/reconnect on hardware, native
 sharing/Photos/push and destructive account operations were not certified here.
 All writes used disposable demo/browser fixtures; no production data, native
