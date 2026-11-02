@@ -6,6 +6,11 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+A-004 in [[sessions/2026-11-02-App-Interactions]] stops closed conversation
+reply receipts clearing reopened drafts/showing stale errors;3318 full tests,
+26 controlled-transport browser cases pass. English inbox copy is next observed
+gap; actual delivery/server acceptance remains separate.
+
 A-001 in [[sessions/2026-11-02-App-Interactions]] isolates community modals,
 including nested attachments and detached cleanup.3299 tests/104 actual browser
 checks pass. A-002 subsequently guards pending edits and late editor results;

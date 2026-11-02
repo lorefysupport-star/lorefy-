@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+A-004: [[sessions/2026-11-02-App-Interactions]] has3318 tests/26 controlled
+reply browser cases.168 cross-page Library/Work/Review/Settings cases pass with
+fresh Explore140/Profile120 regression cases; no exhaustive/native guarantee.
+
 A-003: [[sessions/2026-11-02-App-Interactions]] verifies export render revision
 and lifetime with9 new regressions,3313 full tests and44 actual browser checks.
 Real canvas/PNG output with controlled media, not native share/Photos acceptance.

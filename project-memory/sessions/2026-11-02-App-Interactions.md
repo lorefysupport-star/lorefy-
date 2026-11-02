@@ -79,14 +79,50 @@ six selected web mirrors match. Receipts outside Git:
 `artifacts/app-export-lifecycle-20261102-full.log`,
 `output/playwright/app-export-lifecycle-v682-results.txt`.
 
+## A-004: closed conversation reply receipt
+
+A successful delayed reply used the removed textarea's input event to rewrite
+the shared reply draft. Closing and reopening the same conversation could lose
+the newer draft; late failure also showed an obsolete toast. Reply dispatch and
+both async continuation boundaries now require a connected conversation. Pending
+send retains focus in the editable reply field so Escape still reaches it.
+Current failure stays retryable; current success clears only its sent text.
+Already-sent transport is not claimed canceled; server acceptance stays separate.
+
+Three regressions failed before repair; the busy-focus assertion separately
+failed before focus retention.5 new tests/43 related tests pass. Final3318/3318
+full tests, exit0,63573ms. An old exact-source assertion was strengthened for
+the new connected guard; its first-run failure was not a runtime regression.
+26/26 actual AR/EN browser checks with controlled reply transport reproduce
+close/reopen/new-draft/late receipt and failure/retry, errors[]. Cachev683;
+six selected web mirrors match. Receipts outside Git:
+`artifacts/app-reply-lifecycle-20261102-full.log`,
+`output/playwright/app-reply-lifecycle-v683-results.txt`.
+
+## Cross-page Browser Acceptance
+
+168/168 AR/EN x320/430px checks exercise empty/populated Library, all4 modes,
+mode persistence, search/recovery, all3 sorts, saving completed reading384/384,
+cancel preserving completion, review deliberate zero/cancel, cover unchanged
+save/close/focus, Work tabs, Settings, all3 appearance choices and profile layouts,
+cancel and horizontal bounds. No real account write. The probe initially read
+the missing aria-valuenow on a native progress element, then sampled before its
+async refresh; it now awaits its native value. Customize group/name fixtures were
+aligned with observed markup. No application change was needed for those probes.
+Fresh Explore140/140 and Profile120/120 browser regressions also pass.
+`output/playwright/app-cross-page-v682-results.txt`,
+`output/playwright/app-explore-regression-v683-results.txt`,
+`output/playwright/app-profile-regression-v683-results.txt` are outside Git.
+
 ## Audit Coverage and Next Work
 
 | Area | Current evidence / next step |
 | --- | --- |
 | Profile / Explore | Prior independently verified P-001..003/E-001..002; do not repeat as new repairs. |
-| Community overlays | A-001/A-002 source/browser verified; live writes remain separate. |
-| Library / work / review | Source routing reviewed; broader actual UI smoke still queued. |
-| Settings / personalization / export | A-003 export lifecycle verified; settings cross-page smoke ongoing. |
+| Community overlays | A-001/A-002/A-004 source/browser verified; live writes remain separate. |
+| Library / work / review | Core actual UI paths pass168 cross-page cases, not every possible datum/input. |
+| Settings / personalization / export | Core settings/theme/layout/cancel pass; A-003 export verified. |
+| Import / safety / notifications | Additional actual-browser pass ongoing; English inbox copy gap observed. |
 | Device / live services | Native keyboard, Photos, hardware FPS, real accounts/providers remain separate. |
 
 [[systems/Community-Notifications]] | [[systems/Explore-Works]]

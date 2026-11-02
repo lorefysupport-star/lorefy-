@@ -6,6 +6,10 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+A-004 in [[sessions/2026-11-02-App-Interactions]] protects a reopened reply
+draft from closed-dialog receipts;3318 full tests/26 browser cases pass.168
+cross-page cases plus fresh Explore140/Profile120 verify core navigation paths.
+
 Application A-003 in [[sessions/2026-11-02-App-Interactions]] stops obsolete
 export rendering after asynchronous fonts/media.3313 tests and44 actual browser
 checks pass, preserving every share design/control. Native delivery is separate.

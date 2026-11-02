@@ -1089,26 +1089,29 @@
     }
     send.addEventListener("click", async function () {
       var body = input.value.trim();
-      if (!body || sending) return;
+      if (!body || sending || !overlay.isConnected) return;
       sending = true;
       send.disabled = true;
+      input.focus({preventScroll:true});
       try {
         var backend = global.LorefyBackend;
         var attachment = {replyTo:replyContext(replyTarget)};
         if (!isDemo() && backend && backend.mode === "live" && backend.replyCommunityPost) await backend.replyCommunityPost(post.id, body,attachment);
         else localSavePost({ kind:"text", body:body, attachment:{replyTo:replyContext(replyTarget)}, parentId:post.id });
-      post.replyCount += 1;
+        if (!overlay.isConnected) return;
+        post.replyCount += 1;
         replyActivityAt = 0;
         if (input.value.trim() === body) input.value = "";
         replyTarget = null; targetBar.hidden = true;
         input.dispatchEvent(new global.Event('input'));
         input.style.height = 'auto';
         await paintReplies();
+        if (!overlay.isConnected) return;
         var scrollBody = sheet.querySelector('.lf-community-thread-body');
         scrollBody.scrollTop = scrollBody.scrollHeight;
         renderPostFeed();
-      } catch (error) { toast(error && error.message || uiText('تعذر إرسال الرد', 'Could not send reply')); }
-      finally { sending = false; send.disabled = !input.value.trim(); }
+      } catch (error) { if(overlay.isConnected)toast(error && error.message || uiText('تعذر إرسال الرد', 'Could not send reply')); }
+      finally { sending = false; if(overlay.isConnected)send.disabled = !input.value.trim(); }
     });
     overlay.appendChild(sheet);
     communityOverlayHost().appendChild(overlay);
