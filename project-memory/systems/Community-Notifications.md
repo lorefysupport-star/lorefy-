@@ -6,6 +6,10 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+A-006 in [[sessions/2026-11-02-App-Interactions]] binds publish/attachment UI
+to the original session/editor;3335 tests,88 browser cases and104 modal checks
+pass. Reply/edit pre-dispatch owner gates are the next distinct audit target.
+
 A-004 in [[sessions/2026-11-02-App-Interactions]] stops closed conversation
 reply receipts clearing reopened drafts/showing stale errors;3318 full tests,
 26 controlled-transport browser cases pass. A-005 subsequently repairs English

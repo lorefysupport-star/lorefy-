@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+A-006 in [[sessions/2026-11-02-App-Interactions]] binds the publisher and nested
+picker to their opening session/editor.3335 tests,88 deferred browser cases and
+104 modal regressions pass. Old receipts cannot close replacement editors;
+owner drafts remain separate. Reply/edit owner boundaries are inspected next.
+
 A-005 in [[sessions/2026-11-02-App-Interactions]] repairs English inbox action
 and empty-state copy.3320 full tests and100 AR/EN support browser cases pass.
 The A-001..005 local interaction checkpoint preserves design/data; remaining

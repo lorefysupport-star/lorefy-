@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+A-006: [[sessions/2026-11-02-App-Interactions]] verifies composer owner/client/
+epoch/editor boundaries and nested picker cleanup with3335 source tests,
+88 browser cases and104 modal regressions. Auth is a fixture, not live sign-in.
+
 A-005: [[sessions/2026-11-02-App-Interactions]] has3320 full source tests and
 100 actual inbox/import/trust dialog checks across AR/EN x320/430px. This covers
 empty/read-only/validation paths, not provider imports, writes or live delivery.

@@ -114,6 +114,13 @@
     };
   }
 
+  function communitySession() {
+    var backend=global.LorefyBackend,client=backend&&backend.client,mode=backend&&backend.mode,
+      epoch=backend&&backend._communityEpoch,owner=identity().id,active=global.localStorage.getItem('lorefy.activeUser.v1');
+    return function(){return global.LorefyBackend===backend&&(!backend||backend.client===client&&backend.mode===mode&&backend._communityEpoch===epoch)
+      &&identity().id===owner&&global.localStorage.getItem('lorefy.activeUser.v1')===active;};
+  }
+
   function works() {
     if (Array.isArray(global.LorefyMangaData) && global.LorefyMangaData.length) return global.LorefyMangaData;
     var seen = {};
@@ -612,6 +619,8 @@
   }
 
   function openAttachmentPicker(preferredKind) {
+    var composer=state.composeSheet;
+    if(!composer||!composer.__current||!composer.__current())return;
     var options = savedAttachments().filter(function (item) { return !preferredKind || item.kind === preferredKind; });
     var previous=doc.activeElement;
     var overlay = el("div", { class:"lf-community-picker", role:"dialog", "aria-modal":"true", "aria-label":"اختر ما تريد مشاركته" });
@@ -623,7 +632,8 @@
     ]);
     var close=sheet.querySelector("button");
     var releaseIsolation;
-    function dismissPicker(){overlay.remove();if(releaseIsolation)releaseIsolation();if(previous&&previous.isConnected)previous.focus({preventScroll:true});}
+    function dismissPicker(){overlay.remove();if(composer.__dismissPicker===dismissPicker)composer.__dismissPicker=null;if(releaseIsolation)releaseIsolation();if(previous&&previous.isConnected)previous.focus({preventScroll:true});}
+    composer.__dismissPicker=dismissPicker;
     close.addEventListener("click", dismissPicker);
     var body = el("div", { class:"lf-community-picker-list" });
     if (!options.length) body.appendChild(el("div", { class:"lf-community-picker-empty" }, [
@@ -632,7 +642,7 @@
     ]));
     options.forEach(function (item) {
       var button = el("button", { type:"button", class:"lf-community-picker-option" }, [renderAttachmentPreview(item, false)]);
-      button.addEventListener("click", function () { state.attachment = item; dismissPicker(); syncComposerAttachment(); });
+      button.addEventListener("click", function () { if(!composer.__current()){dismissPicker();return;}state.attachment = item; dismissPicker(); syncComposerAttachment(); });
       body.appendChild(button);
     });
     sheet.appendChild(body);
@@ -675,6 +685,8 @@
   function closeComposerSheet(clearDraft) {
     var sheet = state.composeSheet;
     if (sheet) {
+      if(sheet.__dismissPicker)sheet.__dismissPicker();
+      if(sheet.__stopAuth){sheet.__stopAuth();sheet.__stopAuth=null;}
       var input = sheet.querySelector('.lf-community-compose-text');
       var key = sheet.dataset.draftOwner;
       if (clearDraft === true) composerDrafts.delete(key);
@@ -692,9 +704,11 @@
 
   function openComposerSheet(initialText) {
     if (state.composeSheet && state.composeSheet.isConnected) return;
+    if(state.composeSheet)closeComposerSheet();
     var options = initialText && typeof initialText === "object" && !Array.isArray(initialText) ? initialText : {};
     state.attachment = quoteAttachment(options.attachment) || null;
     var me = identity();
+    var ownsSession=communitySession();
     var draftOwner = String(me.id || me.username || 'guest');
     var draft = !options.attachment && !options.initialText && typeof initialText !== 'string' && composerDrafts.get(draftOwner);
     if (draft) state.attachment = draft.attachment;
@@ -732,6 +746,9 @@
     ]);
     state.composeSheet = composer;
     composer.dataset.draftOwner = draftOwner;
+    function current(){return state.composeSheet===composer&&composer.isConnected&&ownsSession();}
+    function available(){if(current())return true;if(state.composeSheet===composer)closeComposerSheet();return false;}
+    composer.__current=current;
     function fitComposerViewport() {
       var viewport = global.visualViewport;
       var host = composer.parentElement;
@@ -755,9 +772,9 @@
     };
     var toolButtons = composer.querySelectorAll(".lf-community-compose-tools button");
     var publishing = false;
-    toolButtons[0].addEventListener("click", function () { openAttachmentPicker("list"); });
-    toolButtons[1].addEventListener("click", function () { openAttachmentPicker("top"); });
-    toolButtons[2].addEventListener("click", function () { openAttachmentPicker("quote"); });
+    toolButtons[0].addEventListener("click", function () { if(available())openAttachmentPicker("list"); });
+    toolButtons[1].addEventListener("click", function () { if(available())openAttachmentPicker("top"); });
+    toolButtons[2].addEventListener("click", function () { if(available())openAttachmentPicker("quote"); });
     close.addEventListener("click", closeComposerSheet);
     composer.addEventListener("click", function (event) { if (event.target === composer && !publishing) closeComposerSheet(); });
     composer.addEventListener('keydown', function (event) {
@@ -776,7 +793,7 @@
       submit.disabled = publishing || !(textarea.value.trim() || state.attachment);
     });
     submit.addEventListener("click", async function () {
-      if (publishing) return;
+      if (publishing || !available()) return;
       var body = textarea.value.trim();
       if (!body && !state.attachment) return;
       var attachment = state.attachment && state.attachment.kind === "quote" ? quoteAttachment(state.attachment) : state.attachment;
@@ -794,20 +811,24 @@
         if (!isDemo() && backend && backend.mode === "live" && backend.publishCommunityPost) post = normalizePost(await backend.publishCommunityPost(input));
         else if (isDemo()) post = localSavePost(input);
         else throw new Error('تعذر الاتصال بالمجتمع. أعد المحاولة.');
+        if(!available())return;
         state.posts.unshift(post);
         renderPostFeed();
         closeComposerSheet(true);
         global.dispatchEvent(new global.CustomEvent('lorefy:community-post-changed'));
         toast("تم نشر المنشور");
       } catch (error) {
+        if(!available())return;
         console.warn("[Lorefy] publish post:", error);
         toast(error && error.message || "تعذر نشر المنشور");
       } finally {
         publishing = false;
-        close.disabled = false;
-        textarea.disabled = false;
-        toolButtons.forEach(function (button) { button.disabled = false; });
-        submit.disabled = !(textarea.value.trim() || state.attachment);
+        if(current()){
+          close.disabled = false;
+          textarea.disabled = false;
+          toolButtons.forEach(function (button) { button.disabled = false; });
+          submit.disabled = !(textarea.value.trim() || state.attachment);
+        }
       }
     });
     communityOverlayHost().appendChild(composer);
@@ -815,7 +836,9 @@
     fitComposerViewport();
     hydrateIcons(composer);
     syncComposerAttachment();
-    global.setTimeout(function () { if (composer.isConnected) textarea.focus({preventScroll:true}); }, 40);
+    var backend=global.LorefyBackend;
+    if(backend&&backend.onAuth)composer.__stopAuth=backend.onAuth(function(){if(state.composeSheet===composer&&!ownsSession())closeComposerSheet();});
+    global.setTimeout(function () { if (current()) textarea.focus({preventScroll:true}); }, 40);
   }
 
   function createComposerFab() {

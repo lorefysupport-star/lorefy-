@@ -130,7 +130,7 @@ test('English community filters retain their semantic identity', () => {
 test('post publishing cannot be re-enabled by editing during the request', () => {
   const sourceCode = source('modules/lorefy-community.js');
   const compose = sourceCode.slice(sourceCode.indexOf('    var toolButtons = composer'),sourceCode.indexOf('    communityOverlayHost().appendChild(composer)'));
-  assert.match(compose,/if \(publishing\) return/);
+  assert.match(compose,/if \(publishing \|\| !available\(\)\) return/);
   assert.match(compose,/publishing = true/);
   assert.match(compose,/submit\.disabled = publishing \|\|/);
 });

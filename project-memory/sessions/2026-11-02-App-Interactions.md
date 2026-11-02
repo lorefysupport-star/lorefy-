@@ -130,12 +130,44 @@ close. No import/provider request, permission change, deletion, safety write or
 notification delivery was sent. Receipt outside Git:
 `output/playwright/app-support-flows-v684-results.txt`.
 
+## A-006: composer session and replacement ownership
+
+Follow-up requested after A-005. A pending publisher could close a replacement
+composer, clear its draft or show an obsolete error. Before dispatch, an old
+composer could also use a replaced owner/client/session. Its attachment picker
+outlived the parent and could write into another composer.
+
+Composer now captures backend/client/mode/epoch, identity owner and active-owner
+stamp, checks session plus exact mounted editor before dispatch/receipt, and
+closes only its own invalid editor. Auth changes dismiss the old editor/picker;
+drafts stay keyed to the opening owner. Detached replacement cleans its auth and
+viewport listeners. Picker selections require their original current composer.
+Already-issued backend requests are not canceled or reinterpreted as success.
+No payload, design, server policy or persistence schema changed.
+
+Ten of13 initial behavioral cases failed before repair; fixture setup errors
+were corrected before that valid red run. A later failing case proved a silent
+client change could leave the pending editor stuck. All15 now pass, including
+same-session success/failure, pending owner replacement and retry preservation.
+Final3335/3335 full tests, exit0,61855ms. One legacy exact-source assertion was
+strengthened to include the new guard after its first-run failure.
+88/88 actual browser cases AR/EN x320/430px pass with deferred publish/auth
+fixtures and disposable demo owners;104 modal regression cases also pass.
+No live sign-in/account switch, public post or native build. Cachev685; six
+selected web mirrors match. Receipts outside Git:
+`artifacts/app-composer-session-20261102-full.log`,
+`output/playwright/app-composer-session-v685-results.txt`,
+`output/playwright/app-community-modals-v685-results.txt`.
+
+Next source inspection: analogous pre-dispatch owner gates in reply/edit UI,
+not a repeat of A-002/A-004 connected-window receipt protection.
+
 ## Audit Coverage and Remaining Gates
 
 | Area | Current evidence / next step |
 | --- | --- |
 | Profile / Explore | Prior independently verified P-001..003/E-001..002; do not repeat as new repairs. |
-| Community overlays | A-001/A-002/A-004 source/browser verified; live writes remain separate. |
+| Community overlays | A-001/A-002/A-004/A-006 source/browser verified; reply/edit pre-dispatch owner inspection next. Live writes separate. |
 | Library / work / review | Core actual UI paths pass168 cross-page cases, not every possible datum/input. |
 | Settings / personalization / export | Core settings/theme/layout/cancel pass; A-003 export verified. |
 | Import / safety / notifications |100 support cases pass; A-005 inbox copy repaired. Empty validation/read-only/dialog paths only. |
