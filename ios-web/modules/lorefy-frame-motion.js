@@ -193,8 +193,8 @@
   let scheduler;const mounted=new Map();
   function mount(element,value,kind='avatar') {
     if(!element || !root.document)return ()=>{};
-    const descriptor=normalize(value),original=value.original && /^[a-z-]+$/.test(value.original.id) && ['illustrated','autumn','original','atelier'].concat('elven','restored').includes(value.original.renderer)?value.original:null;
-    const signature=JSON.stringify([descriptor,kind,original]);
+    const descriptor=normalize(value),original=value.original && /^[a-z-]+$/.test(value.original.id) && ['illustrated','autumn','original','atelier'].concat('elven','restored','halloween').includes(value.original.renderer)?value.original:null;
+    const still=value.still===true,signature=JSON.stringify([descriptor,kind,original,still]);
     const old=mounted.get(element);if(old && old.signature===signature)return old.dispose;
     if(old)old.dispose();
     if(!scheduler){scheduler=createScheduler(root);root.document.addEventListener('visibilitychange',scheduler.refresh);}
@@ -224,14 +224,14 @@
     let io,ro,disposed=false;
     const renderer=original && root.LorefyOriginalRenderers && root.LorefyOriginalRenderers[original.renderer];
     let ready=false,loading=false;
-    const lazy=!!(original&&original.renderer==='restored'&&root.IntersectionObserver);
+    const lazy=!!(original&&['restored','halloween'].includes(original.renderer)&&root.IntersectionObserver);
     function loadRenderer(){
       if(!renderer||ready||loading||disposed)return;loading=true;
       renderer.load(original.id).then(()=>{if(!disposed){ready=true;element.classList.add('has-original-motion');resize();draw(0);}}).catch(()=>{}).finally(()=>{loading=false;});
     }
     function draw(time){if(!width||!height)return;if(renderer){if(!ready)return;ctx.clearRect(0,0,width,height);ctx.save();ctx.translate(0,paddingTop);renderer.paint(ctx,original.id,kind,time,width,height-paddingTop-paddingBottom);ctx.restore();}else paint(ctx,width,height,time,descriptor,kind);canvas.dataset.motionFrame=String(++frames);}
     const reduced=()=>root.document.documentElement.getAttribute('data-lorefy-motion')==='reduced'||root.matchMedia&&root.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const handle=scheduler.register(time=>{if(!element.isConnected){dispose();return;}draw(original&&(original.renderer==='atelier'||original.renderer==='elven'||original.renderer==='restored')?time:reduced()?0:time);});
+    const handle=scheduler.register(time=>{if(!element.isConnected){dispose();return;}draw(original&&(original.renderer==='atelier'||original.renderer==='elven'||original.renderer==='restored'||original.renderer==='halloween')?time:reduced()?0:time);});
     function dispose(){
       if(disposed)return;disposed=true;handle.dispose();if(io)io.disconnect();if(ro)ro.disconnect();
       const page=layoutPage;
@@ -239,7 +239,7 @@
       canvas.remove();element.classList.remove('has-original-motion');mounted.delete(element);
     }
     resize();if(renderer){if(!lazy)loadRenderer();}else draw(0);
-    if(root.IntersectionObserver){io=new root.IntersectionObserver(entries=>{const visible=entries.some(e=>e.isIntersecting);if(visible&&lazy)loadRenderer();handle.setVisible(visible);},{threshold:0});io.observe(element);}else handle.setVisible(true);
+    if(root.IntersectionObserver){io=new root.IntersectionObserver(entries=>{const visible=entries.some(e=>e.isIntersecting);if(visible&&lazy)loadRenderer();handle.setVisible(visible&&!still);},{threshold:0});io.observe(element);}else handle.setVisible(!still);
     if(root.ResizeObserver){ro=new root.ResizeObserver(resize);ro.observe(element);}
     mounted.set(element,{signature,dispose});return dispose;
   }

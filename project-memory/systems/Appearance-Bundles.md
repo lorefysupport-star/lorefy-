@@ -6,6 +6,13 @@ aliases: ["إطارات", "بنرات", "حزم", "مجانية", "ثيم", "ز�
 ---
 # المظهر والإطارات والحزم
 
+[[sessions/2026-11-02-Halloween-Integration]] integrates the six approved Halloween
+packs into the real catalog and shared renderer, with proportional toolbar-safe
+crowns and independently moving parts. All three layouts:72 owner and18 visitor
+fixture cases,546 browser checks,3370 full tests. The cloud projection is now
+enabled in [[sessions/2026-11-03-Visitor-Profile-Polish]]; physical-device
+validation and release distribution remain separate.
+
 [[sessions/2026-11-01-Profile-Material-Continuity]] separates the profile page
 base from transparent unframed sections; no more flat shelf rectangle over the
 shared gradient. Eleven actual palettes across all3 layouts; no frame/artwork

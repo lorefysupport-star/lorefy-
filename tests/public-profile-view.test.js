@@ -195,11 +195,32 @@ test('visitor library exposes a dedicated view-all control and a compact preview
   assert.equal(all.filter(node => node.props['data-library-preview']).length, 4);
 });
 
-test('an empty visitor profile still has both shelves without editable plus buttons', () => {
+test('an empty visitor profile uses quiet empty states instead of editable-looking slots', () => {
   const all = nodes(render({ id:'reader-b', username:'empty' }));
   assert.equal(all.filter(n => n.props['data-profile-shelf']).length, 2);
-  assert.equal(all.filter(n => n.props['data-empty-slot']).length, 8);
-  assert.equal(all.filter(n => n.props['data-empty-slot'] && n.type === 'button').length, 0);
+  assert.equal(all.filter(n => n.props['data-empty-slot']).length, 0);
+  assert.equal(all.filter(n => n.props['data-visitor-shelf-empty']).length, 2);
+});
+
+test('visitor removes the legacy top ten without resolving or changing saved rankings', () => {
+  const profile={id:'reader-b',top_work_ids:['top-only'],favorite_work_ids:['favorite'],library_entries:{library:'completed'}};
+  const lookups=[];
+  const before=JSON.stringify(profile);
+  const all=nodes(render(profile,{workById:id=>{lookups.push(id);return {id,title:id};}}));
+  assert.ok(!all.some(n=>String(n.props.className).includes('lf-reader-top-works')));
+  assert.ok(!lookups.includes('top-only'));
+  assert.ok(lookups.includes('favorite') && lookups.includes('library'));
+  assert.equal(JSON.stringify(profile),before);
+});
+
+test('public favorites name real works and do not pad partially filled shelves', () => {
+  const tree=render({id:'reader',favorite_work_ids:['one']});
+  const shelf=nodes(tree).find(n=>n.props['data-profile-shelf']==='works');
+  assert.equal(nodes(shelf).filter(n=>n.props['data-empty-slot']).length,0);
+  const title=nodes(shelf).find(n=>n.props.className==='lf-reader-layout-cover-title');
+  assert.equal(title.props.dir,'auto');
+  assert.equal(title.props['data-no-translate'],'1');
+  assert.equal(title.children[0],'one');
 });
 
 test('owner artwork wins over stale character snapshots and viewer artwork', () => {

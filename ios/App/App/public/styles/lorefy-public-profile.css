@@ -8,6 +8,22 @@
 }
 .lf-reader-result-type { display:block; margin-top:3px; font-size:11px; line-height:1.5; color:var(--ui-action); white-space:normal; }
 
+/* Resolve glass aliases on the dock, where the visited profile's tokens are set. */
+.lf-app:has(.lf-public-profile-page) .lf-bottom-nav {
+  --glass-fill: var(--ui-surface);
+  --glass-reflection: none;
+  --glass-edge: var(--ui-line);
+  --glass-blur: none;
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lf-app:has(.lf-public-profile-page) .lf-bottom-nav {
+    --glass-fill: var(--ui-glass-fill);
+    --glass-reflection: var(--ui-glass-reflection);
+    --glass-blur: var(--ui-glass-backdrop);
+  }
+}
+.lf-app .lf-public-profile-page .lf-reader-layout-toolbar h1 { color: var(--ui-ink) !important; }
+
 .lf-reader-banner {
   position: relative;
   height: clamp(178px, 25vh, 210px);
@@ -228,6 +244,42 @@
 .lf-reader-cover.is-empty { aspect-ratio: 2 / 3; }
 .lf-reader-cover img { width: 100%; height: 100%; object-fit: cover; }
 .lf-reader-cover.is-empty { border-style: dashed; background: transparent; cursor: default; }
+.lf-public-profile-page .lf-reader-shelf-rail:not(.is-spine-view):not(.is-showcase-view) .lf-reader-cover.is-work {
+  aspect-ratio: auto;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+}
+.lf-public-profile-page .lf-reader-shelf-rail:not(.is-spine-view):not(.is-showcase-view) .lf-reader-cover.is-work > img {
+  display: block;
+  aspect-ratio: 2 / 3;
+  height: auto;
+  border-radius: 6px;
+}
+.lf-public-profile-page .lf-reader-layout-cover-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 7px;
+  color: var(--ui-ink, var(--apple-label));
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.lf-public-profile-page [data-visitor-shelf-empty] {
+  margin: 0;
+  padding-block: 8px 12px;
+  color: var(--ui-muted, var(--apple-label-2));
+  font-size: 13px;
+  line-height: 1.65;
+}
+.lf-public-profile-page .lf-reader-shelf-rail:not(.is-showcase-view) .lf-reader-layout-cover-title {
+  min-block-size: 3em;
+  text-align: start;
+}
+.lf-public-profile-page .lf-reader-primary-actions { flex-wrap: wrap; }
 .lf-reader-cover.is-character { display: grid; gap: 6px; overflow: visible; border: 0; background: transparent; }
 .lf-reader-cover.is-character:disabled { opacity: 1; cursor: default; }
 .lf-reader-character-image {

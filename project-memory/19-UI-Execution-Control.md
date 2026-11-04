@@ -6,6 +6,11 @@ aliases: ["حالة خطة الواجهات", "المتبقي الفعلي", "م
 ---
 # حالة خطة الواجهات وترتيب العمل
 
+Update 2026-11-04: [[sessions/2026-11-04-Local-Interaction-Audit]] supplies P26
+local file acceptance and repairs optional thumbnail/focus failures. Native
+share delivery, live two-account services and full provider coverage stay open.
+Do not repeat the same local PNG checks as if P26 had no evidence.
+
 ## قرار التصحيح
 
 بعد اعتراض المستخدم على تكرار الجولات، هذه الصفحة هي مرجع **ترتيب التنفيذ

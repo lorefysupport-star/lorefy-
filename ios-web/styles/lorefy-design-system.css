@@ -318,7 +318,7 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
 .lf-app.lf-app.lf-app .lf-sort-control > button { min-width: 0 !important; min-height: 40px !important; padding: 6px 4px !important; border: 0 !important; border-radius: 7px !important; font-size: 11px !important; font-weight: 500 !important; color: var(--ui-muted) !important; }
 .lf-app.lf-app.lf-app .lf-sort-control > button[aria-pressed="true"] { color: var(--ui-ink) !important; background: var(--ui-surface) !important; box-shadow: 0 1px 3px rgba(23,40,43,.06) !important; }
 .lf-app.lf-app.lf-app .lf-type-filters > button,
-.lf-app.lf-app.lf-app .lf-library-tabs > button { width: auto !important; min-width: max-content !important; }
+.lf-app.lf-app.lf-app .lf-library-tabs > button { width: auto !important; min-width: 0 !important; }
 .lf-app.lf-app.lf-app .lf-search-result > div:first-child { width: 58px !important; height: 87px !important; border-radius: 8px !important; }
 .lf-app.lf-app.lf-app .lf-search-result > div:nth-child(2) > div:first-child > p { color: var(--ui-ink) !important; font-size: 14px !important; font-weight: 550 !important; line-height: 1.5 !important; }
 .lf-app.lf-app.lf-app .lf-search-result { min-height: 116px !important; padding-block: 14px !important; gap: 13px !important; border-color: var(--ui-line) !important; }
@@ -482,7 +482,7 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
 .lf-app.lf-app.lf-app .lf-chapter-section { direction: inherit; }
 .lf-app.lf-app.lf-app .lf-community-post-actions svg { width: 19px !important; height: 19px !important; stroke-width: 1.6 !important; }
 .lf-app.lf-app.lf-app .lf-community-post-actions button.is-active { color: var(--ui-action) !important; }
-.lf-app.lf-app.lf-app .lf-community-compose-fab { width: 54px !important; height: 54px !important; background: var(--ui-action) !important; color: var(--ui-on-action) !important; box-shadow: 0 6px 16px rgba(0,75,71,.16) !important; bottom: calc(var(--nc-bottom) + 94px) !important; right: 20px !important; }
+.lf-app.lf-app.lf-app .lf-community-compose-fab { width: 44px !important; height: 44px !important; background: var(--ui-action) !important; color: var(--ui-on-action) !important; box-shadow: 0 6px 16px rgba(0,75,71,.16) !important; }
 .lf-app.lf-app.lf-app .lf-community-compose-fab svg { stroke-width: 1.8; }
 .lf-app.lf-app.lf-app :is(.lf-community-compose-sheet, .lf-community-thread, .lf-community-profile-posts) { background: var(--ui-surface) !important; }
 .lf-app.lf-app.lf-app :is(.lf-community-compose-sheet, .lf-community-thread) > section { background: var(--ui-surface) !important; }
@@ -669,7 +669,6 @@ html[dir='ltr'] :is(.lf-pref-board-cover-grid,.lf-cb-cover-grid) { direction:ltr
   .lf-app.lf-app.lf-app .lf-profile-banner,
   .lf-app.lf-app.lf-app .lf-reader-banner { height: calc(var(--nc-top) + 230px) !important; }
   .lf-app.lf-app.lf-app .lf-community-page { max-width: 680px; margin-inline: auto; }
-  .lf-app.lf-app.lf-app .lf-community-compose-fab { right: max(32px, calc((100% - 680px) / 2 + 16px)) !important; }
   .lf-app.lf-app.lf-app :is(.lf-community-compose-sheet, .lf-community-thread, .lf-community-profile-posts) > section { width: min(100%,680px) !important; margin-inline: auto; border-inline: 1px solid var(--ui-line) !important; }
   .lf-app.lf-app.lf-app .lf-detail-content { max-width: 760px; margin-inline: auto; }
   .lf-app.lf-app.lf-app .lf-detail-hero { height: 310px !important; }

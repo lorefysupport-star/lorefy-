@@ -15,7 +15,7 @@
   function Toolbar(props) {
     const h=root.React.createElement;
     return h('header',{className:'lf-reader-layout-toolbar'},
-      h('h1',null,text(props.lang,'حسابي','Profile')),
+      h('h1',null,props.visitor ? text(props.lang,'الملف الشخصي','Profile') : text(props.lang,'حسابي','Profile')),
       h('div',{className:'lf-reader-layout-tools'},
         props.onSettings&&h('button',{type:'button',onClick:props.onSettings,title:text(props.lang,'الإعدادات','Settings'),'aria-label':text(props.lang,'الإعدادات','Settings')},glyph('Settings',22)),
         props.onEdit&&h('button',{type:'button',onClick:props.onEdit,title:text(props.lang,'تعديل الملف','Edit profile'),'aria-label':text(props.lang,'تعديل الملف','Edit profile')},glyph('Pencil',22)),
@@ -82,7 +82,7 @@
     if(!surface)return page;
     const items=children(surface),identity=pick(items,'lf-reader-identity'),parts=children(identity),metrics=pick(parts,'lf-reader-metrics');
     const shelves=items.filter(node=>node!==identity),first=shelves.shift();
-    return R.cloneElement(page,{key:'reader-public-layout'},h(Toolbar,{key:'reader-toolbar',lang:props.lang,onBack:props.onBack}),banner,
+    return R.cloneElement(page,{key:'reader-public-layout'},h(Toolbar,{key:'reader-toolbar',lang:props.lang,onBack:props.onBack,visitor:true}),banner,
       R.cloneElement(surface,{},R.cloneElement(identity,{},...parts.filter(node=>node!==metrics)),
         first,h(Statistics,{key:'reading-statistics',metrics,lang:props.lang}),...shelves),
       ...nodes.filter(node=>node!==banner&&node!==surface));

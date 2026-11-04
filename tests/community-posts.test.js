@@ -79,17 +79,18 @@ test('community UI is loaded and constrained across narrow mobile widths', () =>
   assert.match(styles, /\.lf-home-screen:has\(\.lf-community-page\)\s*>\s*\.lf-home-reply-shelf/);
 });
 
-test('community floating controls stay inside the app shell and composer stays focused on writing', () => {
+test('community compose stays in the header and its dialog stays inside the app shell', () => {
   const styles = read('styles', 'lorefy-community.css');
   const moduleSource = read('modules', 'lorefy-community.js');
 
   assert.match(moduleSource, /function communityOverlayHost\(\)/);
   assert.match(moduleSource, /communityOverlayHost\(\)\.appendChild\(composer\)/);
-  assert.match(moduleSource, /communityOverlayHost\(\)\.appendChild\(button\)/);
+  assert.match(moduleSource, /composerRow = home && home\.querySelector\("\.lf-social-header \.lf-greeting-row"\)/);
+  assert.match(moduleSource, /composerRow\.appendChild\(createComposerFab\(\)\)/);
   assert.doesNotMatch(moduleSource, /lf-community-compose-brand/);
   assert.match(moduleSource, /placeholder:"اكتب منشورك"/);
   assert.match(moduleSource, /lf-community-compose-modes/);
-  assert.match(styles, /\.lf-community-compose-fab\s*\{[^}]*position:\s*absolute/s);
+  assert.match(read('styles', 'lorefy-home-cinema.css'), /\.lf-greeting-row>\.lf-community-compose-fab\{[^}]*position:static/);
   assert.match(styles, /\.lf-community-compose-sheet(?:\s*,|\s*\{)[\s\S]*position:\s*absolute/);
   assert.doesNotMatch(styles, /\.lf-community-compose-fab\s*\{[^}]*position:\s*fixed/s);
 });

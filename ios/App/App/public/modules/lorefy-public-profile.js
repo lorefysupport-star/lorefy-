@@ -168,7 +168,6 @@
     const works = (profile.favorite_work_ids || []).slice(0, favoriteLimit).map(props.workById).filter(Boolean);
     const characters = (profile.favorite_character_ids || []).filter(Boolean).slice(0, 4);
     const library = Object.keys(profile.library_entries || {}).map(props.workById).filter(Boolean);
-    const topWorks = (profile.top_work_ids || []).slice(0,10).map(props.workById).filter(Boolean);
     const counts = {};
     library.concat(works).forEach(work => { if (work.type) counts[work.type] = (counts[work.type] || 0) + 1; });
     const favoriteType = root.LorefyPublicAppearance ? root.LorefyPublicAppearance.favoriteType(profile,props.workById) || '—' : Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0] || '—';
@@ -225,7 +224,7 @@
     const profileSpineHeight = work => root.LorefyLibraryView && root.LorefyLibraryView.profileSpineHeight ? root.LorefyLibraryView.profileSpineHeight(work.title) : 188;
     const spineCover = work => h('span', {className:'lf-library-cover'}, image(ownerCover(work),work.title), h('span',{className:'lf-library-spine-title','data-no-translate':true,dir:'auto'},work.title));
     const workCard = (work, extra, asSpine=spine) => {
-      const card=h('button', { key:work.id, type:'button', className:'lf-reader-cover is-work', style:asSpine ? {'--spine-height':profileSpineHeight(work)+'px'} : undefined, onClick:() => props.onWork(work), 'aria-label':(root.document.documentElement.lang==='en'?'Open ':'فتح ') + work.title, ...(extra || {}) }, asSpine ? spineCover(work) : image(ownerCover(work), work.title), root.LorefyProfileLayout?.forProfile(profile)==='reader' && h('span',{className:'lf-reader-layout-cover-title','data-no-translate':'1',dir:'auto',title:work.title},work.title));
+      const card=h('button', { key:work.id, type:'button', className:'lf-reader-cover is-work', style:asSpine ? {'--spine-height':profileSpineHeight(work)+'px'} : undefined, onClick:() => props.onWork(work), 'aria-label':(root.document.documentElement.lang==='en'?'Open ':'فتح ') + work.title, ...(extra || {}) }, asSpine ? spineCover(work) : image(ownerCover(work), work.title), !asSpine && h('span',{className:'lf-reader-layout-cover-title','data-no-translate':'1',dir:'auto',title:work.title},work.title));
       return root.LorefyLibraryMedia ? root.LorefyLibraryMedia.card(card,{lang:root.document.documentElement.lang,src:ownerCover(work),workId:work.id,title:work.title,fit:asSpine?'cover':'contain'}) : card;
     };
     const characterWork = ref => {
@@ -249,14 +248,15 @@
         disabled:!linkedWork,
         onClick:linkedWork ? () => props.onWork(linkedWork) : undefined,
         'aria-label':linkedWork ? 'فتح عمل ' + name : name
-      }, h('span', { className:'lf-reader-character-image' }, image(safeImage(portrait), name)), h('strong', null, name));
+      }, h('span', { className:'lf-reader-character-image' }, image(safeImage(portrait), name)), h('strong', {dir:'auto','data-no-translate':'1',title:name}, name));
     };
     function shelf(kind, items) {
       return h('section', { className:'lf-reader-shelf', 'data-profile-shelf':kind, 'aria-label':kind === 'works' ? 'الأعمال المفضلة' : 'الشخصيات المفضلة' },
         h('header', { className:'lf-reader-shelf-head' }, h('h2', null, kind === 'works' ? 'الأعمال المفضلة' : 'الشخصيات المفضلة')),
-        h('div', { className:'lf-reader-shelf-rail' + (kind==='works' && spine ? ' is-spine-view' : kind==='works' && showcase ? ' is-showcase-view' : '') }, ...items, ...Array.from({ length:Math.max(0, (kind==='works' ? favoriteLimit : 4) - items.length) }, (_, i) => h('div', {
-          key:'empty-' + i, className:'lf-reader-cover is-empty', 'data-empty-slot':true, 'aria-label':'خانة فارغة'
-        })))
+        items.length ? h('div', { className:'lf-reader-shelf-rail' + (kind==='works' && spine ? ' is-spine-view' : kind==='works' && showcase ? ' is-showcase-view' : '') }, ...items)
+          : ready && h('p', {className:'lf-reader-empty', 'data-visitor-shelf-empty':kind}, root.document?.documentElement?.lang==='en'
+            ? kind==='works' ? 'No favorite works yet.' : 'No favorite characters yet.'
+            : kind==='works' ? 'لا أعمال مفضلة بعد.' : 'لا شخصيات مفضلة بعد.')
       );
     }
     function libraryCard(work, preview) {
@@ -323,10 +323,6 @@
           }))),
         shelf('works', works.map(work => workCard(work))),
         shelf('characters', characters.map(characterCard)),
-        topWorks.length > 0 && h('section', { className:'lf-reader-shelf lf-reader-top-works', 'aria-label':'أفضل 10 أعمال' },
-          h('header', { className:'lf-reader-shelf-head' }, h('h2', null, 'أفضل 10 أعمال')),
-          h('div', { className:'lf-reader-library-grid' }, ...topWorks.map((work,index) => h('div', { key:work.id, className:'lf-reader-ranked-work' },
-            workCard(work,undefined,false), h('span', { className:'lf-reader-work-rank' }, index+1))))),
         library.length > 0 && h('section', { className:'lf-reader-shelf lf-reader-library-preview', 'aria-label':'المكتبة' },
           h('header', { className:'lf-reader-shelf-head' }, h('h2', null, 'المكتبة'), h('button', { type:'button', className:'lf-reader-view-all', 'data-library-view-all':true, onClick:() => { closeConnections(); setLibraryOpen(true); } }, 'عرض الكل', h('span', null, library.length), icon(root.document?.documentElement?.lang === 'en' ? 'ChevronRight' : 'ChevronLeft', 15))),
           h('div', { className:'lf-reader-library-grid' + (spine ? ' lf-library-grid is-spine-view' : showcase ? ' is-showcase-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.slice(0, 4).map(work => libraryCard(work, true)))),

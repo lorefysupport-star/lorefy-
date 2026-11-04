@@ -1,0 +1,8 @@
+[
+  {"id":"halloween-ember-harvest","artId":"ember-harvest","code":"H1","names":{"ar":"حصاد الجمر","en":"Ember Harvest"},"accent":"#e49643","second":"#ad5836","atlas":"launch/decorations/halloween/H1.png","geometry":{"cx":0.5,"cy":0.5269230769,"size":0.54}},
+  {"id":"halloween-ghost-parade","artId":"ghost-parade","code":"H2","names":{"ar":"موكب الأطياف","en":"Ghost Parade"},"accent":"#a6dce9","second":"#d2d9e8","atlas":"launch/decorations/halloween/H2.png","geometry":{"cx":0.5,"cy":0.5269230769,"size":0.54}},
+  {"id":"halloween-crimson-masquerade","artId":"crimson-masquerade","code":"H3","names":{"ar":"حفلة القرمزي","en":"Crimson Masquerade"},"accent":"#d63851","second":"#be9b8d","atlas":"launch/decorations/halloween/H3.png","geometry":{"cx":0.5,"cy":0.5269230769,"size":0.54}},
+  {"id":"halloween-poison-conservatory","artId":"poison-conservatory","code":"W2","names":{"ar":"حديقة الجرعات","en":"Poison Conservatory"},"accent":"#a4d84a","second":"#b88c52","atlas":"launch/decorations/halloween/W2.png","geometry":{"cx":0.5,"cy":0.5269230769,"size":0.54}},
+  {"id":"halloween-velvet-familiar","artId":"velvet-familiar","code":"W3","names":{"ar":"رفيق المخمل","en":"Velvet Familiar"},"accent":"#bea7dd","second":"#d8b465","atlas":"launch/decorations/halloween/W3.png","geometry":{"cx":0.5,"cy":0.5269230769,"size":0.54}},
+  {"id":"halloween-silk-widow","artId":"silk-widow","code":"G2","names":{"ar":"حرير منتصف الليل","en":"Silk Widow"},"accent":"#d6c6b3","second":"#9e3756","atlas":"launch/decorations/halloween/G2.png","geometry":{"cx":0.5,"cy":0.5269230769,"size":0.54}}
+]

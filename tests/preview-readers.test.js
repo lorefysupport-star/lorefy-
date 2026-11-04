@@ -91,7 +91,7 @@ test('standard application prepares the preview directory before mounting and vi
   assert.match(index,/LorefyPreviewReaders\.prepare\(BE, sess\)/);
   const view=fs.readFileSync(path.join(root,'modules/lorefy-public-profile.js'),'utf8');
   assert.match(view,/LorefyPreviewReaders\.isActive\(\)/);
-  assert.match(view,/lf-reader-top-works/);
+  assert.doesNotMatch(view,/lf-reader-top-works/);
   const app=fs.readFileSync(path.join(root,'uploads/files/lorefy-app.js'),'utf8');
   assert.match(app,/LorefyPreviewReaders\.useReviews\(React,useStoredState\)/);
 });

@@ -715,6 +715,10 @@
     render(section, info);
     if (!info.total || metadata && metadata.sourceFor(info.id) && !metadata.catalogFor(info.id)) resolveCatalog(section, info);
   }
+  function syncActions() {
+    var actions = doc.querySelector('.lf-detail-page .lf-detail-actions');
+    if (actions && !actions.parentNode.querySelector('.lf-chapter-quick-actions')) enhanceActions(actions);
+  }
   function schedule() {
     if (scheduled) return;
     scheduled = true;
@@ -722,12 +726,17 @@
   }
   function start() {
     var screen = doc.getElementById('screen'); if (!screen) return;
-    new MutationObserver(schedule).observe(screen, { childList: true, subtree: true });
+    new MutationObserver(function () {
+      // Keep the replacement controls in the same paint as the work view.
+      syncActions();
+      schedule();
+    }).observe(screen, { childList: true, subtree: true });
     global.addEventListener('lorefy:routechange', schedule);
     global.addEventListener('storage', schedule);
     global.addEventListener('lorefy:stored-state',function (event) {
       if (event.detail && ['lorefy.user.progress.v2','lorefy.user.library.v2'].indexOf(event.detail.key)!==-1) schedule();
     });
+    syncActions();
     schedule();
   }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', start); else start();

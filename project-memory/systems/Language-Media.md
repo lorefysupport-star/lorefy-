@@ -6,6 +6,10 @@ aliases: ["عربي", "إنجليزي", "ترجمة", "صور", "مشاركة", 
 ---
 # اللغة والصور والمشاركة
 
+[[sessions/2026-11-04-Local-Interaction-Audit]] covers optional export thumbnail
+failure isolation and focus recovery after Save. Actual PNG encoding in three
+ratios and templates passes locally; native share targets remain unverified.
+
 [[sessions/2026-11-01-Slow-Media-Recovery]] fixes managed cover/portrait late
 success after the 5.5s UI deadline. Same request recovers, stale retries cannot
 paint current state.3142 tests/14 delayed-byte browser checks; provider transfer

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-04T13:22:14.485Z
-Source commit: c6700400455453678c105577b983fd93ed20d24b
+Observed: 2026-11-04T16:14:58.613Z
+Source commit: 86c2d19b2dbb244c64c9e359439c10d422258507
 
 # Database Source Inventory
 
@@ -59,10 +59,11 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [supabase/migrations/20261009122012_public_profile_appearance.sql](../../supabase/migrations/20261009122012_public_profile_appearance.sql) (2407 bytes)
 - [supabase/migrations/20261009171500_beta_profile_decorations.sql](../../supabase/migrations/20261009171500_beta_profile_decorations.sql) (3622 bytes)
 - [supabase/migrations/20261010212411_decoration_purchases.sql](../../supabase/migrations/20261010212411_decoration_purchases.sql) (8647 bytes)
-- [supabase/migrations/20261011134708_profile_public_lists.sql](../../supabase/migrations/20261011134708_profile_public_lists.sql) (2240 bytes)
-- [supabase/migrations/20261011181942_free_current_profile_bundles.sql](../../supabase/migrations/20261011181942_free_current_profile_bundles.sql) (1032 bytes)
-- [supabase/migrations/20261023193458_reader_profile_layout.sql](../../supabase/migrations/20261023193458_reader_profile_layout.sql) (865 bytes)
+- [supabase/migrations/20261011134708_profile_public_lists.sql](../../supabase/migrations/20261011134708_profile_public_lists.sql) (2202 bytes)
+- [supabase/migrations/20261011181942_free_current_profile_bundles.sql](../../supabase/migrations/20261011181942_free_current_profile_bundles.sql) (1016 bytes)
+- [supabase/migrations/20261023193458_reader_profile_layout.sql](../../supabase/migrations/20261023193458_reader_profile_layout.sql) (849 bytes)
 - [supabase/migrations/20261029194223_optimize_feed_and_foreign_keys.sql](../../supabase/migrations/20261029194223_optimize_feed_and_foreign_keys.sql) (2561 bytes)
+- [supabase/migrations/20261102190000_halloween_profile_artwork.sql](../../supabase/migrations/20261102190000_halloween_profile_artwork.sql) (1188 bytes)
 - [supabase/migrations/20261104120000_notification_interaction_delivery.sql](../../supabase/migrations/20261104120000_notification_interaction_delivery.sql) (13010 bytes)
 - [supabase/tests/profile_username_changes.sql](../../supabase/tests/profile_username_changes.sql) (3114 bytes)
 - [supabase/tests/quarter_ratings.sql](../../supabase/tests/quarter_ratings.sql) (2033 bytes)

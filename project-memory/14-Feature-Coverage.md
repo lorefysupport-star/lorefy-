@@ -6,10 +6,33 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Remaining publication: [[sessions/2026-11-04-Remaining-Repairs-Publication]] maps
+share recovery, visitor favorites, sheet dragging, glass consistency and six
+selected animated packs to full3396, actual PNG/browser192 and frame546 checks.
+All three layouts sampled; physical-device and live two-account gates remain.
+
 Notifications: [[sessions/2026-11-04-Inapp-Interaction-Notifications]] covers
 Like/heart/Dislike, comments, addressed replies, follow, read persistence,
-owner isolation, block/dedup guards and exact older-review opening. Approved
-SQL is live; physical/two-account acceptance and installed runtime remain separate.
+owner isolation, block/dedup guards and exact older-review opening. Nine
+isolated SQL tests, full3396 and four local browser contexts. Approved SQL is
+live; new UI/runtime remains local and real device/two-account acceptance open.
+
+P26: [[sessions/2026-11-04-Local-Interaction-Audit]] verifies actual encoded
+Work/Review/Ranking/List PNGs in three templates and ratios; missing optional
+thumbnail art cannot invalidate the selected PNG. Save focus and Favorites
+touch targets verified locally. Native share delivery and provider coverage
+remain independent.3379 source tests and196 additional browser checks.
+
+Developer tooling: [[playbooks/Developer-MCP]] documents the verified local
+Playwright MCP smoke check and separates cloud setup from authenticated use.
+
+Halloween: [[sessions/2026-11-02-Halloween-Integration]] covers six approved
+avatar/page packs, store filtering/preview/application, persistence/removal,
+per-part animation and all three layouts.3370 full tests,546 browser checks.
+Visitor fixture rendering is verified; the live projection was activated in
+[[sessions/2026-11-03-Visitor-Profile-Polish]]. Top 10 is absent in visitor views;
+favorites, public lists and the three layouts are retained. Device performance
+and release distribution are unverified.
 
 R-04: [[sessions/2026-11-02-Prebuild-Repairs]] verifies dev-tool cancellation,
 literal/glob cleanup and sync/async matching with3361 full tests and clean npm

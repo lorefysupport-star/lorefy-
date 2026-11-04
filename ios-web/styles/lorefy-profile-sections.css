@@ -17,7 +17,7 @@ html:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile
 }
 html:root:root:root:root:root:root:root [data-profile-layout='immersive'] .lf-profile-identity:has(.lf-profile-section-tabs) > .lf-profile-bio { margin: var(--profile-frame-bio-gap,8px) 0 8px !important; }
 html:root:root:root:root:root:root:root .lf-profile-identity:has(.lf-profile-section-tabs) > .lf-profile-top-works-head {
-  min-height: 32px !important; margin-bottom: 2px !important;
+  min-height: 44px !important; margin-bottom: 2px !important;
 }
 .lf-profile-section-tabs button {
   min-width: 0; min-height: 48px; border: 0; border-bottom: 2px solid transparent; border-radius: 0;

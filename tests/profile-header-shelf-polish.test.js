@@ -20,6 +20,6 @@ test('profile bookshelf eliminates reserved space above the tallest book', () =>
 
 test('bookshelf header reserves enough space for the shelf above the fixed navigation', () => {
   assert.match(css, /\.lf-profile-identity:has\(\+ \.lf-profile-favorites\.is-spine-view\) \.lf-profile-metrics\s*\{[^}]*margin-bottom:8px\s*!important/s);
-  assert.match(css, /\.lf-profile-identity:has\(\+ \.lf-profile-favorites\.is-spine-view\) \.lf-profile-top-works-head\s*\{[^}]*min-height:28px\s*!important/s);
+  assert.match(css, /\.lf-profile-identity:has\(\+ \.lf-profile-favorites\.is-spine-view\) \.lf-profile-top-works-head\s*\{[^}]*min-height:44px\s*!important/s);
   assert.doesNotMatch(css, /\.lf-profile-favorites\.is-spine-view\s*\{[^}]*margin-top:-/s);
 });

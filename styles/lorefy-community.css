@@ -792,13 +792,9 @@
 .lf-community-post-actions .lf-community-post-dislike.is-active { color: #ff9f0a; }
 
 .lf-community-compose-fab {
-  position: absolute;
-  z-index: 70;
-  right: 16px;
-  bottom: calc(var(--nc-bottom, 0px) + 92px);
   display: grid;
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   border: 0;
   border-radius: 50%;
@@ -1066,7 +1062,6 @@ html[dir="ltr"] :is(.lf-community-picker, .lf-community-thread, .lf-community-co
   .lf-community-page.lf-community-v2 { padding-inline: 0 !important; }
   .lf-community-v2 > .lf-community-tabs { width: 100% !important; margin-inline: 0 !important; padding-inline: 8px !important; }
   .lf-community-post-card { padding: 12px 11px 8px; }
-  .lf-community-compose-fab { right: 14px; width: 52px; height: 52px; }
   .lf-community-compose-footer .lf-community-compose-tools button { min-width: 44px; width: 44px; padding: 0; }
   .lf-community-compose-footer .lf-community-compose-tools button span { display: none; }
 }

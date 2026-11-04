@@ -10,6 +10,21 @@ identity, reviews, status, character ratings and covers with the existing web
 stack. Apple Design, Apple-like UI and Frontend Design guide the implementation;
 SwiftUI Pro was checked for fit, not presented as a React runtime dependency.
 
+2026-11-03 audit follow-up: work actions now mount before the first paint
+that contains the original controls, while chapter enhancement stays deferred.
+Library filters wrap into two rows, and the composer opens from the Home header.
+Reading status, review, cover and customization share a drag affordance with
+pointer tracking, cancellation and the existing close actions. Dock labels
+scale with the root font. Decorations and their motion policy were not changed.
+Chromium demo verification covers Arabic 320px and English 390px; iPhone touch,
+VoiceOver and runtime frame pacing remain separate checks.
+
+Navigation follow-up: the inbox Back button restores the originating Home or
+Profile tab and its bell focus. Mark-all remains unavailable until there is an
+unread row and does not resend receipts for rows already read. Closing Explore
+search restores heading focus without reopening the input. Browser checks use
+isolated AR/EN demo data; this is not verification of APNs or VoiceOver.
+
 The owner supplied a short video recommending Apple Design and SwiftUI expertise.
 Its visible skill names are `apple-design` and `swiftui-pro`; the speaker calls the
 second a SwiftUI expert skill. No repository URLs are visible, so the Apple Design

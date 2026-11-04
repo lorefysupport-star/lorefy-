@@ -846,9 +846,9 @@
   }
 
   function createComposerFab() {
-    var button = el("button", { type:"button", class:"lf-community-compose-fab", "aria-label":"إنشاء منشور", title:"إنشاء منشور" }, icon("plus", 27));
+    var label = uiText("إنشاء منشور", "Create post");
+    var button = el("button", { type:"button", class:"lf-community-compose-fab", "aria-label":label, title:label }, icon("plus", 22));
     button.addEventListener("click", openComposerSheet);
-    communityOverlayHost().appendChild(button);
     hydrateIcons(button);
     return button;
   }
@@ -1496,10 +1496,9 @@
     if (tabs) { tabs.classList.add("lf-community-tabs"); syncCommunityTabSemantics(tabs); }
     var legacyComposer = page.querySelector(":scope > .lf-community-composer");
     if (legacyComposer) legacyComposer.remove();
-    var host = communityOverlayHost();
-    var fab = host.querySelector(":scope > .lf-community-compose-fab") || doc.querySelector(".lf-community-compose-fab");
-    if (!fab) fab = createComposerFab();
-    else if (fab.parentElement !== host) host.appendChild(fab);
+    var home = page.closest(".lf-home-screen");
+    var composerRow = home && home.querySelector(".lf-social-header .lf-greeting-row");
+    if (composerRow && !composerRow.querySelector(".lf-community-compose-fab")) composerRow.appendChild(createComposerFab());
     var feed = page.querySelector(":scope > .lf-community-post-feed");
     var activity = page.querySelector(":scope > .lf-friend-activity");
     var feedAnchor = activity || (tabs&&tabs.parentElement===page ? tabs : null);

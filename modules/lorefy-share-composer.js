@@ -199,8 +199,23 @@
     var blob=await new Promise(function(resolve,reject){canvas.toBlob(function(b){if(b)resolve(b);else reject(Error('Empty image'));},'image/png');});
     if(!current()||request!==job)return;
     file=new root.File([blob],'lorefy-'+model.kind+'-'+s.template+'-'+(page+1)+'.png',{type:'image/png'});if(url)root.URL.revokeObjectURL(url);url=root.URL.createObjectURL(blob);preview.src=url;preview.style.aspectRatio=p.width+'/'+p.height;
-    status.textContent=p.width+' × '+p.height+' · PNG';retry.hidden=true;
-    for(const t of thumbs){if(!latest())return;var ts=settings(Object.assign({},s,{template:t.id})),small=await loadPage(model,ts,Math.min(page,pageCount(model,ts)-1),requestImage);if(!latest())return;small.avatar=loaded.avatar;var cv=root.document.createElement('canvas');cv.width=162;cv.height=Math.round(small.plan.height*.15);var context=cv.getContext('2d');context.scale(.15,.15);draw(context,model,ts,small,c,en?'en':'ar');t.image.src=cv.toDataURL('image/png');}
+    status.textContent=p.width+' × '+p.height+' · PNG';retry.hidden=true;lock();
+    // Alternate design previews must not block or invalidate the selected PNG.
+    for(const t of thumbs){
+     if(!latest())return;
+     try{
+      var ts=settings(Object.assign({},s,{template:t.id})),small=await loadPage(model,ts,Math.min(page,pageCount(model,ts)-1),requestImage);
+      if(!latest())return;
+      small.avatar=loaded.avatar;
+      var cv=root.document.createElement('canvas');cv.width=162;cv.height=Math.round(small.plan.height*.15);
+      var context=cv.getContext('2d');context.scale(.15,.15);draw(context,model,ts,small,c,en?'en':'ar');
+      t.image.src=cv.toDataURL('image/png');t.button.removeAttribute('title');
+     }catch(thumbnailError){
+      if(!latest())return;
+      t.image.removeAttribute('src');
+      t.button.setAttribute('title',en?'Preview unavailable. Select to retry.':'المعاينة غير متاحة. اختر التصميم للمحاولة.');
+     }
+    }
    }catch(error){if(current()&&request===job){file=null;status.textContent=en?'Some images could not be prepared. Retry.':'تعذر تجهيز بعض الصور. أعد المحاولة.';retry.hidden=false;}}
    finally{if(current()&&request===job)lock();}
   }
@@ -210,7 +225,28 @@
    colors=theme();var paletteNow=palette(s,colors);colorFields.forEach(function(f){f.input.value=paletteNow[f.key];});try{root.localStorage.setItem(prefKey,JSON.stringify(s));}catch(_){}
    var request=job;timer=setTimeout(function(){render(request);},100);
   }
-  async function deliver(mode){if(!current()){closeEditor();return;}if(!file||busy)return;var exported=file;busy=true;lock();try{if(mode==='save')await root.LorefyShareStudio.saveFile(exported);else await root.LorefyShareStudio.nativeFileShare(exported,model.title,'#Lorefy');if(current())status.textContent=en?'Image ready.':'الصورة جاهزة.';}catch(e){if(current())status.textContent=e&&e.name==='AbortError'?(en?'Sharing cancelled.':'أُلغيت المشاركة.'):(en?'Could not share. Retry.':'تعذرت المشاركة. أعد المحاولة.');}finally{busy=false;if(current())lock();else closeEditor();}}
+  async function deliver(mode){
+   if(!current()){closeEditor();return;}
+   if(!file||busy)return;
+   var exported=file,focusBefore=root.document.activeElement;
+   busy=true;lock();
+   try{
+    if(mode==='save')await root.LorefyShareStudio.saveFile(exported);
+    else await root.LorefyShareStudio.nativeFileShare(exported,model.title,'#Lorefy');
+    if(current())status.textContent=en?'Image ready.':'الصورة جاهزة.';
+   }catch(e){
+    if(current())status.textContent=e&&e.name==='AbortError'?(en?'Sharing cancelled.':'أُلغيت المشاركة.'):(en?'Could not share. Retry.':'تعذرت المشاركة. أعد المحاولة.');
+   }finally{
+    busy=false;
+    if(current()){
+     lock();
+     // Disabling the pressed action can leave keyboard focus on the document.
+     var focused=root.document.activeElement;
+     if((focused===root.document.body||focused===root.document.documentElement)&&
+        focusBefore&&focusBefore.isConnected&&!focusBefore.disabled&&dialog.contains(focusBefore))focusBefore.focus();
+    }else closeEditor();
+   }
+  }
   save.addEventListener('click',function(){deliver('save');});share.addEventListener('click',function(){deliver('share');});changed();return active;
  }
  return {templates:templates,normalize:normalize,settings:settings,palette:palette,plan:plan,pageCount:pageCount,loadPage:loadPage,draw:draw,open:open,currentProfile:currentProfile};

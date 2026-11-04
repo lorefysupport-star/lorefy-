@@ -6,6 +6,11 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+[[sessions/2026-11-03-Visitor-Profile-Polish]] removes the redundant Top 10
+works display from visitor profiles without deleting saved rankings or lists.
+Favorite rows, reading metrics, interactions and owner layout/theme remain;
+visitor glass chrome resolves the profile owner's material tokens.
+
 A-003 in [[sessions/2026-11-02-App-Interactions]] guards obsolete share-image
 render work at async boundaries;3313 source tests/44 browser checks preserve
 three layouts, formats, custom accent and close. Native delivery stays separate.

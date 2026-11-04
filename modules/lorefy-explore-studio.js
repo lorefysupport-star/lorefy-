@@ -454,13 +454,17 @@
       var text=searchInput.current?searchInput.current.value:searchQuery;
       setRecent(saveSearchHistory(historyStorage,owner,{q:text,mode:searchMode,format:searchFilters.format}));
     }
-    function clearSearch(){
+    function clearSearch(restoreFocus){
       searchRetry.current++;root.clearTimeout(inputTimer.current);
-      if(searchInput.current){searchInput.current.value='';searchInput.current.dispatchEvent(new root.Event('input',{bubbles:true}));searchInput.current.focus();}
+      if(searchInput.current){searchInput.current.value='';searchInput.current.dispatchEvent(new root.Event('input',{bubbles:true}));if(restoreFocus!==false)searchInput.current.focus();}
       setSearchQuery('');setRemoteSearch(null);
       if(searchMode==='media'&&root.LorefyCatalogLoader)Promise.resolve(root.LorefyCatalogLoader.loadFormat(searchFilters.format||props.allType,'')).catch(function(){});
     }
-    function cancelSearch(){clearSearch();setSearchActive(false);setSearchMode('media');if(root.document.activeElement&&root.document.activeElement.blur)root.document.activeElement.blur();}
+    function cancelSearch(){
+      clearSearch(false);setSearchActive(false);setSearchMode('media');
+      var heading=screen.current&&screen.current.querySelector('.lf-explore-header h1');
+      if(heading)heading.focus({preventScroll:true});
+    }
     function chooseSearchSuggestion(text) {
       if (format) { if(formatSearchInput.current&&formatSearchInput.current.value.trim()!==query.trim())return;root.clearTimeout(inputTimer.current);if(formatSearchInput.current)formatSearchInput.current.value=text;setQuery(text); setLimit(60); }
       else {
@@ -656,7 +660,7 @@
       immersive&&heroArtwork(selected),
       h('header',{className:'lf-explore-header',dir:format?'ltr':undefined},
         format && h('button',{className:'lf-explore-icon','aria-label':t('العودة إلى الأنواع','Back to types'),onClick:back},Icon(en?'ArrowLeft':'ArrowRight')),
-        h('div',null,h('h1',null,format?props.typeLabel(format):searchActive?t('البحث','Search'):t('استكشف','Explore'))),
+        h('div',null,h('h1',{tabIndex:-1},format?props.typeLabel(format):searchActive?t('البحث','Search'):t('استكشف','Explore'))),
         searchActive&&!format?h('button',{className:'lf-explore-search-cancel',onClick:cancelSearch},t('إلغاء','Cancel')):format ? h('button',{className:'lf-explore-icon lf-explore-format-filter','aria-label':t('تصفية الأعمال','Filter works'),onClick:function(){setDraft(Object.assign({},filters,{sort:sort}));open({kind:'filters',title:t('تصفية الأعمال','Filter works')});}},Icon('SlidersHorizontal',22)) : h('button',{className:'lf-explore-icon','aria-label':t('تعديل ذوقي','Edit preferences'),onClick:function(){setDraft(Object.assign({},props.preferences));open({kind:'preferences',title:t('ذوقك في القراءة','Your reading taste')});}},Icon('SlidersHorizontal',22))),
       format ? h('label',{key:'format-search-'+format,className:'lf-explore-format-search','data-lorefy-catalog-search':format},Icon('Search'),h('input',{type:'search',dir:'auto',ref:formatSearchInput,defaultValue:query,'aria-label':t('بحث في ','Search ')+props.typeLabel(format),placeholder:t('ابحث في ','Search ')+props.typeLabel(format),onChange:function(event){var value=event.target.value;searchRetry.current++;root.clearTimeout(inputTimer.current);inputTimer.current=root.setTimeout(function(){setQuery(value);setLimit(60);},180);},onKeyDown:function(event){if(event.key==='Escape'){event.target.blur();back();}if(event.key==='Enter'){root.clearTimeout(inputTimer.current);setQuery(event.currentTarget.value);setLimit(60);}}})) :
         h('div',{key:'global-search',className:'lf-design-inline-search lf-search-box','data-lorefy-catalog-search':searchFilters.format||props.allType,'data-lorefy-search-local':searchMode==='media'?undefined:'true'},Icon('Search'),h('input',{type:'search',dir:'auto',ref:searchInput,defaultValue:searchQuery,autoComplete:'off',enterKeyHint:'search','aria-label':t('بحث','Search'),placeholder:searchMode==='people'?t('ابحث عن شخص','Search people'):searchMode==='lists'?t('ابحث في قوائمك','Search your lists'):t('ابحث عن عمل أو مؤلف','Search media or authors'),onFocus:function(){setSearchActive(true);},onChange:function(event){var value=event.target.value;searchRetry.current++;root.clearTimeout(inputTimer.current);inputTimer.current=root.setTimeout(function(){setSearchQuery(value);},180);},onKeyDown:function(event){if(event.key==='Escape')cancelSearch();if(event.key==='Enter'){root.clearTimeout(inputTimer.current);setSearchQuery(event.currentTarget.value);rememberSearch();event.currentTarget.blur();}}}),searchActive&&h('button',{type:'button',className:'lf-explore-search-clear','aria-label':t('مسح البحث','Clear search'),title:t('مسح البحث','Clear search'),onClick:clearSearch},Icon('X',17))),

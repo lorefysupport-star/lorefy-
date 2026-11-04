@@ -6,10 +6,36 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
-2026-11-04: [[sessions/2026-11-04-Inapp-Interaction-Notifications]] repairs
-interaction receipts, addressed replies, persistence, theme colors and exact
-review navigation. The owner-approved SQL is live. Publication verification is
-isolated from unrelated local visual experiments; native acceptance is separate.
+2026-11-04: [[sessions/2026-11-04-Remaining-Repairs-Publication]] records the
+later owner-authorized publication of remaining UI/share/profile/frame repairs.
+Fresh full3396, PNG/browser192 and animated-frame546 checks pass. No native
+build, Apple upload or production SQL replay; device/live acceptance remains.
+
+2026-11-04: [[sessions/2026-11-04-Inapp-Interaction-Notifications]] completes
+interaction receipt paths locally and applies the approved Supabase update.
+Full3396 plus executable isolated SQL and AR/EN browser evidence; real
+two-account/device acceptance and delivery of the new runtime remain separate.
+
+[[sessions/2026-11-04-Local-Interaction-Audit]] adds actual local PNG acceptance:
+optional thumbnail failures no longer disable a ready image; Save restores lost
+keyboard focus. Favorites keeps a 44px target across original layouts.
+3379 source tests,44 route/state observations,196 browser checks. This does not
+certify live two-account services, external providers or iPhone behavior.
+
+[[playbooks/Developer-MCP]] records the workspace MCP setup and isolated
+Playwright verification of Explore. Cloud tools are configured but not
+authenticated; application runtime and analytics collection are unchanged.
+
+[[sessions/2026-11-03-Visitor-Profile-Polish]] removes the legacy Top 10 from
+visitor views and aligns favorites, Reader toolbar and dock with the owner
+palette. The live artwork projection now recognizes the six Halloween frames
+and the Reader layout without changing privacy, ownership or grants.
+
+[[sessions/2026-11-02-Halloween-Integration]] moves the six selected original
+Halloween concepts from independent art review into the actual decoration store.
+Shared visible-only scheduling, static card previews and preserved user media;
+3370 full tests and546 browser checks. All three profile layouts verified locally.
+No native build or GitHub push. Visitor cloud enablement followed separately.
 
 [[sessions/2026-11-02-Prebuild-Repairs]] closes R-04 development dependency
 advisories with scoped glob/minimatch overrides, an actual cancellation regression,

@@ -5903,6 +5903,17 @@
 
   var customizeDialogSequence = 0;
   function enhanceCustomizeNavigation(sheet) {
+    var header = sheet.firstElementChild;
+    if (header && !header.classList.contains('lf-sheet-drag-header') && global.LorefyWorkPanels) {
+      var cancel = header.querySelector('button'), save = header.querySelector('button:last-child');
+      if (cancel && save) {
+        header.classList.add('lf-sheet-drag-header');
+        var drag = global.LorefyWorkPanels.dragHandlers({current:sheet}, function () {
+          return sheet.isConnected && !sheet.inert && save.getAttribute('aria-busy') !== 'true';
+        }, function () { cancel.click(); });
+        Object.keys(drag).forEach(function (key) { header.addEventListener(key.slice(2).toLowerCase(), drag[key]); });
+      }
+    }
     var group = sheet.querySelector('.lf-customize-tabs');
     if (!group) return;
     var tabs = Array.from(group.querySelectorAll('button'));

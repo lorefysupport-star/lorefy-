@@ -15,3 +15,13 @@ test('Overview tab and its panel have different IDs',()=>{
  const source=fs.readFileSync('modules/lorefy-profile-sections.js','utf8');
  assert.match(source,/'aria-controls':tab==='overview'\?id\+'-overview-panel'/);
 });
+
+test('favorite heading remains a full touch target in compact and shelf presentation',()=>{
+ const css=fs.readFileSync('styles/lorefy-interface-settings.css','utf8');
+ const rules=[...css.matchAll(/([^{}]+lf-profile-top-works-head[^{}]*)\{([^{}]*)\}/g)]
+  .filter(match=>/min-height:/.test(match[2]));
+ assert.equal(rules.length,2);
+ for(const rule of rules)assert.match(rule[2],/min-height:\s*44px/);
+ const sections=fs.readFileSync('styles/lorefy-profile-sections.css','utf8');
+ assert.match(sections,/\.lf-profile-identity:has\(\.lf-profile-section-tabs\) > \.lf-profile-top-works-head\s*\{\s*min-height:\s*44px\s*!important/);
+});

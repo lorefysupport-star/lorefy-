@@ -59,6 +59,15 @@ function descendants(node) {
   if(typeof node.type==='function')return descendants(node.type(node.props));
   return [node,...(node.props.children||[]).flatMap(descendants)];
 }
+
+test('visitor reader toolbar never calls another persons profile My Profile',()=>{
+  const {api,h}=harness();
+  const page=h('div',{'data-profile-layout':'reader'},h('div',{className:'lf-reader-banner'}),
+    h('div',{className:'lf-reader-surface'},h('div',{className:'lf-reader-identity'})));
+  const all=descendants(api.composePublic(page,{lang:'ar',onBack(){}}));
+  assert.ok(all.some(n=>n.type==='h1'&&n.props.children.includes('الملف الشخصي')));
+  assert.ok(!all.some(n=>n.type==='h1'&&n.props.children.includes('حسابي')));
+});
 test('reader toolbar gives every icon action a matching tooltip and accessible name',()=>{
   const {api}=harness();
   for(const lang of ['ar','en']) {

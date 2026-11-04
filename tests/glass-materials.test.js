@@ -43,7 +43,7 @@ test('shared materials load ahead of competing glass layers and are offline cach
 });
 test('small navigation and book text has explicit readable sizes without changing cover geometry',()=>{
  const css=read('styles/lorefy-glass-materials.css');
- assert.match(css,/\.lf-nav-item>span:last-child[^{}]*\{[^}]*font-size:12px/);
+ assert.match(css,/\.lf-nav-item>span:last-child[^{}]*\{[^}]*font-size:\.9375rem/);
  assert.match(css,/\.lf-showcase-title[^{}]*\{[^}]*font-size:13px/);
  assert.doesNotMatch(css,/font-size:\s*[\d.]+vw/);
 });

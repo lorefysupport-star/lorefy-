@@ -1,6 +1,6 @@
 # Lorefy — مصدر التطبيق وذاكرة المشروع
 
-[نقطة حفظ المصدر الحالية والتحقق والمتبقي، 29 أكتوبر 2026](docs/SOURCE_CHECKPOINT_2026-10-29.md).
+[نقطة حفظ المصدر الحالية والتحقق والمتبقي، 4 نوفمبر 2026](docs/SOURCE_CHECKPOINT_2026-11-04.md).
 هذه نسخة تطوير محفوظة على GitHub، وليست بيلد جديدًا أو اعتمادًا كاملًا للجهاز والخدمات.
 
 [حالة التطوير والتسليم: ما أُنجز وما بقي، 17 أكتوبر 2026](project-memory/18-Progress-Handoff.md).
@@ -31,6 +31,8 @@ node tools/lorefy-api-server.js 8795
 افتح http://127.0.0.1:8795/index.html للتطبيق، أو http://127.0.0.1:8795/phone-preview.html?preview=demo&demo=ready&route=profile&decorationLab=1 للمعاينة الهاتفية بحسابات وهمية محلية.
 
 ## الفحص
+
+[إعداد أدوات MCP للمطوّر والتحقق المحلي](project-memory/playbooks/Developer-MCP.md).
 
 ```sh
 npm test

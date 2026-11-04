@@ -10,6 +10,12 @@
 .lf-work-panel::before{content:none!important}
 .lf-app .lf-review-studio::before{content:none!important}
 .lf-studio-header{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important;padding:20px!important;flex:none!important;border-bottom:1px solid #ffffff14!important}
+.lf-sheet-drag-header{position:relative;touch-action:none;cursor:grab;user-select:none}
+.nc-sheet:has(>.lf-sheet-drag-header){transition-property:none!important}
+.lf-sheet-drag-header:active{cursor:grabbing}
+.lf-sheet-drag-header::before{content:"";position:absolute;top:7px;left:50%;translate:-50% 0;width:36px;height:4px;border-radius:2px;background:currentColor;opacity:.35;pointer-events:none}
+.lf-sheet-drag-header button{touch-action:manipulation}
+.lf-app .lf-customize-sheet::before{content:none!important}
 .lf-studio-header small{font-size:10px!important;font-weight:500!important;color:#93a1b2!important;line-height:1.4!important}
 .lf-studio-header h2{margin:4px 0 0!important;font-size:22px!important;line-height:1.3!important;font-weight:600!important;color:#f5f7fb!important}
 .lf-studio-close{display:grid!important;place-items:center!important;width:44px!important;height:44px!important;padding:10px!important;border:1px solid #ffffff28!important;border-radius:50%!important;background:#ffffff0d!important;color:#e0e6ef!important;flex:none!important}

@@ -1,6 +1,55 @@
 (function(root,factory){var api=factory(root);if(typeof module==='object'&&module.exports)module.exports=api;root.LorefyWorkPanels=api;})(typeof window!=='undefined'?window:globalThis,function(root){
  'use strict';
  function icon(name,size){var c=root.NenIcons&&(root.NenIcons[name]||root.NenIcons.BookOpen);return c?root.React.createElement(c,{size:size||20,'aria-hidden':true}):null;}
+ var sheetDrags = new WeakMap();
+ function dragHandlers(host, canClose, onClose) {
+  function offset(panel) {
+   return parseFloat(root.getComputedStyle(panel).translate.split(' ')[1]) || 0;
+  }
+  function finish(e, cancelled) {
+   var panel = host.current, drag = panel && sheetDrags.get(panel);
+   if (!drag || drag.id !== e.pointerId) return;
+   drag.id = null;
+   var distance = cancelled ? offset(panel) : Math.max(0, drag.start + e.clientY - drag.y);
+   var height = panel.offsetHeight;
+   var dismiss = !cancelled && canClose() && distance >= Math.min(104, Math.max(72, height * .2));
+   if (root.matchMedia('(prefers-reduced-motion: reduce)').matches || !panel.animate || distance === 0) {
+    panel.style.translate = '';
+    if (dismiss) onClose();
+    return;
+   }
+   var target = dismiss ? height + 40 : 0;
+   var animation = panel.animate([{translate:'0 '+distance+'px'}, {translate:'0 '+target+'px'}], {
+    duration:dismiss ? 170 : 210, easing:'cubic-bezier(.2,.75,.2,1)', fill:'forwards'
+   });
+   drag.animation = animation;
+   animation.finished.then(function () {
+    if (drag.animation !== animation) return;
+    drag.animation = null;
+    panel.style.translate = '';
+    animation.cancel();
+    if (dismiss && panel.isConnected && canClose()) onClose();
+   }, function () {});
+  }
+  return {
+   onPointerDown:function(e) {
+    var panel=host.current, previous=panel&&sheetDrags.get(panel);
+    if (!panel || !e.isPrimary || e.button!==0 || !canClose() || previous?.id!=null || e.target.closest('button,input,a,select,textarea')) return;
+    var start=offset(panel);
+    if (previous?.animation) previous.animation.cancel();
+    panel.style.translate='0 '+start+'px';
+    e.currentTarget.setPointerCapture(e.pointerId);
+    sheetDrags.set(panel,{id:e.pointerId,y:e.clientY,start:start});
+   },
+   onPointerMove:function(e) {
+    var panel=host.current, drag=panel&&sheetDrags.get(panel);
+    if (drag?.id===e.pointerId) panel.style.translate='0 '+Math.max(0,drag.start+e.clientY-drag.y)+'px';
+   },
+   onPointerUp:function(e){finish(e,false);},
+   onPointerCancel:function(e){finish(e,true);},
+   onLostPointerCapture:function(e){finish(e,true);}
+  };
+ }
  function Panel(p){
   var R=root.React,h=R.createElement,host=R.useRef(null),alive=R.useRef(true),close=R.useRef(null),en=p.language==='en',current=function(){return alive.current&&(!p.isCurrent||p.isCurrent());};
   R.useEffect(function(){
@@ -18,7 +67,7 @@
   }
   return h('div',{className:'lf-studio-overlay',dir:en?'ltr':'rtl',onKeyDown:keyboard,onClick:function(e){if(e.target===e.currentTarget&&current())p.onClose();}},
    h('section',{className:'nc-sheet lf-work-panel '+p.className,ref:host,role:'dialog','aria-modal':true,'aria-label':p.title,'data-no-translate':'1'},
-    h('header',{className:'lf-studio-header'},h('div',null,h('small',null,en?'LOREFY':'لورفاي'),h('h2',null,p.title)),h('button',{className:'lf-studio-close',ref:close,type:'button',disabled:!!p.busy,'aria-label':en?'Close':'إغلاق',title:en?'Close':'إغلاق',onClick:function(){if(current())p.onClose();}},icon('X'))),
+    h('header',Object.assign({className:'lf-studio-header lf-sheet-drag-header'},dragHandlers(host,current,p.onClose)),h('div',null,h('small',null,en?'LOREFY':'لورفاي'),h('h2',null,p.title)),h('button',{className:'lf-studio-close',ref:close,type:'button',disabled:!!p.busy,'aria-label':en?'Close':'إغلاق',title:en?'Close':'إغلاق',onClick:function(){if(current())p.onClose();}},icon('X'))),
     h('div',{className:'lf-studio-body'},p.body),h('footer',{className:'lf-studio-footer'},p.footer)));
  }
  function Status(p){
@@ -69,5 +118,5 @@
     h('h3',{className:'lf-cover-studio-heading'},en?'Available covers':'الأغلفة المتاحة'),p.loading&&h('p',{className:'lf-studio-status',role:'status'},en?'Finding covers…':'جارٍ البحث عن الأغلفة…'),h('div',{className:'lf-cover-studio-grid'},items.map(function(item){return h(CoverTile,{key:item.img,src:item.img,label:label(item.label),description:coverDescription(item,p.language),en:en,selected:selected===item.img,busy:busy,onSelect:function(src){if(current()){setSelected(src);setError('');}},onReady:function(src){if(!current())return;failed.current.delete(src);ready.current.add(src);refresh(function(n){return n+1;});},onFailed:function(src){if(!current())return;failed.current.add(src);refresh(function(n){return n+1;});}});})),p.hasMore&&h('button',{className:'lf-cover-studio-more',type:'button',disabled:busy,onClick:p.onMore},en?'More covers':'المزيد من الأغلفة')),
    footer:h(R.Fragment,null,error&&h('p',{className:'lf-studio-error',role:'alert'},error),h('button',{className:'lf-studio-primary',type:'button',disabled:busy||p.uploading||selected===p.cover||!ready.current.has(selected)||failed.current.has(selected),onClick:function(){apply(selected);}},icon('Check',18),busy?(en?'Saving…':'جارٍ الحفظ…'):(en?'Save cover':'حفظ الغلاف')),p.hasCustom&&h('button',{className:'lf-cover-studio-reset',type:'button',disabled:busy,onClick:function(){apply('');}},icon('RotateCcw',16),en?'Restore original':'استعادة الغلاف الأصلي'))});
  }
- return{Status:Status,Cover:Cover,coverChoices:coverChoices,coverDescription:coverDescription};
+ return{Status:Status,Cover:Cover,coverChoices:coverChoices,coverDescription:coverDescription,dragHandlers:dragHandlers};
 });

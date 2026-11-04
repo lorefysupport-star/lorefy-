@@ -82,14 +82,14 @@ html:root:root:root:root .lf-profile-identity { position:relative; z-index:2; }
 html:root:root:root:root .lf-profile-identity:has(+ .lf-profile-favorites.is-spine-view) .lf-profile-top-works-head { margin-bottom:0 !important; }
 /* Keep the full shelf above the navigation without pulling books over the heading. */
 html:root:root:root:root:root:root .lf-profile-identity:has(+ .lf-profile-favorites.is-spine-view) .lf-profile-metrics { margin-bottom:8px !important; }
-html:root:root:root:root:root:root .lf-profile-identity:has(+ .lf-profile-favorites.is-spine-view) .lf-profile-top-works-head { min-height:28px !important; }
+html:root:root:root:root:root:root .lf-profile-identity:has(+ .lf-profile-favorites.is-spine-view) .lf-profile-top-works-head { min-height:44px !important; }
 
 /* The shelf uses existing covers, with no extra image fetches or 3D engine. */
 html:root:root:root:root .lf-library-card { width:100%; padding:0 !important; color:var(--ui-ink); font:inherit; text-align:start; cursor:pointer; appearance:none; }
 .lf-library-spine-title { display:none; }
 .lf-profile-spine-title { display:none; }
 /* Covers have their own geometry, independent of the narrower book spines. */
-html:root:root:root:root .lf-profile-top-works-head { display:block !important; width:100%; text-align:right !important; margin:0 0 8px !important; min-height:28px; }
+html:root:root:root:root .lf-profile-top-works-head { display:block !important; width:100%; text-align:right !important; margin:0 0 8px !important; min-height:44px; }
 html:root:root:root:root .lf-profile-page > .lf-profile-favorites:not(.is-spine-view):not(.is-empty):not(.lf-profile-top-characters-grid) { grid-template-columns:repeat(4,minmax(0,1fr)) !important; grid-auto-flow:row !important; grid-auto-columns:auto !important; grid-auto-rows:auto !important; justify-content:center !important; align-items:start; gap:10px !important; margin-top:0 !important; width:100% !important; max-width:464px !important; margin-inline:auto !important; padding:0 18px 14px !important; overflow:visible !important; box-sizing:border-box; }
 html:root:root:root:root .lf-profile-page > .lf-profile-favorites:not(.is-spine-view):not(.is-empty):not(.lf-profile-top-characters-grid) > div { position:relative; width:100% !important; max-width:none !important; min-width:0 !important; min-height:0 !important; height:auto !important; aspect-ratio:2/3 !important; overflow:visible !important; background:transparent !important; border:0 !important; }
 html:root:root:root:root .lf-profile-page > .lf-profile-favorites:not(.is-spine-view):not(.is-empty):not(.lf-profile-top-characters-grid) > div > div:first-child { position:relative; width:100% !important; height:100% !important; aspect-ratio:2/3 !important; border:0 !important; border-radius:3px 6px 6px 3px !important; box-shadow:2px 2px 0 var(--ui-separator),3px 3px 0 var(--ui-line),0 7px 10px -5px rgba(0,0,0,.42) !important; }

@@ -180,10 +180,33 @@ html[lang='ar'] :is(.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice
 .lf-app .lf-bottom-nav .lf-nav-item.is-active { color:var(--ui-glass-action) !important; }
 .lf-app .lf-nav-item>span:last-child {
   font-family:var(--glass-font) !important;
-  font-size:12px !important;
+  font-size:.9375rem !important;
   font-weight:500 !important;
   line-height:1.4 !important;
   white-space:normal !important;
+}
+.lf-app .lf-shop-dialog .lf-shop-tabs,
+.lf-character-page :is(.lf-character-filter-row,.lf-character-search) {
+  background:var(--glass-reflection),var(--glass-fill) !important;
+  border-color:var(--glass-edge) !important;
+  color:var(--ui-glass-ink) !important;
+}
+.lf-character-page .lf-character-search :is(input,svg) {
+  color:var(--ui-glass-ink) !important;
+  caret-color:var(--ui-glass-action) !important;
+}
+.lf-character-page .lf-character-search input::placeholder { color:var(--ui-glass-secondary) !important; }
+.lf-character-page .lf-character-filter-row .lf-character-filter-chip.is-active {
+  background:var(--ui-selected) !important;
+  color:var(--ui-action) !important;
+  border-color:var(--ui-line) !important;
+}
+.lf-app .lf-shop-dialog .lf-shop-tabs>button,
+.lf-character-page .lf-character-filter-row .lf-character-filter-chip {
+  font-size:13px !important;
+  line-height:1.4 !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere;
 }
 .lf-app :is(.lf-showcase-title,.lf-cover-title,.lf-library-card-title,.lf-explore-work-caption) {
   font-family:var(--glass-font) !important;
