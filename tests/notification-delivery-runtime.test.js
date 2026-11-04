@@ -8,10 +8,11 @@ function harness(native=false,values=new Map()){
   constructor(tag){this.tagName=tag.toUpperCase();this.children=[];this.attrs={};this.listeners={};this.textContent='';this.className='';}
   appendChild(e){this.children.push(e);e.parent=this;return e;}
   prepend(e){this.children.unshift(e);e.parent=this;}
-  closest(selector){return selector==='button'&&this.tagName==='BUTTON'?this:null;}
+  closest(selector){return selector==='button'&&this.tagName==='BUTTON'?this:selector==='.lf-notifications-page'?this.parent:null;}
+  hasAttribute(k){return Object.hasOwn(this.attrs,k);}
   setAttribute(k,v){this.attrs[k]=v;}removeAttribute(k){delete this.attrs[k];}getAttribute(k){return this.attrs[k]||null;}
   addEventListener(k,fn){this.listeners[k]=fn;}remove(){if(this.parent)this.parent.children=this.parent.children.filter(e=>e!==this);}
-  querySelector(selector){let cls=selector.slice(1);return this.children.find(e=>e.className.split(' ').includes(cls))||null;}
+  querySelector(selector){let cls=selector.slice(1);return this.children.find(e=>selector.startsWith('[')?e.hasAttribute(selector.slice(1,-1)):e.className.split(' ').includes(cls))||null;}
  }
  const body=new Element('body'),head=new Element('head'),bell=new Element('button');
  const doc={body,head,hidden:false,documentElement:{lang:'en'},readyState:'loading',createElement:tag=>new Element(tag),getElementById:()=>null,addEventListener:(name,fn)=>listeners[name]=fn,querySelector:s=>s==='.lf-notification-banner'?body.querySelector(s):s==='.lf-notifications-page'?page:null,querySelectorAll:s=>s.includes('Notifications')?[bell]:[]};
@@ -19,11 +20,36 @@ function harness(native=false,values=new Map()){
  window={document:null,localStorage:{getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,v)},crypto:{randomUUID:()=>P},location:{href:'http://localhost/index.html',search:'',assign:()=>{}},setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout:()=>{},setInterval:fn=>{intervals.push(fn);return intervals.length;},clearInterval:()=>{},CustomEvent:class{constructor(type,opts){this.type=type;this.detail=opts.detail;}},dispatchEvent:()=>{},addEventListener:(name,fn)=>globalListeners[name]=fn,Capacitor:{isNativePlatform:()=>native,Plugins:{App:{addListener:(name,fn)=>appListeners[name]=fn}}},LorefyBackend:{getSession:async()=>user?{userId:user}:null,listNotifications:async()=>rows,subscribeNotifications:async(fn,state)=>{callback=fn;statusCallback=state;return ()=>{};},registerPushDevice:async()=>true,unregisterPushDevice:async()=>true}};
  vm.runInNewContext(source,{window,URL,URLSearchParams,Set,Date,CustomEvent:window.CustomEvent,MutationObserver:class{constructor(fn){mutated=fn;}observe(){}}});window.document=doc;
  return {window,doc,body,bell,values,intervals,listeners,globalListeners,appListeners,api:window.LorefyNativeRuntime,setRows:r=>rows=r,setUser:u=>user=u,receive:(item,change)=>callback(item,change),status:state=>statusCallback?.(state),getStatus:()=>statusCallback,
-   mountInbox(){page=new Element('div');page.className='lf-notifications-page';const empty=new Element('p');empty.textContent='No notifications';page.appendChild(empty);mutated?.();return page;},
+   mountInbox(){page=new Element('div');page.className='lf-notifications-page';const empty=new Element('p');empty.textContent='No notifications';page.appendChild(empty);const action=new Element('button');action.setAttribute('data-inbox-mark-all','1');page.appendChild(action);mutated?.();return page;},
    unmountInbox(){page=null;}
  };
 }
 const notification=(id='n1')=>({id,user_id:A,actor_id:B,kind:'reaction',title:'إعجاب جديد',body:'نورة أعجبت بمنشورك',target_path:'/community',data:{postId:P},created_at:new Date().toISOString()});
+
+test('injected inbox styles use the current theme rather than fixed purple',()=>{
+ const h=harness();h.api.start();h.listeners.DOMContentLoaded();
+ const styles=h.doc.head.children[0].textContent;
+ assert.match(styles,/is-unread\{background:var\(--ui-selected/);
+ assert.match(styles,/lf-cloud-notification-dot\{[^}]*background:var\(--ui-action/);
+ assert.doesNotMatch(styles,/#8a2be2|138,43,226/);
+});
+
+test('mark-all is unavailable when empty and sends receipts only for unread cloud rows',async()=>{
+ const h=harness(), receipts=[];
+ h.window.LorefyBackend.markNotificationsRead=async ids=>{receipts.push(...ids);return true;};
+ h.api.start();h.listeners.DOMContentLoaded();await h.api.connectCloudNotifications();
+ const page=h.mountInbox(),action=page.querySelector('[data-inbox-mark-all]');
+ assert.equal(action.getAttribute('aria-disabled'),'true');
+ h.listeners.click({target:action});
+ h.setRows([notification('new'),{...notification('old'),read_at:new Date().toISOString()}]);
+ await h.api.refreshCloudNotifications();
+ assert.equal(action.getAttribute('aria-disabled'),'false');
+ h.listeners.click({target:action});
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(action.getAttribute('aria-disabled'),'true');
+ h.listeners.click({target:action});
+ assert.deepEqual(receipts,['new']);
+});
 
 test('opening and reopening the bell fetches and mounts the remote inbox after React navigation',async()=>{
  const h=harness();h.api.start();h.listeners.DOMContentLoaded();
@@ -114,6 +140,42 @@ test('push payload and inbox routes open the exact post and reject foreign links
  const push=h.api.notificationRoute({data:{targetPath:'/community',data:{postId:P}}});assert.equal(push.post,P);
  assert.equal(h.api.notificationRoute({data:{targetPath:'https://evil.example/community',data:{postId:P}}}),null);
  assert.equal(h.api.parseAppLink('/community?post='+P).post,P);
+});
+
+test('follow notifications open the actor profile, including legacy cached rows',async()=>{
+ const first=harness(),events=[];
+ first.window.dispatchEvent=event=>events.push(event);
+ first.setRows([{...notification(),kind:'follow',target_path:'/profile',data:{profileId:B,actorName:'Nora',actorUsername:'nora'}}]);
+ await first.api.connectCloudNotifications();
+ const rows=await first.api.refreshCloudNotifications();
+ assert.equal(rows[0].data.profileId,B);
+ assert.equal(rows[0].data.actorUsername,'nora');
+ const reopened=harness(false,first.values);
+ reopened.window.dispatchEvent=event=>events.push(event);
+ reopened.window.LorefyBackend.listNotifications=async()=>{throw Error('offline');};
+ await reopened.api.connectCloudNotifications();
+ reopened.api.start();reopened.listeners.DOMContentLoaded();
+ reopened.mountInbox().querySelector('.lf-cloud-notifications').children[0].listeners.click();
+ assert.equal(events.at(-1)?.type,'lorefy:open-reader-profile');
+ assert.equal(events.at(-1)?.detail.id,B);
+});
+
+test('notification metadata survives snapshots and offline history without arbitrary payloads',async()=>{
+ const h=harness();h.setRows([{...notification(),kind:'comment',target_path:'/review/'+P,data:{reviewId:P,commentId:P,parentCommentId:B,workId:'mal-manga-2-berserk',actorName:'Nora',event:'review_reply',secret:'must not persist'}}]);
+ await h.api.connectCloudNotifications();const rows=await h.api.refreshCloudNotifications();
+ assert.equal(rows[0].data.commentId,P);assert.equal(rows[0].data.event,'review_reply');
+ assert.equal(rows[0].data.secret,undefined);
+ assert.ok(![...h.values.values()].join('').includes('must not persist'));
+});
+
+test('server-authored interaction notifications localize with the current interface language',async()=>{
+ const h=harness();h.api.start();h.listeners.DOMContentLoaded();await h.api.connectCloudNotifications();
+ h.receive({...notification(),data:{postId:P,actorName:'Nora',event:'post_like'}});
+ assert.equal(h.body.querySelector('.lf-notification-banner').children[0].children[0].textContent,'New like');
+ assert.equal(h.body.querySelector('.lf-notification-banner').children[0].children[1].textContent,'Nora liked your post');
+ h.doc.documentElement.lang='ar';h.setRows([{...notification(),kind:'comment',data:{postId:P,actorName:'نورة',event:'post_reply'}}]);
+ await h.api.refreshCloudNotifications();const page=h.mountInbox();
+ assert.equal(page.querySelector('.lf-cloud-notifications').children[0].children[1].children[1].textContent,'نورة رد على منشورك');
 });
 test('disabling notifications unregisters natively even when server cleanup fails',async()=>{
  const h=harness(true);let unregistered=0;h.window.Capacitor.Plugins.PushNotifications={unregister:async()=>unregistered++};h.window.LorefyBackend.unregisterPushDevice=async()=>{throw Error('offline');};

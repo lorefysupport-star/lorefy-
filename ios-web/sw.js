@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v689-ranking-features';
+const CACHE = 'lorefy-v693-inapp-interactions';
 const freshAssetPaths = [
   '/launch/decorations/refined/',
   '/modules/',
@@ -119,13 +119,13 @@ const CORE = [
   './config/lorefy-config.js?v=20260924-catalog-v1',
   './backend/lorefy-secure-storage.js?v=20260824-keychain-v2',
   './modules/lorefy-storage-budget.js?v=20261021-save-quota',
-  './backend/lorefy-backend.js?v=20261101-friend-logic-v1',
+  './backend/lorefy-backend.js?v=20261104-notification-target-v1',
   './backend/lorefy-custom-artwork.js?v=20261019-artwork-quota-v1',
   './backend/lorefy-native-crypto.js?v=20261001-auth-recovery-v1',
   './modules/lorefy-subscriptions.js?v=20260722-billing-guard-v1',
   './backend/lorefy-ios-bridge.js?v=20261001-auth-recovery-v1',
   './backend/lorefy-ios-oauth.js?v=20261003-beta-final-v1',
-  './backend/lorefy-native-runtime.js?v=20261030-inbox-receipt-scope-v1',
+  './backend/lorefy-native-runtime.js?v=20261104-notification-delivery-v1',
   './backend/lorefy-native-photos.js?v=20261001-build33',
 './auth/lorefy-auth.js?v=20261007-review-identity-v1',
   './modules/lorefy-catalog-updater.js?v=20260726-catalog-safety-v4',
@@ -171,7 +171,7 @@ const CORE = [
   './styles/lorefy-book-showcase.css?v=20261028-reading-type-v1',
   './styles/lorefy-profile-header.css?v=20261024-banner-repairs-v4',
   './modules/lorefy-profile-header.js?v=20261025-restored-v1',
-  './uploads/files/lorefy-app.js?v=20261102-ranking-features-v1',
+  './uploads/files/lorefy-app.js?v=20261104-inbox-review-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2',

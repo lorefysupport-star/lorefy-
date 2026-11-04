@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-04: [[sessions/2026-11-04-Inapp-Interaction-Notifications]] repairs
+interaction receipts, addressed replies, persistence, theme colors and exact
+review navigation. The owner-approved SQL is live. Publication verification is
+isolated from unrelated local visual experiments; native acceptance is separate.
+
 [[sessions/2026-11-02-Prebuild-Repairs]] closes R-04 development dependency
 advisories with scoped glob/minimatch overrides, an actual cancellation regression,
 3361 full tests and zero npm advisories. No native/runtime upgrade or legal gate

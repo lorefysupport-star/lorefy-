@@ -25,6 +25,12 @@
   var pendingReads=new Set(),readJob=null,inboxState='ready';
 
   function inboxKey(owner) { return INBOX_CACHE_PREFIX+encodeURIComponent(owner); }
+  function inboxData(value) {
+    var data=value&&typeof value==='object'?value:{},safe={};
+    ['postId','replyId','reviewId','commentId','parentCommentId','profileId'].forEach(function(key){if(validId(data[key]))safe[key]=data[key];});
+    ['workId','actorName','actorUsername','event','reaction'].forEach(function(key){if(typeof data[key]==='string')safe[key]=data[key].slice(0,key==='workId'?200:120);});
+    return safe;
+  }
   function cleanInbox(rows,owner) {
     var seen=new Set();
     return (Array.isArray(rows)?rows:[]).filter(function(row){
@@ -33,7 +39,7 @@
     }).slice(0,60).map(function(row){return {
       id:row.id,user_id:owner,actor_id:String(row.actor_id||''),kind:String(row.kind||'').slice(0,40),
       title:String(row.title||'').slice(0,120),body:String(row.body||'').slice(0,500),
-      target_path:String(row.target_path||'').slice(0,500),data:{postId:row.data&&row.data.postId},
+      target_path:String(row.target_path||'').slice(0,500),data:inboxData(row.data),
       read_at:row.read_at?String(row.read_at).slice(0,40):null,created_at:String(row.created_at||'').slice(0,40)
     };});
   }
@@ -65,7 +71,9 @@
   }
   function markInboxRead(ids) {
     var selected=ids?new Set(ids):new Set(cloudNotifications.map(function(item){return item.id;})),now=new Date().toISOString();
-    cloudNotifications.forEach(function(item){if(selected.has(item.id)){item.read_at=item.read_at||now;pendingReads.add(item.id);}});
+    var changed=false;
+    cloudNotifications.forEach(function(item){if(selected.has(item.id)&&!item.read_at){item.read_at=now;pendingReads.add(item.id);changed=true;}});
+    if(!changed)return;
     saveInbox();renderCloudNotifications();flushReadReceipts();
   }
 
@@ -113,6 +121,14 @@
   function openRoute(target) {
     var route = typeof target === "string" ? parseAppLink(target) : target;
     if (!route || !root.location) return false;
+    if(route.review && root.__lorefyInboxReviewReady && root.dispatchEvent && root.CustomEvent){
+      root.dispatchEvent(new root.CustomEvent('lorefy:open-inbox-review',{detail:{id:route.review}}));
+      return true;
+    }
+    if(route.route==='reader' && validId(route.profileId) && root.dispatchEvent && root.CustomEvent){
+      root.dispatchEvent(new root.CustomEvent('lorefy:open-reader-profile',{detail:{id:route.profileId}}));
+      return true;
+    }
     var url = new URL(root.location.href);
     ["route", "novel", "id", "search", "review", "post", "notifications"].forEach(function (key) {
       url.searchParams.delete(key);
@@ -210,8 +226,30 @@
     var data = outer.data || outer;
     var path = notification && notification.target_path || outer.targetPath || outer.target_path || outer.url || outer.link || '';
     var route = parseAppLink(path);
+    if(route && route.route==='profile' && notification.kind==='follow'){
+      var profileId=data.profileId||notification.actor_id;
+      if(validId(profileId))return {route:'reader',profileId:profileId};
+    }
     if (route && route.route === 'community' && validId(data.postId)) route.post = data.postId;
     return route;
+  }
+
+  function notificationCopy(item) {
+    var data=item.data||{},en=root.document&&root.document.documentElement.lang==='en';
+    var messages={
+      post_like:['إعجاب جديد','New like',' أعجب بمنشورك',' liked your post'],
+      post_dislike:['تفاعل جديد','New reaction',' لم يعجبه منشورك',' disliked your post'],
+      post_reply:['رد جديد','New reply',' رد على منشورك',' replied to your post'],
+      post_reply_reply:['رد على تعليقك','Reply to your comment',' رد على تعليقك',' replied to your comment'],
+      review_like:['إعجاب جديد','New like',' أعجب بمراجعتك',' liked your review'],
+      review_dislike:['تفاعل جديد','New reaction',' لم تعجبه مراجعتك',' disliked your review'],
+      review_comment:['تعليق جديد','New comment',' علّق على مراجعتك',' commented on your review'],
+      review_reply:['رد على تعليقك','Reply to your comment',' رد على تعليقك',' replied to your comment'],
+      follow:['متابع جديد','New follower',' بدأ بمتابعتك',' started following you']
+    };
+    var message=messages[data.event];
+    if(!message)return {title:String(item.title||(en?'New notification':'إشعار جديد')),body:String(item.body||'')};
+    return {title:message[en?1:0],body:(data.actorName||(en?'A Lorefy reader':'قارئ Lorefy'))+message[en?3:2]};
   }
 
   function notificationTarget(notification) {
@@ -275,7 +313,7 @@
     if (!root.document || root.document.getElementById("lf-native-runtime-styles")) return;
     var style = root.document.createElement("style");
     style.id = "lf-native-runtime-styles";
-    style.textContent = ".lf-cloud-notifications{direction:rtl}.lf-cloud-notification{position:relative;display:flex;width:100%;gap:10px;padding:13px 18px;border:0;border-bottom:1px solid rgba(128,128,128,.16);background:transparent;color:inherit;text-align:right;font-family:inherit;cursor:pointer}.lf-cloud-notifications[dir=ltr]{direction:ltr}.lf-cloud-notifications[dir=ltr] .lf-cloud-notification{text-align:left}.lf-cloud-notification.is-unread{background:rgba(138,43,226,.09)}.lf-cloud-notification-dot{width:9px;height:9px;margin-top:6px;border-radius:50%;background:#8a2be2;flex:0 0 9px}.lf-cloud-notification-copy{min-width:0;flex:1}.lf-cloud-notification-copy strong,.lf-cloud-notification-copy span{display:block}.lf-cloud-notification-copy strong{font-size:13px}.lf-cloud-notification-copy span{font-size:12px;line-height:1.55;opacity:.72}.lf-cloud-notification-copy time{display:block;margin-top:3px;font-size:10px;opacity:.52}.lf-cloud-unread-badge{position:absolute!important;top:-3px!important;right:-3px!important;display:grid!important;place-items:center;width:17px!important;height:17px!important;border-radius:50%!important;background:#ef4056!important;color:#fff!important;font:800 9px/1 system-ui!important}.lf-notifications-page>p[data-lf-core-empty=hidden]{display:none!important}";
+    style.textContent = ".lf-cloud-notifications{direction:rtl}.lf-cloud-notification{position:relative;display:flex;box-sizing:border-box;width:100%;min-height:76px;gap:12px;padding:16px 18px;border:0;border-bottom:1px solid var(--ui-line,rgba(128,128,128,.16));background:transparent;color:var(--ui-ink,inherit);text-align:start;font-family:inherit;cursor:pointer}.lf-cloud-notifications[dir=ltr]{direction:ltr}.lf-cloud-notifications[dir=ltr] .lf-cloud-notification{text-align:left}.lf-cloud-notification.is-unread{background:var(--ui-selected,rgba(8,124,131,.09))}.lf-cloud-notification-dot{width:9px;height:9px;margin-top:8px;border-radius:50%;background:var(--ui-action,#087c83);flex:0 0 9px}.lf-cloud-notification-copy{min-width:0;flex:1}.lf-cloud-notification-copy strong,.lf-cloud-notification-copy span{display:block;overflow-wrap:anywhere}.lf-cloud-notification-copy strong{font-size:15px;font-weight:600;line-height:1.5}.lf-cloud-notification-copy span{font-size:14px;line-height:1.65;color:var(--ui-secondary,inherit);opacity:1}.lf-cloud-notification-copy time{display:block;margin-top:6px;font-size:12px;color:var(--ui-muted,inherit);opacity:1}.lf-cloud-unread-badge{position:absolute!important;top:-3px!important;right:-3px!important;display:grid!important;place-items:center;width:17px!important;height:17px!important;border-radius:50%!important;background:#ef4056!important;color:#fff!important;font:800 9px/1 system-ui!important}.lf-notifications-page>p[data-lf-core-empty=hidden]{display:none!important}";
     style.textContent += '.lf-notification-banner{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px;right:12px;max-width:460px;margin:auto;z-index:2147483000;display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--ui-line,#dbe5e7);border-radius:16px;background:var(--ui-surface,#fff);color:var(--ui-ink,#172d30);box-shadow:0 6px 24px rgba(0,0,0,.16)}.lf-notification-banner button{font:inherit;color:inherit;border:0;background:transparent;cursor:pointer}.lf-notification-banner-open{flex:1;min-width:0;min-height:48px;padding:6px 10px;text-align:start}.lf-notification-banner-open strong,.lf-notification-banner-open span{display:block;overflow-wrap:anywhere}.lf-notification-banner-open strong{font-size:14px}.lf-notification-banner-open span{font-size:13px;line-height:1.5;margin-top:3px}.lf-notification-banner-close{width:44px;min-height:44px;font-size:24px!important}';
     root.document.head.appendChild(style);
     style.textContent += '.lf-inbox-status{padding:14px 18px;color:var(--ui-secondary,#697582);font:inherit;text-align:start}.lf-inbox-status p{margin:0 0 8px;font-size:14px;line-height:1.65}.lf-inbox-status button{min-height:44px;padding:8px 16px;border:1px solid var(--ui-line,#cbd5dc);border-radius:22px;background:var(--ui-surface,#fff);color:var(--ui-action,#087c83);font:inherit;cursor:pointer}.lf-inbox-status button[hidden]{display:none}.lf-cloud-notification:focus-visible,.lf-inbox-status button:focus-visible{outline:2px solid var(--ui-action,#087c83);outline-offset:-3px}';
@@ -297,11 +335,20 @@
     });
   }
 
+  function syncInboxActions(page) {
+    var action=page.querySelector('[data-inbox-mark-all]');
+    if(!action)return;
+    var available=action.getAttribute('data-local-unread')==='true'||cloudNotifications.some(function(item){return !item.read_at;});
+    var disabled=String(!available);
+    if(action.getAttribute('aria-disabled')!==disabled)action.setAttribute('aria-disabled',disabled);
+  }
+
   function renderCloudNotifications() {
     if (!root.document) return;
     updateBellBadges();
     var page = root.document.querySelector(".lf-notifications-page");
     if (!page) return;
+    syncInboxActions(page);
     renderInboxStatus(page);
     var previous = page.querySelector(".lf-cloud-notifications");
     var signature=JSON.stringify([root.document.documentElement.lang,cloudNotifications]);
@@ -320,6 +367,7 @@
     section.setAttribute("aria-label", root.document.documentElement.lang === "en" ? "Notifications" : "الإشعارات الجديدة");
     section.dir = root.document.documentElement.lang === "en" ? "ltr" : "rtl";
     cloudNotifications.forEach(function (item) {
+      var content=notificationCopy(item);
       var button = root.document.createElement("button");
       button.type = "button";
       button.className = "lf-cloud-notification" + (item.read_at ? "" : " is-unread");
@@ -329,9 +377,9 @@
       var copy = root.document.createElement("span");
       copy.className = "lf-cloud-notification-copy";
       var title = root.document.createElement("strong");
-      title.textContent = String(item.title || "إشعار جديد");
+      title.textContent = content.title;
       var body = root.document.createElement("span");
-      body.textContent = String(item.body || "");
+      body.textContent = content.body;
       var time = root.document.createElement("time");
       time.textContent = formatNotificationTime(item.created_at);
       copy.appendChild(title); copy.appendChild(body); copy.appendChild(time);
@@ -379,8 +427,9 @@
     banner.className = 'lf-notification-banner'; banner.dir = en ? 'ltr' : 'rtl';
     banner.setAttribute('role','status'); banner.setAttribute('aria-live','polite');
     var open = root.document.createElement('button'); open.type = 'button'; open.className = 'lf-notification-banner-open';
-    var title = root.document.createElement('strong'); title.textContent = String(item.title || (en ? 'New notification' : 'إشعار جديد'));
-    var body = root.document.createElement('span'); body.textContent = String(item.body || '');
+    var content=notificationCopy(item);
+    var title = root.document.createElement('strong'); title.textContent = content.title;
+    var body = root.document.createElement('span'); body.textContent = content.body;
     open.appendChild(title); open.appendChild(body);
     open.addEventListener('click',function(){
       markInboxRead([item.id]);dismissBanner();
@@ -506,6 +555,11 @@
     if (reviewId) {
       var reviewTries = 0;
       var reviewTimer = root.setInterval(function () {
+        if(root.__lorefyInboxReviewReady){
+          root.clearInterval(reviewTimer);
+          root.dispatchEvent(new root.CustomEvent('lorefy:open-inbox-review',{detail:{id:reviewId}}));
+          return;
+        }
         var card = root.document.querySelector('[data-review-id="' + reviewId.replace(/[^0-9a-f-]/gi, "") + '"]');
         if (card) { root.clearInterval(reviewTimer); card.click(); }
         else if (++reviewTries > 60) root.clearInterval(reviewTimer);
@@ -523,17 +577,18 @@
       var target = event.target && event.target.closest && event.target.closest("button");
       if (!target) return;
       if (/^(الإشعارات|Notifications)$/.test(target.getAttribute('aria-label') || '')) refreshCloudNotifications();
-      if (/قراءة الكل|Mark all as read/i.test(target.textContent || "") && target.closest(".lf-notifications-page")) {
+      if (target.hasAttribute("data-inbox-mark-all") && target.getAttribute("aria-disabled") !== "true" && target.closest(".lf-notifications-page")) {
         markInboxRead(null);
       }
     }, true);
     var observer = new MutationObserver(function () {
       var page = root.document.querySelector(".lf-notifications-page");
+      if(page)syncInboxActions(page);
       if (page && ((cloudNotifications.length && !page.querySelector(".lf-cloud-notifications")) ||
           (inboxState !== 'ready' && !page.querySelector('.lf-inbox-status')))) renderCloudNotifications();
       else updateBellBadges();
     });
-    observer.observe(root.document.body, { childList:true, subtree:true });
+    observer.observe(root.document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['data-local-unread'] });
   }
 
   function start() {

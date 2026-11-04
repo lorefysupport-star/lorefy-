@@ -207,6 +207,11 @@ bars share the UI tokens and reduced-preference fallbacks. Compact 88px friend
 items apply only to unexpanded Home rails; Explore retains its existing width.
 No notification, publication, relationship or stored-rating behavior changed.
 
+2026-11-04: [[sessions/2026-11-04-Inapp-Interaction-Notifications]] adds validated
+reply-recipient delivery, actor metadata, block/self/dedup guards and exact older
+review opening. The focused SQL was approved and applied to Supabase; local
+runtime/browser evidence remains separate from pending physical acceptance.
+
 [[sessions/2026-10-16-Friend-Rating-Rows]] وحدت هندسة الاسم والتقييم في [CSS](../../styles/lorefy-explore-studio.css). لا تغيير لمنطق المتابعة أو القيم الكسرية أو الحسابات.
 
 - [[bugs/LF-034-Review-Mutation-Session]]: منع طلب حذف/رد/تفاعل مراجعة قديم من استكمال سلسلة حساب آخر أو إرجاع نجاح متأخر. [[sessions/2026-10-17-Review-Mutation-Session]]

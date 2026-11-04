@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Notifications: [[sessions/2026-11-04-Inapp-Interaction-Notifications]] covers
+Like/heart/Dislike, comments, addressed replies, follow, read persistence,
+owner isolation, block/dedup guards and exact older-review opening. Approved
+SQL is live; physical/two-account acceptance and installed runtime remain separate.
+
 R-04: [[sessions/2026-11-02-Prebuild-Repairs]] verifies dev-tool cancellation,
 literal/glob cleanup and sync/async matching with3361 full tests and clean npm
 audit. Capacitor8.4.3 and all runtime behavior stay; no EAS/native certification.

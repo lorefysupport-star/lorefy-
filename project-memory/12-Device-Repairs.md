@@ -8,6 +8,11 @@ aliases: ["تقرير الجوال", "إصلاحات الجهاز", "device audi
 
 ## ابدأ هنا
 
+2026-11-04 follow-up: [[sessions/2026-11-04-Inapp-Interaction-Notifications]]
+repairs inbox metadata, addressed replies, theme colors and exact target
+navigation. Focused SQL is approved/applied; source/browser tests do not close
+LF-001/LF-005 physical-device acceptance or imply a new installed build.
+
 التقرير المستورد في [[inbox/2026-10-15-Device-Audit]]. هذه لوحة العمل المرتبطة
 بالكود. Obsidian يحفظ الدليل والقرار؛ الأوامر والاختبارات تنفذ العمل. لا تُغلق
 مشكلة بمجرد كتابة ملاحظة، ولا تعتبر نجاح المصدر إثباتًا لتحديث الآيفون.

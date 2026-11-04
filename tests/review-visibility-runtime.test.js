@@ -15,7 +15,7 @@ function effectHarness() {
   const end = app.indexOf('},[]);useEffect(', start);
   assert.ok(start >= 0 && end > start);
   const listeners = new Map(), calls = [];
-  let reviews = [], feed = [row(1), row(2, 'reader')], own = [row(2, 'reader'), row(101, 'reader', 'old-work')];
+  let reviews = [], opened=null, message='', feed = [row(1), row(2, 'reader')], own = [row(2, 'reader'), row(101, 'reader', 'old-work')];
   const api = { mode:'live', user:{id:'reader'},
     listReviews:async options => { calls.push(options); return options.userId ? feed.filter(r => r.user_id === options.userId) : feed; },
     listReviewCollection:async options => { calls.push(options); return options.userId === 'reader' ? own : feed.filter(r => r.user_id === options.userId); }
@@ -24,11 +24,30 @@ function effectHarness() {
   const scope = { window, console, document:{hidden:false,addEventListener(){},removeEventListener(){}},
     CustomEvent:function(name,options){this.type=name;this.detail=options?.detail;},
     setTimeout,clearTimeout,setInterval:()=>0,clearInterval(){},useEffect:fn=>fn(),
-    Io(){},co(){},po(){},fo:fn=>{ reviews = fn(reviews); },Ye(){},S(){},setCloudFollowers(){},setCloudFollowing(){}
+    Io(){},co(){},po(){},fo:fn=>{ reviews = fn(reviews); },Vo:value=>{opened=value;},A:value=>{message=value;},W:'en',Ye(){},S(){},setCloudFollowers(){},setCloudFollowing(){}
   };
   vm.runInNewContext(app.slice(start,end+6),scope);
-  return { api, calls, reviews:()=>reviews, event:async(name,detail)=>{listeners.get(name)?.({detail});await flush();}, setFeed:value=>{feed=value;},setOwn:value=>{own=value;} };
+  return { api, calls, reviews:()=>reviews,opened:()=>opened,message:()=>message, event:async(name,detail)=>{listeners.get(name)?.({detail});await flush();}, setFeed:value=>{feed=value;},setOwn:value=>{own=value;} };
 }
+
+test('inbox opens the exact older review rather than depending on the latest timeline page',async()=>{
+ const h=effectHarness();await flush();
+ h.api.listReviews=async options=>options.reviewId===id(250)?[row(250)]:[];
+ await h.event('lorefy:open-inbox-review',{id:id(250)});
+ assert.equal(h.opened()?.id,id(250));assert.ok(h.reviews().some(item=>item.id===id(250)));
+});
+test('an unavailable notification target reports a recoverable message, not an empty timeline',async()=>{
+ const h=effectHarness();await flush();h.api.listReviews=async()=>[];
+ await h.event('lorefy:open-inbox-review',{id:id(250)});
+ assert.equal(h.opened(),null);assert.match(h.message(),/no longer available/i);
+});
+test('a late notification lookup cannot open a review for a switched account',async()=>{
+ const h=effectHarness();await flush();let release;
+ h.api.listReviews=()=>new Promise(resolve=>{release=resolve;});
+ const pending=h.event('lorefy:open-inbox-review',{id:id(250)});await flush();
+ h.api.user={id:'next-reader'};release([row(250)]);await pending;
+ assert.equal(h.opened(),null);
+});
 
 test('opening a reader profile does not remove other readers from the shared review collection', async () => {
   const h = effectHarness(); await flush();

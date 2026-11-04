@@ -1495,6 +1495,10 @@
       var query = this.client.from("reviews")
         .select("id,user_id,work_id,rating,body,recommend,spoiler,image_urls,is_public,created_at,updated_at")
         .order("created_at", { ascending:false }).order("id", { ascending:false }).limit(limit);
+      if (options.reviewId) {
+        if (!isUuid(options.reviewId)) return [];
+        query = query.eq("id", String(options.reviewId));
+      }
       if (options.workId) query = query.eq("work_id", String(options.workId));
       if (options.userId) query = query.eq("user_id", String(options.userId));
       if (options.before && isUuid(options.before.id)) {

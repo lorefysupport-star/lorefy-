@@ -41,6 +41,12 @@ const phases={reviews:['reviews','authors','avatar','review_comments','commenter
   friends:['follows','reviews','authors','avatar'],
   posts:['posts','attachment','attachment-item','authors','avatar','community_post_reactions','replies'],
   chapters:['chapter_reviews','chapter-avatar']};
+test('notification review lookup uses an exact identifier and rejects malformed targets before fetching',async()=>{
+ const h=harness('reviews');await h.api.listReviews({reviewId:friend,limit:1});
+ assert.ok(h.calls.some(call=>call.table==='reviews'&&call.method==='eq'&&call.args[0]==='id'&&call.args[1]===friend));
+ const fresh=harness('reviews');assert.equal((await fresh.api.listReviews({reviewId:'not-a-review'})).length,0);
+ assert.ok(!fresh.calls.includes('reviews'));
+});
 for(const[action,steps]of Object.entries(phases))for(const phase of steps)test(action+': switching account during '+phase+' stops the old result and later requests',async()=>{
   const h=harness(action),gate=deferred(),entered=deferred();
   h.hooks[phase]=async value=>{entered.resolve();await gate.promise;return value;};
