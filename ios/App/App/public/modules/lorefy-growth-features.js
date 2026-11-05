@@ -4943,8 +4943,8 @@
     favorites.classList.toggle("is-empty", !favorites.querySelector("[data-lorefy-book-cover],img"));
     renameProfileFavouriteWorksHeading(page);
     var labels = identity.querySelectorAll("span, strong");
-    var header = null;
-    for (var labelIndex = labels.length - 1; labelIndex >= 0; labelIndex--) {
+    var header = page.querySelector(":scope > .lf-profile-top-works-head");
+    for (var labelIndex = labels.length - 1; labelIndex >= 0 && !header; labelIndex--) {
       if (!/^(المفضلة|Favorites)$/.test((labels[labelIndex].textContent || "").trim())) continue;
       header = labels[labelIndex].parentElement;
       break;
@@ -4999,7 +4999,7 @@
     return true;
   }
   function syncProfileTopCharacters() {
-    var favorites = doc.querySelector(".lf-profile-favorites");
+    var favorites = doc.querySelector(".lf-profile-favorites:not(.lf-profile-top-characters-grid)");
     var page = favorites && favorites.closest(".lf-profile-page");
     if (!favorites || !page) return false;
     renameProfileFavouriteWorksHeading(page);
@@ -5054,11 +5054,7 @@
     var recent = page.querySelector(":scope > .lf-profile-recent");
     var rated = page.querySelector(":scope > .lf-profile-rated-characters");
     if (recent && rated && recent.nextSibling !== rated) page.insertBefore(recent, rated);
-    var readerStatistics = page.getAttribute('data-profile-layout') === 'reader'
-      && page.querySelector(':scope > .lf-reader-layout-statistics');
-    if (readerStatistics) {
-      if (readerStatistics.nextSibling !== topCharacters) page.insertBefore(topCharacters, readerStatistics.nextSibling);
-    } else if (favorites.nextSibling !== topCharacters) page.insertBefore(topCharacters, favorites.nextSibling);
+    if (favorites.nextSibling !== topCharacters) page.insertBefore(topCharacters, favorites.nextSibling);
     return true;
   }
   function hydrateProfileRatedCharacters(workId, onDone) {

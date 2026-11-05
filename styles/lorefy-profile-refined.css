@@ -75,4 +75,43 @@
   .lf-app .lf-profile-page .lf-profile-section-tabs button { font-size:12px !important; gap:4px; }
   .lf-app .lf-profile-page .lf-profile-community-action { display:flex !important; flex-direction:column; justify-content:center; gap:6px; }
 }
+.lf-app .lf-profile-page .lf-profile-reading-metrics { padding-block:6px !important; margin-block:6px 10px !important; display:grid !important; grid-template-columns:repeat(var(--profile-metric-count,4),minmax(0,1fr)) !important; border:0 !important; }
+.lf-app .lf-profile-page .lf-profile-reading-metrics>div:not(.is-profile-social-stat) { min-height:32px !important; gap:3px !important; justify-content:center !important; align-items:center !important; text-align:center !important; }
+.lf-app .lf-profile-page .lf-profile-reading-metrics svg { width:14px !important; height:14px !important; display:block !important; }
+.lf-app .lf-profile-page .lf-profile-reading-metrics>div:not(.is-profile-social-stat)>div:first-child { display:flex !important; height:14px; margin:0 !important; align-items:center; justify-content:center; }
+.lf-app .lf-profile-page .lf-profile-reading-metrics :is(strong,p:first-of-type) { font-size:17px !important; line-height:1.2 !important; min-height:0 !important; font-family:inherit !important; font-weight:600 !important; }
+.lf-app .lf-profile-page[data-profile-layout='reader']:not(.lf-public-profile-page) .lf-profile-name p { font-size:26px !important; line-height:1.3 !important; }
+.lf-app .lf-profile-page[data-profile-layout='reader']:not(.lf-public-profile-page) .lf-profile-handle { font-size:14px !important; }
+.lf-app .lf-profile-page .lf-profile-section-tabs svg { display:block !important; width:16px !important; height:16px !important; }
+.lf-app .lf-profile-page .lf-profile-reading-metrics>div>:is(p:last-child,span:last-child),
+.lf-app .lf-profile-page .lf-reader-layout-statistics>h2 {
+  position:absolute !important; width:1px !important; height:1px !important; min-height:0 !important; margin:-1px !important; padding:0 !important;
+  overflow:hidden !important; clip-path:inset(50%); white-space:nowrap !important; border:0 !important;
+}
+.lf-app .lf-profile-page .lf-reader-layout-statistics { padding:0 var(--reader-layout-inline,20px) !important; margin-block:0 8px !important; border:0 !important; }
+.lf-app .lf-profile-page .lf-profile-section-tabs { margin-bottom:8px !important; padding:3px !important; }
+.lf-app .lf-profile-page.has-atelier-avatar :is(.lf-profile-connections,.lf-reader-social-summary,.lf-reader-counts) {
+  padding-block-start:var(--profile-frame-connections-space,0px) !important;
+}
+.lf-app .lf-profile-page :is(.lf-profile-connections,.lf-reader-social-summary) { margin-bottom:8px !important; }
+.lf-app .lf-profile-page :is(.lf-profile-top-works-head,[data-profile-shelf='works']>.lf-reader-shelf-head) { min-height:32px !important; margin-bottom:4px !important; }
+.lf-app .lf-profile-page[data-profile-layout='reader']>.lf-profile-top-works-head { margin-inline:var(--reader-layout-inline,20px) !important; width:auto !important; box-sizing:border-box; }
+.lf-app .lf-profile-page :is(.lf-profile-favorites,[data-profile-shelf='works']) :is([data-showcase-position='left'],[data-showcase-position='right']) { padding-bottom:0 !important; }
+.lf-app .lf-profile-page :is(.lf-profile-favorites,[data-profile-shelf='works']) :is([data-showcase-position='left'],[data-showcase-position='right']) .lf-showcase-cover { width:120% !important; }
+.lf-app .lf-profile-page .lf-profile-favorites.is-showcase-view,
+.lf-app .lf-profile-page [data-profile-shelf='works'] .lf-reader-shelf-rail.is-showcase-view {
+  max-width:min(100%,calc((var(--profile-favorites-budget,400px) - 88px) * 1.5 + 32px)) !important;
+  padding:8px 16px 10px !important;
+}
+.lf-app .lf-profile-page :is(.lf-profile-favorites,[data-profile-shelf='works']) .lf-showcase-caption { min-height:60px !important; margin-top:6px !important; gap:2px !important; }
+.lf-app .lf-profile-page :is(.lf-profile-favorites,[data-profile-shelf='works']) .lf-showcase-title { font-size:12px !important; }
+.lf-app .lf-profile-page :is(.lf-profile-favorites,[data-profile-shelf='works']) .lf-showcase-rank { font-size:15px !important; }
+.lf-app .lf-profile-page .lf-profile-favorites.is-spine-view>:is([data-work-title],.lf-profile-spine,.is-empty-spine),
+.lf-app .lf-profile-page :is(.lf-profile-favorites.is-spine-view,[data-profile-shelf='works'] .is-spine-view) .lf-profile-spine-cover {
+  height:min(var(--spine-height,192px),calc(var(--profile-favorites-budget,400px) - 44px)) !important;
+}
+.lf-app .lf-profile-page .lf-profile-favorites:not(.is-spine-view):not(.is-showcase-view)>[data-work-title] {
+  max-width:calc((var(--profile-favorites-budget,400px) - 56px) * 2 / 3) !important;
+  justify-self:center;
+}
 }

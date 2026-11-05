@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-04T16:14:58.613Z
-Source commit: 86c2d19b2dbb244c64c9e359439c10d422258507
+Observed: 2026-11-05T12:27:59.319Z
+Source commit: 4940c040e22c3c097a12f5431b9b34c4636ce201
 
 # Styles Source Inventory
 
@@ -18,7 +18,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-cinema-ui.css](../../styles/lorefy-cinema-ui.css) (9088 bytes)
 - [styles/lorefy-comics-search.css](../../styles/lorefy-comics-search.css) (1755 bytes)
 - [styles/lorefy-community.css](../../styles/lorefy-community.css) (37764 bytes)
-- [styles/lorefy-cover-media.css](../../styles/lorefy-cover-media.css) (15028 bytes)
+- [styles/lorefy-cover-media.css](../../styles/lorefy-cover-media.css) (15802 bytes)
 - [styles/lorefy-custom-glass.css](../../styles/lorefy-custom-glass.css) (18621 bytes)
 - [styles/lorefy-customize.css](../../styles/lorefy-customize.css) (5126 bytes)
 - [styles/lorefy-data-studio.css](../../styles/lorefy-data-studio.css) (5667 bytes)
@@ -40,13 +40,13 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-page-refresh.css](../../styles/lorefy-page-refresh.css) (2066 bytes)
 - [styles/lorefy-product-tools.css](../../styles/lorefy-product-tools.css) (12674 bytes)
 - [styles/lorefy-profile-apple.css](../../styles/lorefy-profile-apple.css) (10999 bytes)
-- [styles/lorefy-profile-header.css](../../styles/lorefy-profile-header.css) (3630 bytes)
+- [styles/lorefy-profile-header.css](../../styles/lorefy-profile-header.css) (3897 bytes)
 - [styles/lorefy-profile-layout.css](../../styles/lorefy-profile-layout.css) (9913 bytes)
-- [styles/lorefy-profile-refined.css](../../styles/lorefy-profile-refined.css) (9286 bytes)
+- [styles/lorefy-profile-refined.css](../../styles/lorefy-profile-refined.css) (13820 bytes)
 - [styles/lorefy-profile-sections.css](../../styles/lorefy-profile-sections.css) (22088 bytes)
 - [styles/lorefy-profile-shop.css](../../styles/lorefy-profile-shop.css) (23176 bytes)
 - [styles/lorefy-public-profile.css](../../styles/lorefy-public-profile.css) (17458 bytes)
-- [styles/lorefy-reader-layout.css](../../styles/lorefy-reader-layout.css) (25651 bytes)
+- [styles/lorefy-reader-layout.css](../../styles/lorefy-reader-layout.css) (25798 bytes)
 - [styles/lorefy-reading-diary.css](../../styles/lorefy-reading-diary.css) (19506 bytes)
 - [styles/lorefy-redesign.css](../../styles/lorefy-redesign.css) (23533 bytes)
 - [styles/lorefy-review-editor.css](../../styles/lorefy-review-editor.css) (8180 bytes)

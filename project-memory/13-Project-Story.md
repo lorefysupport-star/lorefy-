@@ -6,6 +6,20 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-05: [[sessions/2026-11-05-Profile-Compact-Repairs]] fixes follower/frame
+clearance, photo aperture gaps, compact accessible metrics and complete favorite
+presentations above the dock. The v697 follow-up fixes populated Reader ordering,
+visible icons and heading bounds missed by initial fixtures. The v698 follow-up
+keeps the original four owner header actions and metrics before tabs in Reader,
+with shared banner geometry and four-column type. Fresh full3429, header108 and
+populated-browser156 pass. Banner alpha blending follows the actual theme wash.
+Physical-device acceptance remains.
+
+2026-11-05: [[sessions/2026-11-05-Crafted-Frames-Integration]] promotes the eight
+approved object/elf/crochet studies into the actual shop. 3416 source tests,
+720 profile checks and 31 store/pixel checks pass. Owner-approved SQL enables
+their public projection without changing privacy or grants. No build or push.
+
 2026-11-04: [[sessions/2026-11-04-Remaining-Repairs-Publication]] records the
 later owner-authorized publication of remaining UI/share/profile/frame repairs.
 Fresh full3396, PNG/browser192 and animated-frame546 checks pass. No native

@@ -58,21 +58,15 @@
     const R=root.React,h=R.createElement,nodes=children(page);
     const banner=pick(nodes,'lf-profile-banner'),identity=pick(nodes,'lf-profile-identity'),favorites=pick(nodes,'lf-profile-favorites');
     if(!banner||!identity)return page;
-    const parts=children(identity),metrics=pick(parts,'lf-profile-metrics');
-    const oldBanner=children(banner);
-    const controls=oldBanner.flatMap(node=>{
-      if(!node||node.type==='img'||has(node,'lf-profile-avatar'))return [];
-      if(node.type==='div') {
-        const buttons=children(node).filter(child=>child.type==='button');
-        return buttons.length>1?[R.cloneElement(node,{},...buttons.slice(1))]:[];
-      }
-      return node.type==='button'?[node]:[];
-    });
-    const primary=R.cloneElement(identity,{},...parts.filter(node=>node!==metrics));
-    const art=R.cloneElement(banner,{},...oldBanner.filter(node=>node&&(node.type==='img'||has(node,'lf-profile-avatar'))));
-    const composed=R.cloneElement(page,{key:'reader-profile-layout'},h(Toolbar,{key:'reader-toolbar',...props}),art,primary,
-      favorites&&titleFavorites(favorites),h(ReadingLately,{key:'reading-lately',...props}),h(Statistics,{key:'reading-statistics',metrics,lang:props.lang}),
-      h('div',{className:'lf-reader-layout-utilities',key:'profile-tools'},...controls),
+    const parts=children(identity),metrics=pick(parts,'lf-profile-metrics'),followingMetrics=parts[parts.indexOf(metrics)+1];
+    // The legacy source gives this heading its class only after mounting.
+    const favoriteHeading=pick(parts,'lf-profile-top-works-head')||(metrics&&followingMetrics?.type==='div'&&
+      children(followingMetrics).some(node=>node?.type==='button')&&children(followingMetrics).some(node=>node?.type==='span')?followingMetrics:null);
+    const heading=favoriteHeading&&!has(favoriteHeading,'lf-profile-top-works-head')?
+      R.cloneElement(favoriteHeading,{className:'lf-profile-top-works-head'}):favoriteHeading;
+    const primary=R.cloneElement(identity,{},...parts.filter(node=>node!==favoriteHeading));
+    const composed=R.cloneElement(page,{key:'reader-profile-layout'},banner,primary,
+      heading,favorites&&titleFavorites(favorites),h(ReadingLately,{key:'reading-lately',...props}),
       ...nodes.filter(node=>node!==banner&&node!==identity&&node!==favorites));
     return root.LorefyLibraryMedia?root.LorefyLibraryMedia.owner(composed,props):composed;
   }
@@ -84,7 +78,7 @@
     const shelves=items.filter(node=>node!==identity),first=shelves.shift();
     return R.cloneElement(page,{key:'reader-public-layout'},h(Toolbar,{key:'reader-toolbar',lang:props.lang,onBack:props.onBack,visitor:true}),banner,
       R.cloneElement(surface,{},R.cloneElement(identity,{},...parts.filter(node=>node!==metrics)),
-        first,h(Statistics,{key:'reading-statistics',metrics,lang:props.lang}),...shelves),
+        h(Statistics,{key:'reading-statistics',metrics,lang:props.lang}),first,...shelves),
       ...nodes.filter(node=>node!==banner&&node!==surface));
   }
   return {composeOwner,composePublic,ReadingLately,Toolbar,Statistics};

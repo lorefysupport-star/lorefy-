@@ -38,7 +38,9 @@ test('reader composition preserves identity, actions, artwork and secondary sect
   for(const original of [f.name,f.avatar,f.recent])assert.ok(all.includes(original));
   assert.ok(all.some(node=>node.props.className==='lf-profile-banner'&&node.props.children.includes(f.avatar)));
   assert.ok(all.some(node=>node.type==='img'&&node.props.src==='banner.jpg'));
-  assert.ok(all.some(node=>node.props.className==='lf-reader-layout-statistics'));
+  const identity=all.find(node=>node.props.className==='lf-profile-identity');
+  assert.ok(identity.props.children.includes(f.metric));
+  assert.ok(!all.some(node=>node.props.className==='lf-reader-layout-statistics'));
   assert.equal(all.filter(node=>node===f.metric).length,1);
   assert.ok(all.some(node=>node.props.className==='lf-profile-favorites'));
 });
@@ -129,7 +131,34 @@ test('pending SQL patch extends only the existing whitelist and fails on a chang
   assert.ok(sql.includes('raise exception'));
   assert.doesNotMatch(sql,/drop |grant |revoke |update public\./i);
 });
-test('character insertions follow statistics only in Reader and do not churn stable nodes',()=>{
+test('Reader keeps metrics inside the identity before tabs while the favorite heading stays next to works',()=>{
+  const {api,h}=harness(),f=fixture(h,'reader'),tree=api.composeOwner(f.page,{lang:'en',reading:[]});
+  const nodes=tree.props.children,identity=nodes.find(n=>n?.props?.className==='lf-profile-identity');
+  const heading=nodes.indexOf(f.head),favorites=nodes.findIndex(n=>n?.props?.className==='lf-profile-favorites');
+  assert.ok(identity.props.children.includes(f.metric));
+  assert.ok(heading===nodes.indexOf(identity)+1&&favorites===heading+1);
+  assert.ok(!identity.props.children.includes(f.head));
+});
+
+test('Reader reuses the original top controls instead of substituting a second toolbar and hiding actions below favorites',()=>{
+  const {api,h}=harness(),f=fixture(h,'reader');
+  const banner=f.page.props.children[0],actions=h('div',{className:'original-actions'},h('button',{onClick:()=>{}},'Settings'),h('button',{onClick:()=>{}},'Theme'));
+  banner.props.children.push(actions);
+  const nodes=api.composeOwner(f.page,{lang:'en',reading:[],onSettings:()=>{},onEdit:()=>{}}).props.children;
+  assert.equal(nodes[0],banner);assert.ok(nodes[0].props.children.includes(actions));
+  assert.ok(!nodes.some(n=>n?.type===api.Toolbar||n?.props?.className==='lf-reader-layout-utilities'));
+});
+
+test('Reader also recognizes the actual legacy heading before its enhancer adds a class',()=>{
+  const {api,h}=harness(),f=fixture(h,'reader'),action=()=>{};
+  f.head.props.className='';f.head.props.children=[h('button',{onClick:action},'Edit'),h('span',null,'Favorites')];
+  const nodes=api.composeOwner(f.page,{lang:'en',reading:[]}).props.children;
+  const heading=nodes.find(n=>n?.props?.className==='lf-profile-top-works-head');
+  assert.ok(heading);assert.equal(heading.props.children[0].props.onClick,action);
+  assert.ok(!nodes.find(n=>n?.props?.className==='lf-profile-identity').props.children.includes(f.head));
+});
+
+test('character insertions follow favorite works in every layout and do not churn stable nodes',()=>{
   const source=read('modules/lorefy-growth-features.js');
   const fn=source.slice(source.indexOf('function syncProfileTopCharacters()'),source.indexOf('function hydrateProfileRatedCharacters('));
   for(const layout of ['normal','immersive','reader']) {
@@ -138,11 +167,12 @@ test('character insertions follow statistics only in Reader and do not churn sta
     const characters={getAttribute:()=> '5',querySelector:()=>grid};
     const favorites={nextSibling:afterFavorite,closest:()=>page},statistics={nextSibling:afterStats};
     const page={getAttribute:()=>layout,querySelector:selector=>selector.includes('top-characters')?characters:selector.includes('statistics')?statistics:null,
-      insertBefore:(node,before)=>{inserted.push({node,before});(layout==='reader'?statistics:favorites).nextSibling=node;}};
+      insertBefore:(node,before)=>{inserted.push({node,before});favorites.nextSibling=node;}};
     const context={doc:{querySelector:()=>favorites},renameProfileFavouriteWorksHeading(){},profileCharacterEntries:()=>({entries:[],missing:[]}),
       profileTopCharacterSelection:()=>[],profileTopCharacterFromRef:()=>null,profileTopCharacterRefKey:()=>'',characterImageUrl:()=>'',profileRatedCharacterCache:{}};
     vm.createContext(context);vm.runInContext(fn,context);context.syncProfileTopCharacters();context.syncProfileTopCharacters();
     assert.equal(inserted.length,1);
-    assert.equal(inserted[0].node,characters);assert.equal(inserted[0].before,layout==='reader'?afterStats:afterFavorite);
+    assert.equal(inserted[0].node,characters);assert.equal(inserted[0].before,afterFavorite);
+    assert.ok(fn.includes('.lf-profile-favorites:not(.lf-profile-top-characters-grid)'));
   }
 });

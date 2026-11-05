@@ -6,6 +6,21 @@ aliases: ["إطارات", "بنرات", "حزم", "مجانية", "ثيم", "ز�
 ---
 # المظهر والإطارات والحزم
 
+[[sessions/2026-11-05-Profile-Compact-Repairs]] records measured follower clearance,
+photo bleed beneath artwork, compact accessible metrics, adaptive favorites and
+alpha fading into the real theme wash. The v697 follow-up covers populated Reader
+ordering, visible icons, heading gutters and proportional side books missed by
+the initial fixtures. The v698 follow-up shares owner Reader header controls,
+banner geometry and four-column metrics before tabs. Fresh full3429,
+header-parity108 and populated-browser156 pass; physical
+device acceptance remains pending.
+
+[[sessions/2026-11-05-Crafted-Frames-Integration]] adds the eight approved object,
+expressive-elf and crochet packs to the actual shop, with lazy WebP atlases and
+the shared visibility-aware scheduler. 3416 source tests and 751 browser checks
+pass. After approval the eight free frame/page IDs were enabled in the installed
+projection, preserving privacy, blocks and grants. Device/release gates remain.
+
 [[sessions/2026-11-02-Halloween-Integration]] integrates the six approved Halloween
 packs into the real catalog and shared renderer, with proportional toolbar-safe
 crowns and independently moving parts. All three layouts:72 owner and18 visitor

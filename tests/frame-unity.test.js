@@ -81,6 +81,6 @@ test('all 51 portrait frames use one responsive artwork budget instead of family
   }
   const css=read('styles/lorefy-frame-motion.css');
   assert.match(css,/has-calibrated-portrait/);
-  assert.match(css,/has-page-decoration\s*\{[^}]*--profile-cover-height:[^;]*88px/);
+  assert.match(css,/has-page-decoration\s*\{[^}]*--profile-cover-height:[^;]*32px/);
   assert.match(css,/--reader-layout-inline:var\(--profile-frame-safe-inline,32px\)/,'Reader ID rules must use the same content gutter as the page rails');
 });

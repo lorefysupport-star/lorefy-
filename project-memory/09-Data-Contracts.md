@@ -6,6 +6,13 @@ aliases: ["تدفق البيانات", "الحفظ", "storage", "ownership"]
 ---
 # عقود البيانات
 
+Crafted frame contract: [[sessions/2026-11-05-Crafted-Frames-Integration]]. Only
+eight fixed `crafted-*` IDs are available for frame/page selection, not effects.
+Catalog geometry and local atlas paths are validated. Existing owner-scoped
+storage remains authoritative; preview does not mutate profile media. Approved
+SQL extends only their free public projection; auth/owner/private/block/purchase
+guards remain. Browser fixtures are not live multi-account certification.
+
 Completed-empty accounting: [[sessions/2026-11-01-Completed-Empty-Progress]].
 An explicit completed status plus an all-zero/missing checkpoint captures known
 totals once on initialization or catalog/chapter hydration. Preserve positive

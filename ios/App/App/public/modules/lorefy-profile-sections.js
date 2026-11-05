@@ -566,6 +566,10 @@
         const redundant = stat === 'MessageCircle' || stat === 'MessagesSquare' ||
           Array.from(row.querySelectorAll('p,span')).some(label => socialLabels.has(label.textContent.trim()));
         row.classList.toggle('is-profile-social-stat',redundant);
+        if(!redundant){
+          const labels=Array.from(row.querySelectorAll('p,span')),label=labels[labels.length-1]?.textContent.trim();
+          if(label&&row.title!==label)row.title=label;
+        }
         if (!redundant) count++;
       });
       metrics.classList.add('lf-profile-reading-metrics');

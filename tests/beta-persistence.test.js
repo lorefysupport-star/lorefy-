@@ -23,7 +23,7 @@ test('a reused favorite slot opens its current position after catalog hydration'
   const recycled = slot();
   const favorites = { dataset: {}, children: [recycled], classList: { toggle() {} },
     querySelector() { return {}; }, closest() { return page; } };
-  const page = { querySelector() { return { querySelectorAll() { return []; } }; } };
+  const page = { querySelector(selector) { return selector.includes('identity') ? { querySelectorAll() { return []; } } : null; } };
   recycled.parentElement = favorites;
   const requested=[];
   const scope = { doc: { querySelector() { return favorites; } }, read:()=>['book'], uiText:ar=>ar,

@@ -35,7 +35,7 @@ html[lang='en'] :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='rea
   border-radius: 8px; transition: background-color 140ms ease, color 140ms ease;
 }
 :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-reader-layout-tools .lf-shop-shortcut { display: none !important; }
-:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-decoration-page-border {
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']).lf-public-profile-page .lf-decoration-page-border {
   padding-top: max(0px,calc(var(--nc-top,0px) - 12px)) !important;
 }
 :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) > :is(.lf-profile-banner,.lf-reader-banner) {
@@ -61,7 +61,7 @@ html[lang='en'] :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='rea
 }
 :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-identity {
   display: grid !important; grid-template-columns: minmax(0,1fr);
-  grid-template-areas: 'name' 'handle' 'bio' 'social' 'tabs' 'favorites';
+  grid-template-areas: 'name' 'handle' 'bio' 'social' 'metrics' 'tabs' 'favorites';
   grid-template-rows: auto !important; row-gap: 0 !important;
   padding: 12px var(--reader-layout-inline) 0 !important; text-align: start !important;
 }
@@ -93,6 +93,7 @@ html[lang='en'] :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='rea
   align-items: center !important; gap: 4px 20px !important; flex-wrap: wrap;
   min-height: 44px; padding: 0 0 4px !important; margin: 0 !important;
 }
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-metrics { grid-area:metrics; }
 :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-connections > button {
   display: flex !important; gap: 6px !important; padding: 0; min-height: 44px;
 }

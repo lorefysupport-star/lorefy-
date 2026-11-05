@@ -6,6 +6,19 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Profile compact repairs: [[sessions/2026-11-05-Profile-Compact-Repairs]] covers all
+43 offered frames in three layouts, six-theme fading, follower/name clearance,
+small accessible controls and screenshot-ready favorite layouts. The v697
+populated-state follow-up supersedes earlier Reader-order/icon acceptance:
+v698 additionally restores the original owner Reader controls, shared banner
+geometry and metrics before tabs. Fresh full3429, header108 and browser156 pass.
+Device/live network acceptance remains separate.
+
+Crafted collections: [[sessions/2026-11-05-Crafted-Frames-Integration]] maps eight
+selected object/elf/crochet packs to the real shop, shared motion and guarded
+public projection. Full3416, profile720 and store/pixel31 pass. All three layouts
+sampled; native delivery and physical-device/live two-account acceptance remain.
+
 Remaining publication: [[sessions/2026-11-04-Remaining-Repairs-Publication]] maps
 share recovery, visitor favorites, sheet dragging, glass consistency and six
 selected animated packs to full3396, actual PNG/browser192 and frame546 checks.

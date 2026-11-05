@@ -6,16 +6,16 @@ html:root:root:root:root:root:root:root:root :is(#lf-reader-layout,.lf-profile-p
   padding-inline:var(--profile-frame-safe-inline,32px) !important;
 }
 html:root:root:root:root:root:root:root:root .has-page-decoration.has-elven-page {
-  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(190px,calc(100svh - 754px),250px) + 88px + max(0px, var(--profile-frame-top,64px) - 64px));
+  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(120px,calc(100svh - 804px),180px) + 32px + max(0px, var(--profile-frame-top,64px) - 64px));
 }
 html:root:root:root:root:root:root:root:root .has-page-decoration.has-refined-page {
-  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(190px,calc(100svh - 754px),250px) + 88px + max(0px, var(--profile-frame-top,64px) - 64px));
+  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(120px,calc(100svh - 804px),180px) + 32px + max(0px, var(--profile-frame-top,64px) - 64px));
 }
 html:root:root:root:root:root:root:root:root .has-page-decoration.has-elven-page[data-profile-layout='reader'] {
-  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(190px,calc(100svh - 754px),250px) + 24px + max(0px, var(--profile-frame-top,64px) - 64px));
+  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(120px,calc(100svh - 804px),180px) + 32px + max(0px, var(--profile-frame-top,64px) - 64px));
 }
 html:root:root:root:root:root:root:root:root .has-page-decoration.has-refined-page[data-profile-layout='reader'] {
-  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(190px,calc(100svh - 754px),250px) + 24px + max(0px, var(--profile-frame-top,64px) - 64px));
+  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(120px,calc(100svh - 804px),180px) + 32px + max(0px, var(--profile-frame-top,64px) - 64px));
 }
 html:root:root:root:root:root:root:root:root :is(#lf-reader-layout,.lf-profile-page):is(.has-elven-page,.has-refined-page) > :is(.lf-reader-banner,.lf-profile-banner) {
   height:var(--profile-cover-height) !important;
@@ -69,13 +69,13 @@ html:root:root:root:root:root:root:root:root .has-page-decoration {
   --profile-frame-safe-top:env(safe-area-inset-top,0px);
   --profile-frame-banner-top:calc(var(--profile-frame-safe-top) + 66px);
   --profile-frame-controls-top:calc(var(--profile-frame-safe-top) + 16px);
-  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(190px,calc(100svh - 754px),250px) + 88px + max(0px, var(--profile-frame-top,64px) - 64px));
+  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(120px,calc(100svh - 804px),180px) + 32px + max(0px, var(--profile-frame-top,64px) - 64px));
   padding-bottom:calc(var(--nc-bottom,0px) + 112px) !important;
   scroll-padding-top:calc(var(--profile-frame-controls-top) + 52px);
   scroll-padding-bottom:calc(var(--nc-bottom,0px) + 88px);
 }
 html:root:root:root:root:root:root:root:root .has-page-decoration[data-profile-layout='reader'] {
-  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(190px,calc(100svh - 754px),250px) + 24px + max(0px, var(--profile-frame-top,64px) - 64px));
+  --profile-cover-height:calc(var(--profile-frame-safe-top) + clamp(120px,calc(100svh - 804px),180px) + 32px + max(0px, var(--profile-frame-top,64px) - 64px));
 }
 html:root:root:root:root:root:root:root:root[data-lorefy-native-shell='true'] .has-page-decoration {
   --profile-frame-safe-top:var(--nc-top,0px);

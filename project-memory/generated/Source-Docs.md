@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-04T16:14:58.613Z
-Source commit: 86c2d19b2dbb244c64c9e359439c10d422258507
+Observed: 2026-11-05T12:27:59.319Z
+Source commit: 4940c040e22c3c097a12f5431b9b34c4636ce201
 
 # Docs Source Inventory
 
@@ -37,6 +37,8 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/COMMUNITY_TIMELINE_2026-11-01.md](../../docs/COMMUNITY_TIMELINE_2026-11-01.md) (13485 bytes)
 - [docs/COMMUNITY_VISUAL_QA_2026-10-03.md](../../docs/COMMUNITY_VISUAL_QA_2026-10-03.md) (2676 bytes)
 - [docs/CONTENT_RIGHTS_AUDIT.md](../../docs/CONTENT_RIGHTS_AUDIT.md) (2081 bytes)
+- [docs/CRAFTED_FRAMES_ARTWORK.md](../../docs/CRAFTED_FRAMES_ARTWORK.md) (921 bytes)
+- [docs/CRAFTED_FRAMES_INTEGRATION_2026-11-05.md](../../docs/CRAFTED_FRAMES_INTEGRATION_2026-11-05.md) (3094 bytes)
 - [docs/CUSTOM_APPEARANCE_FRAME_FIT_2026-10-09.md](../../docs/CUSTOM_APPEARANCE_FRAME_FIT_2026-10-09.md) (4114 bytes)
 - [docs/CUSTOM_ARTWORK_REPAIR_2026-10-08.md](../../docs/CUSTOM_ARTWORK_REPAIR_2026-10-08.md) (4441 bytes)
 - [docs/DAHLA_UPDATE_VERIFICATION.md](../../docs/DAHLA_UPDATE_VERIFICATION.md) (3486 bytes)
@@ -79,6 +81,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/PERFORMANCE_REVIEW_2026-11-01.md](../../docs/PERFORMANCE_REVIEW_2026-11-01.md) (4439 bytes)
 - [docs/PREBUILD_ACCOUNTS_SHARE_2026-10-01.md](../../docs/PREBUILD_ACCOUNTS_SHARE_2026-10-01.md) (6767 bytes)
 - [docs/PROFILE_ATELIER_2026-10-10.md](../../docs/PROFILE_ATELIER_2026-10-10.md) (3262 bytes)
+- [docs/PROFILE_COMPACT_REPAIRS_2026-11-05.md](../../docs/PROFILE_COMPACT_REPAIRS_2026-11-05.md) (6889 bytes)
 - [docs/PROFILE_CUSTOM_GLASS_QA.md](../../docs/PROFILE_CUSTOM_GLASS_QA.md) (3895 bytes)
 - [docs/PROFILE_DECORATION_AUDIT_2026-10-09.md](../../docs/PROFILE_DECORATION_AUDIT_2026-10-09.md) (4754 bytes)
 - [docs/PROFILE_FAVORITES_SHELF_VERIFICATION_2026-10-07.md](../../docs/PROFILE_FAVORITES_SHELF_VERIFICATION_2026-10-07.md) (4174 bytes)

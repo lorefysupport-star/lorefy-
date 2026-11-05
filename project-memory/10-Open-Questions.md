@@ -6,6 +6,11 @@ aliases: ["المشكلات", "النواقص", "المتبقي", "blockers"]
 ---
 # أمور لا تُغلق بالافتراض
 
+[[sessions/2026-11-05-Crafted-Frames-Integration]] verifies eight new frames in
+source, local browser and the installed SQL definition. It does not certify
+physical-iPhone frame time, live two-account UI, or delivery to older installed
+clients. A native release remains separately authorized; no build was created.
+
 [[sessions/2026-11-01-Home-Reaction-Feedback]] and
 [[sessions/2026-11-01-Home-Reading-Hierarchy]] cover local Home action feedback,
 reading geometry and displayed progress units.3137 full tests plus192/288 browser

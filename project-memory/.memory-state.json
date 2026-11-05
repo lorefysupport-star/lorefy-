@@ -1,14 +1,14 @@
 {
   "schema": 2,
-  "head": "86c2d19b2dbb244c64c9e359439c10d422258507",
+  "head": "4940c040e22c3c097a12f5431b9b34c4636ce201",
   "branch": "main",
   "fingerprints": {
     "package.json": "844df40a16bae92254e4ab6f25874593180bd08fc0c34791bc2a600438f1d86b",
     "AGENTS.md": "6c8d1742a8542b6a82ede3f0a1eff3c1388cadd0180a17e7b1af18a3db3a51c7",
-    "index.html": "fa3decdc442f9590aedf70491a1c138b3f415aa3c6cea4052ebaadb93929c373",
-    "sw.js": "95354019db5147a60243ae0015e5d2ab69c52a11b7298eb095fbee0e8fd85253",
-    "modules/lorefy-frame-motion.js": "965d567945de711b99a984c2b64690e0ed15c0c3779b4f1fa756f0c0623c6383",
-    "styles/lorefy-frame-motion.css": "58132e373dc1f8e4cd557f5ab83c2c485a6f07d2e807d30149a74c8730228532",
+    "index.html": "dd138027dd877d0e51634609e64a30019dd445859979ac509a9e1212da42ba9a",
+    "sw.js": "d676f31909d9dbcb6f6d43ae40cf3bef42b7025bb92986f7f6dfba73c774e22b",
+    "modules/lorefy-frame-motion.js": "211674ce0d1c26c4e9da66b97078802160419528292f8a6823d35ea0be033d6f",
+    "styles/lorefy-frame-motion.css": "0fd6b7eb397135859c141c9c2a90082ed0083d89288eca57efc948608cfdb902",
     "docs/FEATURE_AUDIT_20261011.md": "185e3a025cdff7809562125ce0d649fe3a6ceb8a7683ad7ae1aa23e5b55f3fc8",
     "docs/FRAME_GEOMETRY_20261012.md": "65aa0b1ed0835f7a903295d947c67978b8d7432aeaea6e02bc5ce9b086518558",
     "docs/NATIVE_AUTH_SEARCH_FIXES_2026-10-12.md": "19e1efe53ab358e891633581ed56ee1c4a481fad9fc65155d93958ebc272c18d",
@@ -16,47 +16,37 @@
     "tools/project-memory.mjs": "445cf699ef2d54178cf89c3b4107c345233a63f4ad6ab7d9b87c25dcd9e90251"
   },
   "changes": {
-    "modules/lorefy-chapter-detail.js": "1f15685254582ba9b1cd49339cf862f83cbe18d5cc3d581507d1dc4d9f3245b2",
-    "modules/lorefy-community.js": "14d2bb104fb052e75c84a1c3e87062fd648c032ad0fc2789a15adf8c8fd2f7f3",
-    "modules/lorefy-explore-studio.js": "564dddf7b73125e707a1b6e75230540b48bd7eb0da5e82bf951c6b63ff8146fe",
-    "modules/lorefy-frame-motion.js": "965d567945de711b99a984c2b64690e0ed15c0c3779b4f1fa756f0c0623c6383",
-    "modules/lorefy-growth-features.js": "f6a450c0f2215daf602c0285477a8d1698cdef9579be2b38ced5a31a4b3a6e04",
-    "modules/lorefy-halloween-art.js": "d0683505303359b4b196a5d0eaf679d81fa8a010197400d4509369dcb66a8a5e",
-    "modules/lorefy-halloween-motion.js": "4f8721f752f67389f4ed8d0ad83743929df586ba576f5b61e39212d57284840a",
-    "modules/lorefy-profile-shop.js": "e2b28cb5b06a410d6a6c2f03e2c4f53a75d03844d90f70949a3a4268e56b4ed1",
-    "modules/lorefy-public-profile.js": "180efc5a3f70ac16c06b8526d227763eb3105cb0c02cf1982e2b5f40ae65ba60",
-    "modules/lorefy-reader-layout.js": "993a192f88f5c2d17b0ae8b12e3233974b29cd21cbc04c1c942ec8ad20a6cfd3",
-    "modules/lorefy-review-editor.js": "0f29909a9ece34819a5d93f44b1e593d44bcbea45c281445fe9256b80de8fc77",
-    "modules/lorefy-share-composer.js": "c95c4dd8936bec31be19d815dbed63161536db1fc3a102fe35db43369fdd731c",
-    "modules/lorefy-work-panels.js": "539f4a995528adfb555a4af78ea0c809e5ac5809a38e08408cfcc9fea7329d5b",
-    "styles/lorefy-community.css": "5af67b5c4637dffec374b2689c5a5e6670288b8d3c200cffee3b8ff542da8e25",
-    "styles/lorefy-design-system.css": "af36f5e1c6d59773fee37dfc24b4c129c201bc5edfcbf8097252dbea49183785",
-    "styles/lorefy-glass-materials.css": "251cea781d3715865615f704f5faf585b417bbac13015cec064cf8d41ff1d031",
-    "styles/lorefy-home-cinema.css": "f8f6e840650b15b3daf2b58ab4ce8fbfa867c4db3a3e63d4d41a21a4f9e9d2d8",
-    "styles/lorefy-interface-settings.css": "638c8100c5010ab39e9910f1abe0665d1e0705c3f9772d5af3dc6f6af31633a1",
-    "styles/lorefy-library-cinema.css": "823d60a857a12443cfefeb6cc7bd386a0331a96a96e71cfa37306980a4174fec",
-    "styles/lorefy-library-refined.css": "4d70ff425bd04adc5ce68892ee45591392aa547f99dd2d983f1ef9120b37322f",
-    "styles/lorefy-profile-sections.css": "79f0223fa72a4b35684e837e1e9ccdacb46aaef928f2ebe5d1614810238adb02",
-    "styles/lorefy-public-profile.css": "37b8871c7b1037a9d17a2698d7bd9da7c00d0339c79813f72c4f90f7e118f349",
-    "styles/lorefy-work-studio.css": "5e1ec76847fa18081870370881b1dc6b1f90efb659e60702729c4a44ca55668c",
-    "tests/community-copy.test.js": "0e2ac02240ded71d4767317e9e278da313dc0cdbefa9532d0978b6fc68d300b6",
-    "tests/community-posts.test.js": "7d9db25cb99edd9a7d1f38ae284d76ea4152f0b3e594a7d984d43e90763bb2f5",
-    "tests/cover-media.test.js": "56f28bb1d46a8aeb0397ee3f2a7c6523d33c87d3d0094544379f09aae590d860",
-    "tests/data-studio.test.js": "a1ac9432a8f0bbc87a84b7aae8b7300e238bb2ee4cd936c3eefae204996b4533",
-    "tests/glass-materials.test.js": "206243f1b36d1be94691e1e31a581cc2f9759fc342a7881d1c859deaeecd49b7",
-    "tests/halloween-integration.test.js": "ae9efa9763234f20ca0b5038cf82a33d89af77b64946434b59ace6369e9819a5",
-    "tests/legal-studio.test.js": "c149eee4c97ae0bfce8f014708676ff51cce294ed0953a9be1fddd8f9de52a45",
-    "tests/preview-readers.test.js": "c5674cea8dc75c61dc3e0764696aca721d45275d07865c5c0610f4293e12111a",
-    "tests/profile-header-shelf-polish.test.js": "ced213dfab281d0930c655751166dd8881c10618b01eb98f4c82f8936b7792bf",
-    "tests/profile-refinement.test.js": "c190ac51559ea636ce0d23d6f0d28f9a6d8dbfdab0900c9448f232fd5ad87106",
-    "tests/public-profile-view.test.js": "498cf2ae00484f096394c0acc5074deabf853822c6f0035b2f74058198fc4362",
-    "tests/reader-layout.test.js": "c9416c5464cd2503e6008f1256ed36e87638f2d4afea9864a1eb97b734877ca8",
-    "tests/reading-terminology.test.js": "9f278934646ac8e15ccb2b202b664dc758533f569c4431f92987556d74606e56",
-    "tests/reading-typography.test.js": "5ac9257d4df4ee37d08f8964379b93b41c8a53fd65f5e1015f22bd9cb0ff24a3",
-    "tests/report-studio.test.js": "01320798eed3ef05f6ed39ae66cf418a3bba3f1c18af7803ad669f3fa54ec8b8",
-    "tests/share-render-lifecycle.test.js": "c2759c851e292a23ae6c6355c54eaa5206342fce42a7b82a068f617306655dda",
-    "tests/ui-unity.test.js": "06e5fbf97c1e331cacf8d3af17b21b681de17a1fdb7f01d3965c3337ecc2497a",
-    "tests/work-byline-typography.test.js": "c8b6c8816bbeca07f960bd15651f9d3ff8b45462f6292f395e33ce09043ca116"
+    "modules/lorefy-crafted-crochet.js": "ff340a64214799e2a6f0e5088368f62c3ba960dd766c761aac77224dab9af6d9",
+    "modules/lorefy-crafted-elves.js": "d9e9c7b27b7f34b1cde77360c49fb1c95960b9b7bcc9516e0dd7261ab0f08111",
+    "modules/lorefy-crafted-motion.js": "f3d77c527dc2dd9b3a3e732c1a8489b6e4af9519fde708f4d84ec96d53cb068e",
+    "modules/lorefy-crafted-objects.js": "7ada57b5376290c15834f12ef598a3f971e19f39b0391dac4925f4f7f9c33633",
+    "modules/lorefy-frame-motion.js": "211674ce0d1c26c4e9da66b97078802160419528292f8a6823d35ea0be033d6f",
+    "modules/lorefy-growth-features.js": "fa016d3d8b2576d41df2bc0f06480ce94c0947e08806c65d223864f83cdf7484",
+    "modules/lorefy-profile-header.js": "f53a8cb4386cf74d0d28b278e0ede0c8b552ff291272e9ced68fd8a64eb78496",
+    "modules/lorefy-profile-sections.js": "8a8cee60b0855994f2d792356c44c2478e69aec215fc0a96f51c84bef44d0ced",
+    "modules/lorefy-profile-shop.js": "6bbe71849b848c74516d3407e4bad0d735710bd0df0f6f761339c4a1f60e6997",
+    "modules/lorefy-reader-layout.js": "bc69c9be565e3aa25670aa9da00ee50ca849b9d0d2600e086a1fd877e99f21e0",
+    "styles/lorefy-cover-media.css": "489f1458a226b4f5b30ff7899aa5e202e85efa5036529991e11a6dd89947f467",
+    "styles/lorefy-frame-motion.css": "0fd6b7eb397135859c141c9c2a90082ed0083d89288eca57efc948608cfdb902",
+    "styles/lorefy-profile-header.css": "8508e13f268d07b975859dce438c6250f6efd93c84dadb5dd8487fd415d6c41e",
+    "styles/lorefy-profile-refined.css": "711b780831e24733eba45167084a67506a913efc1d7a65d22013ddfa2aba396b",
+    "styles/lorefy-reader-layout.css": "4d0e7a4172fb3590eb952b35889d69630eb7505838de7b3b59549a2929a9532c",
+    "tests/beta-persistence.test.js": "9297eaac8b89b791fd97d07ae81efd1def525e66f00ab218a8e5a04460459a12",
+    "tests/community-copy.test.js": "d9b9420e08939e1f0b5900d5072ac2e59749228bd75441dd4c123ac08447e662",
+    "tests/cover-media.test.js": "f6f24a9eaabf1230f5580c1a3a98420ddca246484c556c1a70b3d3f4752ad32b",
+    "tests/crafted-frames.test.js": "dc500eb23c14215157d7cd92c953f72d6d00e1c5a9257ca142ec84aba35a9355",
+    "tests/crafted-projection-sql.test.js": "30c906ead7bc1858fb85e331d3ae144d8ad678176a7f4822a657e48346735a4a",
+    "tests/data-studio.test.js": "85859e219f898406bafe8d94d4ad13119ac8f72195f23452be399b8e75b81556",
+    "tests/frame-motion.test.js": "3a7f9f7faa7d72a35521cc5bb6f22c1939fb34e393daf0c5b2476bc2e8f5f50d",
+    "tests/frame-unity.test.js": "800ad379fb5aa99cea4fe12c72c47dac47c422ee076f468dc8147fb733df5e3e",
+    "tests/legal-studio.test.js": "7131b2bd13733589e17da46838bd16efd8e18802de871c2db7615be2fe0e874a",
+    "tests/profile-fade-cover-polish.test.js": "3b59d7db91164e9302018a4595da7169b326570111d175f27e30ecd08b889ef8",
+    "tests/reader-layout.test.js": "3c7204e76ea85339d72209d7e83a31d6fffde0a6c38ff2cc9e287aae6596a2d7",
+    "tests/reading-terminology.test.js": "7a259909f2dae7889688f1f01675f9ba6b87b4a91ae13277eda8daaa58c5f872",
+    "tests/reading-typography.test.js": "cad6dfccea03cf2768fe3a23298d1704eaaa5ec728f22d335c08a4d3f3c4c8a6",
+    "tests/report-studio.test.js": "56fdcf21619c4459521d2e2c9af87ce89f08c48d9816aa27fac11d0f200952c4",
+    "tests/ui-unity.test.js": "f77eda53f0662c76fe62cc6c3bb5b8bc717baed0a865906ae741ab48248f6b4d",
+    "tests/work-byline-typography.test.js": "24756602aef40793a52679008e6fa208f3574b189b627f0c6652f9b6327f4ef9"
   },
   "inventory": [
     {
@@ -304,6 +294,18 @@
       "area": "Docs",
       "bytes": 2081,
       "sha256": "36a5dc009e65614b8b68ee523d87ccf28631997e04fa84157ca3a819d7ef399b"
+    },
+    {
+      "path": "docs/CRAFTED_FRAMES_ARTWORK.md",
+      "area": "Docs",
+      "bytes": 921,
+      "sha256": "291cb65b5b877c76e4fbc96e33fcaeab391b2fe2e982b0c0dda53e41b31cf6e2"
+    },
+    {
+      "path": "docs/CRAFTED_FRAMES_INTEGRATION_2026-11-05.md",
+      "area": "Docs",
+      "bytes": 3094,
+      "sha256": "7a2b44430fa075bdf9c6d5e5e42dd1bde0fe6c6ac891a87b74258921639284af"
     },
     {
       "path": "docs/CUSTOM_APPEARANCE_FRAME_FIT_2026-10-09.md",
@@ -558,6 +560,12 @@
       "sha256": "e2ec612d6f218174601616db9148ae3b6f533703cd18b35e3df72b6ddd6fc78a"
     },
     {
+      "path": "docs/PROFILE_COMPACT_REPAIRS_2026-11-05.md",
+      "area": "Docs",
+      "bytes": 6889,
+      "sha256": "4d44bd0b4541ed28b61d801c587099f2cfe369242898c548ff5dd013defcc377"
+    },
+    {
       "path": "docs/PROFILE_CUSTOM_GLASS_QA.md",
       "area": "Docs",
       "bytes": 3895,
@@ -734,8 +742,8 @@
     {
       "path": "index.html",
       "area": "Shell",
-      "bytes": 52724,
-      "sha256": "fa3decdc442f9590aedf70491a1c138b3f415aa3c6cea4052ebaadb93929c373"
+      "bytes": 53082,
+      "sha256": "dd138027dd877d0e51634609e64a30019dd445859979ac509a9e1212da42ba9a"
     },
     {
       "path": "ios/App/App.xcodeproj/project.pbxproj",
@@ -948,6 +956,30 @@
       "sha256": "00fce2b36b445e186a927bf4b3c89970641b03029f4c5c64d4bcb6e9607e3986"
     },
     {
+      "path": "modules/lorefy-crafted-crochet.js",
+      "area": "Modules",
+      "bytes": 3105,
+      "sha256": "ff340a64214799e2a6f0e5088368f62c3ba960dd766c761aac77224dab9af6d9"
+    },
+    {
+      "path": "modules/lorefy-crafted-elves.js",
+      "area": "Modules",
+      "bytes": 3263,
+      "sha256": "d9e9c7b27b7f34b1cde77360c49fb1c95960b9b7bcc9516e0dd7261ab0f08111"
+    },
+    {
+      "path": "modules/lorefy-crafted-motion.js",
+      "area": "Modules",
+      "bytes": 8379,
+      "sha256": "f3d77c527dc2dd9b3a3e732c1a8489b6e4af9519fde708f4d84ec96d53cb068e"
+    },
+    {
+      "path": "modules/lorefy-crafted-objects.js",
+      "area": "Modules",
+      "bytes": 4564,
+      "sha256": "7ada57b5376290c15834f12ef598a3f971e19f39b0391dac4925f4f7f9c33633"
+    },
+    {
       "path": "modules/lorefy-data-proxy.js",
       "area": "Modules",
       "bytes": 4403,
@@ -980,8 +1012,8 @@
     {
       "path": "modules/lorefy-frame-motion.js",
       "area": "Modules",
-      "bytes": 17918,
-      "sha256": "965d567945de711b99a984c2b64690e0ed15c0c3779b4f1fa756f0c0623c6383"
+      "bytes": 17969,
+      "sha256": "211674ce0d1c26c4e9da66b97078802160419528292f8a6823d35ea0be033d6f"
     },
     {
       "path": "modules/lorefy-frame-restoration.js",
@@ -998,8 +1030,8 @@
     {
       "path": "modules/lorefy-growth-features.js",
       "area": "Modules",
-      "bytes": 427729,
-      "sha256": "f6a450c0f2215daf602c0285477a8d1698cdef9579be2b38ced5a31a4b3a6e04"
+      "bytes": 427518,
+      "sha256": "fa016d3d8b2576d41df2bc0f06480ce94c0947e08806c65d223864f83cdf7484"
     },
     {
       "path": "modules/lorefy-halloween-art.js",
@@ -1130,8 +1162,8 @@
     {
       "path": "modules/lorefy-profile-header.js",
       "area": "Modules",
-      "bytes": 6540,
-      "sha256": "7c7c635a98f07c83f9fadae1ae7786684ce9e44bfd8bf41edad42b196cc68755"
+      "bytes": 7917,
+      "sha256": "f53a8cb4386cf74d0d28b278e0ede0c8b552ff291272e9ced68fd8a64eb78496"
     },
     {
       "path": "modules/lorefy-profile-layout.js",
@@ -1142,14 +1174,14 @@
     {
       "path": "modules/lorefy-profile-sections.js",
       "area": "Modules",
-      "bytes": 42849,
-      "sha256": "8b160412de31a1326e24e54ca161a247d3aab42a1cad1a911b66e7fb26d09027"
+      "bytes": 43059,
+      "sha256": "8a8cee60b0855994f2d792356c44c2478e69aec215fc0a96f51c84bef44d0ced"
     },
     {
       "path": "modules/lorefy-profile-shop.js",
       "area": "Modules",
-      "bytes": 57745,
-      "sha256": "e2b28cb5b06a410d6a6c2f03e2c4f53a75d03844d90f70949a3a4268e56b4ed1"
+      "bytes": 60965,
+      "sha256": "6bbe71849b848c74516d3407e4bad0d735710bd0df0f6f761339c4a1f60e6997"
     },
     {
       "path": "modules/lorefy-public-appearance.js",
@@ -1166,8 +1198,8 @@
     {
       "path": "modules/lorefy-reader-layout.js",
       "area": "Modules",
-      "bytes": 7192,
-      "sha256": "993a192f88f5c2d17b0ae8b12e3233974b29cd21cbc04c1c942ec8ad20a6cfd3"
+      "bytes": 7048,
+      "sha256": "bc69c9be565e3aa25670aa9da00ee50ca849b9d0d2600e086a1fd877e99f21e0"
     },
     {
       "path": "modules/lorefy-reading-diary-core.js",
@@ -1454,8 +1486,8 @@
     {
       "path": "qa/profile-header.html",
       "area": "Tests",
-      "bytes": 3578,
-      "sha256": "6d0d78e74c7bb61e8e474d9a4b39d2dbc9530b0eee05d4abd58d11e97a94d106"
+      "bytes": 3887,
+      "sha256": "ddb28d9d2db25c2f880812d433013f9b91e56b2015ff3a3a8edff5fc695307db"
     },
     {
       "path": "qa/profile-sections-browser.cjs",
@@ -1628,8 +1660,8 @@
     {
       "path": "styles/lorefy-cover-media.css",
       "area": "Styles",
-      "bytes": 15028,
-      "sha256": "6828ac12ba7b2829357e7ce9dc0ec0c2e1bc8f86288d54aca582755aef811428"
+      "bytes": 15802,
+      "sha256": "489f1458a226b4f5b30ff7899aa5e202e85efa5036529991e11a6dd89947f467"
     },
     {
       "path": "styles/lorefy-custom-glass.css",
@@ -1677,7 +1709,7 @@
       "path": "styles/lorefy-frame-motion.css",
       "area": "Styles",
       "bytes": 10214,
-      "sha256": "58132e373dc1f8e4cd557f5ab83c2c485a6f07d2e807d30149a74c8730228532"
+      "sha256": "0fd6b7eb397135859c141c9c2a90082ed0083d89288eca57efc948608cfdb902"
     },
     {
       "path": "styles/lorefy-glass-materials.css",
@@ -1760,8 +1792,8 @@
     {
       "path": "styles/lorefy-profile-header.css",
       "area": "Styles",
-      "bytes": 3630,
-      "sha256": "84e8803753632cf25787653471a0a33831f2028b45f86e53d99e6022333f79c9"
+      "bytes": 3897,
+      "sha256": "8508e13f268d07b975859dce438c6250f6efd93c84dadb5dd8487fd415d6c41e"
     },
     {
       "path": "styles/lorefy-profile-layout.css",
@@ -1772,8 +1804,8 @@
     {
       "path": "styles/lorefy-profile-refined.css",
       "area": "Styles",
-      "bytes": 9286,
-      "sha256": "b9f2816aa089d871f77f0f5f15ad6fee1abf6d93be1dfee08e56ec23aa8dbfaa"
+      "bytes": 13820,
+      "sha256": "711b780831e24733eba45167084a67506a913efc1d7a65d22013ddfa2aba396b"
     },
     {
       "path": "styles/lorefy-profile-sections.css",
@@ -1796,8 +1828,8 @@
     {
       "path": "styles/lorefy-reader-layout.css",
       "area": "Styles",
-      "bytes": 25651,
-      "sha256": "b1058aeefdaf2e5d7a99de1fb6fa04ebb5dd10967e1dc0e7d20a9829bae83501"
+      "bytes": 25798,
+      "sha256": "4d0e7a4172fb3590eb952b35889d69630eb7505838de7b3b59549a2929a9532c"
     },
     {
       "path": "styles/lorefy-reading-diary.css",
@@ -2250,6 +2282,12 @@
       "sha256": "ae0e3dd42e0ceb9bede2510523a1da82dee5a17832eb98561cd225fa2eee0c39"
     },
     {
+      "path": "supabase/migrations/20261104184233_crafted_profile_artwork.sql",
+      "area": "Database",
+      "bytes": 1159,
+      "sha256": "3cc0119c8b80187424db7d713fb5e527036916e2632d201476c4ed6d1dddc320"
+    },
+    {
       "path": "supabase/tests/profile_username_changes.sql",
       "area": "Database",
       "bytes": 3114,
@@ -2276,8 +2314,8 @@
     {
       "path": "sw.js",
       "area": "Shell",
-      "bytes": 16537,
-      "sha256": "95354019db5147a60243ae0015e5d2ab69c52a11b7298eb095fbee0e8fd85253"
+      "bytes": 16878,
+      "sha256": "d676f31909d9dbcb6f6d43ae40cf3bef42b7025bb92986f7f6dfba73c774e22b"
     },
     {
       "path": "tests/account-deletion-recovery.test.js",
@@ -2450,8 +2488,8 @@
     {
       "path": "tests/beta-persistence.test.js",
       "area": "Tests",
-      "bytes": 9274,
-      "sha256": "0a80061cdd1a1fe6e5d8f0a50346ff5463764c8cb89da0991776e38ae4d23c42"
+      "bytes": 9321,
+      "sha256": "9297eaac8b89b791fd97d07ae81efd1def525e66f00ab218a8e5a04460459a12"
     },
     {
       "path": "tests/beta-remediation.test.js",
@@ -2894,8 +2932,8 @@
     {
       "path": "tests/community-copy.test.js",
       "area": "Tests",
-      "bytes": 9068,
-      "sha256": "0e2ac02240ded71d4767317e9e278da313dc0cdbefa9532d0978b6fc68d300b6"
+      "bytes": 9064,
+      "sha256": "d9b9420e08939e1f0b5900d5072ac2e59749228bd75441dd4c123ac08447e662"
     },
     {
       "path": "tests/community-edit-lifecycle.test.js",
@@ -3014,8 +3052,8 @@
     {
       "path": "tests/cover-media.test.js",
       "area": "Tests",
-      "bytes": 11105,
-      "sha256": "56f28bb1d46a8aeb0397ee3f2a7c6523d33c87d3d0094544379f09aae590d860"
+      "bytes": 11096,
+      "sha256": "f6f24a9eaabf1230f5580c1a3a98420ddca246484c556c1a70b3d3f4752ad32b"
     },
     {
       "path": "tests/cover-preparation-performance.test.js",
@@ -3028,6 +3066,18 @@
       "area": "Tests",
       "bytes": 15598,
       "sha256": "3a3c7b3a4d1c8aede7f5db2f4c47d041811b6180a7121109bc83d417aecb5e15"
+    },
+    {
+      "path": "tests/crafted-frames.test.js",
+      "area": "Tests",
+      "bytes": 7477,
+      "sha256": "dc500eb23c14215157d7cd92c953f72d6d00e1c5a9257ca142ec84aba35a9355"
+    },
+    {
+      "path": "tests/crafted-projection-sql.test.js",
+      "area": "Tests",
+      "bytes": 5500,
+      "sha256": "30c906ead7bc1858fb85e331d3ae144d8ad678176a7f4822a657e48346735a4a"
     },
     {
       "path": "tests/custom-appearance.test.js",
@@ -3050,8 +3100,8 @@
     {
       "path": "tests/data-studio.test.js",
       "area": "Tests",
-      "bytes": 6912,
-      "sha256": "a1ac9432a8f0bbc87a84b7aae8b7300e238bb2ee4cd936c3eefae204996b4533"
+      "bytes": 6908,
+      "sha256": "85859e219f898406bafe8d94d4ad13119ac8f72195f23452be399b8e75b81556"
     },
     {
       "path": "tests/decoration-lab.test.js",
@@ -3212,8 +3262,8 @@
     {
       "path": "tests/frame-motion.test.js",
       "area": "Tests",
-      "bytes": 14134,
-      "sha256": "060ef3587df00ede7735f05a1f19172d4aa034713044e0064772d332dd2e8ee6"
+      "bytes": 14204,
+      "sha256": "3a7f9f7faa7d72a35521cc5bb6f22c1939fb34e393daf0c5b2476bc2e8f5f50d"
     },
     {
       "path": "tests/frame-restoration.test.js",
@@ -3225,7 +3275,7 @@
       "path": "tests/frame-unity.test.js",
       "area": "Tests",
       "bytes": 4688,
-      "sha256": "cb2eacc443b67f777eb133f7cfc9cfc4b4cc8f917881eed0714759eb86577f03"
+      "sha256": "800ad379fb5aa99cea4fe12c72c47dac47c422ee076f468dc8147fb733df5e3e"
     },
     {
       "path": "tests/friend-activity.test.js",
@@ -3422,8 +3472,8 @@
     {
       "path": "tests/legal-studio.test.js",
       "area": "Tests",
-      "bytes": 4967,
-      "sha256": "c149eee4c97ae0bfce8f014708676ff51cce294ed0953a9be1fddd8f9de52a45"
+      "bytes": 4963,
+      "sha256": "7131b2bd13733589e17da46838bd16efd8e18802de871c2db7615be2fe0e874a"
     },
     {
       "path": "tests/library-cinema.test.js",
@@ -3690,6 +3740,12 @@
       "sha256": "389b1988dd4890df60678f143ede8b6e722cd76c0b30e67b9c7d67bdc14f59eb"
     },
     {
+      "path": "tests/profile-fade-cover-polish.test.js",
+      "area": "Tests",
+      "bytes": 6142,
+      "sha256": "3b59d7db91164e9302018a4595da7169b326570111d175f27e30ecd08b889ef8"
+    },
+    {
       "path": "tests/profile-favorites-spines.test.js",
       "area": "Tests",
       "bytes": 9303,
@@ -3866,8 +3922,8 @@
     {
       "path": "tests/reader-layout.test.js",
       "area": "Tests",
-      "bytes": 10231,
-      "sha256": "c9416c5464cd2503e6008f1256ed36e87638f2d4afea9864a1eb97b734877ca8"
+      "bytes": 12342,
+      "sha256": "3c7204e76ea85339d72209d7e83a31d6fffde0a6c38ff2cc9e287aae6596a2d7"
     },
     {
       "path": "tests/reading-checkpoint-history.test.js",
@@ -3956,14 +4012,14 @@
     {
       "path": "tests/reading-terminology.test.js",
       "area": "Tests",
-      "bytes": 5943,
-      "sha256": "9f278934646ac8e15ccb2b202b664dc758533f569c4431f92987556d74606e56"
+      "bytes": 5938,
+      "sha256": "7a259909f2dae7889688f1f01675f9ba6b87b4a91ae13277eda8daaa58c5f872"
     },
     {
       "path": "tests/reading-typography.test.js",
       "area": "Tests",
-      "bytes": 8820,
-      "sha256": "5ac9257d4df4ee37d08f8964379b93b41c8a53fd65f5e1015f22bd9cb0ff24a3"
+      "bytes": 8809,
+      "sha256": "cad6dfccea03cf2768fe3a23298d1704eaaa5ec728f22d335c08a4d3f3c4c8a6"
     },
     {
       "path": "tests/recap-integrity.test.js",
@@ -3998,8 +4054,8 @@
     {
       "path": "tests/report-studio.test.js",
       "area": "Tests",
-      "bytes": 8570,
-      "sha256": "01320798eed3ef05f6ed39ae66cf418a3bba3f1c18af7803ad669f3fa54ec8b8"
+      "bytes": 8566,
+      "sha256": "56fdcf21619c4459521d2e2c9af87ce89f08c48d9816aa27fac11d0f200952c4"
     },
     {
       "path": "tests/review-backend-owner.test.js",
@@ -4322,8 +4378,8 @@
     {
       "path": "tests/ui-unity.test.js",
       "area": "Tests",
-      "bytes": 5663,
-      "sha256": "06e5fbf97c1e331cacf8d3af17b21b681de17a1fdb7f01d3965c3337ecc2497a"
+      "bytes": 5662,
+      "sha256": "f77eda53f0662c76fe62cc6c3bb5b8bc717baed0a865906ae741ab48248f6b4d"
     },
     {
       "path": "tests/user-discovery.test.js",
@@ -4352,8 +4408,8 @@
     {
       "path": "tests/work-byline-typography.test.js",
       "area": "Tests",
-      "bytes": 7936,
-      "sha256": "c8b6c8816bbeca07f960bd15651f9d3ff8b45462f6292f395e33ce09043ca116"
+      "bytes": 7932,
+      "sha256": "24756602aef40793a52679008e6fa208f3574b189b627f0c6652f9b6327f4ef9"
     },
     {
       "path": "tests/work-detail-language.test.js",
@@ -5061,19 +5117,19 @@
     "apple:audit",
     "apple:audit:strict"
   ],
-  "verifiedAt": "2026-11-04T16:14:58.613Z",
+  "verifiedAt": "2026-11-05T12:27:59.319Z",
   "artifacts": {
-    "04-Current-State.md": "5dfd0ab19ae5ce469384b4ac17bc7a2272f231eec5290a9ac61e3023b32681c3",
-    "07-Source-Atlas.md": "5f29369371f05b51730ef33020708392721df79c5ce6367fcf2eead0a41f654e",
-    "generated/Source-Modules.md": "bfc7aa67c0ac23dbb0f1c1f339b1980021bca85f2bcc4d0ae779595d569c0bee",
-    "generated/Source-Styles.md": "baa7781e2f783ea347b619f08102a2e9dcf6fdccb94c85c0504f05c1bad98a58",
-    "generated/Source-Backend.md": "9d2eaaf0a3eefff5c9eff5b2c24ecdc993816450f4b5435c8dfcb0f285f8c824",
-    "generated/Source-Tooling.md": "f5e27b57285a6f6ed7bdfa14914e584586d0580e48d889f35f6a257e869578de",
-    "generated/Source-Tests.md": "497b4757f6353030c650e7bf67ab310facfa829f3ead52b61a8b4a5cd4f95154",
-    "generated/Source-Docs.md": "2cdc97264cb5e3ffbf68f055f712494defe2dbb6137a42948f686271bf7845b8",
-    "generated/Source-Database.md": "60f8457ff80886e4e8ba46ed3cd9b89731ca83f05474f2201fcbd3663b2f193b",
-    "generated/Source-Native.md": "2649cab64038fcefba7c81aaf98fd799c743ed4f4218fd858c7dfaa0e1705014",
-    "generated/Source-Shell.md": "31c87ae7b36e7f59a1c45bbb5108915b0be2a4c955383d709d59c30314cf2ac6",
+    "04-Current-State.md": "97bf143b43ea4776f6a2a7596a12d8f7b8a1ba635277668e8fe7ec5a434c84b6",
+    "07-Source-Atlas.md": "6eb00d5caff8b889716fbbc049ea46b4156908171e746365943dd3bbbe7d0c78",
+    "generated/Source-Modules.md": "8f3644156bb745ec9e2a8d0a070b43aae9ab69db0b6fca462a6208fed53e52c1",
+    "generated/Source-Styles.md": "5c73fb07d03364e07655b73f39e025690d3bc4349bb372c96ead2c588b5dc2ca",
+    "generated/Source-Backend.md": "403684daa41db8b5e60e153b807e84215becd82fe46ac4baaf863847d5ce9719",
+    "generated/Source-Tooling.md": "05ca56640a1a2dcc41570ddfc6db53aa25ed6b9e83953a1e1616b7b52972d222",
+    "generated/Source-Tests.md": "0582946d8fd1cdf83c047ef3fe723fb1bf6009952b6c5bf518b99d86ccd9407f",
+    "generated/Source-Docs.md": "10c1884e9543e4f4e472c2f352a83775a8e9912232128fa6124c9bfb8ecdae23",
+    "generated/Source-Database.md": "1d1dd83315e9a93b73f0b52dd1f75b963af18f7a772752ab67d35867db5d2fb6",
+    "generated/Source-Native.md": "e62e868d32c6be50dd50d65aebcf64f6bdd8c3048cad020f5d78ed5e2c39f5e2",
+    "generated/Source-Shell.md": "3fe80270aa4760f2e673b9c7f5c2bfca666620c50587ec1bbfe2a11726b260d7",
     "generated/Project-Brain.canvas": "3955aeb46974f461d4321dc37f303afcaa8e59281d1038629295e32ef4cbc3f1",
     "brain-map.json": "ccbcdcec84c2f2c7b53a06cdfd6a1d420de0601d2103e8f7a6945236e6d0399a"
   }

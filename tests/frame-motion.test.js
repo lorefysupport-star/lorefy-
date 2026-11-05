@@ -97,10 +97,11 @@ test('central crest fits between two controls on either side on small phones',()
   }
 });
 
-test('decoration shortcut is beside the bell and the cover preserves its image height after raising',()=>{
+test('decoration shortcut is beside the bell and the compact cover keeps its toolbar clearance',()=>{
   const css=fs.readFileSync(path.join(__dirname,'../styles/lorefy-frame-motion.css'),'utf8');
   assert.match(css,/\.lf-shop-shortcut\s*\{[^}]*right:52px !important; top:0 !important/);
-  assert.match(css,/clamp\(190px,calc\(100svh - 754px\),250px\)/);
+  assert.match(css,/clamp\(120px,calc\(100svh - 804px\),180px\)/);
+  assert.doesNotMatch(css,/clamp\(148px,calc\(100svh - 794px\),210px\)/);
   assert.match(css,/--profile-frame-banner-top:calc\(var\(--profile-frame-safe-top\) \+ 66px\)/);
 });
 

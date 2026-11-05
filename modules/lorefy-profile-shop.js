@@ -39,11 +39,11 @@
   let offerIds=null;
   const offeredBundles=()=>offerIds ? offerIds.map(findBundle).filter(Boolean) : bundles;
   const hasPaidOffers=()=>offeredBundles().some(pack=>!pack.free);
-  const collectionKey=pack=>pack.renderer==='halloween'?'halloween':pack.renderer==='elven'?'elven':pack.renderer==='atelier'?'atelier':'classic';
+  const collectionKey=pack=>pack.renderer==='crafted'?pack.family:pack.renderer==='halloween'?'halloween':pack.renderer==='elven'?'elven':pack.renderer==='atelier'?'atelier':'classic';
   const searchKey=value=>String(value||'').normalize('NFKD').replace(/[\u0300-\u036f\u064b-\u065f]/g,'').replace(/[أإآ]/g,'ا').toLowerCase().trim();
   function filterCatalog(options={}){
     const {items=offeredBundles(),collection='all',query='',view='collections',wishlist=[],owned=[],freeOnly=false,sort='newest',lang='ar'}=options;
-    const terms=searchKey(query).split(/\s+/).filter(Boolean),rank={halloween:-1,elven:0,atelier:1,classic:2};
+    const terms=searchKey(query).split(/\s+/).filter(Boolean),rank={crochet:-4,'expressive-elves':-3,objects:-2,halloween:-1,elven:0,atelier:1,classic:2};
     return items.filter(p=>(collection==='all'||collectionKey(p)===collection)&&(!freeOnly||p.free)&&
       (view!=='saved'||wishlist.includes(p.id))&&(view!=='owned'||p.free||owned.includes(p.productId))&&
       terms.every(term=>searchKey([p.names.ar,p.names.en,p.collection.ar,p.collection.en].join(' ')).includes(term)))
@@ -89,6 +89,22 @@
     bundles=Object.freeze([...bundles.filter(p=>p.renderer!=='halloween'),...extra]);
     offerIds=Object.freeze([...extra.map(p=>p.id),...(offerIds||[]).filter(id=>!ids.has(id))]);return true;
   }
+  function installCraftedCollections(items){
+    const groups={witch:'objects',moon:'objects',ink:'objects',theatre:'objects',dawn:'expressive-elves',dusk:'expressive-elves',garden:'crochet',patchwork:'crochet'},ids=new Set();
+    if(!Array.isArray(items)||items.length!==8||items.some(p=>{
+      if(!p||!Object.hasOwn(groups,p.artId)||p.id!=='crafted-'+p.artId||p.family!==groups[p.artId]||ids.has(p.id)||!ids.add(p.id)||
+        p.atlas!=='launch/decorations/crafted/'+p.artId+'.webp'||!p.names||!['ar','en'].every(k=>typeof p.names[k]==='string'&&p.names[k].length>0&&p.names[k].length<=100)||
+        !/^#[\da-f]{6}$/i.test(p.accent)||!/^#[\da-f]{6}$/i.test(p.second)||!p.geometry||!validGeometry(p.geometry,.4))return true;
+      const object=p.family==='objects',radii={witch:159,moon:133,ink:152,theatre:147,dawn:179,dusk:162,garden:143,patchwork:138},g={cx:.5,cy:object?300/520:330/620,size:radii[p.artId]*2/(object?520:620)};
+      return ['cx','cy','size'].some(k=>p.geometry[k]!==g[k]);
+    }))return false;
+    const titles={objects:{ar:'حكايات متحركة',en:'Objects in Motion'},'expressive-elves':{ar:'إلف حيّ',en:'Expressive Elves'},crochet:{ar:'حكايات الكروشيه',en:'Crochet Stories'}};
+    const extra=items.map(p=>Object.freeze({id:p.id,artId:p.artId,family:p.family,atlas:p.atlas,renderer:'crafted',names:Object.freeze({...p.names}),accent:p.accent,second:p.second,
+      geometry:Object.freeze({...p.geometry}),releaseAllowed:true,free:true,price:null,row:'0%',icon:'Sparkles',parts:Object.freeze(['frame','page']),
+      collection:Object.freeze(titles[p.family]),motion:Object.freeze({color:p.accent,second:p.second})}));
+    bundles=Object.freeze([...bundles.filter(p=>p.renderer!=='crafted'),...extra]);
+    offerIds=Object.freeze([...extra.map(p=>p.id),...(offerIds||[]).filter(id=>!ids.has(id))]);return true;
+  }
   function installRestoration(items){
     if(!Array.isArray(items)||items.length!==39||new Set(items.map(p=>p&&p.id)).size!==39)return false;
     if(items.some(p=>!p||(!findBundle(p.id)&&!(root.LorefyFrameRestoration&&root.LorefyFrameRestoration.valid(p)))||!(['observatory','blossom','manuscript'].includes(p.id)||/^(pfpvibes|original)-[a-z-]+$/.test(p.id))||
@@ -99,7 +115,7 @@
     bundles=Object.freeze(bundles.map(pack=>{const p=byId.get(pack.id);return p?Object.freeze({...pack,motionRenderer:'restored',motionOverlay:p.avatar,
       geometry:Object.freeze({...p.geometry}),portraitClip:Object.freeze(p.portraitClip.map(q=>Object.freeze([...q])))}):pack;}));return true;
   }
-  function articulated(pack){return !!pack&&(pack.renderer==='halloween'||pack.renderer==='atelier'||pack.renderer==='elven'||pack.motionRenderer==='restored');}
+  function articulated(pack){return !!pack&&(pack.renderer==='crafted'||pack.renderer==='halloween'||pack.renderer==='atelier'||pack.renderer==='elven'||pack.motionRenderer==='restored');}
   function motionOriginal(pack){const renderer=pack.motionRenderer||pack.renderer;return renderer?{original:{id:pack.motionRenderer?pack.id:pack.artId,renderer}}:{};}
   function installShopCatalog(catalog) {
     if(!catalog || catalog.version!==1 || !Array.isArray(catalog.freeIds) || catalog.freeIds.length!==5 || !Array.isArray(catalog.paid) || catalog.paid.length!==12)return false;
@@ -151,6 +167,7 @@
   function avatarSize(id,width=440) {
     const g=frameGeometry(id);return Math.min(96,(width<380?136:160)*g.size);
   }
+  function connectionInset(frameBottom,connectionsTop){return [frameBottom,connectionsTop].every(Number.isFinite)?Math.max(0,Math.ceil(frameBottom+12-connectionsTop)):0;}
   function validGeometry(g,min=.5){return ['cx','cy','size'].every(key=>Number.isFinite(g[key])) && g.size>=min && g.size<=.85 &&
     g.cx-g.size/2>=.02 && g.cx+g.size/2<=.98 && g.cy-g.size/2>=.02 && g.cy+g.size/2<=.98;}
   function avatarMotion(pack){return {...pack.motion,portrait:frameGeometry(pack.id)};}
@@ -176,8 +193,8 @@
     return {'--shop-accent':pack.accent,'--shop-second':pack.second,'--shop-row':pack.row,'--shop-frame-x':pack.row,
       '--shop-portrait-x':geometry.cx * 100 + '%','--shop-portrait-y':geometry.cy * 100 + '%','--shop-portrait-size':geometry.size * 100 + '%',
       '--shop-ring-scale':100 / geometry.size + '%','--shop-portrait-clip':pack.portraitClip?'polygon('+pack.portraitClip.map(q=>q.map(v=>(v*100).toFixed(3)+'%').join(' ')).join(',')+')':'circle(50%)',
-      '--shop-portrait-radius':pack.portraitClip?'0':'50%','--shop-page-art':pack.renderer==='halloween'||pack.overlay ? 'none' : 'url("../launch/shop/lorefy-page-' + pack.id + '.png")',
-      '--shop-frame-image':pack.renderer==='halloween'?'none':pack.motionOverlay||pack.overlay ? 'url("../' + (pack.motionOverlay||pack.overlay) + '")' : 'url("../launch/shop/lorefy-avatar-frames.png")',
+      '--shop-portrait-radius':pack.portraitClip?'0':'50%','--shop-page-art':['halloween','crafted'].includes(pack.renderer)||pack.overlay ? 'none' : 'url("../launch/shop/lorefy-page-' + pack.id + '.png")',
+      '--shop-frame-image':['halloween','crafted'].includes(pack.renderer)?'none':pack.motionOverlay||pack.overlay ? 'url("../' + (pack.motionOverlay||pack.overlay) + '")' : 'url("../launch/shop/lorefy-avatar-frames.png")',
       '--shop-frame-size':pack.motionOverlay||pack.overlay ? '100% 100%' : '300% 100%'};
   };
   let lastProfile = {}, pendingRequest = null, controllerReady = false;
@@ -214,9 +231,9 @@
   }
   function FrameArt({pack,kind,className,animated=true}) {
     const ref=root.React.useRef(null);
-    root.React.useEffect(()=>(animated||pack.renderer==='halloween')&&root.LorefyFrameMotion ? root.LorefyFrameMotion.mount(ref.current,{...(kind==='avatar'?avatarMotion(pack):pack.motion),...motionOriginal(pack),still:!animated},kind) : undefined,[pack.id,kind,animated]);
+    root.React.useEffect(()=>(animated||['halloween','crafted'].includes(pack.renderer))&&root.LorefyFrameMotion ? root.LorefyFrameMotion.mount(ref.current,{...(kind==='avatar'?avatarMotion(pack):pack.motion),...motionOriginal(pack),still:!animated},kind) : undefined,[pack.id,kind,animated]);
     return h(kind==='avatar'?'span':'div',{ref,className,style:{...packStyle(pack),...(kind==='avatar'&&pack.overlay?{backgroundImage:'none'}:{})},
-      'data-motion-page':kind==='page'&&(pack.renderer==='halloween'||pack.overlay||pack.motionRenderer)?'true':undefined,'aria-hidden':true},
+      'data-motion-page':kind==='page'&&(['halloween','crafted'].includes(pack.renderer)||pack.overlay||pack.motionRenderer)?'true':undefined,'aria-hidden':true},
       kind==='avatar'&&(pack.motionOverlay||pack.overlay)&&h('img',{className:'lf-frame-overlay',src:pack.motionOverlay||pack.overlay,alt:'',loading:'lazy',decoding:'async'}));
   }
   function Effect({pack, replay}) {
@@ -250,8 +267,8 @@
     const filters=catalogState||local,set=patch=>(onCatalogState||setLocal)({...filters,...patch});
     const currentView=onlyWishlist?'saved':view,offers=offeredBundles();
     const shown=filterCatalog({...filters,view:currentView,wishlist,owned,lang});
-    const families=[['all','الكل','All'],['halloween','الهالوين','Halloween'],['elven','الإلف','Elven'],['atelier','المشغل','Atelier'],['classic','الكلاسيكيات','Classics']].filter(([key])=>key==='all'||offers.some(p=>collectionKey(p)===key));
-    const newPacks=offers.filter(p=>p.renderer==='elven').slice(0,3),equippedIds=[...new Set(Object.values(equipped).filter(Boolean))];
+    const families=[['all','الكل','All'],['crochet','الكروشيه','Crochet'],['expressive-elves','إلف حيّ','Expressive Elves'],['objects','حكايات متحركة','Objects'],['halloween','الهالوين','Halloween'],['elven','الإلف','Elven'],['atelier','المشغل','Atelier'],['classic','الكلاسيكيات','Classics']].filter(([key])=>key==='all'||offers.some(p=>collectionKey(p)===key));
+    const latest=offers.filter(p=>p.renderer==='crafted'),newPacks=(latest.length?latest:offers.filter(p=>p.renderer==='elven')).slice(0,3),equippedIds=[...new Set(Object.values(equipped).filter(Boolean))];
     const canReset=!!(filters.query||filters.collection!=='all'||filters.freeOnly)&&!(currentView==='saved'&&!offers.some(p=>wishlist.includes(p.id)));
     return h('div',{className:'lf-shop-catalog'},
       h('div',{className:'lf-store-search'},icon('Search',19),h('input',{type:'search',value:filters.query,'aria-label':text(lang,'ابحث عن حزمة','Search collections'),placeholder:text(lang,'ابحث عن حزمة','Search collections'),onChange:e=>set({query:e.target.value})}),
@@ -259,7 +276,7 @@
       h('div',{className:'lf-store-families',role:'group','aria-label':text(lang,'مجموعات الزينة','Decoration collections')},families.map(([key,ar,en])=>h('button',{key,type:'button','aria-pressed':filters.collection===key,onClick:()=>set({collection:key})},text(lang,ar,en)))),
       currentView==='owned'&&equippedIds.length>0&&h('section',{className:'lf-store-equipped'},h('h2',null,text(lang,'مظهرك الحالي','Currently equipped')),h('div',null,equippedIds.map(id=>{const p=findBundle(id);return p&&h('button',{key:id,type:'button',onClick:()=>onSelect(id)},h(Avatar,{profile,pack:p,animated:false}),h('span',null,p.names[lang]),icon('Check',16));}))),
       currentView==='collections'&&!filters.query&&filters.collection==='all'&&newPacks.length>0&&h('section',{className:'lf-store-arrivals'},
-        h('header',null,h('div',null,h('span',null,text(lang,'وصل حديثًا','NEW ARRIVALS')),h('h2',null,text(lang,'إلف لورفاي','Lorefy Elven'))),h('button',{type:'button',onClick:()=>set({collection:'elven'})},text(lang,'عرض الكل','See all'),icon(lang==='en'?'ChevronRight':'ChevronLeft',17))),
+        h('header',null,h('div',null,h('span',null,text(lang,'وصل حديثًا','NEW ARRIVALS')),h('h2',null,newPacks[0].collection[lang])),h('button',{type:'button',onClick:()=>set({collection:collectionKey(newPacks[0])})},text(lang,'عرض الكل','See all'),icon(lang==='en'?'ChevronRight':'ChevronLeft',17))),
         h('div',{className:'lf-store-arrival-art'},newPacks.map(p=>h('button',{key:p.id,type:'button',style:packStyle(p),onClick:()=>onSelect(p.id),'aria-label':text(lang,'معاينة ','Preview ')+p.names[lang]},h(Avatar,{profile,pack:p,animated:false}),h('span',null,p.names[lang]))))),
       h('header',{className:'lf-store-results'},h('div',null,h('h2',null,text(lang,currentView==='saved'?'المحفوظات':currentView==='owned'?'مجموعتي':'كل الحزم',currentView==='saved'?'Saved':currentView==='owned'?'My collection':'All collections')),h('span',{role:'status'},new Intl.NumberFormat(lang).format(shown.length),' ',text(lang,'حزمة','collections'))),
         h('select',{value:filters.sort,'aria-label':text(lang,'ترتيب الحزم','Sort collections'),onChange:e=>set({sort:e.target.value})},h('option',{value:'newest'},text(lang,'الأحدث','Newest')),h('option',{value:'name'},text(lang,'الاسم','Name')))),
@@ -444,6 +461,7 @@
       if(isLocalLab()&&root.fetch){try{const r=await root.fetch('qa/elf-motion/collections.json');if(r.ok)installElvenCollections(await r.json());}catch(_) { /* Elf artwork is confined to the local demo. */ }}
       if(root.fetch){try{const r=await root.fetch('launch/decorations/refined/manifest.json');if(r.ok)installRestoration(await r.json());}catch(_){ /* Original rendering remains available if calibration cannot load. */ }}
       if(root.fetch){try{const r=await root.fetch('launch/decorations/halloween/collections.json');if(r.ok)installHalloweenCollections(await r.json());}catch(_){ /* Existing collections remain available offline. */ }}
+      if(root.fetch){try{const r=await root.fetch('launch/decorations/crafted/collections.json');if(r.ok)installCraftedCollections(await r.json());}catch(_){ /* Keep the existing catalog if the new manifest is unavailable. */ }}
       root.dispatchEvent(new root.CustomEvent('lorefy:profile-shop-catalog-ready'));
       let scheduled = false;
       function styleNode(node,pack) {Object.entries(packStyle(pack)).forEach(([key,value]) => node.style.setProperty(key,value));}
@@ -475,6 +493,8 @@
                 page.style.setProperty('--atelier-stacked-identity',Math.max(12,Math.ceil(ring.getBoundingClientRect().bottom-identity.getBoundingClientRect().top+16))+'px');
               }
             }else{avatar.style.removeProperty('--atelier-avatar-bottom-gap');page.style.removeProperty('--atelier-owner-identity-inset');}
+            const connections=page.querySelector('.lf-profile-connections,.lf-reader-social-summary,.lf-reader-counts');
+            if(connections)connections.style.setProperty('--profile-frame-connections-space',connectionInset(ring.getBoundingClientRect().bottom,connections.getBoundingClientRect().top)+'px');
             const bio=page.querySelector('.lf-profile-bio,.lf-reader-bio');
             if(bio&&articulated(pack)&&page.dataset.profileLayout==='reader'){
               const baseline=bio.getBoundingClientRect().top-parseFloat(root.getComputedStyle(bio).marginTop||0);
@@ -485,7 +505,7 @@
               page.style.setProperty('--profile-frame-bio-gap',Math.max(24,Math.ceil(ring.getBoundingClientRect().bottom-baseline+8))+'px');
             } else page.style.removeProperty('--profile-frame-bio-gap');
             if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(ring,{...avatarMotion(pack),...motionOriginal(pack)},'avatar');
-          } else {if (ring) ring.remove();avatar.classList.remove('has-decoration','has-elven-portrait','has-refined-portrait','has-calibrated-portrait');avatar.style.removeProperty('--elven-portrait-clip');avatar.style.removeProperty('--profile-avatar-frame-inset');avatar.style.removeProperty('--profile-decoration-avatar-size');page.style.removeProperty('--profile-frame-bio-gap');}
+          } else {if (ring) ring.remove();avatar.classList.remove('has-decoration','has-elven-portrait','has-refined-portrait','has-calibrated-portrait');avatar.style.removeProperty('--elven-portrait-clip');avatar.style.removeProperty('--profile-avatar-frame-inset');avatar.style.removeProperty('--profile-decoration-avatar-size');page.style.removeProperty('--profile-frame-bio-gap');page.querySelector('.lf-profile-connections,.lf-reader-social-summary,.lf-reader-counts')?.style.removeProperty('--profile-frame-connections-space');}
         }
         let pin = page.querySelector(':scope > .lf-decoration-page-pin');
         const pagePack = findBundle(choice.page);
@@ -501,7 +521,7 @@
           }
           styleNode(pin.firstElementChild,pagePack);
           pin.firstElementChild.style.setProperty('--decoration-height',page.clientHeight + 'px');
-          if(pagePack.renderer==='halloween'||pagePack.overlay||pagePack.motionRenderer)pin.firstElementChild.setAttribute('data-motion-page','true');else pin.firstElementChild.removeAttribute('data-motion-page');
+          if(['halloween','crafted'].includes(pagePack.renderer)||pagePack.overlay||pagePack.motionRenderer)pin.firstElementChild.setAttribute('data-motion-page','true');else pin.firstElementChild.removeAttribute('data-motion-page');
           if(root.LorefyFrameMotion)root.LorefyFrameMotion.mount(pin.firstElementChild,{...pagePack.motion,...motionOriginal(pagePack)},'page');
         } else if (pin) pin.remove();
         const banner = page.querySelector('.lf-profile-banner,.lf-reader-banner');
@@ -556,5 +576,5 @@
     };
     if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
   }
-  return Object.freeze({get bundles(){return bundles;},get offered(){return offeredBundles();},collectionKey,filterCatalog,installShopCatalog,installRestoration,installHalloweenCollections,installAtelierCollections,installElvenCollections,installLocalCollections,installBetaCollections,isLocalLab,findBundle,isAvailable,DECORATION_KEY,normalizeDecoration,readDecoration,applyDecoration,frameGeometry,avatarSize,previewParts,readWishlist,writeWishlist,Catalog,ProfilePreview,Entry,Shop,open,start});
+  return Object.freeze({get bundles(){return bundles;},get offered(){return offeredBundles();},collectionKey,filterCatalog,installShopCatalog,installRestoration,installCraftedCollections,installHalloweenCollections,installAtelierCollections,installElvenCollections,installLocalCollections,installBetaCollections,isLocalLab,findBundle,isAvailable,DECORATION_KEY,normalizeDecoration,readDecoration,applyDecoration,frameGeometry,avatarSize,connectionInset,previewParts,readWishlist,writeWishlist,Catalog,ProfilePreview,Entry,Shop,open,start});
 });

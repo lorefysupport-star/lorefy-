@@ -1,0 +1,138 @@
+[
+  {
+    "id": "crafted-witch",
+    "artId": "witch",
+    "family": "objects",
+    "atlas": "launch/decorations/crafted/witch.webp",
+    "names": {
+      "ar": "قبعة منتصف الليل",
+      "en": "Midnight Milliner"
+    },
+    "accent": "#c6a2dc",
+    "second": "#d5ac64",
+    "geometry": {
+      "cx": 0.5,
+      "cy": 0.5769230769230769,
+      "size": 0.6115384615384616
+    }
+  },
+  {
+    "id": "crafted-moon",
+    "artId": "moon",
+    "family": "objects",
+    "atlas": "launch/decorations/crafted/moon.webp",
+    "names": {
+      "ar": "باب القمر",
+      "en": "Lunar Gate"
+    },
+    "accent": "#a8d4e6",
+    "second": "#d6b879",
+    "geometry": {
+      "cx": 0.5,
+      "cy": 0.5769230769230769,
+      "size": 0.5115384615384615
+    }
+  },
+  {
+    "id": "crafted-ink",
+    "artId": "ink",
+    "family": "objects",
+    "atlas": "launch/decorations/crafted/ink.webp",
+    "names": {
+      "ar": "حبر حيّ",
+      "en": "Living Manuscript"
+    },
+    "accent": "#c79659",
+    "second": "#aed7c4",
+    "geometry": {
+      "cx": 0.5,
+      "cy": 0.5769230769230769,
+      "size": 0.5846153846153846
+    }
+  },
+  {
+    "id": "crafted-theatre",
+    "artId": "theatre",
+    "family": "objects",
+    "atlas": "launch/decorations/crafted/theatre.webp",
+    "names": {
+      "ar": "مسرح المخمل",
+      "en": "Velvet Proscenium"
+    },
+    "accent": "#be627a",
+    "second": "#dfbe78",
+    "geometry": {
+      "cx": 0.5,
+      "cy": 0.5769230769230769,
+      "size": 0.5653846153846154
+    }
+  },
+  {
+    "id": "crafted-dawn",
+    "artId": "dawn",
+    "family": "expressive-elves",
+    "atlas": "launch/decorations/crafted/dawn.webp",
+    "names": {
+      "ar": "مسافرة الفجر",
+      "en": "Dawn Wayfarer"
+    },
+    "accent": "#e4c59d",
+    "second": "#b34d68",
+    "geometry": {
+      "cx": 0.5,
+      "cy": 0.532258064516129,
+      "size": 0.5774193548387097
+    }
+  },
+  {
+    "id": "crafted-dusk",
+    "artId": "dusk",
+    "family": "expressive-elves",
+    "atlas": "launch/decorations/crafted/dusk.webp",
+    "names": {
+      "ar": "إلف الشفق",
+      "en": "Aurora Sentinel"
+    },
+    "accent": "#bca5dc",
+    "second": "#b8d9e1",
+    "geometry": {
+      "cx": 0.5,
+      "cy": 0.532258064516129,
+      "size": 0.5225806451612903
+    }
+  },
+  {
+    "id": "crafted-garden",
+    "artId": "garden",
+    "family": "crochet",
+    "atlas": "launch/decorations/crafted/garden.webp",
+    "names": {
+      "ar": "حديقة الغرز",
+      "en": "Stitch Garden"
+    },
+    "accent": "#b9ce9c",
+    "second": "#efc6ab",
+    "geometry": {
+      "cx": 0.5,
+      "cy": 0.532258064516129,
+      "size": 0.4612903225806452
+    }
+  },
+  {
+    "id": "crafted-patchwork",
+    "artId": "patchwork",
+    "family": "crochet",
+    "atlas": "launch/decorations/crafted/patchwork.webp",
+    "names": {
+      "ar": "خيط وحكاية",
+      "en": "Thread Tales"
+    },
+    "accent": "#db93b4",
+    "second": "#b9c5e3",
+    "geometry": {
+      "cx": 0.5,
+      "cy": 0.532258064516129,
+      "size": 0.44516129032258067
+    }
+  }
+]
