@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v515-runtime-cleanup';
+const CACHE = 'lorefy-v516-session-verification-retry';
 const freshAssetPaths = [
   '/modules/',
   '/styles/',

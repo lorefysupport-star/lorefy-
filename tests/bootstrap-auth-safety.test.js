@@ -72,6 +72,15 @@ test("an unauthenticated native user always lands on the welcome gate", () => {
   assert.doesNotMatch(index, /if \(directBetaGuest\) mountApp\(\)/);
 });
 
+test("session verification retries against Supabase without reloading or bypassing auth", () => {
+  assert.match(index, /function SessionVerificationRetry\(props\)/);
+  assert.match(index, /var session = await props\.backend\.getSession\(\);\s*await finishBoot\(props\.backend, session\);/);
+  assert.match(index, /React\.createElement\(SessionVerificationRetry, \{ backend:BE \}\)/);
+  assert.doesNotMatch(index, /تعذر الاتصال للتحقق من جلستك[\s\S]{0,250}location\.reload\(\)/);
+  assert.ok(serviceWorker.includes("lorefy-v516-session-verification-retry"));
+  assert.ok(serviceWorker.includes("'./index.html'"), "the refreshed service worker must precache the retry UI");
+});
+
 test("local OAuth buttons have a UI-level direct demo fallback", () => {
   assert.match(config, /addEventListener\("click"/);
   assert.match(config, /Google\|Apple/);

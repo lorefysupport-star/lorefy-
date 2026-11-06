@@ -710,16 +710,7 @@
         }
       }
 
-      (async function(){
-        var BE = window.LorefyBackend;
-        try { if (BE && BE.init) await BE.init(); } catch(e){}
-        var sess = null;
-        try { sess = BE && BE.getSession ? await BE.getSession() : null; } catch(e){
-          root.render(React.createElement('div', { role:'alert', style:{ padding:'80px 24px', textAlign:'center' } },
-            React.createElement('p', null, 'تعذر الاتصال للتحقق من جلستك. بياناتك محفوظة؛ حاول مجدداً.'),
-            React.createElement('button', { type:'button', onClick:function(){ location.reload(); } }, 'إعادة المحاولة')));
-          return;
-        }
+      async function finishBoot(BE, sess){
         var previewParams = new URLSearchParams(location.search || "");
         var directLocalDemo = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) &&
           previewParams.get("preview") === "demo" && previewParams.get("demo") === "ready";
@@ -760,6 +751,40 @@
         else if (sess && id && id.name && id.un) mountGate('preferences');
         else if (sess) mountGate('account');
         else mountGate('welcome');
+      }
+
+      function SessionVerificationRetry(props){
+        var state = React.useState(false), retrying = state[0], setRetrying = state[1];
+        var failedState = React.useState(false), failed = failedState[0], setFailed = failedState[1];
+        async function retry(){
+          if (retrying) return;
+          setRetrying(true);
+          setFailed(false);
+          try {
+            var session = await props.backend.getSession();
+            await finishBoot(props.backend, session);
+          } catch (error) {
+            setRetrying(false);
+            setFailed(true);
+          }
+        }
+        return React.createElement('div', { role:'alert', style:{ padding:'80px 24px', textAlign:'center' } },
+          React.createElement('p', null, failed
+            ? 'ما زال تعذر التحقق من الجلسة. تأكد من اتصال الإنترنت ثم حاول مجدداً. بياناتك محفوظة.'
+            : 'تعذر الاتصال للتحقق من جلستك. بياناتك محفوظة؛ حاول مجدداً.'),
+          React.createElement('button', { type:'button', disabled:retrying, onClick:retry, 'aria-live':'polite' },
+            retrying ? 'جارٍ التحقق…' : 'إعادة المحاولة'));
+      }
+
+      (async function(){
+        var BE = window.LorefyBackend;
+        try { if (BE && BE.init) await BE.init(); } catch(e){}
+        var sess = null;
+        try { sess = BE && BE.getSession ? await BE.getSession() : null; } catch(e){
+          root.render(React.createElement(SessionVerificationRetry, { backend:BE }));
+          return;
+        }
+        await finishBoot(BE, sess);
       })();
     })();
     });
