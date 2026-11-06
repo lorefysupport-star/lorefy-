@@ -43,6 +43,7 @@ aliases: ["تقرير الجوال", "إصلاحات الجهاز", "device audi
 | LF-007 | P3 | إصلاح المصدر؛ لا إصدار جديد | `modules/lorefy-user-experience.js`، صفوف المتابعة | `tests/connection-avatar.test.js` |
 | LF-008 | P3 | إصلاح المصدر؛ لا إصدار جديد | صف المتابعة في `uploads/files/lorefy-app.js` | `tests/connection-keyboard.test.js` |
 | LF-009 | P2 | إصلاح المصدر؛ لا إصدار جديد | عدّاد تقييمات الشخصيات في `modules/lorefy-growth-features.js` | `tests/character-rating-summary.test.js` |
+| LF-066 | P1 | إصلاح المصدر مختبر؛ لم يُفحص سجل الإنتاج أو الجهاز | `backend/lorefy-native-runtime.js`، تحديث صندوق الإشعارات عند mount | `tests/notification-delivery-runtime.test.js`، اختبار متابعة |
 
 ## سجل الأسباب والإصلاحات
 
@@ -185,3 +186,13 @@ receipt in [[sessions/2026-10-16-Native-Touch-Audit]]: owner profile, library,
 work details, list details/end and import entry/exit were inspected read-only.
 The installed completed-status/progress discrepancy remains evidence for LF-002;
 no current source repair is marked installed or hardware-passed.
+
+## LF-066: إشعار متابعة وصل للنظام ولم يظهر داخل التطبيق
+
+عند تركيب صفحة الإشعارات كان runtime يعيد عرض القائمة الموجودة في الذاكرة،
+لكن الجلب البعيد لا يبدأ إلا من نقر زر الجرس أو إشارات أخرى. فتح الشاشة من
+مسار المنزل/الملف الشخصي مع فوات حدث Realtime يُبقي النص الفارغ رغم وجود
+إشعار متابعة محفوظ. اختبار mount جديد فشل قبل الإصلاح ونجح بعده.
+أصبحت الصفحة تجلب القائمة عند تركيبها وتحتفظ بحماية الحساب الحالي؛ لا تغيير
+في RPC أو قاعدة البيانات. يلزم التأكد من سجل المستخدم الحي ومن ظهور التعديل
+على جهازه بعد تحديث التطبيق، ولم يُنشأ build أو تُرسل بيانات اختبار.

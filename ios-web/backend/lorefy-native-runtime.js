@@ -19,6 +19,7 @@
   var pendingToken = '';
   var connectionEpoch = 0, refreshEpoch = 0, activeAccount = '';
   var shownNotifications = new Set(), bannerTimer = null;
+  var observedInboxPage = null;
 
   function parseAppLink(rawUrl) {
     var raw = String(rawUrl || "").trim();
@@ -415,7 +416,19 @@
     }, true);
     var observer = new MutationObserver(function () {
       var page = root.document.querySelector(".lf-notifications-page");
-      if (page && cloudNotifications.length && !page.querySelector(".lf-cloud-notifications")) renderCloudNotifications();
+      if (!page) {
+        observedInboxPage = null;
+        updateBellBadges();
+        return;
+      }
+      if (page !== observedInboxPage) {
+        observedInboxPage = page;
+        renderCloudNotifications();
+        // The inbox can be opened through profile/home routes that do not
+        // activate the bell button. Fetch on mount so missed realtime events
+        // (including follow pushes) still appear in the in-app inbox.
+        refreshCloudNotifications();
+      } else if (cloudNotifications.length && !page.querySelector(".lf-cloud-notifications")) renderCloudNotifications();
       else updateBellBadges();
     });
     observer.observe(root.document.body, { childList:true, subtree:true });

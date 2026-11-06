@@ -41,6 +41,15 @@ test('opening and reopening the bell fetches and mounts the remote inbox after R
  assert.equal(page.querySelector('.lf-cloud-notifications'),null);
  assert.equal(page.children.find(node=>node.tagName==='P').getAttribute('data-lf-core-empty'),null);
 });
+test('mounting the inbox from a home or profile route fetches a missed follow notification',async()=>{
+ const h=harness();h.api.start();h.listeners.DOMContentLoaded();await h.api.connectCloudNotifications();
+ h.setRows([{...notification(),kind:'follow',title:'متابع جديد',body:'قارئ بدأ بمتابعتك',target_path:'/profile',data:{profileId:B}}]);
+ const page=h.mountInbox();await new Promise(resolve=>setImmediate(resolve));
+ const inbox=page.querySelector('.lf-cloud-notifications');
+ assert.ok(inbox);assert.equal(inbox.children.length,1);
+ assert.equal(inbox.children[0].children[1].children[0].textContent,'متابع جديد');
+ assert.equal(page.children.find(node=>node.tagName==='P').getAttribute('data-lf-core-empty'),'hidden');
+});
 test('in-app like/comment banners name the actor, deduplicate, and update the English bell',async()=>{
  const h=harness();await h.api.connectCloudNotifications();h.receive(notification());
  let banner=h.body.querySelector('.lf-notification-banner');assert.ok(banner);assert.equal(banner.children[0].children[1].textContent,'نورة أعجبت بمنشورك');
