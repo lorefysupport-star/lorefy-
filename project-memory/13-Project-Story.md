@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-09: [[sessions/2026-11-09-Device-Audit]] records a read-only physical
+build 37 pass and D-001: list detail scroll alignment now respects native and
+browser safe areas. Twelve local layout/language/inset checks reproduce then
+verify the repair; delivery to the installed phone remains pending.
+
 2026-11-05: [[sessions/2026-11-05-Profile-Compact-Repairs]] fixes follower/frame
 clearance, photo aperture gaps, compact accessible metrics and complete favorite
 presentations above the dock. The v697 follow-up fixes populated Reader ordering,

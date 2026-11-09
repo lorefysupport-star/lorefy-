@@ -130,7 +130,11 @@ html:root:root:root:root:root:root:root .lf-profile-page[data-profile-section]:n
 html:root:root:root:root:root:root:root .lf-profile-page[data-profile-section]:not([data-profile-section='overview']) .lf-profile-top-works-head {
   display: none !important;
 }
-.lf-profile-section-panel { padding: 0 16px 24px; color: var(--ui-ink); }
+.lf-profile-section-panel {
+  padding: 0 16px 24px; color: var(--ui-ink);
+  /* List open/back aligns this panel to the viewport; keep actions below native chrome. */
+  scroll-margin-block-start: calc(max(var(--nc-top,0px),env(safe-area-inset-top,0px)) + 8px);
+}
 .lf-profile-section-panel[hidden] { display: none !important; }
 .lf-profile-section-head {
   display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 16px;

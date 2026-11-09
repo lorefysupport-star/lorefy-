@@ -94,6 +94,13 @@ test('section headings use themed ink rather than legacy profile heading colors'
   const css=fs.readFileSync(path.join(__dirname,'../styles/lorefy-profile-sections.css'),'utf8');
   assert.match(css,/\.lf-profile-section-panel \.lf-profile-section-head h2\s*\{\s*color:\s*var\(--ui-ink\) !important;/);
 });
+
+test('list open and back scrolling respects both native and browser top safe areas', () => {
+  const css=fs.readFileSync(path.join(__dirname,'../styles/lorefy-profile-sections.css'),'utf8');
+  assert.match(css,/\.lf-profile-section-panel\s*\{[^}]*scroll-margin-block-start:\s*calc\(max\(var\(--nc-top,0px\),env\(safe-area-inset-top,0px\)\) \+ 8px\)/s);
+  const source=fs.readFileSync(file,'utf8');
+  assert.match(source,/state\.panel\.scrollIntoView\(\{block:'start',behavior:'instant'\}\)/);
+});
 test('profile header keeps reading metrics and removes redundant social shortcuts in both languages', () => {
   const source=fs.readFileSync(file,'utf8');
   const start=source.indexOf('function compactMetrics(');
