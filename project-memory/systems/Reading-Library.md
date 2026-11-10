@@ -6,6 +6,13 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-11-11-Library-Lootd]] scopes the Lootd follow-up to Library:
+local typing, cached snapshots,42-item render batches with full totals, stable
+progress sorting and owner-scoped return state. Four modes and reading data stay;
+empty filters recover locally and unresolved metadata is not an empty Library.
+Focused27/new13, full3493 after final small-phone polish and AR/EN browser pass. No native build or
+provider/device performance certification.
+
 [[sessions/2026-11-10-Chapter-Runtime]] preserves the synchronous chapter-map
 contract with an exact generated representation, not delayed totals. All3,120
 records/fields/order match; full3452, focused37 and actual browser384/384 pass.

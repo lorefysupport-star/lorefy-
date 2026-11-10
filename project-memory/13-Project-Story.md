@@ -6,6 +6,12 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-11: [[sessions/2026-11-11-Library-Lootd]] applies the same method to
+Library after owner-assisted Lootd sign-in. Bounded rendering, local query state,
+stable memoized collections, return navigation and44px controls preserve all
+four views and reading contracts. Focused27/new13, full3493 after final small-phone polish and actual AR/EN
+browser pass. No build, user-data change or service mutation.
+
 2026-11-10: [[sessions/2026-11-10-Explore-Lootd]] studies public Lootd discovery
 then repairs unrelated search downloads, global pagination and repeated hidden
 catalog work. Direct format selection and stable theme-aware cards preserve the

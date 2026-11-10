@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T19:40:32.921Z
-Source commit: 26d324752656aa546b6c0f00f1dcf893fe689dfe
+Observed: 2026-11-10T23:29:46.822Z
+Source commit: 64000e2d468a43cacd0746a47ece17bd0b5d6f67
 
 # Styles Source Inventory
 
@@ -33,7 +33,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-import-studio.css](../../styles/lorefy-import-studio.css) (7113 bytes)
 - [styles/lorefy-interface-settings.css](../../styles/lorefy-interface-settings.css) (23869 bytes)
 - [styles/lorefy-legal.css](../../styles/lorefy-legal.css) (4324 bytes)
-- [styles/lorefy-library-cinema.css](../../styles/lorefy-library-cinema.css) (13786 bytes)
+- [styles/lorefy-library-cinema.css](../../styles/lorefy-library-cinema.css) (14145 bytes)
 - [styles/lorefy-library-refined.css](../../styles/lorefy-library-refined.css) (6995 bytes)
 - [styles/lorefy-native-layout-fix.css](../../styles/lorefy-native-layout-fix.css) (6133 bytes)
 - [styles/lorefy-notification-center.css](../../styles/lorefy-notification-center.css) (2956 bytes)

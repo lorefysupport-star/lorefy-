@@ -5,7 +5,7 @@ const vm=require('node:vm');
 const path=require('node:path');
 const app=fs.readFileSync(path.join(__dirname,'../uploads/files/lorefy-app.js'),'utf8');
 test('library search and sorting are independent of catalog search',()=>{
-  const start=app.indexOf('libraryVisible='),end=app.indexOf(';return React.createElement',start);
+  const start=app.indexOf('libraryVisible=r.filter'),end=app.indexOf(';',start);
   assert.ok(start>0);
   const ctx={r:[{m:{title:'Z Hunter'},id:'z'},{m:{title:'Other'},id:'o'},{m:{title:'A Hunter'},id:'a'}],libraryQuery:'Hunter',libraryOrder:'title',window:{LorefyCatalogData:{matchesCatalogQuery:(w,q)=>w.title.includes(q)}}};
   vm.runInNewContext('const '+app.slice(start,end)+';result=libraryVisible;',ctx);

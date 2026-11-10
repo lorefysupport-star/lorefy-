@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T19:40:32.921Z
-Source commit: 26d324752656aa546b6c0f00f1dcf893fe689dfe
+Observed: 2026-11-10T23:29:46.822Z
+Source commit: 64000e2d468a43cacd0746a47ece17bd0b5d6f67
 
 # Tests Source Inventory
 
@@ -76,7 +76,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/arabic-library-expansion.test.js](../../tests/arabic-library-expansion.test.js) (4328 bytes)
 - [tests/arabic-library-repair.test.js](../../tests/arabic-library-repair.test.js) (17014 bytes)
 - [tests/arabic-open-catalog.test.js](../../tests/arabic-open-catalog.test.js) (8666 bytes)
-- [tests/audit-library-safety.test.js](../../tests/audit-library-safety.test.js) (3473 bytes)
+- [tests/audit-library-safety.test.js](../../tests/audit-library-safety.test.js) (3455 bytes)
 - [tests/audit-surface-contract.test.js](../../tests/audit-surface-contract.test.js) (1472 bytes)
 - [tests/auth-flow-design.test.js](../../tests/auth-flow-design.test.js) (1274 bytes)
 - [tests/auth-production-guard.test.js](../../tests/auth-production-guard.test.js) (11822 bytes)
@@ -255,6 +255,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/interface-personalization.test.js](../../tests/interface-personalization.test.js) (5233 bytes)
 - [tests/legal-studio.test.js](../../tests/legal-studio.test.js) (4962 bytes)
 - [tests/library-cinema.test.js](../../tests/library-cinema.test.js) (3783 bytes)
+- [tests/library-collection.test.js](../../tests/library-collection.test.js) (10041 bytes)
 - [tests/library-cover-media.test.js](../../tests/library-cover-media.test.js) (8676 bytes)
 - [tests/library-refinement.test.js](../../tests/library-refinement.test.js) (1609 bytes)
 - [tests/library-shelf-acceptance.test.js](../../tests/library-shelf-acceptance.test.js) (1388 bytes)
@@ -344,8 +345,8 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/reading-metrics-stability.test.js](../../tests/reading-metrics-stability.test.js) (2617 bytes)
 - [tests/reading-session-ui.test.js](../../tests/reading-session-ui.test.js) (2104 bytes)
 - [tests/reading-status-policy.test.js](../../tests/reading-status-policy.test.js) (2014 bytes)
-- [tests/reading-terminology.test.js](../../tests/reading-terminology.test.js) (5940 bytes)
-- [tests/reading-typography.test.js](../../tests/reading-typography.test.js) (8813 bytes)
+- [tests/reading-terminology.test.js](../../tests/reading-terminology.test.js) (5937 bytes)
+- [tests/reading-typography.test.js](../../tests/reading-typography.test.js) (8810 bytes)
 - [tests/recap-integrity.test.js](../../tests/recap-integrity.test.js) (998 bytes)
 - [tests/release-legal.test.js](../../tests/release-legal.test.js) (2531 bytes)
 - [tests/release-output-integrity.test.js](../../tests/release-output-integrity.test.js) (4202 bytes)
@@ -405,7 +406,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/ui-finish-pass.test.js](../../tests/ui-finish-pass.test.js) (2389 bytes)
 - [tests/ui-placement.test.js](../../tests/ui-placement.test.js) (23622 bytes)
 - [tests/ui-profile-discover-polish.test.js](../../tests/ui-profile-discover-polish.test.js) (3647 bytes)
-- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5660 bytes)
+- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5656 bytes)
 - [tests/user-discovery.test.js](../../tests/user-discovery.test.js) (5208 bytes)
 - [tests/user-reported-fixes.test.js](../../tests/user-reported-fixes.test.js) (4739 bytes)
 - [tests/version-consistency.test.js](../../tests/version-consistency.test.js) (1492 bytes)

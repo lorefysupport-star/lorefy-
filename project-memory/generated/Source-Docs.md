@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T19:40:32.921Z
-Source commit: 26d324752656aa546b6c0f00f1dcf893fe689dfe
+Observed: 2026-11-10T23:29:46.822Z
+Source commit: 64000e2d468a43cacd0746a47ece17bd0b5d6f67
 
 # Docs Source Inventory
 
@@ -73,6 +73,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/LIBRARIES_DEV_REVIEW_2026-10-18.md](../../docs/LIBRARIES_DEV_REVIEW_2026-10-18.md) (4757 bytes)
 - [docs/LIBRARY_CINEMA_QA.md](../../docs/LIBRARY_CINEMA_QA.md) (2493 bytes)
 - [docs/LIBRARY_EXPANSION_2026-10-03.md](../../docs/LIBRARY_EXPANSION_2026-10-03.md) (4742 bytes)
+- [docs/LIBRARY_FLOW_2026-11-11.md](../../docs/LIBRARY_FLOW_2026-11-11.md) (8043 bytes)
 - [docs/LIBRARY_QUALITY_REPAIR_2026-10-08.md](../../docs/LIBRARY_QUALITY_REPAIR_2026-10-08.md) (11778 bytes)
 - [docs/LOCAL_AUDIT_2026-11-04.md](../../docs/LOCAL_AUDIT_2026-11-04.md) (4015 bytes)
 - [docs/LOGIC_AUDIT_2026-11-01.md](../../docs/LOGIC_AUDIT_2026-11-01.md) (11713 bytes)

@@ -6,6 +6,13 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Library continuation: [[sessions/2026-11-11-Library-Lootd]] covers42-item batches
+without a total cap, the actual1000-work renderer, full-list filtering/sorting,
+callback-only render reuse, hydration, independent local query and owner-safe
+view restoration. Filter/metadata empty states and EN sort labels are explicit.
+Focused27/new13, full3493 after final small-phone polish and local AR/EN four-mode UI pass. Device
+latency, long-session memory and failed remote-reference restoration remain.
+
 Explore continuation: [[sessions/2026-11-10-Explore-Lootd]] covers query-only
 shards, short cancellation, guarded global pagination, status/data distinction,
 lazy linear categories, Types work budgets, theme controls and card geometry.
