@@ -6,6 +6,11 @@ aliases: ["تشغيل", "تحميل", "bootstrap", "cache", "NenApp"]
 ---
 # تشغيل التطبيق
 
+[[sessions/2026-11-10-Icon-Runtime]] reduces Lucide to358,402 bytes while keeping
+all1,743 glyph/alias keys and Lorefy scoped hydration. Canonical source stays in
+vendor; the reproducible dev-only builder feeds entry/offline/native copies.
+Full3458 and actual local navigation pass; no binary or device-latency claim.
+
 [[sessions/2026-11-02-Prebuild-Repairs]] adds request-local lazy diversification
 features while preserving ranking output.3365 tests and three alternating browser
 pairs pass.4x CPU selection median46.4 to4.5ms; whole Explore ranking232.9 to215.7ms.

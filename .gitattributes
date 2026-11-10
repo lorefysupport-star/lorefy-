@@ -1,5 +1,6 @@
 archives/*.zip filter=lfs diff=lfs merge=lfs -text
 uploads/catalog-search-index.json linguist-generated=true
+**/lucide.runtime.min.js text eol=lf
 ios-web/** linguist-generated=true
 ios/App/App/public/** linguist-generated=true
 

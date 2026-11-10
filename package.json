@@ -35,6 +35,7 @@
     "@capacitor/ios": "8.4.3",
     "@electric-sql/pglite": "0.5.4",
     "csv-parse": "7.0.3",
+    "terser": "5.49.2",
     "yaml": "2.9.1"
   },
   "overrides": {

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T08:10:28.276Z
-Source commit: a8b31298ee3047ce22cffc12522c7b8185fe9941
+Observed: 2026-11-10T18:06:19.247Z
+Source commit: 187373e212eafd66ca9897f3b2b98687afd8549d
 
 # Tests Source Inventory
 
@@ -70,7 +70,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/apple-authorization.test.js](../../tests/apple-authorization.test.js) (2410 bytes)
 - [tests/apple-native-guard.test.js](../../tests/apple-native-guard.test.js) (1407 bytes)
 - [tests/apple-press-feedback.test.js](../../tests/apple-press-feedback.test.js) (1794 bytes)
-- [tests/apple-release-package.test.js](../../tests/apple-release-package.test.js) (13174 bytes)
+- [tests/apple-release-package.test.js](../../tests/apple-release-package.test.js) (13215 bytes)
 - [tests/apple-ui-surfaces.test.js](../../tests/apple-ui-surfaces.test.js) (4119 bytes)
 - [tests/arabic-enrichment-demand.test.js](../../tests/arabic-enrichment-demand.test.js) (10855 bytes)
 - [tests/arabic-library-expansion.test.js](../../tests/arabic-library-expansion.test.js) (4328 bytes)
@@ -162,7 +162,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/community-cloud.test.js](../../tests/community-cloud.test.js) (15390 bytes)
 - [tests/community-compose-scroll.test.js](../../tests/community-compose-scroll.test.js) (2667 bytes)
 - [tests/community-compose-session.test.js](../../tests/community-compose-session.test.js) (7490 bytes)
-- [tests/community-copy.test.js](../../tests/community-copy.test.js) (9065 bytes)
+- [tests/community-copy.test.js](../../tests/community-copy.test.js) (9062 bytes)
 - [tests/community-edit-lifecycle.test.js](../../tests/community-edit-lifecycle.test.js) (5307 bytes)
 - [tests/community-feed-language.test.js](../../tests/community-feed-language.test.js) (2724 bytes)
 - [tests/community-feed-layout-work.test.js](../../tests/community-feed-layout-work.test.js) (2549 bytes)
@@ -182,7 +182,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/connection-keyboard.test.js](../../tests/connection-keyboard.test.js) (2451 bytes)
 - [tests/corrections-studio.test.js](../../tests/corrections-studio.test.js) (5003 bytes)
 - [tests/cover-edition-choice.test.js](../../tests/cover-edition-choice.test.js) (5899 bytes)
-- [tests/cover-media.test.js](../../tests/cover-media.test.js) (11098 bytes)
+- [tests/cover-media.test.js](../../tests/cover-media.test.js) (11095 bytes)
 - [tests/cover-preparation-performance.test.js](../../tests/cover-preparation-performance.test.js) (2847 bytes)
 - [tests/cover-source-lock.test.js](../../tests/cover-source-lock.test.js) (15598 bytes)
 - [tests/crafted-frames.test.js](../../tests/crafted-frames.test.js) (7477 bytes)
@@ -190,7 +190,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/custom-appearance.test.js](../../tests/custom-appearance.test.js) (7275 bytes)
 - [tests/custom-artwork-persistence.test.js](../../tests/custom-artwork-persistence.test.js) (13763 bytes)
 - [tests/custom-glass-theme.test.js](../../tests/custom-glass-theme.test.js) (4264 bytes)
-- [tests/data-studio.test.js](../../tests/data-studio.test.js) (6910 bytes)
+- [tests/data-studio.test.js](../../tests/data-studio.test.js) (6907 bytes)
 - [tests/decoration-lab.test.js](../../tests/decoration-lab.test.js) (2787 bytes)
 - [tests/decoration-store.test.js](../../tests/decoration-store.test.js) (5855 bytes)
 - [tests/demo-community.test.js](../../tests/demo-community.test.js) (3412 bytes)
@@ -252,7 +252,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/import-studio.test.js](../../tests/import-studio.test.js) (8209 bytes)
 - [tests/import-ui.test.js](../../tests/import-ui.test.js) (2504 bytes)
 - [tests/interface-personalization.test.js](../../tests/interface-personalization.test.js) (5233 bytes)
-- [tests/legal-studio.test.js](../../tests/legal-studio.test.js) (4965 bytes)
+- [tests/legal-studio.test.js](../../tests/legal-studio.test.js) (4962 bytes)
 - [tests/library-cinema.test.js](../../tests/library-cinema.test.js) (3783 bytes)
 - [tests/library-cover-media.test.js](../../tests/library-cover-media.test.js) (8676 bytes)
 - [tests/library-refinement.test.js](../../tests/library-refinement.test.js) (1609 bytes)
@@ -262,6 +262,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/literary-character-images.test.js](../../tests/literary-character-images.test.js) (32836 bytes)
 - [tests/local-redesign-gate.test.js](../../tests/local-redesign-gate.test.js) (1885 bytes)
 - [tests/localization-audit.test.js](../../tests/localization-audit.test.js) (3636 bytes)
+- [tests/lucide-runtime.test.js](../../tests/lucide-runtime.test.js) (5441 bytes)
 - [tests/mal-provider-migration.test.js](../../tests/mal-provider-migration.test.js) (2306 bytes)
 - [tests/minimal-auth-entry.test.js](../../tests/minimal-auth-entry.test.js) (1841 bytes)
 - [tests/missing-work-studio.test.js](../../tests/missing-work-studio.test.js) (4266 bytes)
@@ -342,14 +343,14 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/reading-metrics-stability.test.js](../../tests/reading-metrics-stability.test.js) (2617 bytes)
 - [tests/reading-session-ui.test.js](../../tests/reading-session-ui.test.js) (2104 bytes)
 - [tests/reading-status-policy.test.js](../../tests/reading-status-policy.test.js) (2014 bytes)
-- [tests/reading-terminology.test.js](../../tests/reading-terminology.test.js) (5940 bytes)
-- [tests/reading-typography.test.js](../../tests/reading-typography.test.js) (8813 bytes)
+- [tests/reading-terminology.test.js](../../tests/reading-terminology.test.js) (5937 bytes)
+- [tests/reading-typography.test.js](../../tests/reading-typography.test.js) (8810 bytes)
 - [tests/recap-integrity.test.js](../../tests/recap-integrity.test.js) (998 bytes)
 - [tests/release-legal.test.js](../../tests/release-legal.test.js) (2531 bytes)
 - [tests/release-output-integrity.test.js](../../tests/release-output-integrity.test.js) (4202 bytes)
 - [tests/release-v11-regressions.test.js](../../tests/release-v11-regressions.test.js) (5522 bytes)
 - [tests/release-v13-readiness.test.js](../../tests/release-v13-readiness.test.js) (7174 bytes)
-- [tests/report-studio.test.js](../../tests/report-studio.test.js) (8568 bytes)
+- [tests/report-studio.test.js](../../tests/report-studio.test.js) (8565 bytes)
 - [tests/review-backend-owner.test.js](../../tests/review-backend-owner.test.js) (7855 bytes)
 - [tests/review-earned-progress.test.js](../../tests/review-earned-progress.test.js) (2079 bytes)
 - [tests/review-editor-ownership.test.js](../../tests/review-editor-ownership.test.js) (8556 bytes)
@@ -408,7 +409,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/user-reported-fixes.test.js](../../tests/user-reported-fixes.test.js) (4739 bytes)
 - [tests/version-consistency.test.js](../../tests/version-consistency.test.js) (1492 bytes)
 - [tests/wood-shelf-clipping.test.js](../../tests/wood-shelf-clipping.test.js) (1555 bytes)
-- [tests/work-byline-typography.test.js](../../tests/work-byline-typography.test.js) (7934 bytes)
+- [tests/work-byline-typography.test.js](../../tests/work-byline-typography.test.js) (7931 bytes)
 - [tests/work-detail-language.test.js](../../tests/work-detail-language.test.js) (10732 bytes)
 - [tests/work-dislike-backend.test.js](../../tests/work-dislike-backend.test.js) (3621 bytes)
 - [tests/work-dislike.test.js](../../tests/work-dislike.test.js) (9194 bytes)

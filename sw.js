@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v703-chapter-runtime';
+const CACHE = 'lorefy-v704-icon-runtime';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -118,7 +118,7 @@ const CORE = [
   './modules/lorefy-ui-runtime.js?v=20261019-render-recovery-v1',
   './vendor/react.production.min.js',
   './vendor/react-dom.production.min.js',
-  './vendor/lucide.js',
+  './vendor/lucide.runtime.min.js?v=20261110-icons-v1',
   './launch/brand/lorefy-feather.png',
   './launch/brand/lorefy-reading-scene.jpg',
   './monitoring/lorefy-sentry.js',

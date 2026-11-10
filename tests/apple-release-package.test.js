@@ -135,7 +135,8 @@ test("keeps every shipped web asset synchronized with the Xcode bundle", () => {
     path.normalize("config/lorefy-release.json"),
     path.normalize("config/lorefy-runtime.js"),
     path.normalize("uploads/lorefy-ar-enrichment.js"),
-    path.normalize("uploads/lorefy-chapter-overrides.js")
+    path.normalize("uploads/lorefy-chapter-overrides.js"),
+    path.normalize("vendor/lucide.js")
   ]);
   const files = runtimeEntries.flatMap(runtimeFiles)
     .map((file) => path.normalize(file))

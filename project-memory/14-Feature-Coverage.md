@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Icon startup: [[sessions/2026-11-10-Icon-Runtime]] covers all1,743 glyph/alias
+keys and1,746 exports, scoped hydration, DOM parity, deterministic minification,
+loading budget and native/offline synchronization. Full3458/focused21 and actual
+browser navigation pass. Lower payload does not certify iPhone latency.
+
 Chapter startup: [[sessions/2026-11-10-Chapter-Runtime]] covers exact metadata
 values/order, independent records and merge reference, unusual/signed-zero values,
 determinism, budget and offline/native packaging. Full3452, focused37 and sampled

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T08:10:28.276Z
-Source commit: a8b31298ee3047ce22cffc12522c7b8185fe9941
+Observed: 2026-11-10T18:06:19.247Z
+Source commit: 187373e212eafd66ca9897f3b2b98687afd8549d
 
 # Docs Source Inventory
 
@@ -65,6 +65,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/FULL_COLOR_THEME_2026-10-09.md](../../docs/FULL_COLOR_THEME_2026-10-09.md) (2136 bytes)
 - [docs/HALLOWEEN_INTEGRATION_2026-11-02.md](../../docs/HALLOWEEN_INTEGRATION_2026-11-02.md) (3817 bytes)
 - [docs/HOME_CINEMA_QA.md](../../docs/HOME_CINEMA_QA.md) (3479 bytes)
+- [docs/ICON_RUNTIME_PERFORMANCE_2026-11-10.md](../../docs/ICON_RUNTIME_PERFORMANCE_2026-11-10.md) (2668 bytes)
 - [docs/INAPP_NOTIFICATIONS_2026-11-04.md](../../docs/INAPP_NOTIFICATIONS_2026-11-04.md) (3969 bytes)
 - [docs/INTERFACE_PERSONALIZATION_VERIFICATION_2026-10-07.md](../../docs/INTERFACE_PERSONALIZATION_VERIFICATION_2026-10-07.md) (3121 bytes)
 - [docs/JIKAN_RETIREMENT_2026-10-29.md](../../docs/JIKAN_RETIREMENT_2026-10-29.md) (6156 bytes)
