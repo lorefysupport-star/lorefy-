@@ -32,5 +32,52 @@ to the list grid. These are simulated native insets, not installation on phone.
 The canonical CSS, asset URL and service worker are mirrored selectively into
 the two existing iOS web trees. No native build, Apple upload or database write.
 
-See [[../systems/Profiles-Lists]], [[../13-Project-Story]], and
-[[../14-Feature-Coverage]].
+See [[systems/Profiles-Lists]], [[13-Project-Story]], and
+[[14-Feature-Coverage]].
+
+## D-002: inconsistent post action placement
+
+Physical feed and conversation views placed the same actions differently.
+The Home-only stylesheet forces LTR and orders Like, Reply, Dislike, Save,
+Share; the shared stylesheet instead inherited RTL and used a wrapping flex
+row. Moving between contexts therefore moved the same command under the finger.
+
+The shared `.lf-community-post-actions` rule now uses the same five tracks,
+direction and order as Home. Existing buttons, receipts, counts, busy states,
+colors, labels and click handlers are unchanged. Controlled browser CSS/DOM
+checks failed before and passed after the repair in both text directions.
+`qa/device-ui-regressions.cjs` additionally exercises actual list open/back.
+No real reactions or notifications were sent during this audit.
+
+## Device coverage and open evidence
+
+Main Home/For You/Following, a conversation and keyboard recovery, Explore
+browse/types/search, work detail/review/status/characters/covers, Library grid,
+owner profile/followers/visitor profile, lists and notification inbox were
+opened read-only. Existing content/media loaded in these sampled paths;
+back navigation from a conversation preserved the timeline position.
+
+Search returned an exact requested work but displayed partial-provider failure.
+Inbox was empty; that alone proves neither deletion nor delivery failure.
+Reader favorite captions appeared clipped and need an isolated populated
+reproduction. An incoming phone call stopped further touches; no call was
+accepted or declined. Streaming stalls were not classified as app freezes.
+
+Release Web Inspector exposed no Lorefy targets. No live JavaScript/network
+trace or native frame-time/CPU measurement was obtained. Current source and
+installed build provenance differ; browser fixes do not update that binary.
+Live cross-account notifications/reactions, all library modes/frame selections,
+authentication, import/export, offline/resume and write persistence remain open.
+No changes to Apple settings, production data, permissions or signing.
+
+## Verification On 10 November
+
+Final `npm test`: 3431 passed, zero failures. The initial in-progress run found
+the not-yet-copied community CSS; subsequent packaging checks pass after selective
+sync. Version-pinned cache assertions now name the actual cache/asset revisions,
+without removing the entry/offline consistency assertions.
+
+The final browser fixture reloads the saved layout (not just a DOM attribute):
+12 owner open/back cases plus 2 CSS/DOM direction parity cases pass. No output
+from these disposable demo fixtures is evidence of a real-account write.
+See [the section-by-section audit](../../docs/DEVICE_AUDIT_2026-11-10.md).

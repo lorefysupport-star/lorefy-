@@ -31,3 +31,11 @@ test('Home feed refinement keeps headers in flow and touch actions at 44px',()=>
  assert.doesNotMatch(css,/data-home-chrome='scrolled'[^{}]*lf-social-header\s*\{[^}]*height:/);
  assert.match(css,/\.lf-home-cinema\s*\{[^}]*overflow-anchor:none/,'material changes must not move the reading position');
 });
+
+test('post actions keep Home order in threads and public-profile posts in both directions',()=>{
+ const css=fs.readFileSync('styles/lorefy-community.css','utf8');
+ assert.match(css,/\.lf-community-post-actions\s*\{[^}]*display:\s*grid;\s*grid-template-columns:\s*repeat\(5,minmax\(0,1fr\)\);\s*direction:\s*ltr;/s);
+ for(const [selector,order] of [['.lf-community-post-like',0],['.lf-community-post-replies',1],['.lf-community-post-dislike',2],['button:nth-child(4)',3],['button:nth-child(5)',4]]) {
+  assert.ok(css.includes(`.lf-community-post-actions ${selector} { order: ${order}; }`),selector);
+ }
+});

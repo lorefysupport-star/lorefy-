@@ -27,7 +27,7 @@ test('updated UI assets use fresh cache keys', () => {
   const html = read('index.html');
   assert.match(html, /lorefy-apple-ui\.css\?v=20260925-ui-coherence-v1/);
   assert.match(html, /lorefy-cinema-ui\.css\?v=20261003-appearance-feather-v2/);
-  assert.match(html, /lorefy-community\.css\?v=20261028-community-copy-v1/);
+  assert.match(html, /lorefy-community\.css\?v=20261110-action-parity-v1/);
   for (const asset of ['modules/lorefy-growth-features.js', 'modules/lorefy-i18n.js',
     'modules/lorefy-v2.js', 'modules/lorefy-public-profile.js', 'uploads/files/lorefy-app.js',
     'modules/lorefy-catalog-loader.js', 'modules/lorefy-explore-studio.js', 'styles/lorefy-explore-studio.css',
@@ -45,7 +45,7 @@ test('updated UI assets use fresh cache keys', () => {
       'modules/lorefy-review-editor.js':'20261101-recommendation-logic-v1',
       'styles/lorefy-work-cinema.css':'20261028-byline-type-v1',
       'styles/lorefy-home-cinema.css':'20261026-work-cinema-v1',
-      'styles/lorefy-community.css':'20261028-community-copy-v1',
+      'styles/lorefy-community.css':'20261110-action-parity-v1',
       'modules/lorefy-public-profile.js':'20261102-visitor-profile-v691',
       'modules/lorefy-i18n.js':'20261102-inbox-copy-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',

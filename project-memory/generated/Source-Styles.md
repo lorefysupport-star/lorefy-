@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-05T12:27:59.319Z
-Source commit: 4940c040e22c3c097a12f5431b9b34c4636ce201
+Observed: 2026-11-10T01:54:52.123Z
+Source commit: cb40407e5712d03bf201d88539405a0686415a39
 
 # Styles Source Inventory
 
@@ -17,7 +17,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-character-atlas.css](../../styles/lorefy-character-atlas.css) (20748 bytes)
 - [styles/lorefy-cinema-ui.css](../../styles/lorefy-cinema-ui.css) (9088 bytes)
 - [styles/lorefy-comics-search.css](../../styles/lorefy-comics-search.css) (1755 bytes)
-- [styles/lorefy-community.css](../../styles/lorefy-community.css) (37764 bytes)
+- [styles/lorefy-community.css](../../styles/lorefy-community.css) (38143 bytes)
 - [styles/lorefy-cover-media.css](../../styles/lorefy-cover-media.css) (15802 bytes)
 - [styles/lorefy-custom-glass.css](../../styles/lorefy-custom-glass.css) (18621 bytes)
 - [styles/lorefy-customize.css](../../styles/lorefy-customize.css) (5126 bytes)
@@ -43,7 +43,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-profile-header.css](../../styles/lorefy-profile-header.css) (3897 bytes)
 - [styles/lorefy-profile-layout.css](../../styles/lorefy-profile-layout.css) (9913 bytes)
 - [styles/lorefy-profile-refined.css](../../styles/lorefy-profile-refined.css) (13820 bytes)
-- [styles/lorefy-profile-sections.css](../../styles/lorefy-profile-sections.css) (22088 bytes)
+- [styles/lorefy-profile-sections.css](../../styles/lorefy-profile-sections.css) (22280 bytes)
 - [styles/lorefy-profile-shop.css](../../styles/lorefy-profile-shop.css) (23176 bytes)
 - [styles/lorefy-public-profile.css](../../styles/lorefy-public-profile.css) (17458 bytes)
 - [styles/lorefy-reader-layout.css](../../styles/lorefy-reader-layout.css) (25798 bytes)

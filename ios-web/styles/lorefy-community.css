@@ -936,7 +936,14 @@
 .lf-community-thread-body { overscroll-behavior: contain; }
 .lf-community-thread-replies, .lf-community-post-card, .lf-community-post-actions { min-width: 0; }
 .lf-community-thread-compose textarea { box-sizing: border-box; width: 100%; min-width: 0; max-height: 110px; overflow-y: auto; font-size: 16px; }
-.lf-community-post-actions { display: flex; flex-wrap: wrap; }
+.lf-community-post-actions {
+  display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); direction: ltr;
+}
+.lf-community-post-actions .lf-community-post-like { order: 0; }
+.lf-community-post-actions .lf-community-post-replies { order: 1; }
+.lf-community-post-actions .lf-community-post-dislike { order: 2; }
+.lf-community-post-actions button:nth-child(4) { order: 3; }
+.lf-community-post-actions button:nth-child(5) { order: 4; }
 .lf-community-post-actions button { flex: 1 1 44px; min-width: 44px; }
 .lf-community-page.lf-community-v2 { background: var(--lf-card, #fff); }
 .lf-community-post-feed { padding: 0; }

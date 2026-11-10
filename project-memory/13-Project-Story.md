@@ -10,6 +10,9 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 build 37 pass and D-001: list detail scroll alignment now respects native and
 browser safe areas. Twelve local layout/language/inset checks reproduce then
 verify the repair; delivery to the installed phone remains pending.
+The 10 November continuation adds D-002: shared post action order now matches
+Home in AR/EN. Live provider failures, empty inbox and caption clipping remain
+separate follow-ups; no production mutation was performed.
 
 2026-11-05: [[sessions/2026-11-05-Profile-Compact-Repairs]] fixes follower/frame
 clearance, photo aperture gaps, compact accessible metrics and complete favorite

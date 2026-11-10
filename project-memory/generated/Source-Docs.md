@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-05T12:27:59.319Z
-Source commit: 4940c040e22c3c097a12f5431b9b34c4636ce201
+Observed: 2026-11-10T01:54:52.123Z
+Source commit: cb40407e5712d03bf201d88539405a0686415a39
 
 # Docs Source Inventory
 
@@ -42,6 +42,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/CUSTOM_APPEARANCE_FRAME_FIT_2026-10-09.md](../../docs/CUSTOM_APPEARANCE_FRAME_FIT_2026-10-09.md) (4114 bytes)
 - [docs/CUSTOM_ARTWORK_REPAIR_2026-10-08.md](../../docs/CUSTOM_ARTWORK_REPAIR_2026-10-08.md) (4441 bytes)
 - [docs/DAHLA_UPDATE_VERIFICATION.md](../../docs/DAHLA_UPDATE_VERIFICATION.md) (3486 bytes)
+- [docs/DEVICE_AUDIT_2026-11-10.md](../../docs/DEVICE_AUDIT_2026-11-10.md) (6964 bytes)
 - [docs/DEVICEHUB_PROFILING_2026-10-14.md](../../docs/DEVICEHUB_PROFILING_2026-10-14.md) (4424 bytes)
 - [docs/DISCORD_FEEDBACK_REVIEW_2026-10-19.md](../../docs/DISCORD_FEEDBACK_REVIEW_2026-10-19.md) (6395 bytes)
 - [docs/DISCORD_REAUDIT_2026-10-03_EVENING.md](../../docs/DISCORD_REAUDIT_2026-10-03_EVENING.md) (8008 bytes)

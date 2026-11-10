@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-05T12:27:59.319Z
-Source commit: 4940c040e22c3c097a12f5431b9b34c4636ce201
+Observed: 2026-11-10T01:54:52.123Z
+Source commit: cb40407e5712d03bf201d88539405a0686415a39
 
 # Tests Source Inventory
 
@@ -19,6 +19,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [qa/community-polish-fixture.html](../../qa/community-polish-fixture.html) (2056 bytes)
 - [qa/connection-avatar-fixture.html](../../qa/connection-avatar-fixture.html) (2017 bytes)
 - [qa/custom-artwork-rls.sql](../../qa/custom-artwork-rls.sql) (2746 bytes)
+- [qa/device-ui-regressions.cjs](../../qa/device-ui-regressions.cjs) (4872 bytes)
 - [qa/diary-position-browser.cjs](../../qa/diary-position-browser.cjs) (3943 bytes)
 - [qa/elf-concepts.html](../../qa/elf-concepts.html) (1903 bytes)
 - [qa/elf-concepts/ear-motion.js](../../qa/elf-concepts/ear-motion.js) (7075 bytes)
@@ -158,7 +159,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/community-cloud.test.js](../../tests/community-cloud.test.js) (15390 bytes)
 - [tests/community-compose-scroll.test.js](../../tests/community-compose-scroll.test.js) (2667 bytes)
 - [tests/community-compose-session.test.js](../../tests/community-compose-session.test.js) (7490 bytes)
-- [tests/community-copy.test.js](../../tests/community-copy.test.js) (9064 bytes)
+- [tests/community-copy.test.js](../../tests/community-copy.test.js) (9063 bytes)
 - [tests/community-edit-lifecycle.test.js](../../tests/community-edit-lifecycle.test.js) (5307 bytes)
 - [tests/community-feed-language.test.js](../../tests/community-feed-language.test.js) (2724 bytes)
 - [tests/community-feed-layout-work.test.js](../../tests/community-feed-layout-work.test.js) (2549 bytes)
@@ -227,7 +228,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/home-cinema.test.js](../../tests/home-cinema.test.js) (4974 bytes)
 - [tests/home-continuation-selection.test.js](../../tests/home-continuation-selection.test.js) (5970 bytes)
 - [tests/home-cover-media.test.js](../../tests/home-cover-media.test.js) (3995 bytes)
-- [tests/home-feed-refinement.test.js](../../tests/home-feed-refinement.test.js) (2400 bytes)
+- [tests/home-feed-refinement.test.js](../../tests/home-feed-refinement.test.js) (3007 bytes)
 - [tests/home-immersive.test.js](../../tests/home-immersive.test.js) (2405 bytes)
 - [tests/home-like-stability.test.js](../../tests/home-like-stability.test.js) (7181 bytes)
 - [tests/home-resume-hierarchy.test.js](../../tests/home-resume-hierarchy.test.js) (3513 bytes)
@@ -309,7 +310,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/profile-refinement.test.js](../../tests/profile-refinement.test.js) (1817 bytes)
 - [tests/profile-relationship-session.test.js](../../tests/profile-relationship-session.test.js) (4294 bytes)
 - [tests/profile-section-theme.test.js](../../tests/profile-section-theme.test.js) (1290 bytes)
-- [tests/profile-sections.test.js](../../tests/profile-sections.test.js) (8845 bytes)
+- [tests/profile-sections.test.js](../../tests/profile-sections.test.js) (9350 bytes)
 - [tests/profile-shop.test.js](../../tests/profile-shop.test.js) (9713 bytes)
 - [tests/project-memory-workflow.test.js](../../tests/project-memory-workflow.test.js) (3399 bytes)
 - [tests/project-memory.test.js](../../tests/project-memory.test.js) (13430 bytes)
@@ -399,7 +400,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/ui-finish-pass.test.js](../../tests/ui-finish-pass.test.js) (2389 bytes)
 - [tests/ui-placement.test.js](../../tests/ui-placement.test.js) (23622 bytes)
 - [tests/ui-profile-discover-polish.test.js](../../tests/ui-profile-discover-polish.test.js) (3647 bytes)
-- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5662 bytes)
+- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5660 bytes)
 - [tests/user-discovery.test.js](../../tests/user-discovery.test.js) (5208 bytes)
 - [tests/user-reported-fixes.test.js](../../tests/user-reported-fixes.test.js) (4739 bytes)
 - [tests/version-consistency.test.js](../../tests/version-consistency.test.js) (1492 bytes)
