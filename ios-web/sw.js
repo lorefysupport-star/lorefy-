@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v701-reader-captions';
+const CACHE = 'lorefy-v702-demand-synopses';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -13,6 +13,8 @@ const freshAssetPaths = [
   '/monitoring/'
 ];
 const CORE = [
+ './uploads/arabic-enrichment/manifest.js?v=20261110-demand-v1',
+ './modules/lorefy-arabic-enrichment-loader.js?v=20261110-demand-v1',
  './launch/decorations/crafted/collections.json',
  './launch/decorations/halloween/collections.json',
  './launch/decorations/halloween/atlas-metadata.json',
@@ -189,7 +191,7 @@ const CORE = [
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
   './modules/lorefy-growth-features.js?v=20261105-profile-order-v2',
   './modules/lorefy-share-studio.js?v=20261028-share-composer-v3',
-  './uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1',
+  './uploads/files/lorefy-enrich.js?v=20261110-demand-v1',
   './launch/icons/icon-180.png',
   './launch/icons/icon-192.png',
   './launch/icons/icon-512.png',
@@ -280,6 +282,7 @@ self.addEventListener('fetch', (e) => {
     url.pathname.endsWith('/uploads/lorefy-catalog-manifest.json') ||
     url.pathname.endsWith('/uploads/catalog-search-index.json') ||
     url.pathname.includes('/uploads/catalog-runtime/') ||
+    url.pathname.includes('/uploads/arabic-enrichment/') ||
     url.pathname.includes('/uploads/catalog-deltas/') ||
     url.pathname.includes('/output/api-catalog/')
   ) {

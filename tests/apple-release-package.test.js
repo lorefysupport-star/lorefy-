@@ -133,7 +133,8 @@ test("Expo iPad configuration matches the native device support", () => {
 test("keeps every shipped web asset synchronized with the Xcode bundle", () => {
   const excluded = new Set([
     path.normalize("config/lorefy-release.json"),
-    path.normalize("config/lorefy-runtime.js")
+    path.normalize("config/lorefy-runtime.js"),
+    path.normalize("uploads/lorefy-ar-enrichment.js")
   ]);
   const files = runtimeEntries.flatMap(runtimeFiles)
     .map((file) => path.normalize(file))

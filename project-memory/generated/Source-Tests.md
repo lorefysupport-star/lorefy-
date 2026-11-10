@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T02:03:22.238Z
-Source commit: 54e7a69795714ea1f78508edc9880f25929e7a54
+Observed: 2026-11-10T07:50:56.131Z
+Source commit: c3143a51556f93b7cd4adf0a9cfef7815a22bcef
 
 # Tests Source Inventory
 
@@ -70,8 +70,9 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/apple-authorization.test.js](../../tests/apple-authorization.test.js) (2410 bytes)
 - [tests/apple-native-guard.test.js](../../tests/apple-native-guard.test.js) (1407 bytes)
 - [tests/apple-press-feedback.test.js](../../tests/apple-press-feedback.test.js) (1794 bytes)
-- [tests/apple-release-package.test.js](../../tests/apple-release-package.test.js) (13058 bytes)
+- [tests/apple-release-package.test.js](../../tests/apple-release-package.test.js) (13114 bytes)
 - [tests/apple-ui-surfaces.test.js](../../tests/apple-ui-surfaces.test.js) (4119 bytes)
+- [tests/arabic-enrichment-demand.test.js](../../tests/arabic-enrichment-demand.test.js) (10855 bytes)
 - [tests/arabic-library-expansion.test.js](../../tests/arabic-library-expansion.test.js) (4328 bytes)
 - [tests/arabic-library-repair.test.js](../../tests/arabic-library-repair.test.js) (17014 bytes)
 - [tests/arabic-open-catalog.test.js](../../tests/arabic-open-catalog.test.js) (8666 bytes)
@@ -123,7 +124,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/catalog-search-recovery.test.js](../../tests/catalog-search-recovery.test.js) (1069 bytes)
 - [tests/catalog-search-responsiveness.test.js](../../tests/catalog-search-responsiveness.test.js) (6089 bytes)
 - [tests/catalog-search-retry.test.js](../../tests/catalog-search-retry.test.js) (8477 bytes)
-- [tests/catalog-search-startup.test.js](../../tests/catalog-search-startup.test.js) (3055 bytes)
+- [tests/catalog-search-startup.test.js](../../tests/catalog-search-startup.test.js) (3047 bytes)
 - [tests/catalog-search-suggestions.test.js](../../tests/catalog-search-suggestions.test.js) (9159 bytes)
 - [tests/catalog-shard-deadline.test.js](../../tests/catalog-shard-deadline.test.js) (4935 bytes)
 - [tests/catalog-source-synopsis.test.js](../../tests/catalog-source-synopsis.test.js) (3028 bytes)

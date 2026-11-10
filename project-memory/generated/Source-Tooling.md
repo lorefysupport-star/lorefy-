@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T02:03:22.238Z
-Source commit: 54e7a69795714ea1f78508edc9880f25929e7a54
+Observed: 2026-11-10T07:50:56.131Z
+Source commit: c3143a51556f93b7cd4adf0a9cfef7815a22bcef
 
 # Tooling Source Inventory
 
@@ -23,6 +23,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tools/benchmark-search-api-cache.cjs](../../tools/benchmark-search-api-cache.cjs) (1577 bytes)
 - [tools/benchmark-search-ui-work.cjs](../../tools/benchmark-search-ui-work.cjs) (2664 bytes)
 - [tools/build-api-catalog-expansion.js](../../tools/build-api-catalog-expansion.js) (21237 bytes)
+- [tools/build-arabic-enrichment.js](../../tools/build-arabic-enrichment.js) (1920 bytes)
 - [tools/build-arabic-library.js](../../tools/build-arabic-library.js) (25378 bytes)
 - [tools/build-booktok-library.js](../../tools/build-booktok-library.js) (8600 bytes)
 - [tools/build-catalog-map.js](../../tools/build-catalog-map.js) (2833 bytes)
@@ -97,7 +98,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tools/prebuild-http-audit.mjs](../../tools/prebuild-http-audit.mjs) (4629 bytes)
 - [tools/prepare-frame-restoration.ps1](../../tools/prepare-frame-restoration.ps1) (5815 bytes)
 - [tools/prepare-ios-local-profile.mjs](../../tools/prepare-ios-local-profile.mjs) (655 bytes)
-- [tools/prepare-ios-web.mjs](../../tools/prepare-ios-web.mjs) (5554 bytes)
+- [tools/prepare-ios-web.mjs](../../tools/prepare-ios-web.mjs) (5833 bytes)
 - [tools/prepare-xtool.mjs](../../tools/prepare-xtool.mjs) (7678 bytes)
 - [tools/project-memory.mjs](../../tools/project-memory.mjs) (18664 bytes)
 - [tools/reclassify-bulk-library.js](../../tools/reclassify-bulk-library.js) (1167 bytes)

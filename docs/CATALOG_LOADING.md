@@ -1,5 +1,13 @@
 # Catalog loading
 
+Arabic synopsis data is independent from the title/alias search index. The
+canonical `uploads/lorefy-ar-enrichment.js` is now a build input, not a timed
+homepage download. `node tools/build-arabic-enrichment.js` generates256 bounded
+JSON shards and their manifest; work details fetch only their matching shard.
+Native preparation runs this generator and omits the redundant original runtime
+map. See [the measured repair](DEMAND_SYNOPSIS_PERFORMANCE_2026-11-10.md) for
+exact parity, cache/failure behavior and performance limits.
+
 The catalog has 163 numbered data parts. `index.html` starts with one useful
 part, chosen from the current work link or format. The app can show that part
 immediately. It does not download the remaining parts at startup.

@@ -5,6 +5,11 @@ date: 2026-10-14
 aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 ---
 
+[[sessions/2026-11-10-Demand-Arabic-Synopses]] removes the timed whole-map
+synopsis download, preserving all entries in exact demand shards. Search aliases
+are separate and unchanged. Full3445/local search/detail pass;45.98% less decoded
+startup-session JS is not a claim of faster first paint or real-device latency.
+
 [[sessions/2026-11-01-Image-Delivery]] repairs local MangaDex TLS502s using OS
 trust with verification retained, restores Kitsu/RanobeDB host parity and local
 media routing. Real images decoded across eight format samples; provider latency

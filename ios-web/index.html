@@ -347,7 +347,9 @@
   <script defer src="modules/lorefy-comics-search.js?v=20260924-catalog-v1"></script>
 
   <!-- Arabic enrichment module (loads before app, per integration notes) -->
-  <script defer src="uploads/files/lorefy-enrich.js?v=20260908-beta-audit-v1"></script>
+  <script defer src="uploads/arabic-enrichment/manifest.js?v=20261110-demand-v1"></script>
+  <script defer src="modules/lorefy-arabic-enrichment-loader.js?v=20261110-demand-v1"></script>
+  <script defer src="uploads/files/lorefy-enrich.js?v=20261110-demand-v1"></script>
   <script>
     (function () {
       var isLocalHost = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
@@ -465,7 +467,6 @@
   <script defer src="modules/lorefy-user-discovery.js?v=20261026-explore-search-v1-search-audit-v2"></script>
   <script>
   window.LOREFY_DEFERRED_ASSETS = [
-      "uploads/lorefy-ar-enrichment.js?v=20260707-lazy-v1",
       "modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2",
       "modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2"
     ];
@@ -704,7 +705,6 @@
         deferredLorefyAssetsStarted = true;
         var assets = (window.LOREFY_DEFERRED_ASSETS || []).slice();
         var searchAssets = assets.filter(function(src){ return /lorefy-(open|api)-catalog\.js/.test(src); });
-        var backgroundAssets = assets.filter(function(src){ return searchAssets.indexOf(src) < 0; });
         var searchReady = null;
         var loaded = {};
         function loadScript(src){
@@ -721,7 +721,7 @@
         function ensureSearch(){
           if (searchReady) return searchReady;
           // Keep adapter execution ordered; a failed helper can retry on focus.
-          // Arabic enrichment has its own schedule and cannot delay this chain.
+          // Work synopses are loaded independently, only when details are opened.
           searchReady = searchAssets.reduce(function(promise, src){
             return promise.then(function(){ return loadScript(src); });
           }, Promise.resolve()).catch(function(){ searchReady = null; });
@@ -738,14 +738,6 @@
         document.addEventListener('input', onSearchIntent, true);
         if ('requestIdleCallback' in window) window.requestIdleCallback(ensureSearch, { timeout: 600 });
         else setTimeout(ensureSearch, 200);
-        setTimeout(function(){
-          backgroundAssets.reduce(function(promise, src){
-            return promise.then(function(){ return loadScript(src).then(function(){
-              try { if (window.__lorefyIngest) window.__lorefyIngest(); } catch(e){}
-              try { if (window.__lorefyRefresh) window.__lorefyRefresh(); } catch(e){}
-            }).catch(function(){}); });
-          }, Promise.resolve());
-        }, 6500);
       }
       function localIdentity(){ try{ return JSON.parse(localStorage.getItem('lorefy.identity.v1')||'null'); }catch(e){ return null; } }
       function localPreferences(){

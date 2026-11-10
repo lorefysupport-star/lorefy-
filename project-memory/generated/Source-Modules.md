@@ -3,14 +3,15 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T02:03:22.238Z
-Source commit: 54e7a69795714ea1f78508edc9880f25929e7a54
+Observed: 2026-11-10T07:50:56.131Z
+Source commit: c3143a51556f93b7cd4adf0a9cfef7815a22bcef
 
 # Modules Source Inventory
 
 Paths and sizes only. Inclusion does not mean the file was semantically reviewed or the feature was tested.
 
 - [modules/lorefy-api-catalog.js](../../modules/lorefy-api-catalog.js) (62580 bytes)
+- [modules/lorefy-arabic-enrichment-loader.js](../../modules/lorefy-arabic-enrichment-loader.js) (4265 bytes)
 - [modules/lorefy-avatar-rig.js](../../modules/lorefy-avatar-rig.js) (8364 bytes)
 - [modules/lorefy-bibliographic-overrides.js](../../modules/lorefy-bibliographic-overrides.js) (16454 bytes)
 - [modules/lorefy-bitmap-rig.js](../../modules/lorefy-bitmap-rig.js) (4365 bytes)

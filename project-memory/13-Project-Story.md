@@ -6,6 +6,13 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-10: [[sessions/2026-11-10-Demand-Arabic-Synopses]] begins the approved
+Lootd-inspired performance plan without redesigning screens. Demand shards keep
+all12,071 Arabic synopsis entries, replacing the timed6MB whole-map download.
+Fresh full3445 and actual local search/detail checks pass; first15s decoded JS
+fell45.98% in one local comparison, not a latency or iPhone certification.
+The wider foundation/community plan remains open; no native build or service change.
+
 2026-11-09: [[sessions/2026-11-09-Device-Audit]] records a read-only physical
 build 37 pass and D-001: list detail scroll alignment now respects native and
 browser safe areas. Twelve local layout/language/inset checks reproduce then

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T02:03:22.238Z
-Source commit: 54e7a69795714ea1f78508edc9880f25929e7a54
+Observed: 2026-11-10T07:50:56.131Z
+Source commit: c3143a51556f93b7cd4adf0a9cfef7815a22bcef
 
 # Docs Source Inventory
 
@@ -31,7 +31,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/BUILD33_RECOVERY.md](../../docs/BUILD33_RECOVERY.md) (2945 bytes)
 - [docs/BUILD34_KNOWN_GAPS.md](../../docs/BUILD34_KNOWN_GAPS.md) (5536 bytes)
 - [docs/BUILD34_READINESS.md](../../docs/BUILD34_READINESS.md) (3377 bytes)
-- [docs/CATALOG_LOADING.md](../../docs/CATALOG_LOADING.md) (1430 bytes)
+- [docs/CATALOG_LOADING.md](../../docs/CATALOG_LOADING.md) (1969 bytes)
 - [docs/CHAPTER_CATALOG_FIX_2026-10-01.md](../../docs/CHAPTER_CATALOG_FIX_2026-10-01.md) (3327 bytes)
 - [docs/CHARACTER_ATLAS_VERIFICATION_2026-10-07.md](../../docs/CHARACTER_ATLAS_VERIFICATION_2026-10-07.md) (2111 bytes)
 - [docs/COMMUNITY_TIMELINE_2026-11-01.md](../../docs/COMMUNITY_TIMELINE_2026-11-01.md) (13485 bytes)
@@ -42,6 +42,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/CUSTOM_APPEARANCE_FRAME_FIT_2026-10-09.md](../../docs/CUSTOM_APPEARANCE_FRAME_FIT_2026-10-09.md) (4114 bytes)
 - [docs/CUSTOM_ARTWORK_REPAIR_2026-10-08.md](../../docs/CUSTOM_ARTWORK_REPAIR_2026-10-08.md) (4441 bytes)
 - [docs/DAHLA_UPDATE_VERIFICATION.md](../../docs/DAHLA_UPDATE_VERIFICATION.md) (3486 bytes)
+- [docs/DEMAND_SYNOPSIS_PERFORMANCE_2026-11-10.md](../../docs/DEMAND_SYNOPSIS_PERFORMANCE_2026-11-10.md) (5309 bytes)
 - [docs/DEVICE_AUDIT_2026-11-10.md](../../docs/DEVICE_AUDIT_2026-11-10.md) (7217 bytes)
 - [docs/DEVICEHUB_PROFILING_2026-10-14.md](../../docs/DEVICEHUB_PROFILING_2026-10-14.md) (4424 bytes)
 - [docs/DISCORD_FEEDBACK_REVIEW_2026-10-19.md](../../docs/DISCORD_FEEDBACK_REVIEW_2026-10-19.md) (6395 bytes)

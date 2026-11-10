@@ -6,6 +6,12 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Startup synopsis loading: [[sessions/2026-11-10-Demand-Arabic-Synopses]] covers
+exact256-shard parity, request/queue/cache bounds, retry and route races, preserved
+personal fields, offline/native asset rules and real local AR search/detail flows.
+Full3445 passes; decoded JS first15s reduced45.98% in one local sample. FCP did
+not improve; full performance plan, phone profiling and live acceptance remain.
+
 Device audit: [[sessions/2026-11-09-Device-Audit]] separates installed build 37
 observations from current source. D-001 covers list open/back safe-area alignment
 with 12 actual browser checks across three layouts and AR/EN. Native delivery
