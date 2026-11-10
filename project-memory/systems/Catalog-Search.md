@@ -5,6 +5,11 @@ date: 2026-10-14
 aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 ---
 
+[[sessions/2026-11-10-Explore-Lootd]] keeps search from fetching unrelated format
+bootstrap parts, cancels short queries, and connects global More to remaining
+matching shards. Existing index, progressive providers, identity and retry
+contracts remain. Full3480/browser pass; no service deployment or native build.
+
 [[sessions/2026-11-10-Demand-Arabic-Synopses]] removes the timed whole-map
 synopsis download, preserving all entries in exact demand shards. Search aliases
 are separate and unchanged. Full3445/local search/detail pass;45.98% less decoded

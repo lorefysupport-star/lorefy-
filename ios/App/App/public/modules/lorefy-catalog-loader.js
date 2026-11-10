@@ -464,10 +464,10 @@
     searchMatches = [];
     searchSuggestions = [];
     searchCursor = 0;
-    searchBusy = !!query;
+    searchBusy = query.length >= 2;
     searchError = false;
     refreshSearchStatus();
-    if (!query) return;
+    if (!searchBusy) return;
     searchTimer = global.setTimeout(function () {
       requestSearchResult(query, type, undefined, function () { return generation === searchGeneration; }).then(function (result) {
         if (generation !== searchGeneration) return;
@@ -670,10 +670,13 @@
     // Explore's format page uses the same shard/search pipeline without
     // leaving Explore or adding redundant global format controls.
     loadFormat: function (type, query) {
+      query = String(query || "").trim();
       var normalizedType = planner.normalizeRouteType(type);
       browseParts = planner.typeParts(manifest, normalizedType);
       browseCursor = 0;
       scheduleSearch(query, type);
+      // Only empty input browses; short input cancels and longer input loads search matches.
+      if (query) return Promise.resolve();
       return enqueue(planner.initialCatalogPlan(manifest, {type: normalizedType}), {gapMs: 40});
     },
     loadType: function (type) { return enqueue(planner.remainingCatalogPlan(manifest, type, loaded)); },

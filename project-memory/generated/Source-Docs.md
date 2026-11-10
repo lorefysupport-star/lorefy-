@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T18:06:19.247Z
-Source commit: 187373e212eafd66ca9897f3b2b98687afd8549d
+Observed: 2026-11-10T19:40:32.921Z
+Source commit: 26d324752656aa546b6c0f00f1dcf893fe689dfe
 
 # Docs Source Inventory
 
@@ -53,6 +53,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/DISCORD_STATUS_RECONCILIATION_2026-10-07.md](../../docs/DISCORD_STATUS_RECONCILIATION_2026-10-07.md) (45225 bytes)
 - [docs/EXPLORE_CINEMA_QA.md](../../docs/EXPLORE_CINEMA_QA.md) (4296 bytes)
 - [docs/EXPLORE_DIVERSE_SHELVES_2026-10-11.md](../../docs/EXPLORE_DIVERSE_SHELVES_2026-10-11.md) (3292 bytes)
+- [docs/EXPLORE_LOOTD_2026-11-10.md](../../docs/EXPLORE_LOOTD_2026-11-10.md) (8065 bytes)
 - [docs/EXPLORE_SEARCH_QA.md](../../docs/EXPLORE_SEARCH_QA.md) (4026 bytes)
 - [docs/EXPLORE_STUDIO_VERIFICATION_2026-10-08.md](../../docs/EXPLORE_STUDIO_VERIFICATION_2026-10-08.md) (4415 bytes)
 - [docs/FEATURE_AUDIT_20261011.md](../../docs/FEATURE_AUDIT_20261011.md) (5106 bytes)

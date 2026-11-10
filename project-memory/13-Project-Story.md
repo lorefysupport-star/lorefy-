@@ -6,6 +6,12 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-10: [[sessions/2026-11-10-Explore-Lootd]] studies public Lootd discovery
+then repairs unrelated search downloads, global pagination and repeated hidden
+catalog work. Direct format selection and stable theme-aware cards preserve the
+chosen identity. Full3480, AR/EN browser open/back and36 ->72 results pass.
+No native build, production mutation or whole-app speed certification.
+
 2026-11-10: [[sessions/2026-11-10-Icon-Runtime]] retains the complete patched
 Lucide API while reducing its startup asset42.7%. Full3458, focused21 and actual
 composer/Profile/Settings browser checks pass. Home first15s decoded JS now

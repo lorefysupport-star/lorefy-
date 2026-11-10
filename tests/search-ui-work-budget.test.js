@@ -29,8 +29,78 @@ function renderHarness(overrides={}) {
   function flush(){const pending=[...timers.values()];timers.clear();pending.forEach(timer=>timer.fn());}
   function flushEffects(){const pending=[...pendingEffects];pendingEffects.clear();pending.forEach(([index,fn])=>{if(effects[index].cleanup)effects[index].cleanup();effects[index].cleanup=fn();});}
   function emit(name,detail){assert.ok(listeners.has(name),'listener registered: '+name);listeners.get(name)({detail});}
-  return {render,find,flush,flushEffects,emit,slots,unmount:()=>effects.forEach(effect=>effect?.cleanup?.()),counts:()=>({rankingCalls,matchCalls}),root};
+  return {render,find,flush,flushEffects,emit,slots,props,unmount:()=>effects.forEach(effect=>effect?.cleanup?.()),counts:()=>({rankingCalls,matchCalls}),root};
 }
+
+test('status-only parent updates preserve matching work until actual catalog data changes',()=>{
+  const rows=[{id:'one',title:'Naruto',type:'Manga'}],app=renderHarness({getCatalog:()=>rows});
+  app.render();app.flushEffects();const input=app.find(n=>n.type==='input');
+  input.props.onFocus();input.props.onChange({target:{value:'Naruto'}});app.flush();app.render();app.flushEffects();
+  const before=app.counts().matchCalls;
+  for(let i=0;i<3;i++){app.props.getCatalog=()=>rows;app.emit('lorefy:catalog-progress');app.render();}
+  assert.equal(app.counts().matchCalls,before,'unchanged results must not be rematched for loader status');
+  rows.push({id:'two',title:'Naruto Story',type:'Manga'});app.emit('lorefy:catalog-ingested');app.render();
+  assert.equal(app.counts().matchCalls,before+2,'in-place ingestion still invalidates the result snapshot');
+});
+
+test('Types never calculates personalized rankings and requests categories only while visible',()=>{
+  let categories=0;const app=renderHarness({getCategories(){categories++;return [{type:'Manga',rep:{id:'one',title:'One',type:'Manga'}}];}});
+  app.render();app.flushEffects();assert.equal(categories,0);
+  app.find(n=>n.props.role==='tab'&&n.children.includes('Types')).props.onClick();app.render();
+  const before=app.counts().rankingCalls;app.emit('lorefy:catalog-progress');app.render();
+  assert.equal(app.counts().rankingCalls,before);assert.ok(categories>0);
+  assert.ok(app.find(n=>n.props.className==='lf-explore-category'));
+});
+
+function globalPaginationHarness(){
+  const rows=Array.from({length:40},(_,i)=>({id:'work-'+i,title:'Naruto '+i,type:'Manga',pop:40-i}));
+  const pending=[],app=renderHarness({getCatalog:()=>rows});
+  app.root.LorefyCatalogLoader={state:()=>({ready:true,hasMore:true,searchQuery:'Naruto',searchType:'All'}),loadExplore:async()=>{},loadFormat:async()=>{},loadMore:()=>new Promise((resolve,reject)=>pending.push({resolve,reject}))};
+  app.render();app.flushEffects();let input=app.find(n=>n.type==='input');input.props.onFocus();input.props.onChange({target:{value:'Naruto'}});app.flush();app.render();app.flushEffects();
+  const more=()=>app.find(n=>n.props.className==='lf-explore-search-more');
+  return {app,rows,pending,more};
+}
+test('global search reveals loaded results then requests the next matching batch',async()=>{
+  const f=globalPaginationHarness();f.more().props.onClick();f.app.render();f.app.flushEffects();
+  assert.ok(f.more(),'more matching shards must stay reachable after loaded cards are revealed');
+  f.more().props.onClick();f.more().props.onClick();await settle();assert.equal(f.pending.length,1);
+  f.rows.push({id:'last',title:'Naruto Last',type:'Manga'});f.app.emit('lorefy:catalog-ingested');
+  f.pending[0].resolve();await settle();f.app.render();f.app.flushEffects();
+  assert.ok(f.app.find(n=>n.props.title==='Naruto Last'));
+});
+for(const outcome of ['resolve','reject'])test('an old global page '+outcome+' cannot change the next search',async()=>{
+  const f=globalPaginationHarness();f.more().props.onClick();f.app.render();f.app.flushEffects();f.more()?.props.onClick();await settle();
+  assert.equal(f.pending.length,1);
+  const input=f.app.find(n=>n.type==='input');input.props.onChange({target:{value:'Other'}});f.app.flush();f.app.render();f.app.flushEffects();
+  const before=JSON.stringify(f.app.slots);f.pending[0][outcome](outcome==='reject'?Error('old offline'):undefined);await settle();
+  assert.equal(JSON.stringify(f.app.slots),before);
+});
+
+test('search format is selectable directly without opening the advanced filter dialog',()=>{
+  const app=renderHarness();app.render();app.find(n=>n.type==='input').props.onFocus();app.render();
+  const select=app.find(n=>n.type==='select'&&n.props['aria-label']==='Format');assert.ok(select);
+  select.props.onChange({target:{value:'Manga'}});app.render();
+  assert.equal(app.find(n=>n.type==='select'&&n.props['aria-label']==='Format').props.value,'Manga');
+  assert.equal(app.find(n=>n.props.role==='dialog'),undefined);
+});
+
+test('a single work does not reserve an empty edition toolbar under its cover',()=>{
+  const app=renderHarness();app.render();const input=app.find(n=>n.type==='input');
+  input.props.onFocus();input.props.onChange({target:{value:'Naruto'}});app.flush();app.render();
+  assert.equal(app.find(n=>n.props.className==='lf-search-edition-actions'),undefined);
+});
+
+test('search format and advanced filter controls share the current glass theme',()=>{
+  const css=fs.readFileSync('styles/lorefy-explore-cinema.css','utf8');
+  assert.match(css,/\.lf-explore-search-tools> :is\(\.lf-explore-search-filter,\.lf-explore-search-format\)\{[^}]*background:var\(--ui-glass-fill,var\(--ui-fill\)\)!important/);
+  assert.match(css,/\.lf-explore-search-tools> :is\(\.lf-explore-search-filter,\.lf-explore-search-format\)\{[^}]*color:var\(--ui-glass-ink,var\(--ui-ink\)\)!important/);
+  assert.match(css,/\.lf-explore-search-cancel\{[^}]*color:var\(--ui-ink\)!important/);
+});
+
+test('bounded result grids reserve actual card layout rather than a short offscreen placeholder',()=>{
+  const css=fs.readFileSync('styles/lorefy-explore-cinema.css','utf8');
+  assert.match(css,/\.lf-explore-cinema :is\(\.lf-explore-format-grid,\.lf-design-search-grid\) \.lf-explore-work\{[^}]*content-visibility:visible!important;[^}]*contain-intrinsic-size:none!important/);
+});
 
 function collectionHarness(){
  const doc={activeElement:null,hidden:false,body:{}},opener={isConnected:true,focus(){doc.activeElement=this;}},close={focus(){doc.activeElement=this;}},card={focus(){doc.activeElement=this;}},background={inert:false};

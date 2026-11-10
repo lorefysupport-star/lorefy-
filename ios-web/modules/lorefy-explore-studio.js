@@ -270,6 +270,16 @@
   function clearSearchHistory(storage,owner){try{storage.removeItem(searchHistoryKey(owner));}catch(_){}return [];}
   // Transient navigation only; preferences and library still use their existing owner storage.
   var viewMemory = new Map();
+  function buildCategories(catalog, types, coverOf) {
+    var groups = new Map(types.map(function(type){return [type,{type:type,count:0,rep:null,hasCover:false}];}));
+    (catalog||[]).forEach(function(work){
+      var entry=groups.get(work.type);if(!entry)return;
+      entry.count++;
+      if(!entry.rep)entry.rep=work;
+      if(!entry.hasCover&&/^https?:/.test(coverOf(work)||'')){entry.rep=work;entry.hasCover=true;}
+    });
+    return Array.from(groups.values()).filter(function(entry){return entry.rep;}).map(function(entry){return {type:entry.type,count:entry.count,rep:entry.rep};});
+  }
   function Explore(props) {
     var React = root.React, h = React.createElement, en = props.language === 'en';
     var owner = String(props.userKey || 'local'), saved = viewMemory.get(owner) || {mode:'you', format:'', query:'', sort:'popular', limit:60, scroll:0};
@@ -283,6 +293,7 @@
     var dialogState = React.useState(null), dialog = dialogState[0], setDialog = dialogState[1];
     var draftState = React.useState(null), draft = draftState[0], setDraft = draftState[1];
     var revisionState = React.useState(0), revision = revisionState[0], setRevision = revisionState[1];
+    var dataRevision = React.useRef(0);
     var slideState = React.useState(0), slide = slideState[0], setSlide = slideState[1];
     var searchState=React.useState(!!saved.searchActive),searchActive=searchState[0],setSearchActive=searchState[1];
     var searchQueryState=React.useState(saved.searchQuery||''),searchQuery=searchQueryState[0],setSearchQuery=searchQueryState[1];
@@ -316,9 +327,9 @@
     var errorState = React.useState(false), loadError = errorState[0], setLoadError = errorState[1];
     var opener = React.useRef(null), panel = React.useRef(null), screen = React.useRef(null), sentinel = React.useRef(null), hero = React.useRef(null), busy = React.useRef(null), dialogInstance = React.useRef(0);
     React.useEffect(function(){
-      var scope={active:true,request:null,loader:root.LorefyCatalogLoader,owner:owner,format:format,query:query,sort:sort,filters:filters};busy.current=scope;
+      var scope={active:true,request:null,loader:root.LorefyCatalogLoader,owner:owner,format:format,query:query,sort:sort,filters:filters,searchActive:searchActive,searchQuery:searchQuery,searchMode:searchMode,searchFilters:searchFilters};busy.current=scope;
       return function(){scope.active=false;};
-    },[owner,format,query,sort,filters]);
+    },[owner,format,query,sort,filters,searchActive,searchQuery,searchMode,searchFilters]);
     var t = function (ar, english) { return en ? english : ar; };
     var Icon = function (name, size) {
       if (en && name === 'ChevronLeft') name = 'ChevronRight';
@@ -343,27 +354,28 @@
     }, [format, query]);
     React.useEffect(function () {
       function changed() { setRevision(function (n) { return n + 1; }); }
-      root.addEventListener('lorefy:catalog-ingested', changed);
+      function dataChanged() { dataRevision.current++;changed(); }
+      root.addEventListener('lorefy:catalog-ingested', dataChanged);
       root.addEventListener('lorefy:catalog-progress', changed);
-      root.addEventListener('lorefy:reader-safety-changed', changed);
+      root.addEventListener('lorefy:reader-safety-changed', dataChanged);
       return function () {
-        root.removeEventListener('lorefy:catalog-ingested', changed);
+        root.removeEventListener('lorefy:catalog-ingested', dataChanged);
         root.removeEventListener('lorefy:catalog-progress', changed);
-        root.removeEventListener('lorefy:reader-safety-changed', changed);
+        root.removeEventListener('lorefy:reader-safety-changed', dataChanged);
       };
     }, []);
     var catalogState = root.LorefyCatalogLoader && root.LorefyCatalogLoader.state();
     var catalogReady = !catalogState || catalogState.ready, catalogPartial = !!(catalogState && catalogState.partial);
     // Search has its own relevance/filter pipeline. Catalog progress must not
     // also rebuild personalized shelves and featured picks hidden behind it.
-    var needsRanked = !props.getCatalog || !format && (!searchActive || searchMode==='media'&&!searchQuery.trim());
+    var needsRanked = !props.getCatalog || !format && (searchActive?searchMode==='media'&&!searchQuery.trim():mode==='you');
     var needsShelves = !format && !searchActive && mode==='you';
     var ranked = React.useMemo(function () { if(!needsRanked)return [];return root.LorefyPerformanceProbe?root.LorefyPerformanceProbe.measure("explore.ranking",function(){return props.getRanked(props.allType);}):props.getRanked(props.allType); }, [needsRanked,props.getRanked,props.allType,revision]);
-    var seeds = (props.favorites || []).concat(props.preferences.seedWorkIds || [], Object.keys(props.library).filter(function (id) {
+    var seeds = needsShelves ? (props.favorites || []).concat(props.preferences.seedWorkIds || [], Object.keys(props.library).filter(function (id) {
       return !/متوقف|متروك|paused|dropped/i.test(props.library[id]);
-    })).slice(0, 24).map(props.getWork).filter(Boolean);
+    })).slice(0, 24).map(props.getWork).filter(Boolean) : [];
     var shelfPreferences = props.preferences;
-    if (!(shelfPreferences.genres || []).length) {
+    if (needsShelves && !(shelfPreferences.genres || []).length) {
       var genreCounts = new Map();
       seeds.forEach(function (work) { (work.genres || []).forEach(function (genre) { genreCounts.set(genre, (genreCounts.get(genre) || 0) + 1); }); });
       shelfPreferences = Object.assign({}, props.preferences, {genres:Array.from(genreCounts).sort(function (a,b) { return b[1]-a[1]; }).slice(0,3).map(function (entry) { return entry[0]; })});
@@ -372,19 +384,23 @@
     // Bring account recommendations forward, without changing their ranking or deduplication.
     shelves.sort(function (a, b) { return Number(b.key === 'for-you') - Number(a.key === 'for-you'); });
     var features = React.useMemo(function(){return needsShelves?featuredWorks(ranked):[];},[needsShelves,ranked]), selected = features[slide % (features.length || 1)];
+    var catalog = props.getCatalog ? props.getCatalog() : ranked;
+    var categories = !format&&!searchActive&&mode==='browse' ? (props.getCategories?props.getCategories():props.categories||[]) : [];
     var results = React.useMemo(function () {
-      return format ? catalogResults(props.getCatalog ? props.getCatalog() : ranked, format, query, sort, props.ratingScore).filter(function(work){return matchesFilters(work,filters);}) : [];
-    }, [format, query, sort, revision, props.getCatalog,filters]);
+      return format ? catalogResults(catalog, format, query, sort, props.ratingScore).filter(function(work){return matchesFilters(work,filters);}) : [];
+    }, [format, query, sort, dataRevision.current, catalog, filters, props.ratingScore]);
     function more() {
       var scope=busy.current;
       var currentState = root.LorefyCatalogLoader && root.LorefyCatalogLoader.state();
-      if (!scope || !scope.active || scope.request || scope.loader!==root.LorefyCatalogLoader || scope.owner!==owner || scope.format!==format || scope.query!==query || scope.sort!==sort || scope.filters!==filters || currentState && currentState.searchError) return;
-      if (limit < resultCount) { setLimit(function (n) { return n + 60; }); return; }
+      if (!scope || !scope.active || scope.request || scope.loader!==root.LorefyCatalogLoader || scope.owner!==owner || scope.format!==format || scope.query!==query || scope.sort!==sort || scope.filters!==filters || scope.searchActive!==searchActive || scope.searchQuery!==searchQuery || scope.searchMode!==searchMode || scope.searchFilters!==searchFilters || currentState && currentState.searchError) return;
+      var globalSearch=!format&&searchActive&&searchMode==='media',shown=globalSearch?searchLimit:limit,total=globalSearch?editionEntries.length:resultCount;
+      if (shown < total) { if(globalSearch)setSearchLimit(function(n){return n+36;});else setLimit(function(n){return n+60;});return; }
+      if(currentState&&currentState.searching)return;
       if (catalogState && catalogState.hasMore && root.LorefyCatalogLoader) {
         var request={};scope.request=request;setLoadError(false);
         function current(){return scope.active&&busy.current===scope&&scope.request===request&&scope.loader===root.LorefyCatalogLoader;}
         Promise.resolve().then(function(){if(current())return scope.loader.loadMore();}).then(function(){
-          if(current()){setLimit(function(n){return n+60;});setRevision(function(n){return n+1;});}
+          if(current()){if(globalSearch)setSearchLimit(function(n){return n+36;});else setLimit(function(n){return n+60;});setRevision(function(n){return n+1;});}
         }).catch(function(){if(current())setLoadError(true);}).finally(function(){if(current())scope.request=null;});
       }
     }
@@ -434,9 +450,9 @@
     },[owner,searchActive,searchQuery,searchMode,searchAttempt]);
     var mediaResults=React.useMemo(function(){
       if(!searchActive||searchMode!=='media'||searchKey(searchQuery).length<2)return [];
-      var rows=catalogResults(props.getCatalog?props.getCatalog():ranked,searchFilters.format||props.allType,searchQuery,searchFilters.sort==='relevance'?'popular':searchFilters.sort,props.ratingScore).filter(function(work){return matchesFilters(work,searchFilters);});
+      var rows=catalogResults(catalog,searchFilters.format||props.allType,searchQuery,searchFilters.sort==='relevance'?'popular':searchFilters.sort,props.ratingScore).filter(function(work){return matchesFilters(work,searchFilters);});
       return searchFilters.sort==='relevance'?rankSearchResults(rows,searchQuery):rows;
-    },[searchActive,searchMode,searchQuery,revision,ranked,props.getCatalog,props.allType,props.ratingScore,searchFilters]);
+    },[searchActive,searchMode,searchQuery,dataRevision.current,catalog,props.allType,props.ratingScore,searchFilters]);
     var editionContext=JSON.stringify([owner,format,format?query:searchQuery,searchMode,searchFilters,filters,sort]);
     var editionView=React.useRef({context:'',entries:[]});
     var groupingActive=format?searchKey(query).length>=2:searchActive&&searchMode==='media'&&searchKey(searchQuery).length>=2;
@@ -519,7 +535,7 @@
         return h('section',{className:'lf-design-inline-results'},h('p',{className:'lf-design-search-status',role:'status'},phase==='updating'?t('جارٍ تحديث النتائج…','Updating results…'):phase==='partial'?t('بعض المصادر غير متاحة؛ هذه النتائج المتوفرة','Some sources are unavailable; showing available results'):phase==='ready'?editionEntries.length+' '+t('نتيجة متوفرة','available results'):''),
           searchMessage(phase),failed&&h('button',{type:'button',className:'lf-explore-search-retry',onClick:retryMediaSearch},Icon('RotateCw',17),t('إعادة المحاولة','Try again')),
           suggestionsFor(searchQuery,activeSearchType),h('div',{className:'lf-design-search-grid'},editionEntries.slice(0,searchLimit).map(searchEntry)),
-          editionEntries.length>searchLimit&&h('button',{className:'lf-explore-search-more',onClick:function(){setSearchLimit(searchLimit+36);}},t('عرض المزيد','Show more')),
+          (editionEntries.length>searchLimit||scoped&&catalogState.hasMore&&!catalogState.searchError)&&h('button',{className:'lf-explore-search-more',disabled:!!(scoped&&catalogState.searching),onClick:more},t('عرض المزيد','Show more')),
           (phase==='empty'||phase==='partial'||phase==='error')&&root.LorefyProductTools&&root.LorefyProductTools.openMissingRequests&&h('button',{className:'lf-catalog-request-button',onClick:function(){root.LorefyProductTools.openMissingRequests(searchQuery);}},Icon('BookPlus',18),t('طلب إضافة عمل','Request a missing work')));
       }
       if(searchMode==='people')return h('section',{className:'lf-design-inline-results'},searchStatus?searchMessage(searchStatus==='loading'?'loading':'error'):readers.length?readers.map(function(reader){return h('button',{key:reader.id,className:'lf-design-person',onClick:function(){rememberSearch();remember();root.LorefyUserDiscovery.openReaderProfile(reader,root.LorefyUserDiscovery.buildDirectory());}},reader.avatar?h('img',{src:reader.avatar,alt:''}):Icon('UserRound',24),h('span',null,h('strong',{dir:'auto'},reader.name),h('small',{dir:'ltr'},'@'+reader.username)),Icon('ChevronLeft',18));}):searchMessage('empty'),searchStatus==='error'&&h('button',{className:'lf-explore-search-retry',onClick:function(){setSearchAttempt(searchAttempt+1);}},Icon('RotateCw',17),t('إعادة المحاولة','Try again')));
@@ -566,7 +582,7 @@
     function searchEntry(entry) {
       var multiple=entry.items.length>1;
       return h('div',{key:entry.key,className:'lf-explore-search-entry','data-edition-group':entry.key},item(entry.work,false),
-        h('div',{className:'lf-search-edition-actions'},entry.eligible&&h('button',{type:'button',className:'lf-search-editions-button',disabled:!multiple,'aria-label':t('طبعات ','Editions of ')+entry.work.title+' · '+entry.items.length,
+        multiple&&entry.eligible&&h('div',{className:'lf-search-edition-actions'},h('button',{type:'button',className:'lf-search-editions-button','aria-label':t('طبعات ','Editions of ')+entry.work.title+' · '+entry.items.length,
           onClick:function(){open({kind:'editions',title:entry.work.title,context:editionContext,items:entry.items.map(function(work){return Object.assign({},work);})});}},Icon('BookOpen',16),editionCountLabel(entry.items.length,props.language))));
     }
     function item(work, feedback, edition) {
@@ -672,7 +688,7 @@
         var step=event.key==='ArrowRight'?(en?1:-1):(en?-1:1),next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+step+buttons.length)%buttons.length;
         buttons[next].click();buttons[next].focus();
       }},[['media',t('الأعمال','Media'),'BookOpen'],['people',t('الأشخاص','People'),'Users'],['lists',t('قوائمي','My lists'),'List']].map(function(entry){return h('button',{key:entry[0],role:'tab',tabIndex:searchMode===entry[0]?0:-1,'aria-selected':searchMode===entry[0],onClick:function(){changeSearchMode(entry[0]);}},Icon(entry[2],16),entry[1]);})),
-      !format&&searchActive&&searchMode==='media'&&h('div',{className:'lf-explore-search-tools'},h('button',{className:'lf-explore-search-filter',onClick:function(){setDraft(Object.assign({},searchFilters));open({kind:'searchFilters',title:t('تصفية البحث','Search filters')});}},Icon('SlidersHorizontal',17),t('الفلاتر','Filters'),(searchFilters.format||searchFilters.genres.length||searchFilters.status!=='all')&&h('span',null,t('مفعّلة','Active'))),h('small',null,searchFilters.format?props.typeLabel(searchFilters.format):t('كل الأعمال','All formats'))),
+      !format&&searchActive&&searchMode==='media'&&h('div',{className:'lf-explore-search-tools'},h('button',{className:'lf-explore-search-filter',onClick:function(){setDraft(Object.assign({},searchFilters));open({kind:'searchFilters',title:t('تصفية البحث','Search filters')});}},Icon('SlidersHorizontal',17),t('الفلاتر','Filters'),(searchFilters.genres.length||searchFilters.status!=='all')&&h('span',null,t('مفعّلة','Active'))),h('select',{className:'lf-explore-search-format','aria-label':t('نوع العمل','Format'),value:searchFilters.format,onChange:function(event){searchRetry.current++;setRemoteSearch(null);setSearchFilters(Object.assign({},searchFilters,{format:event.target.value}));setSearchLimit(36);}},h('option',{value:''},t('كل الأعمال','All formats')),props.types.filter(function(type){return type!==props.allType;}).map(function(type){return h('option',{key:type,value:type},props.typeLabel(type));}))),
       format ? h('div',{className:'lf-explore-sorts',role:'group','aria-label':t('ترتيب الأعمال','Sort works')},[['popular',t('الشائع','Popular')],['rating',t('الأعلى تقييماً','Top rated')],['newest',t('الجديد','New')]].map(function(entry){return h('button',{key:entry[0],'aria-pressed':sort===entry[0],onClick:function(){setSort(entry[0]);setLimit(60);top();}},entry[1]);})) :
         !searchActive&&h('div',{className:'lf-explore-tabs',role:'tablist','aria-label':t('أقسام استكشف','Explore views')},[['you',t('تصفّح','Browse')],['browse',t('الأنواع','Types')]].map(function(tab){return h('button',{key:tab[0],role:'tab',id:'explore-tab-'+tab[0],'aria-controls':'explore-panel','aria-selected':mode===tab[0],onClick:function(){setMode(tab[0]);top();}},tab[1]);})),
       format ? h(React.Fragment,null,
@@ -686,8 +702,8 @@
           shelves.length?shelves.slice(0,1).map(section):h('div',{className:'lf-explore-empty'},h('h2',null,t('لا توجد اقتراحات بعد','No suggestions yet'))),
           root.LorefyFriendActivity&&props.friendProps&&h(root.LorefyFriendActivity.Rails,Object.assign({},props.friendProps,{compact:true,showRecent:false,onSeeAll:function(title,items){setCollectionLimit(60);open({kind:'shelf',title:title,items:items});}})),shelves.slice(1).map(section)):
           h('section',{className:'lf-explore-browse'},h('h2',null,t('أنواع الأعمال','Formats')),h('div',{className:'lf-explore-category-grid'},props.types.filter(function(type){return type!==props.allType;}).map(function(type){
-            var category=props.categories.find(function(entry){return entry.type===type;})||{type:type,count:0};
-            var representative=ranked.find(function(work){return formatKey(work.type)===formatKey(type)&&!work.metadataOnly;})||category.rep;
+            var category=categories.find(function(entry){return entry.type===type;})||{type:type,count:0};
+            var representative=category.rep||ranked.find(function(work){return formatKey(work.type)===formatKey(type)&&!work.metadataOnly;});
             var categoryCard=h('button',{key:type,className:'lf-explore-category',onClick:function(){chooseFormat(type);}},h('span',{className:'lf-explore-category-art'},representative?cover(representative):Icon('BookOpen',32)),
               h('span',{className:'lf-explore-category-copy'},h('strong',null,props.typeLabel(type)),Icon('ChevronLeft',18)));
             return root.LorefyLibraryMedia&&representative?root.LorefyLibraryMedia.card(categoryCard,{lang:props.language,workId:'format:'+type+':'+representative.id,title:props.typeLabel(type)}):categoryCard;
@@ -697,5 +713,5 @@
         dialog.kind==='editions'?h('div',{className:'lf-explore-dialog-grid lf-search-edition-grid'},dialog.items.map(function(work){return item(work,false,true);})):dialog.kind==='preferences'?preferencesBody():dialog.kind==='filters'||dialog.kind==='searchFilters'?filtersBody():dialog.kind==='feedback'?h('div',{className:'lf-explore-feedback'},[['more_like_this',t('المزيد مثل هذا','More like this'),'Sparkles'],['not_interested',t('غير مهتم','Not interested'),'EyeOff']].map(function(action){return h('button',{key:action[0],onClick:function(){props.onFeedback(dialog.work.id,action[0]);setRevision(function(n){return n+1;});close();}},Icon(action[2]),action[1]);})):
           h('div',{className:'lf-explore-dialog-grid'},dialog.items.slice(0,collectionLimit).map(function(work){return item(work,false);}),dialog.loading&&h('p',{className:'lf-explore-collection-status',role:'status'},t('جارٍ تحميل الأعمال…','Loading works…')),(collectionLimit<dialog.items.length||dialog.pager&&dialog.pager.hasMore()||dialog.error)&&h('button',{className:'lf-explore-collection-more',disabled:dialog.loading,onClick:moreCollection},dialog.error?t('إعادة المحاولة','Try again'):t('تحميل المزيد','Load more'))))));
   }
-  return {editionCountLabel:editionCountLabel,groupSearchEditions:groupSearchEditions,rankSearchResults:rankSearchResults,searchPhase:searchPhase,readSearchHistory:readSearchHistory,saveSearchHistory:saveSearchHistory,clearSearchHistory:clearSearchHistory,featureArtwork:featureArtwork,sectionWorks:sectionWorks,sectionType:sectionType,matchesFilters:matchesFilters,catalogResults:catalogResults, featuredWorks:featuredWorks, genreLabel: genreLabel, formatKey: formatKey, collections: COLLECTIONS, SearchSuggestions: SearchSuggestions, readingSnapshot: readingSnapshot, readingItems: readingItems, buildShelves: buildShelves, Explore: Explore};
+  return {buildCategories:buildCategories,editionCountLabel:editionCountLabel,groupSearchEditions:groupSearchEditions,rankSearchResults:rankSearchResults,searchPhase:searchPhase,readSearchHistory:readSearchHistory,saveSearchHistory:saveSearchHistory,clearSearchHistory:clearSearchHistory,featureArtwork:featureArtwork,sectionWorks:sectionWorks,sectionType:sectionType,matchesFilters:matchesFilters,catalogResults:catalogResults, featuredWorks:featuredWorks, genreLabel: genreLabel, formatKey: formatKey, collections: COLLECTIONS, SearchSuggestions: SearchSuggestions, readingSnapshot: readingSnapshot, readingItems: readingItems, buildShelves: buildShelves, Explore: Explore};
 });

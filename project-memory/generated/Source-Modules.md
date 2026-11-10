@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T18:06:19.247Z
-Source commit: 187373e212eafd66ca9897f3b2b98687afd8549d
+Observed: 2026-11-10T19:40:32.921Z
+Source commit: 26d324752656aa546b6c0f00f1dcf893fe689dfe
 
 # Modules Source Inventory
 
@@ -18,7 +18,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-catalog-data.js](../../modules/lorefy-catalog-data.js) (12655 bytes)
 - [modules/lorefy-catalog-detail-cache.js](../../modules/lorefy-catalog-detail-cache.js) (1069 bytes)
 - [modules/lorefy-catalog-identity.js](../../modules/lorefy-catalog-identity.js) (26458 bytes)
-- [modules/lorefy-catalog-loader.js](../../modules/lorefy-catalog-loader.js) (31834 bytes)
+- [modules/lorefy-catalog-loader.js](../../modules/lorefy-catalog-loader.js) (32031 bytes)
 - [modules/lorefy-catalog-map-loader.js](../../modules/lorefy-catalog-map-loader.js) (1835 bytes)
 - [modules/lorefy-catalog-plan.js](../../modules/lorefy-catalog-plan.js) (12186 bytes)
 - [modules/lorefy-catalog-policy.js](../../modules/lorefy-catalog-policy.js) (5160 bytes)
@@ -43,7 +43,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-decoration-billing.js](../../modules/lorefy-decoration-billing.js) (4820 bytes)
 - [modules/lorefy-design-system.js](../../modules/lorefy-design-system.js) (9008 bytes)
 - [modules/lorefy-elven-motion.js](../../modules/lorefy-elven-motion.js) (11875 bytes)
-- [modules/lorefy-explore-studio.js](../../modules/lorefy-explore-studio.js) (78606 bytes)
+- [modules/lorefy-explore-studio.js](../../modules/lorefy-explore-studio.js) (80598 bytes)
 - [modules/lorefy-frame-motion.js](../../modules/lorefy-frame-motion.js) (17969 bytes)
 - [modules/lorefy-frame-restoration.js](../../modules/lorefy-frame-restoration.js) (19994 bytes)
 - [modules/lorefy-friend-activity.js](../../modules/lorefy-friend-activity.js) (12481 bytes)

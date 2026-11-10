@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T18:06:19.247Z
-Source commit: 187373e212eafd66ca9897f3b2b98687afd8549d
+Observed: 2026-11-10T19:40:32.921Z
+Source commit: 26d324752656aa546b6c0f00f1dcf893fe689dfe
 
 # Styles Source Inventory
 
@@ -24,7 +24,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-data-studio.css](../../styles/lorefy-data-studio.css) (5667 bytes)
 - [styles/lorefy-decoration-store.css](../../styles/lorefy-decoration-store.css) (14628 bytes)
 - [styles/lorefy-design-system.css](../../styles/lorefy-design-system.css) (108435 bytes)
-- [styles/lorefy-explore-cinema.css](../../styles/lorefy-explore-cinema.css) (33653 bytes)
+- [styles/lorefy-explore-cinema.css](../../styles/lorefy-explore-cinema.css) (35010 bytes)
 - [styles/lorefy-explore-studio.css](../../styles/lorefy-explore-studio.css) (30335 bytes)
 - [styles/lorefy-frame-motion.css](../../styles/lorefy-frame-motion.css) (10214 bytes)
 - [styles/lorefy-glass-materials.css](../../styles/lorefy-glass-materials.css) (10680 bytes)

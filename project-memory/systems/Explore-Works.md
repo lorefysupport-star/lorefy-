@@ -12,6 +12,14 @@ wholecatalog indexing. Partial All/الكل failures keep cards+Retry in AR/EN.
 3111tests and local browser pass; device/provider coverage limits remain.
 # الاستكشاف وتفاصيل الأعمال والشخصيات
 
+[[sessions/2026-11-10-Explore-Lootd]] adds query-only shard loading, guarded
+global search pagination and data-based result memoization. Hidden category
+summaries are deferred/linear; Types no longer ranks recommendations. Direct
+format selection and theme-correct search controls retain the chosen cinematic
+identity. Bounded grids avoid short offscreen estimates; edition actions only
+reserve space when present. Full3480 and AR/EN local browser pass; physical
+device latency, provider coverage and wider startup payload remain open.
+
 E-002 in [[sessions/2026-11-02-Explore-Interactions]] scopes format pagination
 to its current context and request, rejects obsolete callbacks/results and keeps
 automatic loading bound to the selected sort/query.3293 source tests and192

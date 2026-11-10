@@ -6,6 +6,12 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Explore continuation: [[sessions/2026-11-10-Explore-Lootd]] covers query-only
+shards, short cancellation, guarded global pagination, status/data distinction,
+lazy linear categories, Types work budgets, theme controls and card geometry.
+22 added cases; full3480 and actual AR/EN filtering/open/back/More pass. Live
+provider latency, first-index payload and physical-device acceptance remain.
+
 Icon startup: [[sessions/2026-11-10-Icon-Runtime]] covers all1,743 glyph/alias
 keys and1,746 exports, scoped hydration, DOM parity, deterministic minification,
 loading budget and native/offline synchronization. Full3458/focused21 and actual
