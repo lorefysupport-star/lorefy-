@@ -6,6 +6,12 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-10: [[sessions/2026-11-10-Chapter-Runtime]] follows demand synopses with
+an exact synchronous chapter map:838,685 to216,885 decoded bytes, all3,120 records
+and startup reading contracts retained. Full3452/focused37 and actual browser
+chapter/progress checks pass. Node execution median improved for this file only;
+device and broader startup/community performance remain separate.
+
 2026-11-10: [[sessions/2026-11-10-Demand-Arabic-Synopses]] begins the approved
 Lootd-inspired performance plan without redesigning screens. Demand shards keep
 all12,071 Arabic synopsis entries, replacing the timed6MB whole-map download.

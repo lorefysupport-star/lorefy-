@@ -6,6 +6,11 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-11-10-Chapter-Runtime]] preserves the synchronous chapter-map
+contract with an exact generated representation, not delayed totals. All3,120
+records/fields/order match; full3452, focused37 and actual browser384/384 pass.
+No count source update, new reading credit rule, build or service write.
+
 A-009 in [[sessions/2026-11-02-App-Interactions]] replaces only the import cover
 node when matching an edition, keeping select/focus/open review details stable.
 Skip leaves an empty same-size holder; missing art uses the existing fallback.

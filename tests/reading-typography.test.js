@@ -47,7 +47,7 @@ test('Showcase captions can grow for enlarged text instead of clipping at 72 pix
 test('typography assets share current local cache keys',()=>{
  const assets=['uploads/files/lorefy-app.js','modules/lorefy-home-cinema.js','modules/lorefy-reader-layout.js','modules/lorefy-library-view.js','styles/lorefy-home-immersive.css','styles/lorefy-library-refined.css','styles/lorefy-profile-refined.css','styles/lorefy-book-showcase.css'];
  for(const file of ['index.html','sw.js'])for(const asset of assets)assert.ok(fs.readFileSync(file,'utf8').includes(asset+'?v='+(asset==='styles/lorefy-profile-refined.css'?'20261110-reader-captions-v1':asset==='uploads/files/lorefy-app.js'?'20261104-inbox-review-v1':asset==='modules/lorefy-reader-layout.js'?'20261105-profile-unity-v3':asset==='modules/lorefy-home-cinema.js'?'20261101-home-reading-v1':['uploads/files/lorefy-app.js','modules/lorefy-reader-layout.js','modules/lorefy-library-view.js'].includes(asset)?'20261029-library-media-v1':asset==='styles/lorefy-home-immersive.css'?'20261101-home-reading-v1':'20261028-reading-type-v1')),asset);
- assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v702-demand-synopses/);
+ assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v703-chapter-runtime/);
 });
 test('Showcase reservation follows the effective line height, including legacy important rules',()=>{
  const css=fs.readFileSync('styles/lorefy-book-showcase.css','utf8');

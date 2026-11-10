@@ -6,6 +6,12 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Chapter startup: [[sessions/2026-11-10-Chapter-Runtime]] covers exact metadata
+values/order, independent records and merge reference, unusual/signed-zero values,
+determinism, budget and offline/native packaging. Full3452, focused37 and sampled
+browser384/384 progress pass. Smaller/faster metadata execution is not a full-app
+or native-device latency certificate.
+
 Startup synopsis loading: [[sessions/2026-11-10-Demand-Arabic-Synopses]] covers
 exact256-shard parity, request/queue/cache bounds, retry and route races, preserved
 personal fields, offline/native asset rules and real local AR search/detail flows.

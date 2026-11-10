@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T07:50:56.131Z
-Source commit: c3143a51556f93b7cd4adf0a9cfef7815a22bcef
+Observed: 2026-11-10T08:10:28.276Z
+Source commit: a8b31298ee3047ce22cffc12522c7b8185fe9941
 
 # Tests Source Inventory
 
@@ -70,7 +70,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/apple-authorization.test.js](../../tests/apple-authorization.test.js) (2410 bytes)
 - [tests/apple-native-guard.test.js](../../tests/apple-native-guard.test.js) (1407 bytes)
 - [tests/apple-press-feedback.test.js](../../tests/apple-press-feedback.test.js) (1794 bytes)
-- [tests/apple-release-package.test.js](../../tests/apple-release-package.test.js) (13114 bytes)
+- [tests/apple-release-package.test.js](../../tests/apple-release-package.test.js) (13174 bytes)
 - [tests/apple-ui-surfaces.test.js](../../tests/apple-ui-surfaces.test.js) (4119 bytes)
 - [tests/arabic-enrichment-demand.test.js](../../tests/arabic-enrichment-demand.test.js) (10855 bytes)
 - [tests/arabic-library-expansion.test.js](../../tests/arabic-library-expansion.test.js) (4328 bytes)
@@ -138,6 +138,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/chapter-reading-ownership.test.js](../../tests/chapter-reading-ownership.test.js) (3719 bytes)
 - [tests/chapter-reading-progress.test.js](../../tests/chapter-reading-progress.test.js) (4665 bytes)
 - [tests/chapter-review-session.test.js](../../tests/chapter-review-session.test.js) (4886 bytes)
+- [tests/chapter-runtime.test.js](../../tests/chapter-runtime.test.js) (5059 bytes)
 - [tests/character-atlas.test.js](../../tests/character-atlas.test.js) (6054 bytes)
 - [tests/character-catalog-loading.test.js](../../tests/character-catalog-loading.test.js) (6180 bytes)
 - [tests/character-discovery-retry.test.js](../../tests/character-discovery-retry.test.js) (5466 bytes)

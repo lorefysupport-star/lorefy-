@@ -8,6 +8,12 @@ Native preparation runs this generator and omits the redundant original runtime
 map. See [the measured repair](DEMAND_SYNOPSIS_PERFORMANCE_2026-11-10.md) for
 exact parity, cache/failure behavior and performance limits.
 
+Chapter totals remain synchronous. `node tools/build-chapter-runtime.js` factors
+repeated metadata constants into `uploads/lorefy-chapter-runtime.js` without
+changing any source record. Native preparation runs it automatically. The original
+`lorefy-chapter-overrides.js` stays canonical but is no longer a runtime download.
+See [the chapter performance receipt](CHAPTER_RUNTIME_PERFORMANCE_2026-11-10.md).
+
 The catalog has 163 numbered data parts. `index.html` starts with one useful
 part, chosen from the current work link or format. The app can show that part
 immediately. It does not download the remaining parts at startup.

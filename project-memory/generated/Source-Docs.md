@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T07:50:56.131Z
-Source commit: c3143a51556f93b7cd4adf0a9cfef7815a22bcef
+Observed: 2026-11-10T08:10:28.276Z
+Source commit: a8b31298ee3047ce22cffc12522c7b8185fe9941
 
 # Docs Source Inventory
 
@@ -31,8 +31,9 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/BUILD33_RECOVERY.md](../../docs/BUILD33_RECOVERY.md) (2945 bytes)
 - [docs/BUILD34_KNOWN_GAPS.md](../../docs/BUILD34_KNOWN_GAPS.md) (5536 bytes)
 - [docs/BUILD34_READINESS.md](../../docs/BUILD34_READINESS.md) (3377 bytes)
-- [docs/CATALOG_LOADING.md](../../docs/CATALOG_LOADING.md) (1969 bytes)
+- [docs/CATALOG_LOADING.md](../../docs/CATALOG_LOADING.md) (2382 bytes)
 - [docs/CHAPTER_CATALOG_FIX_2026-10-01.md](../../docs/CHAPTER_CATALOG_FIX_2026-10-01.md) (3327 bytes)
+- [docs/CHAPTER_RUNTIME_PERFORMANCE_2026-11-10.md](../../docs/CHAPTER_RUNTIME_PERFORMANCE_2026-11-10.md) (4093 bytes)
 - [docs/CHARACTER_ATLAS_VERIFICATION_2026-10-07.md](../../docs/CHARACTER_ATLAS_VERIFICATION_2026-10-07.md) (2111 bytes)
 - [docs/COMMUNITY_TIMELINE_2026-11-01.md](../../docs/COMMUNITY_TIMELINE_2026-11-01.md) (13485 bytes)
 - [docs/COMMUNITY_VISUAL_QA_2026-10-03.md](../../docs/COMMUNITY_VISUAL_QA_2026-10-03.md) (2676 bytes)

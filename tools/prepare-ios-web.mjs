@@ -7,6 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 execFileSync(process.execPath, [path.join(root, "tools", "build-runtime-catalog.js")], { stdio: "inherit" });
 execFileSync(process.execPath, [path.join(root, "tools", "build-catalog-search-index.mjs")], { stdio: "inherit" });
 execFileSync(process.execPath, [path.join(root, "tools", "build-arabic-enrichment.js")], { stdio: "inherit" });
+execFileSync(process.execPath, [path.join(root, "tools", "build-chapter-runtime.js")], { stdio: "inherit" });
 const output = path.join(root, "ios-web");
 const releaseConfigPath = path.join(root, "config", "lorefy-release.json");
 const publicBuildConfigPath = path.join(root, "config", "lorefy-build-public.json");
@@ -55,6 +56,7 @@ for (const entry of runtimeEntries) {
 }
 // Retain the canonical source for generation, not a second unused runtime map.
 await rm(path.join(output, "uploads", "lorefy-ar-enrichment.js"), { force: true });
+await rm(path.join(output, "uploads", "lorefy-chapter-overrides.js"), { force: true });
 const expansionFiles = [
   "manifest.json", "manga.json", "manhwa.json", "manhua.json", "comics.json",
   "novel.json", "book.json", "light-novel.json", "web-novel.json"
