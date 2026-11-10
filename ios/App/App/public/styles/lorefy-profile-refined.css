@@ -58,7 +58,8 @@
 }
 .lf-app .lf-profile-page .lf-profile-favorites:not(.is-spine-view):not(.is-showcase-view) .lf-reader-layout-cover-title {
   display:-webkit-box !important; -webkit-box-orient:vertical; -webkit-line-clamp:2;
-  overflow:hidden; min-block-size:3em !important; max-block-size:3em; unicode-bidi:isolate; text-align:start;
+  box-sizing:border-box; line-height:1.5 !important; padding-block:8px 0;
+  overflow:hidden; min-block-size:calc(3em + 8px) !important; max-block-size:calc(3em + 8px); unicode-bidi:isolate; text-align:start;
 }
 .lf-app .lf-profile-page .lf-reader-layout-reading-meta { color:var(--ui-secondary) !important; font-size:13px !important; }
 .lf-app .lf-profile-page .lf-reader-layout-reading-row progress { accent-color:var(--ui-action); }

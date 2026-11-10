@@ -81,3 +81,19 @@ The final browser fixture reloads the saved layout (not just a DOM attribute):
 12 owner open/back cases plus 2 CSS/DOM direction parity cases pass. No output
 from these disposable demo fixtures is evidence of a real-account write.
 See [the section-by-section audit](../../docs/DEVICE_AUDIT_2026-11-10.md).
+
+## D-005: Reader captions clipped by their own padding
+
+The continuation reproduced the device observation with actual saved Reader
+composition, populated Grid favorites, AR/EN and 320/390/440px widths. Computed
+caption height was 39px with 8px top padding and 19.5px line height: only 31px
+was left for two lines requiring 39px. This supersedes the earlier open-repro
+status; artwork loading in the fixture is not classified as a new image bug.
+
+`styles/lorefy-profile-refined.css` now reserves `3em + 8px` at line-height 1.5,
+border-box. Two-line clamping and full source titles remain; book/art/shelf sizes,
+edit targets, palette and data contracts do not change. Six populated viewport/
+language cases check all 24 caption boxes, failing before and passing after.
+Installed-phone acceptance is still pending; no new native build was created.
+Final full source suite after D-005: 3432 passed, zero failures. D-001/D-002's
+14 browser cases reran successfully alongside D-005's six populated cases.

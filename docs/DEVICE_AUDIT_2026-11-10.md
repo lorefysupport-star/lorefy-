@@ -16,6 +16,7 @@ Started 9 November, continued 10 November 2026, Asia/Riyadh.
 | --- | --- | --- | --- |
 | D-001 | High | Opening a saved list aligned its toolbar under native status chrome; Back did not respond at its displayed location. The shared panel uses start-aligned scrolling without safe-area margin. | Source repaired. The greater of native/browser top inset plus 8px is reserved. Local open/back checks pass across AR/EN and all three saved profile layouts. Installed-phone delivery is pending. |
 | D-002 | Medium | Timeline and conversation actions change position. Home has LTR ordering; shared post actions inherited direction and wrapped independently. | Source repaired. Shared five-action geometry/order now matches Home. Controlled CSS/DOM checks pass in both directions. Handlers/counts/receipts are unchanged; no real reaction was sent. |
+| D-005 | Medium | Reader favorite captions clipped. The 39px border-box included 8px padding, leaving only 31px for 39px of text. | Reproduced and repaired in source: two lines plus their padding are reserved, without resizing artwork. Six populated AR/EN viewport cases check 24 caption boxes. Phone acceptance is pending. |
 
 ## Findings Requiring More Evidence
 
@@ -23,7 +24,6 @@ Started 9 November, continued 10 November 2026, Asia/Riyadh.
 | --- | --- | --- |
 | D-003 | Work search returned an exact requested result plus a partial-provider failure message. | Identify the failing provider and response/deadline, verify retry and slow/offline recovery. Do not replace exact identity matching with arbitrary title matches. |
 | D-004 | The real notification inbox was empty. | Authorized two-account Like/comment/reply event, receiver persistence after reopen, target navigation and deduplication. Empty UI alone proves neither deletion nor delivery failure. |
-| D-005 | Reader-layout favorite captions appeared vertically clipped. | Reproduce populated cards with actual saved Reader composition, two-line Arabic/English titles and the complete CSS cascade before changing geometry. |
 | D-006 | Review editor showed existing content with a publish-style command label. | Establish whether the same save path updates the existing record before changing wording. No review was edited or submitted. |
 
 ## Physical Read-Only Coverage
@@ -41,7 +41,7 @@ Started 9 November, continued 10 November 2026, Asia/Riyadh.
 | Characters | Roster, portraits and existing rating controls rendered. | Image upload/crop/permission denial, rating save and cache invalidation on real accounts. |
 | Covers | Current and alternative covers rendered; chooser closed without applying. | Upload/apply, failure/retry, restart durability and edition metadata completeness. |
 | Library | Grid, covers, progress and status totals rendered; sampled completed total agreed with owner profile. | Other three modes, sorting/search, large libraries and writes. |
-| Owner profile | Saved media/frame, metrics, favorites, followers and lists opened. | Every frame/layout/palette and all editing paths. Reader caption clipping remains open. |
+| Owner profile | Saved media/frame, metrics, favorites, followers and lists opened. | Every frame/layout/palette and all editing paths. Reader caption source repair still needs phone delivery/acceptance. |
 | Visitor profile | Follower profile opened, public view/list tab rendered, return restored owner theme. | Real private/block policy matrix, following writes, all populated public-list cases. |
 | Lists | Envelopes and a populated ranked list opened; Home navigation escaped the unsafe toolbar. | Real edit/reorder/share/delete and all list types. D-001 source repair needs new-binary verification. |
 | Notifications | Inbox opened and returned to Home; empty state displayed. | Real delivery, read persistence, older events and targets. |
@@ -50,7 +50,7 @@ Started 9 November, continued 10 November 2026, Asia/Riyadh.
 
 1. Community: real two-account receipts and notification delivery, partial refresh, pagination and reconnect, one section at a time.
 2. Search: source-specific failures, real provider timeouts, Arabic aliases and images without stale results.
-3. Profile: populated Reader caption geometry, remaining formats/layouts, frame hit areas and visitor contrast.
+3. Profile: native acceptance of the caption repair, remaining formats/layouts, frame hit areas and visitor contrast.
 4. Settings/account/import/share: navigation and recovery first; destructive or privacy-changing operations require separate authorization.
 5. Native acceptance: authentication, background/resume, keyboard variants, cold launch, network loss and measured CPU/memory/frame time. Access limitations are not a passing result.
 
@@ -58,15 +58,17 @@ Further phone touches stopped when an incoming call appeared. No call was accept
 
 ## Reproduction
 
-Final source suite: **3431 passed, 0 failed**. Dedicated browser regression:
-**14 cases passed** (12 actual saved-layout list open/back cases, 2 controlled
-action-order direction cases). No installed-binary or service-delivery claim.
+Final source suite after all three repairs: **3432 passed, 0 failed**.
+Dedicated browser regressions: **20 cases passed** (12 actual saved-layout list
+open/back cases, 2 controlled action-order direction cases, 6 populated Reader
+caption cases checking 24 text boxes). No installed-binary/service-delivery claim.
 
 From the repository root, run the local demo server, then the dedicated regression:
 
 ```sh
 node tools/lorefy-api-server.js 8796
 node qa/device-ui-regressions.cjs
+node qa/profile-caption-browser.cjs
 npm test
 ```
 

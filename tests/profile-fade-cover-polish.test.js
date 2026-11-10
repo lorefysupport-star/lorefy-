@@ -1,6 +1,16 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
 const read=f=>fs.readFileSync(f,'utf8');
 
+test('Reader favorite captions reserve two complete lines in addition to cover spacing',()=>{
+ const css=read('styles/lorefy-profile-refined.css');
+ const rule=css.match(/\.lf-profile-favorites:not\(\.is-spine-view\):not\(\.is-showcase-view\) \.lf-reader-layout-cover-title\s*\{([^}]+)\}/)?.[1];
+ assert.ok(rule);
+ assert.match(rule,/line-height:1\.5 !important/);
+ assert.match(rule,/padding-block:8px 0/);
+ assert.match(rule,/min-block-size:calc\(3em \+ 8px\) !important/);
+ assert.match(rule,/max-block-size:calc\(3em \+ 8px\)/);
+});
+
 test('profile artwork fades through alpha into the real theme material, not a flat-color endpoint',()=>{
  const css=read('styles/lorefy-profile-header.css');
  const image=css.slice(css.indexOf('> :is(.lf-profile-banner,.lf-reader-banner) > img {'),css.indexOf('> :is(.lf-profile-banner,.lf-reader-banner)::after'));

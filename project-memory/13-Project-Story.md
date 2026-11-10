@@ -13,6 +13,9 @@ verify the repair; delivery to the installed phone remains pending.
 The 10 November continuation adds D-002: shared post action order now matches
 Home in AR/EN. Live provider failures, empty inbox and caption clipping remain
 separate follow-ups; no production mutation was performed.
+The same continuation reproduces D-005 and reserves caption padding separately
+from two text lines in Reader. Six populated AR/EN viewport cases pass; native
+binary verification remains pending.
 
 2026-11-05: [[sessions/2026-11-05-Profile-Compact-Repairs]] fixes follower/frame
 clearance, photo aperture gaps, compact accessible metrics and complete favorite

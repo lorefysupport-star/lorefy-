@@ -12,6 +12,8 @@ with 12 actual browser checks across three layouts and AR/EN. Native delivery
 and server mutation acceptance are not implied by this source repair.
 D-002 adds two controlled CSS/DOM parity checks for shared post action placement
 outside Home. Actual reaction receipts and cross-account delivery were not tested.
+D-005 reproduces and fixes Reader favorite caption clipping, with 24 two-line
+boxes checked across six language/viewport cases; no artwork geometry changes.
 
 Profile compact repairs: [[sessions/2026-11-05-Profile-Compact-Repairs]] covers all
 43 offered frames in three layouts, six-theme fading, follower/name clearance,

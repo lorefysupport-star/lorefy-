@@ -11,13 +11,13 @@ const out = path.join(__dirname, '../output/playwright/device-ui-20261109');
   fs.mkdirSync(out, { recursive: true });
   try {
     const page = await browser.newPage({ viewport: { width: 440, height: 956 } });
-    await page.goto(base + '/index.html?preview=demo&demo=ready&route=profile&adaptive=1');
+    await page.goto(base + '/index.html?preview=demo&demo=ready&route=profile&adaptive=1', { waitUntil: 'domcontentloaded' });
     await page.locator('.lf-profile-section-tabs').waitFor();
     await page.evaluate(() => {
       localStorage.setItem('lorefy.user.profileLists.v1', JSON.stringify([{ id: 'safe-area-check', name: 'QA list', kind: 'works', isPublic: true,
         items: Array.from({ length: 12 }, (_, i) => ({ id: 'qa-' + i, name: 'QA work ' + i })) }]));
     });
-    await page.reload();
+    await page.reload({ waitUntil: 'domcontentloaded' });
     await page.locator('.lf-profile-section-tabs').waitFor();
     for (const lang of ['ar', 'en']) {
       for (const layout of ['normal', 'immersive', 'reader']) {
@@ -25,7 +25,7 @@ const out = path.join(__dirname, '../output/playwright/device-ui-20261109');
           localStorage.setItem('lorefy.ui.lang.v1', JSON.stringify(lang));
           localStorage.setItem('lorefy.user.profileLayout.v1', JSON.stringify(layout));
         }, { lang, layout });
-        await page.reload();
+        await page.reload({ waitUntil: 'domcontentloaded' });
         await page.locator('.lf-profile-section-tabs').waitFor();
         assert.equal(await page.locator('.lf-profile-page').getAttribute('data-profile-layout'), layout);
         for (const safeTop of [0, 62]) {
