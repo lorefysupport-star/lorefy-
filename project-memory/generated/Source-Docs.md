@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T12:30:45.286Z
-Source commit: f08cd8653d406656deb5e8874612aa45954e1b34
+Observed: 2026-11-11T17:46:57.147Z
+Source commit: cfc5fb12c411a47ff4951e507165d2f0ba83400f
 
 # Docs Source Inventory
 
@@ -116,6 +116,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/UGC_MODERATION_RUNBOOK.md](../../docs/UGC_MODERATION_RUNBOOK.md) (1633 bytes)
 - [docs/UI_AUDIT_2026-09-25.md](../../docs/UI_AUDIT_2026-09-25.md) (2398 bytes)
 - [docs/WORK_CINEMA_QA.md](../../docs/WORK_CINEMA_QA.md) (4695 bytes)
+- [docs/WORK_LOOTD_2026-11-11.md](../../docs/WORK_LOOTD_2026-11-11.md) (4538 bytes)
 - [docs/WORK_STUDIO_QA.md](../../docs/WORK_STUDIO_QA.md) (4546 bytes)
 - [docs/XTOOL_NATIVE_DEVELOPMENT_AR.md](../../docs/XTOOL_NATIVE_DEVELOPMENT_AR.md) (8092 bytes)
 

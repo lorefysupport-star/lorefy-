@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T12:30:45.286Z
-Source commit: f08cd8653d406656deb5e8874612aa45954e1b34
+Observed: 2026-11-11T17:46:57.147Z
+Source commit: cfc5fb12c411a47ff4951e507165d2f0ba83400f
 
 # Modules Source Inventory
 
@@ -47,7 +47,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-frame-motion.js](../../modules/lorefy-frame-motion.js) (17969 bytes)
 - [modules/lorefy-frame-restoration.js](../../modules/lorefy-frame-restoration.js) (19994 bytes)
 - [modules/lorefy-friend-activity.js](../../modules/lorefy-friend-activity.js) (12481 bytes)
-- [modules/lorefy-growth-features.js](../../modules/lorefy-growth-features.js) (428552 bytes)
+- [modules/lorefy-growth-features.js](../../modules/lorefy-growth-features.js) (428649 bytes)
 - [modules/lorefy-halloween-art.js](../../modules/lorefy-halloween-art.js) (5242 bytes)
 - [modules/lorefy-halloween-motion.js](../../modules/lorefy-halloween-motion.js) (7647 bytes)
 - [modules/lorefy-home-cinema.js](../../modules/lorefy-home-cinema.js) (7509 bytes)
@@ -79,7 +79,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-reading-diary-core.js](../../modules/lorefy-reading-diary-core.js) (10222 bytes)
 - [modules/lorefy-reading-diary.js](../../modules/lorefy-reading-diary.js) (51702 bytes)
 - [modules/lorefy-reading-metrics.js](../../modules/lorefy-reading-metrics.js) (7240 bytes)
-- [modules/lorefy-review-editor.js](../../modules/lorefy-review-editor.js) (23441 bytes)
+- [modules/lorefy-review-editor.js](../../modules/lorefy-review-editor.js) (25134 bytes)
 - [modules/lorefy-scroll-memory.js](../../modules/lorefy-scroll-memory.js) (5860 bytes)
 - [modules/lorefy-share-composer.js](../../modules/lorefy-share-composer.js) (28969 bytes)
 - [modules/lorefy-share-studio.js](../../modules/lorefy-share-studio.js) (41736 bytes)

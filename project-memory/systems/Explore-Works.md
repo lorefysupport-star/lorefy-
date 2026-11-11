@@ -187,5 +187,12 @@ historical Discord records and future device/provider verification.
 
 Type-page search now connects its selected format to the existing debounced online lookup and tracks pending/error states. Golden Son by Pierce Brown verified through Novel search and work detail; 53 focused checks. [[sessions/2026-10-21-Format-Search-Online]].
 
+2026-11-11: [[sessions/2026-11-11-Work-Lootd]] separates work identity/source score
+from the owner's reading log and latest valid review. Status/progress/actions use
+the existing stores; no invented percentage for unknown totals. Reader/review
+content precedes chapters, desktop has a log column and secondary command labels
+remain visible on small phones. Full3510 and local AR/EN/theme checks pass;
+physical-device/provider acceptance remains independent. Cachev709, no build.
+
 
 2026-10-21: [[sessions/2026-10-21-Search-Audit]] repairs main All-format online lookup and isolates People/Lists from catalog listeners; 234 focused checks, browser result evidence, and five matching installed simulator assets. Live directory/provider coverage remains separate. No commit or push.

@@ -1,5 +1,50 @@
 /* The selected cinematic identity, confined to the work and its editors. */
 @layer lorefy-work-cinema {
+.lf-app .lf-detail-page .lf-detail-hero{height:220px!important;min-height:220px!important}
+.lf-detail-page .lf-work-log{grid-column:1/-1;min-width:0;padding:16px!important;border:1px solid var(--ui-line);border-radius:8px;background:color-mix(in srgb,var(--ui-surface) 82%,transparent);box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ui-ink) 5%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.lf-detail-page .lf-work-log-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.lf-detail-page .lf-work-log-heading h2{margin:0;font-size:16px;line-height:1.5;font-weight:650;color:var(--ui-ink)}
+.lf-detail-page .lf-work-personal-rating{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;font-size:12px;line-height:1.6;color:var(--ui-muted)}
+.lf-detail-page .lf-work-personal-rating strong{font-size:14px;font-weight:650;font-variant-numeric:tabular-nums;color:var(--ui-rating)}
+.lf-detail-page .lf-work-personal-rating small{font-size:12px;color:var(--ui-danger)}
+.lf-detail-page .lf-work-log-checkpoint{display:grid;gap:8px;margin-bottom:14px!important;color:var(--ui-muted);font-size:12px;line-height:1.6}
+.lf-detail-page .lf-work-log-checkpoint>div{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 12px}
+.lf-detail-page .lf-work-log-checkpoint strong{color:var(--ui-ink);font-size:13px;font-weight:600}
+.lf-detail-page .lf-work-log-checkpoint progress{display:block;width:100%;height:5px;border:0;appearance:none;-webkit-appearance:none;accent-color:var(--ui-action);border-radius:3px;overflow:hidden;background:var(--ui-fill)}
+.lf-detail-page .lf-work-log-checkpoint progress::-webkit-progress-bar{background:var(--ui-fill)}
+.lf-detail-page .lf-work-log-checkpoint progress::-webkit-progress-value{background:var(--ui-action)}
+.lf-detail-page .lf-work-log-checkpoint progress::-moz-progress-bar{background:var(--ui-action)}
+.lf-detail-page .lf-work-rating-source{font-size:11px;line-height:1.5;color:var(--ui-muted);unicode-bidi:isolate}
+.lf-detail-page .lf-work-log .lf-chapter-quick-actions{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:8px!important}
+.lf-detail-page .lf-work-log .lf-chapter-quick-actions>button{width:auto!important;min-height:44px!important;border-radius:8px!important;padding:8px 10px!important;font-size:13px!important;line-height:1.5!important;white-space:normal!important}
+.lf-detail-page .lf-work-log .lf-chapter-quick-actions>:is(.lf-chapter-quick-add,.lf-chapter-quick-review){grid-column:span 3!important;order:0!important}
+.lf-detail-page .lf-work-log .lf-chapter-quick-actions>:is(.lf-chapter-quick-characters,.lf-chapter-quick-cover){grid-column:span 2!important}
+.lf-detail-page .lf-work-log .lf-chapter-quick-actions>.lf-chapter-quick-characters{grid-column:span 3!important}
+.lf-detail-page .lf-work-log .lf-chapter-quick-actions>.lf-chapter-more{grid-column:span 1!important;width:44px!important;justify-self:end;margin:0!important}
+.lf-detail-page .lf-work-log .lf-chapter-quick-actions>button:active{opacity:.75}
+.lf-detail-page .lf-work-log .lf-chapter-quick-actions>button:focus-visible{outline:2px solid var(--ui-action)!important;outline-offset:2px}
+.lf-detail-page .lf-detail-content[data-work-tab=story]>.lf-work-reader-tabs{order:2!important;margin-top:8px!important}
+.lf-detail-page .lf-detail-content[data-work-tab=story]>.lf-work-reader-tabs+div{order:3!important}
+.lf-detail-page .lf-detail-content[data-work-tab=story]>.lf-work-story{order:1!important}
+.lf-detail-page .lf-detail-content[data-work-tab=story]>.lf-chapter-section{order:5!important}
+.lf-detail-page .lf-detail-content[data-work-tab=story]>.lf-work-score-details{order:4!important}
+.lf-detail-page .lf-detail-content[data-work-tab=story]>.lf-work-suggestions{order:6!important}
+@media(max-width:359px){
+ .lf-detail-page .lf-work-log .lf-chapter-quick-actions>:is(.lf-chapter-quick-characters,.lf-chapter-quick-cover){padding:6px!important;gap:4px!important;font-size:12px!important}
+ .lf-detail-page .lf-work-log .lf-chapter-quick-actions>:is(.lf-chapter-quick-characters,.lf-chapter-quick-cover) svg{width:16px!important;height:16px!important;flex:0 0 16px!important}
+}
+@media(min-width:700px){
+ .lf-app .lf-detail-page .lf-detail-hero{height:320px!important;min-height:320px!important}
+ .lf-detail-page .lf-detail-content[data-work-tab]{max-width:1100px!important}
+ .lf-detail-page .lf-detail-content[data-work-tab] .lf-work-identity{grid-template-columns:144px minmax(0,1fr) minmax(240px,300px)!important;gap:20px 24px!important}
+ .lf-detail-page .lf-detail-content[data-work-tab] .lf-work-poster{grid-column:1;grid-row:1/3;width:144px!important;height:216px!important}
+ .lf-detail-page .lf-detail-content[data-work-tab] .lf-work-copy{grid-column:2;grid-row:1;padding-top:14px!important}
+ .lf-detail-page .lf-work-log{grid-column:3;grid-row:1/3;align-self:start}
+ .lf-detail-page .lf-detail-content[data-work-tab] .lf-work-facts{grid-column:2!important;grid-row:2;align-self:start}
+ .lf-detail-page .lf-detail-content[data-work-tab] .lf-work-section-nav{grid-column:1/-1!important}
+}
+}
+@layer lorefy-work-cinema {
 .lf-app:has(.lf-detail-page),html:has(.lf-detail-page) .lf-character-page{--ui-bg:#08090b!important;--ui-surface:#1b1e24!important;--ui-card:#1b1e24!important;--ui-fill:#292c34!important;--ui-fill-soft:#181b20!important;--ui-ink:#f6f6f8!important;--ui-text:#f6f6f8!important;--ui-muted:#b5bac6!important;--ui-line:rgba(255,255,255,.14)!important;--ui-separator:#484d58!important;--ui-action:#6cf2d8!important;--ui-accent:#6cf2d8!important;--ui-selected:rgba(108,242,216,.12)!important;--ui-on-action:#082d27!important;--ui-rating:#6cf2d8!important;--ui-danger:#ff969c!important;background:#08090b!important;color:#f6f6f8!important}
 .lf-detail-page,.lf-detail-page :is(h1,h2,h3,p,button,strong,span,small,summary,input,textarea,select),.lf-app:has(.lf-detail-page) :is(.lf-rating-sheet,.lf-work-cover-sheet,.lf-work-status-sheet),html:has(.lf-detail-page) .lf-character-page{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;letter-spacing:0!important}
 .lf-app .lf-detail-page{padding-bottom:calc(var(--nc-bottom,0px) + 98px)!important;background:#08090b!important;scrollbar-width:none}
@@ -29,7 +74,7 @@
 .lf-detail-page .lf-chapter-quick-actions>button{flex:0 0 44px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;width:44px!important;min-height:44px!important;min-width:0!important;padding:0!important;border-radius:50%!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(52,56,65,.6)!important;color:#e0e4ed!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;font-size:14px!important;font-weight:500!important}
 .lf-detail-page .lf-chapter-quick-actions>:is(.lf-chapter-quick-add,.lf-chapter-quick-review){flex:1 1 calc(50% - 5px)!important;width:auto!important;min-height:48px!important;padding:10px 12px!important;border-radius:12px!important;order:-1!important}
 .lf-detail-page .lf-chapter-quick-actions>.lf-chapter-quick-add{background:#6cf2d8!important;border-color:#6cf2d8!important;color:#082d27!important;font-weight:600!important}
-.lf-detail-page :is(.lf-chapter-quick-characters,.lf-chapter-quick-cover)>span{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important}
+.lf-detail-page :is(.lf-chapter-quick-characters,.lf-chapter-quick-cover)>span{position:static!important;width:auto!important;height:auto!important;overflow:visible!important;clip-path:none!important;white-space:normal!important}
 .lf-detail-page .lf-chapter-more{margin-inline-start:auto!important}
 .lf-detail-page .lf-chapter-more-menu{top:calc(100% + 8px)!important;z-index:12!important;padding:6px!important;background:rgba(40,44,52,.94)!important;border:1px solid rgba(255,255,255,.22)!important;border-radius:12px!important;box-shadow:0 12px 32px rgba(0,0,0,.4)!important;backdrop-filter:blur(28px)!important;-webkit-backdrop-filter:blur(28px)!important}
 .lf-detail-page .lf-chapter-more-menu button{color:#eef0f5!important;min-height:46px!important;font-size:14px!important;font-weight:400!important}

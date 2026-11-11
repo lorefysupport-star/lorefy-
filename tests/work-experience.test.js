@@ -80,6 +80,7 @@ test('work review reaction names do not collapse to just their count',()=>{
   const fake=path=>({querySelector:selector=>selector.includes(path)?{}:null});
   assert.equal(context.workReviewActionLabel(fake('M7.9 20')),'Replies');
   assert.equal(context.workReviewActionLabel(fake('M19 14')),'Like');
+  assert.equal(context.workReviewActionLabel(fake('M17 14V2')),'Dislike');
   assert.equal(context.workReviewActionLabel(fake('M7 10')),'Recommend');
   assert.equal(context.workReviewActionLabel(fake('M3 6h18')),'Delete');
   assert.equal(context.workReviewActionLabel(fake('unknown')),'');

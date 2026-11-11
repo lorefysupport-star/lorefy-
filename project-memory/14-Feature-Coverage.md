@@ -6,6 +6,12 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Work detail: [[sessions/2026-11-11-Work-Lootd]] covers owner/latest personal-score
+selection, explicit zero, saved reading checkpoint, existing action mount,
+responsive desktop/mobile composition and named dislike reactions. Full3510
+and actual AR/EN dark/light/custom browser cases pass. Device/service acceptance
+and provider data quality remain separate.
+
 Favorite presentation: [[sessions/2026-11-11-Profile-Favorites]] covers badge-free
 work/character favorites, selected-slot cover editing, custom cover preservation,
 account guards and width-driven Showcase.12 owner/24 visitor browser cases and

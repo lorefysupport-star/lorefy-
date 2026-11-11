@@ -5,12 +5,12 @@ status: generated
 <!-- project-memory:generated -->
 # Current Source Snapshot
 
-Observed: 2026-11-11T12:30:45.286Z
-Source commit: f08cd8653d406656deb5e8874612aa45954e1b34
+Observed: 2026-11-11T17:46:57.147Z
+Source commit: cfc5fb12c411a47ff4951e507165d2f0ba83400f
 Branch: main
 
 This is a source fingerprint, not proof of a successful test run, deployment or device certification.
-Indexed source files: 861. Freshness includes untracked source additions, edits and removals within the allowlist.
+Indexed source files: 863. Freshness includes untracked source additions, edits and removals within the allowlist.
 Bulk catalogs, media, secrets, vendor packages, frozen archives and generated native web copies are not indexed. Verify them separately.
 
 ## Current Capacitor Packages

@@ -54,9 +54,10 @@ test('work commands and accessibility labels render in English without a DOM tra
   assert.ok(nodes.some(node => node.props.title === 'Change cover'));
 });
 test('saved status and split progress units use the render language rather than the stale document language', () => {
-  const {text} = render('en', {saved:true});
-  assert.ok(text.includes('Reading'),text);
-  assert.ok(text.includes('2 chapters') && text.includes('1 volume') && text.includes('3 pages'),text);
+  const {nodes} = render('en', {saved:true});
+  const identity=nodes.find(node=>node.props.readingStatus);
+  assert.equal(identity.props.readingStatus,'Reading');
+  assert.match(identity.props.readingProgress,/2 chapters.*1 volume.*3 pages/);
 });
 test('Arabic labels and source prose survive an English to Arabic render transition', () => {
   assert.ok(render('en').text.includes('نص المصدر العربي'));

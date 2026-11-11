@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-11: [[sessions/2026-11-11-Work-Lootd]] reorganizes work detail around an
+owner-scoped reading log, separates personal/source scores and retains existing
+editors, zero ratings and progress. Desktop/mobile AR/EN/theme acceptance and
+full3510 pass. Cachev709; no native build or production mutation.
+
 2026-11-11: [[sessions/2026-11-11-Profile-Favorites]] removes per-image favorite
 edit badges, moves cover editing into the selected-slot editor and sizes Showcase
 by available width. Owner12/visitor24 browser cases and People-search navigation

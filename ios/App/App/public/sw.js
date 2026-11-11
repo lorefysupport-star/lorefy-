@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v708-profile-favorites';
+const CACHE = 'lorefy-v709-work-reading';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -25,7 +25,7 @@ const CORE = [
  './styles/lorefy-library-refined.css?v=20261028-reading-type-v1',
  './assets/home/berserk-home-v1.webp',
  './styles/lorefy-home-cinema.css?v=20261026-work-cinema-v1',
- './styles/lorefy-work-cinema.css?v=20261028-byline-type-v1',
+ './styles/lorefy-work-cinema.css?v=20261111-work-reading-v709',
  './styles/lorefy-home-immersive.css?v=20261101-home-reading-v1',
  './styles/lorefy-glass-materials.css?v=20261028-trust-studio-v2',
  './styles/lorefy-data-studio.css?v=20261028-trust-studio-v2',
@@ -168,7 +168,7 @@ const CORE = [
   './modules/lorefy-cover-media.js?v=20261101-image-delivery-v1',
   './modules/lorefy-library-media.js?v=20261111-profile-favorites-v708',
   './styles/lorefy-cover-media.css?v=20261105-profile-polish-v1',
-  './modules/lorefy-review-editor.js?v=20261101-recommendation-logic-v1',
+  './modules/lorefy-review-editor.js?v=20261111-work-reading-v709',
   './styles/lorefy-review-editor.css?v=20261004-work-surface-v3',
   './styles/lorefy-work-surface.css?v=20261011-work-lists-v1',
   './styles/lorefy-character-atlas.css?v=20261101-character-studio-v1',
@@ -184,12 +184,12 @@ const CORE = [
   './styles/lorefy-book-showcase.css?v=20261028-reading-type-v1',
   './styles/lorefy-profile-header.css?v=20261111-profile-flow-v707',
   './modules/lorefy-profile-header.js?v=20261105-profile-compact-v1',
-  './uploads/files/lorefy-app.js?v=20261111-profile-favorites-v708',
+  './uploads/files/lorefy-app.js?v=20261111-work-reading-v709',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
-  './modules/lorefy-growth-features.js?v=20261111-profile-favorites-v708',
+  './modules/lorefy-growth-features.js?v=20261111-work-reading-v709',
   './modules/lorefy-share-studio.js?v=20261028-share-composer-v3',
   './uploads/files/lorefy-enrich.js?v=20261110-demand-v1',
   './launch/icons/icon-180.png',

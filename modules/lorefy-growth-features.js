@@ -5975,6 +5975,7 @@
   function workReviewActionLabel(button){
     if(button.querySelector('path[d^="M7.9 20"]'))return uiText('الردود','Replies');
     if(button.querySelector('path[d^="M19 14"]'))return uiText('إعجاب','Like');
+    if(button.querySelector('path[d="M17 14V2"]'))return uiText('عدم إعجاب','Dislike');
     if(button.querySelector('path[d^="M7 10"]'))return uiText('توصية','Recommend');
     if(button.querySelector('path[d^="M3 6h18"]'))return uiText('حذف','Delete');
     if(button.querySelector('circle[cx="18"][cy="5"]'))return uiText('مشاركة','Share');

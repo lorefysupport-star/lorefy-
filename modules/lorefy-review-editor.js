@@ -39,6 +39,16 @@
   }
   root.LorefySavedReviewDraft = savedDraft;
   root.LorefyCanPublishReview = canPublish;
+  function personalWorkRating(rows,workId,ownerId) {
+    var latest=null;
+    (rows||[]).forEach(function(row){
+      if(!row||String(row.mid)!==String(workId)||!(row.userId==='me'||ownerId&&row.userId===ownerId))return;
+      if(!latest||(Number(row.ts)||0)>=(Number(latest.ts)||0))latest=row;
+    });
+    if(!latest||!canPublish(latest.r,recommendationOf(latest)))return null;
+    return {rating:latest.r,disliked:isDislike(latest.r,recommendationOf(latest))};
+  }
+  root.LorefyPersonalWorkRating=personalWorkRating;
   if (typeof module === 'object' && module.exports) module.exports = { copy:copy, canPublish:canPublish, isDislike:isDislike, localDislikeCount:localDislikeCount, ratingValue:ratingValue, formatLabel:formatLabel, savedDraft:savedDraft };
 
   root.LorefyWorkDislikes = function WorkDislikes(p) {
@@ -85,6 +95,7 @@
 
   root.LorefyWorkIdentity = function WorkIdentity(p) {
     var h=root.React.createElement, w=p.work, english=p.language==='en';
+    var personal=personalWorkRating(p.reviews,w.id,root.LorefyBackend&&root.LorefyBackend.user&&root.LorefyBackend.user.id);
     var feather=root.NenIcons && root.NenIcons.Feather;
     var R=root.React,tabState=R.useState('story'),activeTab=tabState[0],setTab=tabState[1],host=R.useRef(null);
     R.useEffect(function(){setTab('story');},[w.id]);
@@ -114,15 +125,23 @@
         h('p',{className:'lf-work-format'},[formatLabel(w.type,p.language),w.yr].filter(Boolean).join(' · ')),
         h('div',{className:'lf-work-title-line'},h('h1',{dir:'auto','data-no-translate':'1'},w.title)),
         p.subtitle && h('p',{className:'lf-work-subtitle',dir:'auto',title:p.subtitle,'data-no-translate':'1'},p.subtitle),
-        h('div',{className:'lf-work-rating','aria-label':english?'Work rating':'تقييم العمل'},feather&&h(feather,{size:20,'aria-hidden':true}),h('strong',{className:'lf-work-rating-value'},Number(p.rating)>0?Number(p.rating).toFixed(1):'—'),h('span',{className:'lf-work-rating-caption'},english?'out of 5':'من 5')),
+        h('div',{className:'lf-work-rating','aria-label':english?'Work rating':'تقييم العمل'},feather&&h(feather,{size:20,'aria-hidden':true}),h('strong',{className:'lf-work-rating-value'},Number(p.rating)>0?Number(p.rating).toFixed(1):'—'),h('span',{className:'lf-work-rating-caption'},english?'out of 5':'من 5'),p.ratingSource&&h('span',{className:'lf-work-rating-source',dir:'auto'},p.ratingSource)),
         h(root.LorefyWorkDislikes,{workId:w.id,language:p.language,reviews:p.reviews}),
         p.creator && (root.LorefyProductCore && root.LorefyProductCore.authorWorks([w],p.creator).length
           ? h('button',{type:'button',className:'lf-work-creator lf-work-author-button',title:p.creator,'data-no-translate':'1',onClick:function(){ root.LorefyProductTools.openAuthor(p.creator); },'aria-label':(english?'Works by ':'أعمال ')+p.creator},h('span',{className:'lf-work-author-name',dir:'auto','data-no-translate':'1'},p.creator),root.NenIcons && h(english?root.NenIcons.ChevronRight:root.NenIcons.ChevronLeft,{size:14,'aria-hidden':true}))
           : h('p',{className:'lf-work-creator',dir:'auto',title:p.creator,'data-no-translate':'1'},p.creator))),
-      h('div',{className:'lf-work-action-slot'}),
+      h('section',{className:'lf-work-log','aria-label':english?'Your reading':'سجلك القرائي'},
+        h('div',{className:'lf-work-log-heading'},h('h2',null,english?'Your reading':'سجلك القرائي'),
+          h('div',{className:'lf-work-personal-rating'},h('span',null,english?'Your rating':'تقييمك'),
+            h('strong',{dir:'auto'},personal?Number(personal.rating).toFixed(2)+' / 5':english?'Not rated yet':'لم تقيّم بعد'),
+            personal&&personal.disliked&&h('small',null,english?'Dislike':'عدم إعجاب'))),
+        p.readingStatus&&h('div',{className:'lf-work-log-checkpoint'},
+          h('div',null,h('strong',null,p.readingStatus),h('span',null,p.readingProgress)),
+          p.readingKnown&&Number.isFinite(p.readingPercent)&&h('progress',{max:100,value:Math.max(0,Math.min(100,p.readingPercent)),'aria-label':english?'Reading progress':'تقدم القراءة'})),
+        h('div',{className:'lf-work-action-slot'})),
       h('div',{className:'lf-work-facts'},w.st && h('span',null,w.st),p.metadata && h('span',null,p.metadata),w.pl && h('span',null,w.pl)),
       h('nav',{className:'lf-work-section-nav',role:'tablist','aria-label':english?'Work content':'محتوى العمل',onKeyDown:moveTab},
-        [['story',english?'Story':'القصة'],['reviews',english?'Reviews':'المراجعات'],['related',english?'Related':'ذات صلة']].map(function(item){return h('button',{key:item[0],type:'button',role:'tab','data-work-tab':item[0],tabIndex:activeTab===item[0]?0:-1,'aria-selected':activeTab===item[0],onClick:function(){setTab(item[0]);}},item[1]);})));
+        [['story',english?'Overview':'نظرة عامة'],['reviews',english?'Reviews':'المراجعات'],['related',english?'Related':'ذات صلة']].map(function(item){return h('button',{key:item[0],type:'button',role:'tab','data-work-tab':item[0],tabIndex:activeTab===item[0]?0:-1,'aria-selected':activeTab===item[0],onClick:function(){setTab(item[0]);}},item[1]);})));
 
   };
 
