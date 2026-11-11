@@ -4,6 +4,12 @@ const fs = require('node:fs');
 const path = require('node:path');
 const css = fs.readFileSync(path.join(__dirname, '..', 'styles/lorefy-interface-settings.css'), 'utf8');
 
+test('avatar edit target stays above the overlapping identity surface in every prepared layout',()=>{
+ const header=fs.readFileSync('styles/lorefy-profile-header.css','utf8');
+ assert.match(header,/html \.lf-app\.lf-app :is\(#lf-profile-header,\[data-profile-header-ready='true'\]\) \.lf-profile-avatar\s*\{[^}]*z-index:\s*5\s*!important/s);
+ assert.doesNotMatch(header,/\.lf-profile-identity\s*\{[^}]*pointer-events:\s*none/s);
+});
+
 test('profile cover fades into the identity area without masking the avatar or controls', () => {
   assert.match(css, /\.lf-profile-banner::before\s*\{[^}]*bottom:-76px[^}]*background:inherit/s);
   assert.match(css, /\.lf-profile-banner::after\s*\{[^}]*content:''\s*!important[^}]*bottom:-76px[^}]*linear-gradient\(to bottom,transparent,var\(--ui-bg\)\)[^}]*pointer-events:none/s);

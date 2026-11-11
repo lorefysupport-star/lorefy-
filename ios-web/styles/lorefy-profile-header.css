@@ -20,6 +20,10 @@ html .lf-app.lf-app :is(#lf-profile-header,[data-profile-header-ready='true']) >
 html .lf-app.lf-app :is(#lf-profile-header,[data-profile-header-ready='true']) :is(.lf-profile-identity,.lf-reader-identity) {
   position: relative; z-index: 4; background: transparent !important;
 }
+/* The editable avatar overlaps the later identity sibling. Keep its hit target exposed. */
+html .lf-app.lf-app :is(#lf-profile-header,[data-profile-header-ready='true']) .lf-profile-avatar {
+  z-index: 5 !important;
+}
 html .lf-app.lf-app :is(#lf-profile-header,[data-profile-header-ready='true']) > .lf-reader-surface {
   background: transparent !important; position: relative; z-index: 2;
 }

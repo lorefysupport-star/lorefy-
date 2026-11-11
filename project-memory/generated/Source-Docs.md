@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T23:29:46.822Z
-Source commit: 64000e2d468a43cacd0746a47ece17bd0b5d6f67
+Observed: 2026-11-11T11:55:14.314Z
+Source commit: 0a071da3dfe59655903bce026a89ce3dc982f2e8
 
 # Docs Source Inventory
 
@@ -91,6 +91,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/PROFILE_CUSTOM_GLASS_QA.md](../../docs/PROFILE_CUSTOM_GLASS_QA.md) (3895 bytes)
 - [docs/PROFILE_DECORATION_AUDIT_2026-10-09.md](../../docs/PROFILE_DECORATION_AUDIT_2026-10-09.md) (4754 bytes)
 - [docs/PROFILE_FAVORITES_SHELF_VERIFICATION_2026-10-07.md](../../docs/PROFILE_FAVORITES_SHELF_VERIFICATION_2026-10-07.md) (4174 bytes)
+- [docs/PROFILE_FLOW_2026-11-11.md](../../docs/PROFILE_FLOW_2026-11-11.md) (4330 bytes)
 - [docs/PROFILE_FRAME_LAYOUT_RULES.md](../../docs/PROFILE_FRAME_LAYOUT_RULES.md) (1903 bytes)
 - [docs/PROFILE_LAYOUT_VERIFICATION_2026-10-08.md](../../docs/PROFILE_LAYOUT_VERIFICATION_2026-10-08.md) (4766 bytes)
 - [docs/PROFILE_SECTIONS.md](../../docs/PROFILE_SECTIONS.md) (6281 bytes)

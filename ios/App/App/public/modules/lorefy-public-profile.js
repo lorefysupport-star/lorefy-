@@ -2,6 +2,7 @@
 (function (root) {
   'use strict';
   const React = root.React, h = React.createElement;
+  const LIBRARY_BATCH = 42, CONNECTION_BATCH = 50;
   const icon = (name, size = 20) => root.NenIcons[name] ? h(root.NenIcons[name], { size, 'aria-hidden':true }) : null;
   const safeImage = value => /^(https?:|data:image\/)/i.test(String(value || '')) ? value : '';
   const socialUrl = (kind, value) => {
@@ -29,6 +30,10 @@
     const [busy, setBusy] = React.useState(false);
     const [connections, setConnections] = React.useState(null);
     const [libraryOpen, setLibraryOpen] = React.useState(false);
+    const [libraryQuery, setLibraryQuery] = React.useState('');
+    const [libraryLimit, setLibraryLimit] = React.useState(LIBRARY_BATCH);
+    const [catalogRevision, setCatalogRevision] = React.useState(0);
+    const collectionCache = React.useRef(null);
     const [attempt, setAttempt] = React.useState(0);
     const [request, setRequest] = React.useState({ id:null, attempt:0, status:'loading' });
     const profile = snapshot.id === initial.id ? snapshot : initial;
@@ -44,6 +49,18 @@
     const loading = remote && (!currentRequest || request.status === 'loading');
     const ready = !remote || currentRequest && request.status === 'ready';
     const loadingLabel = root.document?.documentElement?.lang === 'en' ? 'Loading...' : 'جارٍ التحميل...';
+    const en = root.document?.documentElement?.lang === 'en';
+    const moreLabel = en ? 'Show more' : 'عرض المزيد';
+    React.useEffect(() => {
+      if (!root.addEventListener) return;
+      const invalidate = () => setCatalogRevision(value => value + 1);
+      root.addEventListener('lorefy:catalog-ingested', invalidate);
+      root.addEventListener('lorefy:chapter-metadata', invalidate);
+      return () => {
+        root.removeEventListener('lorefy:catalog-ingested', invalidate);
+        root.removeEventListener('lorefy:chapter-metadata', invalidate);
+      };
+    }, []);
     const modalKind = libraryOpen ? 'library' : connections?.id === profile.id ? connections.kind : null;
     React.useEffect(() => {
       const host = modalHost.current, doc = root.document;
@@ -97,7 +114,7 @@
       let active = true;
       const scope = lifecycle.current;
       const current = () => active && isCurrent(scope);
-      setSnapshot(initial); setReviews(props.reviews || []); setConnections(null); setLibraryOpen(false); setError('');
+      setSnapshot(initial); setReviews(props.reviews || []); setConnections(null); setLibraryOpen(false); setLibraryQuery(''); setLibraryLimit(LIBRARY_BATCH); setError('');
       if (!remote) return;
       setRequest({ id:initial.id, attempt, status:'loading' });
       backend.getPublicProfile(initial.id).then(value => {
@@ -165,12 +182,22 @@
     },[profile.id,profile.theme]);
     const ownReviews = reviews.filter(review => review.userId === profile.id);
     const favoriteLimit = root.LorefyLibraryView?.favoriteLimit(appearance.library_view) ?? (showcase ? 3 : spine ? 7 : 4);
-    const works = (profile.favorite_work_ids || []).slice(0, favoriteLimit).map(props.workById).filter(Boolean);
+    // Follow and dialog state must not rescan a reader's entire library.
+    const collectionKeys = [profile.id, profile.library_entries, profile.favorite_work_ids, profile.progress_by_id,
+      profile.own_reviews, profile.favorite_type, favoriteLimit, props.workById, catalogRevision];
+    if (!collectionCache.current || collectionKeys.some((value, index) => value !== collectionCache.current.keys[index])) {
+      const works = (profile.favorite_work_ids || []).slice(0, favoriteLimit).map(props.workById).filter(Boolean);
+      const library = Object.keys(profile.library_entries || {}).map(props.workById).filter(Boolean);
+      const counts = {};
+      library.concat(works).forEach(work => { if (work.type) counts[work.type] = (counts[work.type] || 0) + 1; });
+      const favoriteType = root.LorefyPublicAppearance ? root.LorefyPublicAppearance.favoriteType(profile, props.workById) || '—'
+        : Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0] || '—';
+      collectionCache.current = { keys:collectionKeys, works, library, favoriteType };
+    }
+    const {works, library, favoriteType} = collectionCache.current;
     const characters = (profile.favorite_character_ids || []).filter(Boolean).slice(0, 4);
-    const library = Object.keys(profile.library_entries || {}).map(props.workById).filter(Boolean);
-    const counts = {};
-    library.concat(works).forEach(work => { if (work.type) counts[work.type] = (counts[work.type] || 0) + 1; });
-    const favoriteType = root.LorefyPublicAppearance ? root.LorefyPublicAppearance.favoriteType(profile,props.workById) || '—' : Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0] || '—';
+    const query = libraryQuery.trim().toLocaleLowerCase();
+    const libraryRows = libraryOpen && query ? library.filter(work => [work.title, work.author, work.type].some(value => String(value || '').toLocaleLowerCase().includes(query))) : library;
     const favoriteTypeLabel = {Manga:'مانجا',Manhwa:'مانهوا',Manhua:'مانهوا صيني',Comics:'كوميكس',Book:'كتاب',Novel:'رواية','Light Novel':'لايت نوفل','Web Novel':'ويب نوفل'}[favoriteType] || favoriteType;
 
     async function follow() {
@@ -194,24 +221,29 @@
       if (lifecycle.current) lifecycle.current.connection = null;
       setConnections(null);
     }
-    async function openConnections(kind) {
+    async function openConnections(kind, append = false) {
       const scope = lifecycle.current;
       if (!ready || !isCurrent(scope) || scope.connection?.loading && scope.connection.kind === kind) return;
       const id = profile.id;
-      const token = {kind, loading:true};
+      const previous = append && scope.connection?.kind === kind ? scope.connection : null;
+      if (append && (!previous || !previous.more)) return;
+      const token = {kind, loading:true, rows:previous?.rows || [], offset:previous?.offset || 0, more:true};
       scope.connection = token;
       const currentRequest = () => isCurrent(scope) && scope.connection === token;
       setLibraryOpen(false);
-      setConnections({ id, kind, loading:true, rows:[] });
+      setConnections({ id, ...token });
       try {
-        const rows = await backend[kind === 'followers' ? 'listProfileFollowers' : 'listProfileFollowing'](id, 200, 0);
+        const rows = await backend[kind === 'followers' ? 'listProfileFollowers' : 'listProfileFollowing'](id, CONNECTION_BATCH, token.offset);
         if (!currentRequest()) return;
         token.loading = false;
-        setConnections(current => currentRequest() && current && current.id === id && current.kind === kind ? { id, kind, rows, loading:false } : current);
+        token.offset += rows.length;
+        token.more = rows.length === CONNECTION_BATCH;
+        token.rows = Array.from(new Map(token.rows.concat(rows).map(reader => [reader.id, reader])).values());
+        setConnections(current => currentRequest() && current && current.id === id && current.kind === kind ? { id, ...token } : current);
       } catch (_) {
         if (!currentRequest()) return;
         token.loading = false;
-        setConnections(current => currentRequest() && current && current.id === id && current.kind === kind ? { ...current, loading:false, error:true } : current);
+        setConnections(current => currentRequest() && current && current.id === id && current.kind === kind ? { id, ...token, error:true } : current);
       }
     }
     const image = (src, name) => src ? h('img', { src, alt:name || '', loading:'lazy', decoding:'async', onError:props.onImageError }) : h('span', { className:'lf-reader-image-placeholder' }, String(name || '').slice(0, 1));
@@ -285,9 +317,9 @@
           h('h1', null, profile.name || username), h('p', { className:'lf-reader-handle', dir:'ltr' }, '@' + username),
           profile.bio && h('p', { className:'lf-reader-bio', dir:'auto' }, profile.bio),
           h('div', { className:'lf-reader-social-summary', 'aria-label':'إحصاءات التواصل' },
-            h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'following', disabled:!ready, onClick:() => openConnections('following'), 'aria-label':'عرض الحسابات التي يتابعها' }, h('strong', null, ready ? Number(profile.following_count) || 0 : '—'), h('span', null, 'يتابع')),
+            h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'following', disabled:!ready, onClick:() => openConnections('following'), 'aria-label':en ? 'View following' : 'عرض الحسابات التي يتابعها' }, h('strong', null, ready ? Number(profile.following_count) || 0 : '—'), h('span', null, 'يتابع')),
             h('span', { className:'lf-reader-social-divider', 'aria-hidden':true }),
-            h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'followers', disabled:!ready, onClick:() => openConnections('followers'), 'aria-label':'عرض المتابعين' }, h('strong', null, ready ? Number(profile.follower_count) || 0 : '—'), h('span', null, 'متابع'))),
+            h('button', { type:'button', className:'lf-reader-connection', 'data-connection':'followers', disabled:!ready, onClick:() => openConnections('followers'), 'aria-label':en ? 'View followers' : 'عرض المتابعين' }, h('strong', null, ready ? Number(profile.follower_count) || 0 : '—'), h('span', null, 'متابع'))),
           h('div', { className:'lf-reader-primary-actions' },
             h('button', { type:'button', className:'lf-reader-follow' + (ready && profile.is_following ? ' is-following' : ''), 'data-follow-action':true, onClick:follow, disabled:busy || !ready, 'aria-busy':busy, 'aria-pressed':ready ? !!profile.is_following : undefined }, icon(ready && profile.is_following ? 'UserCheck' : 'UserPlus', 17), h('span', null, loading || busy ? loadingLabel : !ready ? '—' : profile.is_following ? 'متابَع' : 'متابعة')),
             h('div', { className:'lf-reader-socials', 'aria-label':'روابط التواصل' },
@@ -324,18 +356,28 @@
         shelf('works', works.map(work => workCard(work))),
         shelf('characters', characters.map(characterCard)),
         library.length > 0 && h('section', { className:'lf-reader-shelf lf-reader-library-preview', 'aria-label':'المكتبة' },
-          h('header', { className:'lf-reader-shelf-head' }, h('h2', null, 'المكتبة'), h('button', { type:'button', className:'lf-reader-view-all', 'data-library-view-all':true, onClick:() => { closeConnections(); setLibraryOpen(true); } }, 'عرض الكل', h('span', null, library.length), icon(root.document?.documentElement?.lang === 'en' ? 'ChevronRight' : 'ChevronLeft', 15))),
+          h('header', { className:'lf-reader-shelf-head' }, h('h2', null, 'المكتبة'), h('button', { type:'button', className:'lf-reader-view-all', 'data-library-view-all':true, disabled:!ready, onClick:() => { if(!ready)return;closeConnections(); setLibraryQuery(''); setLibraryLimit(LIBRARY_BATCH); setLibraryOpen(true); } }, 'عرض الكل', h('span', null, library.length), icon(root.document?.documentElement?.lang === 'en' ? 'ChevronRight' : 'ChevronLeft', 15))),
           h('div', { className:'lf-reader-library-grid' + (spine ? ' lf-library-grid is-spine-view' : showcase ? ' is-showcase-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.slice(0, 4).map(work => libraryCard(work, true)))),
         h('section', { className:'lf-public-profile-reviews' }, h('h2', null, 'المراجعات'), ownReviews.length ? ownReviews.map(props.renderReview) : ready && h('p', { className:'lf-reader-empty' }, 'لا مراجعات بعد'))),
-      libraryOpen && h('div', { className:'lf-reader-modal', ref:modalHost, role:'dialog', 'aria-modal':true, 'aria-label':'مكتبة القارئ', onClick:() => setLibraryOpen(false) },
+      libraryOpen && h('div', { className:'lf-reader-modal', ref:modalHost, role:'dialog', 'aria-modal':true, 'aria-label':en ? 'Reader library' : 'مكتبة القارئ', onClick:() => setLibraryOpen(false) },
         h('section', { className:'lf-reader-library-dialog', onClick:event => event.stopPropagation() },
-          h('header', null, h('div', null, h('h2', null, 'المكتبة'), h('p', null, library.length + ' عمل')), h('button', { type:'button', onClick:() => setLibraryOpen(false), 'aria-label':'إغلاق' }, icon('X'))),
-          h('div', { className:'lf-reader-library-grid is-full' + (spine ? ' lf-library-grid is-spine-view' : showcase ? ' is-showcase-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...library.map(work => libraryCard(work, false))))),
-      connections && connections.id === profile.id && h('div', { className:'lf-reader-modal', ref:modalHost, role:'dialog', 'aria-modal':true, 'aria-label':connections.kind === 'followers' ? 'المتابعون' : 'يتابع', onClick:event => { if (event.target === event.currentTarget) closeConnections(); } },
-        h('section', null, h('header', null, h('h2', null, connections.kind === 'followers' ? 'المتابعون' : 'يتابع'), h('button', { type:'button', onClick:closeConnections, 'aria-label':'إغلاق' }, icon('X'))),
-          connections.loading ? h('p', null, 'جارٍ التحميل...') : connections.error ? h('button', { type:'button', onClick:() => openConnections(connections.kind) }, 'إعادة المحاولة') : connections.rows.length ? connections.rows.map(reader => h('button', {
+          h('header', null, h('div', null, h('h2', null, en ? 'Library' : 'المكتبة'), h('p', null, library.length + (en ? ' works' : ' عمل'))), h('button', { type:'button', onClick:() => setLibraryOpen(false), 'aria-label':en ? 'Close' : 'إغلاق' }, icon('X'))),
+          h('label', {className:'lf-reader-library-search'}, icon('Search',18), h('input', {type:'search',value:libraryQuery,'data-profile-library-search':true,
+            'aria-label':en ? 'Search this library' : 'ابحث في مكتبة القارئ',placeholder:en ? 'Title or author' : 'اسم العمل أو المؤلف',
+            onChange:event => {setLibraryQuery(event.target.value);setLibraryLimit(LIBRARY_BATCH);}})),
+          h('p', {className:'lf-reader-result-count',role:'status','aria-live':'polite'}, libraryRows.length + (en ? ' works' : ' عمل')),
+          h('div', { className:'lf-reader-library-grid is-full' + (spine ? ' lf-library-grid is-spine-view' : showcase ? ' is-showcase-view' : appearance.library_view==='shelf' ? ' is-owner-list' : '') }, ...libraryRows.slice(0,libraryLimit).map(work => libraryCard(work, false))),
+          !libraryRows.length && h('div',{className:'lf-reader-empty'},h('p',null,en ? 'No matching works. Try another title or author.' : 'لا أعمال مطابقة. جرّب عنوانًا أو مؤلفًا آخر.'),h('button',{type:'button','data-profile-library-clear':true,onClick:()=>{setLibraryQuery('');setLibraryLimit(LIBRARY_BATCH);}},en ? 'Clear search' : 'مسح البحث')),
+          libraryRows.length > libraryLimit && h('button',{type:'button',className:'lf-reader-load-more','data-profile-library-more':true,onClick:()=>setLibraryLimit(value=>value+LIBRARY_BATCH)},moreLabel))),
+      connections && connections.id === profile.id && h('div', { className:'lf-reader-modal', ref:modalHost, role:'dialog', 'aria-modal':true, 'aria-label':connections.kind === 'followers' ? (en ? 'Followers' : 'المتابعون') : (en ? 'Following' : 'يتابع'), onClick:event => { if (event.target === event.currentTarget) closeConnections(); } },
+        h('section', null, h('header', null, h('h2', null, connections.kind === 'followers' ? (en ? 'Followers' : 'المتابعون') : (en ? 'Following' : 'يتابع')), h('button', { type:'button', onClick:closeConnections, 'aria-label':en ? 'Close' : 'إغلاق' }, icon('X'))),
+          ...connections.rows.map(reader => h('button', {
             key:reader.id, type:'button', className:'lf-reader-connection-row', onClick:() => { closeConnections(); root.dispatchEvent(new root.CustomEvent('lorefy:open-reader-profile', { detail:reader })); }
-          }, image(safeImage(reader.avatar), reader.name), h('span', null, reader.name || reader.username), h('small', { dir:'ltr' }, '@' + reader.username))) : h('p', null, 'لا توجد حسابات بعد')))
+          }, image(safeImage(reader.avatar), reader.name), h('span', null, reader.name || reader.username), h('small', { dir:'ltr' }, '@' + reader.username))),
+          connections.loading && h('p', {role:'status'}, loadingLabel),
+          connections.error ? h('button', { type:'button',className:'lf-reader-load-more', onClick:() => openConnections(connections.kind,connections.rows.length>0) }, en ? 'Try again' : 'إعادة المحاولة')
+            : connections.more && h('button', {type:'button',className:'lf-reader-load-more','data-profile-connections-more':true,disabled:connections.loading,onClick:()=>openConnections(connections.kind,true)},moreLabel),
+          !connections.loading && !connections.error && !connections.rows.length && h('p',null,en ? 'No accounts yet.' : 'لا توجد حسابات بعد')))
     ),{lang:root.document?.documentElement?.lang,onBack:props.onBack});
   };
 })(window);

@@ -49,11 +49,21 @@ if(params.get('lang')==='en'){document.documentElement.lang='en';document.docume
 const theme=params.get('theme')==='dark'?'dark':'light';
 const art=new URL('../launch/brand/lorefy-reading-scene.jpg',location.href).href;
 const headerRoot=ReactDOM.createRoot(document.getElementById('root'));
-const render=()=>headerRoot.render(React.createElement(LorefyPublicProfile,{
- profile:{id:'header-fixture',name:params.has('long')?'A reader with a deliberately long display name for wrapping':'Header reader',username:'header_reader',banner:art,avatar:art,theme,
+const fixtureProfile={id:'header-fixture',name:params.has('long')?'A reader with a deliberately long display name for wrapping':'Header reader',username:'header_reader',banner:art,avatar:art,theme,
  profile_layout:layout,profile_decoration:params.has('pack')?{frame:params.get('pack'),page:params.get('pack')}:null,
- bio:'Stories worth keeping.',favorite_work_ids:[],favorite_character_ids:[]},
- reviews:[],workById:()=>null,cover:()=>'',onBack(){},onWork(){}
+ bio:'Stories worth keeping.',favorite_work_ids:[],favorite_character_ids:[]};
+const stress=params.get('stress')==='1';
+if(stress){
+ fixtureProfile.library_entries=Object.fromEntries(Array.from({length:1000},(_,i)=>['qa-'+i,'completed']));
+ fixtureProfile.follower_count=125;
+ Object.assign(LorefyBackend,{mode:'live',getPublicProfile:async()=>fixtureProfile,listReviewCollection:async()=>[],
+  listProfileFollowers:async(id,limit,offset)=>Array.from({length:125},(_,i)=>({id:'qa-reader-'+i,name:'QA reader '+i,username:'qa_reader_'+i})).slice(offset,offset+limit),
+  listProfileFollowing:async()=>[],toggleProfileFollow:async(id,value)=>value});
+ window.LorefyI18n={readingStatusLabel:()=>document.documentElement.lang==='en'?'Completed':'قرأته'};
+}
+const render=()=>headerRoot.render(React.createElement(LorefyPublicProfile,{
+ profile:fixtureProfile,
+ reviews:[],workById:id=>stress?{id,title:'QA work '+String(id).replace('qa-','').padStart(4,'0'),cover:art,type:'Manga'}:null,cover:()=>'',onBack(){},onWork(){}
 }));
 render();
 window.addEventListener('lorefy:profile-shop-catalog-ready',render,{once:true});

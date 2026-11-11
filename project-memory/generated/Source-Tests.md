@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-10T23:29:46.822Z
-Source commit: 64000e2d468a43cacd0746a47ece17bd0b5d6f67
+Observed: 2026-11-11T11:55:14.314Z
+Source commit: 0a071da3dfe59655903bce026a89ce3dc982f2e8
 
 # Tests Source Inventory
 
@@ -40,7 +40,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [qa/profile-caption-browser.cjs](../../qa/profile-caption-browser.cjs) (2892 bytes)
 - [qa/profile-decoration-fixture.html](../../qa/profile-decoration-fixture.html) (2347 bytes)
 - [qa/profile-header-browser.cjs](../../qa/profile-header-browser.cjs) (8315 bytes)
-- [qa/profile-header.html](../../qa/profile-header.html) (3887 bytes)
+- [qa/profile-header.html](../../qa/profile-header.html) (4698 bytes)
 - [qa/profile-sections-browser.cjs](../../qa/profile-sections-browser.cjs) (10474 bytes)
 - [qa/public-profile-layout-browser.cjs](../../qa/public-profile-layout-browser.cjs) (6364 bytes)
 - [qa/reading-free-audit-browser.cjs](../../qa/reading-free-audit-browser.cjs) (7361 bytes)
@@ -182,7 +182,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/connection-keyboard.test.js](../../tests/connection-keyboard.test.js) (2451 bytes)
 - [tests/corrections-studio.test.js](../../tests/corrections-studio.test.js) (5003 bytes)
 - [tests/cover-edition-choice.test.js](../../tests/cover-edition-choice.test.js) (5899 bytes)
-- [tests/cover-media.test.js](../../tests/cover-media.test.js) (11092 bytes)
+- [tests/cover-media.test.js](../../tests/cover-media.test.js) (11091 bytes)
 - [tests/cover-preparation-performance.test.js](../../tests/cover-preparation-performance.test.js) (2847 bytes)
 - [tests/cover-source-lock.test.js](../../tests/cover-source-lock.test.js) (15598 bytes)
 - [tests/crafted-frames.test.js](../../tests/crafted-frames.test.js) (7477 bytes)
@@ -303,7 +303,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/profile-fade-cover-polish.test.js](../../tests/profile-fade-cover-polish.test.js) (6680 bytes)
 - [tests/profile-favorites-spines.test.js](../../tests/profile-favorites-spines.test.js) (9303 bytes)
 - [tests/profile-header-extent.test.js](../../tests/profile-header-extent.test.js) (4271 bytes)
-- [tests/profile-header-shelf-polish.test.js](../../tests/profile-header-shelf-polish.test.js) (2034 bytes)
+- [tests/profile-header-shelf-polish.test.js](../../tests/profile-header-shelf-polish.test.js) (2474 bytes)
 - [tests/profile-image-editor.test.js](../../tests/profile-image-editor.test.js) (18937 bytes)
 - [tests/profile-layout.test.js](../../tests/profile-layout.test.js) (5442 bytes)
 - [tests/profile-list-keyboard.test.js](../../tests/profile-list-keyboard.test.js) (8283 bytes)
@@ -312,6 +312,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/profile-list-removal.test.js](../../tests/profile-list-removal.test.js) (4241 bytes)
 - [tests/profile-lists-unified.test.js](../../tests/profile-lists-unified.test.js) (1410 bytes)
 - [tests/profile-mutation-owner.test.js](../../tests/profile-mutation-owner.test.js) (8331 bytes)
+- [tests/profile-post-window.test.js](../../tests/profile-post-window.test.js) (2240 bytes)
 - [tests/profile-read-session.test.js](../../tests/profile-read-session.test.js) (7155 bytes)
 - [tests/profile-refinement.test.js](../../tests/profile-refinement.test.js) (1817 bytes)
 - [tests/profile-relationship-session.test.js](../../tests/profile-relationship-session.test.js) (4294 bytes)
@@ -321,7 +322,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/project-memory-workflow.test.js](../../tests/project-memory-workflow.test.js) (3399 bytes)
 - [tests/project-memory.test.js](../../tests/project-memory.test.js) (13430 bytes)
 - [tests/public-appearance.test.js](../../tests/public-appearance.test.js) (3984 bytes)
-- [tests/public-profile-loading.test.js](../../tests/public-profile-loading.test.js) (16277 bytes)
+- [tests/public-profile-loading.test.js](../../tests/public-profile-loading.test.js) (21739 bytes)
 - [tests/public-profile-view.test.js](../../tests/public-profile-view.test.js) (14835 bytes)
 - [tests/publisher-index-completeness.test.js](../../tests/publisher-index-completeness.test.js) (3772 bytes)
 - [tests/publisher-synopsis-followup.test.js](../../tests/publisher-synopsis-followup.test.js) (2377 bytes)
@@ -345,7 +346,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/reading-metrics-stability.test.js](../../tests/reading-metrics-stability.test.js) (2617 bytes)
 - [tests/reading-session-ui.test.js](../../tests/reading-session-ui.test.js) (2104 bytes)
 - [tests/reading-status-policy.test.js](../../tests/reading-status-policy.test.js) (2014 bytes)
-- [tests/reading-terminology.test.js](../../tests/reading-terminology.test.js) (5937 bytes)
+- [tests/reading-terminology.test.js](../../tests/reading-terminology.test.js) (5934 bytes)
 - [tests/reading-typography.test.js](../../tests/reading-typography.test.js) (8810 bytes)
 - [tests/recap-integrity.test.js](../../tests/recap-integrity.test.js) (998 bytes)
 - [tests/release-legal.test.js](../../tests/release-legal.test.js) (2531 bytes)
@@ -406,7 +407,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/ui-finish-pass.test.js](../../tests/ui-finish-pass.test.js) (2389 bytes)
 - [tests/ui-placement.test.js](../../tests/ui-placement.test.js) (23622 bytes)
 - [tests/ui-profile-discover-polish.test.js](../../tests/ui-profile-discover-polish.test.js) (3647 bytes)
-- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5656 bytes)
+- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5653 bytes)
 - [tests/user-discovery.test.js](../../tests/user-discovery.test.js) (5208 bytes)
 - [tests/user-reported-fixes.test.js](../../tests/user-reported-fixes.test.js) (4739 bytes)
 - [tests/version-consistency.test.js](../../tests/version-consistency.test.js) (1492 bytes)

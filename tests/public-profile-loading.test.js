@@ -40,7 +40,7 @@ function harness(options = {}) {
     render(id = 'reader-a') {
       cursor = 0;
       renderedReviews.length = 0;
-      const tree = window.LorefyPublicProfile({ profile: { id, username: id }, workById: options.workById || (() => null),
+      const tree = window.LorefyPublicProfile({ profile: { ...options.profile, id, username: id }, workById: options.workById || (() => null),
         renderReview: row => { renderedReviews.push(row); return React.createElement('article', {id:row.id}); } });
       for (const node of nodes(tree)) if (node.props.ref && node.props.className === 'lf-reader-modal') node.props.ref.current = options.dialog || null;
       for (const effect of effects) {
@@ -61,6 +61,73 @@ async function loaded(options={}){const app=harness(options);app.render();app.re
 const connectionButton=(tree,kind)=>nodes(tree).find(n=>n.props['data-connection']===kind);
 const dialog=tree=>nodes(tree).find(n=>n.props.role==='dialog');
 const closeDialog=tree=>nodes(dialog(tree)).find(n=>n.type==='button'&&n.props['aria-label']==='إغلاق').props.onClick();
+
+async function collectionFixture(size=1000) {
+ let lookups=0;
+ const app=harness({workById:id=>{lookups++;return{id,title:'Work '+id};}});
+ app.window.document={documentElement:{lang:'ar'},querySelector:()=>null};
+ app.window.dispatchEvent=()=>{};app.window.CustomEvent=class{};
+ app.window.LorefyI18n={readingStatusLabel:v=>v};
+ app.render();app.requests[0].resolve({id:'reader-a',library_entries:Object.fromEntries(Array.from({length:size},(_,i)=>['w'+i,'Read']))});
+ await settle();app.render();return{app,lookups:()=>lookups};
+}
+test('a cached library cannot open while its reader snapshot is still being verified',()=>{
+ const app=harness({profile:{library_entries:{work:'Read'}},workById:id=>({id,title:'Cached'})});
+ app.window.document={documentElement:{lang:'ar'},querySelector:()=>null};app.window.dispatchEvent=()=>{};app.window.CustomEvent=class{};app.window.LorefyI18n={readingStatusLabel:v=>v};
+ const open=nodes(app.render()).find(n=>n.props['data-library-view-all']);assert.equal(open.props.disabled,true);
+ open.props.onClick();assert.equal(dialog(app.render()),undefined);
+});
+test('visitor library renders bounded batches and searches the entire collection',async()=>{
+ const {app}=await collectionFixture();
+ nodes(app.render()).find(n=>n.props['data-library-view-all']).props.onClick();
+ let tree=app.render();
+ assert.equal(nodes(dialog(tree)).filter(n=>n.props.className?.startsWith('lf-reader-library-card')).length,42);
+ nodes(tree).find(n=>n.props['data-profile-library-more']).props.onClick();
+ tree=app.render();assert.equal(nodes(dialog(tree)).filter(n=>n.props.className?.startsWith('lf-reader-library-card')).length,84);
+ const input=nodes(tree).find(n=>n.props['data-profile-library-search']);assert.ok(input);
+ input.props.onChange({target:{value:'Work w999'}});tree=app.render();
+ const cards=nodes(dialog(tree)).filter(n=>n.props.className?.startsWith('lf-reader-library-card'));
+ assert.equal(cards.length,1);assert.equal(cards[0].props['aria-label'],'فتح Work w999');
+ input.props.onChange({target:{value:'missing'}});tree=app.render();
+ assert.ok(nodes(tree).some(n=>n.props['data-profile-library-clear']));
+ nodes(tree).find(n=>n.props['data-profile-library-clear']).props.onClick();
+ assert.equal(nodes(dialog(app.render())).filter(n=>n.props.className?.startsWith('lf-reader-library-card')).length,42);
+ for(let i=0;i<23;i++)nodes(app.render()).find(n=>n.props['data-profile-library-more']).props.onClick();
+ assert.equal(nodes(dialog(app.render())).filter(n=>n.props.className?.startsWith('lf-reader-library-card')).length,1000);
+ assert.equal(nodes(app.render()).find(n=>n.props['data-profile-library-more']),undefined);
+});
+test('unrelated visitor interaction does not resolve every library work again',async()=>{
+ const {app,lookups}=await collectionFixture();const before=lookups();
+ app.render();app.render();assert.ok(lookups()-before<20,'repeated renders must not re-resolve 1000 works');
+});
+test('followers load additional pages without truncation, duplicates or duplicate taps',async()=>{
+ const calls=[];let release;
+ const app=await loaded({followers:(id,limit,offset)=>{calls.push([id,limit,offset]);return offset===0?Promise.resolve(Array.from({length:50},(_,i)=>({id:'r'+i,username:'r'+i}))):new Promise(r=>release=r);}});
+ await connectionButton(app.render(),'followers').props.onClick();
+ assert.deepEqual(calls,[['reader-a',50,0]]);
+ const more=nodes(app.render()).find(n=>n.props['data-profile-connections-more']);assert.ok(more);
+ const first=more.props.onClick(),duplicate=more.props.onClick();assert.equal(calls.length,2);
+ release([{id:'r49',username:'r49'},{id:'r50',username:'r50'}]);await Promise.all([first,duplicate]);
+ const tree=app.render();assert.equal(nodes(tree).filter(n=>n.props.className==='lf-reader-connection-row').length,51);
+ assert.equal(nodes(tree).find(n=>n.props['data-profile-connections-more']),undefined);
+});
+test('closing a pending connection page prevents results leaking into a reopened dialog',async()=>{
+ let release;let page=0;
+ const app=await loaded({followers:()=>++page===1?Promise.resolve(Array.from({length:50},(_,i)=>({id:'r'+i,username:'r'+i}))):new Promise(r=>release=r)});
+ await connectionButton(app.render(),'followers').props.onClick();
+ const pending=nodes(app.render()).find(n=>n.props['data-profile-connections-more']).props.onClick();
+ closeDialog(app.render());await connectionButton(app.render(),'following').props.onClick();
+ release([{id:'late',username:'late'}]);await pending;assert.doesNotMatch(JSON.stringify(dialog(app.render())),/@late/);
+});
+test('a failed next follower page retains rows and retries its raw offset',async()=>{
+ let calls=0;const offsets=[];
+ const app=await loaded({followers:async(id,limit,offset)=>{offsets.push(offset);if(++calls===2)throw Error('offline');return offset===0?Array.from({length:50},(_,i)=>({id:'r'+i,username:'r'+i})):[{id:'last',username:'last'}];}});
+ await connectionButton(app.render(),'followers').props.onClick();
+ await nodes(app.render()).find(n=>n.props['data-profile-connections-more']).props.onClick();
+ assert.equal(nodes(app.render()).filter(n=>n.props.className==='lf-reader-connection-row').length,50);
+ await nodes(app.render()).find(n=>n.type==='button'&&n.children.includes('إعادة المحاولة')).props.onClick();
+ assert.deepEqual(offsets,[0,50,50]);assert.equal(nodes(app.render()).filter(n=>n.props.className==='lf-reader-connection-row').length,51);
+});
 
 function modalFixture() {
  const listeners=new Map(),doc={activeElement:null,documentElement:{lang:'en'},querySelector:()=>null},body={};
@@ -100,10 +167,10 @@ test('visitor library shares keyboard dismissal and never stacks over a connecti
  app.requests[0].resolve({id:'reader-a',library_entries:{work:'Read'}});await settle();app.render();
  const tree=app.render(),open=nodes(tree).find(n=>n.props['data-library-view-all']);open.props.onClick();app.render();
  assert.equal(f.doc.activeElement,f.close);
- assert.equal(dialog(app.render()).props['aria-label'],'مكتبة القارئ');
+ assert.equal(dialog(app.render()).props['aria-label'],'Reader library');
  await connectionButton(app.render(),'following').props.onClick();
  assert.equal(nodes(app.render()).filter(n=>n.props.role==='dialog').length,1);
- assert.equal(dialog(app.render()).props['aria-label'],'يتابع');
+ assert.equal(dialog(app.render()).props['aria-label'],'Following');
 });
 
 test('backdrop dismisses only when the backdrop itself is pressed',async()=>{

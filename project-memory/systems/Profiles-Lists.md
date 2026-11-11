@@ -6,6 +6,13 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+2026-11-11: [[sessions/2026-11-11-Profile-Lootd]] bounds visited library cards42
+and mixed owner/visitor Posts24, retains complete collections for search/More,
+and pages visited connections50 at a time. Failures retain rows/offset while
+dialog/account lifetimes reject stale results. Avatar is above the identity
+overlay. Full3501/browser24 pass; all layouts/art/palettes remain. No build or
+service mutation; physical-device and real-account acceptance remain open.
+
 [[sessions/2026-11-03-Visitor-Profile-Polish]] removes the redundant Top 10
 works display from visitor profiles without deleting saved rankings or lists.
 Favorite rows, reading metrics, interactions and owner layout/theme remain;

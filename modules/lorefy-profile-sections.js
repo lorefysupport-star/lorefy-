@@ -111,7 +111,7 @@
       emptyPosts:'No posts yet', write:'Write a post', search:'Search works', searchCharacters:'Search characters',
       chooseWork:'Choose a work', changeWork:'Change work', loading:'Loading...', retry:'Retry',
       failed:'Could not load. Try again.', saved:'List saved', saveFailed:'Could not save the list.',
-      syncPending:'Saved on this device. Cloud sync is pending.', older:'Older posts',
+      syncPending:'Saved on this device. Cloud sync is pending.', older:'Older posts', more:'Show more',
       unavailable:'Could not load public lists. Try again.',
       up:'Move up', down:'Move down', removeItem:'Remove item', limit:'Up to 50 entries per list',
       add:'Add', selected:'Selected', noResults:'No results', count:'entries', position:'Position', newTitle:'New ranked list'
@@ -123,7 +123,7 @@
       emptyPosts:'لا توجد تغريدات بعد', write:'كتابة تغريدة', search:'ابحث عن عمل', searchCharacters:'ابحث عن شخصية',
       chooseWork:'اختيار عمل', changeWork:'تغيير العمل', loading:'جارٍ التحميل...', retry:'إعادة المحاولة',
       failed:'تعذر التحميل. حاول مجدداً.', saved:'تم حفظ القائمة', saveFailed:'تعذر حفظ القائمة.',
-      syncPending:'حُفظت على هذا الجهاز. المزامنة السحابية معلقة.', older:'تغريدات أقدم',
+      syncPending:'حُفظت على هذا الجهاز. المزامنة السحابية معلقة.', older:'تغريدات أقدم', more:'عرض المزيد',
       unavailable:'تعذر تحميل القوائم العامة. حاول مجدداً.',
       up:'رفع الترتيب', down:'خفض الترتيب', removeItem:'إزالة العنصر', limit:'حتى 50 عنصراً لكل قائمة',
       add:'إضافة', selected:'محدد', noResults:'لا توجد نتائج', count:'عنصر', position:'الترتيب', newTitle:'قائمة مرتبة جديدة'
@@ -527,7 +527,8 @@
     const reviews=root.LorefyProfileReviews ? root.LorefyProfileReviews(state.profile,state.owner) : [];
     const entries=profileEntries(state.posts,reviews,state.profile,state.owner);
     state.reviewStamp=JSON.stringify(reviews);
-    entries.forEach(entry=>{
+    const limit=state.postLimit || 24;
+    entries.slice(0,limit).forEach(entry=>{
       if(entry.post && community)feed.appendChild(community.postCard(entry.post,false));
       else if(entry.review && root.LorefyProfileReviewCard && root.ReactDOM){
         const host=node('div',{class:'lf-profile-review-entry'});feed.appendChild(host);
@@ -540,7 +541,9 @@
     else if (state.postError) state.panel.appendChild(node('div',{class:'lf-profile-section-empty'},[
       node('p',{role:'alert',text:t.failed}),button(t.retry,'rotate-cw',() => loadPosts(state,!!state.posts.length))]));
     else if (!entries.length) state.panel.appendChild(node('p',{class:'lf-profile-section-empty',text:t.emptyPosts}));
-    if (state.more && !state.postBusy && !state.postError)
+    if (entries.length>limit)
+      state.panel.appendChild(button(t.more,'chevron-down',() => {state.postLimit=limit+24;renderPosts(state);}));
+    else if (state.more && !state.postBusy && !state.postError)
       state.panel.appendChild(button(t.older,'chevron-down',() => loadPosts(state,true)));
     hydrate(state.panel);
   }

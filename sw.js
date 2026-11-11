@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v706-library-flow';
+const CACHE = 'lorefy-v707-profile-flow';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -55,7 +55,7 @@ const CORE = [
   './modules/lorefy-decoration-billing.js?v=20261011-shop',
   './modules/lorefy-preview-readers.js?v=20261101-preview-stability-v1',
  './styles/lorefy-profile-sections.css?v=20261109-list-safe-area-v1',
-  './modules/lorefy-profile-sections.js?v=20261105-profile-compact-v1',
+  './modules/lorefy-profile-sections.js?v=20261111-profile-flow-v707',
   './modules/lorefy-i18n.js?v=20261102-inbox-copy-v1',
   './',
   './index.html',
@@ -138,10 +138,10 @@ const CORE = [
   './modules/lorefy-catalog-updater.js?v=20260726-catalog-safety-v4',
   './uploads/lorefy-chapter-runtime.js?v=20261110-factored-v1',
   './uploads/lorefy-catalog-aliases.js?v=20260622-audit1',
-  './styles/lorefy-public-profile.css?v=20261102-visitor-profile-v691',
+  './styles/lorefy-public-profile.css?v=20261111-profile-flow-v707',
   './styles/lorefy-visual-polish.css?v=20260930-reference-v2',
   './modules/lorefy-public-appearance.js?v=20261101-reading-favorite-type-v1',
-  './modules/lorefy-public-profile.js?v=20261102-visitor-profile-v691',
+  './modules/lorefy-public-profile.js?v=20261111-profile-flow-v707',
   './modules/lorefy-community.js?v=20261102-dialog-session-v1',
   './modules/lorefy-page-refresh.js?v=20261027-ui-refinement-v1',
   './modules/lorefy-library-view.js?v=20261029-library-media-v1',
@@ -182,7 +182,7 @@ const CORE = [
   './modules/lorefy-reader-layout.js?v=20261105-profile-unity-v3',
   './styles/lorefy-reader-layout.css?v=20261105-profile-unity-v3',
   './styles/lorefy-book-showcase.css?v=20261028-reading-type-v1',
-  './styles/lorefy-profile-header.css?v=20261105-profile-unity-v3',
+  './styles/lorefy-profile-header.css?v=20261111-profile-flow-v707',
   './modules/lorefy-profile-header.js?v=20261105-profile-compact-v1',
   './uploads/files/lorefy-app.js?v=20261111-library-flow-v1',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',

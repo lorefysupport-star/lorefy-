@@ -6,6 +6,12 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-11: [[sessions/2026-11-11-Profile-Lootd]] follows Library with bounded
+visited library/Posts rendering, full-collection search, paged connections,
+ready-state guards and owner-avatar layering. All3 layouts/custom appearance
+remain;3501 source tests and24 browser cases pass. No native build or production
+mutation; physical-device acceptance remains separate.
+
 2026-11-11: [[sessions/2026-11-11-Library-Lootd]] applies the same method to
 Library after owner-assisted Lootd sign-in. Bounded rendering, local query state,
 stable memoized collections, return navigation and44px controls preserve all

@@ -6,6 +6,12 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Profile continuation: [[sessions/2026-11-11-Profile-Lootd]] covers42-item visited
+library windows/search across1000, keyed derivation,50-record connections with
+error/stale guards,24-item mixed Posts and avatar hit-testing. Full3501 and
+browser24 AR/EN/theme/layout cases pass. Device acceptance and the separate
+owner's cached social graph remain.
+
 Library continuation: [[sessions/2026-11-11-Library-Lootd]] covers42-item batches
 without a total cap, the actual1000-work renderer, full-list filtering/sorting,
 callback-only render reuse, hydration, independent local query and owner-safe
