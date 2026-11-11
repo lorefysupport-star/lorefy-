@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T17:46:57.147Z
-Source commit: cfc5fb12c411a47ff4951e507165d2f0ba83400f
+Observed: 2026-11-11T19:24:51.244Z
+Source commit: 93c9b0e11d3c567ff36345d3e453a9ecd6dd9c3a
 
 # Docs Source Inventory
 
@@ -118,6 +118,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/WORK_CINEMA_QA.md](../../docs/WORK_CINEMA_QA.md) (4695 bytes)
 - [docs/WORK_LOOTD_2026-11-11.md](../../docs/WORK_LOOTD_2026-11-11.md) (4538 bytes)
 - [docs/WORK_STUDIO_QA.md](../../docs/WORK_STUDIO_QA.md) (4546 bytes)
+- [docs/WORK_UI_2026-11-11.md](../../docs/WORK_UI_2026-11-11.md) (3308 bytes)
 - [docs/XTOOL_NATIVE_DEVELOPMENT_AR.md](../../docs/XTOOL_NATIVE_DEVELOPMENT_AR.md) (8092 bytes)
 
 [[07-Source-Atlas]] | [[00-Home]]

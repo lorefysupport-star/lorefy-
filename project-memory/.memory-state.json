@@ -1,12 +1,12 @@
 {
   "schema": 2,
-  "head": "cfc5fb12c411a47ff4951e507165d2f0ba83400f",
+  "head": "93c9b0e11d3c567ff36345d3e453a9ecd6dd9c3a",
   "branch": "main",
   "fingerprints": {
     "package.json": "e08c4b2735cd25687e34145ee3e34f759bf5b22d672e0481b9e3e8f64a150108",
     "AGENTS.md": "6c8d1742a8542b6a82ede3f0a1eff3c1388cadd0180a17e7b1af18a3db3a51c7",
-    "index.html": "25d3a72279f9682c9e815a674b0fb9ac0828a15d985ffd2aa4dfbe7c028e393e",
-    "sw.js": "5d001146ce8f7365e27f7e8a98becd98540ba9256cb4084f775268f0e054441b",
+    "index.html": "f9e2a6da4c12e3e7f3969f63755d83fa4dd90bc53a40b232dda39e9eb662ffc2",
+    "sw.js": "c7140c4c5de88e975f14f2487a9cd97163846438260e253218296b0ad58ebb33",
     "modules/lorefy-frame-motion.js": "211674ce0d1c26c4e9da66b97078802160419528292f8a6823d35ea0be033d6f",
     "styles/lorefy-frame-motion.css": "0fd6b7eb397135859c141c9c2a90082ed0083d89288eca57efc948608cfdb902",
     "docs/FEATURE_AUDIT_20261011.md": "185e3a025cdff7809562125ce0d649fe3a6ceb8a7683ad7ae1aa23e5b55f3fc8",
@@ -16,21 +16,18 @@
     "tools/project-memory.mjs": "445cf699ef2d54178cf89c3b4107c345233a63f4ad6ab7d9b87c25dcd9e90251"
   },
   "changes": {
-    "modules/lorefy-growth-features.js": "515ce1696cdd5ced642701feedd9d7d1a403cf9dfbb2a7c90ac07ff7426766c8",
-    "modules/lorefy-review-editor.js": "695ceb3bedabe9f41ba85a18cf07b60b72930fe61c440e5ac7da51d85bd7bac5",
-    "styles/lorefy-work-cinema.css": "e4813cc94b1b21f069c5bc0ab52a73805c8013b48659bdb3ccdfb3317acef6d2",
-    "tests/community-copy.test.js": "e55ddad4ba69e6f6d141c07a85c6aacd7ff63073c3251864b4abb031bf209151",
-    "tests/cover-media.test.js": "d35ae2bd7ff1cc415d991c5526ea862e2dadaf3dcec721640d38d118392d16d5",
-    "tests/data-studio.test.js": "a864a6749a6ce333a366f1091bcf354d965037c4c198d852be7d0b29735f7a10",
-    "tests/legal-studio.test.js": "7003d6f7d394e71419d0d567366328a0cffc98fdd335ee9d5e4ead0aac9c4e89",
-    "tests/reading-terminology.test.js": "b0584293cac07d1230fbbf0283d75ef28b8102f5360eb3cfd95cc8a910932250",
-    "tests/reading-typography.test.js": "b28aa9e6cb7609df7eafb89f8d5689497591c34f3691c5e9b3be353937611350",
-    "tests/report-studio.test.js": "76c3504ead64d703edcda12655bb9231bc1bad036407f8da27fe787b993a8040",
-    "tests/ui-unity.test.js": "923fd73b648ee8d265e791f80ed58cf5619d82a0647ce82e161b93fd8edbac4c",
-    "tests/work-byline-typography.test.js": "9886d8ac83f4a71d7f95cd94847e9aea4ba7de023cc35bfc01d77b5016af323a",
-    "tests/work-detail-language.test.js": "78cd5f666875e2fa81e5aa2f77829c4a1b9fe6aa43669b71f08dd8b3baaab60e",
-    "tests/work-experience.test.js": "905983b86f0b22f29cc8efe80325883ed813d1fded5010f799548f75f75d615c",
-    "tests/work-reading-log.test.js": "6687074e5b8f87662ddc5c6d5d1cb5db4a71461e0912d6507cdaadd99f41ccb5"
+    "modules/lorefy-review-editor.js": "4fb3cea9dca1bc6a781ecd0f2512bad52d835f97295c5ef9557ae043c70b1c09",
+    "styles/lorefy-work-cinema.css": "ecac42c63a36c3f896bdfec2483483cc5ac9a6cd9d05fc4516a419f8468bf69d",
+    "tests/community-copy.test.js": "6cc8de19d6c7ee19efbe80d99659ae625765da6f9ebe2a09e44479b6b9c36a37",
+    "tests/cover-media.test.js": "e68fd6d1dae56e7883b6276899b2c8099a3ed5468990b5815d2dad89bd9cf648",
+    "tests/data-studio.test.js": "8f7ecd4f7eb7f1c4cb56a202096bfff3295f9be97c25cf3f309c7821a95a8a8e",
+    "tests/legal-studio.test.js": "a6fb1790980b9bf52cbbad39199265d36bb56c3a200224c0e97bbd6ee8d11dff",
+    "tests/reading-terminology.test.js": "67ce181ea59deba679e8f0b6e728b0c53f004f8497fa18bac6d07bebb19683b3",
+    "tests/reading-typography.test.js": "dd52ecf460087e74d8395f1bfe467b3b818c8f67c8c0ae15fa4f9b0b79f50f2f",
+    "tests/report-studio.test.js": "47c4e9779cee00a1f94d1a1d5d457efcbd934fb118f8b5928f1917745ea5bd1c",
+    "tests/ui-unity.test.js": "b6ad2c2b885b97eae3fe94823bedda26fbd92006ee74f12443f0c3ce59ce293f",
+    "tests/work-byline-typography.test.js": "78e8c81aaf887c79e0f9757d16f57559a6f8f0a3eaa71a5a85792533b992e62e",
+    "tests/work-reading-log.test.js": "cce3be0e9206923c8ecfc4b2e8b6e43a780e424d2e5a9bb3c6fd42383b2d4157"
   },
   "inventory": [
     {
@@ -766,6 +763,12 @@
       "sha256": "103b633a39acb28dd635690cb6a424b9d315b7992a1a641d08d27e01f99e7f63"
     },
     {
+      "path": "docs/WORK_UI_2026-11-11.md",
+      "area": "Docs",
+      "bytes": 3308,
+      "sha256": "2e329302690062f326bf293113161c1cb5806612d1878f2dc1062639c8fc4b13"
+    },
+    {
       "path": "docs/XTOOL_NATIVE_DEVELOPMENT_AR.md",
       "area": "Docs",
       "bytes": 8092,
@@ -780,8 +783,8 @@
     {
       "path": "index.html",
       "area": "Shell",
-      "bytes": 52612,
-      "sha256": "25d3a72279f9682c9e815a674b0fb9ac0828a15d985ffd2aa4dfbe7c028e393e"
+      "bytes": 52607,
+      "sha256": "f9e2a6da4c12e3e7f3969f63755d83fa4dd90bc53a40b232dda39e9eb662ffc2"
     },
     {
       "path": "ios/App/App.xcodeproj/project.pbxproj",
@@ -1266,8 +1269,8 @@
     {
       "path": "modules/lorefy-review-editor.js",
       "area": "Modules",
-      "bytes": 25134,
-      "sha256": "695ceb3bedabe9f41ba85a18cf07b60b72930fe61c440e5ac7da51d85bd7bac5"
+      "bytes": 25231,
+      "sha256": "4fb3cea9dca1bc6a781ecd0f2512bad52d835f97295c5ef9557ae043c70b1c09"
     },
     {
       "path": "modules/lorefy-scroll-memory.js",
@@ -1962,8 +1965,8 @@
     {
       "path": "styles/lorefy-work-cinema.css",
       "area": "Styles",
-      "bytes": 29221,
-      "sha256": "e4813cc94b1b21f069c5bc0ab52a73805c8013b48659bdb3ccdfb3317acef6d2"
+      "bytes": 32343,
+      "sha256": "ecac42c63a36c3f896bdfec2483483cc5ac9a6cd9d05fc4516a419f8468bf69d"
     },
     {
       "path": "styles/lorefy-work-experience.css",
@@ -2370,8 +2373,8 @@
     {
       "path": "sw.js",
       "area": "Shell",
-      "bytes": 17020,
-      "sha256": "5d001146ce8f7365e27f7e8a98becd98540ba9256cb4084f775268f0e054441b"
+      "bytes": 17015,
+      "sha256": "c7140c4c5de88e975f14f2487a9cd97163846438260e253218296b0ad58ebb33"
     },
     {
       "path": "tests/account-deletion-recovery.test.js",
@@ -3000,8 +3003,8 @@
     {
       "path": "tests/community-copy.test.js",
       "area": "Tests",
-      "bytes": 9062,
-      "sha256": "e55ddad4ba69e6f6d141c07a85c6aacd7ff63073c3251864b4abb031bf209151"
+      "bytes": 9061,
+      "sha256": "6cc8de19d6c7ee19efbe80d99659ae625765da6f9ebe2a09e44479b6b9c36a37"
     },
     {
       "path": "tests/community-edit-lifecycle.test.js",
@@ -3120,8 +3123,8 @@
     {
       "path": "tests/cover-media.test.js",
       "area": "Tests",
-      "bytes": 11085,
-      "sha256": "d35ae2bd7ff1cc415d991c5526ea862e2dadaf3dcec721640d38d118392d16d5"
+      "bytes": 11083,
+      "sha256": "e68fd6d1dae56e7883b6276899b2c8099a3ed5468990b5815d2dad89bd9cf648"
     },
     {
       "path": "tests/cover-preparation-performance.test.js",
@@ -3168,8 +3171,8 @@
     {
       "path": "tests/data-studio.test.js",
       "area": "Tests",
-      "bytes": 6907,
-      "sha256": "a864a6749a6ce333a366f1091bcf354d965037c4c198d852be7d0b29735f7a10"
+      "bytes": 6906,
+      "sha256": "8f7ecd4f7eb7f1c4cb56a202096bfff3295f9be97c25cf3f309c7821a95a8a8e"
     },
     {
       "path": "tests/decoration-lab.test.js",
@@ -3552,8 +3555,8 @@
     {
       "path": "tests/legal-studio.test.js",
       "area": "Tests",
-      "bytes": 4962,
-      "sha256": "7003d6f7d394e71419d0d567366328a0cffc98fdd335ee9d5e4ead0aac9c4e89"
+      "bytes": 4961,
+      "sha256": "a6fb1790980b9bf52cbbad39199265d36bb56c3a200224c0e97bbd6ee8d11dff"
     },
     {
       "path": "tests/library-cinema.test.js",
@@ -4110,14 +4113,14 @@
     {
       "path": "tests/reading-terminology.test.js",
       "area": "Tests",
-      "bytes": 5937,
-      "sha256": "b0584293cac07d1230fbbf0283d75ef28b8102f5360eb3cfd95cc8a910932250"
+      "bytes": 5934,
+      "sha256": "67ce181ea59deba679e8f0b6e728b0c53f004f8497fa18bac6d07bebb19683b3"
     },
     {
       "path": "tests/reading-typography.test.js",
       "area": "Tests",
-      "bytes": 8816,
-      "sha256": "b28aa9e6cb7609df7eafb89f8d5689497591c34f3691c5e9b3be353937611350"
+      "bytes": 8814,
+      "sha256": "dd52ecf460087e74d8395f1bfe467b3b818c8f67c8c0ae15fa4f9b0b79f50f2f"
     },
     {
       "path": "tests/recap-integrity.test.js",
@@ -4152,8 +4155,8 @@
     {
       "path": "tests/report-studio.test.js",
       "area": "Tests",
-      "bytes": 8565,
-      "sha256": "76c3504ead64d703edcda12655bb9231bc1bad036407f8da27fe787b993a8040"
+      "bytes": 8564,
+      "sha256": "47c4e9779cee00a1f94d1a1d5d457efcbd934fb118f8b5928f1917745ea5bd1c"
     },
     {
       "path": "tests/review-backend-owner.test.js",
@@ -4476,8 +4479,8 @@
     {
       "path": "tests/ui-unity.test.js",
       "area": "Tests",
-      "bytes": 5653,
-      "sha256": "923fd73b648ee8d265e791f80ed58cf5619d82a0647ce82e161b93fd8edbac4c"
+      "bytes": 5649,
+      "sha256": "b6ad2c2b885b97eae3fe94823bedda26fbd92006ee74f12443f0c3ce59ce293f"
     },
     {
       "path": "tests/user-discovery.test.js",
@@ -4506,8 +4509,8 @@
     {
       "path": "tests/work-byline-typography.test.js",
       "area": "Tests",
-      "bytes": 7868,
-      "sha256": "9886d8ac83f4a71d7f95cd94847e9aea4ba7de023cc35bfc01d77b5016af323a"
+      "bytes": 7866,
+      "sha256": "78e8c81aaf887c79e0f9757d16f57559a6f8f0a3eaa71a5a85792533b992e62e"
     },
     {
       "path": "tests/work-detail-language.test.js",
@@ -4548,8 +4551,8 @@
     {
       "path": "tests/work-reading-log.test.js",
       "area": "Tests",
-      "bytes": 4233,
-      "sha256": "6687074e5b8f87662ddc5c6d5d1cb5db4a71461e0912d6507cdaadd99f41ccb5"
+      "bytes": 5565,
+      "sha256": "cce3be0e9206923c8ecfc4b2e8b6e43a780e424d2e5a9bb3c6fd42383b2d4157"
     },
     {
       "path": "tests/work-relations.test.js",
@@ -5239,19 +5242,19 @@
     "apple:audit",
     "apple:audit:strict"
   ],
-  "verifiedAt": "2026-11-11T17:46:57.147Z",
+  "verifiedAt": "2026-11-11T19:24:51.244Z",
   "artifacts": {
-    "04-Current-State.md": "8d26847c5bf75a189b50e169c3df8139190f0d169c45bb1ea730dd5b448862b1",
-    "07-Source-Atlas.md": "7fccd1584a7d7516002f16fba4a1532a6e3c4bdd8c4ef75783d0beff518bfeb0",
-    "generated/Source-Modules.md": "142a162feef61721c34903f5de1ef334a44886484205c9d29af9ace16a1451ad",
-    "generated/Source-Styles.md": "bf5cd166919d092802981a565369daaa18be116cccb6d86e5f3fb025ee76ddc9",
-    "generated/Source-Backend.md": "0c881561348d99e0a3706a47d6530d344b1a9234a57519695b4585f0a9178210",
-    "generated/Source-Tooling.md": "f820a07dc26da40c51cfa3da5dd4b7a2eb4c9a890fd280b21d87207ca0690985",
-    "generated/Source-Tests.md": "0e0b70ac222202fbcc43bb7035a518db5da0b2e6ef188812510ec3ae9de8fe9b",
-    "generated/Source-Docs.md": "d493472a34ec4afad7f8683d90c999dcda3a0df35533b39720e25157df14229f",
-    "generated/Source-Database.md": "a784f853e0bb796e857a38ea1470915fbffe7ef646a352f28c0d22134fde8b6b",
-    "generated/Source-Native.md": "f973bfd2b38a090982e8dd5726c9a2f8d6eac7e355c3802e5aaab31fa88feda2",
-    "generated/Source-Shell.md": "87b30402c2f6bd5ccb88a967e2624c2950a5d9efbebb6dea8314a73b3a9796e8",
+    "04-Current-State.md": "fad872f77c5dfa213f6370ebaa158fc7529d18313a62a66384fabf8db44fcd93",
+    "07-Source-Atlas.md": "37bd6501f01ad4dad5a3a34640673a766caea51e94135934282ffdf1d1dc8138",
+    "generated/Source-Modules.md": "f549ef0656c9b4f02161678d634a37c716a5f72d112c7c2178ab49f3c9fd0627",
+    "generated/Source-Styles.md": "fe6df38bf90e3f8e3f42077a4d60cbe99863190e4ab9ab5190b57b12ea1c96b3",
+    "generated/Source-Backend.md": "680574db0a20192035078ba748bb39ae798fc08ce5ff2e95d960274173418280",
+    "generated/Source-Tooling.md": "89b4757827f7f7575017650b41a7ad0050bbb5c3837232ccfdbba8240aa61f35",
+    "generated/Source-Tests.md": "9030d18468a0da1fc02040eee8af0b08ccc9a544346336210f0af8b25c1cf412",
+    "generated/Source-Docs.md": "1810291db46509888d8a60cc9da62f9a9d1adcf1bf808473a990999f2fa87ae0",
+    "generated/Source-Database.md": "4eb34f5dee5455395e13fd3dd97d2233e93e1d087c46e549b7aa4b4ab7866087",
+    "generated/Source-Native.md": "17a739afe1e0eb5b2c1b01a187604c9ff49abd9c1cd296ec20b3b524753ccd25",
+    "generated/Source-Shell.md": "50408529fb4648701a96fd43a5cf253c8c569f1fb4ead6db1682350404b48bac",
     "generated/Project-Brain.canvas": "3955aeb46974f461d4321dc37f303afcaa8e59281d1038629295e32ef4cbc3f1",
     "brain-map.json": "ccbcdcec84c2f2c7b53a06cdfd6a1d420de0601d2103e8f7a6945236e6d0399a"
   }

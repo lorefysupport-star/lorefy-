@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T17:46:57.147Z
-Source commit: cfc5fb12c411a47ff4951e507165d2f0ba83400f
+Observed: 2026-11-11T19:24:51.244Z
+Source commit: 93c9b0e11d3c567ff36345d3e453a9ecd6dd9c3a
 
 # Styles Source Inventory
 
@@ -59,7 +59,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-ui.css](../../styles/lorefy-ui.css) (15045 bytes)
 - [styles/lorefy-user-experience.css](../../styles/lorefy-user-experience.css) (6753 bytes)
 - [styles/lorefy-visual-polish.css](../../styles/lorefy-visual-polish.css) (8496 bytes)
-- [styles/lorefy-work-cinema.css](../../styles/lorefy-work-cinema.css) (29221 bytes)
+- [styles/lorefy-work-cinema.css](../../styles/lorefy-work-cinema.css) (32343 bytes)
 - [styles/lorefy-work-experience.css](../../styles/lorefy-work-experience.css) (16272 bytes)
 - [styles/lorefy-work-layout.css](../../styles/lorefy-work-layout.css) (4932 bytes)
 - [styles/lorefy-work-relations.css](../../styles/lorefy-work-relations.css) (2327 bytes)

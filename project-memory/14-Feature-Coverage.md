@@ -6,6 +6,12 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Work UI continuation: [[sessions/2026-11-11-Work-UI]] supersedes the initial v709
+visual treatment while preserving its reading contracts. Two new regressions,
+full3512 and actual AR/EN/theme/mobile/desktop checks cover ordering, no duplicate
+state, transparent tabs, heading gap and review Escape/focus recovery. Device
+acceptance remains separate.
+
 Work detail: [[sessions/2026-11-11-Work-Lootd]] covers owner/latest personal-score
 selection, explicit zero, saved reading checkpoint, existing action mount,
 responsive desktop/mobile composition and named dislike reactions. Full3510

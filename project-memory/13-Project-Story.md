@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-11: [[sessions/2026-11-11-Work-UI]] responds to owner feedback on the
+functional reading log: quieter mobile tools, clearer title/byline/metrics,
+non-duplicated progress and underline content tabs. AR/EN/theme browser evidence
+and full3512 pass; cachev710, source only. Supersedes v709 visual treatment.
+
 2026-11-11: [[sessions/2026-11-11-Work-Lootd]] reorganizes work detail around an
 owner-scoped reading log, separates personal/source scores and retains existing
 editors, zero ratings and progress. Desktop/mobile AR/EN/theme acceptance and

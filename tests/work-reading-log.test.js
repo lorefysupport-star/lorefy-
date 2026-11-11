@@ -40,11 +40,30 @@ test('work composition has a responsive log column and visible secondary action 
  assert.match(css,/\.lf-work-log[\s\S]*minmax\(240px,300px\)/);
  assert.match(css,/@media\(max-width:359px\)[\s\S]*lf-chapter-quick-cover\)\{padding:6px!important;gap:4px!important;font-size:12px!important/);
  assert.doesNotMatch(css,/\.lf-detail-page :is\(\.lf-chapter-quick-characters,\.lf-chapter-quick-cover\)>span\{position:absolute!important;width:1px/);
+ assert.match(css,/nav\.lf-work-section-nav\{[^}]*background:transparent!important/);
+ assert.match(css,/lf-work-log-heading\{[^}]*margin-bottom:16px!important/);
+ assert.match(css,/lf-chapter-quick-actions>button\{backdrop-filter:none!important/);
 });
 test('saved reading checkpoint belongs inside the log and unknown totals do not invent a percentage',()=>{
  const nodes=all(harness('en',[],{readingStatus:'Reading',readingProgress:'Chapter 12',readingKnown:true,readingPercent:30}).tree);
- const checkpoint=nodes.find(n=>n.props.className==='lf-work-log-checkpoint');assert.ok(checkpoint);assert.match(text(checkpoint),/Reading.*Chapter 12/);
+ const checkpoint=nodes.find(n=>n.props.className==='lf-work-log-checkpoint');assert.ok(checkpoint);assert.match(text(checkpoint),/Reading progress.*Chapter 12/);
  assert.equal(all(checkpoint).find(n=>n.type==='progress').props.value,30);
  const unknown=all(harness('en',[],{readingStatus:'Reading',readingProgress:'Chapter 12',readingKnown:false,readingPercent:0}).tree);
  assert.equal(unknown.filter(n=>n.type==='progress').length,0);
+});
+
+test('work hierarchy keeps creator with title, then groups public metrics',()=>{
+ const {tree}=harness('en',[],{creator:'Creator'}),nodes=all(tree),copy=nodes.find(n=>n.props.className==='lf-work-copy');
+ const creator=copy.children.findIndex(n=>n?.props?.className==='lf-work-creator');
+ const metrics=copy.children.findIndex(n=>n?.props?.className==='lf-work-public-metrics');
+ assert.ok(creator>=0&&metrics>creator);assert.ok(all(copy.children[metrics]).some(n=>n.props.className==='lf-work-rating'));
+});
+
+test('reading actions precede a single progress summary, without repeated reading state',()=>{
+ for(const language of ['ar','en']){
+  const nodes=all(harness(language,[],{readingStatus:'Completed',readingProgress:'Chapter 12'}).tree);
+  const log=nodes.find(n=>n.props.className==='lf-work-log'),slot=log.children.findIndex(n=>n?.props?.className==='lf-work-action-slot');
+  const progress=log.children.findIndex(n=>n?.props?.className==='lf-work-log-checkpoint');
+  assert.ok(progress>slot);assert.ok(!text(log.children[progress]).includes('Completed'));
+ }
 });

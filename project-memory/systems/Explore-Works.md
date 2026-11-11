@@ -194,5 +194,10 @@ content precedes chapters, desktop has a log column and secondary command labels
 remain visible on small phones. Full3510 and local AR/EN/theme checks pass;
 physical-device/provider acceptance remains independent. Cachev709, no build.
 
+[[sessions/2026-11-11-Work-UI]] supersedes the v709 mobile box/segmented-tab
+presentation with clearer byline/metrics and unframed reading controls, single
+progress summary and underline content tabs. Existing reading/zero-rating stores
+and editors remain. Full3512 and actual browser AR/EN/theme cases; cachev710.
+
 
 2026-10-21: [[sessions/2026-10-21-Search-Audit]] repairs main All-format online lookup and isolates People/Lists from catalog listeners; 234 focused checks, browser result evidence, and five matching installed simulator assets. Live directory/provider coverage remains separate. No commit or push.
