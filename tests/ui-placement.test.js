@@ -169,7 +169,8 @@ test('every best-four character tile uses a direct native button editor trigger'
   assert.match(tile, /type: "button"/);
   assert.match(tile, /"data-lf-top-character-editor": "slot"/);
   assert.match(tile, /open\.addEventListener\("click", openProfileTopCharactersEditorFromControl, true\)/);
-  assert.match(tile, /tile\.appendChild\(profileCharacterImageEdit/);
+  assert.doesNotMatch(tile, /tile\.appendChild\(profileCharacterImageEdit/);
+  assert.match(source, /selectedActions\.appendChild\(profileCharacterImageEdit\(activeItem, render\)\)/);
   assert.doesNotMatch(tile, /openCharacterPage\(/);
 });
 

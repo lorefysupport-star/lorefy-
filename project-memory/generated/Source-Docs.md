@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T11:55:14.314Z
-Source commit: 0a071da3dfe59655903bce026a89ce3dc982f2e8
+Observed: 2026-11-11T12:30:45.286Z
+Source commit: f08cd8653d406656deb5e8874612aa45954e1b34
 
 # Docs Source Inventory
 
@@ -90,6 +90,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/PROFILE_COMPACT_REPAIRS_2026-11-05.md](../../docs/PROFILE_COMPACT_REPAIRS_2026-11-05.md) (6889 bytes)
 - [docs/PROFILE_CUSTOM_GLASS_QA.md](../../docs/PROFILE_CUSTOM_GLASS_QA.md) (3895 bytes)
 - [docs/PROFILE_DECORATION_AUDIT_2026-10-09.md](../../docs/PROFILE_DECORATION_AUDIT_2026-10-09.md) (4754 bytes)
+- [docs/PROFILE_FAVORITES_2026-11-11.md](../../docs/PROFILE_FAVORITES_2026-11-11.md) (3469 bytes)
 - [docs/PROFILE_FAVORITES_SHELF_VERIFICATION_2026-10-07.md](../../docs/PROFILE_FAVORITES_SHELF_VERIFICATION_2026-10-07.md) (4174 bytes)
 - [docs/PROFILE_FLOW_2026-11-11.md](../../docs/PROFILE_FLOW_2026-11-11.md) (4330 bytes)
 - [docs/PROFILE_FRAME_LAYOUT_RULES.md](../../docs/PROFILE_FRAME_LAYOUT_RULES.md) (1903 bytes)

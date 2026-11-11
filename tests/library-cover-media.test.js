@@ -15,13 +15,19 @@ test('adapter keeps source, metadata and cover container while separating native
  const open=nodes.find(n=>n.props.className==='lf-cover-open');assert.equal(open.props['aria-label'],'Open Literal title');open.props.onClick();assert.deepEqual(f.calls,['open']);
  assert.equal(tree.props['data-work-id'],'work-id');assert.ok(kids(tree).includes(retry));assert.ok(!walk(open).includes(retry));
 });
-test('profile favorite preserves its edit action, data and original custom cover',()=>{
+test('profile favorites keep work opening and custom artwork without edit buttons on covers',()=>{
  const {api}=loadAPI(),calls=[],image=h('img',{src:'data:image/png;base64,user-cover'}),cover=h('div',{onClick:()=>calls.push('open'),style:{aspectRatio:'2/3'}},image),edit=h('button',{onClick:()=>calls.push('edit'),title:'Edit cover'}),slot=h('div',{key:'favorite','data-work-title':'Favorite',style:{position:'relative'}},cover,edit),page=h('div',{'data-profile-layout':'reader'},h('section',{className:'lf-profile-favorites'},slot));
  const next=api.owner(page,{lang:'ar'}),media=kids(kids(next)[0])[0];assert.equal(media.type,'CoverMedia');assert.equal(media.props.src,'data:image/png;base64,user-cover');
  const tree=media.props.render(h('span',{}),h('button',{className:'lf-cover-retry'})),nodes=walk(tree),editor=nodes.find(n=>n.props.title==='Edit cover');
- assert.equal(editor.props.onClick,edit.props.onClick);assert.ok(editor.props.className.includes('lf-profile-cover-edit'));
- editor.props.onClick();nodes.find(n=>n.props.className==='lf-cover-open').props.onClick();assert.deepEqual(calls,['edit','open']);
+ assert.equal(editor,undefined);
+ nodes.find(n=>n.props.className==='lf-cover-open').props.onClick();assert.deepEqual(calls,['open']);
  assert.equal(tree.props['data-work-title'],'Favorite');assert.equal(tree.props.style,slot.props.style);
+});
+test('owner cover cleanup does not depend on the managed image service being present',()=>{
+ const {api,root}=loadAPI();delete root.LorefyCoverMedia;
+ const slot=h('div',{'data-work-title':'Favorite'},h('img',{src:'original.jpg'}),h('button',{title:'Edit cover'}));
+ const tree=api.owner(h('div',{},h('section',{className:'lf-profile-favorites'},slot)),{lang:'en'});
+ assert.equal(walk(tree).filter(n=>n.type==='button').length,0);assert.ok(walk(tree).some(n=>n.props.src==='original.jpg'));
 });
 test('empty favorite slots and character grids are not upgraded to covers',()=>{
  const {api}=loadAPI(),empty=h('div',{key:'empty'}),character=h('div',{'data-work-title':'Not a work'},h('img',{src:'portrait.jpg'}));

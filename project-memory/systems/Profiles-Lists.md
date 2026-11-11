@@ -6,6 +6,12 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+2026-11-11: [[sessions/2026-11-11-Profile-Favorites]] removes image-edit badges
+from profile favorites while retaining accessible editor entries. Selected-slot
+cover action uses the existing picker and saved custom art, with account guards.
+Showcase fills available width independently of header budget.12 owner and24
+visitor cases plus People-search navigation pass. No build/service mutation.
+
 2026-11-11: [[sessions/2026-11-11-Profile-Lootd]] bounds visited library cards42
 and mixed owner/visitor Posts24, retains complete collections for search/More,
 and pages visited connections50 at a time. Failures retain rows/offset while

@@ -5,7 +5,8 @@ function extract(start,end){return source.slice(source.indexOf(start),source.ind
 test('favorite works keep seven saved slots, covers and results on editing',()=>{
  const works=Array.from({length:30},(_,i)=>({id:String(i+1),title:'Work '+i,cover:'cover'+i}));let overlay;
  let saved=['1','2','3','4','5','6','7'];
- const scope={doc:{documentElement:{lang:'en'},querySelector:()=>null},read:()=>saved.slice(),el,
+ const scope={doc:{documentElement:{lang:'en'},querySelector:()=>null},read:key=>key==='lorefy.user.customCovers.v2'?{'1':'custom-cover'}:saved.slice(),el,
+  profileRatedCharacterOwner:()=> 'owner',scheduleCharacterActionIcons(){},
   ovOpen(){const page=el('div'),body=el('div'),head=el('header',{},[el('button',{class:'lf-ov-back'})]);page.append(head,body);return overlay={page,head,body,close(){}};},
   uiText:(ar,en)=>en,profileWorkFor:id=>works.find(w=>w.id===id),mlTitleOf:w=>w.title,mlCoverOf:w=>w.cover,
   profileTopCharacterSearchText:v=>String(v).toLowerCase(),mlWorks:()=>works,write(key,value){saved=Array.from(value);},toastSafe(){},
@@ -13,8 +14,12 @@ test('favorite works keep seven saved slots, covers and results on editing',()=>
  vm.runInNewContext(extract('  function openProfileFavouriteWorksEditor(','  function syncProfileFavouriteWorksControls('),scope);
  scope.openProfileFavouriteWorksEditor();const slots=overlay.body.querySelector('.lf-top-works-editor-slots'),results=overlay.body.querySelector('.lf-top-works-editor-results');
  assert.equal(slots.children.length,7);
+ const coverAction=overlay.body.querySelector('.lf-top-works-editor-cover-action');
+ assert.equal(coverAction.attrs['aria-label'],'Change cover: Work 0');
+ assert.equal(slots.children[0].querySelector('img').attrs.src,'custom-cover');
  const firstSlot=slots.children[0],firstResult=results.children[0],cover=firstResult.children[0];
  slots.children[1].click();assert.equal(slots.children[0],firstSlot);assert.equal(results.children[0],firstResult);assert.equal(slots.children[1].attrs['aria-pressed'],'true');
+ assert.equal(coverAction.attrs['aria-label'],'Change cover: Work 1');
  results.querySelector('.lf-top-works-editor-more').click();assert.equal(results.children.length,25);assert.equal(results.children[0],firstResult);assert.equal(firstResult.children[0],cover);
  const search=overlay.body.querySelector('input');search.value='work';search.handlers.input();assert.equal(slots.children[0],firstSlot);assert.equal(results.children[0],firstResult);
  results.children[2].click();assert.equal(slots.children[0],firstSlot);assert.equal(slots.children[1].attrs['aria-label'].includes('Work 2'),true);

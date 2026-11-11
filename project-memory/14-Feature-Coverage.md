@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Favorite presentation: [[sessions/2026-11-11-Profile-Favorites]] covers badge-free
+work/character favorites, selected-slot cover editing, custom cover preservation,
+account guards and width-driven Showcase.12 owner/24 visitor browser cases and
+actual People search pass; installed-device acceptance remains separate.
+
 Profile continuation: [[sessions/2026-11-11-Profile-Lootd]] covers42-item visited
 library windows/search across1000, keyed derivation,50-record connections with
 error/stale guards,24-item mixed Posts and avatar hit-testing. Full3501 and

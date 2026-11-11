@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="../styles/lorefy-frame-motion.css">
 <link rel="stylesheet" href="../styles/lorefy-profile-header.css">
 <link rel="stylesheet" href="../styles/lorefy-profile-refined.css">
+<link rel="stylesheet" href="../styles/lorefy-book-showcase.css">
 <style>:root{--nc-top:0px;--nc-bottom:0px}body{margin:0}.lf-app{max-width:560px;margin:auto;height:100dvh}#root{height:100%}</style>
 </head><body><div class="lf-app"><div id="root"></div></div>
 <script src="../vendor/react.production.min.js"></script>
@@ -23,6 +24,7 @@
 <script src="../modules/lorefy-public-appearance.js"></script>
 <script src="../modules/lorefy-profile-layout.js"></script>
 <script src="../modules/lorefy-reader-layout.js"></script>
+<script src="../modules/lorefy-book-showcase.js"></script>
 <script src="../modules/lorefy-public-profile.js"></script>
 <script src="../modules/lorefy-frame-motion.js"></script>
 <script src="../modules/lorefy-bitmap-rig.js"></script>
@@ -53,6 +55,8 @@ const fixtureProfile={id:'header-fixture',name:params.has('long')?'A reader with
  profile_layout:layout,profile_decoration:params.has('pack')?{frame:params.get('pack'),page:params.get('pack')}:null,
  bio:'Stories worth keeping.',favorite_work_ids:[],favorite_character_ids:[]};
 const stress=params.get('stress')==='1';
+const favorites=params.get('favorites')==='1';
+if(favorites){fixtureProfile.favorite_work_ids=['qa-0','qa-1','qa-2','qa-3','qa-4'];fixtureProfile.library_view=params.get('view')||'showcase';}
 if(stress){
  fixtureProfile.library_entries=Object.fromEntries(Array.from({length:1000},(_,i)=>['qa-'+i,'completed']));
  fixtureProfile.follower_count=125;
@@ -63,7 +67,7 @@ if(stress){
 }
 const render=()=>headerRoot.render(React.createElement(LorefyPublicProfile,{
  profile:fixtureProfile,
- reviews:[],workById:id=>stress?{id,title:'QA work '+String(id).replace('qa-','').padStart(4,'0'),cover:art,type:'Manga'}:null,cover:()=>'',onBack(){},onWork(){}
+ reviews:[],workById:id=>stress||favorites?{id,title:'QA work '+String(id).replace('qa-','').padStart(4,'0'),cover:art,type:'Manga'}:null,cover:()=>art,onBack(){},onWork(){}
 }));
 render();
 window.addEventListener('lorefy:profile-shop-catalog-ready',render,{once:true});

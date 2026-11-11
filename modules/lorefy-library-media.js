@@ -40,11 +40,15 @@
       fallback:opts.fallback||image&&image.props['data-fallback'],fit:opts.fit||'cover',loading:opts.loading||'lazy',language:opts.lang,render:render,'data-work-title':props['data-work-title']});
   }
   function owner(page,props){
-    if(!root.LorefyCoverMedia)return page;
+    if(!page)return page;
     var R=root.React;
     return R.cloneElement(page,{},...children(page).map(function(node){
       if(!has(node,'lf-profile-favorites')||has(node,'lf-profile-top-characters-grid'))return node;
-      return R.cloneElement(node,{},...children(node).map(function(slot){return slot&&slot.props&&slot.props['data-work-title']?card(slot,{lang:props.lang}):slot;}));
+      return R.cloneElement(node,{},...children(node).map(function(slot){
+        if(!slot||!slot.props||!slot.props['data-work-title'])return slot;
+        var clean=R.cloneElement(slot,{},...children(slot).filter(function(child){return !child||child.type!=='button';}));
+        return card(clean,{lang:props.lang});
+      }));
     }));
   }
   root.LorefyLibraryMedia={card:card,owner:owner};

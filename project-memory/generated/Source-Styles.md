@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T11:55:14.314Z
-Source commit: 0a071da3dfe59655903bce026a89ce3dc982f2e8
+Observed: 2026-11-11T12:30:45.286Z
+Source commit: f08cd8653d406656deb5e8874612aa45954e1b34
 
 # Styles Source Inventory
 
@@ -42,7 +42,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-profile-apple.css](../../styles/lorefy-profile-apple.css) (10999 bytes)
 - [styles/lorefy-profile-header.css](../../styles/lorefy-profile-header.css) (4116 bytes)
 - [styles/lorefy-profile-layout.css](../../styles/lorefy-profile-layout.css) (9913 bytes)
-- [styles/lorefy-profile-refined.css](../../styles/lorefy-profile-refined.css) (13918 bytes)
+- [styles/lorefy-profile-refined.css](../../styles/lorefy-profile-refined.css) (14352 bytes)
 - [styles/lorefy-profile-sections.css](../../styles/lorefy-profile-sections.css) (22280 bytes)
 - [styles/lorefy-profile-shop.css](../../styles/lorefy-profile-shop.css) (23176 bytes)
 - [styles/lorefy-public-profile.css](../../styles/lorefy-public-profile.css) (19089 bytes)

@@ -2,6 +2,12 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const views=require('../modules/lorefy-library-view.js');
 const appearance=require('../modules/lorefy-public-appearance.js');
+test('profile showcase uses available width instead of shrinking to leftover header height',()=>{
+ const css=require('node:fs').readFileSync('styles/lorefy-profile-refined.css','utf8');
+ const start=css.indexOf('.lf-app .lf-profile-page .lf-profile-favorites.is-showcase-view,');
+ const rule=css.slice(start,css.indexOf('}',start));
+ assert.doesNotMatch(rule,/profile-favorites-budget/);assert.match(rule,/max-width:\s*min\(100%,560px\)/);
+});
 
 function element() {
   const classes=new Set(),attributes={};

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T11:55:14.314Z
-Source commit: 0a071da3dfe59655903bce026a89ce3dc982f2e8
+Observed: 2026-11-11T12:30:45.286Z
+Source commit: f08cd8653d406656deb5e8874612aa45954e1b34
 
 # Modules Source Inventory
 
@@ -47,7 +47,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-frame-motion.js](../../modules/lorefy-frame-motion.js) (17969 bytes)
 - [modules/lorefy-frame-restoration.js](../../modules/lorefy-frame-restoration.js) (19994 bytes)
 - [modules/lorefy-friend-activity.js](../../modules/lorefy-friend-activity.js) (12481 bytes)
-- [modules/lorefy-growth-features.js](../../modules/lorefy-growth-features.js) (427518 bytes)
+- [modules/lorefy-growth-features.js](../../modules/lorefy-growth-features.js) (428552 bytes)
 - [modules/lorefy-halloween-art.js](../../modules/lorefy-halloween-art.js) (5242 bytes)
 - [modules/lorefy-halloween-motion.js](../../modules/lorefy-halloween-motion.js) (7647 bytes)
 - [modules/lorefy-home-cinema.js](../../modules/lorefy-home-cinema.js) (7509 bytes)
@@ -55,7 +55,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-interface-settings.js](../../modules/lorefy-interface-settings.js) (15005 bytes)
 - [modules/lorefy-legal.js](../../modules/lorefy-legal.js) (4936 bytes)
 - [modules/lorefy-library-cinema.js](../../modules/lorefy-library-cinema.js) (8058 bytes)
-- [modules/lorefy-library-media.js](../../modules/lorefy-library-media.js) (4120 bytes)
+- [modules/lorefy-library-media.js](../../modules/lorefy-library-media.js) (4266 bytes)
 - [modules/lorefy-library-view.js](../../modules/lorefy-library-view.js) (12422 bytes)
 - [modules/lorefy-local-redesign.js](../../modules/lorefy-local-redesign.js) (1194 bytes)
 - [modules/lorefy-motion-atelier.js](../../modules/lorefy-motion-atelier.js) (9730 bytes)

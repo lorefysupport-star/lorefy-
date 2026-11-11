@@ -4287,7 +4287,6 @@
     }
     tile.appendChild(open);
     tile.appendChild(el('span', {class:'lf-profile-character-caption', 'aria-hidden':'true', text:(index+1)+'. '+(character ? name : uiText('أضف شخصية','Add character'))}));
-    if (character) tile.appendChild(profileCharacterImageEdit(item, syncProfileTopCharacters));
     return tile;
   }
   function profileTopCharacterSelection() {
@@ -4777,6 +4776,22 @@
       "aria-label": uiText("ابحث عن عمل لإضافته", "Search for a work to add")
     });
     var slots = el("div", { class: "lf-top-works-editor-slots" });
+    var editorOwner=profileRatedCharacterOwner();
+    var coverAction=el('button',{type:'button',class:'lf-top-works-editor-cover-action'},[
+      el('i',{'data-lucide':'image','aria-hidden':'true'}),
+      el('span',{text:uiText('تغيير غلاف العمل المحدد','Change selected cover')})
+    ]);
+    function syncCoverAction(){
+      var id=draft[activeSlot],work=id&&workFor(id);
+      coverAction.disabled=!work;
+      coverAction.setAttribute('aria-label',uiText('تغيير غلاف ','Change cover: ')+(work?titleFor(id):uiText('العمل المحدد','selected work')));
+    }
+    coverAction.addEventListener('click',function(){
+      var id=draft[activeSlot];
+      if(!ov.page.isConnected||ov.page.inert||editorOwner!==profileRatedCharacterOwner()||!id||!workFor(id))return;
+      stopCatalogRefresh();ov.close();
+      global.dispatchEvent(new CustomEvent('lorefy:edit-favorite-cover',{detail:{workId:id}}));
+    });
     var results = el("div", { class: "lf-top-works-editor-results" });
     var meta = el("p", { class: "lf-top-works-editor-meta", text: uiText("اختر الخانة، ثم اضغط العمل لاستبداله. الترتيب هو ترتيب ظهوره في ملفك.", "Choose a slot, then select a replacement. This order appears on your profile.") });
     var save = el("button", { type: "button", class: "lf-top-works-editor-save", text: uiText("حفظ المفضلة", "Save favorites") });
@@ -4787,7 +4802,7 @@
       var work = workFor(id);
       return (work && (mlTitleOf(work) || work.title || work.ar)) || "عمل في مكتبتك";
     }
-    function coverFor(work) { return work && (mlCoverOf(work) || work.sourceCover || work.cover); }
+    function coverFor(work) { return work && (read('lorefy.user.customCovers.v2',{})[work.id] || mlCoverOf(work) || work.sourceCover || work.cover); }
     function searchText(work) {
       return profileTopCharacterSearchText([work && work.title, work && work.ar, work && work.auth, work && work.author].filter(Boolean).join(" "));
     }
@@ -4812,6 +4827,7 @@
     var slotUpdates = [], slotNodes=[], resultNodes=new Map();
     function render() {
       slotUpdates = [];
+      syncCoverAction();
       var query = profileTopCharacterSearchText(search.value);
 
       draft.forEach(function (id, index) {
@@ -4842,7 +4858,7 @@
         };slotUpdates.push(update);
         button.addEventListener("click", function () {
           if (!ov.page.isConnected || ov.page.inert || activeSlot===index) return;
-          activeSlot=index;slotUpdates.forEach(function(update){update();});
+          activeSlot=index;slotUpdates.forEach(function(update){update();});syncCoverAction();
         });
         if(previous)slots.replaceChild(button,previous.button);else slots.appendChild(button);
         slotNodes[index]={key:slotKey,button:button,update:update};
@@ -4922,6 +4938,8 @@
     });
     ov.body.appendChild(meta);
     ov.body.appendChild(slots);
+    ov.body.appendChild(coverAction);
+    scheduleCharacterActionIcons();
     ov.body.appendChild(search);
     ov.body.appendChild(results);
     ov.page.appendChild(save);

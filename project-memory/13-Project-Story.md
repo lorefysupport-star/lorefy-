@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-11: [[sessions/2026-11-11-Profile-Favorites]] removes per-image favorite
+edit badges, moves cover editing into the selected-slot editor and sizes Showcase
+by available width. Owner12/visitor24 browser cases and People-search navigation
+retain layouts, palettes, saved slots and reader ownership. Source-only cachev708.
+
 2026-11-11: [[sessions/2026-11-11-Profile-Lootd]] follows Library with bounded
 visited library/Posts rendering, full-collection search, paged connections,
 ready-state guards and owner-avatar layering. All3 layouts/custom appearance

@@ -101,7 +101,7 @@
 .lf-app .lf-profile-page :is(.lf-profile-favorites,[data-profile-shelf='works']) :is([data-showcase-position='left'],[data-showcase-position='right']) .lf-showcase-cover { width:120% !important; }
 .lf-app .lf-profile-page .lf-profile-favorites.is-showcase-view,
 .lf-app .lf-profile-page [data-profile-shelf='works'] .lf-reader-shelf-rail.is-showcase-view {
-  max-width:min(100%,calc((var(--profile-favorites-budget,400px) - 88px) * 1.5 + 32px)) !important;
+  width:100% !important; max-width:min(100%,560px) !important;
   padding:8px 16px 10px !important;
 }
 .lf-app .lf-profile-page :is(.lf-profile-favorites,[data-profile-shelf='works']) .lf-showcase-caption { min-height:60px !important; margin-top:6px !important; gap:2px !important; }
@@ -116,3 +116,11 @@
   justify-self:center;
 }
 }
+
+.lf-app .lf-top-works-editor-cover-action {
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;
+  margin:12px 0;padding:10px 14px;border:1px solid var(--ui-line);border-radius:8px;
+  background:var(--ui-surface);color:var(--ui-ink);font:inherit;cursor:pointer;
+}
+.lf-app .lf-top-works-editor-cover-action:disabled {opacity:.5;cursor:default;}
+.lf-app .lf-top-works-editor-cover-action svg {width:18px;height:18px;flex-shrink:0;}
