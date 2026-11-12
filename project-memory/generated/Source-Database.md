@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T19:24:51.244Z
-Source commit: 93c9b0e11d3c567ff36345d3e453a9ecd6dd9c3a
+Observed: 2026-11-12T23:11:20.665Z
+Source commit: 5245421c27eb31fb2de9e98f3c8247ce09414b6a
 
 # Database Source Inventory
 

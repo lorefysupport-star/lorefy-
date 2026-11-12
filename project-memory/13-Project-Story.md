@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-12: [[sessions/2026-11-12-Theme-Contrast]] fixes shared palette contrast,
+stale dark aliases and glass chrome ink across the existing layouts. Full3516,
+135 sampled modes and18 route/theme/layout browser observations pass; v711 is
+source-only, not a native/device acceptance or production rollout.
+
 2026-11-11: [[sessions/2026-11-11-Work-UI]] responds to owner feedback on the
 functional reading log: quieter mobile tools, clearer title/byline/metrics,
 non-duplicated progress and underline content tabs. AR/EN/theme browser evidence

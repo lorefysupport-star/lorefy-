@@ -1,5 +1,19 @@
 /* One material definition for chrome; owner-scoped palette tokens stay authoritative. */
 @layer lorefy-glass-materials {
+/* Glass labels use the sampled backdrop pair, not opaque-page text colors. */
+.lf-app .lf-bottom-nav .lf-nav-item,.lf-app .lf-bottom-nav .lf-nav-item :is(span,svg){color:var(--ui-glass-secondary)!important}
+.lf-app .lf-bottom-nav .lf-nav-item.is-active,.lf-app .lf-bottom-nav .lf-nav-item.is-active :is(span,svg){color:var(--ui-glass-action)!important}
+.lf-app :is(.lf-home-feed-tabs,.lf-library-view-switch,.lf-library-tabs,.lf-explore-tabs,.lf-explore-sorts,.lf-design-search-modes,.lf-work-reader-tabs,.lf-profile-section-tabs) button{color:var(--ui-glass-ink)!important}
+.lf-app :is(.lf-home-feed-tabs,.lf-library-view-switch,.lf-library-tabs,.lf-explore-tabs,.lf-explore-sorts,.lf-design-search-modes,.lf-work-reader-tabs,.lf-profile-section-tabs) button :is(span,svg){color:inherit!important}
+.lf-app :is(.lf-home-feed-tabs,.lf-library-view-switch,.lf-library-tabs,.lf-explore-tabs,.lf-explore-sorts,.lf-design-search-modes,.lf-work-reader-tabs,.lf-profile-section-tabs) button:is([aria-selected=true],[aria-pressed=true],.is-active){color:var(--ui-glass-action)!important}
+.lf-app :is(.lf-library-search,.lf-design-inline-search,.lf-explore-format-search) input{color:var(--ui-glass-ink)!important;caret-color:var(--ui-glass-action)!important}
+.lf-app :is(.lf-library-search,.lf-design-inline-search,.lf-explore-format-search) input::placeholder{color:var(--ui-glass-muted)!important;opacity:1!important}
+.lf-app .lf-social-header :is(h1,h2,.lf-social-brand,.lf-icon-button),.lf-app .lf-cinema-resume-heading :is(h2,button){color:var(--ui-glass-ink)!important}
+.lf-app :is(.lf-work-panel,.lf-review-studio) :is(h2,h3,label){color:var(--ui-glass-ink)!important}
+.lf-app :is(.lf-work-panel,.lf-review-studio) :is(small,.lf-studio-field,.lf-rating-metric-label,.lf-rating-range-labels){color:var(--ui-glass-muted)!important}
+.lf-app :is(.lf-work-panel,.lf-review-studio) :is(.lf-studio-close,.lf-review-score-controls>button,.lf-review-studio-tabs>button){color:var(--ui-glass-ink)!important}
+.lf-app :is(.lf-work-panel,.lf-review-studio) .lf-rating-footer>button:not(:disabled),.lf-app .lf-work-panel .lf-studio-primary:not(:disabled){background:var(--ui-action)!important;color:var(--ui-on-action)!important}
+.lf-app .lf-review-studio [data-review-dislike][aria-pressed=true]{background:var(--ui-fill-soft)!important;color:var(--ui-danger)!important;border-color:var(--ui-danger)!important}
 :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
 .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page {
   --glass-fill:var(--ui-surface);

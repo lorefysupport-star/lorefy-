@@ -22,8 +22,9 @@ test('custom colors form a complete chromatic theme, not a near-neutral accent s
     const blue=design.palette(design.customMode('#3687bb',base));
     const [r,,b]=channels(blue.bg);assert.ok(b-r>=20,`${base} blue page must carry blue`);
     assert.notEqual(orange.bg,orange.card);assert.notEqual(orange.card,orange.field);
-    assert.equal(orange.green,design.palette(base).green);
-    assert.equal(orange.red,design.palette(base).red);
+    for(const key of ['green','red'])for(const bg of ['bg','card','field','fill2','accentSoft'])assert.ok(contrast(orange[key],orange[bg])>=4.5,base+'/'+key+'/'+bg);
+    assert.ok(channels(orange.green)[1]>channels(orange.green)[0],'success remains green');
+    assert.ok(channels(orange.red)[0]>channels(orange.red)[1],'danger remains red');
   }
   for(const base of ['dark','light'])for(const color of ['#ffffff','#000000','#ffff00']){
     const p=design.palette(design.customMode(color,base));

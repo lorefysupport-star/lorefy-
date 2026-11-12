@@ -6,6 +6,12 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Theme continuity: [[sessions/2026-11-12-Theme-Contrast]] covers semantic ink,
+action-label pairing, dark alias replacement and glass chrome consumption.
+Four regressions/135 palette modes and18 browser route/theme/layout observations
+include all profile layouts. Full3516 pass; modeled contrast is not a full DOM,
+physical-device or accessibility-conformance certificate.
+
 Work UI continuation: [[sessions/2026-11-11-Work-UI]] supersedes the initial v709
 visual treatment while preserving its reading contracts. Two new regressions,
 full3512 and actual AR/EN/theme/mobile/desktop checks cover ordering, no duplicate

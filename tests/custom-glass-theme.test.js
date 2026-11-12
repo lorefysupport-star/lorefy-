@@ -5,7 +5,7 @@ const design=require('../modules/lorefy-design-system.js');
 const read=file=>fs.readFileSync(file,'utf8');
 
 test('custom glass is loaded before fixed cinematic important layers and cached',()=>{
- const asset='styles/lorefy-custom-glass.css?v=20261027-theme-unity-v2';
+ const asset='styles/lorefy-custom-glass.css?v=20261111-theme-contrast-v711';
  const html=read('index.html');assert.ok(html.includes(asset));assert.ok(read('sw.js').includes(asset));
  assert.ok(html.indexOf(asset)<html.indexOf('styles/lorefy-home-cinema.css'));
 });
@@ -18,7 +18,7 @@ test('custom palette exports stable aliases that cannot cycle through cinematic 
    assert.doesNotMatch(tokens['--custom-'+key],/var\(/);
   }
  }
- assert.equal(design.tokens('dark')['--custom-bg'],undefined,'default appearance stays unchanged');
+ assert.equal(design.tokens('dark')['--custom-bg'],design.tokens('dark')['--ui-bg'],'dark replaces previous custom aliases too');
 });
 
 test('custom glass covers cinematic pages, work sheets, community composer and navigation',()=>{

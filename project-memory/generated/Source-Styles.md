@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T19:24:51.244Z
-Source commit: 93c9b0e11d3c567ff36345d3e453a9ecd6dd9c3a
+Observed: 2026-11-12T23:11:20.665Z
+Source commit: 5245421c27eb31fb2de9e98f3c8247ce09414b6a
 
 # Styles Source Inventory
 
@@ -19,7 +19,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-comics-search.css](../../styles/lorefy-comics-search.css) (1755 bytes)
 - [styles/lorefy-community.css](../../styles/lorefy-community.css) (38143 bytes)
 - [styles/lorefy-cover-media.css](../../styles/lorefy-cover-media.css) (15802 bytes)
-- [styles/lorefy-custom-glass.css](../../styles/lorefy-custom-glass.css) (18621 bytes)
+- [styles/lorefy-custom-glass.css](../../styles/lorefy-custom-glass.css) (19655 bytes)
 - [styles/lorefy-customize.css](../../styles/lorefy-customize.css) (5126 bytes)
 - [styles/lorefy-data-studio.css](../../styles/lorefy-data-studio.css) (5667 bytes)
 - [styles/lorefy-decoration-store.css](../../styles/lorefy-decoration-store.css) (14628 bytes)
@@ -27,7 +27,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-explore-cinema.css](../../styles/lorefy-explore-cinema.css) (35010 bytes)
 - [styles/lorefy-explore-studio.css](../../styles/lorefy-explore-studio.css) (30335 bytes)
 - [styles/lorefy-frame-motion.css](../../styles/lorefy-frame-motion.css) (10214 bytes)
-- [styles/lorefy-glass-materials.css](../../styles/lorefy-glass-materials.css) (10680 bytes)
+- [styles/lorefy-glass-materials.css](../../styles/lorefy-glass-materials.css) (13078 bytes)
 - [styles/lorefy-home-cinema.css](../../styles/lorefy-home-cinema.css) (35433 bytes)
 - [styles/lorefy-home-immersive.css](../../styles/lorefy-home-immersive.css) (11151 bytes)
 - [styles/lorefy-import-studio.css](../../styles/lorefy-import-studio.css) (7113 bytes)

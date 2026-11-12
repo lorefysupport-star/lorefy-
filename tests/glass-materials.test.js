@@ -32,7 +32,7 @@ test('glass ink, secondary text and accent retain contrast over black and white 
  }
 });
 test('shared materials load ahead of competing glass layers and are offline cached',()=>{
- const asset='styles/lorefy-glass-materials.css?v=20261028-trust-studio-v2',html=read('index.html');
+ const asset='styles/lorefy-glass-materials.css?v=20261111-theme-contrast-v711',html=read('index.html');
  assert.ok(html.includes(asset));assert.ok(read('sw.js').includes(asset));
  assert.ok(html.indexOf(asset)<html.indexOf('styles/lorefy-custom-glass.css'));
  const css=read('styles/lorefy-glass-materials.css');

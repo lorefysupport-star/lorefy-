@@ -32,7 +32,8 @@
   function luminance(hex){return rgb(hex).map(function(c){c/=255;return c<=.04045?c/12.92:Math.pow((c+.055)/1.055,2.4);}).reduce(function(sum,c,i){return sum+c*[.2126,.7152,.0722][i];},0);}
   function contrast(a,b){var x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);}
   function readable(color,backgrounds,dark){
-    for(var step=0;step<=100;step++){
+    if(backgrounds.every(function(bg){return contrast(color,bg)>=4.5;}))return color;
+    for(var step=1;step<=100;step++){
       var candidate=mix(color,dark?'#ffffff':'#000000',step/100);
       if(backgrounds.every(function(bg){return contrast(candidate,bg)>=4.5;}))return candidate;
     }
@@ -71,18 +72,20 @@
     var result={};Object.keys(map).forEach(function(key){result['--ui-'+key]=p[map[key]];});
     result['--ui-action-pressed']=p.accentPressed || mix(p.accent,p.onAccent==='#FFFFFF'||p.onAccent==='#fff'?'#000000':'#ffffff',.12);
     // Keep literal palette aliases: cinema screens can override --ui-* locally.
-    if(normalizeMode(mode)!=='dark')Object.keys(map).forEach(function(key){result['--custom-'+key]=p[map[key]];});
+    Object.keys(map).forEach(function(key){result['--custom-'+key]=p[map[key]];});
     // Bound glass labels against both backdrop extremes and the reflection peak.
     var dark=isDark(mode),alpha=dark?.68:.62,glare=dark?.12:.44;
-    var glassSamples=['#000000',dark?'#7a7a7a':'#ffffff'].flatMap(function(backdrop){
+    var glassSamples=[p.bg,p.card,p.field,p.fill2,p.accentSoft].concat(['#000000',dark?'#7a7a7a':'#ffffff'].flatMap(function(backdrop){
       var base=mix(backdrop,p.card,alpha);
       return [mix(base,'#ffffff',.015),mix(base,'#ffffff',glare)];
-    });
+    }));
     result['--ui-glass-fill']='rgba('+rgb(p.card).join(',')+','+alpha+')';
     result['--ui-glass-sheet']='rgba('+rgb(p.card).join(',')+',.86)';
     result['--ui-glass-ink']=readable(p.text,glassSamples,dark);
     result['--ui-glass-secondary']=readable(p.text2,glassSamples,dark);
+    result['--ui-glass-muted']=readable(p.sub,glassSamples,dark);
     result['--ui-glass-action']=readable(p.accent,glassSamples,dark);
+    ['ink','secondary','muted','action'].forEach(function(key){result['--custom-glass-'+key]=result['--ui-glass-'+key];});
     result['--ui-glass-backdrop']='blur(26px) saturate(150%) brightness('+(dark?'.48':'1.05')+')';
     result['--ui-glass-reflection']='linear-gradient(132deg,rgba(255,255,255,'+glare+'),rgba(255,255,255,.015) 43%,rgba(255,255,255,'+(dark?'.07':'.2')+'))';
     result['--ui-page-wash']='linear-gradient(145deg,'+mix(p.bg,p.accent,.16)+' 0%,'+p.bg+' 48%,'+mix(p.bg,p.fill2,.7)+' 100%)';
@@ -90,6 +93,17 @@
   }
 
   function palette(mode) {
+    var p=rawPalette(mode),dark=isDark(mode),surfaces=[p.bg,p.card,p.field,p.fill2,p.accentSoft];
+    // Semantic labels must follow the chosen surfaces, not their original base theme.
+    ['text','text2','sub','sub2','placeholder','accent','accentText','rating','red','green','gold','blue'].forEach(function(key){
+      p[key]=readable(p[key],surfaces,dark);
+    });
+    if(contrast(p.onAccent,p.accent)<4.5)p.onAccent=contrast(p.accent,'#ffffff')>=contrast(p.accent,'#000000')?'#ffffff':'#000000';
+    p.accentPressed=mix(p.accent,luminance(p.onAccent)>.5?'#000000':'#ffffff',.12);
+    return p;
+  }
+
+  function rawPalette(mode) {
     mode = normalizeMode(mode);
     if(isCustom(mode))return customPalette(mode);
     if (mode === 'pink') return Object.assign({}, palette('light'), {

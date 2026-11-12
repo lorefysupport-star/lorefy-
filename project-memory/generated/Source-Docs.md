@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-11T19:24:51.244Z
-Source commit: 93c9b0e11d3c567ff36345d3e453a9ecd6dd9c3a
+Observed: 2026-11-12T23:11:20.665Z
+Source commit: 5245421c27eb31fb2de9e98f3c8247ce09414b6a
 
 # Docs Source Inventory
 
@@ -113,6 +113,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/SUPABASE_PRO_ADOPTION_2026-10-30.md](../../docs/SUPABASE_PRO_ADOPTION_2026-10-30.md) (18102 bytes)
 - [docs/SUPABASE_PRO_OPTIMIZATION_2026-10-29.md](../../docs/SUPABASE_PRO_OPTIMIZATION_2026-10-29.md) (7886 bytes)
 - [docs/TESTER_LAB_LANGUAGE_AUDIT_2026-10-09.md](../../docs/TESTER_LAB_LANGUAGE_AUDIT_2026-10-09.md) (4684 bytes)
+- [docs/THEME_CONTRAST_2026-11-12.md](../../docs/THEME_CONTRAST_2026-11-12.md) (2990 bytes)
 - [docs/UGC_MODERATION_RUNBOOK.md](../../docs/UGC_MODERATION_RUNBOOK.md) (1633 bytes)
 - [docs/UI_AUDIT_2026-09-25.md](../../docs/UI_AUDIT_2026-09-25.md) (2398 bytes)
 - [docs/WORK_CINEMA_QA.md](../../docs/WORK_CINEMA_QA.md) (4695 bytes)

@@ -6,6 +6,12 @@ aliases: ["إطارات", "بنرات", "حزم", "مجانية", "ثيم", "ز�
 ---
 # المظهر والإطارات والحزم
 
+[[sessions/2026-11-12-Theme-Contrast]] makes every palette, including standard
+dark, replace the stable aliases used by pages and portals. Shared semantic ink
+and glass-specific ink are contrast-adjusted across owned sampled surfaces.
+Full3516 and browser checks preserve all three profile layouts, artwork and saved
+custom colors. Cachev711; native/device acceptance remains separate.
+
 [[sessions/2026-11-05-Profile-Compact-Repairs]] records measured follower clearance,
 photo bleed beneath artwork, compact accessible metrics, adaptive favorites and
 alpha fading into the real theme wash. The v697 follow-up covers populated Reader
