@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Community continuity: [[sessions/2026-11-13-Community-Continuity]] covers scoped
+post/card retention, bounded friend snapshot reuse, exact-review event reads and
+explicit remote-insert updates. Warm/stale/account/race tests and actual browser
+card/read/scroll evidence do not certify physical-device or production latency.
+
 Theme continuity: [[sessions/2026-11-12-Theme-Contrast]] covers semantic ink,
 action-label pairing, dark alias replacement and glass chrome consumption.
 Four regressions/135 palette modes and18 browser route/theme/layout observations

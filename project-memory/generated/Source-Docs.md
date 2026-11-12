@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-12T23:11:20.665Z
-Source commit: 5245421c27eb31fb2de9e98f3c8247ce09414b6a
+Observed: 2026-11-12T23:49:00.541Z
+Source commit: d3d0166cf99eacb61a7f1693ce3a152341e06964
 
 # Docs Source Inventory
 
@@ -35,6 +35,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/CHAPTER_CATALOG_FIX_2026-10-01.md](../../docs/CHAPTER_CATALOG_FIX_2026-10-01.md) (3327 bytes)
 - [docs/CHAPTER_RUNTIME_PERFORMANCE_2026-11-10.md](../../docs/CHAPTER_RUNTIME_PERFORMANCE_2026-11-10.md) (4093 bytes)
 - [docs/CHARACTER_ATLAS_VERIFICATION_2026-10-07.md](../../docs/CHARACTER_ATLAS_VERIFICATION_2026-10-07.md) (2111 bytes)
+- [docs/COMMUNITY_CONTINUITY_2026-11-13.md](../../docs/COMMUNITY_CONTINUITY_2026-11-13.md) (4175 bytes)
 - [docs/COMMUNITY_TIMELINE_2026-11-01.md](../../docs/COMMUNITY_TIMELINE_2026-11-01.md) (13485 bytes)
 - [docs/COMMUNITY_VISUAL_QA_2026-10-03.md](../../docs/COMMUNITY_VISUAL_QA_2026-10-03.md) (2676 bytes)
 - [docs/CONTENT_RIGHTS_AUDIT.md](../../docs/CONTENT_RIGHTS_AUDIT.md) (2081 bytes)

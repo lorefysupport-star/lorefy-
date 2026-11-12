@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Community continuity acceptance</title>
+<link rel="stylesheet" href="../styles/lorefy-community.css">
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px Arial,sans-serif;background:#101113;color:#f6f7f8}button{font:inherit;min-height:44px;cursor:pointer}
+.controls{display:flex;flex-wrap:wrap;gap:8px;padding:8px}.controls button{background:#24272b;color:#fff;border:1px solid #666;border-radius:6px}
+output{display:block;padding:8px}.lf-app{height:65vh;overflow:auto;--ui-bg:#101113;--ui-surface:#24272b;--ui-ink:#fff;--ui-action:#80ebd4;--ui-border:#666;--lf-bg:#101113;--lf-card:#24272b;--lf-text:#fff;--lf-sub:#aaa;--lf-border:#444}
+.lf-community-page{max-width:600px;margin:auto}.lf-community-post-list{display:flex;flex-direction:column}.lf-community-post-card{min-height:180px}
+</style>
+<div class="controls">
+<button id="leave">Leave feed</button><button id="return">Return to feed</button>
+<button id="reaction">20 reaction events</button><button id="new">New remote post</button>
+<button id="owner">Change session</button>
+</div>
+<output id="receipt" role="status"></output>
+<main class="lf-app"><div id="route"></div></main>
+<script>
+const route=document.getElementById('route'),receipt=document.getElementById('receipt');
+let reads=0,targets=0,notify=()=>{},firstCard=null,serial=0;
+const rows=Array.from({length:8},(_,i)=>({id:'post-'+i,user_id:'fixture-reader',kind:'text',body:'Local continuity fixture '+i,created_at:new Date(Date.now()-i*1000).toISOString(),profile:{name:'Fixture reader',username:'fixture'},reactions:{like:0,dislike:0,mine:{}}}));
+function report(){const card=route.querySelector('[data-post-timestamp]');if(card&&!firstCard)firstCard=card;receipt.textContent='reads='+reads+' targets='+targets+' retained='+!!(card&&firstCard===card)+' cards='+route.querySelectorAll('[data-post-timestamp]').length;}
+window.LorefyBackend={mode:'live',user:{id:'fixture-owner'},_communityEpoch:1,getFollowedProfileIds:async()=>[],
+listCommunityPosts:async options=>{reads++;if(options.postId)targets++;return options.postId?rows.filter(row=>row.id===options.postId):rows.slice();},
+subscribeCommunity:async callback=>{notify=callback;return()=>{};}};
+function enter(){route.replaceChildren();const page=document.createElement('div');page.className='lf-community-page';route.appendChild(page);if(window.LorefyCommunity)window.LorefyCommunity.enhance();report();}
+document.getElementById('leave').onclick=()=>{route.textContent='Conversation or work detail';window.LorefyCommunity.enhance();report();};
+document.getElementById('return').onclick=enter;
+document.getElementById('reaction').onclick=()=>{rows[0].reactions={like:20,dislike:0,mine:{}};for(let i=0;i<20;i++)notify({table:'community_post_reactions',new:{post_id:rows[0].id}});report();};
+document.getElementById('new').onclick=()=>{const row={...rows[0],id:'new-'+(++serial),created_at:new Date().toISOString()};rows.unshift(row);notify({table:'community_posts',eventType:'INSERT',new:row});report();};
+document.getElementById('owner').onclick=()=>{window.LorefyBackend._communityEpoch++;firstCard=null;window.LorefyCommunity.enhance();report();};
+new MutationObserver(()=>report()).observe(route,{childList:true,subtree:true});
+enter();
+</script>
+<script src="../modules/lorefy-community.js"></script>
+</html>

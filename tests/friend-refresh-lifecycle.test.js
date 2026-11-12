@@ -3,7 +3,7 @@ const source=fs.readFileSync('modules/lorefy-friend-activity.js','utf8');
 const settle=async()=>{for(let i=0;i<8;i++)await new Promise(resolve=>setImmediate(resolve));};
 const sample={ratings:[{id:'rating',user_id:'friend',work_id:'work',rating:4,created_at:'2026-11-01T00:00:00Z'}],followingIds:['friend'],limited:false};
 function mount(){
- const hooks=[],effects=[],pending=[],handlers=new Map(),events=new Map(),timers=new Map(),requests=[];let cursor=0,timerId=0,listener;
+ const hooks=[],effects=[],pending=[],handlers=new Map(),events=new Map(),timers=new Map(),requests=[];let cursor=0,timerId=0,listener,now=100000;
  const props={language:'en',following:['friend'],reviews:[],getWork:()=>({id:'work',title:'Book'}),cover:()=>'/cover',fallback:()=>'',Stars:()=>null};
  const backend={mode:'live',user:{id:'owner'},listFriendRatings:()=>new Promise((resolve,reject)=>requests.push({resolve,reject})),subscribeCommunity:async fn=>{listener=fn;return()=>{listener=null;};}};
  const window={LorefyBackend:backend,
@@ -15,13 +15,14 @@ function mount(){
    useRef(initial){const index=cursor++;if(!(index in hooks))hooks[index]={current:initial};return hooks[index];},
    useEffect(fn,deps){const index=cursor++,old=effects[index];if(!old||deps.some((value,i)=>value!==old.deps[i])){old?.cleanup?.();effects[index]={deps};pending.push(()=>{effects[index].cleanup=fn();});}},
   }};
- vm.runInNewContext(source,{window});
+ vm.runInNewContext(source,{window,Date:{now:()=>now,parse:Date.parse}});
  const h={props,backend,requests,handlers,state:()=>hooks[0],
   render(){cursor=0;const tree=window.LorefyFriendActivity.Rails(props);while(pending.length)pending.shift()();return tree;},
   emit(key,payload){for(const fn of events.get(key)||[])fn(payload);},
   realtime(table){assert.equal(typeof listener,'function','friend rails subscribe to the shared change channel');listener(typeof table==='string'?{table}:table);},
   timers(ms){for(const[id,job]of[...timers])if(job.ms===ms){timers.delete(id);job.fn();}},
-  cleanup(){for(const effect of effects)effect?.cleanup?.();}};
+  cleanup(){for(const effect of effects)effect?.cleanup?.();},
+  remount(){this.cleanup();hooks.length=0;effects.length=0;return this.render();},advance(ms){now+=ms;}};
  h.render();return h;
 }
 
@@ -29,6 +30,24 @@ test('initial friend load and pull refresh share one request and completion',asy
  const h=mount();await settle();const pull=h.handlers.get('community-friends')({active:()=>true});await settle();
  assert.equal(h.requests.length,1);h.requests[0].resolve(sample);assert.equal(await pull,true);await settle();
  assert.equal(h.state().rows.length,1);h.cleanup();
+});
+
+test('return from a review reuses the current-session friend snapshot without a loading flash or request',async()=>{
+ const h=mount();await settle();h.requests[0].resolve(sample);await settle();h.remount();await settle();
+ assert.equal(h.requests.length,1);assert.equal(h.state().rows.length,1);assert.equal(h.state().loading,false);h.cleanup();
+});
+
+test('expired friend snapshot stays visible while one background request refreshes it',async()=>{
+ const h=mount();await settle();h.requests[0].resolve(sample);await settle();h.advance(61000);h.remount();await settle();
+ assert.equal(h.requests.length,2);assert.equal(h.state().rows.length,1);assert.equal(h.state().loading,false);
+ h.requests[1].resolve(sample);await settle();h.cleanup();
+});
+
+test('friend snapshots do not cross a changed backend epoch or following scope',async()=>{
+ const h=mount();await settle();h.requests[0].resolve(sample);await settle();h.backend._communityEpoch=2;h.remount();await settle();
+ assert.equal(h.requests.length,2);assert.equal(h.state().rows.length,0);
+ h.requests[1].resolve(sample);await settle();h.props.following=['new-friend'];h.remount();await settle();
+ assert.equal(h.requests.length,3);assert.equal(h.state().rows.length,0);h.requests[2].resolve(sample);await settle();h.cleanup();
 });
 
 test('background refresh and failure retain already loaded friend rows',async()=>{

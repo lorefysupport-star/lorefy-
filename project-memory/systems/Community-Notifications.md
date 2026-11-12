@@ -6,6 +6,12 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-11-13-Community-Continuity]] repairs distinct remount behavior:
+same-session posts/cards and friend snapshots survive return, while known review
+events use exact-ID reads. Remote inserts wait behind an update control; manual
+and pull refresh remain explicit. Actual browser node/read/scroll evidence only;
+no live publishing, backend deployment, native build or FPS guarantee.
+
 A-007 in [[sessions/2026-11-02-App-Interactions]] completes reply/edit session
 boundaries, distinct from prior window-lifetime fixes.3349 tests,144 actual
 browser cases and148 regressions pass under controlled transport/auth fixtures.

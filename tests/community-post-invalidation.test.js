@@ -4,13 +4,18 @@ const settle=async()=>{for(let i=0;i<8;i++)await new Promise(r=>setImmediate(r))
 function invalidation(){
  const timers=new Map(),calls=[];let serial=0;
  const state={page:{isConnected:true},posts:[],loaded:true},backend={user:{id:'owner'}};
- const scope={state,global:{LorefyBackend:backend,setTimeout:fn=>{timers.set(++serial,fn);return serial;},clearTimeout:id=>timers.delete(id)},
+ const scope={state,renderPostFeed(){},global:{LorefyBackend:backend,setTimeout:fn=>{timers.set(++serial,fn);return serial;},clearTimeout:id=>timers.delete(id)},
   loadPosts:(...args)=>{calls.push(args);return Promise.resolve(true);}};
  vm.runInNewContext(source.slice(source.indexOf('  function scheduleRefresh('),source.indexOf('  function boot()',source.indexOf('  function scheduleRefresh('))),scope);
  return{state,backend,scope,calls,send:scope.scheduleRefresh,flush(){const values=[...timers.values()];timers.clear();values.forEach(fn=>fn());}};
 }
 test('review changes do not invalidate standalone posts',()=>{
  const h=invalidation();for(const table of ['reviews','review_comments','review_reactions'])h.send({table});h.flush();assert.equal(h.calls.length,0);
+});
+
+test('new remote roots wait for an explicit update instead of shifting the visible timeline',()=>{
+ const h=invalidation();h.send({table:'community_posts',eventType:'INSERT',new:{id:'new-root',parent_id:null}});h.flush();
+ assert.equal(h.calls.length,0);assert.equal(h.state.updatesPending,true);
 });
 test('post invalidations arriving during a request get one trailing refresh',async()=>{
  const h=invalidation();let finish;h.state.postJob={current:()=>true,promise:new Promise(r=>finish=r)};

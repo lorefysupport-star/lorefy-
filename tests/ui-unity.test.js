@@ -27,7 +27,7 @@ test('updated UI assets use fresh cache keys', () => {
   const html = read('index.html');
   assert.match(html, /lorefy-apple-ui\.css\?v=20260925-ui-coherence-v1/);
   assert.match(html, /lorefy-cinema-ui\.css\?v=20261003-appearance-feather-v2/);
-  assert.match(html, /lorefy-community\.css\?v=20261110-action-parity-v1/);
+  assert.match(html, /lorefy-community\.css\?v=20261113-community-continuity-v712/);
   for (const asset of ['modules/lorefy-growth-features.js', 'modules/lorefy-i18n.js',
     'modules/lorefy-v2.js', 'modules/lorefy-public-profile.js', 'uploads/files/lorefy-app.js',
     'modules/lorefy-catalog-loader.js', 'modules/lorefy-explore-studio.js', 'styles/lorefy-explore-studio.css',
@@ -38,18 +38,18 @@ test('updated UI assets use fresh cache keys', () => {
     'backend/lorefy-backend.js','modules/lorefy-home-cinema.js']) {
     const versions = {
       'modules/lorefy-growth-features.js':'20261111-work-polish-v710',
-      'modules/lorefy-community.js':'20261102-dialog-session-v1',
+      'modules/lorefy-community.js':'20261113-community-continuity-v712',
       'modules/lorefy-chapter-detail.js':'20261101-image-delivery-v1',
       'styles/lorefy-work-studio.css':'20261029-cover-editions-v1',
       'modules/lorefy-work-panels.js':'20261029-cover-editions-v1',
       'modules/lorefy-review-editor.js':'20261111-work-polish-v710',
       'styles/lorefy-work-cinema.css':'20261111-work-polish-v710',
       'styles/lorefy-home-cinema.css':'20261026-work-cinema-v1',
-      'styles/lorefy-community.css':'20261110-action-parity-v1',
+      'styles/lorefy-community.css':'20261113-community-continuity-v712',
       'modules/lorefy-public-profile.js':'20261111-profile-flow-v707',
       'modules/lorefy-i18n.js':'20261102-inbox-copy-v1',
       'modules/lorefy-v2.js':'20261016-statistics-activity-v1',
-      'uploads/files/lorefy-app.js':'20261111-work-polish-v710',
+      'uploads/files/lorefy-app.js':'20261113-community-continuity-v712',
       'backend/lorefy-backend.js':'20261104-notification-target-v1',
       'modules/lorefy-home-cinema.js':'20261101-home-reading-v1',
       'backend/lorefy-native-runtime.js':'20261104-notification-delivery-v1',

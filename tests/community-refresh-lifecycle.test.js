@@ -79,6 +79,19 @@ function postLoader(){
  vm.runInNewContext(source.slice(start,end),scope);
  return{state,api:scope.loadPosts,reads:()=>reads,timeout:()=>timeout(),resolve:rows=>resolve(rows),resolver:()=>resolve,paints:()=>paints};
 }
+
+test('new-activity control refreshes standalone posts as well as review and friend listeners',()=>{
+ const Node=require('./helpers/render-dom'),list=new Node(),status=new Node(),events=[];let reads=0;
+ const state={filter:'all',posts:[],updatesPending:true,reviewFeed:{updates:true}},host={querySelector:s=>s.includes('post-list')?list:status};
+ const scope={Date,doc:{documentElement:{lang:'en'},querySelector:()=>host},state,
+  identity:()=>({id:'owner'}),savedPosts:()=>({}),visibleCommunityPosts:()=>[],uiText:(ar,en)=>en,
+  el:(...args)=>new Node(...args),icon:()=>new Node('i'),loadPosts:()=>{reads++;return Promise.resolve(true);},
+  global:{CustomEvent:class{constructor(type){this.type=type;}},dispatchEvent:event=>events.push(event.type)},
+  orderCommunityFeed(){},hydrateIcons(){}};
+ const start=source.indexOf('  function renderPostFeed()');vm.runInNewContext(source.slice(start,source.indexOf('  function orderCommunityFeed()',start)),scope);
+ scope.renderPostFeed();list.children.find(node=>node.attrs.class==='lf-community-updates').click();
+ assert.equal(reads,1);assert.deepEqual(events,['lorefy:community-refresh']);
+});
 test('post refresh callers wait for the same request instead of completing early',async()=>{
  const h=postLoader(),a=h.api(true),b=h.api(true);let done=false;b.then(()=>{done=true;});
  await Promise.resolve();assert.equal(done,false);assert.equal(h.reads(),1);h.resolve([]);await Promise.all([a,b]);

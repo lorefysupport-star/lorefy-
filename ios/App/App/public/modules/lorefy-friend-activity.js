@@ -39,12 +39,16 @@
     // These are readers' published ratings, like the feed below, rather than editorial recommendations.
     return !!work && !(policy && (policy.isExcludedWork(work) || policy.isExplicitWork(work) || policy.isAiGeneratedWork(work)));
   }
+  var friendSnapshot = null;
   function Rails(p) {
     p=Object.assign({},p,{compact:true});
     var R=root.React, h=R.createElement, en=p.language==='en', backend=root.LorefyBackend;
     var owner=String(backend && backend.user && backend.user.id || ''), live=backend && backend.mode==='live';
     var followingKey=(p.following || []).map(String).sort().join('|');
-    var state=R.useState({owner:'',rows:[],following:[],loading:live,error:false}), result=state[0], set=state[1];
+    var client=backend&&backend.client,epoch=backend&&backend._communityEpoch;
+    function sameSnapshot(){return friendSnapshot&&friendSnapshot.backend===backend&&friendSnapshot.client===client&&friendSnapshot.epoch===epoch&&friendSnapshot.owner===owner&&friendSnapshot.scope===followingKey;}
+    if(!sameSnapshot())friendSnapshot=null;
+    var state=R.useState(function(){return friendSnapshot?friendSnapshot.value:{owner:'',rows:[],following:[],loading:live,error:false};}), result=state[0], set=state[1];
     var reload=R.useRef(null), version=R.useState(0), bump=version[1];
     var expandedState=R.useState({}), expanded=expandedState[0], expand=expandedState[1];
     R.useEffect(function () {
@@ -55,21 +59,23 @@
     },[]);
     R.useEffect(function () {
       if (!live) return;
-      var mounted=true,job=null,queued=false,deadlineTimer=0,refreshTimer=0,unsubscribe=null,knownFriends=null;
-      function current() { return mounted && root.LorefyBackend===backend && owner===String(backend.user && backend.user.id || ''); }
-      function keep(previous) { return previous.owner===owner && previous.scope===followingKey && previous.backend===backend; }
+      var mounted=true,job=null,queued=false,deadlineTimer=0,refreshTimer=0,unsubscribe=null,knownFriends=sameSnapshot()?new Set(friendSnapshot.value.following.map(String)):null;
+      function current() { return mounted && root.LorefyBackend===backend && backend.client===client && backend._communityEpoch===epoch && owner===String(backend.user && backend.user.id || ''); }
+      function keep(previous) { return previous.owner===owner && previous.scope===followingKey && previous.backend===backend && previous.client===client && previous.epoch===epoch; }
       function load(context) {
         if (!current() || context && context.active && !context.active()) return Promise.resolve(false);
         if (job) return job;
         set(function (previous) {
-          return Object.assign(keep(previous) ? {} : {owner:owner,scope:followingKey,backend:backend,rows:[],following:[]},
+          return Object.assign(keep(previous) ? {} : {owner:owner,scope:followingKey,backend:backend,client:client,epoch:epoch,rows:[],following:[]},
             keep(previous) ? previous : {}, {loading:!keep(previous) || !previous.loaded,error:false});
         });
         var deadline=new Promise(function (_,reject) { deadlineTimer=root.setTimeout(function () { reject(new Error('Friend ratings timeout')); },14000); });
         job=Promise.race([Promise.resolve().then(function () { return backend.listFriendRatings(); }),deadline]).then(function (data) {
           if (!current()) return false;
           knownFriends=new Set(data.followingIds.map(String));
-          set({owner:owner,scope:followingKey,backend:backend,rows:data.ratings,following:data.followingIds,limited:data.limited,loaded:true,loading:false,error:false});
+          var value={owner:owner,scope:followingKey,backend:backend,client:client,epoch:epoch,rows:data.ratings,following:data.followingIds,limited:data.limited,loaded:true,loading:false,error:false};
+          friendSnapshot={owner:owner,scope:followingKey,backend:backend,client:client,epoch:epoch,at:Date.now(),value:value};
+          set(value);
           var loader=root.LorefyCatalogLoader;
           if (loader && loader.loadWorks) loader.loadWorks(data.ratings.map(function (row) { return row.work_id; })).catch(function () {});
           return true;
@@ -96,15 +102,15 @@
       root.addEventListener('lorefy:community-refresh',manual);
       var stop=root.LorefyPageRefresh && root.LorefyPageRefresh.register('community-friends',load);
       if (backend.subscribeCommunity) backend.subscribeCommunity(changed).then(function (stop) { if (mounted) unsubscribe=stop; else if (stop) stop(); }).catch(function () {});
-      load();
+      if(!sameSnapshot()||Date.now()-friendSnapshot.at>=60000)load();
       return function () {
         mounted=false; root.clearTimeout(deadlineTimer); root.clearTimeout(refreshTimer);
         if (reload.current===load) reload.current=null;
         if (unsubscribe) unsubscribe(); if (stop) stop();
         root.removeEventListener('lorefy:profile-follow-changed',changed); root.removeEventListener('lorefy:community-refresh',manual);
       };
-    },[owner,live,backend,followingKey]);
-    var valid=!live || result.owner===owner && result.scope===followingKey && result.backend===backend, loading=live && (!valid || result.loading), error=live && valid && result.error;
+    },[owner,live,backend,client,epoch,followingKey]);
+    var valid=!live || result.owner===owner && result.scope===followingKey && result.backend===backend && result.client===client && result.epoch===epoch, loading=live && (!valid || result.loading), error=live && valid && result.error;
     var safety=root.LorefyProductTools && root.LorefyProductTools.core.safety;
     var hidden=safety ? safety.getBlockedUsers().concat(safety.getMutedUsers()) : [];
     var data=derive(live ? valid ? result.rows : [] : p.reviews,live ? valid ? result.following : [] : p.following,{owner:owner,hidden:hidden,aliases:root.LorefyCatalogAliases});

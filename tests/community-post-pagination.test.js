@@ -16,6 +16,13 @@ function mount(rows){
 }
 async function twoPages(h){await h.load(true);await h.load(true,true);assert.equal(h.state.posts.length,120);}
 
+test('a later remote insert keeps its pending notice when an older refresh completes',async()=>{
+ const h=mount([row(0)]);let release;h.backend.listCommunityPosts=()=>new Promise(r=>release=r);
+ const pending=h.load(true);h.state.updateVersion=1;h.state.updatesPending=true;release([row(0)]);await pending;
+ assert.equal(h.state.updatesPending,true);
+ h.backend.listCommunityPosts=async()=>[row(0)];await h.load(true);assert.equal(h.state.updatesPending,false);
+});
+
 test('refresh retains the complete loaded window through its old boundary despite new posts',async()=>{
  const data=Array.from({length:180},(_,i)=>row(i)),h=mount(data);await twoPages(h);
  h.setData([row(-2),row(-1),...data]);const previous=h.state.posts.at(-1).id;

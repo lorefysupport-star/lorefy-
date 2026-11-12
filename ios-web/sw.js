@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v711-theme-contrast';
+const CACHE = 'lorefy-v712-community-continuity';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -48,7 +48,7 @@ const CORE = [
   './uploads/lorefy-editorial-picks.js?v=20261017-editorial-comics-v1',
   './styles/lorefy-user-experience.css?v=20261015-connection-avatar-v1',
   './modules/lorefy-user-experience.js?v=20261015-connection-avatar-v1',
-  './modules/lorefy-friend-activity.js?v=20261101-friend-events-v1',
+  './modules/lorefy-friend-activity.js?v=20261113-community-continuity-v712',
   './modules/lorefy-original-illustrated.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-original-autumn.js?v=20261013-all-profile-frames-v6',
   './modules/lorefy-original-original.js?v=20261013-all-profile-frames-v6',
@@ -78,7 +78,7 @@ const CORE = [
   './styles/lorefy-cinema-ui.css?v=20261003-appearance-feather-v2',
   './styles/lorefy-native-layout-fix.css?v=20260921-product-remediation-v1',
   './styles/lorefy-review-social.css?v=20261021-stable-rendering',
-  './styles/lorefy-community.css?v=20261110-action-parity-v1',
+  './styles/lorefy-community.css?v=20261113-community-continuity-v712',
   './styles/lorefy-comics-search.css?v=20260923-comics-identity-v2',
   './styles/lorefy-auth-flow.css?v=20261018-minimal-entry-v1',
   './styles/lorefy-page-refresh.css?v=20261027-ui-refinement-v1',
@@ -142,7 +142,7 @@ const CORE = [
   './styles/lorefy-visual-polish.css?v=20260930-reference-v2',
   './modules/lorefy-public-appearance.js?v=20261101-reading-favorite-type-v1',
   './modules/lorefy-public-profile.js?v=20261111-profile-flow-v707',
-  './modules/lorefy-community.js?v=20261102-dialog-session-v1',
+  './modules/lorefy-community.js?v=20261113-community-continuity-v712',
   './modules/lorefy-page-refresh.js?v=20261027-ui-refinement-v1',
   './modules/lorefy-library-view.js?v=20261029-library-media-v1',
   './modules/lorefy-interface-settings.js?v=20261028-settings-studio-v1',
@@ -184,7 +184,7 @@ const CORE = [
   './styles/lorefy-book-showcase.css?v=20261028-reading-type-v1',
   './styles/lorefy-profile-header.css?v=20261111-profile-flow-v707',
   './modules/lorefy-profile-header.js?v=20261105-profile-compact-v1',
-  './uploads/files/lorefy-app.js?v=20261111-work-polish-v710',
+  './uploads/files/lorefy-app.js?v=20261113-community-continuity-v712',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
   './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2',

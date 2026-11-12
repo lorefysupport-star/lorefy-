@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-13: [[sessions/2026-11-13-Community-Continuity]] fixes remount resets,
+friend reload flashes and whole-collection work for known review reactions.
+New remote inserts become deliberate updates rather than forced reordering.
+Local browser node/read/scroll evidence is separate from device/service speed.
+
 2026-11-12: [[sessions/2026-11-12-Theme-Contrast]] fixes shared palette contrast,
 stale dark aliases and glass chrome ink across the existing layouts. Full3516,
 135 sampled modes and18 route/theme/layout browser observations pass; v711 is

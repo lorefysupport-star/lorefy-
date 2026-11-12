@@ -53,8 +53,8 @@ test('visitor library status also uses the shared reading formatter',()=>{
   assert.match(src,/root\.LorefyI18n\.readingStatusLabel\(status,/);
 });
 test('reading vocabulary consumers use current runtime cache keys',()=>{
-  for(const entry of ['index.html','sw.js'])for(const asset of ['uploads/files/lorefy-app.js','modules/lorefy-i18n.js','modules/lorefy-work-panels.js','modules/lorefy-growth-features.js','modules/lorefy-public-profile.js'])assert.ok(fs.readFileSync(entry,'utf8').includes(asset+'?v='+(asset==='modules/lorefy-work-panels.js'?'20261029-cover-editions-v1':asset==='modules/lorefy-growth-features.js'?'20261111-work-polish-v710':asset==='uploads/files/lorefy-app.js'?'20261111-work-polish-v710':asset==='modules/lorefy-public-profile.js'?'20261111-profile-flow-v707':'20261102-inbox-copy-v1')),asset);
-  assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v711-theme-contrast/);
+  for(const entry of ['index.html','sw.js'])for(const asset of ['uploads/files/lorefy-app.js','modules/lorefy-i18n.js','modules/lorefy-work-panels.js','modules/lorefy-growth-features.js','modules/lorefy-public-profile.js'])assert.ok(fs.readFileSync(entry,'utf8').includes(asset+'?v='+(asset==='modules/lorefy-work-panels.js'?'20261029-cover-editions-v1':asset==='modules/lorefy-growth-features.js'?'20261111-work-polish-v710':asset==='uploads/files/lorefy-app.js'?'20261113-community-continuity-v712':asset==='modules/lorefy-public-profile.js'?'20261111-profile-flow-v707':'20261102-inbox-copy-v1')),asset);
+  assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v712-community-continuity/);
 });
 test('profile reading results are named keyboard buttons rather than unnamed clickable containers',()=>{
   assert.ok(source.includes('React.createElement("button",{key:d.id,type:"button","data-reading-work-id":d.id,"aria-label":uiText(W,"فتح "+d.title,"Open "+d.title),onClick:()=>T(d)'));

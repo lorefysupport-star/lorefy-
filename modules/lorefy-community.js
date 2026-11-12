@@ -313,6 +313,7 @@
     state.loading = true;
     state.error = false;
     var request = state.feedRequest = (state.feedRequest || 0) + 1;
+    var updatesAtStart = state.updateVersion || 0;
     var feedPage = state.page;
     var backend = global.LorefyBackend;
     var accountId = String(backend && backend.user && backend.user.id || '');
@@ -379,6 +380,8 @@
     })(), follows]).then(function () {
       if (!job.current()) return false;
       state.loaded = true;
+      state.loadedAt = Date.now();
+      if (!older && !targetIds && (state.updateVersion || 0) === updatesAtStart) state.updatesPending = false;
       return true;
     });
     job.promise = Promise.race([work, deadline]).catch(function () {
@@ -1187,7 +1190,7 @@
       if(canonical.size)state.posts=state.posts.map(function(post){return canonical.get(post)||post;});
     }
     var signature = JSON.stringify([cardContext, saved, posts, state.filter, !!state.error, !!state.loading,
-      !!state.hasMore, state.reviewFeed || {}, doc.documentElement.lang, Math.floor(Date.now() / 60000)]);
+      !!state.hasMore, !!state.updatesPending, state.reviewFeed || {}, doc.documentElement.lang, Math.floor(Date.now() / 60000)]);
     if (host.__lorefyFeedSignature === signature && host.__lorefyFeedList === list) return;
     var page=state.page,scrollRoot=page && (page.closest && page.closest('.lf-screen-scroll') || page),anchors=[];
     // Empty timeline/status controls sort after reviews and cannot move their cards.
@@ -1206,6 +1209,12 @@
     var desired=[], previousCards=host.__lorefyPostCards || new Map(), nextCards=new Map();
     function append(node){desired.push(node);return node;}
 
+    if (state.updatesPending || state.reviewFeed && state.reviewFeed.updates) {
+      var updates = el('button', {type:'button',class:'lf-community-updates',text:uiText('تحديثات جديدة · عرض', 'New activity · Show')});
+      updates.disabled = !!state.loading || !!(state.reviewFeed && state.reviewFeed.loading);
+      updates.addEventListener('click', function () { loadPosts(true); global.dispatchEvent(new global.CustomEvent('lorefy:community-refresh')); });
+      append(updates);
+    }
     if (state.error) {
       var retry = el('button', { type:'button', class:'lf-community-retry', text:uiText('تعذر تحميل المنشورات · إعادة المحاولة', 'Could not load posts · Retry') });
       retry.disabled = state.loading;
@@ -1477,6 +1486,15 @@
 
   function enhance() {
     var page = doc.querySelector(".lf-community-page");
+    var reset = !state.feedScope || !state.feedScope();
+    if (reset) {
+      state.feedScope = communitySession();
+      state.feedRequest = (state.feedRequest || 0) + 1;
+      state.posts = []; state.loaded = false; state.loadedAt = 0;
+      state.loading = false; state.hasMore = false; state.error = false; state.updatesPending = false;
+      state.feedElement = null;
+      state.followedIds = []; state.followsLoaded = false; state.legacySeedAttempted = false;
+    }
     if (!page) {
       var staleFab = doc.querySelector(".lf-community-compose-fab");
       if (staleFab) staleFab.remove();
@@ -1484,12 +1502,13 @@
       state.page = null;
       return false;
     }
-    if (state.page !== page) {
-      state.feedRequest = (state.feedRequest || 0) + 1; state.loading = false; state.hasMore = false; state.error = false; state.page = page; state.loaded = false; state.posts = [];
+    if (state.page !== page || reset) {
+      state.feedRequest = (state.feedRequest || 0) + 1; state.loading = false; state.error = false; state.page = page;
+      // Keep the same session's loaded window while a stale return refreshes behind it.
+      if (!state.loadedAt || Date.now() - state.loadedAt >= 60000) state.loaded = false;
       var openingTabs=communityFilterTabs(page);
       var selectedTab = openingTabs&&openingTabs.querySelector('[data-community-filter][aria-selected="true"]');
       state.filter = selectedTab ? filterForCommunityTab(selectedTab) : "all";
-      state.followedIds = []; state.followsLoaded = false; state.legacySeedAttempted = false;
     }
     page.classList.add("lf-community-v2");
     var tabs = communityFilterTabs(page);
@@ -1500,13 +1519,15 @@
     var composerRow = home && home.querySelector(".lf-social-header .lf-greeting-row");
     if (composerRow && !composerRow.querySelector(".lf-community-compose-fab")) composerRow.appendChild(createComposerFab());
     var feed = page.querySelector(":scope > .lf-community-post-feed");
+    if (reset && feed) { feed.remove(); feed = null; }
     var activity = page.querySelector(":scope > .lf-friend-activity");
     var feedAnchor = activity || (tabs&&tabs.parentElement===page ? tabs : null);
     if (!feed) {
-      feed = createPostFeed();
+      feed = state.feedElement || createPostFeed();
       feed.id = "lf-community-post-feed";
       if (feedAnchor && feedAnchor.nextSibling) page.insertBefore(feed, feedAnchor.nextSibling); else if (feedAnchor) page.appendChild(feed); else page.insertBefore(feed, page.firstChild);
     } else if (!feed.id) feed.id = "lf-community-post-feed";
+    state.feedElement = feed;
     markLegacyCommunitySections(page);
     orderCommunityFeed();
     if (state.loaded && !state.legacySeedAttempted && state.posts.length === 0 && page.querySelector(".lf-review-card")) {
@@ -1514,6 +1535,7 @@
       state.loaded = false;
     }
     if (feedAnchor && feed.previousElementSibling !== feedAnchor) feedAnchor.insertAdjacentElement('afterend', feed);
+    renderPostFeed();
     loadPosts(false);
     return true;
   }
@@ -1522,6 +1544,10 @@
     if (payload && payload.table && !/^(community_posts|community_post_reactions|profile_follows)$/.test(payload.table)) return;
     if (!state.page || !state.page.isConnected) { state.loaded=false; return; }
     var page=state.page,backend=global.LorefyBackend,owner=backend && backend.user && backend.user.id;
+    var inserted=payload && payload.table==='community_posts' && payload.eventType==='INSERT' && payload.new;
+    if (inserted && !inserted.parent_id && String(inserted.user_id || '')!==String(owner || '') && !state.posts.some(function(post){return String(post.id)===String(inserted.id);})) {
+      state.updateVersion=(state.updateVersion || 0)+1;state.updatesPending=true; renderPostFeed(); return;
+    }
     var queue=state.postInvalidation;
     if (!queue || queue.page!==page || queue.backend!==backend || queue.owner!==owner) {
       global.clearTimeout(state.refreshTimer);state.refreshTimer=0;

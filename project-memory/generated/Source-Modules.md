@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-12T23:11:20.665Z
-Source commit: 5245421c27eb31fb2de9e98f3c8247ce09414b6a
+Observed: 2026-11-12T23:49:00.541Z
+Source commit: d3d0166cf99eacb61a7f1693ce3a152341e06964
 
 # Modules Source Inventory
 
@@ -32,7 +32,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-character-system.js](../../modules/lorefy-character-system.js) (107676 bytes)
 - [modules/lorefy-comics-search.js](../../modules/lorefy-comics-search.js) (4569 bytes)
 - [modules/lorefy-comics-taxonomy.js](../../modules/lorefy-comics-taxonomy.js) (13314 bytes)
-- [modules/lorefy-community.js](../../modules/lorefy-community.js) (99718 bytes)
+- [modules/lorefy-community.js](../../modules/lorefy-community.js) (101511 bytes)
 - [modules/lorefy-cover-api.js](../../modules/lorefy-cover-api.js) (36762 bytes)
 - [modules/lorefy-cover-media.js](../../modules/lorefy-cover-media.js) (8516 bytes)
 - [modules/lorefy-crafted-crochet.js](../../modules/lorefy-crafted-crochet.js) (3105 bytes)
@@ -46,7 +46,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-explore-studio.js](../../modules/lorefy-explore-studio.js) (80598 bytes)
 - [modules/lorefy-frame-motion.js](../../modules/lorefy-frame-motion.js) (17969 bytes)
 - [modules/lorefy-frame-restoration.js](../../modules/lorefy-frame-restoration.js) (19994 bytes)
-- [modules/lorefy-friend-activity.js](../../modules/lorefy-friend-activity.js) (12481 bytes)
+- [modules/lorefy-friend-activity.js](../../modules/lorefy-friend-activity.js) (13418 bytes)
 - [modules/lorefy-growth-features.js](../../modules/lorefy-growth-features.js) (428649 bytes)
 - [modules/lorefy-halloween-art.js](../../modules/lorefy-halloween-art.js) (5242 bytes)
 - [modules/lorefy-halloween-motion.js](../../modules/lorefy-halloween-motion.js) (7647 bytes)

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-12T23:11:20.665Z
-Source commit: 5245421c27eb31fb2de9e98f3c8247ce09414b6a
+Observed: 2026-11-12T23:49:00.541Z
+Source commit: d3d0166cf99eacb61a7f1693ce3a152341e06964
 
 # Styles Source Inventory
 
@@ -17,7 +17,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-character-atlas.css](../../styles/lorefy-character-atlas.css) (20748 bytes)
 - [styles/lorefy-cinema-ui.css](../../styles/lorefy-cinema-ui.css) (9088 bytes)
 - [styles/lorefy-comics-search.css](../../styles/lorefy-comics-search.css) (1755 bytes)
-- [styles/lorefy-community.css](../../styles/lorefy-community.css) (38143 bytes)
+- [styles/lorefy-community.css](../../styles/lorefy-community.css) (38677 bytes)
 - [styles/lorefy-cover-media.css](../../styles/lorefy-cover-media.css) (15802 bytes)
 - [styles/lorefy-custom-glass.css](../../styles/lorefy-custom-glass.css) (19655 bytes)
 - [styles/lorefy-customize.css](../../styles/lorefy-customize.css) (5126 bytes)
