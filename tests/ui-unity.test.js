@@ -61,7 +61,7 @@ test('updated UI assets use fresh cache keys', () => {
       'modules/lorefy-catalog-loader.js':'20261113-comics-coverage-v717',
       'modules/lorefy-catalog-map-loader.js':'20261113-comics-coverage-v717',
       'uploads/lorefy-catalog-summary.js':'20261113-comics-coverage-v717',
-      'modules/lorefy-explore-studio.js':'20261110-explore-flow-v1',
+      'modules/lorefy-explore-studio.js':'20261113-search-format-v718',
       'styles/lorefy-explore-cinema.css':'20261110-explore-flow-v1',
       'styles/lorefy-explore-studio.css':'20261021-explore-refine-v2'
     };

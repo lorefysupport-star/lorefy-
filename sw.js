@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v717-comics-coverage';
+const CACHE = 'lorefy-v718-search-format';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -178,7 +178,7 @@ const CORE = [
   './modules/lorefy-work-relations.js?v=20261007-work-relations-v3',
   './styles/lorefy-work-relations.css?v=20261007-work-relations-v3',
   './modules/lorefy-photo-framer.js?v=20261024-banner-repairs-v1',
-  './modules/lorefy-explore-studio.js?v=20261110-explore-flow-v1',
+  './modules/lorefy-explore-studio.js?v=20261113-search-format-v718',
   './styles/lorefy-explore-studio.css?v=20261021-explore-refine-v2',
   './styles/lorefy-profile-layout.css?v=20261009-panoramic-identity-v3',
   './modules/lorefy-profile-layout.js?v=20261023-reader-layout-v1',

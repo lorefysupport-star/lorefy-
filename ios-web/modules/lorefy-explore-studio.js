@@ -370,7 +370,13 @@
     // also rebuild personalized shelves and featured picks hidden behind it.
     var needsRanked = !props.getCatalog || !format && (searchActive?searchMode==='media'&&!searchQuery.trim():mode==='you');
     var needsShelves = !format && !searchActive && mode==='you';
-    var ranked = React.useMemo(function () { if(!needsRanked)return [];return root.LorefyPerformanceProbe?root.LorefyPerformanceProbe.measure("explore.ranking",function(){return props.getRanked(props.allType);}):props.getRanked(props.allType); }, [needsRanked,props.getRanked,props.allType,revision]);
+    var rankingType = searchActive && searchMode==='media' ? activeSearchType : props.allType;
+    var ranked = React.useMemo(function () { if(!needsRanked)return [];return root.LorefyPerformanceProbe?root.LorefyPerformanceProbe.measure("explore.ranking",function(){return props.getRanked(rankingType);}):props.getRanked(rankingType); }, [needsRanked,props.getRanked,rankingType,revision]);
+    var idleResults = React.useMemo(function(){
+      if(!searchActive||searchMode!=='media'||searchQuery.trim())return [];
+      var rows=ranked.filter(function(work){return (formatKey(activeSearchType)===formatKey(props.allType)||formatKey(work.type)===formatKey(activeSearchType))&&matchesFilters(work,searchFilters);});
+      return searchFilters.sort==='relevance'?rows:catalogResults(rows,activeSearchType,'',searchFilters.sort,props.ratingScore);
+    },[searchActive,searchMode,searchQuery,ranked,activeSearchType,props.allType,searchFilters,props.ratingScore]);
     var seeds = needsShelves ? (props.favorites || []).concat(props.preferences.seedWorkIds || [], Object.keys(props.library).filter(function (id) {
       return !/متوقف|متروك|paused|dropped/i.test(props.library[id]);
     })).slice(0, 24).map(props.getWork).filter(Boolean) : [];
@@ -433,7 +439,7 @@
     }, [features.length, paused, format, mode,searchActive,reducedMotion]);
     React.useEffect(function(){
       setSearchPending(false);
-      if(!searchActive||searchMode!=='media'||searchKey(searchQuery).length<2)return;
+      if(!searchActive||searchMode!=='media'||searchQuery.trim()&&searchKey(searchQuery).length<2)return;
       var active=true;setLoadError(false);setSearchPending(true);
       var timer=root.setTimeout(function(){var loader=root.LorefyCatalogLoader;Promise.resolve().then(function(){return loader&&loader.loadFormat?loader.loadFormat(searchFilters.format||props.allType,searchQuery):null;}).catch(function(){if(active)setLoadError(true);}).finally(function(){if(active)setSearchPending(false);});},0);
       return function(){active=false;root.clearTimeout(timer);};
@@ -517,7 +523,7 @@
     function searchIdle(){
       return h('section',{className:'lf-explore-search-idle'},
         recent.length>0&&h('section',{className:'lf-explore-recent'},h('header',null,h('h2',null,t('بحثك الأخير','Recent searches')),h('button',{onClick:function(){setRecent(clearSearchHistory(historyStorage,owner));}},t('مسح الكل','Clear all'))),recent.map(function(entry,index){return h('button',{key:entry.mode+entry.q+index,className:'lf-explore-recent-row',onClick:function(){replaySearch(entry);}},Icon('History',18),h('span',{dir:'auto'},entry.q),h('small',null,entry.mode==='people'?t('الأشخاص','People'):entry.mode==='lists'?t('قوائمي','My lists'):entry.format?props.typeLabel(entry.format):t('الأعمال','Media')),Icon('ArrowUpLeft',17));})),
-        searchMode==='media'?h('section',null,h('h2',null,t('اكتشف عملك القادم','Find your next read')),h('div',{className:'lf-design-search-grid'},ranked.slice(0,6).map(function(work){return item(work,false);})))
+        searchMode==='media'?h('section',null,h('h2',null,t('اكتشف عملك القادم','Find your next read')),idleResults.length?h('div',{className:'lf-design-search-grid'},idleResults.slice(0,6).map(function(work){return item(work,false);})):searchMessage(searchPending?'loading':loadError?'error':'empty'))
           :h('div',{className:'lf-explore-search-message'},Icon(searchMode==='people'?'Users':'List',32),h('h2',null,searchMode==='people'?t('ابحث عن قارئ','Find a reader'):t('ابحث في قوائمك','Search your lists')),h('p',null,searchMode==='people'?t('الاسم أو اسم المستخدم','Name or username'):t('اسم القائمة أو وصفها','List name or description'))));
     }
     function searchMessage(phase){

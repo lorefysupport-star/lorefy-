@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-13: [[sessions/2026-11-13-Search-Format-Idle]] repairs format selection
+before typing: recommendations/load now follow the selected type and advanced
+filters rather than retaining All. Browser verification covers eight types,
+typed queries, reset and returning from detail; native/device acceptance open.
+
 2026-11-13: [[sessions/2026-11-13-Comics-Coverage]] expands the locally searchable
 comic-series source and repairs both source-query scope and the return/typing
 race. Added metadata is not invented artwork, chapter totals or ratings. Existing

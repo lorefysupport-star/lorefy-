@@ -5,6 +5,11 @@ date: 2026-10-14
 aliases: ["بحث", "كتالوج", "نتائج", "catalog", "search", "worker"]
 ---
 
+[[sessions/2026-11-13-Search-Format-Idle]] connects blank-query suggestions to the
+selected format and advanced filters, requesting only its initial format plan.
+Clearing the title retains the format; return navigation/reset are verified.
+Typed search, provider cancellation and People/Lists remain separate.
+
 [[sessions/2026-11-10-Explore-Lootd]] keeps search from fetching unrelated format
 bootstrap parts, cancels short queries, and connects global More to remaining
 matching shards. Existing index, progressive providers, identity and retry

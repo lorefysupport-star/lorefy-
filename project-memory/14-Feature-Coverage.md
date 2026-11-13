@@ -6,6 +6,10 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Search filters: [[sessions/2026-11-13-Search-Format-Idle]] covers blank-query
+format recommendations/loading and advanced filter/sort/reset. All eight types
+and typed queries verified in a local browser; no live-provider/device claim.
+
 Comics: [[sessions/2026-11-13-Comics-Coverage]] covers2,000 new source IDs, typed
 series provenance through compaction, scoped on-demand Open Library search and
 the delayed-return cancellation fix. Four actual offline-source searches open

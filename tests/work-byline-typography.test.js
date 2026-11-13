@@ -76,11 +76,11 @@ test('search byline is readable and bounded to two font-relative lines; rails ke
 test('byline fixes have matching runtime/offline asset versions',()=>{
  const entry=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8');
  for(const file of ['modules/lorefy-review-editor.js','modules/lorefy-explore-studio.js','styles/lorefy-work-cinema.css','styles/lorefy-explore-cinema.css']){
-  const version=['modules/lorefy-explore-studio.js','styles/lorefy-explore-cinema.css'].includes(file)?'20261110-explore-flow-v1':'20261111-work-polish-v710';
+  const version=file==='modules/lorefy-explore-studio.js'?'20261113-search-format-v718':file==='styles/lorefy-explore-cinema.css'?'20261110-explore-flow-v1':'20261111-work-polish-v710';
   assert.ok(entry.includes(file+'?v='+version));
   assert.ok(sw.includes(file+'?v='+version));
  }
- assert.match(sw,/lorefy-v717-comics-coverage/);
+ assert.match(sw,/lorefy-v718-search-format/);
 });
 test('linked author tooltip cannot be translated as an interface command',()=>{
  const r=render('توقف','en'),button=r.nodes.find(n=>n.props.className==='lf-work-creator lf-work-author-button');

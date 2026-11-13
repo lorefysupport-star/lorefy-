@@ -84,6 +84,68 @@ test('search format is selectable directly without opening the advanced filter d
   assert.equal(app.find(n=>n.props.role==='dialog'),undefined);
 });
 
+function idleFormatHarness() {
+  const types=['Manga','Manhwa','Manhua','Comics','Novel','Book','Light Novel','Web Novel'];
+  const rows=types.map((type,i)=>({id:'idle-'+i,title:type+' Example',type,pop:100-i,genres:i%2?['Fantasy']:['Action'],st:'completed'}));
+  const loads=[],rankTypes=[];
+  const app=renderHarness({types:['All',...types],getCatalog:()=>rows,getRanked(type){rankTypes.push(type);return rows;}});
+  app.root.LorefyCatalogLoader={state:()=>({ready:true}),loadExplore:async()=>{},loadFormat:async(type,query)=>{loads.push([type,query]);}};
+  app.render();app.flushEffects();app.find(n=>n.type==='input').props.onFocus();app.render();app.flushEffects();
+  const choose=type=>{app.find(n=>n.props.className==='lf-explore-search-format').props.onChange({target:{value:type}});app.render();app.flushEffects();app.flush();};
+  const titles=()=>app.find(n=>n.props.className==='lf-design-search-grid')?.children.map(n=>n.props.key)||[];
+  return {app,rows,loads,rankTypes,choose,titles};
+}
+
+for(const type of ['Manga','Manhwa','Manhua','Comics','Novel','Book','Light Novel','Web Novel'])test('empty search recommendations obey '+type+' before typing',async()=>{
+  const f=idleFormatHarness();f.choose(type);await settle();f.app.render();
+  assert.deepEqual(f.titles(),[f.rows.find(row=>row.type===type).id]);
+  assert.equal(f.rankTypes.at(-1),type,'personalized recommendations receive the selected format');
+  assert.deepEqual(f.loads.at(-1),[type,''],'request the selected format even without a title');
+  f.choose('');await settle();f.app.render();assert.equal(f.titles().length,6,'All restores mixed suggestions');
+});
+
+test('empty selected format never falls back to unrelated recommendations',async()=>{
+  const f=idleFormatHarness();f.choose('Poetry');await settle();f.app.render();
+  assert.equal(f.titles().length,0);
+  assert.ok(f.app.find(n=>n.type==='h2'&&n.children.includes('No matching results')));
+});
+
+test('advanced idle search filters and reset apply to the visible recommendations',async()=>{
+  const f=idleFormatHarness();f.app.find(n=>n.props.className==='lf-explore-search-filter').props.onClick();f.app.render();
+  f.app.find(n=>n.type==='label'&&n.children.includes('Format')).children.find(n=>n.type==='select').props.onChange({target:{value:'Comics'}});f.app.render();
+  f.app.find(n=>n.type==='label'&&n.children.includes('Genre')).children.find(n=>n.type==='select').props.onChange({target:{value:'Action'}});f.app.render();
+  f.app.find(n=>n.props.className==='lf-explore-save').props.onClick();f.app.render();f.app.flushEffects();f.app.flush();await settle();f.app.render();
+  assert.equal(f.titles().length,0,'a genre mismatch cannot leak other recommendations');
+  f.app.find(n=>n.props.className==='lf-explore-search-filter').props.onClick();f.app.render();
+  f.app.find(n=>n.props.className==='lf-explore-filter-reset').props.onClick();f.app.render();
+  f.app.find(n=>n.props.className==='lf-explore-save').props.onClick();f.app.render();f.app.flushEffects();f.app.flush();await settle();f.app.render();
+  assert.equal(f.titles().length,6);assert.equal(f.app.find(n=>n.props.className==='lf-explore-search-format').props.value,'');
+});
+
+test('changing type with an existing title filters immediately and clearing retains that type',async()=>{
+  const f=idleFormatHarness();const input=f.app.find(n=>n.type==='input');
+  input.props.onChange({target:{value:'Example'}});f.app.flush();f.app.render();f.app.flushEffects();
+  for(const type of ['Comics','Novel','Manga']){
+    f.choose(type);await settle();f.app.render();
+    const grid=f.app.find(n=>n.props.className==='lf-design-search-grid');
+    assert.equal(grid.children.length,1);
+    assert.ok(f.app.find(n=>n.props.title===type+' Example'));
+    assert.deepEqual(f.loads.at(-1),[type,'Example']);
+  }
+  input.props.onChange({target:{value:''}});f.app.flush();f.app.render();f.app.flushEffects();f.app.flush();await settle();f.app.render();
+  assert.deepEqual(f.titles(),['idle-0']);assert.deepEqual(f.loads.at(-1),['Manga','']);
+});
+
+test('idle search sort changes order without losing the format boundary',async()=>{
+  const f=idleFormatHarness();f.rows.push({id:'new-comic',title:'Newest Comic',type:'Comics',pop:1,yr:2026});
+  f.rows.find(row=>row.type==='Comics').yr=1990;
+  f.choose('Comics');await settle();f.app.render();assert.deepEqual(f.titles(),['idle-3','new-comic']);
+  f.app.find(n=>n.props.className==='lf-explore-search-filter').props.onClick();f.app.render();
+  f.app.find(n=>n.type==='label'&&n.children.includes('Sort')).children.find(n=>n.type==='select').props.onChange({target:{value:'newest'}});f.app.render();
+  f.app.find(n=>n.props.className==='lf-explore-save').props.onClick();f.app.render();
+  assert.deepEqual(f.titles(),['new-comic','idle-3']);
+});
+
 test('a single work does not reserve an empty edition toolbar under its cover',()=>{
   const app=renderHarness();app.render();const input=app.find(n=>n.type==='input');
   input.props.onFocus();input.props.onChange({target:{value:'Naruto'}});app.flush();app.render();
