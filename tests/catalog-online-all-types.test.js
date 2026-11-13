@@ -8,7 +8,7 @@ function harness(){
  return {search:scope.search,calls,max:()=>max,current:()=>current,cancel:()=>current=false};
 }
 test('main online search reaches all format families with at most two active jobs',async()=>{
- const h=harness(),result=await h.search('Golden son','All');assert.equal(new Set(h.calls).size,6);assert.equal(result.works.length,6);assert.equal(h.max(),2);
+ const h=harness(),result=await h.search('Golden son','All');assert.equal(new Set(h.calls).size,7);assert.equal(result.works.length,7);assert.ok(h.calls.includes('Comics'));assert.equal(h.max(),2);
 });
 test('changing query cancels format jobs that have not started',async()=>{
  const h=harness(),pending=h.search('Golden son','All',{isCurrent:h.current});h.cancel();await pending;assert.equal(h.calls.length,2);

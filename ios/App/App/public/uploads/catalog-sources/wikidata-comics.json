@@ -1,0 +1,18 @@
+{
+  "source": "Wikidata",
+  "license": "CC0",
+  "licenseUrl": "https://www.wikidata.org/wiki/Wikidata:Licensing",
+  "retrievedAt": "2026-11-13T17:16:13.499Z",
+  "query": "SELECT DISTINCT ?item ?title ?ar ?kind\nWHERE {\n ?item wdt:P31 wd:Q14406742.\n FILTER NOT EXISTS { ?item wdt:P31 wd:Q8274. }\n BIND(wd:Q14406742 AS ?kind)\n ?item rdfs:label ?title. FILTER(LANG(?title)=\"en\")\n OPTIONAL { ?item rdfs:label ?ar. FILTER(LANG(?ar)=\"ar\") }\n} LIMIT 2000",
+  "inputHash": "e3fa6cd5ffb45d93ba0381375f68db7f60a486251668d8a5dec4cd80b54b62af",
+  "count": 2000,
+  "parts": [
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170
+  ]
+}

@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-13: [[sessions/2026-11-13-Comics-Coverage]] expands the locally searchable
+comic-series source and repairs both source-query scope and the return/typing
+race. Added metadata is not invented artwork, chapter totals or ratings. Existing
+reader state and catalogs remain; production account/gateway gates are separate.
+
 2026-11-13: [[sessions/2026-11-13-Catalog-Hotpath]] profiles and reduces catalog
 CPU duplication while preserving live safety, classification and existing UI.
 Paired browser measurements and unchanged catalog signatures support the scoped

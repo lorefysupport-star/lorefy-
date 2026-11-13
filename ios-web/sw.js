@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v716-catalog-hotpath';
+const CACHE = 'lorefy-v717-comics-coverage';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -91,11 +91,11 @@ const CORE = [
   './modules/lorefy-cover-api.js?v=20261101-cover-preparation-v1',
   './modules/lorefy-catalog-policy.js?v=20261113-catalog-hotpath-v716',
   './modules/lorefy-catalog-plan.js?v=20261019-search-authors-v1-search-audit-v2',
-  './modules/lorefy-catalog-loader.js?v=20261110-query-shards-v1',
-  './modules/lorefy-catalog-search-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1',
+  './modules/lorefy-catalog-loader.js?v=20261113-comics-coverage-v717',
+  './modules/lorefy-catalog-search-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1-comics-v717',
   './modules/lorefy-catalog-identity.js?v=20261101-identity-memo-v1',
   './modules/lorefy-comics-search.js?v=20260924-catalog-v1',
-  './modules/lorefy-catalog-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1',
+  './modules/lorefy-catalog-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1-comics-v717',
   './modules/lorefy-catalog-data.js?v=20261017-search-alias-v1-fast-search-v1-search-audit-v2',
   './modules/lorefy-reading-metrics.js?v=20261101-completed-progress-v1',
   './modules/lorefy-reading-diary-core.js?v=20261101-diary-units-v1',
@@ -109,8 +109,8 @@ const CORE = [
   './modules/lorefy-user-discovery.js?v=20261026-explore-search-v1-search-audit-v2',
   './modules/lorefy-preview-cleanup.js?v=20261001-prebuild-v1',
   './uploads/lorefy-catalog-map.js?v=20261008-arabic-breadth-v4',
-  './uploads/lorefy-catalog-summary.js?v=20261018-runtime-cleanup-v1',
-  './modules/lorefy-catalog-map-loader.js?v=20261018-runtime-cleanup-v1',
+  './uploads/lorefy-catalog-summary.js?v=20261113-comics-coverage-v717',
+  './modules/lorefy-catalog-map-loader.js?v=20261113-comics-coverage-v717',
   './uploads/lorefy-arabic-library.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-booktok-library.js?v=20260830-booktok-library-v1',
   './modules/lorefy-comics-taxonomy.js?v=20261113-catalog-hotpath-v716',
@@ -190,7 +190,7 @@ const CORE = [
   './uploads/files/lorefy-app.js?v=20261113-notification-studio-v714',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
-  './modules/lorefy-api-catalog.js?v=20261029-search-editions-v1-fast-search-v1-search-audit-v2',
+  './modules/lorefy-api-catalog.js?v=20261113-comics-coverage-v717',
   './uploads/lorefy-data-part05.js?v=20261013-discover-reviewed-v2',
   './modules/lorefy-growth-features.js?v=20261111-work-polish-v710',
   './modules/lorefy-share-studio.js?v=20261028-share-composer-v3',

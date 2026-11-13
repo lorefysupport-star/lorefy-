@@ -10,7 +10,8 @@
   var loading = new Map();
   var activeQueue = Promise.resolve();
   var version = "20261013-discover-reviewed-v2";
-  var workerVersion = "20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1";
+  var workerVersion = "20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1-comics-v717";
+  var searchIndexVersion = "20261113-comics-coverage-v717";
   var refreshTimer = 0;
   var pendingProgressPart = 0;
   var REFRESH_DEBOUNCE_MS = 700;
@@ -328,7 +329,7 @@
         try { if (controller) controller.abort(); } catch (error) {}
         reject(new Error("Catalog search index timed out"));
       }, SEARCH_REQUEST_TIMEOUT_MS);
-      global.fetch("uploads/catalog-search-index.json?v=" + version, controller ? {signal: controller.signal} : undefined).then(function (response) {
+      global.fetch("uploads/catalog-search-index.json?v=" + searchIndexVersion, controller ? {signal: controller.signal} : undefined).then(function (response) {
         if (expired) throw new Error("Catalog search index timed out");
         if (!response.ok) throw new Error("Search index returned " + response.status);
         return response.json();
@@ -494,12 +495,15 @@
     return next && !loaded.has(next) ? enqueue([next], {gapMs: 40}) : Promise.resolve();
   }
 
-  function loadRoute() {
+  function loadRoute(generationAtNavigation) {
     var route = routeState();
 
     browseParts = route.rawType === "All" ? planner.allCatalogParts(manifest) : planner.typeParts(manifest, route.type);
     browseCursor = 0;
-    scheduleSearch(route.query, route.rawType);
+    // A queued navigation must not erase input typed after returning to Explore.
+    var newerExploreSearch = typeof generationAtNavigation === 'number' && generationAtNavigation !== searchGeneration &&
+      !route.workId && !route.query && new URLSearchParams(global.location.search || '').get('route') === 'discover';
+    if (!newerExploreSearch) scheduleSearch(route.query, route.rawType);
     if (route.workId) return loadWorks([route.workId]).then(function () { return hydrateWork(route.workId); });
     return enqueue(planner.initialCatalogPlan(manifest, route), { gapMs: 40 });
   }
@@ -613,7 +617,10 @@
   }
 
   global.addEventListener("popstate", emitRouteChange);
-  global.addEventListener("lorefy:routechange", function () { global.setTimeout(loadRoute, 80); });
+  global.addEventListener("lorefy:routechange", function () {
+    var generation = searchGeneration;
+    global.setTimeout(function () { loadRoute(generation); }, 80);
+  });
   doc.addEventListener("input", function (event) {
     var target = event && event.target;
     if (!target || target.tagName !== "INPUT" || !target.closest || !target.closest(".lf-search-box")) return;

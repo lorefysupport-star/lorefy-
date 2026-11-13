@@ -38,6 +38,11 @@ broadranking386.78→54.42ms are localCPU evidence; native delivery, stalledshar
 optionalproduction sources and peak-load/dataquality gates remain separate.
 # الكتالوج والبحث
 
+[[sessions/2026-11-13-Comics-Coverage]] adds2,000 CC0 series metadata records in
+new lazy parts and a scoped comic pass in All search. A queued Explore return
+can no longer cancel newer typed input. Original163 compact shards are unchanged;
+unknown media/ratings/totals remain unknown. Optional production sources still gated.
+
 [[sessions/2026-11-01-Smooth-Runtime]] S-001 bounds memoization of pure cover URL
 validation/edition keys; rights/proxy routing remains live. Identical-output CPU
 microbenchmark54.03 to11.09ms,3240 tests and28 browser checks. Not network timing.

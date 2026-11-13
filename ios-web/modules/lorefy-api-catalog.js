@@ -620,6 +620,7 @@
     // Identifier slugs deliberately omit some scripts. Search cache identity
     // must preserve them, or unrelated Japanese/Unicode queries share a key.
     var queryKey = encodeURIComponent(normalizeSpaces(query || '').normalize('NFKC').toLowerCase());
+    if (normalizeType(type) === TYPES.comics) kind += ':comics-v2';
     return [kind, normalizeType(type), queryKey, (providers || []).slice().sort().join("+"), page || 1, perPage || config().perPage || DEFAULT_PER_PAGE].join("|");
   }
 
@@ -818,6 +819,12 @@
   function fetchOpenLibrary(query, type, page, perPage, options) {
     if (!enabledProvider("openLibrary")) return Promise.resolve([]);
     var q = query || (typeConfig(type).seeds || ["fiction"])[0];
+    if (type === TYPES.comics) {
+      var literalQuery = q.replace(/([+\-!(){}\[\]^"~*?:\\/]|&&|\|\|)/g, '\\$1');
+      var scopedQuery = '(' + literalQuery + ') AND (subject:comics OR subject:"graphic novels" OR subject:"comic books" OR subject:"comic strips")';
+      // Preserve a long title instead of exceeding the existing gateway budget.
+      q = scopedQuery.length <= 160 ? scopedQuery : literalQuery;
+    }
     var params = new URLSearchParams();
     params.set("q", q);
     params.set("page", String(page || 1));
@@ -961,11 +968,14 @@
     if (!query || query.length < 2) return Promise.resolve({ added: 0, works: [], skipped: "short-query" });
     if (/^(all|الكل)$/i.test(String(type || "").trim())) {
       // Search only on demand, with at most two format jobs running together.
-      var types = [TYPES.manga,TYPES.book,TYPES.manhwa,TYPES.manhua,TYPES.lightNovel,TYPES.webNovel], next = 0, results = [];
+      var types = [TYPES.manga,TYPES.book,TYPES.comics,TYPES.manhwa,TYPES.manhua,TYPES.lightNovel,TYPES.webNovel], next = 0, results = [];
       function worker() {
         if (next >= types.length || options && (options.signal && options.signal.aborted || options.isCurrent && !options.isCurrent())) return Promise.resolve();
         var selected = types[next++];
         var jobOptions=Object.assign({},options,{generalSearch:true,providers:selected===TYPES.lightNovel||selected===TYPES.webNovel?["anilist"]:undefined});
+        // General bibliographic hits can bury comics with ambiguous titles.
+        // Add one scoped pass, without repeating authenticated community APIs.
+        if(selected===TYPES.comics){jobOptions.generalSearch=false;jobOptions.providers=['openLibrary'];}
         if(selected===TYPES.book&&typeof global!=='undefined'&&global.LorefyOpenCatalog)jobOptions.providers=['openLibrary','googleBooks','bookBrainz','wikidata','gcd'];
         return runProviders("search-all", query, selected, jobOptions).then(function(result){results.push(result);return worker();});
       }

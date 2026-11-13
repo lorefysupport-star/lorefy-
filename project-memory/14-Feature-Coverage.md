@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Comics: [[sessions/2026-11-13-Comics-Coverage]] covers2,000 new source IDs, typed
+series provenance through compaction, scoped on-demand Open Library search and
+the delayed-return cancellation fix. Four actual offline-source searches open
+their detail records. Completeness, metadata enrichment and device acceptance open.
+
 Catalog CPU reuse: [[sessions/2026-11-13-Catalog-Hotpath]] covers bounded pure
 text reuse, mutation-safe policy checks and single-pass taxonomy preparation.
 Six regression/67 focused tests and three interleaved4x browser pairs preserve

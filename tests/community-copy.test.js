@@ -127,5 +127,5 @@ test('community copy changes use matching entry and offline asset versions', () 
     assert.ok(entry.includes(file + '?v='+version));
     assert.ok(sw.includes(file + '?v='+version));
   }
-  assert.match(sw, /lorefy-v716-catalog-hotpath/);
+  assert.match(sw, /lorefy-v717-comics-coverage/);
 });

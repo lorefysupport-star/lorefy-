@@ -12,6 +12,7 @@ var latestInputRequest = null;
 function loadIndex() {
   if (!indexPromise) {
     var url = new URL("../uploads/catalog-search-index.json", self.location.href);
+    url.searchParams.set('v', '20261113-comics-coverage-v717');
     indexPromise = fetch(url).then(function (response) {
       if (!response.ok) throw new Error("Search index returned " + response.status);
       return response.json();

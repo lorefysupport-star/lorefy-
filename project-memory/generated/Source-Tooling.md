@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T16:56:38.302Z
-Source commit: 71f26bd15230fdea252093b5e8125b2f8a2ff65e
+Observed: 2026-11-13T17:33:05.746Z
+Source commit: c638ec32756ddee795aa41854b6a0a54d1b62991
 
 # Tooling Source Inventory
 
@@ -31,7 +31,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tools/build-chapter-runtime.js](../../tools/build-chapter-runtime.js) (4052 bytes)
 - [tools/build-ios-simulator-local.sh](../../tools/build-ios-simulator-local.sh) (1281 bytes)
 - [tools/build-lucide-runtime.js](../../tools/build-lucide-runtime.js) (1269 bytes)
-- [tools/build-runtime-catalog.js](../../tools/build-runtime-catalog.js) (3640 bytes)
+- [tools/build-runtime-catalog.js](../../tools/build-runtime-catalog.js) (3726 bytes)
 - [tools/build-tester-lab.mjs](../../tools/build-tester-lab.mjs) (6203 bytes)
 - [tools/bump-preview-readers-assets.mjs](../../tools/bump-preview-readers-assets.mjs) (951 bytes)
 - [tools/bump-public-appearance-assets.mjs](../../tools/bump-public-appearance-assets.mjs) (1432 bytes)
@@ -52,6 +52,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tools/import-mangadex-metadata.js](../../tools/import-mangadex-metadata.js) (5698 bytes)
 - [tools/import-openlibrary-dump.js](../../tools/import-openlibrary-dump.js) (7124 bytes)
 - [tools/import-ranobedb-dump.js](../../tools/import-ranobedb-dump.js) (7297 bytes)
+- [tools/import-wikidata-comics.cjs](../../tools/import-wikidata-comics.cjs) (5515 bytes)
 - [tools/inspect-ranobedb-dump.js](../../tools/inspect-ranobedb-dump.js) (652 bytes)
 - [tools/lorefy-api-server.js](../../tools/lorefy-api-server.js) (16949 bytes)
 - [tools/lorefy-ios-usb-session.sh](../../tools/lorefy-ios-usb-session.sh) (772 bytes)

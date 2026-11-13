@@ -22,7 +22,8 @@ function compactRecord(record, features) {
     'weeklyReads','listAdds','baseRatings','baseReviews','sourceCoverUrl','coverImage',
     'cover','sourceCover','genres','tags','altTitles','authorAliases','st','rec',
     'contentRating','isAdult','adult','aiGenerated','isAiGenerated','language','originalLanguage','malId','anilistId','_apiDynamic','_apiSource','pl','related','sc',
-    '_catalogMergedIds','_catalogEditions','alternateCovers'];
+    '_catalogMergedIds','_catalogEditions','alternateCovers',
+    'metadataOnly','catalogLevel','wikidataId','source','sourceUrl','sourceLicense'];
   const card = {_catalogCompact:true};
   for (const key of fields) if(record[key]!==undefined) card[key]=record[key];
   card._tasteGenreKeys = features.workGenreKeys(record).filter(key=>key.length<=40).slice(0,32);

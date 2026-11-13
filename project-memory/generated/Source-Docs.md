@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T16:56:38.302Z
-Source commit: 71f26bd15230fdea252093b5e8125b2f8a2ff65e
+Observed: 2026-11-13T17:33:05.746Z
+Source commit: c638ec32756ddee795aa41854b6a0a54d1b62991
 
 # Docs Source Inventory
 
@@ -36,6 +36,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/CHAPTER_CATALOG_FIX_2026-10-01.md](../../docs/CHAPTER_CATALOG_FIX_2026-10-01.md) (3327 bytes)
 - [docs/CHAPTER_RUNTIME_PERFORMANCE_2026-11-10.md](../../docs/CHAPTER_RUNTIME_PERFORMANCE_2026-11-10.md) (4093 bytes)
 - [docs/CHARACTER_ATLAS_VERIFICATION_2026-10-07.md](../../docs/CHARACTER_ATLAS_VERIFICATION_2026-10-07.md) (2111 bytes)
+- [docs/COMICS_COVERAGE_V717.md](../../docs/COMICS_COVERAGE_V717.md) (6033 bytes)
 - [docs/COMMUNITY_CONTINUITY_2026-11-13.md](../../docs/COMMUNITY_CONTINUITY_2026-11-13.md) (4175 bytes)
 - [docs/COMMUNITY_TIMELINE_2026-11-01.md](../../docs/COMMUNITY_TIMELINE_2026-11-01.md) (13485 bytes)
 - [docs/COMMUNITY_VISUAL_QA_2026-10-03.md](../../docs/COMMUNITY_VISUAL_QA_2026-10-03.md) (2676 bytes)

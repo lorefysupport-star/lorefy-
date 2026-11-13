@@ -89,6 +89,22 @@ test('startup uses the bootstrap part and does not start a full-catalog worker',
   assert.deepEqual(app.scripts, []);
 });
 
+test('a delayed Explore return cannot clear a newer typed catalog search', async () => {
+  const app=harness();app.documentEvents.get('DOMContentLoaded')();await app.settle();
+  app.win.location.search='?route=discover';
+  app.windowEvents.get('lorefy:routechange')();
+  app.win.LorefyCatalogLoader.loadFormat('All','Paper Girls');
+  await app.settle();
+  assert.equal(app.win.LorefyCatalogLoader.state().searchQuery,'Paper Girls');
+});
+
+test('leaving Explore still cancels its pending query', async () => {
+  const app=harness();app.documentEvents.get('DOMContentLoaded')();await app.settle();
+  app.win.location.search='?route=library';app.windowEvents.get('lorefy:routechange')();
+  app.win.LorefyCatalogLoader.loadFormat('All','Paper Girls');await app.settle();
+  assert.equal(app.win.LorefyCatalogLoader.state().searchQuery,'');
+});
+
 test('search loads a matching part, and a direct link loads its mapped part', async () => {
   const app = harness();
   app.documentEvents.get('DOMContentLoaded')();
@@ -112,7 +128,8 @@ test('generated search index matches the bundled catalog snapshot', () => {
   assert.equal(index.schema, 1);
   assert.equal(index.sourceHash, manifest.contentHash);
   assert.equal(index.records.length, manifest.count);
-  assert.ok(index.records.every(row => Number.isInteger(row[0]) && row[0] >= 1 && row[0] <= 163 && row[1] && row[2]));
+  const parts=fs.readdirSync(path.join(root,'uploads/catalog-runtime')).filter(n=>/^lorefy-data-part\d+\.json$/.test(n));
+  assert.ok(index.records.every(row => Number.isInteger(row[0]) && row[0] >= 1 && row[0] <= parts.length && row[1] && row[2]));
 });
 
 test('controlled inputs consume typing before catalog status refreshes their parent', async () => {

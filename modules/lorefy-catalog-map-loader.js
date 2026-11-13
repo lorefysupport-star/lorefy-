@@ -4,7 +4,7 @@
 })(typeof window !== 'undefined' ? window : globalThis, function (root) {
   'use strict';
   var inFlight = null;
-  var ASSET = 'uploads/lorefy-catalog-map.js?v=20261008-arabic-breadth-v4';
+  var ASSET = 'uploads/lorefy-catalog-map.js?v=20261113-comics-coverage-v717';
   function ensure() {
     var manifest = root.LorefyCatalogManifest || {};
     if (manifest.workParts) return Promise.resolve(manifest);

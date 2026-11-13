@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T16:56:38.302Z
-Source commit: 71f26bd15230fdea252093b5e8125b2f8a2ff65e
+Observed: 2026-11-13T17:33:05.746Z
+Source commit: c638ec32756ddee795aa41854b6a0a54d1b62991
 
 # Tests Source Inventory
 
@@ -104,7 +104,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/catalog-api-integrity-performance.test.js](../../tests/catalog-api-integrity-performance.test.js) (11305 bytes)
 - [tests/catalog-bulk-import.test.js](../../tests/catalog-bulk-import.test.js) (4812 bytes)
 - [tests/catalog-content-policy.test.js](../../tests/catalog-content-policy.test.js) (7640 bytes)
-- [tests/catalog-demand-loading.test.js](../../tests/catalog-demand-loading.test.js) (12059 bytes)
+- [tests/catalog-demand-loading.test.js](../../tests/catalog-demand-loading.test.js) (13046 bytes)
 - [tests/catalog-discovery-language.test.js](../../tests/catalog-discovery-language.test.js) (1344 bytes)
 - [tests/catalog-hotpath-reuse.test.js](../../tests/catalog-hotpath-reuse.test.js) (3545 bytes)
 - [tests/catalog-identity.test.js](../../tests/catalog-identity.test.js) (12676 bytes)
@@ -112,7 +112,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/catalog-local-search-efficiency.test.js](../../tests/catalog-local-search-efficiency.test.js) (8665 bytes)
 - [tests/catalog-map-loading.test.js](../../tests/catalog-map-loading.test.js) (6962 bytes)
 - [tests/catalog-metadata-audit.test.js](../../tests/catalog-metadata-audit.test.js) (1221 bytes)
-- [tests/catalog-online-all-types.test.js](../../tests/catalog-online-all-types.test.js) (2351 bytes)
+- [tests/catalog-online-all-types.test.js](../../tests/catalog-online-all-types.test.js) (2389 bytes)
 - [tests/catalog-open-routing.test.js](../../tests/catalog-open-routing.test.js) (6186 bytes)
 - [tests/catalog-organization.test.js](../../tests/catalog-organization.test.js) (9089 bytes)
 - [tests/catalog-plan.test.js](../../tests/catalog-plan.test.js) (9180 bytes)
@@ -160,6 +160,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/character-studio-actions.test.js](../../tests/character-studio-actions.test.js) (1408 bytes)
 - [tests/cinema-workflow.test.js](../../tests/cinema-workflow.test.js) (5243 bytes)
 - [tests/cinematic-ui.test.js](../../tests/cinematic-ui.test.js) (1210 bytes)
+- [tests/comics-coverage.test.js](../../tests/comics-coverage.test.js) (5219 bytes)
 - [tests/comics-progress-regressions.test.js](../../tests/comics-progress-regressions.test.js) (8949 bytes)
 - [tests/comics-taxonomy.test.js](../../tests/comics-taxonomy.test.js) (26957 bytes)
 - [tests/community-cloud.test.js](../../tests/community-cloud.test.js) (15390 bytes)
@@ -416,7 +417,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/ui-finish-pass.test.js](../../tests/ui-finish-pass.test.js) (2389 bytes)
 - [tests/ui-placement.test.js](../../tests/ui-placement.test.js) (23737 bytes)
 - [tests/ui-profile-discover-polish.test.js](../../tests/ui-profile-discover-polish.test.js) (3647 bytes)
-- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5684 bytes)
+- [tests/ui-unity.test.js](../../tests/ui-unity.test.js) (5693 bytes)
 - [tests/user-discovery.test.js](../../tests/user-discovery.test.js) (5208 bytes)
 - [tests/user-reported-fixes.test.js](../../tests/user-reported-fixes.test.js) (4739 bytes)
 - [tests/version-consistency.test.js](../../tests/version-consistency.test.js) (1492 bytes)
