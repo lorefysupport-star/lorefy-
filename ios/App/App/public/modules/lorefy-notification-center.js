@@ -48,17 +48,19 @@
   var visible=select(all,state.filter),keep=new Set(visible.map(function(r){return r.id;}));
   state.rows.forEach(function(record,id){if(!keep.has(id)){record.button.remove();state.rows.delete(id);}});
   visible.forEach(function(item,index){
-   var signature=JSON.stringify([p.language,item]),record=state.rows.get(item.id);
+   var relativeTime=p.time(item.created_at),signature=JSON.stringify([p.language,item]),record=state.rows.get(item.id);
    if(!record){var button=node('button','lf-cloud-notification'),symbol=node('span','lf-inbox-symbol'),content=node('span','lf-cloud-notification-copy'),title=node('strong'),body=node('span'),time=node('time'),dot=node('span','lf-cloud-notification-dot');
     button.type='button';content.appendChild(title);content.appendChild(body);content.appendChild(time);button.appendChild(symbol);button.appendChild(content);button.appendChild(dot);
     record={button:button,symbol:symbol,title:title,body:body,time:time,dot:dot};button.addEventListener('click',function(){state.props.open(record.item);});state.rows.set(item.id,record);
    }
    record.item=item;if(record.signature!==signature){var text=copy(item,p.language),kind=category(item),glyph={mentions:'at-sign',replies:'message-circle',likes:'heart',follows:'user-plus',other:'bell'}[kind];
     record.button.className='lf-cloud-notification'+(!item.read_at?' is-unread':'');record.button.setAttribute('data-notification-id',item.id);record.button.setAttribute('data-kind',kind);
-    record.button.setAttribute('aria-label',text.body+' · '+p.time(item.created_at)+(!item.read_at?(en?' · Unread':' · غير مقروء'):''));
-    record.title.textContent=text.title;record.body.textContent=text.body;record.time.textContent=p.time(item.created_at);record.time.setAttribute('datetime',item.created_at||'');record.dot.hidden=!!item.read_at;
+    record.title.textContent=text.title;record.body.textContent=text.body;record.time.setAttribute('datetime',item.created_at||'');record.dot.hidden=!!item.read_at;
     record.symbol.textContent='';record.symbol.appendChild(icon(glyph));record.signature=signature;
    }
+   var accessibleCopy=record.body.textContent+' · '+relativeTime+(!item.read_at?(en?' · Unread':' · غير مقروء'):'');
+   if(record.time.textContent!==relativeTime)record.time.textContent=relativeTime;
+   if(record.button.getAttribute('aria-label')!==accessibleCopy)record.button.setAttribute('aria-label',accessibleCopy);
    var at=state.section.children[index];if(at!==record.button)state.section.insertBefore(record.button,at||null);
   });
   state.empty.hidden=!!visible.length||!!localVisible||p.loading||p.status==='offline';state.empty.textContent=en?(state.filter==='all'?'You’re all caught up':'No notifications in this category'):(state.filter==='all'?'كل شيء هادئ الآن':'لا توجد إشعارات في هذا القسم');

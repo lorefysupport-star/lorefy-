@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T06:32:57.628Z
-Source commit: 37fca66c5cc96d23a9ae475d18afa6a2e13d7219
+Observed: 2026-11-13T11:47:34.979Z
+Source commit: 8615636a4230409927d90ac0b6f953c6dddf1db1
 
 # Docs Source Inventory
 
@@ -82,6 +82,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/NATIVE_AUTH_SEARCH_FIXES_2026-10-12.md](../../docs/NATIVE_AUTH_SEARCH_FIXES_2026-10-12.md) (2407 bytes)
 - [docs/NEW_FEATURES_AUDIT_2026-10-08.md](../../docs/NEW_FEATURES_AUDIT_2026-10-08.md) (5772 bytes)
 - [docs/NORMAL_PROFILE_APPLE_QA.md](../../docs/NORMAL_PROFILE_APPLE_QA.md) (4593 bytes)
+- [docs/NOTIFICATION_RETEST_20261113.md](../../docs/NOTIFICATION_RETEST_20261113.md) (3120 bytes)
 - [docs/NOTIFICATION_STUDIO_V714.md](../../docs/NOTIFICATION_STUDIO_V714.md) (4466 bytes)
 - [docs/NOTIFICATIONS_VERIFICATION_2026-10-13.md](../../docs/NOTIFICATIONS_VERIFICATION_2026-10-13.md) (5319 bytes)
 - [docs/OPEN_CATALOG.md](../../docs/OPEN_CATALOG.md) (4533 bytes)

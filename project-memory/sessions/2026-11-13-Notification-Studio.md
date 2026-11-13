@@ -32,3 +32,12 @@ The displayed count covers loaded history; the Push payload uses server unread
 total. Older pages are session-only; latest60 rows retain the existing offline cache.
 
 [[systems/Community-Notifications]] | [[13-Project-Story]] | [[14-Feature-Coverage]]
+
+## Owner-requested retest
+
+[Fresh retest](../../docs/NOTIFICATION_RETEST_20261113.md):130 focused and3560
+full tests pass. A stale relative-time defect was reproduced and fixed without
+replacing the row, verified with a five-minute browser clock advance. Production
+read-only authenticated-role SELECT saw own history and zero foreign rows. The
+owner declined sending to a real account; historical HTTP202 responses do not
+certify the new sender or on-device delivery. No production writes in this pass.

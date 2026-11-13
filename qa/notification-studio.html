@@ -16,7 +16,7 @@ output{display:block;max-width:650px;margin:0 auto 12px;font:12px/1.5 monospace;
 </style>
 <div class="controls">
  <select id="theme" aria-label="Theme"><option value="dark">Dark</option><option value="light">Light</option><option value="pink">Pink</option></select>
- <button id="language">English</button><button id="new">New mention</button><button id="refresh">Unchanged refresh</button><button id="failure">Offline refresh</button><button id="restore">Restore connection</button>
+ <button id="language">English</button><button id="new">New mention</button><button id="refresh">Unchanged refresh</button><button id="advance">Advance 5 minutes</button><button id="failure">Offline refresh</button><button id="restore">Restore connection</button>
 </div>
 <output id="receipt" role="status"></output>
 <main class="lf-app" data-theme="dark"><div class="lf-notifications-page">
@@ -26,7 +26,8 @@ output{display:block;max-width:650px;margin:0 auto 12px;font:12px/1.5 monospace;
 </div></main>
 <script>
 const owner='11111111-1111-4111-8111-111111111111',actor='22222222-2222-4222-8222-222222222222';
-let remote,reads=0,receipts=0,offline=false,serial=10,firstNode;
+let remote,reads=0,receipts=0,offline=false,serial=10,firstNode,clockOffset=0;
+const actualNow=Date.now;Date.now=()=>actualNow()+clockOffset;
 const events=['post_mention','review_comment','post_like','follow','review_reply'];
 const names=['نورة','عبدالرحمن','ريم','فهد','سارة'];
 const rows=events.map((event,i)=>({id:'00000000-0000-4000-8000-'+String(i+1).padStart(12,'0'),user_id:owner,actor_id:actor,kind:event.includes('mention')?'mention':event==='follow'?'follow':event.includes('like')?'reaction':'comment',data:{event,actorName:names[i]},created_at:new Date(Date.now()-(i+1)*60000).toISOString(),read_at:i===4?new Date().toISOString():null,target_path:'/notifications'}));
@@ -35,8 +36,9 @@ function report(){const node=document.querySelector('[data-notification-id]');if
 new MutationObserver(report).observe(document.querySelector('.lf-app'),{subtree:true,childList:true});
 document.getElementById('theme').onchange=e=>document.querySelector('.lf-app').dataset.theme=e.target.value;
 document.getElementById('language').onclick=()=>{const en=document.documentElement.lang!=='en';document.documentElement.lang=en?'en':'ar';document.documentElement.dir=en?'ltr':'rtl';document.querySelector('h1').textContent=en?'Notifications':'الإشعارات';document.querySelector('[data-inbox-mark-all]').textContent=en?'Mark all read':'قراءة الكل';LorefyNativeRuntime.refreshCloudNotifications();};
-document.getElementById('new').onclick=()=>{const row={...rows[0],id:'00000000-0000-4000-8000-'+String(++serial).padStart(12,'0'),read_at:null,created_at:new Date().toISOString()};rows.unshift(row);remote(row,{event:'INSERT'});report();};
-document.getElementById('refresh').onclick=()=>LorefyNativeRuntime.refreshCloudNotifications();
+document.getElementById('new').onclick=()=>{const row={...rows[0],id:'00000000-0000-4000-8000-'+String(++serial).padStart(12,'0'),read_at:null,created_at:new Date(Date.now()).toISOString()};rows.unshift(row);remote(row,{event:'INSERT'});report();};
+document.getElementById('refresh').onclick=()=>{firstNode=document.querySelector('[data-notification-id]');LorefyNativeRuntime.refreshCloudNotifications();};
+document.getElementById('advance').onclick=()=>{clockOffset+=300000;LorefyNativeRuntime.refreshCloudNotifications();};
 document.getElementById('failure').onclick=()=>{offline=true;LorefyNativeRuntime.refreshCloudNotifications();};
 document.getElementById('restore').onclick=()=>{offline=false;LorefyNativeRuntime.refreshCloudNotifications();};
 </script>

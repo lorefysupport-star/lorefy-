@@ -23,7 +23,7 @@ const CORE = [
  './styles/lorefy-share-composer.css?v=20261028-share-composer-v3',
  './modules/lorefy-share-composer.js?v=20261104-export-previews-v1',
  './styles/lorefy-notification-center.css?v=20261113-notification-studio-v714',
- './modules/lorefy-notification-center.js?v=20261113-notification-studio-v714',
+ './modules/lorefy-notification-center.js?v=20261113-notification-clock-v1',
  './styles/lorefy-profile-refined.css?v=20261111-profile-favorites-v708',
  './styles/lorefy-library-refined.css?v=20261028-reading-type-v1',
  './assets/home/berserk-home-v1.webp',

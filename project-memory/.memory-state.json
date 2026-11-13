@@ -1,12 +1,12 @@
 {
   "schema": 2,
-  "head": "37fca66c5cc96d23a9ae475d18afa6a2e13d7219",
+  "head": "8615636a4230409927d90ac0b6f953c6dddf1db1",
   "branch": "main",
   "fingerprints": {
     "package.json": "e08c4b2735cd25687e34145ee3e34f759bf5b22d672e0481b9e3e8f64a150108",
     "AGENTS.md": "6c8d1742a8542b6a82ede3f0a1eff3c1388cadd0180a17e7b1af18a3db3a51c7",
-    "index.html": "a123824118f953a530e47973008c02bbb9ff04636ccf241bd695215e30950093",
-    "sw.js": "e85867bf6b19268b47ce420e5c3c97afa79d3a9ef59617417ea48bfe1e684e1b",
+    "index.html": "33f97ee6d3d12b741125eefa9843593ddf812d7ec7eddb0b14faf7702ef7467e",
+    "sw.js": "4422f2018b8315b40aa3e00043416d64eea046ffde69824987a5f99601630018",
     "modules/lorefy-frame-motion.js": "211674ce0d1c26c4e9da66b97078802160419528292f8a6823d35ea0be033d6f",
     "styles/lorefy-frame-motion.css": "0fd6b7eb397135859c141c9c2a90082ed0083d89288eca57efc948608cfdb902",
     "docs/FEATURE_AUDIT_20261011.md": "185e3a025cdff7809562125ce0d649fe3a6ceb8a7683ad7ae1aa23e5b55f3fc8",
@@ -16,26 +16,8 @@
     "tools/project-memory.mjs": "445cf699ef2d54178cf89c3b4107c345233a63f4ad6ab7d9b87c25dcd9e90251"
   },
   "changes": {
-    "backend/lorefy-backend.js": "e84e7e93c6aa4e6054a94255aa3865b60b0efb5d837d4a3ec872c4fa11be714d",
-    "backend/lorefy-native-runtime.js": "aa46d4264c3ba33c51d816c46285a3d73e603e0981925bcc059f01cc66c9d064",
-    "modules/lorefy-community.js": "ba8b1cbf5c3922f731a5089080768aafdebfa4cc1eaaa257e340993fd38cbec0",
-    "modules/lorefy-notification-center.js": "d37ce54b1eff09e8ad6417da434b0bc5c84462a673b5df758f7ab6dc658cd11c",
-    "styles/lorefy-notification-center.css": "065a3f518943b732de89f89098f9be19fb80c1f768149691f65dbf5e89e79fd3",
-    "tests/community-copy.test.js": "7ccdcdfc29839a7a5c88f0324ff0f768c8392e266694f7725c03a829d8187387",
-    "tests/cover-media.test.js": "68f96634608da5374f93505552a2b9c87fb1c5377ff6b397b537c24861988784",
-    "tests/data-studio.test.js": "1e8f34ec0880598bb250741f51f466feda0b982f8d4d568e0a44ffc98159f869",
-    "tests/legal-studio.test.js": "3ead7856aded71f67a9001f90dd6867cd3d14f76a5f5db041b360be50e62ee32",
-    "tests/notification-backend-session.test.js": "60f671c97ffa0856809f8009a6ee0a4d37fe4b4ea451678272a88af1951c5a82",
-    "tests/notification-center.test.js": "ee4ddc93ac91dce05274184100b424a2322062a41d307ea64013e214ef44fe5d",
-    "tests/notification-delivery-runtime.test.js": "af83d1ba7f1d54302ec5831fddf5896acc2d1f100ea9f2d22337af91bb31b304",
-    "tests/notification-sql-runtime.test.js": "224524e8e253aa7cf39a660f27adaa9795f81f9c8d6a898b5e02bf1bc007a954",
-    "tests/push-dispatch-transport.test.js": "a36b1481382ad5a78b20bab2824eaef1193a15bf83ba1c2345d2b74e99686cbb",
-    "tests/reading-terminology.test.js": "8253ee6f6b6e1e797c16f4acab9fa11ddc871cb1d98d7e98cbdd288521a174fd",
-    "tests/reading-typography.test.js": "16e9d226c6273813549586358b11572267b7876a86445a04036ed13a9ea805fa",
-    "tests/report-studio.test.js": "feca164aac69c40df1a306f8fd0df81aaff65183627094c3e70b1d014bdf3206",
-    "tests/review-visibility-runtime.test.js": "f10dd74a45734bd12ad6303fb0f154cdde6a84ec3b8f67205207df60917dfe7f",
-    "tests/ui-unity.test.js": "b4556bfcda1df0fc8f81203951095d744a731a7feb2443097a33980803cfea66",
-    "tests/work-byline-typography.test.js": "7e74bde80dbbc4feb78a827c5ad5cb2d9aed1b7383411e73d636ee6a84f0885c"
+    "modules/lorefy-notification-center.js": "36cfacd438fe1366fc1e638142a9ddc04c4b26ef17afe9e3f2cab1ffd1cb5916",
+    "tests/notification-center.test.js": "86552148b41e2f6fd2bd2b5d801ac2af02516e22e3ec7f0d7c6b6b9a6f93eef4"
   },
   "inventory": [
     {
@@ -555,6 +537,12 @@
       "sha256": "c484992791ca4333a10e9f473790f27d27023de90d1f3e1fd8da8640c1007e18"
     },
     {
+      "path": "docs/NOTIFICATION_RETEST_20261113.md",
+      "area": "Docs",
+      "bytes": 3120,
+      "sha256": "090ae59b0b23adcb8bed13abdb02cae26c5875061d048650c0e6d51a84f7a315"
+    },
+    {
       "path": "docs/NOTIFICATION_STUDIO_V714.md",
       "area": "Docs",
       "bytes": 4466,
@@ -815,8 +803,8 @@
     {
       "path": "index.html",
       "area": "Shell",
-      "bytes": 52992,
-      "sha256": "a123824118f953a530e47973008c02bbb9ff04636ccf241bd695215e30950093"
+      "bytes": 52989,
+      "sha256": "33f97ee6d3d12b741125eefa9843593ddf812d7ec7eddb0b14faf7702ef7467e"
     },
     {
       "path": "ios/App/App.xcodeproj/project.pbxproj",
@@ -1187,8 +1175,8 @@
     {
       "path": "modules/lorefy-notification-center.js",
       "area": "Modules",
-      "bytes": 9824,
-      "sha256": "d37ce54b1eff09e8ad6417da434b0bc5c84462a673b5df758f7ab6dc658cd11c"
+      "bytes": 9997,
+      "sha256": "36cfacd438fe1366fc1e638142a9ddc04c4b26ef17afe9e3f2cab1ffd1cb5916"
     },
     {
       "path": "modules/lorefy-open-catalog.js",
@@ -1559,8 +1547,8 @@
     {
       "path": "qa/notification-studio.html",
       "area": "Tests",
-      "bytes": 6047,
-      "sha256": "0b879ff41d3623f53097358c5c907315118fd9c1600f7abc78ea8404b138df7f"
+      "bytes": 6362,
+      "sha256": "31fd5719ee5a9a3af311621978d8e31e83ebe70f89809fd551df839fe30b1eb1"
     },
     {
       "path": "qa/original-frame-fit-browser.cjs",
@@ -2441,8 +2429,8 @@
     {
       "path": "sw.js",
       "area": "Shell",
-      "bytes": 17327,
-      "sha256": "e85867bf6b19268b47ce420e5c3c97afa79d3a9ef59617417ea48bfe1e684e1b"
+      "bytes": 17324,
+      "sha256": "4422f2018b8315b40aa3e00043416d64eea046ffde69824987a5f99601630018"
     },
     {
       "path": "tests/account-deletion-recovery.test.js",
@@ -3773,8 +3761,8 @@
     {
       "path": "tests/notification-center.test.js",
       "area": "Tests",
-      "bytes": 1409,
-      "sha256": "ee4ddc93ac91dce05274184100b424a2322062a41d307ea64013e214ef44fe5d"
+      "bytes": 3612,
+      "sha256": "86552148b41e2f6fd2bd2b5d801ac2af02516e22e3ec7f0d7c6b6b9a6f93eef4"
     },
     {
       "path": "tests/notification-copy.test.js",
@@ -5334,19 +5322,19 @@
     "apple:audit",
     "apple:audit:strict"
   ],
-  "verifiedAt": "2026-11-13T06:32:57.628Z",
+  "verifiedAt": "2026-11-13T11:47:34.979Z",
   "artifacts": {
-    "04-Current-State.md": "f71738105ae13e1821a2dc68be2c5d3938ca3c7667de639f1c33127c1f80e5f9",
-    "07-Source-Atlas.md": "79dc90c3e1837898cd90590e292bd4737dce1f7c8e4b3a188dfc092b1adc6421",
-    "generated/Source-Modules.md": "a49f6229ceb0bf826f786eb1c4463552fbf25e4e870554cb885d58ed41bd2ecf",
-    "generated/Source-Styles.md": "467b89e5035ccc5a29d34a936a2f229199a6308fb2b9574294e38c2c514f6880",
-    "generated/Source-Backend.md": "0fe7bf3525118a220022c54091b4c711feba29b085bbdab2ade9371c6d5ab7a6",
-    "generated/Source-Tooling.md": "479ece4b749c55f729193042dc1d24a6be05844dabe18909cd341962f96fb315",
-    "generated/Source-Tests.md": "02a1eb52a918f206f6e6fa00bc073578d800ddc1b4769c17388e12fb1b6e9623",
-    "generated/Source-Docs.md": "3a86e4afdad643d3fa0c31777377ef06ca824ba98fcfe30e3439e372bf3db9b8",
-    "generated/Source-Database.md": "168ea48b174a7cf1aa784247e5a22e5a1b70fe6fd821b453d7c10500243487b8",
-    "generated/Source-Native.md": "9bb753281a20c7f2fdfdca3effb5bdca8c2cf80e1000a098b17da3362d91ee94",
-    "generated/Source-Shell.md": "60f341f6eced1db25d54bdb6e9bec7b3a2eabc393a5cb24d4b5922fcb97d861f",
+    "04-Current-State.md": "105457ff9fdcf93423b1cf23bcbd7f259cb05a416327838f68baa4392e218dfa",
+    "07-Source-Atlas.md": "08d39ceb67866d99578b307d34e7e8ba2651395ca81d889d369d442e6f63dc03",
+    "generated/Source-Modules.md": "c5c6ae9ec0628955e0131924772781069f689d70204a4438560f8ee5d8f6ba7b",
+    "generated/Source-Styles.md": "e288d09b113b4cc9d43a7b503b6ca6625bcf34973b8817f9435d2e43b1f55fb6",
+    "generated/Source-Backend.md": "e73aa8d17f6da70282bc2838a0445ad9a759cdf9bb6840792611c353286fc583",
+    "generated/Source-Tooling.md": "612bafaa345a25162e9b6dc32944dcc79287b2867d7d7e7beaf9f21bc9df8e08",
+    "generated/Source-Tests.md": "4df9f88e9fa38898870444f9348f9cbf70524710162d417b63ebb439bc65e9b5",
+    "generated/Source-Docs.md": "5ddf7b3ca8fe2fa0b0c23d7059720709e438bc302c6e679f2f2f26878ddb6b4e",
+    "generated/Source-Database.md": "754058c589c4145f5decd2734081435e9cb52011e88f4c14e729517fa973bddd",
+    "generated/Source-Native.md": "73f72e39bf9c85ce231cfa959fffd60226b9020676919af08c101793e8e4bd05",
+    "generated/Source-Shell.md": "1214ccef492af2970d2523390b8fb3c7ce16a7a3b8063126a418c7a39cfeb76a",
     "generated/Project-Brain.canvas": "3955aeb46974f461d4321dc37f303afcaa8e59281d1038629295e32ef4cbc3f1",
     "brain-map.json": "ccbcdcec84c2f2c7b53a06cdfd6a1d420de0601d2103e8f7a6945236e6d0399a"
   }

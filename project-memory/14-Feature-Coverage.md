@@ -12,6 +12,10 @@ boundaries and actual unread Push badge. Full3559 tests and controlled browser
 checks pass; targeted migration/sender deployed by explicit owner approval.
 Installed-client UI, OS permission behavior and device delivery remain separate.
 
+The same session's owner-requested retest fixes stale relative timestamps while
+retaining row identity.130 focused/3560 full tests pass, and a read-only live
+authenticated-role query shows zero foreign notifications. No real test send.
+
 Interface continuity: [[sessions/2026-11-13-Interface-Continuity]] covers shared
 directional routes, loaded matching cover travel, selected capsules, search and
 dialog/menu entrances. Eight regressions and browser checks include cleanup,

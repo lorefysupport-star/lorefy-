@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T06:32:57.628Z
-Source commit: 37fca66c5cc96d23a9ae475d18afa6a2e13d7219
+Observed: 2026-11-13T11:47:34.979Z
+Source commit: 8615636a4230409927d90ac0b6f953c6dddf1db1
 
 # Tests Source Inventory
 
@@ -35,7 +35,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [qa/home-cinema.html](../../qa/home-cinema.html) (1414 bytes)
 - [qa/minimal-entry.html](../../qa/minimal-entry.html) (3392 bytes)
 - [qa/motion-atelier.html](../../qa/motion-atelier.html) (5053 bytes)
-- [qa/notification-studio.html](../../qa/notification-studio.html) (6047 bytes)
+- [qa/notification-studio.html](../../qa/notification-studio.html) (6362 bytes)
 - [qa/original-frame-fit-browser.cjs](../../qa/original-frame-fit-browser.cjs) (6889 bytes)
 - [qa/page-refresh.html](../../qa/page-refresh.html) (3978 bytes)
 - [qa/panoramic-identity-fixture.html](../../qa/panoramic-identity-fixture.html) (2342 bytes)
@@ -281,7 +281,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/new-feature-dialogs.test.js](../../tests/new-feature-dialogs.test.js) (4818 bytes)
 - [tests/notification-backend-session.test.js](../../tests/notification-backend-session.test.js) (12382 bytes)
 - [tests/notification-center-style.test.js](../../tests/notification-center-style.test.js) (509 bytes)
-- [tests/notification-center.test.js](../../tests/notification-center.test.js) (1409 bytes)
+- [tests/notification-center.test.js](../../tests/notification-center.test.js) (3612 bytes)
 - [tests/notification-copy.test.js](../../tests/notification-copy.test.js) (472 bytes)
 - [tests/notification-delivery-runtime.test.js](../../tests/notification-delivery-runtime.test.js) (28609 bytes)
 - [tests/notification-navigation.test.js](../../tests/notification-navigation.test.js) (1909 bytes)
