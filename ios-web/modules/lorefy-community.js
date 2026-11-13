@@ -527,13 +527,15 @@
     replyActivityRows = rows.map(normalizePost); replyActivityAccount = me; replyActivityAt = Date.now();
     return replyActivity();
   }
-  async function openThreadById(id) {
+  async function openThreadById(id, replyId) {
+    var ownsSession=communitySession();
     var post = (isDemo() ? demoPosts() : state.posts).find(function (row) { return row.id === String(id); });
     if (!post && !isDemo() && global.LorefyBackend) {
       var rows = await global.LorefyBackend.listCommunityPosts({postId:id,limit:1});
       post = rows[0] && normalizePost(rows[0]);
     }
-    if (post && !post.is_deleted) return openThread(post);
+    if(!ownsSession())return;
+    if (post && !post.is_deleted) return openThread(post,replyId);
     toast(uiText('المنشور غير متوفر','Post unavailable'));
   }
 
@@ -1015,10 +1017,10 @@
   function replyContext(post) {
     return post ? {id:String(post.id),username:String(post.profile && post.profile.username || '').slice(0,80)} : null;
   }
-  async function openThread(post) {
+  async function openThread(post, notificationReplyId) {
     if (doc.querySelector('.lf-community-thread')) return;
     var sending = false,dismissed=false,ownsSession=communitySession(),stopAuth;
-    var repliesRequest = 0, replyRows = [], hasOlderReplies = false;
+    var repliesRequest = 0, replyRows = [], hasOlderReplies = false, linkedReply=null, linkedReplyLoaded=false, linkedReplyFocused=false;
     var previousFocus = doc.activeElement;
     var overlay = el("div", { class:"lf-community-thread", role:"dialog", "aria-modal":"true", "aria-label":uiText('محادثة المنشور', 'Post conversation') });
     var close = el("button", { type:"button", class:"lf-community-thread-close", "aria-label":uiText('إغلاق', 'Close') }, icon("x", 20));
@@ -1095,6 +1097,16 @@
       try {
         var chunk = await threadReplies(post, replyBefore);
         if (!overlay.isConnected || request !== repliesRequest || !availableThread()) return;
+        if(notificationReplyId&&!linkedReplyLoaded&&!chunk.some(function(row){return row.id===notificationReplyId;})){
+          var api=global.LorefyBackend;
+          if(!isDemo()&&api?.listCommunityPosts){
+            var linkedRows=await api.listCommunityPosts({postId:notificationReplyId,limit:1});
+            if(request!==repliesRequest||!availableThread())return;
+            linkedReply=linkedRows.find(function(row){return row.id===notificationReplyId&&row.parent_id===post.id&&!row.is_deleted;});
+            if(linkedReply)linkedReply=normalizePost(linkedReply);
+          }
+          linkedReplyLoaded=true;
+        }
         hasOlderReplies = chunk.length === 40;
         replyRows = Array.from(new Map((older ? chunk.concat(replyRows) : chunk).map(function (row) { return [row.id, row]; })).values()).sort(function (a,b) { return new Date(a.created_at)-new Date(b.created_at) || a.id.localeCompare(b.id); });
         if (!older && chunk.length < 40) {
@@ -1104,6 +1116,10 @@
         }
         var replies = replyRows;
         repliesHost.textContent = "";
+        if(linkedReply&&!replyRows.some(function(row){return row.id===linkedReply.id;})){
+          var linkedHost=el('section',{class:'lf-notification-linked-reply','aria-label':uiText('الرد المشار إليه','Linked reply')},[postCard(linkedReply,true,targetReply)]);
+          repliesHost.appendChild(linkedHost);
+        }
         if (hasOlderReplies || older && chunk.length === 40) {
           var previous = el('button', { type:'button', class:'lf-community-load-more', text:uiText('عرض الردود السابقة', 'Older replies') });
           previous.addEventListener('click', function () { previous.disabled = true; paintReplies(true); }); repliesHost.appendChild(previous);
@@ -1117,6 +1133,10 @@
           repliesHost.appendChild(row);
         });
         hydrateIcons(repliesHost);
+        if(notificationReplyId&&!linkedReplyFocused){
+          var linkedNode=Array.from(repliesHost.querySelectorAll('[data-community-post-id]')).find(function(node){return node.getAttribute('data-community-post-id')===notificationReplyId;});
+          if(linkedNode){linkedNode.classList.add('lf-notification-target');linkedNode.setAttribute('tabindex','-1');linkedNode.scrollIntoView({block:'center',behavior:'auto'});linkedNode.focus({preventScroll:true});linkedReplyFocused=true;}
+        }
         if (older) scrollBody.scrollTop = scrollTop + scrollBody.scrollHeight - scrollHeight;
       } catch (error) {
         if (!overlay.isConnected || request !== repliesRequest || !availableThread()) return;

@@ -6,6 +6,12 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+[[sessions/2026-11-13-Notification-Studio]] supersedes the earlier source-only
+notification deployment boundary: the explicitly authorized mention migration
+and existing Push sender were deployed after3559 tests. New categorized inbox,
+read history, session-scoped older pages and exact context links are source/browser
+verified; installed UI and physical-device delivery still require acceptance.
+
 [[sessions/2026-11-13-Community-Continuity]] repairs distinct remount behavior:
 same-session posts/cards and friend snapshots survive return, while known review
 events use exact-ID reads. Remote inserts wait behind an update control; manual

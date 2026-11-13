@@ -2022,18 +2022,24 @@
       if (result.error) throw result.error;
       return result.data === true;
     },
-    listNotifications: async function(limit){
+    listNotifications: async function(limit, before){
       if (this.mode !== "live") return [];
       var request = mediaRequestScope(this);
       var session = await this.getSession();
       assertMediaRequest(this, request);
       if (!session) return [];
       if (session.userId !== request.owner) throw invalidSessionError();
-      var result = await this.client.from("notifications")
+      var query = this.client.from("notifications")
         .select("id,actor_id,kind,title,body,target_path,data,read_at,created_at")
         .eq("user_id", session.userId)
-        .order("created_at", { ascending:false })
-        .limit(Math.min(Math.max(Number(limit) || 50, 1), 100));
+        .order("created_at", { ascending:false }).order("id", {ascending:false});
+      if(before){
+        var timestamp=new Date(before.createdAt);
+        if(!isUuid(before.id) || !Number.isFinite(timestamp.getTime()))throw new Error('Invalid notification cursor.');
+        var time=timestamp.toISOString();
+        query=query.or('created_at.lt.'+time+',and(created_at.eq.'+time+',id.lt.'+before.id+')');
+      }
+      var result=await query.limit(Math.min(Math.max(Number(limit) || 50, 1), 100));
       assertMediaRequest(this, request);
       if (result.error) throw result.error;
       return Array.isArray(result.data) ? result.data.filter(function(row){ return row && row.actor_id !== session.userId; }) : [];

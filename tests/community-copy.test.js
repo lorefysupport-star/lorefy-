@@ -123,9 +123,9 @@ test('author and number typography retain natural text direction and scalable re
 test('community copy changes use matching entry and offline asset versions', () => {
   const entry = fs.readFileSync('index.html', 'utf8'), sw = fs.readFileSync('sw.js', 'utf8');
   for (const file of ['modules/lorefy-community.js', 'styles/lorefy-community.css']) {
-    const version=file.endsWith('.css')?'20261113-community-continuity-v712':'20261113-community-continuity-v712';
+    const version=file.endsWith('.css')?'20261113-community-continuity-v712':'20261113-notification-studio-v714';
     assert.ok(entry.includes(file + '?v='+version));
     assert.ok(sw.includes(file + '?v='+version));
   }
-  assert.match(sw, /lorefy-v713-interface-continuity/);
+  assert.match(sw, /lorefy-v714-notification-studio/);
 });

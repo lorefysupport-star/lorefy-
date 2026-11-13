@@ -6,6 +6,12 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Notifications: [[sessions/2026-11-13-Notification-Studio]] covers categorized
+read-preserving inbox, validated older cursors, server mentions, block/dedupe
+boundaries and actual unread Push badge. Full3559 tests and controlled browser
+checks pass; targeted migration/sender deployed by explicit owner approval.
+Installed-client UI, OS permission behavior and device delivery remain separate.
+
 Interface continuity: [[sessions/2026-11-13-Interface-Continuity]] covers shared
 directional routes, loaded matching cover travel, selected capsules, search and
 dialog/menu entrances. Eight regressions and browser checks include cleanup,
@@ -831,7 +837,7 @@ AR/light وEN/dark في المتصفح. [[sessions/2026-10-18-Apple-Interaction-
 | المتابعة والوصول والصور | [[12-Device-Repairs]] LF-006/007/008 | [avatars](../tests/connection-avatar.test.js)، [keys](../tests/connection-keyboard.test.js)، [locale](../tests/followers-localization.test.js) | جلسة VoiceOver فعلية أو كل روابط الصور البعيدة |
 | اللستات والخصوصية والحظر | [[systems/Profiles-Lists]]، [[sessions/2026-10-15-Privacy-Safety-Repairs]] | [sections](../tests/profile-sections.test.js)، [privacy](../tests/privacy-safety-repairs.test.js) | أن التغيير المحلي وصل إلى قاعدة الإنتاج |
 | المجتمع والتفاعلات والمحفوظات | [[systems/Community-Notifications]]؛ [community](../modules/lorefy-community.js) | [runtime repairs](../tests/runtime-repairs.test.js)، [account surfaces](../tests/account-surface-isolation.test.js) | نشر تفاعل فعلي أو قبول moderation على الخادم |
-| صندوق الجرس وAPNs | [[systems/Community-Notifications]]، [[sessions/2026-10-16-Authorized-Push-Check]] | [delivery runtime](../tests/notification-delivery-runtime.test.js)، [native links](../tests/native-notifications-links.test.js)، قبول واختبار فعلي واحد أكد المالك استقباله وفتحه | تعميم كل الأجهزة والأحداث والإقلاع البارد؛ إصلاح النقل لم يُنشر |
+| صندوق الجرس وAPNs | [[systems/Community-Notifications]]، [[sessions/2026-10-16-Authorized-Push-Check]]، [[sessions/2026-11-13-Notification-Studio]] | [delivery runtime](../tests/notification-delivery-runtime.test.js)، [native links](../tests/native-notifications-links.test.js)، تحديث المنشن ومُرسل Push منشور بإذن المالك في 13 نوفمبر | تعميم وصول الأحداث لكل الأجهزة والإقلاع البارد؛ الواجهة الجديدة لم تُبنَ للجوال بعد |
 | الثيمات والرفوف والإطارات | [[systems/Appearance-Bundles]]، [[decisions/Profile-Frame-Geometry]] | [frame motion](../tests/frame-motion.test.js)، [profile decoration](../tests/profile-decoration.test.js) | أن كل حزمة اجتازت اللمس والأداء على iPhone |
 | مجانية الحزم وملكية الشراء | [[decisions/Temporary-Free-Bundles]]؛ [billing](../modules/lorefy-decoration-billing.js) | [paid collections](../tests/paid-collections.test.js) | جاهزية بيع فعلي أو موافقة حقوق الأصول |
 | الصور واللغة والمشاركة | [[systems/Language-Media]] | [native photo formats](../tests/native-photo-format.test.js)، [image resilience](../tests/image-resilience.test.js) | فحص الكاميرا والمعرض والرفض والاتجاه على الهاتف |

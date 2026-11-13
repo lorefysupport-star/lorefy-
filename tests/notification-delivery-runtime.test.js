@@ -26,6 +26,38 @@ function harness(native=false,values=new Map()){
 }
 const notification=(id='n1')=>({id,user_id:A,actor_id:B,kind:'reaction',title:'إعجاب جديد',body:'نورة أعجبت بمنشورك',target_path:'/community',data:{postId:P},created_at:new Date().toISOString()});
 
+test('older history loads once with a cursor and cannot restore a departed account',async()=>{
+ const h=harness();h.setRows(Array.from({length:60},(_,i)=>notification('n'+i)));await h.api.connectCloudNotifications();
+ let resolve,calls=0;h.window.LorefyBackend.listNotifications=(limit,cursor)=>{calls++;assert.ok(cursor.createdAt);return new Promise(r=>resolve=r);};
+ const first=h.api.loadOlderNotifications(),duplicate=h.api.loadOlderNotifications();assert.equal(calls,1);
+ resolve([notification('older')]);await Promise.all([first,duplicate]);assert.equal(h.api.getInboxRows().length,61);
+ h.window.LorefyBackend.listNotifications=()=>new Promise(r=>resolve=r);const old=h.api.loadOlderNotifications();
+ h.setUser(B);h.window.LorefyBackend.listNotifications=async()=>[];await h.api.connectCloudNotifications();resolve([notification('foreign')]);await old;
+ assert.equal(h.api.getInboxRows().length,0);
+});
+
+test('older read updates change the cached row and loaded-history badge',async()=>{
+ const h=harness();h.setRows(Array.from({length:60},(_,i)=>({...notification('n'+i),read_at:'2026-11-01T00:00:00Z'})));await h.api.connectCloudNotifications();
+ h.window.LorefyBackend.listNotifications=async()=>[notification('older')];await h.api.loadOlderNotifications();
+ assert.equal(h.bell.children[0].textContent,'1');
+ h.receive({...notification('older'),read_at:'2026-11-13T00:00:00Z'},{event:'UPDATE'});
+ assert.ok(h.api.getInboxRows().find(r=>r.id==='older').read_at);assert.equal(h.bell.children.length,0);
+});
+
+test('mark-all drains all loaded history in bounded receipt batches',async()=>{
+ const h=harness(),batches=[];h.api.start();h.listeners.DOMContentLoaded();h.setRows(Array.from({length:60},(_,i)=>notification('n'+i)));await h.api.connectCloudNotifications();
+ for(let page=1;page<=3;page++){h.window.LorefyBackend.listNotifications=async()=>Array.from({length:60},(_,i)=>notification('n'+(page*60+i)));await h.api.loadOlderNotifications();}
+ h.window.LorefyBackend.markNotificationsRead=async ids=>{batches.push(ids.length);return true;};
+ const page=h.mountInbox();h.listeners.click({target:page.querySelector('[data-inbox-mark-all]')});await new Promise(r=>setImmediate(r));
+ assert.deepEqual(batches,[200,40]);assert.ok(h.api.getInboxRows().every(r=>r.read_at));
+});
+
+test('notification destinations retain only validated reply and comment targets',()=>{
+ const h=harness();assert.equal(h.api.notificationRoute({...notification(),data:{postId:P,replyId:B}}).reply,B);
+ assert.equal(h.api.notificationRoute({...notification(),target_path:'/review/'+P,data:{commentId:B}}).comment,B);
+ assert.equal(h.api.notificationRoute({...notification(),data:{postId:P,replyId:'bad'}}).reply,undefined);
+});
+
 test('injected inbox styles use the current theme rather than fixed purple',()=>{
  const h=harness();h.api.start();h.listeners.DOMContentLoaded();
  const styles=h.doc.head.children[0].textContent;

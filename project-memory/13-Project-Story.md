@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-13: [[sessions/2026-11-13-Notification-Studio]] redesigns the persistent
+interaction inbox and adds server-resolved mentions. The owner-authorized targeted
+Supabase migration and Push sender update are deployed;3559 source tests and
+controlled browser checks pass. No native release or fresh device delivery test.
+
 2026-11-13: [[sessions/2026-11-13-Interface-Continuity]] applies shared route,
 cover, capsule, search and dialog/menu continuity. Activation-only finite effects
 preserve data, themes, layouts and immediate actions. Cachev713 is source-only;

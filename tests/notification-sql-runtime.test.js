@@ -13,7 +13,7 @@ test.before(async()=>{
  grant usage on schema public,auth to authenticated;
  create table public.profiles(id uuid primary key,name text,username text,is_private boolean default false);
  create table public.profile_blocks(blocker_id uuid,blocked_id uuid,primary key(blocker_id,blocked_id));
- create table public.reviews(id uuid primary key,user_id uuid,work_id text,is_public boolean default true);
+ create table public.reviews(id uuid primary key,user_id uuid,work_id text,is_public boolean default true,body text default '');
  create table public.review_comments(id uuid primary key default gen_random_uuid(),review_id uuid,user_id uuid,body text,is_deleted boolean default false,created_at timestamptz default now());
  create table public.review_reactions(review_id uuid,user_id uuid,kind text,primary key(review_id,user_id,kind));
  create table public.profile_follows(follower_id uuid,following_id uuid,primary key(follower_id,following_id));
@@ -25,6 +25,7 @@ test.before(async()=>{
  `);
  for(const file of ['20260828204500_notifications_foundation.sql','20260913000000_review_comment_threads.sql','20260920090000_community_posts.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
  if(fs.existsSync(migration))await db.exec(fs.readFileSync(migration,'utf8'));
+ await db.exec(fs.readFileSync('supabase/migrations/20261113055739_notification_mentions_inbox.sql','utf8'));
 });
 test.after(async()=>{await db?.close();});
 test.beforeEach(async()=>{
@@ -36,6 +37,40 @@ test.beforeEach(async()=>{
  select set_config('request.jwt.claim.sub','${C}',false);`);
 });
 const rows=async()=> (await db.query('select * from notifications order by event_key')).rows;
+
+test('mentions are server-resolved, case insensitive and unique; email text and self mentions stay quiet',async()=>{
+ await db.exec(`insert into community_posts(user_id,kind,body) values('${C}','text','Hello @NORA @nora @fahad test@ali.com @unknown');`);
+ const items=await rows();assert.equal(items.length,1);assert.equal(items[0].user_id,B);
+ assert.equal(items[0].kind,'mention');assert.equal(items[0].data.event,'post_mention');assert.equal(items[0].data.actorName,'Fahad');
+});
+test('review and comment mentions preserve exact destination and avoid duplicate ordinary replies',async()=>{
+ await db.exec(`update reviews set body='Hello @nora' where id='${R}';`);
+ assert.equal((await rows())[0].data.reviewId,R);await db.exec('truncate notifications');
+ await db.exec(`insert into review_comments(review_id,user_id,body) values('${R}','${C}','Hi @ali @nora');`);
+ const items=await rows();assert.equal(items.length,2);assert.equal(items.filter(x=>x.user_id===A).length,1);
+ const mention=items.find(x=>x.user_id===B);assert.equal(mention.kind,'mention');assert.ok(mention.data.commentId);assert.equal(mention.target_path,'/review/'+R);
+});
+test('private works, hidden authors and blocks do not leak content through mentions',async()=>{
+ await db.exec(`update reviews set is_public=false,body='Hello @nora' where id='${R}';
+ update profiles set is_private=true where id='${C}';
+ insert into community_posts(user_id,kind,body) values('${C}','text','@nora');`);
+ assert.equal((await rows()).length,0);
+ await db.exec(`update profiles set is_private=false where id='${C}';insert into profile_blocks values('${B}','${C}');
+ insert into community_posts(user_id,kind,body) values('${C}','text','@nora');`);
+ assert.equal((await rows()).length,0);
+});
+test('editing mentions sends only newly added recipients and never repeats existing receipts',async()=>{
+ await db.exec(`insert into community_posts(id,user_id,kind,body) values('${Q}','${C}','text','@nora');
+ update community_posts set body='again @nora @ali' where id='${Q}';
+ update community_posts set body='remove' where id='${Q}';update community_posts set body='@nora @ali' where id='${Q}';`);
+ assert.equal((await rows()).length,2);
+});
+test('a mention cannot expose a parent work or thread whose owner blocked the recipient',async()=>{
+ await db.exec(`insert into profile_blocks values('${A}','${B}');
+ insert into review_comments(review_id,user_id,body) values('${R}','${C}','Hello @nora');
+ insert into community_posts(user_id,kind,body,parent_id) values('${C}','text','Hello @nora','${P}');`);
+ assert.equal((await rows()).filter(x=>x.user_id===B).length,0);
+});
 
 test('review replies reach both the reviewer and the parent-comment author',async()=>{
  await db.exec(`insert into review_comments(id,review_id,user_id,body) values('${Q}','${R}','${B}','First comment'); truncate notifications;
@@ -87,6 +122,14 @@ test('the focused migration is repeatable without deleting notifications or wide
  await db.exec(fs.readFileSync(migration,'utf8'));
  assert.equal((await rows()).length,1);
  assert.equal((await db.query("select has_table_privilege('authenticated','public.notifications','INSERT') as allowed")).rows[0].allowed,false);
+});
+
+test('mention migration replays safely while retaining read and unread history',async()=>{
+ await db.exec(`insert into community_posts(id,user_id,kind,body) values('${Q}','${B}','text','Hello @ali');`);
+ const before=await rows();assert.ok(before.some(r=>r.kind==='mention'));
+ await db.exec(fs.readFileSync('supabase/migrations/20261113055739_notification_mentions_inbox.sql','utf8'));
+ assert.deepEqual(await rows(),before);
+ assert.equal((await db.query("select has_function_privilege('authenticated','private.notify_text_mentions()','EXECUTE') as allowed")).rows[0].allowed,false);
 });
 test('inbox access and read receipts stay owner scoped and never delete history',async()=>{
  await db.exec(`insert into profile_follows values('${B}','${A}'),('${A}','${B}');

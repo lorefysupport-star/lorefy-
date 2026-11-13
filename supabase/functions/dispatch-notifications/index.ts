@@ -101,7 +101,7 @@ Deno.serve(async (request) => {
   });
   const [{ data: notification, error: notificationError }, { data: devices, error: deviceError }] = await Promise.all([
     admin.from("notifications")
-      .select("id,user_id,kind,title,body,target_path,data,event_key")
+      .select("id,user_id,kind,title,body,target_path,data,event_key,read_at")
       .eq("id", notificationId).eq("user_id", userId).maybeSingle(),
     admin.from("push_device_tokens")
       .select("id,token,environment")
@@ -111,7 +111,15 @@ Deno.serve(async (request) => {
   ]);
   if (notificationError || deviceError) return json({ error: "notification_lookup_failed" }, 502);
   if (!notification) return json({ error: "notification_not_found" }, 404);
+  if (notification.read_at) return json({ delivered: 0, unavailable: 0 }, 202);
   if (!devices?.length) return json({ delivered: 0, unavailable: 0 }, 202);
+
+  let badge: number | undefined;
+  try {
+    const unread = await admin.from("notifications").select("id", { count: "exact", head: true })
+      .eq("user_id", userId).is("read_at", null);
+    if (!unread.error && typeof unread.count === "number") badge = Math.max(0, Math.min(9999, unread.count));
+  } catch { /* Delivery must not depend on the optional badge query. */ }
 
   let authorization: string;
   try { authorization = await createApnsJwt(teamId, keyId, privateKey); }
@@ -138,7 +146,7 @@ Deno.serve(async (request) => {
         body: JSON.stringify({
           aps: {
             alert: { title: notification.title, body: notification.body },
-            badge: 1,
+            ...(badge === undefined ? {} : { badge }),
             sound: "default"
           },
           notificationId: notification.id,

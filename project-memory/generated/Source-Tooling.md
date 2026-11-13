@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T00:13:24.977Z
-Source commit: 13a5fe9c9cd6c89c185f697eb5194f06ba52e508
+Observed: 2026-11-13T06:32:57.628Z
+Source commit: 37fca66c5cc96d23a9ae475d18afa6a2e13d7219
 
 # Tooling Source Inventory
 

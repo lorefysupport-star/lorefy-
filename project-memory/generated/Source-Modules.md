@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T00:13:24.977Z
-Source commit: 13a5fe9c9cd6c89c185f697eb5194f06ba52e508
+Observed: 2026-11-13T06:32:57.628Z
+Source commit: 37fca66c5cc96d23a9ae475d18afa6a2e13d7219
 
 # Modules Source Inventory
 
@@ -32,7 +32,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-character-system.js](../../modules/lorefy-character-system.js) (107676 bytes)
 - [modules/lorefy-comics-search.js](../../modules/lorefy-comics-search.js) (4569 bytes)
 - [modules/lorefy-comics-taxonomy.js](../../modules/lorefy-comics-taxonomy.js) (13314 bytes)
-- [modules/lorefy-community.js](../../modules/lorefy-community.js) (101511 bytes)
+- [modules/lorefy-community.js](../../modules/lorefy-community.js) (103172 bytes)
 - [modules/lorefy-cover-api.js](../../modules/lorefy-cover-api.js) (36762 bytes)
 - [modules/lorefy-cover-media.js](../../modules/lorefy-cover-media.js) (8516 bytes)
 - [modules/lorefy-crafted-crochet.js](../../modules/lorefy-crafted-crochet.js) (3105 bytes)
@@ -60,6 +60,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-library-view.js](../../modules/lorefy-library-view.js) (12422 bytes)
 - [modules/lorefy-local-redesign.js](../../modules/lorefy-local-redesign.js) (1194 bytes)
 - [modules/lorefy-motion-atelier.js](../../modules/lorefy-motion-atelier.js) (9730 bytes)
+- [modules/lorefy-notification-center.js](../../modules/lorefy-notification-center.js) (9824 bytes)
 - [modules/lorefy-open-catalog.js](../../modules/lorefy-open-catalog.js) (9150 bytes)
 - [modules/lorefy-original-autumn.js](../../modules/lorefy-original-autumn.js) (6846 bytes)
 - [modules/lorefy-original-illustrated.js](../../modules/lorefy-original-illustrated.js) (8213 bytes)

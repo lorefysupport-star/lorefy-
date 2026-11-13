@@ -3,21 +3,21 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T00:13:24.977Z
-Source commit: 13a5fe9c9cd6c89c185f697eb5194f06ba52e508
+Observed: 2026-11-13T06:32:57.628Z
+Source commit: 37fca66c5cc96d23a9ae475d18afa6a2e13d7219
 
 # Backend Source Inventory
 
 Paths and sizes only. Inclusion does not mean the file was semantically reviewed or the feature was tested.
 
 - [auth/lorefy-auth.js](../../auth/lorefy-auth.js) (36265 bytes)
-- [backend/lorefy-backend.js](../../backend/lorefy-backend.js) (114816 bytes)
+- [backend/lorefy-backend.js](../../backend/lorefy-backend.js) (115211 bytes)
 - [backend/lorefy-custom-artwork.js](../../backend/lorefy-custom-artwork.js) (7601 bytes)
 - [backend/lorefy-ios-bridge.js](../../backend/lorefy-ios-bridge.js) (5327 bytes)
 - [backend/lorefy-ios-oauth.js](../../backend/lorefy-ios-oauth.js) (8887 bytes)
 - [backend/lorefy-native-crypto.js](../../backend/lorefy-native-crypto.js) (990 bytes)
 - [backend/lorefy-native-photos.js](../../backend/lorefy-native-photos.js) (2129 bytes)
-- [backend/lorefy-native-runtime.js](../../backend/lorefy-native-runtime.js) (35960 bytes)
+- [backend/lorefy-native-runtime.js](../../backend/lorefy-native-runtime.js) (39489 bytes)
 - [backend/lorefy-secure-storage.js](../../backend/lorefy-secure-storage.js) (4510 bytes)
 - [monitoring/lorefy-sentry.js](../../monitoring/lorefy-sentry.js) (6027 bytes)
 

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T00:13:24.977Z
-Source commit: 13a5fe9c9cd6c89c185f697eb5194f06ba52e508
+Observed: 2026-11-13T06:32:57.628Z
+Source commit: 37fca66c5cc96d23a9ae475d18afa6a2e13d7219
 
 # Database Source Inventory
 
@@ -15,7 +15,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [supabase/functions/decoration-purchases/index.ts](../../supabase/functions/decoration-purchases/index.ts) (4820 bytes)
 - [supabase/functions/decoration-purchases/policy.mjs](../../supabase/functions/decoration-purchases/policy.mjs) (1319 bytes)
 - [supabase/functions/delete-account/index.ts](../../supabase/functions/delete-account/index.ts) (6667 bytes)
-- [supabase/functions/dispatch-notifications/index.ts](../../supabase/functions/dispatch-notifications/index.ts) (6877 bytes)
+- [supabase/functions/dispatch-notifications/index.ts](../../supabase/functions/dispatch-notifications/index.ts) (7380 bytes)
 - [supabase/functions/lorefy-public/index.ts](../../supabase/functions/lorefy-public/index.ts) (17669 bytes)
 - [supabase/migrations/20260722000000_account_foundation.sql](../../supabase/migrations/20260722000000_account_foundation.sql) (5151 bytes)
 - [supabase/migrations/20260722000100_entitlements.sql](../../supabase/migrations/20260722000100_entitlements.sql) (1337 bytes)
@@ -66,6 +66,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [supabase/migrations/20261102190000_halloween_profile_artwork.sql](../../supabase/migrations/20261102190000_halloween_profile_artwork.sql) (1188 bytes)
 - [supabase/migrations/20261104120000_notification_interaction_delivery.sql](../../supabase/migrations/20261104120000_notification_interaction_delivery.sql) (13010 bytes)
 - [supabase/migrations/20261104184233_crafted_profile_artwork.sql](../../supabase/migrations/20261104184233_crafted_profile_artwork.sql) (1159 bytes)
+- [supabase/migrations/20261113055739_notification_mentions_inbox.sql](../../supabase/migrations/20261113055739_notification_mentions_inbox.sql) (5105 bytes)
 - [supabase/tests/profile_username_changes.sql](../../supabase/tests/profile_username_changes.sql) (3114 bytes)
 - [supabase/tests/quarter_ratings.sql](../../supabase/tests/quarter_ratings.sql) (2033 bytes)
 - [supabase/tests/review_account_privacy.sql](../../supabase/tests/review_account_privacy.sql) (2879 bytes)

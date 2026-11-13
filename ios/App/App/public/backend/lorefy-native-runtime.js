@@ -13,6 +13,8 @@
   var ALLOWED_WEB_HOSTS = ["lorefy.app", "www.lorefy.app"];
   var ALLOWED_SCHEMES = ["com.lorefy.app:", "lorefy:"];
   var cloudNotifications = [];
+  var olderNotifications=[],olderJob=null,hasOlderNotifications=false,olderError=false;
+  function getInboxRows(){var seen=new Set();return cloudNotifications.concat(olderNotifications).filter(function(r){return !seen.has(r.id)&&seen.add(r.id);});}
   var cloudUnsubscribe = null;
   var started = false;
   var pushRegistration = null;
@@ -59,20 +61,23 @@
     var backend=root.LorefyBackend,epoch=connectionEpoch,owner=activeAccount;
     if(!owner || !pendingReads.size || !backend || !backend.markNotificationsRead)return;
     if(readJob && readJob.epoch===epoch)return readJob.promise;
-    var ids=Array.from(pendingReads),job={epoch:epoch,promise:null};readJob=job;
+    var ids=Array.from(pendingReads).slice(0,200),job={epoch:epoch,promise:null},sent=false;readJob=job;
     job.promise=Promise.resolve().then(function(){
       if(epoch!==connectionEpoch || owner!==activeAccount || backend!==root.LorefyBackend)return false;
       return backend.markNotificationsRead(ids);
     }).then(function(result){
       if(epoch!==connectionEpoch || owner!==activeAccount || backend!==root.LorefyBackend || result===false)return;
-      ids.forEach(function(id){pendingReads.delete(id);});saveInbox();
-    }).catch(function(){ /* Retry these receipts on the next authenticated refresh. */ }).finally(function(){if(readJob===job)readJob=null;});
+      ids.forEach(function(id){pendingReads.delete(id);});sent=true;saveInbox();
+    }).catch(function(){ /* Retry these receipts on the next authenticated refresh. */ }).finally(function(){
+      if(readJob===job)readJob=null;
+      if(sent&&epoch===connectionEpoch&&owner===activeAccount&&backend===root.LorefyBackend&&pendingReads.size)return flushReadReceipts();
+    });
     return job.promise;
   }
   function markInboxRead(ids) {
-    var selected=ids?new Set(ids):new Set(cloudNotifications.map(function(item){return item.id;})),now=new Date().toISOString();
+    var selected=ids?new Set(ids):new Set(getInboxRows().map(function(item){return item.id;})),now=new Date().toISOString();
     var changed=false;
-    cloudNotifications.forEach(function(item){if(selected.has(item.id)&&!item.read_at){item.read_at=now;pendingReads.add(item.id);changed=true;}});
+    getInboxRows().forEach(function(item){if(selected.has(item.id)&&!item.read_at){item.read_at=now;pendingReads.add(item.id);changed=true;}});
     if(!changed)return;
     saveInbox();renderCloudNotifications();flushReadReceipts();
   }
@@ -122,15 +127,16 @@
     var route = typeof target === "string" ? parseAppLink(target) : target;
     if (!route || !root.location) return false;
     if(route.review && root.__lorefyInboxReviewReady && root.dispatchEvent && root.CustomEvent){
-      root.dispatchEvent(new root.CustomEvent('lorefy:open-inbox-review',{detail:{id:route.review}}));
+      root.dispatchEvent(new root.CustomEvent('lorefy:open-inbox-review',{detail:{id:route.review,commentId:route.comment}}));
       return true;
     }
+    if(route.post && root.LorefyCommunity?.openThreadById){root.LorefyCommunity.openThreadById(route.post,route.reply).catch(function(){});return true;}
     if(route.route==='reader' && validId(route.profileId) && root.dispatchEvent && root.CustomEvent){
       root.dispatchEvent(new root.CustomEvent('lorefy:open-reader-profile',{detail:{id:route.profileId}}));
       return true;
     }
     var url = new URL(root.location.href);
-    ["route", "novel", "id", "search", "review", "post", "notifications"].forEach(function (key) {
+    ["route", "novel", "id", "search", "review", "post", "reply", "comment", "notifications"].forEach(function (key) {
       url.searchParams.delete(key);
     });
     Object.keys(route).forEach(function (key) {
@@ -231,10 +237,13 @@
       if(validId(profileId))return {route:'reader',profileId:profileId};
     }
     if (route && route.route === 'community' && validId(data.postId)) route.post = data.postId;
+    if(route?.post&&validId(data.replyId))route.reply=data.replyId;
+    if(route?.review&&validId(data.commentId))route.comment=data.commentId;
     return route;
   }
 
   function notificationCopy(item) {
+    if(root.LorefyNotificationCenter)return root.LorefyNotificationCenter.copy(item,root.document?.documentElement.lang);
     var data=item.data||{},en=root.document&&root.document.documentElement.lang==='en';
     var messages={
       post_like:['إعجاب جديد','New like',' أعجب بمنشورك',' liked your post'],
@@ -321,7 +330,7 @@
 
   function updateBellBadges() {
     if (!root.document) return;
-    var unread = cloudNotifications.filter(function (item) { return !item.read_at; }).length;
+    var unread = getInboxRows().filter(function (item) { return !item.read_at; }).length;
     Array.prototype.forEach.call(root.document.querySelectorAll('button[aria-label="الإشعارات"],button[aria-label="Notifications"]'), function (button) {
       var badge = button.querySelector(".lf-cloud-unread-badge");
       if (!unread) { if (badge) badge.remove(); return; }
@@ -338,7 +347,7 @@
   function syncInboxActions(page) {
     var action=page.querySelector('[data-inbox-mark-all]');
     if(!action)return;
-    var available=action.getAttribute('data-local-unread')==='true'||cloudNotifications.some(function(item){return !item.read_at;});
+    var available=action.getAttribute('data-local-unread')==='true'||getInboxRows().some(function(item){return !item.read_at;});
     var disabled=String(!available);
     if(action.getAttribute('aria-disabled')!==disabled)action.setAttribute('aria-disabled',disabled);
   }
@@ -350,6 +359,13 @@
     if (!page) return;
     syncInboxActions(page);
     renderInboxStatus(page);
+    if(root.LorefyNotificationCenter){
+      root.LorefyNotificationCenter.render({page:page,rows:getInboxRows(),language:root.document.documentElement.lang,
+        loading:!!refreshJob,status:inboxState,loadingOlder:!!olderJob,hasOlder:hasOlderNotifications,olderError:olderError,time:formatNotificationTime,
+        refresh:function(){return refreshCloudNotifications(false,true);},older:loadOlderNotifications,
+        open:function(item){markInboxRead([item.id]);var route=notificationRoute(item);if(route)openRoute(route);}});
+      return;
+    }
     var previous = page.querySelector(".lf-cloud-notifications");
     var signature=JSON.stringify([root.document.documentElement.lang,cloudNotifications]);
     Array.prototype.forEach.call(page.children, function (child) {
@@ -468,13 +484,14 @@
       var existing=new Set(cloudNotifications.map(function(item){return item.id;}));
       var fresh=cloudNotifications.filter(function(item){return !initialIds.has(item.id) && !rows.some(function(row){return row.id===item.id;});});
       cloudNotifications=fresh.concat(rows).slice(0,60);
+      if(!olderNotifications.length)hasOlderNotifications=rows.length===60;
       inboxState='ready';saveInbox();
       renderCloudNotifications();
       if(job.announce) rows.filter(function(item){return !existing.has(item.id);}).reverse().forEach(announceNotification);
     } catch(error) {
       if(current()){inboxState='offline';renderCloudNotifications();}
     } finally {
-      if(refreshJob===job)refreshJob=null;
+      if(refreshJob===job){refreshJob=null;if(current())renderCloudNotifications();}
     }
     if(!current())return [];
     // A reconnect may happen after the server took the in-flight snapshot.
@@ -484,12 +501,27 @@
     return job.promise;
   }
 
+  async function loadOlderNotifications(){
+    if(olderJob)return olderJob.promise;
+    var backend=root.LorefyBackend,epoch=connectionEpoch,owner=activeAccount;
+    var all=getInboxRows().sort(function(a,b){return Date.parse(b.created_at)-Date.parse(a.created_at)||b.id.localeCompare(a.id);}),last=all[all.length-1];
+    if(!last||!owner||!backend?.listNotifications)return [];
+    var job={promise:null};olderJob=job;olderError=false;renderCloudNotifications();
+    job.promise=(async function(){try{
+      var rows=await backend.listNotifications(60,{createdAt:last.created_at,id:last.id});
+      if(epoch!==connectionEpoch||owner!==activeAccount||backend!==root.LorefyBackend)return [];
+      var ids=new Set(getInboxRows().map(function(r){return r.id;})),chunk=cleanInbox(rows,owner).filter(function(r){return !ids.has(r.id);});
+      olderNotifications=olderNotifications.concat(chunk);hasOlderNotifications=rows.length===60;return chunk;
+    }catch(error){if(epoch===connectionEpoch&&owner===activeAccount)olderError=true;return [];}
+    finally{if(olderJob===job){olderJob=null;renderCloudNotifications();}}})();return job.promise;
+  }
+
   async function connectCloudNotifications() {
     var backend=root.LorefyBackend, epoch=++connectionEpoch;
     refreshEpoch++;
     refreshJob=null;
     if(cloudUnsubscribe){cloudUnsubscribe();cloudUnsubscribe=null;}
-    activeAccount='';cloudNotifications=[];pendingReads=new Set();readJob=null;inboxState='loading';shownNotifications.clear();dismissBanner();renderCloudNotifications();
+    activeAccount='';cloudNotifications=[];olderNotifications=[];olderJob=null;hasOlderNotifications=false;olderError=false;pendingReads=new Set();readJob=null;inboxState='loading';shownNotifications.clear();dismissBanner();renderCloudNotifications();
     if(!backend || !backend.getSession)return;
     var session;
     try{session=await backend.getSession();}catch(error){if(epoch===connectionEpoch){inboxState='offline';renderCloudNotifications();}return;}
@@ -502,11 +534,12 @@
       try {
         var unsubscribe=await backend.subscribeNotifications(function(item, change){
           if(epoch!==connectionEpoch || backend!==root.LorefyBackend || !item || item.actor_id===activeAccount || (item.user_id && item.user_id!==activeAccount))return;
-          var old=cloudNotifications.find(function(row){return row.id===item.id;});
+          var old=getInboxRows().find(function(row){return row.id===item.id;});
           var next=Object.assign({},item,{read_at:item.read_at || old && old.read_at || null});
           if(change && change.event==='UPDATE'){
             if(!old){refreshCloudNotifications(false,true);return;}
             cloudNotifications=cleanInbox(cloudNotifications.map(function(row){return row.id===item.id?next:row;}),activeAccount);
+            olderNotifications=olderNotifications.map(function(row){return row.id===item.id?cleanInbox([next],activeAccount)[0]:row;});
             saveInbox();renderCloudNotifications();return;
           }
           cloudNotifications=cleanInbox([next].concat(cloudNotifications.filter(function(row){return row.id!==item.id;})),activeAccount);
@@ -547,7 +580,7 @@
       var postTries=0;
       var postTimer=root.setInterval(function(){
         if(root.LorefyCommunity && root.LorefyCommunity.openThreadById){
-          root.clearInterval(postTimer);root.LorefyCommunity.openThreadById(postId).catch(function(){});
+          root.clearInterval(postTimer);root.LorefyCommunity.openThreadById(postId,validId(params.get('reply'))?params.get('reply'):null).catch(function(){});
         }else if(++postTries>60)root.clearInterval(postTimer);
       },100);
     }
@@ -557,7 +590,7 @@
       var reviewTimer = root.setInterval(function () {
         if(root.__lorefyInboxReviewReady){
           root.clearInterval(reviewTimer);
-          root.dispatchEvent(new root.CustomEvent('lorefy:open-inbox-review',{detail:{id:reviewId}}));
+          root.dispatchEvent(new root.CustomEvent('lorefy:open-inbox-review',{detail:{id:reviewId,commentId:validId(params.get('comment'))?params.get('comment'):null}}));
           return;
         }
         var card = root.document.querySelector('[data-review-id="' + reviewId.replace(/[^0-9a-f-]/gi, "") + '"]');
@@ -584,7 +617,9 @@
     var observer = new MutationObserver(function () {
       var page = root.document.querySelector(".lf-notifications-page");
       if(page)syncInboxActions(page);
-      if (page && ((cloudNotifications.length && !page.querySelector(".lf-cloud-notifications")) ||
+      var localSignature=page&&root.LorefyNotificationCenter?Array.from(page.querySelectorAll('.lf-local-notification')).map(function(n){return n.getAttribute('data-local-kind')+n.getAttribute('data-local-read');}).join('|'):'';
+      if (page && ((root.LorefyNotificationCenter && !page._lfInboxCenter) || (cloudNotifications.length && !page.querySelector(".lf-cloud-notifications")) ||
+          (page._lfInboxCenter && page._lfInboxCenter.localSignature!==localSignature) ||
           (inboxState !== 'ready' && !page.querySelector('.lf-inbox-status')))) renderCloudNotifications();
       else updateBellBadges();
     });
@@ -618,6 +653,8 @@
     refreshCloudNotifications:refreshCloudNotifications,
     connectCloudNotifications:connectCloudNotifications,
     notificationRoute:notificationRoute,
+    getInboxRows:getInboxRows,
+    loadOlderNotifications:loadOlderNotifications,
     start:start
   };
 });

@@ -36,6 +36,14 @@ test('inbox opens the exact older review rather than depending on the latest tim
  await h.event('lorefy:open-inbox-review',{id:id(250)});
  assert.equal(h.opened()?.id,id(250));assert.ok(h.reviews().some(item=>item.id===id(250)));
 });
+
+test('inbox review destination retains its validated comment context',async()=>{
+ const h=effectHarness();await flush();h.api.listReviews=async()=>[row(250)];
+ await h.event('lorefy:open-inbox-review',{id:id(250),commentId:id(251)});
+ assert.equal(h.opened()?.notificationCommentId,id(251));
+ await h.event('lorefy:open-inbox-review',{id:id(250),commentId:'bad'});
+ assert.equal(h.opened()?.notificationCommentId,undefined);
+});
 test('an unavailable notification target reports a recoverable message, not an empty timeline',async()=>{
  const h=effectHarness();await flush();h.api.listReviews=async()=>[];
  await h.event('lorefy:open-inbox-review',{id:id(250)});

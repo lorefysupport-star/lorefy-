@@ -15,7 +15,7 @@ function harness() {
     remove: async () => true };
   function client(label) {
     return { rpc: async (name, args) => { calls.push({ name, args, client: label }); return hooks.write(name); },
-      from: table => { const filters = {}; return { select() { return this; }, eq(k, v) { filters[k] = v; return this; }, order() { return this; },
+      from: table => { const filters = {}; return { select() { return this; }, eq(k, v) { filters[k] = v; return this; }, or(v) { filters.cursor=v;return this; },order() { return this; },
         limit: async limit => { calls.push({ name: 'query', table, filters, limit, client: label }); return hooks.write('query'); } }; },
       channel: name => { const channel = { name, client: label, handlers: {}, on(event, filter, listener) { this.handlers[filter.event] = {filter,listener}; if(filter.event==='INSERT'){this.filter = filter; this.listener = listener;} return this; }, subscribe(state) { this.state = state; channels.push(this); return this; } }; return channel; },
       removeChannel: async channel => { removed.push({ channel, client: label }); return hooks.remove(); } };
@@ -35,6 +35,11 @@ const actions = {
   list: h => h.api.listNotifications(12),
   read: h => h.api.markNotificationsRead([id])
 };
+test('notification history uses a stable validated timestamp/id cursor',async()=>{
+ const h=harness();await h.api.listNotifications(20,{createdAt:'2026-11-13T00:00:00.000Z',id});
+ assert.match(h.calls[0].filters.cursor,/created_at\.lt\.2026-11-13/);assert.ok(h.calls[0].filters.cursor.includes('id.lt.'+id));
+ await assert.rejects(h.api.listNotifications(20,{createdAt:'bad',id}),/cursor/i);
+});
 for (const name of ['register', 'list']) for (const transition of ['account', 'client', 'epoch', 'local-owner']) {
   test(name + ': ' + transition + ' during auth prevents a subsequent request', async () => {
     const h = harness(), entered = deferred(), gate = deferred();
