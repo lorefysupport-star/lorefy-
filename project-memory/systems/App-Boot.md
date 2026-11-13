@@ -6,6 +6,10 @@ aliases: ["تشغيل", "تحميل", "bootstrap", "cache", "NenApp"]
 ---
 # تشغيل التطبيق
 
+[[sessions/2026-11-13-Interface-Continuity]] adds a shared, finite UI-motion owner
+at entry/cachev713. Observation exists only during activation; passive rerenders
+do not replay route entrances. No framework, release or service change.
+
 [[sessions/2026-11-10-Icon-Runtime]] reduces Lucide to358,402 bytes while keeping
 all1,743 glyph/alias keys and Lorefy scoped hydration. Canonical source stays in
 vendor; the reproducible dev-only builder feeds entry/offline/native copies.

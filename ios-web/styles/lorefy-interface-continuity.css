@@ -1,0 +1,13 @@
+/* One activation owns motion; passive hydration must not replay an entrance. */
+html[data-lf-continuity] .lf-app .nc-screen { animation: none !important; }
+html[data-lf-continuity] .lf-app :is(.lf-settings-sheet,.lf-explore-dialog,.lf-community-compose-sheet > section,[role="dialog"],[role="menu"]) { animation: none !important; }
+.lf-continuity-cover {
+  position: fixed; z-index: 10020; pointer-events: none; object-fit: cover;
+  border-radius: 4px; margin: 0; max-width: none;
+}
+[data-lf-moving-pill] { position: relative; isolation: isolate; }
+[data-lf-moving-pill] > :not(.lf-continuity-pill) { position: relative; z-index: 1; }
+html[data-lf-continuity] .lf-app.lf-app.lf-app.lf-app [data-lf-pill-target] { background: transparent !important; box-shadow: none !important; }
+.lf-continuity-pill {
+  position: absolute; z-index: 0; pointer-events: none; margin: 0;
+}

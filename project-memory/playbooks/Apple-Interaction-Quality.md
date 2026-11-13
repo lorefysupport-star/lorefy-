@@ -5,6 +5,12 @@ date: 2026-10-18
 ---
 # Apple Interaction Quality for Lorefy
 
+2026-11-13: [[sessions/2026-11-13-Interface-Continuity]] adds activation-only
+continuity rather than replayed page entrances. Capture geometry and selected
+paint before motion. Back targets a matching card, not hero art. Actions never
+wait for effects. Account/visibility/resize teardown and settled zero-layer
+evidence are required; animation is not a network-speed fix.
+
 Work-flow application: [[sessions/2026-10-19-Work-Experience]] covers work
 identity, reviews, status, character ratings and covers with the existing web
 stack. Apple Design, Apple-like UI and Frontend Design guide the implementation;

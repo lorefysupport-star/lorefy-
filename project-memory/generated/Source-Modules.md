@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-12T23:49:00.541Z
-Source commit: d3d0166cf99eacb61a7f1693ce3a152341e06964
+Observed: 2026-11-13T00:13:24.977Z
+Source commit: 13a5fe9c9cd6c89c185f697eb5194f06ba52e508
 
 # Modules Source Inventory
 
@@ -52,6 +52,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-halloween-motion.js](../../modules/lorefy-halloween-motion.js) (7647 bytes)
 - [modules/lorefy-home-cinema.js](../../modules/lorefy-home-cinema.js) (7509 bytes)
 - [modules/lorefy-i18n.js](../../modules/lorefy-i18n.js) (44628 bytes)
+- [modules/lorefy-interface-continuity.js](../../modules/lorefy-interface-continuity.js) (11460 bytes)
 - [modules/lorefy-interface-settings.js](../../modules/lorefy-interface-settings.js) (15005 bytes)
 - [modules/lorefy-legal.js](../../modules/lorefy-legal.js) (4936 bytes)
 - [modules/lorefy-library-cinema.js](../../modules/lorefy-library-cinema.js) (8058 bytes)

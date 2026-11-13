@@ -6,6 +6,12 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Interface continuity: [[sessions/2026-11-13-Interface-Continuity]] covers shared
+directional routes, loaded matching cover travel, selected capsules, search and
+dialog/menu entrances. Eight regressions and browser checks include cleanup,
+focus, three profile layouts and dark/light/pink. No hydration animation, new
+dependency or native release; iPhone frame pacing remains unverified.
+
 Community continuity: [[sessions/2026-11-13-Community-Continuity]] covers scoped
 post/card retention, bounded friend snapshot reuse, exact-review event reads and
 explicit remote-insert updates. Warm/stale/account/race tests and actual browser

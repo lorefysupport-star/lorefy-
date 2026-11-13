@@ -3,19 +3,19 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-12T23:49:00.541Z
-Source commit: d3d0166cf99eacb61a7f1693ce3a152341e06964
+Observed: 2026-11-13T00:13:24.977Z
+Source commit: 13a5fe9c9cd6c89c185f697eb5194f06ba52e508
 
 # Source Atlas
 
 A source inventory, not automatic understanding or a deployment audit. Every entry links to canonical source; hashes stay in the local fingerprint state.
 
-- [[generated/Source-Modules|Modules]]: 81 files
-- [[generated/Source-Styles|Styles]]: 57 files
+- [[generated/Source-Modules|Modules]]: 82 files
+- [[generated/Source-Styles|Styles]]: 58 files
 - [[generated/Source-Backend|Backend]]: 10 files
 - [[generated/Source-Tooling|Tooling]]: 107 files
-- [[generated/Source-Tests|Tests]]: 416 files
-- [[generated/Source-Docs|Docs]]: 112 files
+- [[generated/Source-Tests|Tests]]: 417 files
+- [[generated/Source-Docs|Docs]]: 113 files
 - [[generated/Source-Database|Database]]: 60 files
 - [[generated/Source-Native|Native]]: 10 files
 - [[generated/Source-Shell|Shell]]: 16 files

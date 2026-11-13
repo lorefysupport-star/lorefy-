@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v712-community-continuity';
+const CACHE = 'lorefy-v713-interface-continuity';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -13,6 +13,8 @@ const freshAssetPaths = [
   '/monitoring/'
 ];
 const CORE = [
+ './styles/lorefy-interface-continuity.css?v=20261113-interface-continuity-v713',
+ './modules/lorefy-interface-continuity.js?v=20261113-interface-continuity-v713',
  './uploads/arabic-enrichment/manifest.js?v=20261110-demand-v1',
  './modules/lorefy-arabic-enrichment-loader.js?v=20261110-demand-v1',
  './launch/decorations/crafted/collections.json',

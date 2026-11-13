@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-13: [[sessions/2026-11-13-Interface-Continuity]] applies shared route,
+cover, capsule, search and dialog/menu continuity. Activation-only finite effects
+preserve data, themes, layouts and immediate actions. Cachev713 is source-only;
+device pacing and native acceptance remain separate.
+
 2026-11-13: [[sessions/2026-11-13-Community-Continuity]] fixes remount resets,
 friend reload flashes and whole-collection work for known review reactions.
 New remote inserts become deliberate updates rather than forced reordering.
