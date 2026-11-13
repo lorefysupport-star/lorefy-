@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-13: [[sessions/2026-11-13-Catalog-Hotpath]] profiles and reduces catalog
+CPU duplication while preserving live safety, classification and existing UI.
+Paired browser measurements and unchanged catalog signatures support the scoped
+gain; native performance and release remain separate.
+
 2026-11-13: [[sessions/2026-11-13-Glass-Unity]] unifies transient/control glass,
 theme-adaptive rims and desktop dock sizing.80 captures and102 responsive checks
 retain existing palettes/art/layouts; this is source/browser evidence, not a build.

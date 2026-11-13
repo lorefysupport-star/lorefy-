@@ -16,12 +16,12 @@
     return /open library/i.test([work && work.pl, work && work.source, work && work.sourceName].filter(Boolean).join(' '));
   }
 
-  function originalWithLaterGraphicEdition(work) {
-    if (!openLibrarySource(work) || publisherFor(work).publisher !== 'Other') return false;
+  function originalWithLaterGraphicEdition(work, value) {
+    if (!openLibrarySource(work)) return false;
     if (/\bgraphic novel\b/i.test(String(work.title || ''))) return false;
     var year = Number(work.yr || work.year) || 0;
     var adaptationYear = adaptationYears[titleKey(work.title, work.auth || work.author)];
-    return year > 0 && adaptationYear > year;
+    return year > 0 && adaptationYear > year && publisherFromText(value).publisher === 'Other';
   }
 
   function eastAsianManga(work) {
@@ -85,7 +85,9 @@
   }
 
   function publisherFor(work) {
-    var value = normalized(work);
+    return publisherFromText(normalized(work));
+  }
+  function publisherFromText(value) {
     var marvel = universeFor(value, MARVEL_UNIVERSES);
     if (marvel || /\bmarvel(?: comics)?\b/i.test(value)) return { publisher: 'Marvel', universe: marvel };
     var dc = universeFor(value, DC_UNIVERSES);
@@ -142,15 +144,15 @@
     return CLASSIC_ORIGINALS.some(function (entry) { return entry[0].test(title) && entry[1].test(author); });
   }
 
-  function earlyOpenLibraryText(work) {
+  function earlyOpenLibraryText(work, value) {
     var source = [work && work.pl, work && work.source, work && work.sourceName].filter(Boolean).join(' ').toLowerCase();
     var year = Number(work && (work.yr || work.year)) || 0;
+    if (!/open library/i.test(source) || year <= 0 || year >= 1930) return false;
     var genres = [work && work.genres, work && work.gen, work && work.subjects].map(function (value) {
       return Array.isArray(value) ? value.join(' ') : value || '';
     }).join(' ').toLowerCase();
-    var publisher = publisherFor(work || {}).publisher;
     var explicitVisualEdition = /\b(?:comic books?|comic strips?|cartoons?|adaptations?)\b/i.test(genres);
-    return /open library/i.test(source) && year > 0 && year < 1930 && publisher === 'Other' && !explicitVisualEdition;
+    return !explicitVisualEdition && publisherFromText(value).publisher === 'Other';
   }
 
   function classify(work) {
@@ -168,17 +170,17 @@
     var value = normalized(work);
     var before = work.type;
     var reason = '';
-    var classicText = classicOriginalText(work) || earlyOpenLibraryText(work);
+    var classicText = classicOriginalText(work) || earlyOpenLibraryText(work, value);
     if (mangaDexSource(work)) { work.type = MANGA; reason = 'mangadex-manga'; }
     else if (explicitReferenceBook(value) || explicitMangaGuide(value) || classicText) { work.type = BOOK; reason = classicText ? 'classic-original-text' : 'reference-book'; }
-    else if (explicitTextNovel(value) || originalWithLaterGraphicEdition(work) || mahfouzProse(work)) { work.type = NOVEL; reason = 'text-novel'; }
+    else if (explicitTextNovel(value) || originalWithLaterGraphicEdition(work, value) || mahfouzProse(work)) { work.type = NOVEL; reason = 'text-novel'; }
     else if (explicitManga(value) || eastAsianManga(work)) { work.type = MANGA; reason = 'manga'; }
     if (work.type !== before) {
       work.catalogCorrection = reason;
       work.catalogClassification = 'reclassified';
       return { changed: true, reclassified: true, reason: reason };
     }
-    var publisher = publisherFor(work);
+    var publisher = publisherFromText(value);
     var universe = publisher.universe ? 'comic:' + publisher.publisher.toLowerCase() + '-' + publisher.universe : '';
     var changed = work.comicPublisher !== publisher.publisher || work.comicUniverse !== universe;
     work.comicPublisher = publisher.publisher;

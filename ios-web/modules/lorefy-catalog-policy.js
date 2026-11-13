@@ -1,8 +1,12 @@
 (function (root) {
   'use strict';
 
+  var normalizedCache = new Map();
   function normalized(value) {
-    return String(value || '')
+    var input = String(value || '');
+    var cached = normalizedCache.get(input);
+    if (cached !== undefined) return cached;
+    var result = input
       .normalize('NFKD')
       .replace(/[\u0300-\u036f\u064b-\u065f\u0670]/g, '')
       .replace(/[أإآ]/g, 'ا')
@@ -12,6 +16,12 @@
       .replace(/[^a-z0-9\u0600-\u06ff]+/g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
+    // Cache only pure, short text; work eligibility still checks live fields.
+    if (input.length <= 256) {
+      if (normalizedCache.size >= 1024) normalizedCache.delete(normalizedCache.keys().next().value);
+      normalizedCache.set(input, result);
+    }
+    return result;
   }
 
   function isExcludedTitle(value) {

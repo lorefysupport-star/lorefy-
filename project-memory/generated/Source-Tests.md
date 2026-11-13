@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T12:28:28.010Z
-Source commit: fff4dafc2fea607ac93f04781c92a5bbf0ac90ed
+Observed: 2026-11-13T16:56:38.302Z
+Source commit: 71f26bd15230fdea252093b5e8125b2f8a2ff65e
 
 # Tests Source Inventory
 
@@ -106,6 +106,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/catalog-content-policy.test.js](../../tests/catalog-content-policy.test.js) (7640 bytes)
 - [tests/catalog-demand-loading.test.js](../../tests/catalog-demand-loading.test.js) (12059 bytes)
 - [tests/catalog-discovery-language.test.js](../../tests/catalog-discovery-language.test.js) (1344 bytes)
+- [tests/catalog-hotpath-reuse.test.js](../../tests/catalog-hotpath-reuse.test.js) (3545 bytes)
 - [tests/catalog-identity.test.js](../../tests/catalog-identity.test.js) (12676 bytes)
 - [tests/catalog-input-privacy.test.js](../../tests/catalog-input-privacy.test.js) (6415 bytes)
 - [tests/catalog-local-search-efficiency.test.js](../../tests/catalog-local-search-efficiency.test.js) (8665 bytes)
@@ -164,7 +165,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/community-cloud.test.js](../../tests/community-cloud.test.js) (15390 bytes)
 - [tests/community-compose-scroll.test.js](../../tests/community-compose-scroll.test.js) (2667 bytes)
 - [tests/community-compose-session.test.js](../../tests/community-compose-session.test.js) (7490 bytes)
-- [tests/community-copy.test.js](../../tests/community-copy.test.js) (9077 bytes)
+- [tests/community-copy.test.js](../../tests/community-copy.test.js) (9081 bytes)
 - [tests/community-edit-lifecycle.test.js](../../tests/community-edit-lifecycle.test.js) (5307 bytes)
 - [tests/community-feed-language.test.js](../../tests/community-feed-language.test.js) (2724 bytes)
 - [tests/community-feed-layout-work.test.js](../../tests/community-feed-layout-work.test.js) (2549 bytes)
@@ -185,7 +186,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/connection-keyboard.test.js](../../tests/connection-keyboard.test.js) (2451 bytes)
 - [tests/corrections-studio.test.js](../../tests/corrections-studio.test.js) (5003 bytes)
 - [tests/cover-edition-choice.test.js](../../tests/cover-edition-choice.test.js) (5899 bytes)
-- [tests/cover-media.test.js](../../tests/cover-media.test.js) (11083 bytes)
+- [tests/cover-media.test.js](../../tests/cover-media.test.js) (11087 bytes)
 - [tests/cover-preparation-performance.test.js](../../tests/cover-preparation-performance.test.js) (2847 bytes)
 - [tests/cover-source-lock.test.js](../../tests/cover-source-lock.test.js) (15598 bytes)
 - [tests/crafted-frames.test.js](../../tests/crafted-frames.test.js) (7477 bytes)
@@ -193,7 +194,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/custom-appearance.test.js](../../tests/custom-appearance.test.js) (7505 bytes)
 - [tests/custom-artwork-persistence.test.js](../../tests/custom-artwork-persistence.test.js) (13763 bytes)
 - [tests/custom-glass-theme.test.js](../../tests/custom-glass-theme.test.js) (4299 bytes)
-- [tests/data-studio.test.js](../../tests/data-studio.test.js) (6982 bytes)
+- [tests/data-studio.test.js](../../tests/data-studio.test.js) (6986 bytes)
 - [tests/decoration-lab.test.js](../../tests/decoration-lab.test.js) (2787 bytes)
 - [tests/decoration-store.test.js](../../tests/decoration-store.test.js) (5855 bytes)
 - [tests/demo-community.test.js](../../tests/demo-community.test.js) (3412 bytes)
@@ -259,7 +260,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/import-ui.test.js](../../tests/import-ui.test.js) (2504 bytes)
 - [tests/interface-continuity.test.js](../../tests/interface-continuity.test.js) (6143 bytes)
 - [tests/interface-personalization.test.js](../../tests/interface-personalization.test.js) (5233 bytes)
-- [tests/legal-studio.test.js](../../tests/legal-studio.test.js) (4961 bytes)
+- [tests/legal-studio.test.js](../../tests/legal-studio.test.js) (4965 bytes)
 - [tests/library-cinema.test.js](../../tests/library-cinema.test.js) (3783 bytes)
 - [tests/library-collection.test.js](../../tests/library-collection.test.js) (10041 bytes)
 - [tests/library-cover-media.test.js](../../tests/library-cover-media.test.js) (9062 bytes)
@@ -353,14 +354,14 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/reading-metrics-stability.test.js](../../tests/reading-metrics-stability.test.js) (2617 bytes)
 - [tests/reading-session-ui.test.js](../../tests/reading-session-ui.test.js) (2104 bytes)
 - [tests/reading-status-policy.test.js](../../tests/reading-status-policy.test.js) (2014 bytes)
-- [tests/reading-terminology.test.js](../../tests/reading-terminology.test.js) (5942 bytes)
-- [tests/reading-typography.test.js](../../tests/reading-typography.test.js) (8822 bytes)
+- [tests/reading-terminology.test.js](../../tests/reading-terminology.test.js) (5946 bytes)
+- [tests/reading-typography.test.js](../../tests/reading-typography.test.js) (8826 bytes)
 - [tests/recap-integrity.test.js](../../tests/recap-integrity.test.js) (998 bytes)
 - [tests/release-legal.test.js](../../tests/release-legal.test.js) (2531 bytes)
 - [tests/release-output-integrity.test.js](../../tests/release-output-integrity.test.js) (4202 bytes)
 - [tests/release-v11-regressions.test.js](../../tests/release-v11-regressions.test.js) (5522 bytes)
 - [tests/release-v13-readiness.test.js](../../tests/release-v13-readiness.test.js) (7174 bytes)
-- [tests/report-studio.test.js](../../tests/report-studio.test.js) (8564 bytes)
+- [tests/report-studio.test.js](../../tests/report-studio.test.js) (8568 bytes)
 - [tests/review-backend-owner.test.js](../../tests/review-backend-owner.test.js) (7855 bytes)
 - [tests/review-earned-progress.test.js](../../tests/review-earned-progress.test.js) (2079 bytes)
 - [tests/review-editor-ownership.test.js](../../tests/review-editor-ownership.test.js) (8556 bytes)
@@ -420,7 +421,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [tests/user-reported-fixes.test.js](../../tests/user-reported-fixes.test.js) (4739 bytes)
 - [tests/version-consistency.test.js](../../tests/version-consistency.test.js) (1492 bytes)
 - [tests/wood-shelf-clipping.test.js](../../tests/wood-shelf-clipping.test.js) (1555 bytes)
-- [tests/work-byline-typography.test.js](../../tests/work-byline-typography.test.js) (7866 bytes)
+- [tests/work-byline-typography.test.js](../../tests/work-byline-typography.test.js) (7870 bytes)
 - [tests/work-detail-language.test.js](../../tests/work-detail-language.test.js) (10783 bytes)
 - [tests/work-dislike-backend.test.js](../../tests/work-dislike-backend.test.js) (3621 bytes)
 - [tests/work-dislike.test.js](../../tests/work-dislike.test.js) (9194 bytes)

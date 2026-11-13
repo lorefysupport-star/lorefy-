@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T12:28:28.010Z
-Source commit: fff4dafc2fea607ac93f04781c92a5bbf0ac90ed
+Observed: 2026-11-13T16:56:38.302Z
+Source commit: 71f26bd15230fdea252093b5e8125b2f8a2ff65e
 
 # Docs Source Inventory
 
@@ -31,6 +31,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/BUILD33_RECOVERY.md](../../docs/BUILD33_RECOVERY.md) (2945 bytes)
 - [docs/BUILD34_KNOWN_GAPS.md](../../docs/BUILD34_KNOWN_GAPS.md) (5536 bytes)
 - [docs/BUILD34_READINESS.md](../../docs/BUILD34_READINESS.md) (3377 bytes)
+- [docs/CATALOG_HOTPATH_V716.md](../../docs/CATALOG_HOTPATH_V716.md) (4079 bytes)
 - [docs/CATALOG_LOADING.md](../../docs/CATALOG_LOADING.md) (2382 bytes)
 - [docs/CHAPTER_CATALOG_FIX_2026-10-01.md](../../docs/CHAPTER_CATALOG_FIX_2026-10-01.md) (3327 bytes)
 - [docs/CHAPTER_RUNTIME_PERFORMANCE_2026-11-10.md](../../docs/CHAPTER_RUNTIME_PERFORMANCE_2026-11-10.md) (4093 bytes)

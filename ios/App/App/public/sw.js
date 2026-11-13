@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v715-glass-unity';
+const CACHE = 'lorefy-v716-catalog-hotpath';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -89,7 +89,7 @@ const CORE = [
   './modules/lorefy-design-system.js?v=20261113-glass-unity-v715',
   './modules/lorefy-data-proxy.js?v=20261101-image-delivery-v1',
   './modules/lorefy-cover-api.js?v=20261101-cover-preparation-v1',
-  './modules/lorefy-catalog-policy.js?v=20261101-policy-v1',
+  './modules/lorefy-catalog-policy.js?v=20261113-catalog-hotpath-v716',
   './modules/lorefy-catalog-plan.js?v=20261019-search-authors-v1-search-audit-v2',
   './modules/lorefy-catalog-loader.js?v=20261110-query-shards-v1',
   './modules/lorefy-catalog-search-worker.js?v=20261019-search-authors-v1-fast-search-v1-search-audit-v2-policy-v1-identity-v1',
@@ -113,7 +113,7 @@ const CORE = [
   './modules/lorefy-catalog-map-loader.js?v=20261018-runtime-cleanup-v1',
   './uploads/lorefy-arabic-library.js?v=20261008-arabic-breadth-v4',
   './uploads/lorefy-booktok-library.js?v=20260830-booktok-library-v1',
-  './modules/lorefy-comics-taxonomy.js?v=20261008-arabic-library-v2',
+  './modules/lorefy-comics-taxonomy.js?v=20261113-catalog-hotpath-v716',
   './uploads/lorefy-catalog-quality.js?v=20261011-explore-v2',
   './modules/lorefy-bibliographic-overrides.js?v=20261020-publisher-synopsis-v2',
   './modules/lorefy-character-system.js?v=20261028-image-picker-lifecycle-v2-tenrai-v1-search-audit-v2',

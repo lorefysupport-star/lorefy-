@@ -6,6 +6,11 @@ aliases: ["تشغيل", "تحميل", "bootstrap", "cache", "NenApp"]
 ---
 # تشغيل التطبيق
 
+[[sessions/2026-11-13-Catalog-Hotpath]] reduces repeated policy normalization and
+taxonomy description/publisher work. Interleaved4x CPU browser taxonomy median
+310.0 to158.9ms; ranking173.8 to115.0ms, identical3,305-record flags. Scoped
+startup CPU evidence, not whole-app/device performance. Source cachev716 only.
+
 [[sessions/2026-11-13-Interface-Continuity]] adds a shared, finite UI-motion owner
 at entry/cachev713. Observation exists only during activation; passive rerenders
 do not replay route entrances. No framework, release or service change.

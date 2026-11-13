@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T12:28:28.010Z
-Source commit: fff4dafc2fea607ac93f04781c92a5bbf0ac90ed
+Observed: 2026-11-13T16:56:38.302Z
+Source commit: 71f26bd15230fdea252093b5e8125b2f8a2ff65e
 
 # Modules Source Inventory
 
@@ -21,7 +21,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-catalog-loader.js](../../modules/lorefy-catalog-loader.js) (32031 bytes)
 - [modules/lorefy-catalog-map-loader.js](../../modules/lorefy-catalog-map-loader.js) (1835 bytes)
 - [modules/lorefy-catalog-plan.js](../../modules/lorefy-catalog-plan.js) (12186 bytes)
-- [modules/lorefy-catalog-policy.js](../../modules/lorefy-catalog-policy.js) (5160 bytes)
+- [modules/lorefy-catalog-policy.js](../../modules/lorefy-catalog-policy.js) (5602 bytes)
 - [modules/lorefy-catalog-requests.js](../../modules/lorefy-catalog-requests.js) (2284 bytes)
 - [modules/lorefy-catalog-search-worker.js](../../modules/lorefy-catalog-search-worker.js) (2326 bytes)
 - [modules/lorefy-catalog-updater.js](../../modules/lorefy-catalog-updater.js) (13500 bytes)
@@ -31,7 +31,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-chapter-metadata.js](../../modules/lorefy-chapter-metadata.js) (14018 bytes)
 - [modules/lorefy-character-system.js](../../modules/lorefy-character-system.js) (107676 bytes)
 - [modules/lorefy-comics-search.js](../../modules/lorefy-comics-search.js) (4569 bytes)
-- [modules/lorefy-comics-taxonomy.js](../../modules/lorefy-comics-taxonomy.js) (13314 bytes)
+- [modules/lorefy-comics-taxonomy.js](../../modules/lorefy-comics-taxonomy.js) (13404 bytes)
 - [modules/lorefy-community.js](../../modules/lorefy-community.js) (103172 bytes)
 - [modules/lorefy-cover-api.js](../../modules/lorefy-cover-api.js) (36762 bytes)
 - [modules/lorefy-cover-media.js](../../modules/lorefy-cover-media.js) (8516 bytes)

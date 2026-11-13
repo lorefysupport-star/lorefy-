@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Catalog CPU reuse: [[sessions/2026-11-13-Catalog-Hotpath]] covers bounded pure
+text reuse, mutation-safe policy checks and single-pass taxonomy preparation.
+Six regression/67 focused tests and three interleaved4x browser pairs preserve
+the same3,305-record flags. Native/device latency acceptance remains open.
+
 Shared glass: [[sessions/2026-11-13-Glass-Unity]] covers notification/share/store/
 character chrome, transient community surfaces, adaptive highlights and bounded
 desktop navigation. Six regressions,39 focused tests,80 captures and102 viewport/
