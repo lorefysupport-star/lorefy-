@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T11:47:34.979Z
-Source commit: 8615636a4230409927d90ac0b6f953c6dddf1db1
+Observed: 2026-11-13T12:28:28.010Z
+Source commit: fff4dafc2fea607ac93f04781c92a5bbf0ac90ed
 
 # Modules Source Inventory
 
@@ -41,7 +41,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-crafted-objects.js](../../modules/lorefy-crafted-objects.js) (4564 bytes)
 - [modules/lorefy-data-proxy.js](../../modules/lorefy-data-proxy.js) (4403 bytes)
 - [modules/lorefy-decoration-billing.js](../../modules/lorefy-decoration-billing.js) (4820 bytes)
-- [modules/lorefy-design-system.js](../../modules/lorefy-design-system.js) (9949 bytes)
+- [modules/lorefy-design-system.js](../../modules/lorefy-design-system.js) (10247 bytes)
 - [modules/lorefy-elven-motion.js](../../modules/lorefy-elven-motion.js) (11875 bytes)
 - [modules/lorefy-explore-studio.js](../../modules/lorefy-explore-studio.js) (80598 bytes)
 - [modules/lorefy-frame-motion.js](../../modules/lorefy-frame-motion.js) (17969 bytes)

@@ -6,6 +6,10 @@ aliases: ["إطارات", "بنرات", "حزم", "مجانية", "ثيم", "ز�
 ---
 # المظهر والإطارات والحزم
 
+[[sessions/2026-11-13-Glass-Unity]] connects missed transient chrome to the
+common glass, adds brightness-aware rims/shadows, and bounds desktop docks.
+Existing user palettes, artwork and layouts remain; no native release.
+
 [[sessions/2026-11-12-Theme-Contrast]] makes every palette, including standard
 dark, replace the stable aliases used by pages and portals. Shared semantic ink
 and glass-specific ink are contrast-adjusted across owned sampled surfaces.

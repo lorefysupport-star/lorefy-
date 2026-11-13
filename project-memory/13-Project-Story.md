@@ -6,10 +6,16 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-13: [[sessions/2026-11-13-Glass-Unity]] unifies transient/control glass,
+theme-adaptive rims and desktop dock sizing.80 captures and102 responsive checks
+retain existing palettes/art/layouts; this is source/browser evidence, not a build.
+
 2026-11-13 retest: [[sessions/2026-11-13-Notification-Studio]] records a distinct
 relative-time cache defect and its verified repair,130 focused/3560 full tests,
 and read-only production owner isolation. The owner declined an actual Push
 test; no synthetic live interaction or service change was made in the retest.
+In a later explicitly authorized step, one Push was accepted and the owner
+confirmed its external display. Tap destination and native badge acceptance remain.
 
 2026-11-13: [[sessions/2026-11-13-Notification-Studio]] redesigns the persistent
 interaction inbox and adds server-resolved mentions. The owner-authorized targeted

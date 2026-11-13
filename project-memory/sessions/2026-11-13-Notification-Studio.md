@@ -41,3 +41,12 @@ replacing the row, verified with a five-minute browser clock advance. Production
 read-only authenticated-role SELECT saw own history and zero foreign rows. The
 owner declined sending to a real account; historical HTTP202 responses do not
 certify the new sender or on-device delivery. No production writes in this pass.
+
+## Later Owner-authorized Device Receipt
+
+After the retest, the owner explicitly requested one real test notification to
+their account. Exactly one notification was inserted; the correlated sender
+response was HTTP202 with delivered1, unavailable0 and no timeout/error. The
+owner then confirmed that it appeared outside the app. This supersedes the
+delivery-only acceptance gap above, not native cold-launch, tap destination,
+badge-clearing or every permission-state acceptance. No second send was made.

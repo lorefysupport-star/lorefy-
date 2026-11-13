@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T11:47:34.979Z
-Source commit: 8615636a4230409927d90ac0b6f953c6dddf1db1
+Observed: 2026-11-13T12:28:28.010Z
+Source commit: fff4dafc2fea607ac93f04781c92a5bbf0ac90ed
 
 # Styles Source Inventory
 
@@ -27,7 +27,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-explore-cinema.css](../../styles/lorefy-explore-cinema.css) (35010 bytes)
 - [styles/lorefy-explore-studio.css](../../styles/lorefy-explore-studio.css) (30335 bytes)
 - [styles/lorefy-frame-motion.css](../../styles/lorefy-frame-motion.css) (10214 bytes)
-- [styles/lorefy-glass-materials.css](../../styles/lorefy-glass-materials.css) (13078 bytes)
+- [styles/lorefy-glass-materials.css](../../styles/lorefy-glass-materials.css) (14052 bytes)
 - [styles/lorefy-home-cinema.css](../../styles/lorefy-home-cinema.css) (35433 bytes)
 - [styles/lorefy-home-immersive.css](../../styles/lorefy-home-immersive.css) (11151 bytes)
 - [styles/lorefy-import-studio.css](../../styles/lorefy-import-studio.css) (7113 bytes)
@@ -37,7 +37,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-library-cinema.css](../../styles/lorefy-library-cinema.css) (14145 bytes)
 - [styles/lorefy-library-refined.css](../../styles/lorefy-library-refined.css) (6995 bytes)
 - [styles/lorefy-native-layout-fix.css](../../styles/lorefy-native-layout-fix.css) (6133 bytes)
-- [styles/lorefy-notification-center.css](../../styles/lorefy-notification-center.css) (6767 bytes)
+- [styles/lorefy-notification-center.css](../../styles/lorefy-notification-center.css) (6803 bytes)
 - [styles/lorefy-page-refresh.css](../../styles/lorefy-page-refresh.css) (2066 bytes)
 - [styles/lorefy-product-tools.css](../../styles/lorefy-product-tools.css) (12674 bytes)
 - [styles/lorefy-profile-apple.css](../../styles/lorefy-profile-apple.css) (10999 bytes)
@@ -53,7 +53,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-review-editor.css](../../styles/lorefy-review-editor.css) (8180 bytes)
 - [styles/lorefy-review-social.css](../../styles/lorefy-review-social.css) (56705 bytes)
 - [styles/lorefy-settings-studio.css](../../styles/lorefy-settings-studio.css) (7558 bytes)
-- [styles/lorefy-share-composer.css](../../styles/lorefy-share-composer.css) (7154 bytes)
+- [styles/lorefy-share-composer.css](../../styles/lorefy-share-composer.css) (7296 bytes)
 - [styles/lorefy-share-studio.css](../../styles/lorefy-share-studio.css) (33761 bytes)
 - [styles/lorefy-system.css](../../styles/lorefy-system.css) (217722 bytes)
 - [styles/lorefy-trust-studio.css](../../styles/lorefy-trust-studio.css) (6641 bytes)

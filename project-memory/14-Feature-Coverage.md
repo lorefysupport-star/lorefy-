@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Shared glass: [[sessions/2026-11-13-Glass-Unity]] covers notification/share/store/
+character chrome, transient community surfaces, adaptive highlights and bounded
+desktop navigation. Six regressions,39 focused tests,80 captures and102 viewport/
+accessibility assertions; native/device and exhaustive workflow acceptance open.
+
 Notifications: [[sessions/2026-11-13-Notification-Studio]] covers categorized
 read-preserving inbox, validated older cursors, server mentions, block/dedupe
 boundaries and actual unread Push badge. Full3559 tests and controlled browser
@@ -15,6 +20,8 @@ Installed-client UI, OS permission behavior and device delivery remain separate.
 The same session's owner-requested retest fixes stale relative timestamps while
 retaining row identity.130 focused/3560 full tests pass, and a read-only live
 authenticated-role query shows zero foreign notifications. No real test send.
+Later owner authorization permitted one test send; the sender accepted it and
+the owner confirmed external display. Native tap/badge states remain separate.
 
 Interface continuity: [[sessions/2026-11-13-Interface-Continuity]] covers shared
 directional routes, loaded matching cover travel, selected capsules, search and

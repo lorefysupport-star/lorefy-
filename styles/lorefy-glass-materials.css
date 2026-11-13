@@ -15,12 +15,13 @@
 .lf-app :is(.lf-work-panel,.lf-review-studio) .lf-rating-footer>button:not(:disabled),.lf-app .lf-work-panel .lf-studio-primary:not(:disabled){background:var(--ui-action)!important;color:var(--ui-on-action)!important}
 .lf-app .lf-review-studio [data-review-dislike][aria-pressed=true]{background:var(--ui-fill-soft)!important;color:var(--ui-danger)!important;border-color:var(--ui-danger)!important}
 :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
-.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page {
+.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page,.lf-export-overlay {
   --glass-fill:var(--ui-surface);
   --glass-sheet:var(--ui-surface);
   --glass-reflection:none;
   --glass-blur:none;
-  --glass-edge:var(--ui-separator);
+  --glass-edge:var(--ui-glass-edge);
+  --glass-shadow:var(--ui-glass-shadow);
   --glass-font:-apple-system,BlinkMacSystemFont,"Segoe UI","Readex Pro",sans-serif;
   --custom-glass:var(--glass-fill) !important;
   --custom-sheen:var(--glass-reflection) !important;
@@ -31,21 +32,17 @@
   --profile-apple-edge:var(--glass-edge) !important;
 }
 html[lang='ar'] :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
-html[lang='ar'] :is(.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page) {
+html[lang='ar'] :is(.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page,.lf-export-overlay) {
   --glass-font:"Readex Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
   :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
-  .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page {
+  .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page,.lf-export-overlay {
     --glass-fill:var(--ui-glass-fill);
     --glass-sheet:var(--ui-glass-sheet);
     --glass-reflection:var(--ui-glass-reflection);
     --glass-blur:var(--ui-glass-backdrop);
   }
-}
-@supports (color:color-mix(in srgb,white,black)) {
-  :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
-  .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page { --glass-edge:color-mix(in srgb,var(--ui-ink) 22%,var(--ui-line)); }
 }
 .lf-app.lf-app :is(.lf-home-cinema,.lf-library-cinema,.lf-explore-cinema,.lf-detail-page,.lf-profile-page),
 .lf-character-page .lf-character-page-shell {
@@ -60,18 +57,24 @@ html[lang='ar'] :is(.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice
 .lf-app :is(.lf-bottom-nav,.lf-profile-section-tabs,.lf-home-feed-tabs,.lf-library-view-switch,.lf-library-tabs,.lf-design-inline-search,.lf-explore-format-search,.lf-explore-tabs,.lf-explore-sorts,.lf-work-section-nav,.lf-work-reader-tabs,.lf-community-compose-fab,.lf-profile-banner button:not(.lf-profile-avatar),.lf-reader-layout-tools button,.lf-profile-networks a,.lf-reader-socials a) {
   background:var(--glass-reflection),var(--glass-fill) !important;
   border-color:var(--glass-edge) !important;
-  box-shadow:inset 0 1px 0 #ffffff80,inset 0 -1px 0 #00000014,0 6px 20px #00000016 !important;
+  box-shadow:var(--glass-shadow) !important;
   backdrop-filter:var(--glass-blur) !important;
   -webkit-backdrop-filter:var(--glass-blur) !important;
   color:var(--ui-glass-ink) !important;
 }
 .lf-app :is(.lf-work-panel,.lf-rating-sheet,.lf-community-compose-sheet>section,.lf-community-picker>section,.lf-chapter-more-menu),
-.lf-image-choice-card {
+.lf-image-choice-card,
+.lf-app :is(.lf-community-post-menu>div,.lf-community-edit>section,.lf-community-undo) {
   background:var(--glass-reflection),var(--glass-sheet) !important;
   border-color:var(--glass-edge) !important;
   backdrop-filter:var(--glass-blur) !important;
   -webkit-backdrop-filter:var(--glass-blur) !important;
+  box-shadow:var(--glass-shadow) !important;
+  color:var(--ui-glass-ink) !important;
 }
+.lf-app :is(.lf-community-post-menu>div,.lf-community-edit>section,.lf-community-undo) :is(button,span,h2) { color:var(--ui-glass-ink); }
+.lf-app .lf-community-post-menu>div>button:last-child { color:var(--ui-danger); }
+.lf-app .lf-community-edit-save:not(:disabled) { color:var(--ui-on-action); }
 /* Pair action ink with its fill; legacy white labels cannot follow a light accent. */
 .lf-image-choice-sheet {
   direction:inherit !important;
@@ -187,7 +190,7 @@ html[lang='ar'] :is(.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice
   background:var(--ui-selected) !important;
   border-color:var(--ui-line) !important;
   color:var(--ui-action) !important;
-  box-shadow:inset 0 1px 0 #ffffff66,0 1px 4px #00000014 !important;
+  box-shadow:inset 0 1px 0 var(--ui-glass-highlight),0 1px 4px #00000014 !important;
   font-weight:600 !important;
 }
 .lf-app .lf-bottom-nav .lf-nav-item { color:var(--ui-glass-secondary) !important; }
@@ -199,11 +202,25 @@ html[lang='ar'] :is(.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice
   line-height:1.4 !important;
   white-space:normal !important;
 }
+@media (min-width:700px) {
+  .lf-app .lf-bottom-nav {
+    width:calc(100% - 24px) !important;
+    max-width:560px !important;
+    left:12px !important;
+    right:12px !important;
+    margin-inline:auto !important;
+    transform:none !important;
+    translate:none !important;
+  }
+}
 .lf-app .lf-shop-dialog .lf-shop-tabs,
 .lf-character-page :is(.lf-character-filter-row,.lf-character-search) {
   background:var(--glass-reflection),var(--glass-fill) !important;
   border-color:var(--glass-edge) !important;
   color:var(--ui-glass-ink) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+  box-shadow:var(--glass-shadow) !important;
 }
 .lf-character-page .lf-character-search :is(input,svg) {
   color:var(--ui-glass-ink) !important;
@@ -237,13 +254,17 @@ html[lang='ar'] :is(.lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice
   line-height:1.5 !important;
   color:var(--ui-secondary) !important;
 }
-@media (prefers-reduced-transparency:reduce) {
+@media (prefers-reduced-transparency:reduce), (prefers-contrast:more) {
   :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
-  .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page {
+  .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page,.lf-export-overlay {
     --glass-fill:var(--ui-surface);
     --glass-sheet:var(--ui-surface);
     --glass-reflection:linear-gradient(transparent,transparent);
     --glass-blur:none;
   }
+}
+@media (prefers-contrast:more) {
+  :is(.lf-trust-studio,.lf-data-studio,.lf-settings-sheet,.lf-customize-sheet,.lf-interface-panel),
+  .lf-app,.lf-profile-page,.lf-character-page,.lf-image-choice-sheet,.lf-im-page,.lf-export-overlay { --glass-edge:var(--ui-ink); }
 }
 }

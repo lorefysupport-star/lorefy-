@@ -88,6 +88,9 @@
     ['ink','secondary','muted','action'].forEach(function(key){result['--custom-glass-'+key]=result['--ui-glass-'+key];});
     result['--ui-glass-backdrop']='blur(26px) saturate(150%) brightness('+(dark?'.48':'1.05')+')';
     result['--ui-glass-reflection']='linear-gradient(132deg,rgba(255,255,255,'+glare+'),rgba(255,255,255,.015) 43%,rgba(255,255,255,'+(dark?'.07':'.2')+'))';
+    result['--ui-glass-highlight']='rgba(255,255,255,'+(dark?'.16':'.5')+')';
+    result['--ui-glass-edge']=mix(p.border,p.text,.22);
+    result['--ui-glass-shadow']='inset 0 1px 0 '+result['--ui-glass-highlight']+',inset 0 -1px 0 rgba(0,0,0,.08),0 6px 20px rgba(0,0,0,'+(dark?'.22':'.08')+')';
     result['--ui-page-wash']='linear-gradient(145deg,'+mix(p.bg,p.accent,.16)+' 0%,'+p.bg+' 48%,'+mix(p.bg,p.fill2,.7)+' 100%)';
     return result;
   }

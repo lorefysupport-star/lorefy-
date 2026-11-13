@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v714-notification-studio';
+const CACHE = 'lorefy-v715-glass-unity';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -20,9 +20,9 @@ const CORE = [
  './launch/decorations/crafted/collections.json',
  './launch/decorations/halloween/collections.json',
  './launch/decorations/halloween/atlas-metadata.json',
- './styles/lorefy-share-composer.css?v=20261028-share-composer-v3',
+ './styles/lorefy-share-composer.css?v=20261113-glass-unity-v715',
  './modules/lorefy-share-composer.js?v=20261104-export-previews-v1',
- './styles/lorefy-notification-center.css?v=20261113-notification-studio-v714',
+ './styles/lorefy-notification-center.css?v=20261113-glass-unity-v715',
  './modules/lorefy-notification-center.js?v=20261113-notification-clock-v1',
  './styles/lorefy-profile-refined.css?v=20261111-profile-favorites-v708',
  './styles/lorefy-library-refined.css?v=20261028-reading-type-v1',
@@ -30,7 +30,7 @@ const CORE = [
  './styles/lorefy-home-cinema.css?v=20261026-work-cinema-v1',
  './styles/lorefy-work-cinema.css?v=20261111-work-polish-v710',
  './styles/lorefy-home-immersive.css?v=20261101-home-reading-v1',
- './styles/lorefy-glass-materials.css?v=20261111-theme-contrast-v711',
+ './styles/lorefy-glass-materials.css?v=20261113-glass-unity-v715',
  './styles/lorefy-data-studio.css?v=20261028-trust-studio-v2',
  './styles/lorefy-trust-studio.css?v=20261028-report-studio-v1',
  './styles/lorefy-settings-studio.css?v=20261028-settings-studio-v1',
@@ -86,7 +86,7 @@ const CORE = [
   './styles/lorefy-auth-flow.css?v=20261018-minimal-entry-v1',
   './styles/lorefy-page-refresh.css?v=20261027-ui-refinement-v1',
   './styles/lorefy-design-system.css?v=20261102-profile-empty-v1',
-  './modules/lorefy-design-system.js?v=20261111-theme-contrast-v711',
+  './modules/lorefy-design-system.js?v=20261113-glass-unity-v715',
   './modules/lorefy-data-proxy.js?v=20261101-image-delivery-v1',
   './modules/lorefy-cover-api.js?v=20261101-cover-preparation-v1',
   './modules/lorefy-catalog-policy.js?v=20261101-policy-v1',

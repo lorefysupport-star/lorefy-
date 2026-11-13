@@ -27,9 +27,9 @@ test('image-picker close and portrait-edit controls have full touch targets', ()
 });
 
 test('image picker is themed at its actual mount outside the React app', () => {
-  assert.match(material,/\.lf-app,\.lf-profile-page,\.lf-character-page,\.lf-image-choice-sheet,\.lf-im-page\s*\{/);
-  assert.match(material,/html\[lang='ar'\] :is\([^)]*\.lf-image-choice-sheet,\.lf-im-page\)/);
-  assert.match(material,/\.lf-image-choice-card\s*\{\s*background:var\(--glass-reflection\),var\(--glass-sheet\)/);
+  assert.match(material,/\.lf-app,\.lf-profile-page,\.lf-character-page,\.lf-image-choice-sheet,\.lf-im-page[^{}]*\{/);
+  assert.match(material,/html\[lang='ar'\] :is\([^)]*\.lf-image-choice-sheet,\.lf-im-page[^)]*\)/);
+  assert.match(material,/\.lf-image-choice-card[^{}]*\{\s*background:var\(--glass-reflection\),var\(--glass-sheet\)/);
 });
 
 test('image-picker direction follows the document and long headings wrap', () => {

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T11:47:34.979Z
-Source commit: 8615636a4230409927d90ac0b6f953c6dddf1db1
+Observed: 2026-11-13T12:28:28.010Z
+Source commit: fff4dafc2fea607ac93f04781c92a5bbf0ac90ed
 
 # Docs Source Inventory
 
@@ -65,6 +65,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/FRIEND_RATINGS_USER_FIXES_2026-10-11.md](../../docs/FRIEND_RATINGS_USER_FIXES_2026-10-11.md) (5612 bytes)
 - [docs/FULL_APP_AUDIT_2026-10-04.md](../../docs/FULL_APP_AUDIT_2026-10-04.md) (36684 bytes)
 - [docs/FULL_COLOR_THEME_2026-10-09.md](../../docs/FULL_COLOR_THEME_2026-10-09.md) (2136 bytes)
+- [docs/GLASS_UNITY_V715.md](../../docs/GLASS_UNITY_V715.md) (4606 bytes)
 - [docs/HALLOWEEN_INTEGRATION_2026-11-02.md](../../docs/HALLOWEEN_INTEGRATION_2026-11-02.md) (3817 bytes)
 - [docs/HOME_CINEMA_QA.md](../../docs/HOME_CINEMA_QA.md) (3479 bytes)
 - [docs/ICON_RUNTIME_PERFORMANCE_2026-11-10.md](../../docs/ICON_RUNTIME_PERFORMANCE_2026-11-10.md) (2668 bytes)
