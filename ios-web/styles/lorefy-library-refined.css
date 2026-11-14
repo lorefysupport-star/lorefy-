@@ -38,6 +38,7 @@
 .lf-app .lf-library-cinema .lf-library-grid.is-showcase-view { --showcase-rank:var(--ui-action) !important; }
 .lf-app .lf-library-cinema .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):not(.is-showcase-view) .lf-library-card { grid-template-rows:auto minmax(40px,auto) 4px minmax(20px,auto) !important; }
 .lf-app .lf-library-cinema .lf-library-grid.is-spine-view { container-type:inline-size; padding-inline:18px !important; }
+.lf-app .lf-library-cinema .lf-library-grid:has(> .lf-library-empty) { grid-auto-rows:auto !important; align-items:start !important; }
 .lf-app .lf-library-cinema .lf-library-grid.is-spine-view>.lf-library-card { min-width:0 !important; width:100% !important; }
 .lf-app .lf-library-cinema .lf-library-grid.is-spine-view>.lf-library-card:nth-child(7n+1)::before { inset-inline-start:-18px !important; width:calc(700% + 60px) !important; }
 @supports(width:1cqw) {

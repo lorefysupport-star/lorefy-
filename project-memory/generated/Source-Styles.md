@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-14T12:02:07.369Z
-Source commit: 1eea7b8b5c1fe2b98a41e75f677fe12fbe989b05
+Observed: 2026-11-14T12:38:54.828Z
+Source commit: ec452466268e7eedf54473987ec4711cfe2c0ce4
 
 # Styles Source Inventory
 
@@ -35,7 +35,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-interface-settings.css](../../styles/lorefy-interface-settings.css) (23869 bytes)
 - [styles/lorefy-legal.css](../../styles/lorefy-legal.css) (4324 bytes)
 - [styles/lorefy-library-cinema.css](../../styles/lorefy-library-cinema.css) (20446 bytes)
-- [styles/lorefy-library-refined.css](../../styles/lorefy-library-refined.css) (6995 bytes)
+- [styles/lorefy-library-refined.css](../../styles/lorefy-library-refined.css) (7130 bytes)
 - [styles/lorefy-native-layout-fix.css](../../styles/lorefy-native-layout-fix.css) (6133 bytes)
 - [styles/lorefy-notification-center.css](../../styles/lorefy-notification-center.css) (6803 bytes)
 - [styles/lorefy-page-refresh.css](../../styles/lorefy-page-refresh.css) (2066 bytes)

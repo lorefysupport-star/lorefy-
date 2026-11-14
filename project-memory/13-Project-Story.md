@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-14: [[sessions/2026-11-14-Final-Prebuild]] audits the current source,
+repairs empty-Library layout tap interception and verifies3610 source tests,
+1356 browser assertions and102 responsive checks. Live Apple web OAuth still
+fails; privacy, rights and signed-device release gates are deliberately open.
+
 2026-11-14: [[sessions/2026-11-14-Library-Formats]] applies another observable
 Lootd Library organization pass without copying private implementation. Saved
 formats filter status totals/cards locally; glass tools, Add and reset are

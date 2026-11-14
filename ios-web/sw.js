@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v719-library-format';
+const CACHE = 'lorefy-v720-prebuild-library';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -25,7 +25,7 @@ const CORE = [
  './styles/lorefy-notification-center.css?v=20261113-glass-unity-v715',
  './modules/lorefy-notification-center.js?v=20261113-notification-clock-v1',
  './styles/lorefy-profile-refined.css?v=20261111-profile-favorites-v708',
- './styles/lorefy-library-refined.css?v=20261028-reading-type-v1',
+ './styles/lorefy-library-refined.css?v=20261114-prebuild-v720',
  './assets/home/berserk-home-v1.webp',
  './styles/lorefy-home-cinema.css?v=20261026-work-cinema-v1',
  './styles/lorefy-work-cinema.css?v=20261111-work-polish-v710',

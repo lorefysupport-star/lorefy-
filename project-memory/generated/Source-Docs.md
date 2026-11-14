@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-14T12:02:07.369Z
-Source commit: 1eea7b8b5c1fe2b98a41e75f677fe12fbe989b05
+Observed: 2026-11-14T12:38:54.828Z
+Source commit: ec452466268e7eedf54473987ec4711cfe2c0ce4
 
 # Docs Source Inventory
 
@@ -94,6 +94,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [docs/PERFORMANCE_AUDIT_2026-10-14.md](../../docs/PERFORMANCE_AUDIT_2026-10-14.md) (3434 bytes)
 - [docs/PERFORMANCE_REVIEW_2026-11-01.md](../../docs/PERFORMANCE_REVIEW_2026-11-01.md) (4439 bytes)
 - [docs/PREBUILD_ACCOUNTS_SHARE_2026-10-01.md](../../docs/PREBUILD_ACCOUNTS_SHARE_2026-10-01.md) (6767 bytes)
+- [docs/PREBUILD_FINAL_2026-11-14.md](../../docs/PREBUILD_FINAL_2026-11-14.md) (5751 bytes)
 - [docs/PROFILE_ATELIER_2026-10-10.md](../../docs/PROFILE_ATELIER_2026-10-10.md) (3262 bytes)
 - [docs/PROFILE_COMPACT_REPAIRS_2026-11-05.md](../../docs/PROFILE_COMPACT_REPAIRS_2026-11-05.md) (6889 bytes)
 - [docs/PROFILE_CUSTOM_GLASS_QA.md](../../docs/PROFILE_CUSTOM_GLASS_QA.md) (3895 bytes)

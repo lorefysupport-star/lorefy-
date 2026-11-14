@@ -6,6 +6,10 @@ aliases: ["آيفون", "بيلد", "تست فلاي", "ios", "TestFlight", "saf
 ---
 # غلاف iOS والتحزيم
 
+[[sessions/2026-11-14-Final-Prebuild]] rechecks current source and both native
+web mirrors, fixes empty-Library hit testing, and separates3610 green source
+tests from live Apple web OAuth failure and privacy/rights/device release gates.
+
 [[sessions/2026-11-02-Prebuild-Repairs]] pins patched glob/minimatch only under
 the dev-only rimraf dependency. CLI/native Capacitor remain8.4.3; cancellation
 and cleanup compatibility,3361 tests and npm audit pass. This source-tooling

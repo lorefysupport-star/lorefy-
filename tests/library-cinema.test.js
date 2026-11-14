@@ -65,3 +65,11 @@ test('Library heading has a named add action and summary can reset active filter
  const summary=api().Summary({count:2,total:9,language:'en',filtered:true,onReset:()=>resets++});
  summary.children.find(n=>n.type==='button').props.onClick();assert.equal(resets,1);
 });
+
+test('an empty Library sizes its row from the message instead of overflowing a book-height track',()=>{
+ const css=fs.readFileSync('styles/lorefy-library-refined.css','utf8');
+ const rule=css.match(/\.lf-library-grid:has\(>\s*\.lf-library-empty\)\s*\{([^}]+)\}/);
+ assert.ok(rule,'empty layouts need their own content-sized row');
+ assert.match(rule[1],/grid-auto-rows:\s*auto\s*!important/);
+ assert.match(rule[1],/align-items:\s*start\s*!important/);
+});
