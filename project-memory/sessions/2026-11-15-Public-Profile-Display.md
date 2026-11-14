@@ -5,6 +5,12 @@ date: 2026-11-15
 ---
 # Public Favorites Presentation
 
+Follow-up: the owner requested every display mode. The browser matrix now
+includes the pre-existing List (`shelf`) mode as well:600/600 cases pass,
+576 visitor and24 owner cases. No additional application code was changed.
+The new startup video is a separate render-boundary investigation; it is not
+resolved or certified by profile layout checks.
+
 The owner's Showcase choice was stored correctly, but the deployed
 `get_public_profile_appearance(uuid)` recognized only `spines` and `shelf`,
 turning `showcase` into `grid`. The additive migration

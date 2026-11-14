@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-14T22:32:43.056Z
-Source commit: 39315a8321b043e6f7dc22840d6e6eac51175b52
+Observed: 2026-11-14T22:42:45.402Z
+Source commit: 9612db729d96b6a3bff0ea8da98926c129997879
 
 # Tests Source Inventory
 
@@ -41,7 +41,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [qa/panoramic-identity-fixture.html](../../qa/panoramic-identity-fixture.html) (2342 bytes)
 - [qa/profile-caption-browser.cjs](../../qa/profile-caption-browser.cjs) (2892 bytes)
 - [qa/profile-decoration-fixture.html](../../qa/profile-decoration-fixture.html) (2347 bytes)
-- [qa/profile-display-browser.cjs](../../qa/profile-display-browser.cjs) (7134 bytes)
+- [qa/profile-display-browser.cjs](../../qa/profile-display-browser.cjs) (7150 bytes)
 - [qa/profile-header-browser.cjs](../../qa/profile-header-browser.cjs) (8315 bytes)
 - [qa/profile-header.html](../../qa/profile-header.html) (5027 bytes)
 - [qa/profile-sections-browser.cjs](../../qa/profile-sections-browser.cjs) (10474 bytes)

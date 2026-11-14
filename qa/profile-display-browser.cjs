@@ -19,7 +19,7 @@ fs.mkdirSync(out, {recursive:true});
     for (const width of [320,440]) for (const lang of ['ar','en']) for (const theme of ['dark','light','custom-light-51ad79']) {
     await page.setViewportSize({width,height:956});
     await page.evaluate(lang=>{document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';},lang);
-    for (const layout of ['normal','immersive','reader']) for (const view of ['grid','spines','showcase']) for (const count of [1,3,4,7]) {
+    for (const layout of ['normal','immersive','reader']) for (const view of ['grid','spines','showcase','shelf']) for (const count of [1,3,4,7]) {
       await page.evaluate(({layout,view,count,theme,art}) => {
         if (LorefyBackend.mode !== 'demo') throw Error('QA requires isolated demo mode');
         const reader = {...LorefyPreviewReaders.findReader('qa-tester-01'),id:'display-'+layout+'-'+view+'-'+count,
@@ -53,7 +53,7 @@ fs.mkdirSync(out, {recursive:true});
       }
     }
     }
-    for (const width of [320,440]) for (const layout of ['normal','immersive','reader']) for (const view of ['grid','spines','showcase']) {
+    for (const width of [320,440]) for (const layout of ['normal','immersive','reader']) for (const view of ['grid','spines','showcase','shelf']) {
       await page.evaluate(({layout,view,art})=>{
         if (LorefyBackend.mode!=='demo') throw Error('QA requires isolated demo mode');
         const ids=LorefyMangaData.slice(0,7).map(work=>work.id);
