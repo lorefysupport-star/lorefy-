@@ -93,7 +93,7 @@ html .lf-app.lf-app :is(#lf-reader-book-view,.lf-profile-page[data-profile-layou
 
 /* Keep saved favorites intact; only their presentation has a smaller window. */
 html .lf-app.lf-app :is(#lf-favorite-window,.lf-profile-favorites) > .lf-favorite-overflow { display: none !important; }
-html .lf-app.lf-app :is(#lf-wood-shelf,.lf-profile-page > .lf-profile-favorites.is-spine-view,.lf-reader-shelf-rail.is-spine-view) {
+html .lf-app.lf-app :is(#lf-wood-shelf,.lf-profile-page > .lf-profile-favorites.is-spine-view) {
   grid-template-columns: repeat(7,minmax(0,1fr)) !important; gap: 4px !important;
   width: calc(100% - 24px) !important; max-width: 560px !important;
   padding: 0 12px 32px !important; margin-inline: auto !important;

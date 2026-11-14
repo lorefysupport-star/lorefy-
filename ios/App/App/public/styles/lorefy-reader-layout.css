@@ -125,7 +125,7 @@ html[lang='en'] :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='rea
 :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-top-works-head > button { display: flex !important; min-height: 44px; background: transparent !important; color: var(--ui-action) !important; border: 0 !important; box-shadow: none !important; }
 :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-top-works-head > button svg { width: 16px; height: 16px; stroke-width: 1.75; }
 :is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) .lf-profile-favorites:not(.lf-profile-top-characters-grid),
-:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) [data-profile-shelf='works'] .lf-reader-shelf-rail {
+:is(#lf-reader-layout, .lf-profile-page[data-profile-layout='reader']) [data-profile-shelf='works'] .lf-reader-shelf-rail:not(.is-spine-view):not(.is-showcase-view) {
   display: grid !important; grid-template-columns: repeat(4,minmax(0,1fr)) !important;
   grid-auto-flow: row !important; gap: 10px !important; align-items: start !important;
   width: 100% !important; max-width: none !important; box-sizing: border-box;

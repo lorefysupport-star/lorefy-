@@ -285,7 +285,8 @@
     function shelf(kind, items) {
       return h('section', { className:'lf-reader-shelf', 'data-profile-shelf':kind, 'aria-label':kind === 'works' ? 'الأعمال المفضلة' : 'الشخصيات المفضلة' },
         h('header', { className:'lf-reader-shelf-head' }, h('h2', null, kind === 'works' ? 'الأعمال المفضلة' : 'الشخصيات المفضلة')),
-        items.length ? h('div', { className:'lf-reader-shelf-rail' + (kind==='works' && spine ? ' is-spine-view' : kind==='works' && showcase ? ' is-showcase-view' : '') }, ...items)
+        items.length ? h('div', { className:'lf-reader-shelf-rail' + (kind==='works' && spine ? ' is-spine-view' : kind==='works' && showcase ? ' is-showcase-view' : ''),
+          style:kind==='works' && spine ? {'--profile-spine-count':Math.min(items.length,7)} : undefined }, ...items)
           : ready && h('p', {className:'lf-reader-empty', 'data-visitor-shelf-empty':kind}, root.document?.documentElement?.lang==='en'
             ? kind==='works' ? 'No favorite works yet.' : 'No favorite characters yet.'
             : kind==='works' ? 'لا أعمال مفضلة بعد.' : 'لا شخصيات مفضلة بعد.')

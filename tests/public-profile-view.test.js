@@ -74,6 +74,14 @@ test('all seven public shelf favorites remain independently clickable',()=>{
   assert.deepEqual(opened,['a','b','c','d','e','f','g']);
 });
 
+test('visitor spine columns follow actual resolved favorites instead of reserving seven empty positions',()=>{
+  for (const count of [1,3,4,7,8]) {
+    const rail=nodes(render({id:'reader-a',library_view:'spines',favorite_work_ids:Array.from({length:count},(_,i)=>String(i))}))
+      .find(n=>n.props.className==='lf-reader-shelf-rail is-spine-view');
+    assert.equal(rail.props.style?.['--profile-spine-count'],Math.min(count,7));
+  }
+});
+
 test('owner showcase reaches both public favorites and library without dropping work actions',()=>{
   const opened=[];
   const tree=render({id:'showcase-owner',theme:'light',library_view:'showcase',favorite_work_ids:['a','b','c','d'],library_entries:{a:'reading',b:'completed'}},{onWork:work=>opened.push(work.id)});

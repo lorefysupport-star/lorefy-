@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Public presentation: [[sessions/2026-11-15-Public-Profile-Display]] covers all4
+projected view modes, SQL privacy/block/privilege guards, real-count shelves and
+three layout variants.3618 source tests and450 browser cases pass. Production
+Showcase projection verified separately; source UI repairs are not a new binary.
+
 Final prebuild: [[sessions/2026-11-14-Final-Prebuild]] records3610 passing source
 tests,1356 browser workflow assertions,102 responsive checks and96 empty-layout
 cases. Source/native asset parity is distinct from physical-device, service and

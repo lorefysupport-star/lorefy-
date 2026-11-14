@@ -6,6 +6,13 @@ aliases: ["بروفايل", "شخص", "لست", "قوائم", "مفضلة", "pro
 ---
 # البروفايلات والمفضلة واللستات
 
+2026-11-15: [[sessions/2026-11-15-Public-Profile-Display]] fixes the deployed
+appearance projection rejecting saved Showcase, after approval and SQL tests.
+Visitor spines use resolved favorite count and full available rail width;
+Reader no longer overrides their baseline.3618 source tests and450 browser
+cases pass. The projection is live; updated renderer/CSS are source-only until
+delivered. No user-state/RLS changes or new native binary.
+
 2026-11-11: [[sessions/2026-11-11-Profile-Favorites]] removes image-edit badges
 from profile favorites while retaining accessible editor entries. Selected-slot
 cover action uses the existing picker and saved custom art, with account guards.

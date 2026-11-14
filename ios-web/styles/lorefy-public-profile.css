@@ -358,10 +358,10 @@ html:root:root:root:root:root:root:root .lf-reader-full [data-profile-shelf='wor
   grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px !important;
   max-width: 428px; margin-inline: auto; align-items: start;
 }
-html:root:root:root:root:root:root:root .lf-reader-full .lf-reader-shelf-rail.is-spine-view {
-  grid-template-columns: repeat(4,minmax(0,74px)) !important; grid-auto-rows: auto;
-  justify-content: center; align-items: end; gap: 8px !important;
-  width: 100%; max-width: 336px; padding: 0 8px 18px; box-sizing: border-box;
+html:root:root:root:root:root:root:root .lf-reader-full [data-profile-shelf='works'] .lf-reader-shelf-rail.is-spine-view {
+  grid-template-columns: repeat(var(--profile-spine-count,7),minmax(0,74px)) !important; grid-auto-rows: auto;
+  justify-content: center !important; align-items: end !important; gap: 4px !important;
+  width: 100% !important; max-width: 560px !important; padding: 0 12px 32px !important; box-sizing: border-box;
   position: relative; overflow: visible; background: none;
 }
 .lf-reader-shelf-rail.is-spine-view::after {
@@ -369,9 +369,9 @@ html:root:root:root:root:root:root:root .lf-reader-full .lf-reader-shelf-rail.is
   border-top: 2px solid var(--ui-separator); background: var(--ui-muted);
   box-shadow: inset 0 1px rgba(255,255,255,.18),0 3px 4px rgba(0,0,0,.16); pointer-events: none;
 }
-.lf-reader-shelf-rail.is-spine-view > .lf-reader-cover {
-  display: flex; align-items: end; height: var(--spine-height,196px); aspect-ratio: auto;
-  border: 0; border-radius: 0; background: transparent; overflow: visible;
+html:root:root:root:root:root:root:root .lf-reader-full [data-profile-shelf='works'] .is-spine-view > .lf-reader-cover {
+  display: flex !important; align-items: end !important; height: var(--spine-height,196px) !important; aspect-ratio: auto !important;
+  padding: 0 !important; margin: 0 !important; border: 0 !important; border-radius: 0; background: transparent; overflow: visible;
 }
 .lf-reader-shelf-rail.is-spine-view > .lf-reader-cover.is-empty {
   height: 180px; border: 1px dashed var(--ui-separator); border-radius: 50% 50% 4px 4px / 9px 9px 4px 4px;
@@ -379,6 +379,7 @@ html:root:root:root:root:root:root:root .lf-reader-full .lf-reader-shelf-rail.is
 .lf-reader-shelf-rail.is-spine-view > .lf-reader-cover.is-empty:nth-child(even) { height: 196px; }
 .lf-reader-shelf-rail.is-spine-view .lf-library-cover {
   position: relative; display: block; width: 100%; height: var(--spine-height,196px);
+  margin: 0; flex-shrink: 0;
   aspect-ratio: auto; overflow: hidden; border-radius: 50% 50% 4px 4px / 9px 9px 4px 4px;
   box-shadow: 0 2px 3px rgba(0,0,0,.24);
 }

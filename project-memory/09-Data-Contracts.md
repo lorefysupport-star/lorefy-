@@ -6,6 +6,13 @@ aliases: ["تدفق البيانات", "الحفظ", "storage", "ownership"]
 ---
 # عقود البيانات
 
+Public favorites: [[sessions/2026-11-15-Public-Profile-Display]]. The public
+appearance projection must preserve `showcase` alongside `spines` and `shelf`;
+unknown modes remain `grid`. Owner storage and visitor projection are separate
+contracts. Real resolved favorite count controls visitor spine columns, not
+the viewer's preferences or padded owner editor slots. Existing privacy and
+both blocking directions remain authoritative.
+
 Crafted frame contract: [[sessions/2026-11-05-Crafted-Frames-Integration]]. Only
 eight fixed `crafted-*` IDs are available for frame/page selection, not effects.
 Catalog geometry and local atlas paths are validated. Existing owner-scoped
