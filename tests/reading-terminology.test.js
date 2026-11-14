@@ -53,8 +53,8 @@ test('visitor library status also uses the shared reading formatter',()=>{
   assert.match(src,/root\.LorefyI18n\.readingStatusLabel\(status,/);
 });
 test('reading vocabulary consumers use current runtime cache keys',()=>{
-  for(const entry of ['index.html','sw.js'])for(const asset of ['uploads/files/lorefy-app.js','modules/lorefy-i18n.js','modules/lorefy-work-panels.js','modules/lorefy-growth-features.js','modules/lorefy-public-profile.js'])assert.ok(fs.readFileSync(entry,'utf8').includes(asset+'?v='+(asset==='modules/lorefy-work-panels.js'?'20261029-cover-editions-v1':asset==='modules/lorefy-growth-features.js'?'20261111-work-polish-v710':asset==='uploads/files/lorefy-app.js'?'20261113-notification-studio-v714':asset==='modules/lorefy-public-profile.js'?'20261111-profile-flow-v707':'20261102-inbox-copy-v1')),asset);
-  assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v718-search-format/);
+  for(const entry of ['index.html','sw.js'])for(const asset of ['uploads/files/lorefy-app.js','modules/lorefy-i18n.js','modules/lorefy-work-panels.js','modules/lorefy-growth-features.js','modules/lorefy-public-profile.js'])assert.ok(fs.readFileSync(entry,'utf8').includes(asset+'?v='+(asset==='modules/lorefy-work-panels.js'?'20261029-cover-editions-v1':asset==='modules/lorefy-growth-features.js'?'20261111-work-polish-v710':asset==='uploads/files/lorefy-app.js'?'20261114-library-format-v719':asset==='modules/lorefy-public-profile.js'?'20261111-profile-flow-v707':'20261102-inbox-copy-v1')),asset);
+  assert.match(fs.readFileSync('sw.js','utf8'),/lorefy-v719-library-format/);
 });
 test('profile reading results are named keyboard buttons rather than unnamed clickable containers',()=>{
   assert.ok(source.includes('React.createElement("button",{key:d.id,type:"button","data-reading-work-id":d.id,"aria-label":uiText(W,"فتح "+d.title,"Open "+d.title),onClick:()=>T(d)'));
@@ -63,5 +63,5 @@ for(const lang of ['ar','en'])test(`empty library filters share the profile mean
   global.LorefyI18n=i18n;global.NenIcons={};global.React={createElement:(tag,props,...children)=>({tag,props,children})};
   const library=require('../modules/lorefy-library-cinema');
   for(const status of stored){const tree=library.Empty({language:lang,filtered:true,status});assert.equal(tree.children.find(n=>n?.tag==='strong').children[0],i18n.readingStatusEmpty(status,lang));}
-  assert.ok(source.includes('filtered:q!=="all",status:q,'));
+  assert.ok(source.includes('filtered:q!=="all"||!!libraryModel.format,format:libraryModel.format,status:q,'));
 });

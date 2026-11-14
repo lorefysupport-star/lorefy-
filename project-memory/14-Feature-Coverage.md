@@ -6,6 +6,11 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+Library formats: [[sessions/2026-11-14-Library-Formats]] covers eight format
+boundaries, full status totals, query/sort/paging and owner/return continuity.
+New glass controls verified in96 AR/EN/theme/width/layout browser cases; no
+production service or iPhone performance acceptance claim.
+
 Search filters: [[sessions/2026-11-13-Search-Format-Idle]] covers blank-query
 format recommendations/loading and advanced filter/sort/reset. All eight types
 and typed queries verified in a local browser; no live-provider/device claim.

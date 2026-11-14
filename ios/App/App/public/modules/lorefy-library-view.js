@@ -168,7 +168,7 @@
       if (next !== label.textContent) label.textContent = next;
     });
 
-    var switcher = header.querySelector('.lf-library-view-switch');
+    var switcher = page.querySelector('.lf-library-view-switch');
     if (!switcher) {
       switcher = doc.createElement('div');
       switcher.className = 'lf-library-view-switch';
@@ -191,7 +191,8 @@
         });
         switcher.appendChild(button);
       });
-      header.insertBefore(switcher, header.querySelector('.lf-library-search') || header.querySelector('.lf-library-tabs'));
+      var controls = page.querySelector('.lf-library-controls') || header;
+      controls.insertBefore(switcher, controls.firstChild);
       try { if (root.lucide && root.lucide.createIcons) root.lucide.createIcons({ nodes: [switcher] }); } catch (error) {}
     }
     var english = doc.documentElement.lang === 'en';

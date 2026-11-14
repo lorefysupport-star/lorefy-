@@ -47,3 +47,21 @@ test('Library header cancels legacy title padding and absolute layout controls',
  assert.match(css,/\.lf-library-cinema \.lf-library-copy>span\{[^}]*direction:ltr!important/);
  assert.match(css,/\.lf-library-copy strong\{[^}]*white-space:normal!important/);
 });
+
+test('Library tools expose named format and sort controls with owned format counts',()=>{
+ global.React={createElement:(type,props,...children)=>({type,props:props||{},children:children.flat().filter(Boolean)})};
+ global.NenIcons={BookOpen:'BookOpen',ArrowDownWideNarrow:'ArrowDownWideNarrow'};
+ let format='',order='added';const tree=api().Tools({language:'en',format:'رواية',formats:[{value:'رواية',label:'Novel',count:4}],typeLabel:()=> 'Novel',order,onFormat:value=>format=value,onOrder:value=>order=value});
+ const walk=n=>n&&typeof n==='object'?[n,...(n.children||[]).flatMap(walk)]:[],nodes=walk(tree);
+ const select=nodes.find(n=>n.props['aria-label']==='Work type');assert.equal(select.props.value,'رواية');
+ assert.ok(nodes.some(n=>n.type==='option'&&n.children.includes('Novel · 4')));select.props.onChange({target:{value:''}});assert.equal(format,'');
+ nodes.find(n=>n.props['aria-label']==='Sort library').props.onChange({target:{value:'title'}});assert.equal(order,'title');
+});
+
+test('Library heading has a named add action and summary can reset active filters',()=>{
+ global.React={createElement:(type,props,...children)=>({type,props:props||{},children:children.flat().filter(Boolean)})};global.NenIcons={Plus:'Plus'};
+ let adds=0,resets=0;const heading=api().Heading({language:'en',onExplore:()=>adds++});
+ const action=heading.children.find(n=>n.type==='button');assert.equal(action.props['aria-label'],'Add work');action.props.onClick();assert.equal(adds,1);
+ const summary=api().Summary({count:2,total:9,language:'en',filtered:true,onReset:()=>resets++});
+ summary.children.find(n=>n.type==='button').props.onClick();assert.equal(resets,1);
+});

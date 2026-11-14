@@ -6,6 +6,11 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+2026-11-14: [[sessions/2026-11-14-Library-Formats]] applies another observable
+Lootd Library organization pass without copying private implementation. Saved
+formats filter status totals/cards locally; glass tools, Add and reset are
+clearer. All four views/reading data remain; device certification is separate.
+
 2026-11-13: [[sessions/2026-11-13-Search-Format-Idle]] repairs format selection
 before typing: recommendations/load now follow the selected type and advanced
 filters rather than retaining All. Browser verification covers eight types,

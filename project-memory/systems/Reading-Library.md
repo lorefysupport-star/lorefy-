@@ -6,6 +6,11 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+[[sessions/2026-11-14-Library-Formats]] adds the saved-format selector and scopes
+status totals/results before paging, with owner-scoped return continuity. New
+Library controls use the existing glass palette and retain all four layouts.
+88 focused and96 browser layout cases; device/provider performance separate.
+
 [[sessions/2026-11-11-Library-Lootd]] scopes the Lootd follow-up to Library:
 local typing, cached snapshots,42-item render batches with full totals, stable
 progress sorting and owner-scoped return state. Four modes and reading data stay;

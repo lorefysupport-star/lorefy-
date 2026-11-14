@@ -13,7 +13,7 @@ function harness(count=1000,owner='library-owner') {
     useLayoutEffect(fn,deps){return this.useEffect(fn,deps);}};
   const root={React,addEventListener(name,fn){listeners.set(name,fn);},removeEventListener(name){listeners.delete(name);}};
   vm.runInNewContext(fs.readFileSync('modules/lorefy-library-cinema.js','utf8'),{window:root,module:{exports:{}},Map,Set});
-  const props={owner,library:Object.fromEntries(catalog.map((work,i)=>[work.id,i%2?'read':'reading'])),progress:{},query:'',status:'all',order:'added',language:'en',done:'read',
+  const props={owner,library:Object.fromEntries(catalog.map((work,i)=>[work.id,i%2?'read':'reading'])),progress:{},query:'',status:'all',order:'added',language:'en',done:'read',typeKey:require('../modules/lorefy-explore-studio.js').formatKey,
     getWork(id){resolves++;return catalog.find(w=>w.id===id);},getProgress(work){progressReads++;return props.progress[work.id]||{};},percentage:(work,p)=>p.chapter||0,
     matches(work,query){matches++;return work.title.includes(query);},render(value){model=value;if(value.pageProps.ref)value.pageProps.ref.current=page;return value;}};
   function render(){si=mi=ri=ei=0;return root.LorefyLibraryCinema.Collection(props);}
@@ -65,6 +65,48 @@ test('returning to the same Library restores revealed batch and scroll, without 
 test('changing filters resets the batch and scroll and cannot invoke an obsolete more action',()=>{
   const app=harness(100);let m=app.render();app.flush();const old=m.onMore;app.props.status='read';m=app.render();app.flush();old();m=app.render();assert.equal(m.visible.length,42);assert.equal(app.page.scrollTop,0);
 });
+
+test('format options count the complete saved collection and merge bilingual aliases',()=>{
+  const app=harness(100);app.catalog.forEach((work,i)=>{work.type=i%2?'Manga':'Novel';});app.catalog[0].type='رواية';
+  const m=app.render();assert.equal(m.formats.length,2);
+  assert.equal(m.formats.find(f=>f.value==='رواية').count,50);
+  assert.equal(m.formats.find(f=>f.value==='مانجا').count,50);
+  assert.equal(m.total,100);assert.equal(m.visible.length,42);
+});
+
+for(const [type,alias]of [['Manga','مانجا'],['Manhwa','مانهوا'],['Manhua','مانهوا صيني'],['Comics','كوميكس'],['Novel','رواية'],['Book','كتاب'],['Light Novel','لايت نوفل'],['Web Novel','ويب نوفل']])test('Library '+type+' filter applies before status, query and paging',()=>{
+  const app=harness(100);app.catalog.forEach((work,i)=>{work.type=i%2?'Book':type;});
+  let m=app.render();app.flush();m.onFormat(alias);m=app.render();app.flush();
+  const expected=type==='Book'?100:50;assert.equal(m.results.length,expected);assert.equal(m.counts.reading,50);
+  if(type!=='Book')assert.equal(m.counts.read||0,0);
+  m.onQuery('0098');m=app.render();app.flush();assert.deepEqual(Array.from(m.results,row=>row.id),['work-98']);
+  assert.equal(m.counts.reading,50,'search text must not replace format-scoped status totals');
+  m.onQuery('');app.render();app.flush();app.props.status='read';m=app.render();
+  assert.equal(m.results.length,type==='Book'?50:0,'reading state and format must both match');
+});
+
+test('format selection restores after detail navigation and never leaks across owners',()=>{
+  const app=harness(100);app.catalog.forEach(work=>work.type='Novel');let m=app.render();app.flush();
+  m.onFormat('رواية');m=app.render();app.flush();m.onMore();m=app.render();app.flush();app.page.scrollTop=420;m.pageProps.onScroll({currentTarget:app.page});
+  m=app.remount();assert.equal(m.format,'رواية');assert.equal(m.visible.length,84);assert.equal(app.page.scrollTop,420);
+  app.props.owner='different-owner';m=app.render();app.flush();assert.equal(m.format,'');assert.equal(m.visible.length,42);assert.equal(app.page.scrollTop,0);
+});
+
+test('changing format resets paging and ignores retained callbacks from its previous context',()=>{
+  const app=harness(100);app.catalog.forEach(work=>work.type='Novel');let m=app.render();app.flush();const oldMore=m.onMore,oldFormat=m.onFormat;
+  m.onFormat('Novel');m=app.render();app.flush();oldMore();oldFormat('Book');m=app.render();assert.equal(m.visible.length,42);assert.equal(m.format,'رواية');
+});
+
+test('format-only empty state recovers in the Library and does not invent missing membership',()=>{
+  const app=harness(3);app.catalog.forEach(work=>work.type='Novel');let m=app.render();app.flush();m.onFormat('Comics');m=app.render();app.flush();
+  assert.equal(m.empty,true);assert.equal(m.total,3);assert.equal(m.results.length,0);m.onFormat('');m=app.render();assert.equal(m.results.length,3);
+});
+
+test('format switches reuse the membership snapshot without resolving catalog records again',()=>{
+  const app=harness(100);app.catalog.forEach((work,i)=>work.type=i%2?'Novel':'Manga');let m=app.render();app.flush();const before=app.counts().resolves;
+  for(const type of ['Novel','Manga','Book','']){m.onFormat(type);m=app.render();app.flush();}
+  assert.equal(app.counts().resolves,before);
+});
 test('filter-empty and query-empty actions recover within the Library before navigating elsewhere',()=>{
   const app=harness(0);let cleared=0,reset=0;
   const filtered=app.root.LorefyLibraryCinema.Empty({language:'en',filtered:true,status:'read',onReset:()=>reset++});
@@ -76,15 +118,17 @@ test('Library render is wired to the bounded collection with accessible progress
   assert.match(app,/LorefyLibraryCinema\.Collection/);assert.match(app,/libraryModel\.visible/);assert.match(app,/libraryModel\.pageProps/);assert.match(app,/libraryModel\.hasMore/);
   assert.match(css,/\.lf-library-more\{[^}]*min-height:44px/);
 });
-test('Library status badges do not reserve excess width at the expense of status words',()=>{
+test('Library status controls remain horizontally reachable without splitting their labels',()=>{
   const css=fs.readFileSync('styles/lorefy-library-cinema.css','utf8');
-  assert.match(css,/\.lf-library-tabs button b\{[^}]*min-width:0!important/);
-  assert.match(css,/@media\(max-width:350px\)[\s\S]*\.lf-library-tabs\{[^}]*grid-template-columns:repeat\(2,minmax\(0,1fr\)\)!important/);
+  assert.match(css,/\.lf-app \.lf-library-cinema \.lf-library-tabs\{[^}]*overflow-x:auto!important/);
+  assert.match(css,/\.lf-app \.lf-library-cinema \.lf-library-tabs button\{[^}]*white-space:nowrap!important/);
+  assert.match(css,/@media\(max-width:359px\)\{\.lf-library-filter-tools\{grid-template-columns:minmax\(0,1fr\)/);
 });
 
 test('the actual Library renderer mounts only the batch while the summary retains every result',()=>{
   const app=harness(),source=fs.readFileSync('uploads/files/lorefy-app.js','utf8'),start=source.indexOf(',dr=()=>{'),end=source.indexOf(',cr=()=>{',start);
-  const context={React:app.root.React,window:{LorefyLibraryCinema:app.root.LorefyLibraryCinema,LorefyCatalogData:{matchesCatalogQuery:app.props.matches},LorefyLibraryMedia:{card:node=>node}},
+  app.catalog.forEach((work,i)=>work.type=i%2?'Manga':'Novel');
+  const context={React:app.root.React,window:{LorefyExploreStudio:require('../modules/lorefy-explore-studio.js'),LorefyLibraryCinema:app.root.LorefyLibraryCinema,LorefyCatalogData:{matchesCatalogQuery:app.props.matches},LorefyLibraryMedia:{card:node=>node}},
     b:app.props.library,le:app.props.progress,q:'all',libraryQuery:'',libraryOrder:'added',W:'en',Y:app.props.owner,C:{},
     STATUS_DONE:'read',STATUS_READING:'reading',STATUS_WISHLIST:'wish',STATUS_PAUSED:'paused',STATUS_DROPPED:'dropped',
     workById:app.props.getWork,je:app.props.getProgress,progressPercent:app.props.percentage,uiText:(language,ar,en)=>en,lorefyReadingStatusLabel:value=>value,
@@ -94,9 +138,14 @@ test('the actual Library renderer mounts only the batch while the summary retain
   const nodes=node=>node&&typeof node==='object'?[node,...node.children.flat(Infinity).flatMap(nodes)]:[];
   const all=nodes(tree),cards=all.filter(node=>node.props.className==='lf-library-card');
   assert.equal(cards.length,42);assert.equal(all.find(node=>node.type===app.root.LorefyLibraryCinema.Summary).props.count,1000);
-  assert.equal(all.find(node=>node.type==='select').props['aria-label'],'Sort library');
+  assert.equal(nodes(cards[0]).find(node=>node.type==='span'&&node.props['data-no-translate']==='1').children[0],'reading','a new checkpoint uses the short saved status, not repeated missing-progress prose');
+  assert.equal(all.find(node=>node.type===app.root.LorefyLibraryCinema.Tools).props.order,'added');
   all.find(node=>node.props.className==='lf-library-more').props.onClick();assert.equal(nodes(app.render()).filter(node=>node.props.className==='lf-library-card').length,84);
   nodes(app.render()).find(node=>node.type===app.root.LorefyLibraryCinema.Search).props.onChange('0999');
   const searched=nodes(app.render());assert.equal(searched.filter(node=>node.props.className==='lf-library-card').length,1);
   assert.equal(searched.find(node=>node.type===app.root.LorefyLibraryCinema.Search).props.value,'0999');
+  searched.find(node=>node.type===app.root.LorefyLibraryCinema.Search).props.onChange('');app.render();app.flush();
+  nodes(app.render()).find(node=>node.type===app.root.LorefyLibraryCinema.Tools).props.onFormat('Novel');
+  const filtered=nodes(app.render());assert.equal(filtered.find(node=>node.type===app.root.LorefyLibraryCinema.Summary).props.count,500);
+  assert.equal(filtered.filter(node=>node.props.className==='lf-library-card').length,42);
 });

@@ -1,5 +1,5 @@
 /* Lorefy service worker — same-origin app assets only. */
-const CACHE = 'lorefy-v718-search-format';
+const CACHE = 'lorefy-v719-library-format';
 const freshAssetPaths = [
   '/launch/decorations/crafted/',
   '/launch/decorations/halloween/',
@@ -40,8 +40,8 @@ const CORE = [
  './styles/lorefy-work-studio.css?v=20261029-cover-editions-v1',
  './modules/lorefy-work-panels.js?v=20261029-cover-editions-v1',
  './modules/lorefy-home-cinema.js?v=20261101-home-reading-v1',
- './styles/lorefy-library-cinema.css?v=20261111-library-flow-v1',
- './modules/lorefy-library-cinema.js?v=20261111-library-flow-v1',
+ './styles/lorefy-library-cinema.css?v=20261114-library-format-v719',
+ './modules/lorefy-library-cinema.js?v=20261114-library-format-v719',
   './styles/lorefy-explore-cinema.css?v=20261110-explore-flow-v1',
   './assets/shelves/wall-walnut-v1.png',
  './modules/lorefy-local-redesign.js?v=20261022-profile-1',
@@ -147,7 +147,7 @@ const CORE = [
   './modules/lorefy-public-profile.js?v=20261111-profile-flow-v707',
   './modules/lorefy-community.js?v=20261113-notification-studio-v714',
   './modules/lorefy-page-refresh.js?v=20261027-ui-refinement-v1',
-  './modules/lorefy-library-view.js?v=20261029-library-media-v1',
+  './modules/lorefy-library-view.js?v=20261114-library-format-v719',
   './modules/lorefy-interface-settings.js?v=20261028-settings-studio-v1',
   './modules/lorefy-profile-shop.js?v=20261105-profile-compact-v1',
   './styles/lorefy-decoration-store.css?v=20261025-store-v2',
@@ -187,7 +187,7 @@ const CORE = [
   './styles/lorefy-book-showcase.css?v=20261028-reading-type-v1',
   './styles/lorefy-profile-header.css?v=20261111-profile-flow-v707',
   './modules/lorefy-profile-header.js?v=20261105-profile-compact-v1',
-  './uploads/files/lorefy-app.js?v=20261113-notification-studio-v714',
+  './uploads/files/lorefy-app.js?v=20261114-library-format-v719',
   './modules/lorefy-catalog-detail-cache.js?v=20260924-catalog-search-v1',
   './modules/lorefy-open-catalog.js?v=20261025-open-catalog-search-audit-v2',
   './modules/lorefy-api-catalog.js?v=20261113-comics-coverage-v717',

@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-13T17:48:29.703Z
-Source commit: 5dee8b02dea6d3bca25e13f9c8fb8eb66a24fda0
+Observed: 2026-11-14T12:02:07.369Z
+Source commit: 1eea7b8b5c1fe2b98a41e75f677fe12fbe989b05
 
 # Modules Source Inventory
 
@@ -55,9 +55,9 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-interface-continuity.js](../../modules/lorefy-interface-continuity.js) (11460 bytes)
 - [modules/lorefy-interface-settings.js](../../modules/lorefy-interface-settings.js) (15005 bytes)
 - [modules/lorefy-legal.js](../../modules/lorefy-legal.js) (4936 bytes)
-- [modules/lorefy-library-cinema.js](../../modules/lorefy-library-cinema.js) (8058 bytes)
+- [modules/lorefy-library-cinema.js](../../modules/lorefy-library-cinema.js) (11365 bytes)
 - [modules/lorefy-library-media.js](../../modules/lorefy-library-media.js) (4266 bytes)
-- [modules/lorefy-library-view.js](../../modules/lorefy-library-view.js) (12422 bytes)
+- [modules/lorefy-library-view.js](../../modules/lorefy-library-view.js) (12431 bytes)
 - [modules/lorefy-local-redesign.js](../../modules/lorefy-local-redesign.js) (1194 bytes)
 - [modules/lorefy-motion-atelier.js](../../modules/lorefy-motion-atelier.js) (9730 bytes)
 - [modules/lorefy-notification-center.js](../../modules/lorefy-notification-center.js) (9997 bytes)
