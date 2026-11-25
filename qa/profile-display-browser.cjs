@@ -40,12 +40,14 @@ fs.mkdirSync(out, {recursive:true});
         return {width:r.width,contentWidth:rail.parentElement.clientWidth-parseFloat(getComputedStyle(rail.parentElement).paddingLeft)-parseFloat(getComputedStyle(rail.parentElement).paddingRight),
           columns:style.gridTemplateColumns.split(' ').length,cards:cards.map(card=>{
             const c=card.getBoundingClientRect(), cover=card.querySelector('[data-lorefy-book-cover]')?.getBoundingClientRect();
-            return {width:c.width,bottom:c.bottom,coverBottom:cover?.bottom,coverHeight:cover?.height};
+            return {width:c.width,top:c.top,bottom:c.bottom,coverBottom:cover?.bottom,coverWidth:cover?.width,coverHeight:cover?.height};
           })};
       });
       const visible=Math.min(count,view==='spines'?7:view==='showcase'?3:4);
       const pass=result.cards.length===visible && (view!=='spines' || result.columns===visible &&
-        result.width>=result.contentWidth-1 && result.cards.every(card=>card.coverHeight>=176 && Math.abs(card.bottom-card.coverBottom)<1));
+        result.width>=result.contentWidth-1 && result.cards.every(card=>card.coverHeight>=176 && Math.abs(card.bottom-card.coverBottom)<1))
+        && (view!=='shelf' || result.columns===1 && result.cards.every((c,i)=>c.width>c.coverWidth*3 && (!i || c.top>=result.cards[i-1].bottom-1)))
+        && (view!=='showcase' || result.cards.slice(1).every(c=>result.cards[0].coverWidth>c.coverWidth));
       checks.push({layout,view,count,width,lang,theme,pass,...(!pass?{result}:{})});
       if (count===4 && layout==='normal' && width===440 && lang==='ar' && theme==='dark') {
         await page.locator('[data-profile-shelf="works"]').scrollIntoViewIfNeeded();
@@ -62,7 +64,7 @@ fs.mkdirSync(out, {recursive:true});
         localStorage.setItem('lorefy.user.profileLayout.v1',JSON.stringify(layout));
         localStorage.setItem('lorefy.library.view.v1',view);
       },{layout,view,art});
-      await page.setViewportSize({width,height:844});
+      await page.setViewportSize({width,height:width===320?700:844});
       await page.goto(base+'/index.html?preview=demo&demo=ready&route=profile&adaptive=1&decorationLab=1',{waitUntil:'domcontentloaded'});
       await page.locator('.lf-profile-favorites>[data-work-title]').first().waitFor();
       await page.waitForFunction(({layout,view})=>document.querySelector('.lf-profile-page')?.dataset.profileLayout===layout&&
@@ -70,12 +72,17 @@ fs.mkdirSync(out, {recursive:true});
       const result=await page.evaluate(()=>{
         const rail=document.querySelector('.lf-profile-favorites'),r=rail.getBoundingClientRect();
         const cards=[...rail.children].filter(n=>getComputedStyle(n).display!=='none');
-        return {width:r.width,left:r.left,right:r.right,cards:cards.map(n=>{
+        return {width:r.width,left:r.left,right:r.right,trackWidth:parseFloat(getComputedStyle(rail).gridTemplateColumns),cards:cards.map(n=>{
           const rect=n.querySelector('[data-lorefy-book-cover]')?.getBoundingClientRect();
-          return rect?{width:rect.width,height:rect.height}:null;
+          const row=n.getBoundingClientRect();
+          return rect?{width:rect.width,height:rect.height,rowWidth:row.width,top:row.top,bottom:row.bottom}:null;
         }),saved:JSON.parse(localStorage.getItem('lorefy.user.favorites.v2')).length};
       });
-      const pass=result.saved===7&&result.cards.length===(view==='spines'?7:view==='showcase'?3:4)&&result.left>=-1&&result.right<=width+1&&result.cards.every(c=>c?.width>10&&c.height>60);
+      const pass=result.saved===7&&result.cards.length===(view==='spines'?7:view==='showcase'?3:4)&&result.left>=-1&&result.right<=width+1&&result.cards.every(c=>c?.width>10&&c.height>60)
+        && (view!=='grid' || result.cards.every(c=>c.width>=result.trackWidth-2))
+        && (view!=='showcase' || result.cards.slice(1).every(c=>result.cards[0].width>c.width))
+        && (view!=='spines' || result.cards.every(c=>c.height>=144))
+        && (view!=='shelf' || result.cards.every((c,i)=>c.rowWidth>c.width*3 && (!i||c.top>=result.cards[i-1].bottom-1)));
       checks.push({surface:'owner',width,layout,view,pass,...(!pass?{result}:{})});
     }
     const report={checks:checks.length,passed:checks.filter(c=>c.pass).length,failed:checks.filter(c=>!c.pass),errors};

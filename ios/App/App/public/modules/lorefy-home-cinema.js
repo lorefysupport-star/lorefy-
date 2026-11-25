@@ -58,17 +58,19 @@
     if(root.LorefyLibraryMedia)poster=root.LorefyLibraryMedia.card(poster,{lang:props.language,workId:work.id,title:work.title,loading:'eager'});
     function thumbnail(w){
       var attributes={key:w.id,type:'button','aria-label':(en?'Switch to ':'التبديل إلى ')+w.title,title:w.title,'aria-pressed':String(w.id)===String(work.id),onClick:()=>select(String(w.id))},src=props.cover(w);
-      return root.LorefyCoverMedia?h(root.LorefyCoverMedia,{key:w.id,workId:w.id,src:src,fallback:props.fallback(w),loading:'lazy',language:props.language,render:function(surface){return h('button',attributes,surface);}}):h('button',attributes,h('img',{src:src,alt:'',loading:'lazy',onError:props.onError,'data-fallback':props.fallback(w)}));
+      function item(surface){return h('button',attributes,h('span',{className:'lf-reading-mini-cover','aria-hidden':true},surface),h('span',{className:'lf-reading-mini-title',dir:'auto','data-no-translate':'1'},w.title));}
+      return root.LorefyCoverMedia?h(root.LorefyCoverMedia,{key:w.id,workId:w.id,src:src,fallback:props.fallback(w),loading:'lazy',language:props.language,render:item}):item(h('img',{src:src,alt:'',loading:'lazy',onError:props.onError,'data-fallback':props.fallback(w)}));
     }
     return h('section',{className:'lf-cinema-resume',ref:scene,'data-work-id':String(work.id)},
-      backdrop,
-      h('div',{className:'lf-cinema-resume-content',dir:'ltr'},
+      art && art!==cover && backdrop,
+      h('header',{className:'lf-cinema-resume-heading',dir:en?'ltr':'rtl'},h('h2',null,en?'Continue reading':'تابع القراءة'),h('button',{type:'button',className:'lf-cinema-library-link',onClick:props.onLibrary},en?'Library':'مكتبتي',icons[en?'ChevronRight':'ChevronLeft']&&h(icons[en?'ChevronRight':'ChevronLeft'],{size:16,'aria-hidden':true}))),
+      h('div',{className:'lf-cinema-resume-content',dir:en?'ltr':'rtl'},
         h('div',{className:'lf-cinema-resume-copy',dir:en?'ltr':'rtl'},
-          h('div',{className:'lf-cinema-resume-heading'},h('h2',null,en?'Continue reading':'تابع القراءة'),h('button',{type:'button',className:'lf-cinema-library-link',onClick:props.onLibrary},en?'Library':'مكتبتي')),
           h('h3',{'data-no-translate':'1',dir:'auto',title:work.title},work.title),
+          typeof work.author==='string' && work.author.trim() && h('small',{className:'lf-reading-byline',dir:'auto','data-no-translate':'1'},work.author),
           h('p',{'data-no-translate':'1',dir:en?'ltr':'rtl'},h('bdi',{className:'lf-cinema-checkpoint',dir:'ltr'},summary)),
           percent!==null&&h('div',{className:'lf-cinema-progress-row'},h('div',{className:'lf-cinema-progress',role:'progressbar','aria-label':en?'Reading progress':'تقدّم القراءة','aria-valuemin':0,'aria-valuemax':100,'aria-valuenow':percent},h('i',{style:{width:percent+'%'}})),h('span',{className:'lf-cinema-progress-label','aria-hidden':true},percent+'%')),
-          h('button',{type:'button',className:'lf-cinema-resume-action',onClick:()=>props.onOpen(work)},icons.BookOpen&&h(icons.BookOpen,{size:22,'aria-hidden':true}),en?'Continue':'متابعة')),
+          h('button',{type:'button',className:'lf-cinema-resume-action',onClick:()=>(props.onEditProgress||props.onOpen)(work)},icons.BookOpen&&h(icons.BookOpen,{size:18,'aria-hidden':true}),props.onEditProgress?(en?'Update progress':'تحديث التقدّم'):(en?'Open work':'فتح العمل'))),
         poster),
       works.length>1&&h('div',{className:'lf-cinema-reading-switch',role:'group','aria-label':en?'Reading works':'الأعمال الجارية',dir:en?'ltr':'rtl'},
         h('span',{className:'lf-cinema-reading-label'},en?'Reading now':'قراءاتك'),h('div',{className:'lf-cinema-reading-options'},works.map(thumbnail))));

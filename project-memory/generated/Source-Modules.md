@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-14T22:42:45.402Z
-Source commit: 9612db729d96b6a3bff0ea8da98926c129997879
+Observed: 2026-11-25T14:51:33.158Z
+Source commit: 888d2227b318e33aa04fc63638d2194e36e4e95f
 
 # Modules Source Inventory
 
@@ -32,7 +32,7 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-character-system.js](../../modules/lorefy-character-system.js) (107676 bytes)
 - [modules/lorefy-comics-search.js](../../modules/lorefy-comics-search.js) (4569 bytes)
 - [modules/lorefy-comics-taxonomy.js](../../modules/lorefy-comics-taxonomy.js) (13404 bytes)
-- [modules/lorefy-community.js](../../modules/lorefy-community.js) (103172 bytes)
+- [modules/lorefy-community.js](../../modules/lorefy-community.js) (104635 bytes)
 - [modules/lorefy-cover-api.js](../../modules/lorefy-cover-api.js) (36762 bytes)
 - [modules/lorefy-cover-media.js](../../modules/lorefy-cover-media.js) (8516 bytes)
 - [modules/lorefy-crafted-crochet.js](../../modules/lorefy-crafted-crochet.js) (3105 bytes)
@@ -43,21 +43,21 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-decoration-billing.js](../../modules/lorefy-decoration-billing.js) (4820 bytes)
 - [modules/lorefy-design-system.js](../../modules/lorefy-design-system.js) (10247 bytes)
 - [modules/lorefy-elven-motion.js](../../modules/lorefy-elven-motion.js) (11875 bytes)
-- [modules/lorefy-explore-studio.js](../../modules/lorefy-explore-studio.js) (81372 bytes)
+- [modules/lorefy-explore-studio.js](../../modules/lorefy-explore-studio.js) (83244 bytes)
 - [modules/lorefy-frame-motion.js](../../modules/lorefy-frame-motion.js) (17969 bytes)
 - [modules/lorefy-frame-restoration.js](../../modules/lorefy-frame-restoration.js) (19994 bytes)
 - [modules/lorefy-friend-activity.js](../../modules/lorefy-friend-activity.js) (13418 bytes)
 - [modules/lorefy-growth-features.js](../../modules/lorefy-growth-features.js) (428649 bytes)
 - [modules/lorefy-halloween-art.js](../../modules/lorefy-halloween-art.js) (5242 bytes)
 - [modules/lorefy-halloween-motion.js](../../modules/lorefy-halloween-motion.js) (7647 bytes)
-- [modules/lorefy-home-cinema.js](../../modules/lorefy-home-cinema.js) (7509 bytes)
+- [modules/lorefy-home-cinema.js](../../modules/lorefy-home-cinema.js) (8082 bytes)
 - [modules/lorefy-i18n.js](../../modules/lorefy-i18n.js) (44628 bytes)
 - [modules/lorefy-interface-continuity.js](../../modules/lorefy-interface-continuity.js) (11460 bytes)
 - [modules/lorefy-interface-settings.js](../../modules/lorefy-interface-settings.js) (15005 bytes)
 - [modules/lorefy-legal.js](../../modules/lorefy-legal.js) (4936 bytes)
-- [modules/lorefy-library-cinema.js](../../modules/lorefy-library-cinema.js) (11365 bytes)
+- [modules/lorefy-library-cinema.js](../../modules/lorefy-library-cinema.js) (16196 bytes)
 - [modules/lorefy-library-media.js](../../modules/lorefy-library-media.js) (4266 bytes)
-- [modules/lorefy-library-view.js](../../modules/lorefy-library-view.js) (12431 bytes)
+- [modules/lorefy-library-view.js](../../modules/lorefy-library-view.js) (12627 bytes)
 - [modules/lorefy-local-redesign.js](../../modules/lorefy-local-redesign.js) (1194 bytes)
 - [modules/lorefy-motion-atelier.js](../../modules/lorefy-motion-atelier.js) (9730 bytes)
 - [modules/lorefy-notification-center.js](../../modules/lorefy-notification-center.js) (9997 bytes)
@@ -73,10 +73,10 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [modules/lorefy-product-tools.js](../../modules/lorefy-product-tools.js) (54333 bytes)
 - [modules/lorefy-profile-header.js](../../modules/lorefy-profile-header.js) (7917 bytes)
 - [modules/lorefy-profile-layout.js](../../modules/lorefy-profile-layout.js) (2104 bytes)
-- [modules/lorefy-profile-sections.js](../../modules/lorefy-profile-sections.js) (43312 bytes)
+- [modules/lorefy-profile-sections.js](../../modules/lorefy-profile-sections.js) (46429 bytes)
 - [modules/lorefy-profile-shop.js](../../modules/lorefy-profile-shop.js) (60965 bytes)
 - [modules/lorefy-public-appearance.js](../../modules/lorefy-public-appearance.js) (4374 bytes)
-- [modules/lorefy-public-profile.js](../../modules/lorefy-public-profile.js) (31886 bytes)
+- [modules/lorefy-public-profile.js](../../modules/lorefy-public-profile.js) (31962 bytes)
 - [modules/lorefy-reader-layout.js](../../modules/lorefy-reader-layout.js) (7048 bytes)
 - [modules/lorefy-reading-diary-core.js](../../modules/lorefy-reading-diary-core.js) (10222 bytes)
 - [modules/lorefy-reading-diary.js](../../modules/lorefy-reading-diary.js) (51702 bytes)

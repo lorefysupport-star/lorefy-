@@ -6,6 +6,8 @@ aliases: ["كل المزايا", "التغطية", "الميزات", "feature co
 ---
 # مصفوفة تغطية التطبيق
 
+[[sessions/2026-11-21-Library-Workbench]]: local Library browsing redesign; no release or remote sync.
+
 Public presentation: [[sessions/2026-11-15-Public-Profile-Display]] covers all4
 projected view modes, SQL privacy/block/privilege guards, real-count shelves and
 three layout variants.3618 source tests and450 browser cases pass. Production

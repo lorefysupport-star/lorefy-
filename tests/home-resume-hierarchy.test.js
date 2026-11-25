@@ -15,6 +15,11 @@ test('current-reading options follow the resume content in normal document flow'
  assert(switcher>content);assert.ok(h.nodes.some(n=>n.props.className==='lf-cinema-reading-options'));
  assert.ok(h.nodes.some(n=>n.props.className==='lf-cinema-reading-label'&&n.children.includes('قراءاتك')));
 });
+for(const language of ['ar','en'])test('reading header precedes the work, and copy follows the reading direction in '+language,()=>{
+ const h=render(language),header=h.tree.children.findIndex(n=>n.props?.className==='lf-cinema-resume-heading'),content=h.tree.children.findIndex(n=>n.props?.className==='lf-cinema-resume-content');
+ assert(header>=0 && content>header);assert.equal(h.tree.children[content].props.dir,language==='ar'?'rtl':'ltr');
+ assert(h.tree.children[header].children.some(n=>n.props?.className==='lf-cinema-library-link'));
+});
 for(const language of ['ar','en'])test('library action is explicit and does not open the current work in '+language,()=>{
  const h=render(language),button=h.nodes.find(n=>n.type==='button'&&n.props.className==='lf-cinema-library-link');
  assert.ok(button);assert(button.children.includes(language==='en'?'Library':'مكتبتي'));button.props.onClick();assert.deepEqual(h.events,[['library']]);

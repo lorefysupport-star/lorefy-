@@ -106,6 +106,7 @@
         slot.classList.toggle('lf-favorite-overflow',index>=favoriteLimit(mode));
       });
       var hasBooks=!!(favorites.querySelector('[data-lorefy-book-cover]')||favorites.querySelector('img'));
+      favorites.classList.toggle('is-favorite-list', mode === 'shelf');
       favorites.classList.toggle('is-spine-view', normalizeMode(mode) === 'spines' && hasBooks);
       syncShowcaseCards(doc,favorites,Array.from(favorites.children),normalizeMode(mode)==='showcase'&&hasBooks);
       Array.from(favorites.children).forEach(function (slot) {
@@ -191,8 +192,10 @@
         });
         switcher.appendChild(button);
       });
-      var controls = page.querySelector('.lf-library-controls') || header;
-      controls.insertBefore(switcher, controls.firstChild);
+      var slot = page.querySelector('.lf-library-layout-slot');
+      var controls = slot || page.querySelector('.lf-library-controls') || header;
+      if (slot) slot.appendChild(switcher);
+      else controls.insertBefore(switcher, controls.firstChild);
       try { if (root.lucide && root.lucide.createIcons) root.lucide.createIcons({ nodes: [switcher] }); } catch (error) {}
     }
     var english = doc.documentElement.lang === 'en';

@@ -23,15 +23,15 @@ async function settleTabs(page) {
     assert.equal(await page.locator('.lf-profile-favorites').first().isVisible(),false);
     assert.equal(await page.locator('.lf-profile-top-works-head').isVisible(),false);
     await page.getByRole('button',{name:'قائمة جديدة',exact:true}).click();
+    await page.getByRole('button',{name:/قائمة أعمال/}).click();
     await page.getByRole('textbox',{name:'اسم القائمة',exact:true}).fill('أفضل أعمال فهد');
-    await page.getByRole('combobox',{name:'القوائم',exact:true}).selectOption('works');
     await page.getByRole('searchbox',{name:'ابحث عن عمل'}).fill('One Piece');
     await page.locator('.lf-profile-list-results .is-result').first().click();
     await page.getByRole('searchbox',{name:'ابحث عن عمل'}).fill('Berserk');
     await page.locator('.lf-profile-list-results .is-result').first().click();
     assert.equal(await page.locator('.is-editing li').count(),2);
     const original=await page.locator('.is-editing li strong').allTextContents();
-    await page.getByRole('button',{name:'خفض الترتيب',exact:true}).first().click();
+    await page.getByRole('button',{name:/^خفض الترتيب/}).first().click();
     assert.deepEqual(await page.locator('.is-editing li strong').allTextContents(),original.slice().reverse());
     await page.getByRole('button',{name:'حفظ القائمة',exact:true}).click();
     await page.locator('[data-profile-folder]').waitFor();
@@ -44,12 +44,14 @@ async function settleTabs(page) {
     await page.screenshot({path:path.join(out,'owner-lists-ar.png')});
     evidence.push('owner work list creation, reorder, save and reload');
     await page.getByRole('button',{name:'قائمة جديدة',exact:true}).click();
+    await page.getByRole('button',{name:/قائمة شخصيات/}).click();
     await page.getByRole('textbox',{name:'اسم القائمة',exact:true}).fill('أفضل شخصيات ون بيس');
     await page.getByRole('searchbox',{name:'ابحث عن عمل'}).fill('One Piece');
-    await page.locator('.lf-profile-list-results .is-result').first().click();
-    await page.locator('.lf-profile-list-results .is-result').first().waitFor({timeout:45000});
-    await page.locator('.lf-profile-list-results .is-result').first().click();
-    await page.locator('.lf-profile-list-results .is-result:not(:disabled)').first().click();
+    await page.locator('.lf-profile-list-results .lf-profile-list-select').first().click();
+    await page.locator('.lf-profile-list-work-label strong').waitFor();
+    await page.locator('.lf-profile-list-results .lf-profile-list-select:enabled').first().click({timeout:45000});
+    await page.locator('.is-editing li').first().waitFor();
+    await page.locator('.lf-profile-list-results .lf-profile-list-select:enabled').first().click();
     assert.equal(await page.locator('.is-editing li').count(),2);
     await page.getByRole('button',{name:'حفظ القائمة',exact:true}).click();
     await page.locator('[data-profile-folder]').first().waitFor();
@@ -69,16 +71,20 @@ async function settleTabs(page) {
     await page.getByRole('button',{name:'حذف',exact:true}).click();
     assert.equal(await page.locator('[data-profile-folder]').count(),1);
     evidence.push('rename, private visibility and confirmed deletion');
-    await page.getByRole('tab',{name:'التغريدات',exact:true}).click();
+    await page.getByRole('tab',{name:'النشاط',exact:true}).click();
     await page.getByRole('button',{name:'كتابة تغريدة',exact:true}).click();
     const composer=page.locator('.lf-community-compose-sheet');
     await composer.locator('textarea').fill('تغريدة فهد لاختبار تبويب البروفايل');
     await composer.locator('.lf-community-compose-submit').click();
     await composer.waitFor({state:'detached'});
+    const postFilter=page.locator('.lf-profile-activity-filters [data-activity-filter="post"]');
+    await postFilter.click();
     await page.locator('.lf-profile-post-feed .lf-community-post-card').waitFor();
     await page.locator('.lf-profile-post-feed .lf-community-post-body').first().click();
     await page.locator('.lf-community-thread').waitFor();
     await page.locator('.lf-community-thread button[aria-label="إغلاق"]').click();
+    assert.equal(await postFilter.getAttribute('aria-pressed'),'true');
+    assert.equal(await page.getByRole('tab',{name:'النشاط',exact:true}).getAttribute('aria-selected'),'true');
     await page.screenshot({path:path.join(out,'owner-posts-ar.png')});
     evidence.push('post composer, profile feed, thread opening');
     await page.evaluate(()=>{
@@ -96,7 +102,7 @@ async function settleTabs(page) {
     evidence.push('public owner-specific folder content and read-only visitor');
     for (const width of [320,375,390,414,430,440,768]) {
       await page.setViewportSize({width,height:956});
-      await page.getByRole('tab',{name:'الرئيسية',exact:true}).click();
+      await page.getByRole('tab',{name:'لمحة',exact:true}).click();
       await page.getByRole('tab',{name:'القوائم',exact:true}).click();
       const layout=await page.locator('.lf-reader-full').evaluate(n=>({
         width:n.clientWidth, scroll:n.scrollWidth,
@@ -113,7 +119,8 @@ async function settleTabs(page) {
     });
     await page.getByRole('tab',{name:'Lists',exact:true}).waitFor();
     await page.screenshot({path:path.join(out,'visitor-lists-en.png')});
-    await page.getByRole('tab',{name:'Posts',exact:true}).click();
+    await page.getByRole('tab',{name:'Activity',exact:true}).click();
+    await page.locator('.lf-profile-section-panel').getByRole('button',{name:'Posts',exact:true}).click();
     await page.locator('.lf-profile-section-panel').getByText('No posts yet',{exact:true}).waitFor();
     evidence.push('English profile tab and empty post translations');
     await page.evaluate(()=>{
@@ -129,7 +136,7 @@ async function settleTabs(page) {
     await page.screenshot({path:path.join(out,'owner-lists-en-custom.png')});
     await page.getByRole('tab',{name:'Lists',exact:true}).focus();
     await page.keyboard.press('ArrowRight');
-    assert.equal(await page.getByRole('tab',{name:'Posts',exact:true}).getAttribute('aria-selected'),'true');
+    assert.equal(await page.getByRole('tab',{name:'Activity',exact:true}).getAttribute('aria-selected'),'true');
     await page.locator('.lf-profile-post-feed .lf-community-post-card').waitFor();
     const post=page.locator('.lf-profile-post-feed .lf-community-post-card').first();
     const like=post.locator('.lf-community-post-like');
@@ -138,8 +145,8 @@ async function settleTabs(page) {
     await page.getByRole('tab',{name:'Overview',exact:true}).click();
     assert.equal(await page.locator('.lf-profile-favorites').first().isVisible(),true);
     assert.equal(await page.locator('.lf-owner-post-metric').isVisible(),false);
-    await page.getByRole('tab',{name:'Posts',exact:true}).click();
-    assert.equal(await page.getByRole('tab',{name:'Posts',exact:true}).getAttribute('aria-selected'),'true');
+    await page.getByRole('tab',{name:'Activity',exact:true}).click();
+    assert.equal(await page.getByRole('tab',{name:'Activity',exact:true}).getAttribute('aria-selected'),'true');
     evidence.push('fresh English startup, panoramic custom theme, keyboard tabs, reactions and no duplicate post shortcut');
     assert.deepEqual(errors,[]);
     fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({evidence,pageErrors:errors},null,2));

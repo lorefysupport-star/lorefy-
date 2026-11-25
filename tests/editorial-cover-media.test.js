@@ -18,7 +18,7 @@ test('review work attachments opt in with an explicit work anchor and compact ar
  const s=fs.readFileSync('uploads/files/lorefy-app.js','utf8');assert.match(s,/r&&o&&window\.LorefyLibraryMedia\.card/);assert.match(s,/className:"lf-community-work-card"/);assert.match(s,/artClass:"lf-review-work-art"/);
 });
 test('scoped editorial geometry preserves compact art, sharp immersive crops and independent retry',()=>{
- const css=fs.readFileSync('styles/lorefy-cover-media.css','utf8');assert.match(css,/\.lf-review-work-art\{[^}]*width:34px[^}]*height:48px/);assert.match(css,/\.lf-explore-immersive-art[^{}]*\.lf-cover-image\{[^}]*transform:scale\(1\.2\)/);assert.match(css,/\.lf-explore-art-retry\{/);
+ const css=fs.readFileSync('styles/lorefy-cover-media.css','utf8');assert.match(css,/\.lf-review-work-art\{[^}]*width:34px[^}]*height:48px/);assert.match(css,/\.lf-explore-immersive-art[^{}]*\.lf-cover-image\{[^}]*object-position:center 35%/);assert.match(css,/\.lf-explore-art-retry\{/);
 });
 
 test('clipped cover containers retain an outer keyboard focus indicator',()=>{

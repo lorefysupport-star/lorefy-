@@ -12,6 +12,12 @@ wholecatalog indexing. Partial All/الكل failures keep cards+Retry in AR/EN.
 3111tests and local browser pass; device/provider coverage limits remain.
 # الاستكشاف وتفاصيل الأعمال والشخصيات
 
+Local Explore phone preview (2026-11-21): the featured artwork is scoped to
+its own section below navigation. Returning from a work restores the carousel
+position for the same reader. Checked the round trip in Arabic and English;
+74 focused tests passed. Static loopback does not serve the /api/media proxy,
+so the preview cannot verify production fallback for unavailable remote covers.
+
 [[sessions/2026-11-10-Explore-Lootd]] adds query-only shard loading, guarded
 global search pagination and data-based result memoization. Hidden category
 summaries are deferred/linear; Types no longer ranks recommendations. Direct
@@ -201,3 +207,5 @@ and editors remain. Full3512 and actual browser AR/EN/theme cases; cachev710.
 
 
 2026-10-21: [[sessions/2026-10-21-Search-Audit]] repairs main All-format online lookup and isolates People/Lists from catalog listeners; 234 focused checks, browser result evidence, and five matching installed simulator assets. Live directory/provider coverage remains separate. No commit or push.
+
+2026-11-24 (local only): Explore returns from a work with the same format filters, sort, scroll position and expanded search window. Applied status and genre filters can be removed above the results. Browser regression: `qa/explore-return-browser.cjs` (Arabic 320px, English 390px). No live service or native-device verification.

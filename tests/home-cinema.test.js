@@ -26,6 +26,14 @@ test('empty reading state remains usable and never inserts a sample work',()=>{
  let explored=false;const node=render({works:[],language:'en',onExplore:()=>explored=true});
  all(node).find(x=>x.type==='button').props.onClick();assert.ok(explored);assert.equal(all(node).filter(x=>x.type==='img').length,0);
 });
+test('Home desk edits progress from the primary action; the cover still opens details',()=>{
+ const work={id:'desk',title:'A work'},events=[];
+ const tree=render({works:[work],language:'en',cover:()=>'',fallback:()=>'',progressFor:()=>({}),summary:()=>'',percent:()=>0,onEditProgress:w=>events.push(['edit',w.id]),onOpen:w=>events.push(['open',w.id])});
+ const nodes=all(tree),action=nodes.find(n=>n.props.className==='lf-cinema-resume-action');
+ assert(action.children.includes('Update progress'));assert.deepEqual(events,[]);
+ action.props.onClick();nodes.find(n=>n.props.className==='lf-cinema-resume-cover').props.onClick();
+ assert.deepEqual(events,[['edit','desk'],['open','desk']]);
+});
 test('Home styling and assets are scoped and wired before the existing application',()=>{
  const css=fs.readFileSync('styles/lorefy-home-cinema.css','utf8'),index=fs.readFileSync('index.html','utf8'),app=fs.readFileSync('uploads/files/lorefy-app.js','utf8');
  assert.ok(index.indexOf('modules/lorefy-home-cinema.js')<index.indexOf('src="uploads/files/lorefy-app.js'));

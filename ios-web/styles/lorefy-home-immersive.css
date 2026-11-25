@@ -1,14 +1,17 @@
 /* Home reference pass only. Keep the approved Explore and other layouts untouched. */
 @layer lorefy-home-immersive {
 .lf-app .lf-home-cinema { overflow-anchor:none; }
-.lf-app .lf-home-cinema { --cinema-chrome:calc(var(--nc-top,0px) + 126px) !important; }
-.lf-app .lf-home-cinema .lf-greeting-row { height:50px !important; margin-bottom:10px !important; }
+.lf-app .lf-home-cinema { --cinema-chrome:calc(var(--nc-top,0px) + 72px) !important; }
+.lf-app .lf-home-cinema .lf-greeting-row { height:50px !important; margin-bottom:0 !important; }
 .lf-app .lf-home-cinema .lf-cinema-resume { container-type:inline-size; }
 .lf-app .lf-home-cinema .lf-cinema-resume:not(.is-empty) {
   display:flex !important; flex-direction:column; align-items:stretch; justify-content:flex-end;
-  gap:18px; min-height:300px; padding-bottom:20px !important;
+  gap:12px; min-height:0; padding-block:10px 14px !important;
 }
-.lf-app .lf-home-cinema .lf-cinema-resume-content { padding-top:52px !important; }
+.lf-app .lf-home-cinema .lf-cinema-resume-content { padding-top:0 !important; align-items:center; }
+.lf-app .lf-home-cinema .lf-cinema-resume-content[dir='rtl'] { direction:rtl !important; }
+.lf-app .lf-home-cinema .lf-cinema-resume>.lf-cinema-resume-heading { width:100%; max-width:720px; margin-inline:auto; }
+.lf-app .lf-home-cinema .lf-cinema-library-link { display:inline-flex; align-items:center; justify-content:center; gap:5px; }
 .lf-app .lf-home-cinema .lf-cinema-reading-switch {
   position:static !important; display:flex; align-items:center; justify-content:space-between;
   gap:12px; width:100%; min-width:0; padding-top:12px; border-top:1px solid var(--ui-line);
@@ -23,24 +26,28 @@
 .lf-app .lf-home-cinema .lf-cinema-reading-switch button[aria-pressed='true'] { border:2px solid var(--ui-action); background:var(--ui-selected); }
 .lf-app .lf-home-cinema .lf-cinema-reading-switch button:active { background:var(--ui-fill); }
 .lf-app .lf-home-cinema .lf-cinema-reading-switch img { width:28px; height:42px; border-radius:2px; }
-.lf-app .lf-home-cinema .lf-cinema-library-link { min-width:44px; text-decoration:underline; text-underline-offset:4px; }
+.lf-app .lf-home-cinema .lf-cinema-library-link { min-width:44px; text-decoration:none; }
 .lf-app .lf-home-cinema .lf-cinema-checkpoint { font-variant-numeric:tabular-nums; unicode-bidi:isolate; }
 .lf-app .lf-home-cinema[data-home-chrome='immersive']>.lf-social-header {
-  background:linear-gradient(180deg,#000000b8,#00000075 62%,#00000008) !important;
+  background:var(--ui-bg) !important;
   backdrop-filter:none !important;
   -webkit-backdrop-filter:none !important;
 }
 .lf-app .lf-home-cinema[data-home-chrome='immersive'] .lf-cinema-heading :is(h1,.lf-social-brand) {
-  color:#fff !important;
-  text-shadow:0 2px 12px #0009 !important;
+  color:var(--ui-ink) !important;
+  text-shadow:none !important;
 }
 .lf-app .lf-home-cinema .lf-cinema-backdrop {
+  top:0 !important; height:100% !important;
   filter:none !important;
   transform:none !important;
 }
 .lf-app .lf-home-cinema .lf-cinema-resume:not(.is-empty)::before {
-  top:calc(-1 * var(--cinema-chrome)) !important;
-  background:linear-gradient(180deg,transparent 28%,color-mix(in srgb,var(--ui-bg) 12%,transparent) 48%,color-mix(in srgb,var(--ui-bg) 86%,transparent) 79%,var(--ui-bg) 99%) !important;
+  top:0 !important;
+  background:linear-gradient(to bottom,transparent 46%,var(--ui-bg) 99%),linear-gradient(var(--reading-scrim-flow,to right),color-mix(in srgb,var(--ui-bg) 94%,transparent) 0%,color-mix(in srgb,var(--ui-bg) 85%,transparent) 58%,color-mix(in srgb,var(--ui-bg) 40%,transparent)) !important;
+}
+.lf-app .lf-home-cinema .lf-cinema-resume:has(.lf-cinema-resume-content[dir='rtl'])::before {
+  --reading-scrim-flow:to left;
 }
 .lf-app .lf-home-cinema .lf-cinema-resume-action {
   width:max-content !important;
@@ -56,23 +63,20 @@
   -webkit-backdrop-filter:var(--glass-blur) !important;
 }
 .lf-app .lf-home-cinema .lf-cinema-resume-heading h2 {
-  font-size:12px !important;
-  font-weight:500 !important;
-  border-radius:10px !important;
-  background:var(--glass-reflection),var(--glass-fill) !important;
-  color:var(--ui-glass-ink) !important;
-  border-color:var(--glass-edge) !important;
+  font-size:16px !important;
+  font-weight:700 !important;
+  padding:0 !important; border:0 !important; backdrop-filter:none !important;
+  background:transparent !important; color:var(--ui-ink) !important;
 }
 .lf-app .lf-home-cinema .lf-cinema-resume h3 {
-  font-size:28px !important;
+  font-size:23px !important;
   line-height:1.25 !important;
   display:-webkit-box !important;
   -webkit-box-orient:vertical !important;
-  -webkit-line-clamp:2 !important;
+  -webkit-line-clamp:3 !important;
   overflow:hidden !important;
   overflow-wrap:anywhere !important;
-  min-block-size:2.5em !important;
-  max-block-size:2.5em !important;
+  max-block-size:3.75em !important;
   text-align:start !important;
   unicode-bidi:isolate;
 }
@@ -150,7 +154,84 @@
 .lf-app .lf-home-cinema :is(.lf-community-action-row,.lf-community-post-actions) button:focus-visible { outline:2px solid var(--ui-action) !important; outline-offset:2px !important; }
 .lf-app .lf-home-cinema :is(.lf-community-action-row,.lf-community-post-actions) button:active { background:var(--ui-selected) !important; }
 .lf-app .lf-home-cinema .lf-friend-reader { min-height:44px !important; }
+.lf-app .lf-home-cinema .lf-friend-section:has(>p.lf-friend-empty:not([role])) { display:none; }
 .lf-app .lf-home-cinema .lf-friend-score { font-variant-numeric:tabular-nums; }
+
+/* Reading desk and timeline are independent destinations within Home. */
+.lf-app .lf-home-cinema .lf-cinema-resume:not(.is-empty) {
+  --desk-paper:color-mix(in srgb,var(--ui-action) 6%,var(--ui-bg));
+  background:var(--desk-paper) !important; gap:16px; padding-block:12px 18px !important;
+}
+.lf-app .lf-home-cinema .lf-cinema-resume:not(:has(.lf-cinema-backdrop))::before { content:none; }
+.lf-app .lf-home-cinema .lf-cinema-resume>.lf-cinema-resume-heading h2 {
+  font-size:21px !important; line-height:1.4; box-shadow:none; border-radius:0 !important;
+}
+.lf-app .lf-home-cinema .lf-cinema-resume-content {
+  grid-template-columns:minmax(92px,36%) minmax(0,1fr) !important;
+  gap:18px; padding-block:0 4px !important;
+}
+.lf-app .lf-home-cinema .lf-cinema-resume-cover {
+  grid-column:1; grid-row:1; width:min(100%,158px) !important; justify-self:center;
+  box-shadow:2px 1px var(--ui-line),4px 2px var(--ui-secondary),0 8px 16px #0003;
+}
+.lf-app .lf-home-cinema .lf-cinema-resume-copy { grid-column:2; grid-row:1; }
+.lf-app .lf-home-cinema .lf-cinema-resume-copy h3 { font-size:24px !important; line-height:1.18 !important; }
+.lf-app .lf-home-cinema .lf-reading-byline {
+  display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  color:var(--ui-secondary); font-size:13px; margin-block:0 10px;
+}
+.lf-app .lf-home-cinema .lf-cinema-resume-copy .lf-cinema-resume-action {
+  display:inline-flex; flex-direction:row; gap:8px; padding:8px 16px !important;
+  color:var(--ui-bg) !important; background:var(--ui-ink) !important;
+  border:0 !important; box-shadow:none !important; backdrop-filter:none !important;
+}
+.lf-app .lf-home-cinema .lf-cinema-resume-action>svg { position:static !important; flex:none; }
+.lf-app .lf-home-cinema .lf-cinema-reading-switch {
+  display:grid !important; grid-template-columns:minmax(0,1fr); justify-content:stretch !important;
+  gap:6px; padding-top:10px !important; max-width:720px; margin-inline:auto;
+}
+.lf-app .lf-home-cinema .lf-cinema-reading-options {
+  display:flex; width:100%; min-width:0; overflow-x:auto; gap:12px; padding:3px 0;
+  scrollbar-width:thin; scroll-snap-type:x proximity;
+}
+.lf-app .lf-home-cinema .lf-cinema-reading-options button {
+  flex:0 0 min(46%,200px); width:auto; height:50px; min-height:50px; min-width:0;
+  display:flex; gap:8px; align-items:center; justify-content:start;
+  text-align:start; padding:3px 6px; background:transparent; border:0;
+  border-inline-start:3px solid transparent; border-radius:0; scroll-snap-align:start;
+}
+.lf-app .lf-home-cinema .lf-cinema-reading-options button[aria-pressed='true'] {
+  border:0; border-inline-start:3px solid var(--ui-action); background:var(--ui-selected);
+}
+.lf-app .lf-home-cinema .lf-reading-mini-cover { width:28px; flex:none; }
+.lf-app .lf-home-cinema .lf-reading-mini-title {
+  color:var(--ui-ink); font-family:inherit; font-size:12px;
+  line-height:1.45; font-weight:600; min-width:0; overflow:hidden; overflow-wrap:anywhere;
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;
+}
+.lf-app .lf-home-cinema>.lf-home-community-heading {
+  position:sticky !important; top:var(--cinema-chrome); z-index:12 !important; display:flex; align-items:center;
+  justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding:4px 18px !important;
+  background:var(--ui-bg) !important; border-bottom:1px solid var(--ui-line);
+}
+.lf-app .lf-home-cinema .lf-home-community-heading h2 { margin:0; font-size:20px; line-height:1.4; color:var(--ui-ink); }
+.lf-app .lf-home-cinema .lf-home-community-heading .lf-home-feed-tabs {
+  width:auto !important; height:auto; min-height:44px; gap:10px !important; padding:0 !important;
+  border:0 !important; border-radius:0 !important; background:none !important;
+  box-shadow:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;
+}
+.lf-app .lf-home-cinema .lf-home-community-heading .lf-home-feed-tabs button {
+  flex:0 0 auto !important; min-height:44px !important; padding:2px 6px !important;
+  color:var(--ui-secondary) !important; background:none !important; border:0 !important;
+  border-bottom:2px solid transparent !important; border-radius:0 !important; box-shadow:none !important;
+}
+.lf-app .lf-home-cinema .lf-home-community-heading .lf-home-feed-tabs button[aria-selected=true] {
+  color:var(--ui-ink) !important; border-bottom-color:var(--ui-action) !important;
+}
+@container (max-width:320px) {
+  .lf-app .lf-home-cinema .lf-cinema-resume-content { grid-template-columns:32% minmax(0,1fr) !important; gap:12px; }
+  .lf-app .lf-home-cinema .lf-cinema-resume-copy h3 { font-size:20px !important; }
+}
 @supports not (background:color-mix(in srgb,white,black)){
   .lf-app .lf-home-cinema .lf-cinema-resume:not(.is-empty)::before { background:linear-gradient(transparent 35%,var(--ui-bg)) !important; }
 }

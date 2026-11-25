@@ -301,4 +301,10 @@ geometry. Count-only accessible names in legacy review actions remain separate.
 
 Unnecessary card rebuilding audit and fixes preserve unchanged editor/feed nodes; see [[sessions/2026-10-21-Stable-Rendering]].
 
+Local profile workbench: owner and visitor use Overview, Lists and Activity. Activity filters posts and reviews independently; a slow post request must not hide existing reviews. Banner failures use the theme surface, not an enlarged avatar placeholder. No backend or saved layout changes.
+
+2026-11-24, local favorites display: `modules/lorefy-library-view.js` and `modules/lorefy-public-profile.js` distinguish list rows from cover tiles for owner and visitor. Compact owner spine heights retain their title-dependent proportions; image retries stay inside narrow spines. `qa/profile-display-browser.cjs` measures actual list columns, row separation and compact spine height. No database or release change.
+
+2026-11-24 (local): `modules/lorefy-profile-sections.js` restores the selected folder card and scroll position on Back. In-place public snapshots keep the detail open, but a private or removed folder must disappear; reselecting the Lists tab must not discard an edit. Regression: `node qa/profile-list-navigation-browser.cjs` with the local demo running. No device or live backend verification.
+
 Favorite slot save investigation: bounded downloaded catalog cache, quota-only safe cache reclaim, and honest failed-save feedback; 82 focused checks plus save/reopen/reload in isolated demo. Device Hub storage pressure removed without changing saved favorites. [[sessions/2026-10-21-Favorite-Save-Quota]].

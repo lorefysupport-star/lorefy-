@@ -189,6 +189,7 @@
     var action = kind === 'reply' ? (compact ? uiText('الرد على الرد', 'Reply') : uiText('فتح الردود', 'Open replies')) :
       kind === 'dislike' ? uiText('عدم إعجاب', 'Dislike') : uiText('إعجاب', 'Like');
     var label = action + ' · ' + count.full;
+    if(button.getAttribute('data-zero')!==String(count.display==='0'))button.setAttribute('data-zero',String(count.display==='0'));
     if (button.getAttribute('aria-label') !== label) button.setAttribute('aria-label', label);
     if (button.getAttribute('title') !== label) button.setAttribute('title', label);
     var span = button.querySelector('span');
@@ -944,12 +945,13 @@
     var profile = post.profile || {};
     var author = el("button", { type:"button", class:"lf-community-post-author" }, [
       avatar(profile, compact ? 34 : 42),
-      el("span", null, [el("strong", { dir:'auto', title:profile.name || profile.username || uiText('قارئ Lorefy', 'Lorefy reader'), text:profile.name || profile.username || uiText('قارئ Lorefy', 'Lorefy reader') }), el("small", { dir:'ltr', 'data-no-translate':'1', text:"@" + String(profile.username || "lorefy_reader") + " · " + timeLabel(post.created_at) })])
+      el("span", null, [el("strong", { dir:'auto', title:profile.name || profile.username || uiText('قارئ Lorefy', 'Lorefy reader'), text:profile.name || profile.username || uiText('قارئ Lorefy', 'Lorefy reader') }), el("small", { dir:'ltr', 'data-no-translate':'1', text:"@" + String(profile.username || "lorefy_reader") })])
     ]);
     author.addEventListener("click", function () { openProfile(profile); });
     var hasQuote = !!quoteAttachment(post.attachment);
     var typeLabel = hasQuote ? uiText('اقتباس', 'Quote') : post.kind === "list" ? uiText('قائمة', 'List') : post.kind === "top" ? uiText('ترتيب الشخصيات', 'Character ranking') : uiText('منشور', 'Post');
     var header = el("header", {class:'lf-community-post-header'}, [author, el("span", { class:"lf-community-post-kind is-" + (hasQuote ? "quote" : post.kind), text:typeLabel })]);
+    if(post.created_at && Number.isFinite(Date.parse(post.created_at)))header.appendChild(el('time',{class:'lf-post-time',datetime:post.created_at,text:timeLabel(post.created_at)}));
     if (post.user_id === identity().id) {
       var menu = el('details', {class:'lf-community-post-menu'});
       var trigger = el('summary', {'aria-label':uiText('خيارات المنشور','Post options'),title:uiText('خيارات المنشور','Post options')},icon('ellipsis',20));
@@ -960,8 +962,14 @@
       menu.addEventListener('keydown',function (event) { if (event.key === 'Escape') { menu.open = false; trigger.focus(); } });
       menu.appendChild(trigger); menu.appendChild(el('div',null,[edit,remove])); header.appendChild(menu);
     }
-    var body = el("p", { class:"lf-community-post-body", dir:"auto", text:post.body });
-    var card = el("article", { class:"lf-community-post-card" + (compact ? " is-compact" : ""), "data-community-post-id":post.id, "data-community-post-kind":hasQuote ? "quote" : post.kind }, [header]);
+    var fullText=String(post.body||''), preview=fullText;
+    if(!compact && (fullText.length>240 || fullText.split('\n',4).length>3)){
+      var firstLines=fullText.split('\n',3).join('\n'), chars=Array.from(firstLines);
+      preview=(chars.length>240?chars.slice(0,240).join('').replace(/\s+\S*$/u,''):firstLines).trimEnd();
+    }
+    var abbreviated=preview!==fullText;
+    var body = el("p", { class:"lf-community-post-body", dir:"auto", text:abbreviated?preview+'…':fullText });
+    var card = el("article", { dir:uiText('rtl','ltr'), class:"lf-community-post-card" + (compact ? " is-compact" : ""), "data-community-post-id":post.id, "data-community-post-kind":hasQuote ? "quote" : post.kind }, [header]);
     var replyTo = post.attachment && post.attachment.replyTo;
     if (replyTo && replyTo.id) {
       var reference = el('button',{type:'button',class:'lf-community-reply-reference',text:uiText('ردًا على @','Replying to @') + String(replyTo.username || uiText('قارئ','reader'))});
@@ -973,6 +981,11 @@
       card.appendChild(reference);
     }
     if (post.body) card.appendChild(body);
+    if(abbreviated){
+      var more=el('button',{type:'button',class:'lf-post-read-more',text:uiText('قراءة التغريدة كاملة','Read full post')});
+      more.addEventListener('click',function(){if(beforeOverlay)beforeOverlay();openThread(post);});
+      card.appendChild(more);
+    }
     if (hasQuote) card.appendChild(renderAttachmentPreview(post.attachment, false));
     else if (post.attachment && Array.isArray(post.attachment.items)) card.appendChild(renderAttachmentPreview(Object.assign({ kind:post.kind }, post.attachment), false));
     var mine = post.reactions && post.reactions.mine || {};
@@ -1030,22 +1043,34 @@
     var targetLabel = el('span');
     var clearTarget = el('button',{type:'button','aria-label':uiText('إلغاء الرد المحدد','Cancel reply target')},icon('x',18));
     var targetBar = el('div',{class:'lf-community-reply-target',hidden:true},[targetLabel,clearTarget]);
-    clearTarget.addEventListener('click',function () { replyTarget = null; targetBar.hidden = true; input.focus(); });
+    clearTarget.addEventListener('click',function () { if(!availableThread())return; replyTarget = null; targetBar.hidden = true; rememberDraft(); input.focus(); });
     var send = el("button", { type:"button", disabled:"disabled", "aria-label":uiText('إرسال الرد', 'Send reply') }, icon("send", 18));
     var draftKey = String(identity().id || identity().username) + ':' + post.id;
-    input.value = replyDrafts.get(draftKey) || '';
+    var draft=replyDrafts.get(draftKey);
+    input.value = draft ? draft.body : '';
+    if(draft && draft.target){
+      replyTarget={id:draft.target.id,profile:{username:draft.target.username}};
+      targetLabel.textContent=uiText('ردًا على @','Replying to @')+draft.target.username;
+      targetBar.hidden=false;
+    }
     send.disabled = !input.value.trim();
+    function rememberDraft(){
+      if(input.value)replyDrafts.set(draftKey,{body:input.value,target:replyContext(replyTarget)});
+      else replyDrafts.delete(draftKey);
+      if(replyDrafts.size>30)replyDrafts.delete(replyDrafts.keys().next().value);
+    }
     function targetReply(replyPost) {
       if(!availableThread())return;
       var username = String(replyPost && replyPost.profile && replyPost.profile.username || "");
       replyTarget = replyPost.id === post.id ? null : replyPost;
       targetBar.hidden = !replyTarget;
       targetLabel.textContent = uiText('ردًا على @','Replying to @') + username;
+      rememberDraft();
       input.focus();
     }
     var sheet = el("section", null, [
       el("header", { class:"lf-community-thread-head" }, [close, el("strong", { text:uiText('المنشور', 'Post') }), el("span", { "aria-hidden":"true" })]),
-      el("div", { class:"lf-community-thread-body" }, [el("div", { class:"lf-community-thread-origin" }, [postCard(post, true, targetReply)]), repliesHost]),
+      el("div", { class:"lf-community-thread-body" }, [el("div", { class:"lf-community-thread-origin" }, [postCard(post, true, targetReply)]), el('h2',{class:'lf-post-replies-heading',text:uiText('الردود','Replies')}), repliesHost]),
       targetBar, el("footer", { class:"lf-community-thread-compose" }, [avatar(identity(), 36), input, send])
     ]);
     function currentThread(){return !dismissed&&overlay.isConnected&&ownsSession();}
@@ -1082,8 +1107,7 @@
     });
     input.addEventListener("input", function () {
       if(!availableThread())return;
-      if (input.value) replyDrafts.set(draftKey, input.value); else replyDrafts.delete(draftKey);
-      if (replyDrafts.size > 30) replyDrafts.delete(replyDrafts.keys().next().value);
+      rememberDraft();
       send.disabled = sending || !input.value.trim();
       input.style.height = 'auto';
       input.style.height = Math.min(input.scrollHeight,110) + 'px';
@@ -1267,8 +1291,8 @@
       var replyButton=card.querySelector('.lf-community-post-replies');
       updatePostCounter(replyButton, 'reply', post.replyCount, false);
       nextCards.set(String(post.id),{post:post,fingerprint:fingerprint,card:card});
-      var timestamp=card.querySelector(".lf-community-post-author small");
-      if(timestamp){var label="@"+String(post.profile&&post.profile.username||"lorefy_reader")+" · "+timeLabel(post.created_at);if(timestamp.textContent!==label)timestamp.textContent=label;}
+      var timestamp=card.querySelector(".lf-post-time");
+      if(timestamp){var label=timeLabel(post.created_at);if(timestamp.textContent!==label)timestamp.textContent=label;}
       card.dataset.postTimestamp = String(Date.parse(post.created_at) || 0);
       append(card);
     });

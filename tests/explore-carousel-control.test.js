@@ -13,7 +13,7 @@ function harness({lang='en',reduced=false,count=3}={}) {
   const props={language:lang,userKey:'test',allType:'All',types:['All','Book'],genres:[],categories:[],preferences:{},library:{},getRanked:()=>works,getWork:id=>works.find(w=>w.id===id),cover:()=>'',fallback:()=>'',typeLabel:x=>x,ratingScore:()=>0,onEditProgress:work=>actions.push({kind:'add',id:work.id}),onWork:work=>actions.push({kind:'open',id:work.id})};
   function render(){cleanups.forEach(fn=>fn());cleanups=[];effects.length=0;cursor=0;tree=win.LorefyExploreStudio.Explore(props);cleanups=effects.map(fn=>fn()).filter(fn=>typeof fn==='function');return tree;}
   function nodes(node=tree){return node&&typeof node==='object'?[node,...node.children.flatMap(n=>nodes(n))]:[];}
-  render();return {render,timers,nodes,win,actions,works,rotation:()=>nodes().find(n=>n.attrs.className==='lf-explore-feature-rotation'),slide:()=>nodes().find(n=>n.attrs.className==='lf-explore-feature-dot'&&n.attrs['aria-pressed'])?.attrs['aria-label'],tick(){[...timers.values()].forEach(fn=>fn());render();},dispose(){cleanups.forEach(fn=>fn());}};
+  render();return {render,timers,nodes,win,actions,works,remount(){hooks.length=0;render();},rotation:()=>nodes().find(n=>n.attrs.className==='lf-explore-feature-rotation'),slide:()=>nodes().find(n=>n.attrs.className==='lf-explore-feature-dot'&&n.attrs['aria-pressed'])?.attrs['aria-label'],tick(){[...timers.values()].forEach(fn=>fn());render();},dispose(){cleanups.forEach(fn=>fn());}};
 }
 for(const lang of ['ar','en'])test('reference hero starts stable and its picker can start and pause rotation in '+lang,()=>{
   const h=harness({lang});try{
@@ -27,6 +27,15 @@ for(const lang of ['ar','en'])test('reference hero starts stable and its picker 
 });
 test('reduced motion has no autoplay or misleading rotation control',()=>{const h=harness({reduced:true});try{assert.equal(h.timers.size,0);assert.equal(h.rotation(),undefined);const before=h.slide();h.tick();assert.equal(h.slide(),before);}finally{h.dispose();}});
 test('one featured work has no rotation control or timer',()=>{const h=harness({count:1});try{assert.equal(h.timers.size,0);assert.equal(h.rotation(),undefined);}finally{h.dispose();}});
+for(const lang of ['ar','en'])test('picker arrows follow reading direction and returning keeps the selected work: '+lang,()=>{
+ const h=harness({lang});try{
+  h.win.NenIcons={ChevronRight:'right',ChevronLeft:'left'};h.render();
+  const ar=lang==='ar',next=h.nodes().find(n=>n.attrs['aria-label']===(ar?'العمل التالي':'Next work')),prev=h.nodes().find(n=>n.attrs['aria-label']===(ar?'العمل السابق':'Previous work'));
+  next.attrs.onClick();h.render();const chosen=h.slide();
+  h.nodes().find(n=>n.attrs.className==='lf-explore-feature-open').attrs.onClick();h.remount();
+  assert.equal(h.slide(),chosen);assert.equal(prev.children[0].tag,ar?'right':'left');assert.equal(next.children[0].tag,ar?'left':'right');
+ }finally{h.dispose();}
+});
 test('manual navigation pauses rotation and exposes a start action',()=>{const h=harness();try{h.nodes().find(n=>n.attrs['aria-label']==='Next work').attrs.onClick();h.render();assert.equal(h.timers.size,0);assert.equal(h.rotation()?.attrs['aria-label'],'Start automatic slideshow');}finally{h.dispose();}});
 test('hero poster and Add target the same selected actual work without writing a library entry',()=>{
  const h=harness();try{
@@ -37,9 +46,11 @@ test('hero poster and Add target the same selected actual work without writing a
   h.nodes().find(n=>n.attrs.className==='lf-explore-feature-add').attrs.onClick();assert.deepEqual(h.actions.at(-1),{kind:'add',id:'2'});
  }finally{h.dispose();}
 });
-test('immersive background lives before the header and disappears outside Browse',()=>{
+test('featured artwork belongs to the pick, below the navigation, and disappears outside Browse',()=>{
  const h=harness();try{
-  assert.equal(h.nodes()[0].children[0].attrs.className,'lf-explore-immersive-art');
+  assert.equal(h.nodes()[0].children[0].attrs.className,'lf-explore-header');
+  const pick=h.nodes().find(n=>n.attrs.className==='lf-explore-feature');
+  assert.equal(pick.children[0].attrs.className,'lf-explore-immersive-art');
   h.nodes().find(n=>n.attrs.id==='explore-tab-browse').attrs.onClick();h.render();
   assert.equal(h.nodes().some(n=>n.attrs.className==='lf-explore-immersive-art'),false);
  }finally{h.dispose();}

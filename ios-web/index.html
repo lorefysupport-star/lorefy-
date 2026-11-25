@@ -531,6 +531,9 @@
         var fallbackFor = function(img, localOnly){
           var explicit = img.getAttribute("data-fallback") || "";
           if (!localOnly && /^data:image\//i.test(explicit)) return explicit;
+          // Let the profile's own surface show through while its banner is unavailable.
+          if (img.matches && img.matches('.lf-profile-banner > img,.lf-reader-banner > img'))
+            return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 1"%3E%3C/svg%3E';
           var context = String(img.alt || "") + " " + String(img.className || "");
           try{ context += " " + String((img.closest("[class]") || {}).className || ""); }catch(e){}
           var coverLike = /cover|hero|poster|work/i.test(context);

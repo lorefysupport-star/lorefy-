@@ -6,6 +6,21 @@ aliases: ["فصول", "الفصول", "ساعات", "الساعات", "قراء�
 ---
 # المكتبة والتقدم ومقاييس القراءة
 
+Local Home reading desk supersedes the earlier Home hierarchy below: the cover
+opens details, the primary action opens the existing progress editor, and the
+named reading queue switches works. Audience tabs now belong to the timeline
+after the desk and stay below the masthead during scrolling. Verified switching
+work, opening and cancelling the editor, switching audiences and pinned layout
+in Arabic and English at 320/390/820 CSS pixels. No native build or remote sync.
+
+2026-11-21 local Home reading pass: the resume section owns its artwork and
+full-width Library link; reading metadata follows the interface direction.
+The Home feed skips a confirmed empty friends rail but retains status/retry.
+Verified both languages at 320, 390 and 820 CSS pixels, switching works and
+opening Library. Browser evidence only; no release or device certification.
+
+[[sessions/2026-11-21-Library-Workbench]]: local Library browsing redesign; no release or remote sync.
+
 [[sessions/2026-11-14-Library-Formats]] adds the saved-format selector and scopes
 status totals/results before paging, with owner-scoped return continuity. New
 Library controls use the existing glass palette and retain all four layouts.

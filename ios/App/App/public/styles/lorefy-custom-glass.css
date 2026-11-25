@@ -55,7 +55,7 @@
 /* Media remains sharp. Only the fade blends into the selected page color. */
 .lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) .lf-cinema-resume::before { background:linear-gradient(transparent 8%,color-mix(in srgb,var(--custom-bg) 68%,transparent) 50%,var(--custom-bg) 99%) !important; }
 .lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) .lf-detail-hero>div:nth-child(2) { background:linear-gradient(180deg,transparent,transparent 30%,var(--custom-bg)) !important; }
-.lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) .lf-explore-immersive-art::after { background:linear-gradient(180deg,#00000033,transparent 35%,color-mix(in srgb,var(--custom-bg) 20%,transparent) 64%,var(--custom-bg) 100%) !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) .lf-explore-immersive-art::after { background:linear-gradient(180deg,transparent 8%,color-mix(in srgb,var(--custom-bg) 32%,transparent) 34%,color-mix(in srgb,var(--custom-bg) 90%,transparent) 69%,var(--custom-bg) 100%) !important; }
 
 .lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) :is(.lf-home-cinema,.lf-library-cinema,.lf-explore-cinema,.lf-detail-page,.lf-work-panel,.lf-community-compose-sheet) :is(h1,h2,h3,h4,strong),
 :root:is([data-lorefy-theme^='custom-'],[data-lorefy-theme='light'],[data-lorefy-theme='pink'],[data-lorefy-theme='dark']) .lf-character-page :is(h1,h2,h3,strong) { color:var(--custom-ink) !important; }
@@ -97,7 +97,7 @@
 .lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) :is(button,a,input,textarea,select,summary):focus-visible { outline-color:var(--custom-action) !important; }
 
 /* On-art titles use a stable scrim; page labels and actions use the owner palette. */
-.lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) .lf-explore-cinema.has-feature .lf-explore-header h1 { color:#fff !important; text-shadow:0 2px 12px #000 !important; }
+.lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) .lf-explore-cinema.has-feature .lf-explore-header h1 { color:var(--custom-ink) !important; text-shadow:none !important; }
 .lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) :is(.lf-explore-section-head>button,.lf-library-search>svg,.lf-library-controls>span,.lf-design-feature-copy,.lf-explore-feature-meta,.lf-community-compose-audience,.lf-community-compose-length) { color:var(--custom-secondary) !important; }
 .lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) :is(.lf-explore-feature-add,.lf-detail-hero button,.lf-chapter-quick-actions>button:not(.lf-chapter-quick-add),.lf-community-compose-tools button) { background:var(--custom-glass) !important; color:var(--custom-ink) !important; border-color:var(--custom-edge) !important; }
 .lf-app:is(.is-custom,.is-light,.is-pink,.is-dark) .lf-community-compose-submit { background:var(--custom-action) !important; color:var(--custom-on-action) !important; }

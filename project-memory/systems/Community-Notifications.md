@@ -6,6 +6,15 @@ aliases: ["مجتمع", "منشور", "تعليق", "جرس", "تنبيه", "com
 ---
 # المجتمع والتنبيهات
 
+2026-11-22: local feed previews and full conversations in
+`modules/lorefy-community.js` and `styles/lorefy-community.css`. Long text
+opens in full above a separate replies heading; author identifiers and time
+remain separate. Checked AR/EN, light/dark, likes, reply targeting, draft
+restoration and return scroll in the isolated phone preview. Drafts now retain
+the target reply as well as text: tested close/reopen, local send with correct
+reply reference, and draft removal after send. No live traffic
+or native device verification; no changes to notifications or cloud data.
+
 [[sessions/2026-11-13-Notification-Studio]] supersedes the earlier source-only
 notification deployment boundary: the explicitly authorized mention migration
 and existing Push sender were deployed after3559 tests. New categorized inbox,

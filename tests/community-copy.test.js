@@ -46,7 +46,7 @@ test('count updates refresh accessible name, tooltip and isolated visible number
   assert.equal(button.attrs['aria-label'], 'الرد على الرد · ردّان (2)');
   assert.equal(button.children[0], span);
 });
-function card(lang, compact = false, kind = 'text') {
+function card(lang, compact = false, kind = 'text', body = 'توقف Review literal') {
   const scope = helpers(lang), actions = [];
   Object.assign(scope, { el: (...args) => new Node(...args), avatar: () => new Node('span'), icon: () => new Node('i'),
     identity: () => ({ id: 'viewer' }), savedPosts: () => ({}), quoteAttachment: () => null,
@@ -55,7 +55,7 @@ function card(lang, compact = false, kind = 'text') {
     toggleSavedPost() {}, setPostReaction() {}, sharePost() {}, openThread() {} });
   vm.runInNewContext(source.slice(source.indexOf('  function postCard('), source.indexOf('  async function threadReplies(')), scope);
   const profile = { name: 'رحلة / Journey', username: 'reader' };
-  const post = { id: 'p', user_id: 'other', profile, kind, body: 'توقف Review literal',
+  const post = { id: 'p', user_id: 'other', profile, kind, body,
     created_at: '2026-10-28', replyCount: 2, reactions: { like: 12345, dislike: 1, mine: {} } };
   return { node: scope.postCard(post, compact), profile, post, actions };
 }
@@ -85,6 +85,13 @@ test('compact cards keep reply-to-reply semantics and stable pressed state', () 
   const {node} = card('en', true);
   assert.equal(node.querySelector('.lf-community-post-replies').attrs['aria-label'], 'Reply · 2 replies');
   assert.equal(node.querySelector('.lf-community-post-like').attrs['aria-pressed'], 'false');
+});
+for(const lang of ['ar','en'])test('feed previews are bounded, conversation retains full text: '+lang,()=>{
+  const body='One\nTwo\nThree\nFour\nFive',preview=card(lang,false,'text',body),full=card(lang,true,'text',body);
+  assert.equal(preview.node.querySelector('.lf-community-post-body').textContent,'One\nTwo\nThree…');
+  assert.ok(preview.node.querySelector('.lf-post-read-more'));
+  assert.equal(full.node.querySelector('.lf-community-post-body').textContent,body);
+  assert.equal(full.node.querySelector('time').attrs.datetime,'2026-10-28');
 });
 test('all existing counter refresh paths use the same presentation contract', () => {
   const reaction = source.slice(source.indexOf('  function setPostReaction('), source.indexOf('  async function sharePost('));

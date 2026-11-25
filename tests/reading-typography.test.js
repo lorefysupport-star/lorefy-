@@ -20,14 +20,16 @@ test('Library source isolates its work title without truncating the actual strin
  assert.ok(app.includes('React.createElement("strong",{dir:"auto",title:o.title,"data-no-translate":"1"},o.title)'));
  assert.ok(app.includes('"data-no-translate":"1",dir:W==="en"?"ltr":"rtl"'));
 });
-test('Home title has a stable two-line box and adapts layout rather than font size',()=>{
+test('Home resume titles grow to three lines without reserving empty lines or shrinking text',()=>{
  const css=fs.readFileSync('styles/lorefy-home-immersive.css','utf8');
- assert.match(css,/min-block-size:2\.5em/);assert.match(css,/max-block-size:2\.5em/);assert.match(css,/text-align:start !important/);assert.match(css,/unicode-bidi:isolate/);assert.match(css,/@container/);
+ const title=css.match(/\.lf-cinema-resume h3\s*\{([^}]+)\}/)[1];
+ assert.match(title,/-webkit-line-clamp:3 !important/);assert.match(title,/line-height:1\.25 !important/);assert.match(title,/max-block-size:3\.75em !important/);assert.doesNotMatch(title,/min-block-size/);assert.match(title,/overflow-wrap:anywhere/);
+ assert.match(title,/text-align:start !important/);assert.match(title,/unicode-bidi:isolate/);assert.match(css,/@container/);
  assert.doesNotMatch(css,/@media\(max-width:359px\)\{\s*\.lf-app \.lf-home-cinema \.lf-cinema-resume h3/);
 });
 test('Library titles and metadata use isolated start alignment and flexible title tracks',()=>{
  const css=fs.readFileSync('styles/lorefy-library-refined.css','utf8');
- assert.match(css,/unicode-bidi:isolate/);assert.match(css,/text-align:start !important/);assert.match(css,/minmax\(40px,auto\)/);assert.match(css,/max-block-size:3em/);assert.match(css,/\[dir='rtl'\]/);
+ assert.match(css,/unicode-bidi:isolate/);assert.match(css,/text-align:start !important/);assert.match(css,/\.lf-library-card\s*\{[^}]*grid-template-rows:auto auto auto/);assert.match(css,/\.lf-library-copy strong\s*\{[^}]*-webkit-line-clamp:2[^}]*max-block-size:3em/);assert.match(css,/\[dir='rtl'\]/);
 });
 test('Profile titles have a two-line reservation without changing frame or shelf sizes',()=>{
  const css=fs.readFileSync('styles/lorefy-profile-refined.css','utf8');

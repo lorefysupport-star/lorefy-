@@ -21,6 +21,18 @@ function harness(count=1000,owner='library-owner') {
   return {root,props,catalog,page,render,flush,emit(name){listeners.get(name)?.();},unmount(){effects.forEach(e=>e.cleanup?.());},remount(){effects.forEach(e=>e.cleanup?.());state.length=memos.length=refs.length=effects.length=0;pending.clear();page.scrollTop=0;render();flush();return model;},counts:()=>({resolves,matches,progressReads})};
 }
 
+test('cover density is a device display preference, not a change to the filtered collection',()=>{
+  const app=harness(),values=new Map();
+  app.root.localStorage={getItem:k=>values.get(k),setItem:(k,v)=>values.set(k,v)};
+  let m=app.render();app.flush();m.onQuery('0099');m=app.render();app.flush();
+  const before=app.counts();
+  assert.equal(m.pageProps['data-cover-density'],'comfortable');
+  m.onDensity('compact');m=app.render();app.flush();
+  assert.equal(m.pageProps['data-cover-density'],'compact');
+  assert.equal(m.visible[0].id,'work-99');assert.deepEqual(app.counts(),before);
+  assert.equal(app.remount().density,'compact');
+  values.clear();assert.equal(app.remount().density,'comfortable');
+});
 test('Library mounts one complete shelf batch, retains full counts, and reaches every saved work',()=>{
   const app=harness();let m=app.render();app.flush();
   assert.equal(m.rows.length,1000);assert.equal(m.counts.read,500);assert.equal(m.visible.length,42);assert.equal(m.results.length,1000);

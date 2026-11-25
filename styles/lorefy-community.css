@@ -1111,6 +1111,52 @@ html[dir="ltr"] :is(.lf-community-picker, .lf-community-thread, .lf-community-co
 .lf-app.lf-app.lf-app .lf-social-header > .lf-home-feed-tabs {
   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%!important;box-sizing:border-box;
 }
+
+/* Feed previews and conversations share actions, not the same reading layout. */
+@layer lorefy-home-immersive {
+  .lf-app .lf-home-cinema .lf-community-post-card:not(.is-compact) {
+    display:block !important; padding-block:16px 6px !important;
+  }
+  .lf-community-post-card[dir] .lf-community-post-header,
+  .lf-community-post-card[dir] .lf-community-post-author {
+    direction:inherit !important; text-align:start !important; align-items:center;
+  }
+  .lf-community-post-card[dir] .lf-community-post-header {
+    display:flex !important; gap:8px; flex-wrap:nowrap; margin-block-end:10px !important;
+  }
+  .lf-community-post-card[dir] .lf-community-post-author {
+    flex:1 1 0 !important; min-width:0; max-width:none; min-height:44px;
+  }
+  .lf-community-post-card[dir] .lf-community-post-author>span:last-child { text-align:inherit !important; }
+  .lf-community-post-card[dir='rtl'] .lf-community-post-header,
+  .lf-community-post-card[dir='rtl'] .lf-community-post-author,
+  .lf-community-post-card[dir='rtl'] { direction:rtl !important; }
+  .lf-community-post-card[dir='rtl'] .lf-community-post-author :is(strong,small) { text-align:right !important; }
+  .lf-community-post-card[dir='ltr'] .lf-community-post-author :is(strong,small) { text-align:left !important; }
+  .lf-community-post-actions button[data-zero='true']>span { display:none; }
+  .lf-community-post-kind.is-text { display:none !important; }
+  .lf-post-time { flex:none; font-size:12px; font-variant-numeric:tabular-nums; color:var(--ui-secondary,var(--lf-sub)); }
+  .lf-community-post-card .lf-post-read-more {
+    display:block; min-height:44px; padding:0 4px; margin-inline-end:auto; background:none;
+    border:0; color:var(--ui-action,var(--lf-accent)); font:inherit; font-size:14px; font-weight:600;
+    text-decoration:underline; text-underline-offset:3px; cursor:pointer;
+  }
+  .lf-community-thread .lf-community-thread-origin .lf-community-post-body {
+    font-size:1.2rem !important; line-height:1.65 !important; margin-block:16px !important;
+    white-space:pre-wrap; display:block !important; max-height:none !important;
+  }
+  .lf-community-thread .lf-post-replies-heading {
+    font-size:1rem !important; line-height:1.4; padding:16px 16px 8px !important; margin:0 !important;
+    color:var(--ui-ink,var(--lf-text)); text-align:start;
+  }
+  .lf-community-thread .lf-community-thread-reply .lf-community-post-card {
+    margin-inline-start:16px; padding-inline-start:12px !important;
+    border-inline-start:2px solid var(--ui-line,var(--lf-border)) !important;
+  }
+  .lf-community-thread .lf-community-post-actions button,
+  .lf-community-thread .lf-community-thread-close { min-width:44px !important; min-height:44px !important; }
+  .lf-post-read-more:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
+}
 .lf-app.lf-app.lf-app .lf-social-header .lf-home-feed-tabs > button {
   width:100%!important;max-width:none!important;box-sizing:border-box;
 }

@@ -6,6 +6,8 @@ aliases: ["رواية التطبيق", "قصة Lorefy", "المسار الكام
 ---
 # رواية Lorefy من البداية إلى الحالة الحالية
 
+[[sessions/2026-11-21-Library-Workbench]]: local Library browsing redesign; no release or remote sync.
+
 2026-11-15: [[sessions/2026-11-15-Public-Profile-Display]] repairs saved
 Showcase being normalized to Covers by the live public-appearance function.
 Approved narrow SQL change is verified on production; responsive visitor shelf

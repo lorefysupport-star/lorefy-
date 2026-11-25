@@ -3,8 +3,8 @@ kind: source-index
 status: generated
 ---
 <!-- project-memory:generated -->
-Observed: 2026-11-14T22:42:45.402Z
-Source commit: 9612db729d96b6a3bff0ea8da98926c129997879
+Observed: 2026-11-25T14:51:33.158Z
+Source commit: 888d2227b318e33aa04fc63638d2194e36e4e95f
 
 # Styles Source Inventory
 
@@ -17,25 +17,25 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-character-atlas.css](../../styles/lorefy-character-atlas.css) (20748 bytes)
 - [styles/lorefy-cinema-ui.css](../../styles/lorefy-cinema-ui.css) (9088 bytes)
 - [styles/lorefy-comics-search.css](../../styles/lorefy-comics-search.css) (1755 bytes)
-- [styles/lorefy-community.css](../../styles/lorefy-community.css) (38677 bytes)
-- [styles/lorefy-cover-media.css](../../styles/lorefy-cover-media.css) (15802 bytes)
-- [styles/lorefy-custom-glass.css](../../styles/lorefy-custom-glass.css) (19655 bytes)
+- [styles/lorefy-community.css](../../styles/lorefy-community.css) (41534 bytes)
+- [styles/lorefy-cover-media.css](../../styles/lorefy-cover-media.css) (16005 bytes)
+- [styles/lorefy-custom-glass.css](../../styles/lorefy-custom-glass.css) (19702 bytes)
 - [styles/lorefy-customize.css](../../styles/lorefy-customize.css) (5126 bytes)
 - [styles/lorefy-data-studio.css](../../styles/lorefy-data-studio.css) (5667 bytes)
 - [styles/lorefy-decoration-store.css](../../styles/lorefy-decoration-store.css) (14628 bytes)
 - [styles/lorefy-design-system.css](../../styles/lorefy-design-system.css) (108435 bytes)
-- [styles/lorefy-explore-cinema.css](../../styles/lorefy-explore-cinema.css) (35010 bytes)
-- [styles/lorefy-explore-studio.css](../../styles/lorefy-explore-studio.css) (30335 bytes)
+- [styles/lorefy-explore-cinema.css](../../styles/lorefy-explore-cinema.css) (34890 bytes)
+- [styles/lorefy-explore-studio.css](../../styles/lorefy-explore-studio.css) (30842 bytes)
 - [styles/lorefy-frame-motion.css](../../styles/lorefy-frame-motion.css) (10214 bytes)
 - [styles/lorefy-glass-materials.css](../../styles/lorefy-glass-materials.css) (14052 bytes)
 - [styles/lorefy-home-cinema.css](../../styles/lorefy-home-cinema.css) (35433 bytes)
-- [styles/lorefy-home-immersive.css](../../styles/lorefy-home-immersive.css) (11151 bytes)
+- [styles/lorefy-home-immersive.css](../../styles/lorefy-home-immersive.css) (16328 bytes)
 - [styles/lorefy-import-studio.css](../../styles/lorefy-import-studio.css) (7113 bytes)
 - [styles/lorefy-interface-continuity.css](../../styles/lorefy-interface-continuity.css) (872 bytes)
 - [styles/lorefy-interface-settings.css](../../styles/lorefy-interface-settings.css) (23869 bytes)
 - [styles/lorefy-legal.css](../../styles/lorefy-legal.css) (4324 bytes)
-- [styles/lorefy-library-cinema.css](../../styles/lorefy-library-cinema.css) (20446 bytes)
-- [styles/lorefy-library-refined.css](../../styles/lorefy-library-refined.css) (7130 bytes)
+- [styles/lorefy-library-cinema.css](../../styles/lorefy-library-cinema.css) (27957 bytes)
+- [styles/lorefy-library-refined.css](../../styles/lorefy-library-refined.css) (7945 bytes)
 - [styles/lorefy-native-layout-fix.css](../../styles/lorefy-native-layout-fix.css) (6133 bytes)
 - [styles/lorefy-notification-center.css](../../styles/lorefy-notification-center.css) (6803 bytes)
 - [styles/lorefy-page-refresh.css](../../styles/lorefy-page-refresh.css) (2066 bytes)
@@ -43,8 +43,8 @@ Paths and sizes only. Inclusion does not mean the file was semantically reviewed
 - [styles/lorefy-profile-apple.css](../../styles/lorefy-profile-apple.css) (10999 bytes)
 - [styles/lorefy-profile-header.css](../../styles/lorefy-profile-header.css) (4116 bytes)
 - [styles/lorefy-profile-layout.css](../../styles/lorefy-profile-layout.css) (9913 bytes)
-- [styles/lorefy-profile-refined.css](../../styles/lorefy-profile-refined.css) (14352 bytes)
-- [styles/lorefy-profile-sections.css](../../styles/lorefy-profile-sections.css) (22280 bytes)
+- [styles/lorefy-profile-refined.css](../../styles/lorefy-profile-refined.css) (17091 bytes)
+- [styles/lorefy-profile-sections.css](../../styles/lorefy-profile-sections.css) (23956 bytes)
 - [styles/lorefy-profile-shop.css](../../styles/lorefy-profile-shop.css) (23176 bytes)
 - [styles/lorefy-public-profile.css](../../styles/lorefy-public-profile.css) (19395 bytes)
 - [styles/lorefy-reader-layout.css](../../styles/lorefy-reader-layout.css) (25841 bytes)

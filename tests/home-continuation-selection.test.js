@@ -60,7 +60,7 @@ test('Home selection cannot reuse a different account progress map', () => {
 
 test('the current social Home calls the continuation section before its community feed', () => {
   const currentHome = source.slice(source.lastIndexOf('lf-home-screen'));
-  assert.match(currentHome, /continueReadingSection\(\),Tn\?\$r\(\):sr\(\)/);
+  assert.match(currentHome, /continueReadingSection\(\),!Tn&&React\.createElement\("div",\{className:"lf-home-community-heading".*?homeFeedTabs\(\)\),Tn\?\$r\(\):sr\(\)/);
   assert.ok(source.includes('continueReadingSection=()=>'), 'shared section has a real renderer');
 });
 

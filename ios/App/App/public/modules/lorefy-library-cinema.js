@@ -18,23 +18,47 @@
     if(progress){var saved=savedUnit(work,progress);if(saved)return saved.total>0;}
     return units.some(function(unit){return positive(work,unit.total)>0;});
   }
-  function checkpoint(work,progress,language,fallback){
+  function stepLabel(saved,language,readingLabel){
+    if(readingLabel&&language!=='en')return 'ال'+saved.unit.ar+' '+saved.current+' من '+saved.total;
+    return saved.current+' / '+saved.total+' '+saved.unit[language==='en'?'en':'ar'];
+  }
+  function checkpoint(work,progress,language,fallback,readingLabel){
     var saved=savedUnit(work,progress);
-    return saved&&saved.total?saved.current+' / '+saved.total+' '+saved.unit[language==='en'?'en':'ar']:fallback;
+    return saved&&saved.total?stepLabel(saved,language,readingLabel):fallback;
   }
   function percentage(work,progress){
     var saved=savedUnit(work,progress);
     if(!saved)return hasTotal(work,progress)?0:null;
     return saved.total?Math.max(0,Math.min(100,Math.round(saved.current/saved.total*100))):null;
   }
+  function closestToFinish(rows,progress){
+    var pick=null;
+    for(var row of rows){
+      var saved=savedUnit(row.m,progress&&progress[row.id]);
+      if(!saved||!saved.total||saved.current>=saved.total)continue;
+      var ratio=saved.current/saved.total;
+      if(!pick||ratio>pick.ratio)pick={work:row.m,saved:saved,ratio:ratio};
+    }
+    return pick;
+  }
+  function CheckpointLink(props){
+    var h=root.React.createElement,en=props.language==='en',pick=props.pick,Mark=(root.NenIcons||{}).BookOpen;
+    var step=pick.saved;
+    return h('button',{type:'button',className:'lf-library-checkpoint-link',onClick:function(){props.onOpen(pick.work);},dir:en?'ltr':'rtl'},
+      Mark&&h(Mark,{size:21,'aria-hidden':true}),
+      h('span',null,h('small',null,en?'Closest to finishing':'الأقرب للإنهاء'),h('b',{dir:'auto'},pick.work.title)),
+      h('span',{className:'lf-library-checkpoint-units'},stepLabel(step,props.language,true)));
+  }
   function Heading(props){
     var h=root.React.createElement,en=props.language==='en',Plus=(root.NenIcons||{}).Plus;
-    return h('div',{className:'lf-library-cinema-heading',dir:en?'ltr':'rtl',style:{direction:en?'ltr':'rtl'}},h('h1',null,en?'My Library':'مكتبتي'),props.onExplore&&h('button',{type:'button',className:'lf-library-add','aria-label':en?'Add work':'إضافة عمل',title:en?'Add work':'إضافة عمل',onClick:props.onExplore},Plus&&h(Plus,{size:22,'aria-hidden':true})));
+    return h('div',{className:'lf-library-cinema-heading',dir:en?'ltr':'rtl',style:{direction:en?'ltr':'rtl'}},
+      h('h1',null,en?'My Library':'مكتبتي'),
+      props.onExplore&&h('button',{type:'button',className:'lf-library-add','aria-label':en?'Add work':'إضافة عمل',title:en?'Add work':'إضافة عمل',onClick:props.onExplore},Plus&&h(Plus,{size:20,'aria-hidden':true})));
   }
   function Search(props){
     var h=root.React.createElement,icons=root.NenIcons||{},en=props.language==='en';
     return h('div',{className:'lf-library-search'},icons.Search&&h(icons.Search,{size:21,'aria-hidden':true}),
-      h('input',{type:'search',dir:'auto',enterKeyHint:'search',value:props.value,onChange:function(event){props.onChange(event.target.value);},placeholder:en?'Search your library':'ابحث في مكتبتك','aria-label':en?'Search library':'البحث في المكتبة'}),
+      h('input',{type:'search',dir:props.value?'auto':en?'ltr':'rtl',enterKeyHint:'search',value:props.value,onChange:function(event){props.onChange(event.target.value);},placeholder:en?'Search your library':'ابحث في مكتبتك','aria-label':en?'Search library':'البحث في المكتبة'}),
       props.value&&h('button',{type:'button','aria-label':en?'Clear search':'مسح البحث',title:en?'Clear search':'مسح البحث',onClick:function(){props.onChange('');}},icons.X&&h(icons.X,{size:18,'aria-hidden':true})));
   }
   function Summary(props){
@@ -45,13 +69,31 @@
   function Tools(props){
     var h=root.React.createElement,en=props.language==='en',icons=root.NenIcons||{},options=props.formats||[];
     if(props.format&&!options.some(function(option){return option.value===props.format;}))options=options.concat({value:props.format,label:props.typeLabel?props.typeLabel(props.format):props.format,count:0});
-    return h('div',{className:'lf-library-filter-tools',dir:en?'ltr':'rtl',style:{direction:en?'ltr':'rtl'}},
+    var selected=options.find(function(option){return option.value===props.format;});
+    var label=en?'Browse options':'خيارات العرض',Icon=icons.SlidersHorizontal||icons.Settings;
+    var scope=selected?selected.label:props.order==='title'?(en?'Title order':'حسب العنوان'):props.order==='progress'?(en?'Reading progress':'تقدم القراءة'):'';
+    return h(root.React.Fragment,null,
+      h('button',{type:'button',id:'lf-library-browse-toggle',className:'lf-library-browse-toggle',title:label,'aria-label':scope?label+': '+scope:label,
+        'data-active':scope?'true':'false','aria-expanded':!!props.open,'aria-controls':'lf-library-browse-panel',onClick:function(){props.onOpen(!props.open);}},
+        Icon?h(Icon,{size:20,'aria-hidden':true}):label),
+      h('div',{className:'lf-library-options lf-library-options-content',id:'lf-library-browse-panel',dir:en?'ltr':'rtl',hidden:!props.open,onKeyDown:function(e){
+        if(e.key==='Escape'){props.onOpen(false);e.currentTarget.ownerDocument.getElementById('lf-library-browse-toggle').focus();e.stopPropagation();}
+      }},
+      h('div',{className:'lf-library-layout-slot'},h('span',null,en?'Layout':'طريقة العرض')),
+      props.onDensity&&h('fieldset',{className:'lf-library-density'},
+        h('legend',null,en?'Cover size':'حجم الأغلفة'),
+        ['comfortable','compact'].map(function(value){
+          var compact=value==='compact';
+          return h('label',{key:value},h('input',{type:'radio',name:'lf-library-density',value:value,checked:value===props.density,onChange:function(){props.onDensity(value);}}),
+            h('span',null,compact?(en?'Compact':'مكثّف'):(en?'Large':'كبير')));
+        })),
+      h('div',{className:'lf-library-filter-tools',dir:en?'ltr':'rtl',style:{direction:en?'ltr':'rtl'}},
       h('label',{className:'lf-library-format-field'},icons.BookOpen&&h(icons.BookOpen,{size:17,'aria-hidden':true}),
         h('select',{value:props.format||'','aria-label':en?'Work type':'نوع العمل',onChange:function(event){props.onFormat(event.target.value);}},h('option',{value:''},en?'All formats':'كل الأنواع'),options.map(function(option){return h('option',{key:option.value,value:option.value},option.label+' · '+option.count);}))),
       h('label',{className:'lf-library-order-field'},icons.ArrowDownWideNarrow&&h(icons.ArrowDownWideNarrow,{size:17,'aria-hidden':true}),
-        h('select',{value:props.order,'aria-label':en?'Sort library':'ترتيب المكتبة',onChange:function(event){props.onOrder(event.target.value);}},[['added',en?'Added order':'ترتيب الإضافة'],['title',en?'Title':'العنوان'],['progress',en?'Reading progress':'تقدم القراءة']].map(function(option){return h('option',{key:option[0],value:option[0]},option[1]);}))));
+        h('select',{value:props.order,'aria-label':en?'Sort library':'ترتيب المكتبة',onChange:function(event){props.onOrder(event.target.value);}},[['added',en?'Added order':'ترتيب الإضافة'],['title',en?'Title':'العنوان'],['progress',en?'Reading progress':'تقدم القراءة']].map(function(option){return h('option',{key:option[0],value:option[0]},option[1]);}))))));
   }
-  var BATCH=42,views=new Map();
+  var BATCH=42,views=new Map(),densityKey='lorefy.library.coverDensity.v1',returnTarget=null;
   function remember(owner,value){
     views.delete(owner);views.set(owner,value);
     if(views.size>8)views.delete(views.keys().next().value);
@@ -72,6 +114,15 @@
   }
   function Collection(props){
     var React=root.React,owner=String(props.owner||'local'),saved=views.get(owner);
+    var browse=React.useState(false);
+    var densityState=React.useState(function(){
+      try{return root.localStorage.getItem(densityKey)==='compact'?'compact':'comfortable';}catch(error){return 'comfortable';}
+    });
+    function onDensity(value){
+      if(value!=='compact'&&value!=='comfortable')return;
+      densityState[1](value);
+      try{root.localStorage.setItem(densityKey,value);}catch(error){}
+    }
     var revisionState=React.useState(0),revision=revisionState[0],setRevision=revisionState[1];
     var queryState=React.useState(function(){return {owner:owner,external:props.query,value:saved&&saved.externalQuery===props.query?saved.query:props.query};}),queryValue=queryState[0],setQuery=queryState[1];
     var query=queryValue.owner===owner&&queryValue.external===props.query?queryValue.value:props.query;
@@ -95,15 +146,36 @@
       var rows=[],counts=Object.create(null);data.rows.forEach(function(row){if(row.format!==format)return;rows.push(row);counts[row.st]=(counts[row.st]||0)+1;});return {rows:rows,counts:counts};
     },[data,format]);
     var results=React.useMemo(function(){return selectRows(scoped.rows,Object.assign({},props,{query:query}));},[scoped,props.status,query,props.order,props.progress]);
-    React.useLayoutEffect(function(){if(node.current)node.current.scrollTop=initial.scroll;},[context]);
+    var checkpointPick=React.useMemo(function(){
+      return props.readingStatus&&props.status===props.readingStatus&&!query.trim()?closestToFinish(results,props.progress):null;
+    },[results,props.progress,props.status,props.readingStatus,query]);
+    React.useLayoutEffect(function(){
+      if(!node.current)return;
+      node.current.scrollTop=initial.scroll;
+      var target=returnTarget;returnTarget=null;
+      if(!target||target.context!==context)return;
+      var frame=root.requestAnimationFrame(function(){
+        if(!node.current||root.document.activeElement!==root.document.body)return;
+        var cards=node.current.querySelectorAll('.lf-library-card[data-work-id]');
+        var card=Array.from(cards).find(function(el){return el.dataset.workId===target.id;});
+        var button=card&&card.querySelector('.lf-cover-open');
+        if(button)button.focus({preventScroll:true});
+      });
+      return function(){root.cancelAnimationFrame(frame);};
+    },[context]);
     React.useEffect(function(){
       var previous=views.get(owner);remember(owner,{context:context,query:query,format:format,externalQuery:props.query,limit:limit,scroll:previous&&previous.context===context?previous.scroll:0});
     },[owner,context,limit]);
-    return props.render({rows:scoped.rows,counts:scoped.counts,total:data.rows.length,formats:data.formats,format:format,pending:data.pending,results:results,visible:results.slice(0,limit),empty:!results.length&&!data.pending,hasMore:results.length>limit,query:query,
+    return props.render({browseOpen:browse[0],onBrowse:browse[1],density:densityState[0],onDensity:onDensity,checkpointPick:checkpointPick,rows:scoped.rows,counts:scoped.counts,total:data.rows.length,formats:data.formats,format:format,pending:data.pending,results:results,visible:results.slice(0,limit),empty:!results.length&&!data.pending,hasMore:results.length>limit,query:query,
       onQuery:function(value){if(active.current!==context)return;setQuery({owner:owner,external:props.query,value:String(value)});},
       onFormat:function(value){if(active.current!==context)return;setFormat({owner:owner,value:value?typeKey(value):''});},
       onMore:function(){if(active.current!==context)return;setPage(function(previous){return {context:context,limit:Math.min(results.length,(previous.context===context?previous.limit:limit)+BATCH)};});},
-      pageProps:{ref:node,onScroll:function(event){if(active.current!==context)return;remember(owner,{context:context,query:query,format:format,externalQuery:props.query,limit:limit,scroll:event.currentTarget.scrollTop});}}});
+      pageProps:{'data-cover-density':densityState[0],ref:node,onClickCapture:function(event){
+        returnTarget=null;
+        if(event.detail!==0||!event.target.closest)return;
+        var open=event.target.closest('.lf-cover-open'),card=open&&open.closest('.lf-library-card[data-work-id]');
+        if(card)returnTarget={context:context,id:card.dataset.workId};
+      },onScroll:function(event){if(active.current!==context)return;remember(owner,{context:context,query:query,format:format,externalQuery:props.query,limit:limit,scroll:event.currentTarget.scrollTop});}}});
   }
   function Empty(props){
     var h=root.React.createElement,en=props.language==='en',search=!!String(props.query||'').trim(),icons=root.NenIcons||{},Icon=search?icons.Search:icons.BookOpen;
@@ -113,6 +185,6 @@
       h('p',null,search?(en?'Try a different title or author.':'جرّب عنوانًا أو مؤلفًا آخر.'):props.filtered?(en?'Try another format or reading status.':'جرّب نوعًا أو حالة قراءة أخرى.'):(en?'Keep the stories you want to return to.':'احتفظ بالأعمال التي تود العودة إليها.')),
       h('button',{type:'button',onClick:search?props.onClear:props.filtered&&props.onReset?props.onReset:props.onExplore},en?(search?'Clear search':props.filtered&&props.onReset?'Show all works':'Explore works'):(search?'مسح البحث':props.filtered&&props.onReset?'عرض كل الأعمال':'استكشف الأعمال')));
   }
-  var api={hasTotal:hasTotal,checkpoint:checkpoint,percentage:percentage,Heading:Heading,Search:Search,Summary:Summary,Tools:Tools,Empty:Empty,Collection:Collection};
+  var api={CheckpointLink:CheckpointLink,closestToFinish:closestToFinish,hasTotal:hasTotal,checkpoint:checkpoint,percentage:percentage,Heading:Heading,Search:Search,Summary:Summary,Tools:Tools,Empty:Empty,Collection:Collection};
   root.LorefyLibraryCinema=api;if(typeof module==='object'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

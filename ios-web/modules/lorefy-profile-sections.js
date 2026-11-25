@@ -104,7 +104,7 @@
   function labels(lang) {
     const en = lang === 'en';
     return en ? {
-      tabs:['Overview','Lists','Posts'], navigation:'Profile sections', create:'New list', edit:'Edit list',
+      tabs:['Overview','Lists','Activity'], filters:{all:'All',post:'Posts',review:'Reviews'},emptyActivity:'No activity yet',emptyReviews:'No reviews yet', navigation:'Profile sections', create:'New list', edit:'Edit list',
       name:'List name', description:'Description', works:'Works', characters:'Characters', public:'Visible to everyone',
       private:'Private', save:'Save list', cancel:'Cancel', back:'Back to lists', remove:'Delete list',
       confirm:'Delete this list?', yes:'Delete', no:'Keep list', empty:'No lists yet', deleted:'List deleted',
@@ -116,7 +116,7 @@
       up:'Move up', down:'Move down', removeItem:'Remove item', limit:'Up to 50 entries per list',
       add:'Add', selected:'Selected', noResults:'No results', count:'entries', position:'Position', newTitle:'New ranked list'
     } : {
-      tabs:['الرئيسية','القوائم','التغريدات'], navigation:'أقسام البروفايل', create:'قائمة جديدة', edit:'تعديل القائمة',
+      tabs:['لمحة','القوائم','النشاط'], filters:{all:'الكل',post:'التغريدات',review:'المراجعات'},emptyActivity:'لا يوجد نشاط بعد',emptyReviews:'لا توجد مراجعات بعد', navigation:'أقسام البروفايل', create:'قائمة جديدة', edit:'تعديل القائمة',
       name:'اسم القائمة', description:'الوصف', works:'أعمال', characters:'شخصيات', public:'ظاهرة للجميع',
       private:'خاصة', save:'حفظ القائمة', cancel:'إلغاء', back:'العودة للقوائم', remove:'حذف القائمة',
       confirm:'حذف هذه القائمة؟', yes:'حذف', no:'إبقاء القائمة', empty:'لا توجد قوائم بعد', deleted:'تم حذف القائمة',
@@ -243,7 +243,16 @@
     rows.forEach(folder => {
       const card = node('button',{type:'button',class:'lf-profile-folder','data-profile-folder':folder.id,
         'aria-label':folder.name+' · '+folderMeta(folder,t)+' · '+(folder.isPublic?t.public:t.private),
-        onclick:() => folder.legacyId ? root.LorefyLegacyLists.open(folder) : showFolder(state,folder)},[
+        onclick:event => {
+          if (folder.legacyId) return root.LorefyLegacyLists.open(folder);
+          state.listReturnTop=event.currentTarget.getBoundingClientRect().top;
+          state.listReturnScroll=[];
+          for (let n=event.currentTarget.parentElement;n;n=n.parentElement) {
+            if (n===doc.scrollingElement || (n.scrollHeight>n.clientHeight && /auto|scroll/.test(root.getComputedStyle(n).overflowY)))
+              state.listReturnScroll.push([n,n.scrollTop]);
+          }
+          showFolder(state,folder);
+        }},[
         folderPreview(folder,t),
         node('span',{class:'lf-profile-folder-caption'},[
           node('span',{},[node('strong',{'data-no-translate':'true',dir:'auto',text:folder.name}),
@@ -275,19 +284,39 @@
       if (current(state) && viewer===account(root.localStorage) && state.tab==='lists') renderFolders(state);
     }
   }
-  function showFolder(state, folder) {
+  function refreshListView(state) {
+    const intro=state.panel.querySelector('.lf-profile-list-intro');
+    if (!intro) {
+      if (!state.panel.querySelector('.lf-profile-list-editor,.lf-profile-list-kind')) renderFolders(state);
+      return;
+    }
+    const folder=foldersFor(state.profile,state.owner,root.localStorage).find(row=>row.id===intro.dataset.folderId);
+    if (!folder || (!state.owner && state.profile.profile_lists_error)) { renderFolders(state); return; }
+    if (JSON.stringify(folder)!==intro.folderStamp) showFolder(state,folder,false);
+  }
+  function showFolder(state, folder, enter=true) {
     const t = text();
-    const intro = node('header',{class:'lf-profile-list-intro'},[
+    const intro = node('header',{class:'lf-profile-list-intro','data-folder-id':folder.id},[
       folderArtwork(folder,'lf-profile-list-artwork'),
       node('div',{class:'lf-profile-list-meta'},[node('span',{text:folderMeta(folder,t)}),folderVisibility(folder,t)]),
       node('h2',{'data-no-translate':'true',dir:'auto',text:folder.name})
     ]);
+    intro.folderStamp=JSON.stringify(folder);
     replacePanel(state,node('div',{class:'lf-profile-list-toolbar'},[
       button(t.back,doc.documentElement.lang==='en'?'arrow-left':'arrow-right',() => {
         renderFolders(state);
         const card = Array.from(state.panel.querySelectorAll('[data-profile-folder]')).find(el => el.dataset.profileFolder===folder.id);
         if (card) card.focus({preventScroll:true});
-        state.panel.scrollIntoView({block:'start',behavior:'instant'});
+        for (const [scroller,top] of state.listReturnScroll || []) {
+          if (scroller.isConnected) scroller.scrollTo({top,behavior:'instant'});
+        }
+        if (card && state.listReturnScroll?.length) {
+          const target=Math.min(Math.max(state.listReturnTop,0),Math.max(0,root.innerHeight-card.offsetHeight));
+          for (const [scroller] of state.listReturnScroll) {
+            if (scroller.isConnected) scroller.scrollTo({top:scroller.scrollTop+card.getBoundingClientRect().top-target,behavior:'instant'});
+          }
+        } else card?.scrollIntoView({block:'nearest',behavior:'instant'});
+        state.listReturnScroll=null;
       },'is-back'),
       state.owner && node('div',{class:'lf-profile-list-toolbar-actions'},[
         button(t.edit,'pencil',() => editFolder(state,folder)),
@@ -304,8 +333,10 @@
     state.panel.appendChild(list);
     if (!folder.items.length) state.panel.appendChild(node('p',{class:'lf-profile-section-empty',text:t.noResults}));
     hydrate(state.panel);
-    state.panel.scrollIntoView({block:'start',behavior:'instant'});
-    state.panel.querySelector('.is-back').focus({preventScroll:true});
+    if (enter) {
+      state.panel.scrollIntoView({block:'start',behavior:'instant'});
+      state.panel.querySelector('.is-back').focus({preventScroll:true});
+    }
   }
   function confirmDelete(state, folder) {
     if (!state.owner || !current(state)) return;
@@ -343,7 +374,10 @@
     const t = text(), draft = source ? JSON.parse(JSON.stringify(source)) :
       {id:root.crypto.randomUUID(),name:'',description:'',kind:initialKind||'characters',isPublic:true,items:[]};
     const editOwner = state.profile.id;
-    replacePanel(state,contentHeader(source?t.edit:t.newTitle,button(t.cancel,'x',() => renderFolders(state))));
+    replacePanel(state,contentHeader(source?t.edit:t.newTitle,button(t.cancel,'x',() => {
+      const saved=source && foldersFor(state.profile,state.owner,root.localStorage).find(row=>row.id===source.id);
+      if (saved) showFolder(state,saved); else renderFolders(state);
+    })));
     const form = node('form',{class:'lf-profile-list-editor'});
     const name = node('input',{type:'text',maxlength:100,required:'required',value:draft.name,'aria-label':t.name,placeholder:t.name,dir:'auto','data-no-translate':'true'});
     const description = node('textarea',{maxlength:500,'aria-label':t.description,placeholder:t.description,dir:'auto','data-no-translate':'true'});
@@ -521,11 +555,20 @@
   function renderPosts(state) {
     if (state.tab!=='posts') return;
     const t=text(), community=root.LorefyCommunity;
-    replacePanel(state,contentHeader(t.tabs[2],state.owner && community && button(t.write,'feather',() => community.openComposer(),'is-profile-create')));
+    const filter=state.activityFilter||'all', waitingForPosts=filter!=='review';
+    const focused=doc.activeElement?.dataset?.activityFilter;
+    const controls=node('div',{class:'lf-profile-activity-filters',role:'group','aria-label':t.tabs[2]},
+      Object.entries(t.filters).map(([key,label])=>node('button',{type:'button',text:label,'data-activity-filter':key,'aria-pressed':String(key===filter),onclick:()=>{
+        if(filter===key)return;
+        state.activityFilter=key;state.postLimit=24;renderPosts(state);
+        state.panel.querySelector('[data-activity-filter="'+key+'"]')?.focus({preventScroll:true});
+      }})));
+    replacePanel(state,contentHeader(t.tabs[2],state.owner && community && button(t.write,'feather',() => community.openComposer(),'is-profile-create')),controls);
+    if(focused)controls.querySelector('[data-activity-filter="'+focused+'"]')?.focus({preventScroll:true});
     const feed=node('div',{class:'lf-profile-post-feed'});
     if(state.reviewRoots)state.reviewRoots.forEach(root=>root.unmount());state.reviewRoots=[];
     const reviews=root.LorefyProfileReviews ? root.LorefyProfileReviews(state.profile,state.owner) : [];
-    const entries=profileEntries(state.posts,reviews,state.profile,state.owner);
+    const entries=profileEntries(state.posts,reviews,state.profile,state.owner).filter(entry=>filter==='all'||entry[filter]);
     state.reviewStamp=JSON.stringify(reviews);
     const limit=state.postLimit || 24;
     entries.slice(0,limit).forEach(entry=>{
@@ -537,13 +580,13 @@
       }
     });
     state.panel.appendChild(feed);
-    if (state.postBusy) state.panel.appendChild(node('p',{role:'status',class:'lf-profile-section-empty',text:t.loading}));
-    else if (state.postError) state.panel.appendChild(node('div',{class:'lf-profile-section-empty'},[
+    if (waitingForPosts && state.postBusy) state.panel.appendChild(node('p',{role:'status',class:'lf-profile-section-empty',text:t.loading}));
+    else if (waitingForPosts && state.postError) state.panel.appendChild(node('div',{class:'lf-profile-section-empty'},[
       node('p',{role:'alert',text:t.failed}),button(t.retry,'rotate-cw',() => loadPosts(state,!!state.posts.length))]));
-    else if (!entries.length) state.panel.appendChild(node('p',{class:'lf-profile-section-empty',text:t.emptyPosts}));
+    else if (!entries.length) state.panel.appendChild(node('p',{role:'status',class:'lf-profile-section-empty',text:filter==='all'?t.emptyActivity:filter==='review'?t.emptyReviews:t.emptyPosts}));
     if (entries.length>limit)
       state.panel.appendChild(button(t.more,'chevron-down',() => {state.postLimit=limit+24;renderPosts(state);}));
-    else if (state.more && !state.postBusy && !state.postError)
+    else if (waitingForPosts && state.more && !state.postBusy && !state.postError)
       state.panel.appendChild(button(t.older,'chevron-down',() => loadPosts(state,true)));
     hydrate(state.panel);
   }
@@ -606,14 +649,14 @@
         states.set(page,state);liveStates.add(state);
         state.buttons=['overview','lists','posts'].map((tab,index) => {
           const b=node('button',{type:'button',role:'tab',id:id+'-'+tab,'aria-controls':tab==='overview'?id+'-overview-panel':panel.id,
-            onclick:() => selectTab(state,tab)},[icon(['layout-grid','folder-heart','feather'][index]),node('span',{text:text().tabs[index]})]);
+            onclick:() => {if (state.tab!==tab) selectTab(state,tab);}},[icon(['layout-grid','folder-heart','feather'][index]),node('span',{text:text().tabs[index]})]);
           b.addEventListener('keydown',event => {
             const keys=['ArrowLeft','ArrowRight','Home','End'];
             if (!keys.includes(event.key)) return;
             event.preventDefault();
             const step=event.key==='ArrowRight'?(state.lang==='en'?1:-1):(state.lang==='en'?-1:1);
             const target=event.key==='Home'?0:event.key==='End'?2:(index+step+3)%3;
-            selectTab(state,['overview','lists','posts'][target],true);
+            if (target!==index) selectTab(state,['overview','lists','posts'][target],true);
           });
           bar.appendChild(b); return b;
         });
@@ -660,7 +703,7 @@
   root.addEventListener('lorefy:stored-state',event => {
     if (!event.detail || event.detail.key !== KEY) return;
     liveStates.forEach(state => {
-      if (state.owner && current(state) && state.tab === 'lists' && !state.panel.querySelector('.lf-profile-list-editor')) renderFolders(state);
+      if (state.owner && current(state) && state.tab === 'lists') refreshListView(state);
     });
   });
   root.addEventListener('lorefy:profile-snapshot',event => {
@@ -669,7 +712,7 @@
       const state=states.get(page);
       if (state && event.detail && event.detail.profile && state.profile.id===event.detail.profile.id) {
         state.profile=event.detail.profile;
-        if (state.tab==='lists') renderFolders(state);
+        if (state.tab==='lists') refreshListView(state);
       }
     });
   });

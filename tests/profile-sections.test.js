@@ -54,9 +54,9 @@ test('profile post selection uses owner id, excludes replies and deleted rows', 
 });
 test('tabs have complete Arabic and English labels', () => {
   assert.equal(typeof api.labels, 'function');
-  assert.deepEqual(api.labels('ar').tabs,['الرئيسية','القوائم','التغريدات']);
-  assert.deepEqual(api.labels('en').tabs,['Overview','Lists','Posts']);
-  for(const value of Object.values(api.labels('en')).flat()) assert.doesNotMatch(value,/[\u0600-\u06ff]/);
+  assert.deepEqual(api.labels('ar').tabs,['لمحة','القوائم','النشاط']);
+  assert.deepEqual(api.labels('en').tabs,['Overview','Lists','Activity']);
+  for(const value of Object.values(api.labels('en')).flatMap(label=>typeof label==='string'?[label]:Object.values(label))) assert.doesNotMatch(value,/[\u0600-\u06ff]/);
 });
 test('public snapshot projects lists and degrades safely before database activation', async () => {
   const vm=require('node:vm'), window={};

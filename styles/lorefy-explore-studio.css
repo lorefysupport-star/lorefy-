@@ -313,3 +313,10 @@
 .lf-explore-filter-options .lf-explore-preferences { max-height:220px;overflow-y:auto;padding-bottom:12px; }
 .lf-explore-collection-status { grid-column:1 / -1;padding:16px;text-align:center;color:var(--ui-muted); }
 .lf-explore-dialog-grid .lf-explore-work { width:100%; }
+.lf-explore-applied { display:flex; flex-wrap:wrap; gap:4px 8px; margin:4px 16px 8px; }
+.lf-explore-applied button {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; max-width:100%;
+  min-height:44px; padding:4px 10px; border:1px solid var(--ui-line); border-radius:6px;
+  font:inherit; font-size:14px; color:var(--ui-ink); background:var(--ui-surface); cursor:pointer;
+}
+.lf-explore-applied button:focus-visible { outline:2px solid var(--ui-action); outline-offset:2px; }

@@ -6,9 +6,18 @@ test('Library has no decorative book backdrop or extra artwork request',()=>{
  assert.doesNotMatch(app,/LorefyLibraryCinema\.Backdrop/);
  assert.doesNotMatch(css,/lf-library-cinema-backdrop/);
 });
+test('closest unfinished checkpoint respects rows, stored unit and real totals',()=>{
+ const rows=['a','b','c','d'].map(id=>({id,m:{id,ch:10,pages:100}}));
+ const progress={a:{chapter:7},b:{page:80},c:{chapter:10},d:{volume:1},other:{page:99}};
+ assert.equal(api().closestToFinish(rows,progress).work.id,'b');
+ assert.equal(api().closestToFinish(rows.slice(2),progress),null);
+ assert.equal(api().closestToFinish(rows,{}),null);
+});
 test('Library checkpoints show saved units and known totals, never fabricate a denominator',()=>{
  assert.equal(api().checkpoint({ch:420},{chapter:218},'en','saved'),'218 / 420 chapters');
  assert.equal(api().checkpoint({pages:412},{page:90},'ar','saved'),'90 / 412 صفحة');
+ assert.equal(api().checkpoint({pages:412},{page:90},'ar','saved',true),'الصفحة 90 من 412');
+ assert.equal(api().checkpoint({ch:0},{chapter:12},'ar','الفصل 12',true),'الفصل 12');
  assert.equal(api().checkpoint({vol:42},{volume:12},'en','saved'),'12 / 42 volumes');
  assert.equal(api().checkpoint({ch:0},{chapter:12},'en','12 chapters'),'12 chapters');
  assert.equal(api().checkpoint({ch:420},{chapter:0},'en','No checkpoint'),'No checkpoint');
@@ -58,6 +67,19 @@ test('Library tools expose named format and sort controls with owned format coun
  nodes.find(n=>n.props['aria-label']==='Sort library').props.onChange({target:{value:'title'}});assert.equal(order,'title');
 });
 
+test('the browse button exposes its linked panel and restores focus on keyboard dismissal',()=>{
+ global.React={Fragment:'Fragment',createElement:(type,props,...children)=>({type,props:props||{},children:children.flat().filter(Boolean)})};
+ let open=false,focused=false;
+ const props={language:'ar',open,onOpen:v=>open=v};
+ const [toggle,hidden]=api().Tools(props).children;
+ assert.equal(toggle.props['aria-controls'],hidden.props.id);
+ assert.equal(hidden.props.hidden,true);
+ toggle.props.onClick();assert.equal(open,true);
+ const [expanded,panel]=api().Tools({...props,open}).children;
+ assert.equal(expanded.props['aria-expanded'],true);assert.equal(panel.props.hidden,false);
+ panel.props.onKeyDown({key:'Escape',currentTarget:{ownerDocument:{getElementById:id=>id===toggle.props.id&&{focus(){focused=true;}}}},stopPropagation(){}});
+ assert.equal(open,false);assert.equal(focused,true);
+});
 test('Library heading has a named add action and summary can reset active filters',()=>{
  global.React={createElement:(type,props,...children)=>({type,props:props||{},children:children.flat().filter(Boolean)})};global.NenIcons={Plus:'Plus'};
  let adds=0,resets=0;const heading=api().Heading({language:'en',onExplore:()=>adds++});

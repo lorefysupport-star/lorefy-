@@ -48,7 +48,7 @@ test('Explore sheets stay above glass navigation and anchor to the viewport',()=
  assert.match(css,/\.lf-explore-cinema \.lf-explore-overlay\{position:fixed!important/);
  assert.match(css,/:has\(\.lf-explore-cinema \.lf-explore-overlay\) \.lf-bottom-nav\{visibility:hidden!important/);
 });
-test('selected reference extends sharp artwork behind header and has three wide recommendations',()=>{
+test('featured pick retains sharp artwork and three wide recommendations',()=>{
  const css=read('styles/lorefy-explore-cinema.css');
  assert.match(css,/\.lf-explore-immersive-art\{[^}]*position:absolute!important/);
  assert.match(css,/\.lf-explore-immersive-art>img\{[^}]*filter:none!important/);

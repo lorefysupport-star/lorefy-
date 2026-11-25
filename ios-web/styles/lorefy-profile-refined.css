@@ -56,8 +56,11 @@
   display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;
   overflow:hidden; min-block-size:3em; max-block-size:3em; unicode-bidi:isolate; text-align:start;
 }
-.lf-app .lf-profile-page .lf-profile-favorites:not(.is-spine-view):not(.is-showcase-view) .lf-reader-layout-cover-title {
+.lf-app .lf-profile-page .lf-profile-favorites:not(.is-spine-view):not(.is-showcase-view) .lf-reader-layout-cover-title,
+.lf-app .lf-profile-page .is-favorite-list > :is([data-work-title],.lf-reader-cover) > .lf-reader-layout-cover-title {
   display:-webkit-box !important; -webkit-box-orient:vertical; -webkit-line-clamp:2;
+}
+.lf-app .lf-profile-page .lf-profile-favorites:not(.is-spine-view):not(.is-showcase-view) .lf-reader-layout-cover-title {
   box-sizing:border-box; line-height:1.5 !important; padding-block:8px 0;
   overflow:hidden; min-block-size:calc(3em + 8px) !important; max-block-size:calc(3em + 8px); unicode-bidi:isolate; text-align:start;
 }
@@ -109,11 +112,42 @@
 .lf-app .lf-profile-page :is(.lf-profile-favorites,[data-profile-shelf='works']) .lf-showcase-rank { font-size:15px !important; }
 .lf-app .lf-profile-page .lf-profile-favorites.is-spine-view>:is([data-work-title],.lf-profile-spine,.is-empty-spine),
 .lf-app .lf-profile-page :is(.lf-profile-favorites.is-spine-view,[data-profile-shelf='works'] .is-spine-view) .lf-profile-spine-cover {
-  height:min(var(--spine-height,192px),calc(var(--profile-favorites-budget,400px) - 44px)) !important;
+  height:clamp(calc(var(--spine-height,192px) * .82),calc(var(--profile-favorites-budget,400px) - 44px),var(--spine-height,192px)) !important;
 }
-.lf-app .lf-profile-page .lf-profile-favorites:not(.is-spine-view):not(.is-showcase-view)>[data-work-title] {
-  max-width:calc((var(--profile-favorites-budget,400px) - 56px) * 2 / 3) !important;
+.lf-app .lf-profile-page .lf-profile-favorites:not(.is-spine-view):not(.is-showcase-view):not(.is-favorite-list)>[data-work-title] {
+  width:100% !important; max-width:100% !important;
   justify-self:center;
+}
+.lf-app .lf-profile-page :is(.lf-profile-favorites,.lf-reader-shelf-rail).is-favorite-list {
+  display:grid !important; grid-template-columns:minmax(0,1fr) !important; grid-auto-rows:auto !important;
+  width:100% !important; max-width:560px !important; padding:0 16px !important; margin-inline:auto !important;
+  gap:0 !important; box-sizing:border-box; direction:inherit;
+}
+.lf-app .lf-profile-page .is-favorite-list > :is([data-work-title],.lf-reader-cover):not(.lf-favorite-overflow) {
+  display:grid !important; grid-template-columns:44px minmax(0,1fr) !important; align-items:center !important; gap:12px !important;
+  width:100% !important; max-width:none !important; min-height:76px !important; height:auto !important; aspect-ratio:auto !important;
+  padding:5px 0 !important; margin:0 !important; border:0 !important; border-bottom:1px solid var(--ui-line) !important;
+  border-radius:0 !important; box-shadow:none !important; background:transparent !important; position:relative;
+}
+.lf-app .lf-profile-page .is-favorite-list:has([data-lorefy-book-cover]) > .is-empty-spine,
+.lf-app .lf-profile-page .is-favorite-list > .is-empty-spine ~ .is-empty-spine { display:none !important; }
+.lf-app .lf-profile-page .is-favorite-list [data-lorefy-book-cover] {
+  grid-column:1; grid-row:1; width:44px !important; height:66px !important; min-height:0 !important; aspect-ratio:2/3 !important;
+}
+.lf-app .lf-profile-page .is-favorite-list > [data-work-title]:not(:has(> .lf-reader-layout-cover-title))::after {
+  content:attr(data-work-title); grid-column:2; grid-row:1; color:var(--ui-ink); font-weight:600;
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden;
+  overflow-wrap:anywhere; text-align:start; unicode-bidi:plaintext;
+}
+.lf-app .lf-profile-page .is-favorite-list > :is([data-work-title],.lf-reader-cover) > .lf-reader-layout-cover-title {
+  position:static !important; grid-column:2; grid-row:1;
+  overflow:hidden; overflow-wrap:anywhere; text-align:start; background:none !important;
+  height:auto !important; min-block-size:0 !important; padding:0 !important; color:var(--ui-ink) !important;
+}
+.lf-app .lf-profile-page .is-favorite-list > [data-work-title]::after,
+.lf-app .lf-profile-page .is-favorite-list > :is([data-work-title],.lf-reader-cover) > .lf-reader-layout-cover-title {
+  font-family:inherit; font-size:14px !important; line-height:1.5 !important; font-weight:600;
+  text-align:match-parent !important;
 }
 }
 

@@ -36,7 +36,12 @@
 .lf-app .lf-library-cinema .lf-library-progress i { background:var(--ui-action) !important; }
 .lf-app .lf-library-cinema :is(.lf-showcase-rank,.lf-showcase-caption::after) { color:var(--ui-action) !important; --showcase-rank:var(--ui-action) !important; }
 .lf-app .lf-library-cinema .lf-library-grid.is-showcase-view { --showcase-rank:var(--ui-action) !important; }
-.lf-app .lf-library-cinema .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):not(.is-showcase-view) .lf-library-card { grid-template-rows:auto minmax(40px,auto) 4px minmax(20px,auto) !important; }
+.lf-app .lf-library-cinema .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):not(.is-showcase-view) .lf-library-card { grid-template-rows:auto auto auto!important; row-gap:5px!important; }
+.lf-app .lf-library-cinema .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):not(.is-showcase-view) .lf-library-progress { grid-row:1!important; align-self:end; z-index:1; pointer-events:none; height:3px!important; }
+.lf-app .lf-library-cinema .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):not(.is-showcase-view) .lf-library-copy strong { min-block-size:0!important; margin-block-start:2px!important; }
+.lf-app .lf-library-cinema .lf-library-grid:not(.is-shelf-view):not(.is-spine-view):not(.is-showcase-view) .lf-library-copy>span { grid-row:3!important; }
+.lf-app .lf-library-cinema:has(.lf-library-cinema-heading[dir=rtl]) .lf-library-copy strong { text-align:right!important; }
+.lf-app .lf-library-cinema:has(.lf-library-cinema-heading[dir=ltr]) .lf-library-copy strong { text-align:left!important; }
 .lf-app .lf-library-cinema .lf-library-grid.is-spine-view { container-type:inline-size; padding-inline:18px !important; }
 .lf-app .lf-library-cinema .lf-library-grid:has(> .lf-library-empty) { grid-auto-rows:auto !important; align-items:start !important; }
 .lf-app .lf-library-cinema .lf-library-grid.is-spine-view>.lf-library-card { min-width:0 !important; width:100% !important; }

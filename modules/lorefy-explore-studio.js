@@ -288,17 +288,17 @@
     var queryState = React.useState(saved.query), query = queryState[0], setQuery = queryState[1];
     var sortState = React.useState(saved.sort==='trending'?'newest':saved.sort), sort = sortState[0], setSort = sortState[1];
     var limitState = React.useState(saved.limit), limit = limitState[0], setLimit = limitState[1];
-    var filtersState=React.useState({genres:[],status:'all',rating:0}),filters=filtersState[0],setFilters=filtersState[1];
+    var filtersState=React.useState(saved.filters||{genres:[],status:'all',rating:0}),filters=filtersState[0],setFilters=filtersState[1];
     var collectionLimitState=React.useState(60),collectionLimit=collectionLimitState[0],setCollectionLimit=collectionLimitState[1];
     var dialogState = React.useState(null), dialog = dialogState[0], setDialog = dialogState[1];
     var draftState = React.useState(null), draft = draftState[0], setDraft = draftState[1];
     var revisionState = React.useState(0), revision = revisionState[0], setRevision = revisionState[1];
     var dataRevision = React.useRef(0);
-    var slideState = React.useState(0), slide = slideState[0], setSlide = slideState[1];
+    var slideState = React.useState(saved.slide || 0), slide = slideState[0], setSlide = slideState[1];
     var searchState=React.useState(!!saved.searchActive),searchActive=searchState[0],setSearchActive=searchState[1];
     var searchQueryState=React.useState(saved.searchQuery||''),searchQuery=searchQueryState[0],setSearchQuery=searchQueryState[1];
     var searchFiltersState=React.useState(saved.searchFilters||{format:'',genres:[],status:'all',sort:'relevance'}),searchFilters=searchFiltersState[0],setSearchFilters=searchFiltersState[1];
-    var searchLimitState=React.useState(36),searchLimit=searchLimitState[0],setSearchLimit=searchLimitState[1];
+    var searchLimitState=React.useState(saved.searchLimit||36),searchLimit=searchLimitState[0],setSearchLimit=searchLimitState[1];
     var attemptState=React.useState(0),searchAttempt=attemptState[0],setSearchAttempt=attemptState[1];
     var historyStorage;try{historyStorage=root.sessionStorage;}catch(_){}
     var recentState=React.useState(readSearchHistory(historyStorage,owner)),recent=recentState[0],setRecent=recentState[1];
@@ -307,7 +307,12 @@
     var inputTimer=React.useRef(null), searchInput=React.useRef(null), formatSearchInput=React.useRef(null);
     React.useEffect(function(){return function(){root.clearTimeout(inputTimer.current);};},[]);
     var searchModeState=React.useState(saved.searchMode||'media'),searchMode=searchModeState[0],setSearchMode=searchModeState[1];
-    React.useEffect(function(){searchRetry.current++;setSearchLimit(36);return function(){searchRetry.current++;};},[owner,format,query,searchQuery,searchMode,searchFilters]);
+    var previousSearchContext=React.useRef(null);
+    React.useEffect(function(){
+      var context=JSON.stringify([owner,format,query,searchQuery,searchMode,searchFilters]);searchRetry.current++;
+      if(previousSearchContext.current!==null&&previousSearchContext.current!==context)setSearchLimit(36);
+      previousSearchContext.current=context;return function(){searchRetry.current++;};
+    },[owner,format,query,searchQuery,searchMode,searchFilters]);
     var previousOwner=React.useRef(owner);
     React.useEffect(function(){
       if(previousOwner.current===owner)return;
@@ -333,14 +338,15 @@
     var t = function (ar, english) { return en ? english : ar; };
     var Icon = function (name, size) {
       if (en && name === 'ChevronLeft') name = 'ChevronRight';
+      else if (en && name === 'ChevronRight') name = 'ChevronLeft';
       var component = root.NenIcons && root.NenIcons[name];
       return component ? h(component, {size:size || 19, 'aria-hidden':true}) : null;
     };
     function remember(scroll) {
-      viewMemory.set(owner, {mode:mode, format:format, query:query, sort:sort, limit:limit,searchActive:searchActive,searchQuery:searchQuery,searchMode:searchMode,searchFilters:searchFilters, scroll:scroll == null ? screen.current && screen.current.scrollTop || 0 : scroll});
+      viewMemory.set(owner, {mode:mode, format:format, query:query, sort:sort, filters:filters, limit:limit,slide:slide,searchActive:searchActive,searchQuery:searchQuery,searchMode:searchMode,searchFilters:searchFilters,searchLimit:searchLimit, scroll:scroll == null ? screen.current && screen.current.scrollTop || 0 : scroll});
       if (viewMemory.size > 8) viewMemory.delete(viewMemory.keys().next().value);
     }
-    React.useEffect(function () { remember(); }, [owner, mode, format, query, sort, limit,searchActive,searchQuery,searchMode,searchFilters]);
+    React.useEffect(function () { remember(); }, [owner, mode, format, query, sort, filters,limit,slide,searchActive,searchQuery,searchMode,searchFilters,searchLimit]);
     React.useLayoutEffect(function () { if (screen.current) screen.current.scrollTop = saved.scroll; }, []);
     function top() { if (screen.current) screen.current.scrollTop = 0; }
     React.useEffect(function () {
@@ -626,6 +632,21 @@
       var target=collectionLimit+60;setCollectionLimit(target);
       if(dialog.shelf)fillCollection(dialog.shelf,dialog.title,target,collectionRequest.current,dialog.pager);
     }
+    function appliedFilters(searching) {
+      var active=searching?searchFilters:filters, tags=[];
+      function chip(key,label,patch){
+        tags.push(h('button',{key:key,type:'button','aria-label':t('إزالة فلتر: ','Remove filter: ')+label,onClick:function(){
+          var next=Object.assign({},active,patch);
+          if(searching){setSearchFilters(next);setSearchLimit(36);}else{setFilters(next);setLimit(60);}
+          screen.current?.querySelector(searching?'.lf-explore-search-filter':'.lf-explore-format-filter')?.focus({preventScroll:true});
+          top();
+        }},label,Icon('X',14)));
+      }
+      (active.genres||[]).forEach(function(g){chip('genre:'+g,genreLabel(g,props.language),{genres:active.genres.filter(function(value){return value!==g;})});});
+      if(active.status!=='all')chip('status',active.status==='completed'?t('مكتمل','Completed'):t('مستمر','Ongoing'),{status:'all'});
+      if(searching&&active.sort!=='relevance')chip('sort',active.sort==='rating'?t('الأعلى تقييماً','Top rated'):active.sort==='newest'?t('الأحدث','Newest'):t('الشائع','Popular'),{sort:'relevance'});
+      return tags.length?h('div',{className:'lf-explore-applied',role:'group','aria-label':t('الفلاتر المطبّقة','Applied filters')},tags):null;
+    }
     function filtersBody() {
       var searching=dialog.kind==='searchFilters';
       return h(React.Fragment,null,
@@ -657,7 +678,7 @@
     function chooseFormat(type) { root.clearTimeout(inputTimer.current);setFilters({genres:[],status:'all',rating:0});setFormat(type); setMode('browse'); setQuery(''); setSort('popular'); setLimit(60); top(); }
     function back() { root.clearTimeout(inputTimer.current);setFormat(''); setMode('browse'); setQuery(''); top(); }
     function featureControls() {
-      return h('div',{className:'lf-explore-feature-controls'},h('button',{'aria-label':t('العمل السابق','Previous work'),onClick:function(){setPaused(true);setSlide((slide+features.length-1)%features.length);}},Icon(en?'ChevronLeft':'ChevronRight',16)),
+      return h('div',{className:'lf-explore-feature-controls'},h('button',{'aria-label':t('العمل السابق','Previous work'),onClick:function(){setPaused(true);setSlide((slide+features.length-1)%features.length);}},Icon('ChevronRight',16)),
           features.map(function(work,index){return h('button',{key:work.id,className:'lf-explore-feature-dot','aria-label':work.title,'aria-pressed':index===slide%features.length,onClick:function(){setPaused(true);setSlide(index);}},h('span',null));}),
           h('button',{'aria-label':t('العمل التالي','Next work'),onClick:function(){setPaused(true);setSlide(slide+1);}},Icon('ChevronLeft',16)),
           !reducedMotion && h('button',{type:'button',className:'lf-explore-feature-rotation','aria-label':paused?t('تشغيل العرض التلقائي','Start automatic slideshow'):t('إيقاف العرض التلقائي','Pause automatic slideshow'),title:paused?t('تشغيل العرض التلقائي','Start automatic slideshow'):t('إيقاف العرض التلقائي','Pause automatic slideshow'),onClick:function(){setPaused(function(value){return !value;});}},Icon(paused?'Play':'Pause',16)));
@@ -668,6 +689,7 @@
       var poster=h('button',{type:'button',className:'lf-explore-feature-poster','aria-label':t('فتح ','Open ')+selected.title,onClick:function(){openWork(selected);}},cover(selected,true));
       if(root.LorefyLibraryMedia)poster=root.LorefyLibraryMedia.card(poster,{lang:props.language,workId:selected.id,title:selected.title,loading:'eager'});
       return h('section', {className:'lf-explore-feature',ref:hero,'aria-label':t('اختيار اليوم','Featured pick'),'data-featured-work':selected.id},
+        heroArtwork(selected),
         h('div',{className:'lf-explore-feature-card'},
           h('div',{className:'lf-design-feature-copy',dir:'ltr'},
             features.length>1?h('details',{className:'lf-explore-feature-selector'},h('summary',null,t('اختيار اليوم','Featured pick')),featureControls()):h('span',{className:'lf-explore-feature-label'},t('اختيار اليوم','Featured pick')),
@@ -679,7 +701,7 @@
     }
     var immersive=!!selected&&!format&&mode==='you'&&!searchActive;
     return h('div', {className:'lf-screen-scroll lf-discover-page lf-explore-studio lf-explore-cinema'+(format?' is-format':'')+(immersive?' has-feature':'')+(searchActive?' is-searching':'')+(!format&&!searchActive&&mode==='browse'?' is-types':''),dir:en?'ltr':'rtl',ref:screen,onScroll:function(){remember();}},
-      immersive&&heroArtwork(selected),
+
       h('header',{className:'lf-explore-header',dir:format?'ltr':undefined},
         format && h('button',{className:'lf-explore-icon','aria-label':t('العودة إلى الأنواع','Back to types'),onClick:back},Icon(en?'ArrowLeft':'ArrowRight')),
         h('div',null,h('h1',{tabIndex:-1},format?props.typeLabel(format):searchActive?t('البحث','Search'):t('استكشف','Explore'))),
@@ -697,6 +719,7 @@
       !format&&searchActive&&searchMode==='media'&&h('div',{className:'lf-explore-search-tools'},h('button',{className:'lf-explore-search-filter',onClick:function(){setDraft(Object.assign({},searchFilters));open({kind:'searchFilters',title:t('تصفية البحث','Search filters')});}},Icon('SlidersHorizontal',17),t('الفلاتر','Filters'),(searchFilters.genres.length||searchFilters.status!=='all')&&h('span',null,t('مفعّلة','Active'))),h('select',{className:'lf-explore-search-format','aria-label':t('نوع العمل','Format'),value:searchFilters.format,onChange:function(event){searchRetry.current++;setRemoteSearch(null);setSearchFilters(Object.assign({},searchFilters,{format:event.target.value}));setSearchLimit(36);}},h('option',{value:''},t('كل الأعمال','All formats')),props.types.filter(function(type){return type!==props.allType;}).map(function(type){return h('option',{key:type,value:type},props.typeLabel(type));}))),
       format ? h('div',{className:'lf-explore-sorts',role:'group','aria-label':t('ترتيب الأعمال','Sort works')},[['popular',t('الشائع','Popular')],['rating',t('الأعلى تقييماً','Top rated')],['newest',t('الجديد','New')]].map(function(entry){return h('button',{key:entry[0],'aria-pressed':sort===entry[0],onClick:function(){setSort(entry[0]);setLimit(60);top();}},entry[1]);})) :
         !searchActive&&h('div',{className:'lf-explore-tabs',role:'tablist','aria-label':t('أقسام استكشف','Explore views')},[['you',t('تصفّح','Browse')],['browse',t('الأنواع','Types')]].map(function(tab){return h('button',{key:tab[0],role:'tab',id:'explore-tab-'+tab[0],'aria-controls':'explore-panel','aria-selected':mode===tab[0],onClick:function(){setMode(tab[0]);top();}},tab[1]);})),
+      (format||searchActive&&searchMode==='media')&&appliedFilters(!format),
       format ? h(React.Fragment,null,
         h('p',{className:'lf-explore-catalog-status',role:'status'},loadError||remoteFailed||catalogState&&catalogState.searchError?t('تعذر تحميل النتائج، حاول مجدداً.','Could not load results. Try again.'):remoteBusy||catalogState&&catalogState.searching?t('جارٍ البحث…','Searching…'):!catalogReady?t('جارٍ تحميل الأعمال…','Loading works…'):''),
         suggestionsFor(query,format),
